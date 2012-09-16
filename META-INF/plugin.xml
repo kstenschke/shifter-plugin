@@ -1,0 +1,144 @@
+<!--
+  ~ Copyright 2012 Kay Stenschke
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~ http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<idea-plugin version="2">
+    <name>Shifter</name>
+    <description><![CDATA[
+    Detects type of keyword at caret and shifts it "up" or "down" on keyboard shortcut.<br>
+    If there's only one shiftable word in a line, it can be shifted without the caret touching it.<br>
+    Lowercase/uppercase or lower case with upper first character of shifted words is maintained.<br>
+    <br>
+    Supported shifting / keyword types:
+    <ul>
+        <li>Shifting a multi-line selection sorts the lines alphabetically ascending/descending.</li>
+        <li>Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending.</li>
+        <li>Boolean values - Toggles true/false, on/off, yes/no (e.g. Objective-C)</li>
+        <li>Numeric values - Increments/decrements numbers by 1</li>
+        <li>UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
+        <li>PHP variables - Shifts to alphabetically next/previous variable name found in current document</li>
+        <li>Strings wrapped in single/double quotes - Shifts to alphabetically next/previous quoted string found in current document</li>
+        <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
+        <li>CSS pixel values - Shifts px-values up/down by 1</li>
+        <li>CSS orientations and positioning: top/right/bottom/left and absolute/relative</li>
+        <li>Accessibility types: public/private/protected</li>
+        <li>MySql data types: Shifts to next bigger/smaller numeric/string type</li>
+        <li>Primitive data types of Java, JavaScript, PHP, Objective-C</li>
+        <li>Doc comment tags (Java, JavaScript, PHP)</li>
+        <li>JavaScript event types (mouse, keyboard, frame/object, form)</li>
+        <li>Named colors from the sRGB color space (white, lightgray, gray...)</li>
+        <li>Full and abbreviated names of months and weekdays (english)</li>
+    </ul>
+    <br>Default keyboard shortcuts:
+    <ul>
+        <li>Ctrl+Shift+Alt+Comma  - Shift Down
+        <li>Ctrl+Shift+Alt+Period - Shift Up
+    </ul>
+    <br>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ]]></description>
+    <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
+    <version>1.0.7</version>
+    <idea-version since-build="8000"/>
+
+    <change-notes><![CDATA[
+    1.0.8 (not released yet)<br>
+    <ul>
+        <li>Added shifting of strings wrapped in backticks</li>
+        <li>Added shifting of PHP core magical constants (__FILE__, __LINE__, etc.)</li>
+    </ul>
+    1.0.7<br>
+    <ul>
+        <li>Added balloon info with human-readable date when shifting UNIX timestamps</li>
+        <li>Added shifting of UNIX timestamps +/- one day</li>
+        <li>Added shifting of named colors from the sRGB color space (white, lightGray, gray...)</li>
+        <li>Added shifting of abbreviated month and weekday names (jan, feb, ... and mon, tue, ...)</li>
+        <li>Added shifting of JavaScript event types (mouse, keyboard, frame/object, form)</li>
+    </ul>1.0.6<br>
+    <ul>
+        <li>Improved shiftable word types detection</li>
+        <li>Added Objective-C specific data types</li>
+        <li>Bugfix: Shifted quoted strings were partly maintaining wrong case</li>
+    </ul>1.0.5<br>
+    <ul>
+        <li>Added autocompletion of shifted JsDoc method tag with respective function name</li>
+        <li>Added shifting of data types inside Java, JavaScript and PHP doc comments</li>
+        <li>Added maintaining of lower case with upper first character</li>
+        <li>Added option to sort items of selected comma separated list</li>
+    </ul>1.0.4<br>
+    <ul>
+        <li>Added support for single/double quoted strings: shifts to aphabetically next/previous quoted string in current file</li>
+        <li>Added shifting of CSS positioning: absolute/relative</li>
+        <li>Added shifting of Objective-c booleans YES/NO</li>
+        <li>Bugfix: PHP variables containing underscores were not detected</li>
+    </ul>1.0.3<br>
+    <ul>
+        <li>Added support for PHP variables: shifts to alphabetically next/previous variable in current file</li>
+        <li>Added shifting of numeric values w/o units</li>
+        <li>Added ability to undo/redo shifter actions</li>
+        <li>Changed CSS pixel values shifting size to 1</li>
+    </ul>
+    <br>1.0.2<br>
+    <ul>
+        <li>Added alphabetical ascending/descending sorting of multi-line selections.</li>
+        <li>Added shifting of doc-params @param/@return</li>
+        <li>Added shifting of months, weekdays and CSS orientations: top/right/bottom/left</li>
+        <li>Added shifting of a whole line: a single shiftable word in the edited line is detected</li>
+        <li>Added maintaining of uppercase/lowercase for all types</li>
+    </ul>
+    <br>
+    1.0.1<br>
+    <ul>
+        <li>Added shifting of MySql data type keywords</li>
+        <li>Added CSS pixel value shifting</li>
+        <li>Added accessibility keywords shifting</li>
+        <li>Added conversion of triple digit CSS RGB values to six digits</li>
+        <li>Added case sensitivity for booleans</li>
+    </ul>
+    <br>
+    1.0.0<br>
+    <ul><li>Initial release</li></ul>
+  ]]></change-notes>
+
+    <application-components>
+    </application-components>
+
+    <project-components>
+    </project-components>
+
+    <actions>
+        <group id="ShifterActionGroup" text="Shift Words at Cart" popup="false">
+            <separator/>
+
+            <action id="ShiftDownAction" class="com.kstenschke.shifter.actions.ShiftDownAction" text="Shift-Down Word at Caret"
+                    description="Shift-Down Word at Caret">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt COMMA"/>
+            </action>
+
+            <action id="ShiftUpAction" class="com.kstenschke.shifter.actions.ShiftUpAction" text="Shift-Up Word at Caret"
+                    description="Shift-Up Word at Caret">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt PERIOD"/>
+            </action>
+
+            <add-to-group group-id="EditMenu" anchor="last"/>
+        </group>
+    </actions>
+
+
+    <extensions defaultExtensionNs="com.intellij">
+
+    </extensions>
+
+    <depends>com.intellij.modules.lang</depends>
+</idea-plugin>
