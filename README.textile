@@ -28,7 +28,8 @@ Supported shifting / keyword types:
 * Numeric values - Increments/decrements numbers by 1
 * UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
-* Strings wrapped in single/double quotes - Shifts to alphabetically next/previous quoted string found in current document
+* PHP core magical constants - Shifts PHP's magic constants (__FILE__, __LINE__, etc.)
+* Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS pixel values - Shifts px-values up/down by 1
 * CSS orientations and positioning: top/right/bottom/left and absolute/relative
