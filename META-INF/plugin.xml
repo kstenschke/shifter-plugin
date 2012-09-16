@@ -53,7 +53,7 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
-    1.0.8 (not released yet)<br>
+    1.0.8<br>
     <ul>
         <li>Added shifting of strings wrapped in backticks</li>
         <li>Added shifting of PHP core magical constants (__FILE__, __LINE__, etc.)</li>
