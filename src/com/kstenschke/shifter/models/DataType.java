@@ -38,7 +38,7 @@ public class DataType {
 	/**
 	 * Returns string array with all recognized doc comment data types
 	 *
-	 * @return  Array
+	 * @return	Array
 	 */
 	public String[]   getAllTypes() {
 		return ArrayHelper.mergeStringArrays(this.typesJavaScript, this.typesJava, this.typesPHP, this.typesObjectiveC);
@@ -49,7 +49,7 @@ public class DataType {
 	/**
 	 * Returns pipe-separated list (as string) with all recognized doc comment data types
 	 *
-	 * @return  String
+	 * @return	String
 	 */
 	public String   getAllTypesPiped() {
 		String[] allTypes = this.getAllTypes();
@@ -62,21 +62,21 @@ public class DataType {
 	/**
 	 * Check whether given String represents any known data type
 	 *
-	 * @param   word          String to be checked
-	 * @return  Boolean.
+	 * @param	word		String to be checked
+	 * @return	Boolean.
 	 */
 	public Boolean isDataType(String word) {
-		return !(word == null || word.length() == 0)                      // Word has content
-				  && this.getAllTypesPiped().contains(word.toLowerCase());  // Word is a keyword of the data type
+		return !(word == null || word.length() == 0)						// Word has content
+				  && this.getAllTypesPiped().contains(word.toLowerCase());	// Word is a keyword of the data type
 	}
 
 
 
 	/**
-	 * @param   word           String to be shifted
-	 * @param   filename       Filename of the edited file
-	 * @param   isUp           Shifting up or down?
-	 * @return  String         Shifting result
+	 * @param	word		String to be shifted
+	 * @param	filename	Filename of the edited file
+	 * @param	isUp		Shifting up or down?
+	 * @return	String		Shifting result
 	 */
 	public String getShifted(String word, String filename, Boolean isUp) {
 		String[] dataTypes   = this.getDataTypesByFilename(filename);
@@ -112,8 +112,8 @@ public class DataType {
 	/**
 	 * Return array of data types of detected language of edited file
 	 *
-	 * @param   filename   Filename of edited file
-	 * @return  String[]
+	 * @param	filename	Filename of edited file
+	 * @return	String[]
 	 */
 	public String[] getDataTypesByFilename(String filename) {
 		if( filename != null ) {

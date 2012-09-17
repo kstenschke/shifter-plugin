@@ -40,6 +40,7 @@
         <li>Doc comment tags (Java, JavaScript, PHP)</li>
         <li>JavaScript event types (mouse, keyboard, frame/object, form)</li>
         <li>Named colors from the sRGB color space (white, lightgray, gray...)</li>
+        <li>Names of common data collection types (list, set, bag, dictionary, tree, etc.)</li>
         <li>Full and abbreviated names of months and weekdays (english)</li>
     </ul>
     <br>Default keyboard shortcuts:
@@ -54,6 +55,10 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.0.9<br>
+    <ul>
+        <li>Added shifting of common data collection type names (list, set, bag, dictionary, tree, etc.)</li>
+    </ul>
     1.0.8<br>
     <ul>
         <li>Added shifting of strings wrapped in backticks</li>

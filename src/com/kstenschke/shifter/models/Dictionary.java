@@ -13,39 +13,40 @@ public class Dictionary {
 
 
 	public static final int TYPE_ACCESSIBILITY      = 1;
-	public static final int TYPE_PHPMAGICALCONSTANT = 25;
+	public static final int TYPE_PHPMAGICALCONSTANT = 2;
 
-	public static final int TYPE_MYSQLDATATYPENUMERIC  = 2;
-	public static final int TYPE_MYSQLDATATYPESTRING   = 3;
+	public static final int TYPE_MYSQLDATATYPENUMERIC	= 10;
+	public static final int TYPE_MYSQLDATATYPESTRING	= 11;
+	public static final int TYPE_DATACOLLECTIONTYPE		= 12;
 
-	public static final int TYPE_MONTH        = 4;
-	public static final int TYPE_MONTH_ABBR   = 5;
-	public static final int TYPE_WEEKDAY      = 6;
-	public static final int TYPE_WEEKDAY_ABRR = 7;
+	public static final int TYPE_MONTH        = 20;
+	public static final int TYPE_MONTH_ABBR   = 21;
+	public static final int TYPE_WEEKDAY      = 22;
+	public static final int TYPE_WEEKDAY_ABRR = 23;
 
-	public static final int TYPE_JSEVENT_MOUSE      = 9;
-	public static final int TYPE_JSEVENT_KEYBOARD   = 10;
-	public static final int TYPE_JSEVENT_FRAMEOBJ   = 11;
-	public static final int TYPE_JSEVENT_FORM       = 12;
+	public static final int TYPE_JSEVENT_MOUSE      = 30;
+	public static final int TYPE_JSEVENT_KEYBOARD   = 31;
+	public static final int TYPE_JSEVENT_FRAMEOBJ   = 32;
+	public static final int TYPE_JSEVENT_FORM       = 33;
 
 
-	public static final int TYPE_COLOR        = 8;
-	public static final int TYPE_ORIENTATION  = 13;
-	public static final int TYPE_ADVERB       = 14;
+	public static final int TYPE_COLOR        = 40;
+	public static final int TYPE_ORIENTATION  = 41;
+	public static final int TYPE_ADVERB       = 42;
 
 		// Generic types
-	public static final int TYPE_QUOTEDSTRING    = 15;
-	public static final int TYPE_RGBCOLOR        = 16;
-	public static final int TYPE_PIXELVALUE      = 17;
-	public static final int TYPE_DOCCOMMENTTAG   = 18;
-	public static final int TYPE_PHPVARIABLE     = 19;
-	public static final int TYPE_NUMERICVALUE    = 20;
-	public static final int TYPE_BOOLEANSTRING   = 21;
-	public static final int TYPE_POSITIONING     = 22;
+	public static final int TYPE_QUOTEDSTRING    = 50;
+	public static final int TYPE_RGBCOLOR        = 51;
+	public static final int TYPE_PIXELVALUE      = 52;
+	public static final int TYPE_DOCCOMMENTTAG   = 53;
+	public static final int TYPE_PHPVARIABLE     = 54;
+	public static final int TYPE_NUMERICVALUE    = 55;
+	public static final int TYPE_BOOLEANSTRING   = 56;
+	public static final int TYPE_POSITIONING     = 57;
 
-		// Data types with context
-	public static final int TYPE_DATATYPE_IN_DOCCOMMENT   = 23;
-	public static final int TYPE_DATATYPE_GENERAL         = 24;
+		// Data types of different contexts
+	public static final int TYPE_DATATYPE_IN_DOCCOMMENT   = 60;
+	public static final int TYPE_DATATYPE_GENERAL         = 61;
 
 
 		// Word type objects
@@ -54,6 +55,7 @@ public class Dictionary {
 
 	StaticWordType wordTypeMySqlDataTypesNumeric;
 	StaticWordType wordTypeMySqlDataTypesString;
+	StaticWordType wordTypeDataCollectionType;
 
 	StaticWordType wordTypeMonths;
 	StaticWordType wordTypeMonthsAbbr;
@@ -96,6 +98,10 @@ public class Dictionary {
 		// Init word type: PHP magical constants (shifted only inside PHP files)
 		String[] keywordsPhpMagicalConstants = {"__dir__", "__file__", "__namespace__", "__class__", "__line__", "__function__", "__method__", "__trait__"};
 		this.wordTypePhpMagicalConstants = new StaticWordType(keywordsPhpMagicalConstants);
+
+		// Init word type: data collection types
+		String[] keywordsDataCollectionTypes = {"list", "set", "bag", "multiset", "dictionary", "table", "tree", "sequence", "queue", "heap", "graph"};
+		this.wordTypeDataCollectionType = new StaticWordType(keywordsDataCollectionTypes);
 
 
 
@@ -250,6 +256,9 @@ public class Dictionary {
 		}
 
 
+		if (this.wordTypeDataCollectionType.hasWord(word)) {
+			return TYPE_DATACOLLECTIONTYPE;
+		}
 
 		if (this.wordTypeMonths.hasWord(word)) {
 			return TYPE_MONTH;
@@ -344,6 +353,9 @@ public class Dictionary {
 
 			case TYPE_PHPMAGICALCONSTANT:
 				return this.wordTypePhpMagicalConstants.getShifted(word, isUp);
+
+			case TYPE_DATACOLLECTIONTYPE:
+				return this.wordTypeDataCollectionType.getShifted(word, isUp);
 
 			case TYPE_MYSQLDATATYPENUMERIC:
 				return this.wordTypeMySqlDataTypesNumeric.getShifted(word, isUp);
