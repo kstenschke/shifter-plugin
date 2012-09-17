@@ -22,13 +22,13 @@ package com.kstenschke.shifter.models;
 public class BooleanString {
 
 	/**
-	 * Check whether given String represents a number
+	 * Check whether given string represents any of the known boolean keyword data pairs
 	 *
 	 * @param   str        String to be checked
 	 * @return  Boolean.
 	 */
 	public Boolean isBooleanString(String str) {
-		String regExPattern = "yes|no|true|false|ok|cancel|on|off";
+		String regExPattern = "yes|no|true|false|ok|cancel|on|off|shown|hidden|positive|negative";
 
 		return (str.toLowerCase()).matches(regExPattern);
 	}
@@ -42,39 +42,55 @@ public class BooleanString {
 	public String getShifted(String word) {
 		word  = word.toLowerCase();
 
-		// true / false
-		if( word.equals("true") ) {
-			return "false";
-		}
-		if( word.equals("false") ) {
-			return "true";
-		}
+		String toggled;
 
-		// YES / NO
-		if( word.equals("yes") ) {
-			return "no";
-		}
-		if( word.equals("no") ) {
-			return "yes";
-		}
+			// true / false
+		toggled = this.toggleBoolean(word, "true", "false");
+		if( toggled != null ) return toggled;
 
-		// ok / cancel
-		if( word.equals("ok") ) {
-			return "cancel";
-		}
-		if( word.equals("cancel") ) {
-			return "ok";
-		}
+			// yes / no
+		toggled = this.toggleBoolean(word, "yes", "no");
+		if( toggled != null ) return toggled;
 
-		// on / off
-		if( word.equals("on") ) {
-			return "off";
-		}
-		if( word.equals("off") ) {
-			return "on";
-		}
+			// ok / cancel
+		toggled = this.toggleBoolean(word, "ok", "cancel");
+		if( toggled != null ) return toggled;
+
+			// on / off
+		toggled = this.toggleBoolean(word, "on", "off");
+		if( toggled != null ) return toggled;
+
+			// shown / hidden
+		toggled = this.toggleBoolean(word, "shown", "hidden");
+		if( toggled != null ) return toggled;
+
+			// positive / negative
+		toggled = this.toggleBoolean(word, "positive", "negative");
+		if( toggled != null ) return toggled;
+
+
 
 		return word;
+	}
+
+
+
+	/**
+	 * Compare given string to given "positive" and "negative" keyword and return the opposite of the current or null if none matched
+	 *
+	 * @param	strCurrent		String to be matched and toggled
+	 * @param	strPositive		Positive keyword
+	 * @param	strNegative		Negative keyword
+	 * @return					The toggled keyword if matched or null
+	 */
+	private String toggleBoolean(String strCurrent, String strPositive, String strNegative) {
+		if( strCurrent.equals(strPositive) ) {
+			return strNegative;
+		} else if( strCurrent.equals(strNegative) ) {
+			return strPositive;
+		}
+
+		return null;
 	}
 
 }
