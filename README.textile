@@ -39,6 +39,7 @@ Supported shifting / keyword types:
 * Doc comment tags (Java, JavaScript, PHP)
 * JavaScript event types (mouse, keyboard, frame/object, form)
 * Named colors from the sRGB color space (white, lightgray, gray...)
+* Names of common data collection types (list, set, bag, dictionary, tree, etc.)
 * Full and abbreviated names of months and weekdays (english)
 
 
