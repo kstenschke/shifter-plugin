@@ -24,12 +24,12 @@ Supported shifting / keyword types:
 
 * Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
 * Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending.
-* Boolean values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, positive/negative
 * Numeric values - Increments/decrements numbers by 1
 * UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
-* PHP core magical constants - Shifts PHP's magic constants (__FILE__, __LINE__, etc.)
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
+* Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max
+* PHP core magical constants - Shifts PHP's magic constants (__FILE__, __LINE__, etc.)
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS pixel values - Shifts px-values up/down by 1
 * CSS orientations and positioning: top/right/bottom/left and absolute/relative

@@ -21,6 +21,19 @@ package com.kstenschke.shifter.models;
  */
 public class BooleanString {
 
+	private String[] typesJavaScript;
+
+
+
+	/**
+	 * Constructor
+	 */
+	public BooleanString() {
+
+	}
+
+
+
 	/**
 	 * Check whether given string represents any of the known boolean keyword data pairs
 	 *
@@ -28,7 +41,9 @@ public class BooleanString {
 	 * @return  Boolean.
 	 */
 	public Boolean isBooleanString(String str) {
-		String regExPattern = "yes|no|true|false|ok|cancel|on|off|shown|hidden|positive|negative";
+		String regExPattern = "yes|no" + "|true|false" + "|ok|cancel" + "|on|off" + "|shown|hidden"
+							+ "|positive|negative" + "|from|until" + "|enable|disable|" + "|enabled|disabled"
+							+ "|pass|fail" + "|min|max";
 
 		return (str.toLowerCase()).matches(regExPattern);
 	}
@@ -68,6 +83,25 @@ public class BooleanString {
 		toggled = this.toggleBoolean(word, "positive", "negative");
 		if( toggled != null ) return toggled;
 
+			// from / until
+		toggled = this.toggleBoolean(word, "from", "until");
+		if( toggled != null ) return toggled;
+
+			// enable / disable
+		toggled = this.toggleBoolean(word, "enable", "disable");
+		if( toggled != null ) return toggled;
+
+		// enabled / disabled
+		toggled = this.toggleBoolean(word, "enabled", "disabled");
+		if( toggled != null ) return toggled;
+
+			// pass / fail
+		toggled = this.toggleBoolean(word, "pass", "fail");
+		if( toggled != null ) return toggled;
+
+			// min / max
+		toggled = this.toggleBoolean(word, "min", "max");
+		if( toggled != null ) return toggled;
 
 
 		return word;
