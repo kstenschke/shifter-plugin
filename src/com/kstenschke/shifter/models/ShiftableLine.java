@@ -49,10 +49,10 @@ public class ShiftableLine {
 	public ShiftableLine(String line,  CharSequence editorText, int caretOffset, String filename) {
 //		this.dictionary   = new Dictionary();
 
-		this.line      = line;
-		this.editorText  = editorText;
-		this.caretOffset  = caretOffset;
-		this.filename  = filename;
+		this.line			= line;
+		this.editorText		= editorText;
+		this.caretOffset	= caretOffset;
+		this.filename		= filename;
 	}
 
 
@@ -68,13 +68,13 @@ public class ShiftableLine {
 
 		String[] words  = line.split("\\s+");
 
-		// Check all words for shiftable types - shiftable if there's not more than one
+			// Check all words for shiftable types - shiftable if there's not more than one
 		int amountShiftableWordsInSentence = 0;
 		String testShiftedWord;
-		String unshiftedWord = "";
-		String shiftedWord   = "";
-		String prefixChar    = "";
-		String postfixChar   = "";
+		String unshiftedWord	= "";
+		String shiftedWord		= "";
+		String prefixChar		= "";
+		String postfixChar		= "";
 
 
 		for (String word : words) {
@@ -97,7 +97,7 @@ public class ShiftableLine {
 			}
 		}
 
-		// Actual shifting
+			// Actual shifting
 		if( amountShiftableWordsInSentence == 1 ) {
 				// Shift detected word in line
 			return this.line.replace(unshiftedWord, shiftedWord);

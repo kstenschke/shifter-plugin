@@ -55,8 +55,8 @@ public class StaticWordType {
 
 
 	/**
-	 * @param	word			Word to be shifted
-	 * @param	isUp			Shifting up or down?
+	 * @param	word		Word to be shifted
+	 * @param	isUp		Shifting up or down?
 	 * @return	String		Shifting result
 	 */
 	public String getShifted(String word, Boolean isUp) {

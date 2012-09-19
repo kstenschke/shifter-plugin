@@ -50,14 +50,14 @@ public class PixelValue {
 	 * @return	String
 	 */
 	public String getShifted(String pxValue, Boolean isUp) {
-		// Get int from PX value
+			// Get int from PX value
 		pxValue = pxValue.replace("px", "");
 		int numericValue = Integer.parseInt(pxValue);
 
-		// Shift up/down by 1px
+			// Shift up/down by 1px
 		numericValue = numericValue + (isUp ? 1 : -1);
 
-		// Add "px" to numeric value
+			// Add "px" to numeric value
 		return Integer.toString(numericValue).concat("px");
 	}
 

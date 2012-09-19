@@ -41,9 +41,7 @@ public class RbgColor {
 	 * @return	Boolean.
 	 */
 	public Boolean isRgbColorString(String str, String prefix) {
-		return !( !prefix.equals("#")
-					 || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}"))
-		);
+		return !( !prefix.equals("#")  || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")) );
 	}
 
 
