@@ -29,7 +29,7 @@ import java.util.regex.Pattern;
  */
 public class QuotedString {
 
-	String quoteChar;
+	private String quoteChar;
 
 	/**
 	 * Constructor

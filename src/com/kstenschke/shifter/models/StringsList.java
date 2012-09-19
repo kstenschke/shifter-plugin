@@ -21,14 +21,14 @@ package com.kstenschke.shifter.models;
  */
 public class StringsList {
 
-	/**
-	 * Constructor
-	 *
-	 * @param	str		A string
-	 */
-	public StringsList(String str) {
-
-	}
+//	/**
+//	 * Constructor
+//	 *
+//	 * @param	str		A string
+//	 */
+//	public StringsList(String str) {
+//
+//	}
 
 
 

@@ -17,19 +17,40 @@
 package com.kstenschke.shifter.models;
 
 /**
- * BooleanString class
+ * "BooleanString" class
  */
 public class BooleanString {
 
-	private String[] typesJavaScript;
+	private String [] [] keywordPairs = {
+		{"before", "after"},
+		{"enable", "disable"},
+		{"enabled", "disabled"},
+		{"expand", "collapse"},
+		{"from", "until"},
+		{"horizontal", "vertical"},
+		{"min", "max"},
+		{"ok", "cancel"},
+		{"on", "off"},
+		{"pass", "fail"},
+		{"positive", "negative"},
+		{"show", "hide"},
+		{"shown", "hidden"},
+		{"true", "false"},
+		{"yes", "no"}
+	};
 
+	private String regExPattern;
 
 
 	/**
 	 * Constructor
 	 */
 	public BooleanString() {
+		regExPattern	= "|";
 
+		for (String[] keywordPair : keywordPairs) {
+			regExPattern = regExPattern + keywordPair[0] + "|" + keywordPair[1] + "|";
+		}
 	}
 
 
@@ -41,9 +62,6 @@ public class BooleanString {
 	 * @return  Boolean.
 	 */
 	public Boolean isBooleanString(String str) {
-		String regExPattern = "yes|no" + "|true|false" + "|ok|cancel" + "|on|off" + "|shown|hidden"
-							+ "|positive|negative" + "|from|until" + "|enable|disable|" + "|enabled|disabled"
-							+ "|pass|fail" + "|min|max";
 
 		return (str.toLowerCase()).matches(regExPattern);
 	}
@@ -59,50 +77,10 @@ public class BooleanString {
 
 		String toggled;
 
-			// true / false
-		toggled = this.toggleBoolean(word, "true", "false");
-		if( toggled != null ) return toggled;
-
-			// yes / no
-		toggled = this.toggleBoolean(word, "yes", "no");
-		if( toggled != null ) return toggled;
-
-			// ok / cancel
-		toggled = this.toggleBoolean(word, "ok", "cancel");
-		if( toggled != null ) return toggled;
-
-			// on / off
-		toggled = this.toggleBoolean(word, "on", "off");
-		if( toggled != null ) return toggled;
-
-			// shown / hidden
-		toggled = this.toggleBoolean(word, "shown", "hidden");
-		if( toggled != null ) return toggled;
-
-			// positive / negative
-		toggled = this.toggleBoolean(word, "positive", "negative");
-		if( toggled != null ) return toggled;
-
-			// from / until
-		toggled = this.toggleBoolean(word, "from", "until");
-		if( toggled != null ) return toggled;
-
-			// enable / disable
-		toggled = this.toggleBoolean(word, "enable", "disable");
-		if( toggled != null ) return toggled;
-
-		// enabled / disabled
-		toggled = this.toggleBoolean(word, "enabled", "disabled");
-		if( toggled != null ) return toggled;
-
-			// pass / fail
-		toggled = this.toggleBoolean(word, "pass", "fail");
-		if( toggled != null ) return toggled;
-
-			// min / max
-		toggled = this.toggleBoolean(word, "min", "max");
-		if( toggled != null ) return toggled;
-
+		for (String[] keywordPair : keywordPairs) {
+			toggled = this.toggleBoolean(word, keywordPair[0], keywordPair[1]);
+			if( toggled != null ) return toggled;
+		}
 
 		return word;
 	}

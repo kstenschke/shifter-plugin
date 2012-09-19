@@ -26,28 +26,28 @@ import com.intellij.openapi.editor.Editor;
  */
 public class ShiftableLine {
 
-	String line;
+	private final String line;
 
-	CharSequence editorText;
+	private final CharSequence editorText;
 
-	int caretOffset;
+	private final int caretOffset;
 
-	String filename;
+	private final String filename;
 
-	Dictionary dictionary;
+//	private final Dictionary dictionary;
 
 
 
 	/**
 	 * Constructor
 	 *
-	 * @param	line
-	 * @param	editorText
-	 * @param	caretOffset
-	 * @param	filename
+	 * @param	line			Text of line
+	 * @param	editorText		Full text currently in editor
+	 * @param	caretOffset		Caret position in document
+	 * @param	filename		Name of the edited file if any
 	 */
 	public ShiftableLine(String line,  CharSequence editorText, int caretOffset, String filename) {
-		this.dictionary   = new Dictionary();
+//		this.dictionary   = new Dictionary();
 
 		this.line      = line;
 		this.editorText  = editorText;

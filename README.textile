@@ -28,7 +28,8 @@ Supported shifting / keyword types:
 * UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
-* Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max
+* Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative,
+  from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse
 * PHP core magical constants - Shifts PHP's magic constants (==__FILE__, __LINE__==, etc.)
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS pixel values - Shifts px-values up/down by 1

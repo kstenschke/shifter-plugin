@@ -29,9 +29,6 @@
         <li>UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
         <li>PHP variables - Shifts to alphabetically next/previous variable name found in current document</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
-        <li>Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, positive/negative,
-            from/until, enable(d)/disable(d), pass/fail, min/max
-        </li>
         <li>PHP core magical constants - Shifts PHP's magic constants (__FILE__, __LINE__, etc.)</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS pixel values - Shifts px-values up/down by 1</li>
@@ -44,6 +41,10 @@
         <li>Named colors from the sRGB color space (white, lightgray, gray...)</li>
         <li>Names of common data collection types (list, set, bag, dictionary, tree, etc.)</li>
         <li>Full and abbreviated names of months and weekdays (english)</li>
+        <li>Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide,
+            positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse
+        </li>
+
     </ul>
     <br>Default keyboard shortcuts:
     <ul>

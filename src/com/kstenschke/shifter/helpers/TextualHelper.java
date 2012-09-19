@@ -63,20 +63,6 @@ public class TextualHelper {
 
 
 	/**
-	 * Check whether given character is a newline character
-	 *
-	 * @param   charValue     A character
-	 * @return  Boolean
-	 */
-	public static boolean charIsNewline(char charValue) {
-		String str = String.valueOf(charValue);
-
-		return str.matches("\n") || str.matches("\r") || str.matches("\r\n");
-	}
-
-
-
-	/**
 	 * Convert given string to lower case with only first char in upper case
 	 *
 	 * @param   str      String to be converted
@@ -108,7 +94,8 @@ public class TextualHelper {
 	 * @return                 The extracted word or null
 	 */
 	public static String getWordAtOffset(CharSequence text, int cursorOffset) {
-		if (text.length() == 0) return null;
+		if (	text.length() == 0
+			||	cursorOffset >= text.length())  return null;
 
 		if (cursorOffset > 0
 				  && !Character.isJavaIdentifierPart(text.charAt(cursorOffset))
@@ -195,8 +182,8 @@ public class TextualHelper {
 	/**
 	 * Get starting position offset of word at given offset in given CharSequence
 	 *
-	 * @param   text
-	 * @param   offset
+	 * @param   text		Text to be analyzed
+	 * @param   offset		Character offset in text, intersecting the word dealing with
 	 * @return  int
 	 */
 	public static int getStartOfWordAtOffset(CharSequence text, int offset) {
@@ -225,10 +212,10 @@ public class TextualHelper {
 
 
 	/**
-	 * @param   doc
-	 * @param   startLine
-	 * @param   endLine
-	 * @return
+	 * @param   doc			Document
+	 * @param   startLine	Number of first line to be extracted
+	 * @param   endLine     Number of last line of extract
+	 * @return				Extracted list of lines
 	 */
 	public static List<String> extractLines(Document doc, int startLine, int endLine) {
 		List<String> lines = new ArrayList<String>(endLine - startLine);
@@ -245,11 +232,11 @@ public class TextualHelper {
 
 
 	/**
-	 * @param   doc
-	 * @param   lineNumber
-	 * @return
+	 * @param   doc			Document to extract the line from
+	 * @param   lineNumber	Number of line to be extracted
+	 * @return	String		The extracted line
 	 */
-	public static String extractLine(Document doc, int lineNumber) {
+	private static String extractLine(Document doc, int lineNumber) {
 		int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
 		int startOffset = doc.getLineStartOffset(lineNumber);
 		int endOffset = doc.getLineEndOffset(lineNumber) + lineSeparatorLength;
@@ -269,8 +256,8 @@ public class TextualHelper {
 
 
 	/**
-	 * @param   lines
-	 * @return
+	 * @param   lines			List of lines (strings) to be joined
+	 * @return 	StringBuilder
 	 */
 	public static StringBuilder joinLines(List<String> lines) {
 		StringBuilder builder = new StringBuilder();

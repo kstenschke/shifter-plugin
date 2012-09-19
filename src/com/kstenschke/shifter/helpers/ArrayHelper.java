@@ -79,7 +79,7 @@ public class ArrayHelper {
 	 * @param   array2   Array of strings
 	 * @return  array    Merged array containing each of the elements of array1 and array2
 	 */
-	public static String[] mergeStringArrays(String array1[], String array2[]) {
+	private static String[] mergeStringArrays(String array1[], String array2[]) {
 		if (array1 == null || array1.length == 0) {
 			return array2;
 		}

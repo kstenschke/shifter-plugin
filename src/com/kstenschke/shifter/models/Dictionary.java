@@ -12,78 +12,78 @@ public class Dictionary {
 	public static final int TYPE_UNKNOWN = 0;
 
 
-	public static final int TYPE_ACCESSIBILITY      = 1;
-	public static final int TYPE_PHPMAGICALCONSTANT = 2;
+	private static final int TYPE_ACCESSIBILITY      = 1;
+	private static final int TYPE_PHPMAGICALCONSTANT = 2;
 
-	public static final int TYPE_MYSQLDATATYPENUMERIC	= 10;
-	public static final int TYPE_MYSQLDATATYPESTRING	= 11;
-	public static final int TYPE_DATACOLLECTIONTYPE		= 12;
+	private static final int TYPE_MYSQLDATATYPENUMERIC	= 10;
+	private static final int TYPE_MYSQLDATATYPESTRING	= 11;
+	private static final int TYPE_DATACOLLECTIONTYPE		= 12;
 
-	public static final int TYPE_MONTH        = 20;
-	public static final int TYPE_MONTH_ABBR   = 21;
-	public static final int TYPE_WEEKDAY      = 22;
-	public static final int TYPE_WEEKDAY_ABRR = 23;
+	private static final int TYPE_MONTH        = 20;
+	private static final int TYPE_MONTH_ABBR   = 21;
+	private static final int TYPE_WEEKDAY      = 22;
+	private static final int TYPE_WEEKDAY_ABRR = 23;
 
-	public static final int TYPE_JSEVENT_MOUSE      = 30;
-	public static final int TYPE_JSEVENT_KEYBOARD   = 31;
-	public static final int TYPE_JSEVENT_FRAMEOBJ   = 32;
-	public static final int TYPE_JSEVENT_FORM       = 33;
+	private static final int TYPE_JSEVENT_MOUSE      = 30;
+	private static final int TYPE_JSEVENT_KEYBOARD   = 31;
+	private static final int TYPE_JSEVENT_FRAMEOBJ   = 32;
+	private static final int TYPE_JSEVENT_FORM       = 33;
 
 
-	public static final int TYPE_COLOR        = 40;
-	public static final int TYPE_ORIENTATION  = 41;
-	public static final int TYPE_ADVERB       = 42;
+	private static final int TYPE_COLOR        = 40;
+	private static final int TYPE_ORIENTATION  = 41;
+	private static final int TYPE_ADVERB       = 42;
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING    = 50;
-	public static final int TYPE_RGBCOLOR        = 51;
-	public static final int TYPE_PIXELVALUE      = 52;
-	public static final int TYPE_DOCCOMMENTTAG   = 53;
+	private static final int TYPE_RGBCOLOR        = 51;
+	private static final int TYPE_PIXELVALUE      = 52;
+	private static final int TYPE_DOCCOMMENTTAG   = 53;
 	public static final int TYPE_PHPVARIABLE     = 54;
-	public static final int TYPE_NUMERICVALUE    = 55;
-	public static final int TYPE_BOOLEANSTRING   = 56;
-	public static final int TYPE_POSITIONING     = 57;
+	private static final int TYPE_NUMERICVALUE    = 55;
+	private static final int TYPE_BOOLEANSTRING   = 56;
+	private static final int TYPE_POSITIONING     = 57;
 
 		// Data types of different contexts
-	public static final int TYPE_DATATYPE_IN_DOCCOMMENT   = 60;
-	public static final int TYPE_DATATYPE_GENERAL         = 61;
+	private static final int TYPE_DATATYPE_IN_DOCCOMMENT   = 60;
+	private static final int TYPE_DATATYPE_GENERAL         = 61;
 
 
 		// Word type objects
-	StaticWordType wordTypeAccessibilities;
-	StaticWordType wordTypePhpMagicalConstants;
+	private final StaticWordType wordTypeAccessibilities;
+	private final StaticWordType wordTypePhpMagicalConstants;
 
-	StaticWordType wordTypeMySqlDataTypesNumeric;
-	StaticWordType wordTypeMySqlDataTypesString;
-	StaticWordType wordTypeDataCollectionType;
+	private final StaticWordType wordTypeMySqlDataTypesNumeric;
+	private final StaticWordType wordTypeMySqlDataTypesString;
+	private final StaticWordType wordTypeDataCollectionType;
 
-	StaticWordType wordTypeMonths;
-	StaticWordType wordTypeMonthsAbbr;
-	StaticWordType wordTypeWeekdays;
-	StaticWordType wordTypeWeekdaysAbbr;
+	private final StaticWordType wordTypeMonths;
+	private final StaticWordType wordTypeMonthsAbbr;
+	private final StaticWordType wordTypeWeekdays;
+	private final StaticWordType wordTypeWeekdaysAbbr;
 
-	StaticWordType wordTypeColors;
+	private final StaticWordType wordTypeColors;
 
-	StaticWordType wordTypeOrientations;
-	StaticWordType wordTypePositioning;
-	StaticWordType wordTypeAdverb;
+	private final StaticWordType wordTypeOrientations;
+	private final StaticWordType wordTypePositioning;
+	private final StaticWordType wordTypeAdverb;
 
-	StaticWordType wordTypeJsEventsMouse;
-	StaticWordType wordTypeJsEventsKeyboard;
-	StaticWordType wordTypeJsEventsFrameObj;
-	StaticWordType wordTypeJsEventsForm;
+	private final StaticWordType wordTypeJsEventsMouse;
+	private final StaticWordType wordTypeJsEventsKeyboard;
+	private final StaticWordType wordTypeJsEventsFrameObj;
+	private final StaticWordType wordTypeJsEventsForm;
 
 
 		// Generic types (calculated when shifted)
-	BooleanString typeBooleanString;
-	QuotedString typeQuotedString;
-	RbgColor typeRgbColor;
-	PixelValue typePixelValue;
-	NumericValue typeNumericValue;
-	PhpVariable typePhpVariable;
-	DocCommentTag typeTagInDocComment;
-	DocCommentType typeDataTypeInDocComment;
-	DataType typeDataTypeGeneral;
+	private final BooleanString typeBooleanString;
+	private final QuotedString typeQuotedString;
+	private final RbgColor typeRgbColor;
+	private final PixelValue typePixelValue;
+	private final NumericValue typeNumericValue;
+	private final PhpVariable typePhpVariable;
+	private final DocCommentTag typeTagInDocComment;
+	private final DocCommentType typeDataTypeInDocComment;
+	private final DataType typeDataTypeGeneral;
 
 
 

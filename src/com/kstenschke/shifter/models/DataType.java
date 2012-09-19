@@ -13,13 +13,13 @@ import java.util.regex.Pattern;
  */
 public class DataType {
 
-	private String[] typesJavaScript;
+	private final String[] typesJavaScript;
 
-	private String[] typesJava;
+	private final String[] typesJava;
 
-	private String[] typesPHP;
+	private final String[] typesPHP;
 
-	private String[] typesObjectiveC;
+	private final String[] typesObjectiveC;
 
 
 
@@ -40,7 +40,7 @@ public class DataType {
 	 *
 	 * @return	Array
 	 */
-	public String[]   getAllTypes() {
+	public String[] getAllTypes() {
 		return ArrayHelper.mergeStringArrays(this.typesJavaScript, this.typesJava, this.typesPHP, this.typesObjectiveC);
 	}
 
@@ -51,7 +51,7 @@ public class DataType {
 	 *
 	 * @return	String
 	 */
-	public String   getAllTypesPiped() {
+	public String getAllTypesPiped() {
 		String[] allTypes = this.getAllTypes();
 
 		return ArrayHelper.implode(allTypes, "|");

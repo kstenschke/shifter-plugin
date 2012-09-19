@@ -24,22 +24,23 @@ import com.kstenschke.shifter.helpers.TextualHelper;
  */
 public class ShiftableWord {
 
-	Dictionary dictionary;
+	private final Dictionary dictionary;
 
-	String word;
-	String prefixChar;
-	String postfixChar;
+	private final String word;
 
-	String filename;
+//	private String prefixChar;
+//	private String postfixChar;
 
-	public   int wordType;
+	private final String filename;
 
-	Boolean isShiftable;
+	private final int wordType;
+
+	private final Boolean isShiftable;
 
 
-	CharSequence editorText;
+	private final CharSequence editorText;
 
-	int caretOffset;
+	private final int caretOffset;
 
 
 
@@ -58,8 +59,8 @@ public class ShiftableWord {
 		this.dictionary = new Dictionary();
 
 		this.word         = word;
-		this.prefixChar   = prefixChar;
-		this.postfixChar  = postfixChar;
+//		this.prefixChar   = prefixChar;
+//		this.postfixChar  = postfixChar;
 		this.editorText   = editorText;
 		this.caretOffset  = caretOffset;
 		this.filename     = filename;

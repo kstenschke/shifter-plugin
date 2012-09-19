@@ -23,11 +23,11 @@ import com.kstenschke.shifter.helpers.ArrayHelper;
  */
 public class StaticWordType {
 
-	String[] keywords;
+	private final String[] keywords;
 
-	int amountKeywords;
+	private final int amountKeywords;
 
-	String regExPattern;
+	private final String regExPattern;
 
 
 

@@ -13,11 +13,11 @@ import java.util.regex.Pattern;
  */
 public class DocCommentTag {
 
-	private String[] tagsJavaScript;
+	private final String[] tagsJavaScript;
 
-	private String[] tagsJava;
+	private final String[] tagsJava;
 
-	private String[] tagsPHP;
+	private final String[] tagsPHP;
 
 
 
@@ -145,8 +145,8 @@ public class DocCommentTag {
 	/**
 	 * Find first JavaScript function's name out of given code
 	 *
-	 * @param   jsCode
-	 * @return  String   JavaScript Method name
+	 * @param   jsCode   JavaScript source code to be analyzed
+	 * @return  String   JavaScript method name
 	 */
 	private String parseNextMethod(String jsCode) {
 		List<String> allMatches = new ArrayList<String>();
