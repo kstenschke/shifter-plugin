@@ -60,8 +60,9 @@
     <change-notes><![CDATA[
     1.0.9<br>
     <ul>
+        <li>Extended shiftable "boolean" keyword pairs</li>
         <li>Added shifting of common data collection type names (list, set, bag, dictionary, tree, etc.)</li>
-        <li>Added shown/hidden, positive/negative to shiftable boolean keyword pairs</li>
+        <li>Bugfix: shifting with caret at EOF failed</li>
     </ul>
     1.0.8<br>
     <ul>
