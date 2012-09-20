@@ -23,6 +23,8 @@ import com.kstenschke.shifter.helpers.ArrayHelper;
  */
 public class StaticWordType {
 
+	private int typeID;
+
 	private final String[] keywords;
 
 	private final int amountKeywords;
@@ -34,10 +36,22 @@ public class StaticWordType {
 	/**
 	 * Constructor
 	 */
-	public StaticWordType(String[] keywords) {
+	public StaticWordType(int typeID, String[] keywords) {
+		this.typeID	= typeID;
+
 		this.keywords = keywords;
 		this.amountKeywords = keywords.length;
 		this.regExPattern = ArrayHelper.implode(this.keywords, "|").toLowerCase();
+	}
+
+
+	/**
+	 * Get word type ID
+	 *
+	 * @return	int
+	 */
+	public int getTypeID() {
+		return typeID;
 	}
 
 

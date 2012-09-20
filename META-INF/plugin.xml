@@ -38,13 +38,14 @@
         <li>Primitive data types of Java, JavaScript, PHP, Objective-C</li>
         <li>Doc comment tags (Java, JavaScript, PHP)</li>
         <li>JavaScript event types (mouse, keyboard, frame/object, form)</li>
-        <li>Named colors from the sRGB color space (white, lightgray, gray...)</li>
-        <li>Names of common data collection types (list, set, bag, dictionary, tree, etc.)</li>
+        <li>Named colors from the sRGB color space (white/lightgray/gray...)</li>
+        <li>Names of common data collection types (list/set/bag/dictionary/tree...)</li>
         <li>Full and abbreviated names of months and weekdays (english)</li>
+        <li>Geographical directions: north/east/south/west</li>
+        <li>Units of time: seconds/minutes/hours/day/month/year</li>
         <li>Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide,
-            positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse
+            positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
         </li>
-
     </ul>
     <br>Default keyboard shortcuts:
     <ul>
@@ -62,6 +63,8 @@
     <ul>
         <li>Extended shiftable "boolean" keyword pairs</li>
         <li>Added shifting of common data collection type names (list, set, bag, dictionary, tree, etc.)</li>
+        <li>Added shifting of geographical orientations (north, south, east, west)</li>
+        <li>Added shifting of time units (seconds, minutes, hours, day, month, year)</li>
         <li>Bugfix: shifting with caret at EOF failed</li>
     </ul>
     1.0.8<br>

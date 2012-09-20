@@ -22,13 +22,17 @@ package com.kstenschke.shifter.models;
 public class BooleanString {
 
 	private String [] [] keywordPairs = {
+		{"absolute", "relative"},
+		{"asc", "desc"},
 		{"before", "after"},
 		{"enable", "disable"},
 		{"enabled", "disabled"},
 		{"expand", "collapse"},
+		{"first", "last"},
 		{"from", "until"},
 		{"horizontal", "vertical"},
 		{"min", "max"},
+		{"minimum", "maximum"},
 		{"ok", "cancel"},
 		{"on", "off"},
 		{"pass", "fail"},
@@ -36,6 +40,7 @@ public class BooleanString {
 		{"show", "hide"},
 		{"shown", "hidden"},
 		{"true", "false"},
+		{"width", "height"},
 		{"yes", "no"}
 	};
 
