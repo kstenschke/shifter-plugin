@@ -45,6 +45,7 @@ public class StaticWordType {
 	}
 
 
+
 	/**
 	 * Get word type ID
 	 *

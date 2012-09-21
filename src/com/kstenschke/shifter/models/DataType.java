@@ -14,11 +14,8 @@ import java.util.regex.Pattern;
 public class DataType {
 
 	private final String[] typesJavaScript;
-
 	private final String[] typesJava;
-
 	private final String[] typesPHP;
-
 	private final String[] typesObjectiveC;
 
 

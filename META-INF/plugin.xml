@@ -29,22 +29,21 @@
         <li>UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
         <li>PHP variables - Shifts to alphabetically next/previous variable name found in current document</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
-        <li>PHP core magical constants - Shifts PHP's magic constants (__FILE__, __LINE__, etc.)</li>
+        <li>PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS pixel values - Shifts px-values up/down by 1</li>
-        <li>CSS orientations and positioning: top/right/bottom/left and absolute/relative</li>
+        <li>* CSS orientations and positioning: top/right/bottom/left and absolute/relative, and geographical directions (north/east/south/west)</li>
         <li>Accessibility types: public/private/protected</li>
         <li>MySql data types: Shifts to next bigger/smaller numeric/string type</li>
         <li>Primitive data types of Java, JavaScript, PHP, Objective-C</li>
         <li>Doc comment tags (Java, JavaScript, PHP)</li>
         <li>JavaScript event types (mouse, keyboard, frame/object, form)</li>
         <li>Named colors from the sRGB color space (white/lightgray/gray...)</li>
+        <li>Full and abbreviated names of months and weekdays and units of time</li>
+        <li>Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)</li>
+        <li>Metasyntax terms: foo/bar/baz...</li>
         <li>Names of common data collection types (list/set/bag/dictionary/tree...)</li>
-        <li>Full and abbreviated names of months and weekdays (english)</li>
-        <li>Geographical directions: north/east/south/west</li>
-        <li>Units of time: seconds/minutes/hours/day/month/year</li>
-        <li>Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide,
-            positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
+        <li>Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
         </li>
     </ul>
     <br>Default keyboard shortcuts:
@@ -61,10 +60,11 @@
     <change-notes><![CDATA[
     1.0.9<br>
     <ul>
+        <li>Added shifting of metasyntax terms</li>
+        <li>Added shifting of logical operators, arithmetical operations and elements</li>
+        <li>Added shifting of geographical orientations and time units</li>
+        <li>Added shifting of data collection type names</li>
         <li>Extended shiftable "boolean" keyword pairs</li>
-        <li>Added shifting of common data collection type names (list, set, bag, dictionary, tree, etc.)</li>
-        <li>Added shifting of geographical orientations (north, south, east, west)</li>
-        <li>Added shifting of time units (seconds, minutes, hours, day, month, year)</li>
         <li>Bugfix: shifting with caret at EOF failed</li>
     </ul>
     1.0.8<br>

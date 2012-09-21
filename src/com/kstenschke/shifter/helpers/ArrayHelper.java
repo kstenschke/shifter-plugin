@@ -16,6 +16,7 @@
 
 package com.kstenschke.shifter.helpers;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,24 @@ import java.util.List;
  * Static helper methods for arrays
  */
 public class ArrayHelper {
+
+	/**
+	 * Check haystack for existence of needle
+	 *
+	 * @param haystack		List of strings
+	 * @param needle		String
+	 * @return				Boolean
+	 */
+	public static boolean in_array(DefaultListModel haystack, String needle) {
+		for(int i=0; i<haystack.size(); i++) {
+			if(haystack.get(i).toString().equals(needle)) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+
 
 	/**
 	 * Find strings position in array

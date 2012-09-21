@@ -3,69 +3,70 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
 
+// @todo	change types to be lazy initialized
+
 /**
  * Dictionary of "shiftable" keywords
  */
 public class Dictionary {
 
-		// Type IDs
 	public static final int TYPE_UNKNOWN = 0;
 
-
-	private static final int TYPE_ACCESSIBILITY      = 1;
-	private static final int TYPE_PHPMAGICALCONSTANT = 2;
-
+		// Dictionary (list of strings) based types
+	private static final int TYPE_ACCESSIBILITY      	= 1;
+	private static final int TYPE_PHPMAGICALCONSTANT 	= 2;
 	private static final int TYPE_MYSQLDATATYPENUMERIC	= 10;
 	private static final int TYPE_MYSQLDATATYPESTRING	= 11;
 	private static final int TYPE_DATACOLLECTIONTYPE	= 12;
-
-	private static final int TYPE_MONTH			= 20;
-	private static final int TYPE_MONTH_ABBR	= 21;
-	private static final int TYPE_WEEKDAY		= 22;
-	private static final int TYPE_WEEKDAY_ABRR	= 23;
-	private static final int TYPE_TIME_UNIT		= 24;
-
-	private static final int TYPE_JSEVENT_MOUSE		= 30;
-	private static final int TYPE_JSEVENT_KEYBOARD	= 31;
-	private static final int TYPE_JSEVENT_FRAMEOBJ	= 32;
-	private static final int TYPE_JSEVENT_FORM		= 33;
-
-
-	private static final int TYPE_COLOR			= 40;
-	private static final int TYPE_ORIENTATION	= 41;
-	private static final int TYPE_GEODIRECTION	= 42;
+	private static final int TYPE_LOGICALOPERATORS		= 13;
+	private static final int TYPE_ARITHMETICELEMENTS	= 14;
+	private static final int TYPE_ARITHMETICOPERATIONS	= 15;
+	private static final int TYPE_METASYNTAX			= 16;
+	private static final int TYPE_MONTH					= 20;
+	private static final int TYPE_MONTH_ABBR			= 21;
+	private static final int TYPE_WEEKDAY				= 22;
+	private static final int TYPE_WEEKDAY_ABRR			= 23;
+	private static final int TYPE_TIME_UNIT				= 24;
+	private static final int TYPE_JSEVENT_MOUSE			= 30;
+	private static final int TYPE_JSEVENT_KEYBOARD		= 31;
+	private static final int TYPE_JSEVENT_FRAMEOBJ		= 32;
+	private static final int TYPE_JSEVENT_FORM			= 33;
+	private static final int TYPE_COLOR					= 40;
+	private static final int TYPE_ORIENTATION			= 41;
+	private static final int TYPE_GEODIRECTION			= 42;
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING	= 50;
-	private static final int TYPE_RGBCOLOR		= 51;
-	private static final int TYPE_PIXELVALUE	= 52;
-	private static final int TYPE_DOCCOMMENTTAG	= 53;
+	public static final int TYPE_RGBCOLOR		= 51;
+	public static final int TYPE_PIXELVALUE		= 52;
+	public static final int TYPE_DOCCOMMENTTAG	= 53;
 	public static final int TYPE_PHPVARIABLE	= 54;
-	private static final int TYPE_NUMERICVALUE	= 55;
-	private static final int TYPE_BOOLEANSTRING	= 56;
-	private static final int TYPE_POSITIONING	= 57;
+	public static final int TYPE_NUMERICVALUE	= 55;
+	public static final int TYPE_BOOLEANSTRING	= 56;
 
 		// Data types of different contexts
 	private static final int TYPE_DATATYPE_IN_DOCCOMMENT	= 60;
 	private static final int TYPE_DATATYPE_GENERAL			= 61;
 
 
+
 		// Word type objects
 	private final StaticWordType wordTypeAccessibilities;
 	private final StaticWordType wordTypePhpMagicalConstants;
-
 	private final StaticWordType wordTypeMySqlDataTypesNumeric;
 	private final StaticWordType wordTypeMySqlDataTypesString;
 	private final StaticWordType wordTypeDataCollectionType;
+	private final StaticWordType wordTypeLogicalOperators;
+	private final StaticWordType wordTypeArithmeticElements;
+	private final StaticWordType wordTypeArithmeticOperations;
+	private final StaticWordType wordTypeMetaSyntax;
 
 	private final StaticWordType wordTypeMonths;
 	private final StaticWordType wordTypeMonthsAbbr;
 	private final StaticWordType wordTypeWeekdays;
 	private final StaticWordType wordTypeWeekdaysAbbr;
 	private final StaticWordType wordTypeTimeUnit;
-
 	private final StaticWordType wordTypeColors;
-
 	private final StaticWordType wordTypeOrientations;
 	private final StaticWordType wordTypeGeoDirections;
 
@@ -73,7 +74,6 @@ public class Dictionary {
 	private final StaticWordType wordTypeJsEventsKeyboard;
 	private final StaticWordType wordTypeJsEventsFrameObj;
 	private final StaticWordType wordTypeJsEventsForm;
-
 
 		// Generic types (calculated when shifted)
 	private final BooleanString typeBooleanString;
@@ -100,17 +100,33 @@ public class Dictionary {
 		String[] keywordsPhpMagicalConstants = {"__dir__", "__file__", "__namespace__", "__class__", "__line__", "__function__", "__method__", "__trait__"};
 		this.wordTypePhpMagicalConstants = new StaticWordType(TYPE_PHPMAGICALCONSTANT, keywordsPhpMagicalConstants);
 
+
 			// Data collection types
 		String[] keywordsDataCollectionTypes = {"list", "set", "bag", "multiset", "dictionary", "table", "tree", "sequence", "queue", "heap", "graph"};
 		this.wordTypeDataCollectionType = new StaticWordType(TYPE_DATACOLLECTIONTYPE, keywordsDataCollectionTypes);
 
-			// Numeric MySql data types
+			// Logical operators
+		String[] keywordsLogicalOperators = {"and", "or", "xor", "not"};
+		this.wordTypeLogicalOperators = new StaticWordType(TYPE_LOGICALOPERATORS, keywordsLogicalOperators);
+
+			// Arithmetic elements and operations
+		String[] keywordsArithmeticElements = {"sum", "difference", "product", "quotient", "remainder", "opposite"};
+		this.wordTypeArithmeticElements = new StaticWordType(TYPE_ARITHMETICELEMENTS, keywordsArithmeticElements);
+
+		String[] keywordsArithmeticOperations = {"addition", "subtraction", "multiplication", "division", "modulus", "negation", "concatenation"};
+		this.wordTypeArithmeticOperations = new StaticWordType(TYPE_ARITHMETICOPERATIONS, keywordsArithmeticOperations);
+
+
+			// Numerical and string based MySql data types
 		String[] keywordsMySqlDataTypesNumeric = {"bit", "tinyint", "bool", "boolean", "smallint", "mediumint", "int", "integer", "bigint", "float", "double", "decimal", "dec"};
 		this.wordTypeMySqlDataTypesNumeric = new StaticWordType(TYPE_MYSQLDATATYPENUMERIC, keywordsMySqlDataTypesNumeric);
 
-			// Mysql string data types
 		String[] keywordsMySqlDataTypesString = {"char", "varchar", "binary", "varbinary", "tinyblob", "tinytext", "blob", "text", "mediumblob", "mediumtext", "longblob", "longtext", "enum", "set"};
 		this.wordTypeMySqlDataTypesString = new StaticWordType(TYPE_MYSQLDATATYPESTRING, keywordsMySqlDataTypesString);
+
+		String[] keywordsMetaSyntax = {"foo", "bar", "baz", "qux"};
+		this.wordTypeMetaSyntax = new StaticWordType(TYPE_METASYNTAX, keywordsMetaSyntax);
+
 
 			// JavaScript event types
 		String[] keywordsJsEventsMouse   = { "click", "dblclick", "mousedown", "mousemove", "mouseover", "mouseout", "mouseup" };
@@ -125,27 +141,28 @@ public class Dictionary {
 		String[] keywordsJsEventsForm   = { "blur", "change", "focus", "reset", "select", "submit" };
 		this.wordTypeJsEventsForm = new StaticWordType(TYPE_JSEVENT_FORM, keywordsJsEventsForm);
 
-			// Months
+
+			// Months, weekdays, time units
 		String[] keywordsMonth = {"january", "february", "march", "april", "mai", "june", "july", "august", "september", "october", "november", "december"};
 		this.wordTypeMonths = new StaticWordType(TYPE_MONTH, keywordsMonth);
 
 		String[] keywordsMonthAbbr = {"jan", "feb", "mar", "apr", "mai", "jun", "jul", "aug", "sep", "oct", "nov", "dec"};
 		this.wordTypeMonthsAbbr = new StaticWordType(TYPE_MONTH_ABBR, keywordsMonthAbbr);
 
-			// Weekday names
 		String[] keywordsWeekday = {"monday", "tuesday", "wednesday", "thursday", "friday", "saturday", "sunday"};
 		this.wordTypeWeekdays = new StaticWordType(TYPE_WEEKDAY, keywordsWeekday);
 
 		String[] keywordsWeekdayAbbr = {"mon", "tue", "wed", "thu", "fri", "sat", "sun"};
 		this.wordTypeWeekdaysAbbr = new StaticWordType(TYPE_WEEKDAY_ABRR, keywordsWeekdayAbbr);
 
-			// Time units
 		String[] keywordsTimeUnit = {"seconds", "minutes", "hours", "day", "month", "year"};
 		this.wordTypeTimeUnit	= new StaticWordType(TYPE_TIME_UNIT, keywordsTimeUnit);
+
 
 			// Color names from the sRGB color space
 		String[] keywordsColors = {"white", "lightgray", "gray", "darkgray", "black", "red", "pink", "orange", "yellow", "green", "magenta", "cyan", "blue"};
 		this.wordTypeColors = new StaticWordType(TYPE_COLOR, keywordsColors);
+
 
 			// CSS and geographical orientations
 		String[] keywordsOrientation = {"top", "right", "bottom", "left"};
@@ -160,26 +177,29 @@ public class Dictionary {
 		/**
 		 * Generic (=calculated) word types
 		 */
-			// Must have be prefixed with "#"
+			// Must be prefixed with "#"
 		this.typeRgbColor = new RbgColor();
 
-		// Must be prefixed with "@"
+			// Must be prefixed with "@"
 		this.typeTagInDocComment = new DocCommentTag();
 
-		// Various words that can be booleans
+			// Various words coming in pairs, can be booleans
 		this.typeBooleanString = new BooleanString();
 
-		// Must consist of numeric value followed by "px"
+			// Must consist of numeric value followed by "px"
 		this.typePixelValue = new PixelValue();
 
+			// Must be wrapped in single or double quotes or backticks
 		this.typeQuotedString = new QuotedString();
 
 		this.typeNumericValue = new NumericValue();
 
+			// Must be prefixed with "$"
 		this.typePhpVariable = new PhpVariable();
 
 		this.typeDataTypeInDocComment = new DocCommentType();
 
+			// Various general data types, e.g. int, array, ... of JavaScript, Java, PHP, ObjectiveC
 		this.typeDataTypeGeneral = new DataType();
 	}
 
@@ -196,9 +216,7 @@ public class Dictionary {
 	 * @return	int
 	 */
 	public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
-		if (this.typePhpVariable.isPhpVariable(word)) {
-			return TYPE_PHPVARIABLE;
-		}
+		if (this.typePhpVariable.isPhpVariable(word)) return TYPE_PHPVARIABLE;
 
 		boolean isDocCommentLineContext   = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
 
@@ -207,30 +225,21 @@ public class Dictionary {
 				return TYPE_DOCCOMMENTTAG;
 			}
 
-			if (this.typeDataTypeInDocComment.isDocCommentType(word, prefixChar, line)) {
-				return TYPE_DATATYPE_IN_DOCCOMMENT;
-			}
+			if (this.typeDataTypeInDocComment.isDocCommentType(word, prefixChar, line)) return TYPE_DATATYPE_IN_DOCCOMMENT;
 		}
 
 
 
-		if ( !prefixChar.equals("@") && this.wordTypeAccessibilities.hasWord(word)) {
-			return TYPE_ACCESSIBILITY;
-		}
+		if ( !prefixChar.equals("@") && this.wordTypeAccessibilities.hasWord(word)) return TYPE_ACCESSIBILITY;
 
 			// PHP file?
-		if ( filename.endsWith(".php") || filename.endsWith(".php3") || filename.endsWith(".php4") || filename.endsWith(".php5") || filename.endsWith(".phps") || filename.endsWith(".phtml") ) {
-			if( this.wordTypePhpMagicalConstants.hasWord(word) ) {
-				return TYPE_PHPMAGICALCONSTANT;
-			}
+		if( filename.endsWith(".php") || filename.endsWith(".php3") || filename.endsWith(".php4") || filename.endsWith(".php5") || filename.endsWith(".phps") || filename.endsWith(".phtml") ) {
+			if( this.wordTypePhpMagicalConstants.hasWord(word) ) return TYPE_PHPMAGICALCONSTANT;
 		}
 
 			// SQL file
 		if ( filename.endsWith(".sql") ) {
-			StaticWordType []	staticWordTypeList = {
-				this.wordTypeMySqlDataTypesNumeric,
-				this.wordTypeMySqlDataTypesString
-			};
+			StaticWordType []	staticWordTypeList = { this.wordTypeMySqlDataTypesNumeric, this.wordTypeMySqlDataTypesString };
 			for (StaticWordType wordType: staticWordTypeList) {
 				if(wordType.hasWord(word))	return wordType.getTypeID();
 			}
@@ -242,6 +251,10 @@ public class Dictionary {
 			this.wordTypeJsEventsFrameObj,
 			this.wordTypeJsEventsForm,
 			this.wordTypeDataCollectionType,
+			this.wordTypeLogicalOperators,
+			this.wordTypeArithmeticElements,
+			this.wordTypeArithmeticOperations,
+			this.wordTypeMetaSyntax,
 			this.wordTypeMonths,
 			this.wordTypeMonthsAbbr,
 			this.wordTypeWeekdays,
@@ -257,38 +270,22 @@ public class Dictionary {
 
 
 			// Generic/calculated word types
-		if (this.typeBooleanString.isBooleanString(word)) {
-			return TYPE_BOOLEANSTRING;
-		}
+		if (this.typeBooleanString.isBooleanString(word)) return TYPE_BOOLEANSTRING;
 
-		if (this.typeQuotedString.isQuotedString(word, prefixChar, postfixChar)) {
+		if (this.typeQuotedString.isQuotedString(word, prefixChar, postfixChar)) return TYPE_QUOTEDSTRING;
 
-			return TYPE_QUOTEDSTRING;
-		}
+		if (this.typeRgbColor.isRgbColorString(word, prefixChar)) return TYPE_RGBCOLOR;
 
-		if (this.typeRgbColor.isRgbColorString(word, prefixChar)) {
-			return TYPE_RGBCOLOR;
-		}
+		if (this.typePixelValue.isPixelValue(word)) return TYPE_PIXELVALUE;
 
-		if (this.typePixelValue.isPixelValue(word)) {
-			return TYPE_PIXELVALUE;
-		}
+		if (this.typeNumericValue.isNumericValue(word)) return TYPE_NUMERICVALUE;
 
-		if (this.typeNumericValue.isNumericValue(word)) {
-			return TYPE_NUMERICVALUE;
-		}
-
-		if ( this.typeDataTypeGeneral.isDataType(word) ) {
-			return TYPE_DATATYPE_GENERAL;
-		}
+		if ( this.typeDataTypeGeneral.isDataType(word) ) return TYPE_DATATYPE_GENERAL;
 
 			// "Second round" for mySql data types- after everything else failed they have a chance (w/o need of being .sql file)
-		if ( this.wordTypeMySqlDataTypesNumeric.hasWord(word)) {
-			return TYPE_MYSQLDATATYPENUMERIC;
-		}
-		if ( this.wordTypeMySqlDataTypesString.hasWord(word)) {
-			return TYPE_MYSQLDATATYPESTRING;
-		}
+		if ( this.wordTypeMySqlDataTypesNumeric.hasWord(word)) return TYPE_MYSQLDATATYPENUMERIC;
+
+		if ( this.wordTypeMySqlDataTypesString.hasWord(word)) return TYPE_MYSQLDATATYPESTRING;
 
 		return TYPE_UNKNOWN;
 	}
@@ -296,10 +293,12 @@ public class Dictionary {
 
 
 	/**
-	 * Shift given word: get next/previous keyword of given word group in dictionary
+	 * Shift given word
+	 * Dictionary: get next/previous keyword of given word group
+	 * Generic: calculate shifted value
 	 *
 	 * @param	word			Word to be shifted
-	 * @param	wordType		Word type ID
+	 * @param	idWordType		Word type ID
 	 * @param	isUp			Shift up or down?
 	 * @param	editorText		Full text of currently edited document
 	 * @param	caretOffset		Caret offset in document
@@ -308,11 +307,11 @@ public class Dictionary {
 	 * @return					The shifted word
 	 *
 	 */
-	public String getShiftedWord(String word, int wordType, Boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
-		switch (wordType) {
+	public String getShiftedWord(String word, int idWordType, Boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
+		switch (idWordType) {
 				// ================== String based word types
 			case TYPE_BOOLEANSTRING:
-				return this.typeBooleanString.getShifted(word);
+				return this.typeBooleanString.getShifted(word, isUp);
 
 			case TYPE_ACCESSIBILITY:
 				return this.wordTypeAccessibilities.getShifted(word, isUp);
@@ -323,8 +322,20 @@ public class Dictionary {
 			case TYPE_DATACOLLECTIONTYPE:
 				return this.wordTypeDataCollectionType.getShifted(word, isUp);
 
+			case TYPE_LOGICALOPERATORS:
+				return this.wordTypeLogicalOperators.getShifted(word, isUp);
+
+			case TYPE_ARITHMETICELEMENTS:
+				return this.wordTypeArithmeticElements.getShifted(word, isUp);
+
+			case TYPE_ARITHMETICOPERATIONS:
+				return this.wordTypeArithmeticOperations.getShifted(word, isUp);
+
 			case TYPE_MYSQLDATATYPENUMERIC:
 				return this.wordTypeMySqlDataTypesNumeric.getShifted(word, isUp);
+
+			case TYPE_METASYNTAX:
+				return this.wordTypeMetaSyntax.getShifted(word, isUp);
 
 			case TYPE_MYSQLDATATYPESTRING:
 				return this.wordTypeMySqlDataTypesString.getShifted(word, isUp);

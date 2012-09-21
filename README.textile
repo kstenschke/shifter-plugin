@@ -22,8 +22,8 @@ Lowercase/uppercase or lower case with upper first character of shifted words is
 
 Supported shifting / keyword types:
 
-* Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
-* Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending.
+* Shifting a multi line selection sorts the lines alphabetically ascending/descending.
+* Shifting a single line selection, that is a comma separated list, sorts the items ascending/descending.
 * Numeric values - Increments/decrements numbers by 1
 * UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
@@ -31,18 +31,17 @@ Supported shifting / keyword types:
 * PHP core magical constants - Shifts PHP's magic constants (==__FILE__, __LINE__==, etc.)
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS pixel values - Shifts px-values up/down by 1
-* CSS orientations and positioning: top/right/bottom/left and absolute/relative
+* CSS orientations and positioning: top/right/bottom/left and absolute/relative, and geographical directions (north/east/south/west)
 * Accessibility types: public/private/protected
 * MySql data types: Shifts to next bigger/smaller numeric/string type
 * Primitive data types of Java, JavaScript, PHP, Objective-C
 * Doc comment tags (Java, JavaScript, PHP)
 * JavaScript event types (mouse, keyboard, frame/object, form)
 * Named colors from the sRGB color space (white, lightgray, gray...)
+* Full and abbreviated names of months and weekdays and units of time
+* Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)
 * Names of common data collection types (list, set, bag, dictionary, tree, etc.)
-* Full and abbreviated names of months and weekdays (english)
-* Geographical directions: north/east/south/west
-* Units of time: seconds, minutes, hours, day, month, year
-* Boolean/ paired keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse
+* Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse
 
 
 h2. License

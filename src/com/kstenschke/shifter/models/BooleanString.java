@@ -31,15 +31,20 @@ public class BooleanString {
 		{"first", "last"},
 		{"from", "until"},
 		{"horizontal", "vertical"},
+		{"increment", "decrement"},
 		{"min", "max"},
 		{"minimum", "maximum"},
+		{"multiple", "single"},
 		{"ok", "cancel"},
 		{"on", "off"},
+		{"open", "close"},
 		{"pass", "fail"},
 		{"positive", "negative"},
+		{"pre", "post"},
 		{"show", "hide"},
 		{"shown", "hidden"},
 		{"true", "false"},
+		{"username", "password"},
 		{"width", "height"},
 		{"yes", "no"}
 	};
@@ -61,6 +66,17 @@ public class BooleanString {
 
 
 	/**
+	 * Get word type ID
+	 *
+	 * @return	int
+	 */
+	public int getTypeId() {
+		return Dictionary.TYPE_BOOLEANSTRING;
+	}
+
+
+
+	/**
 	 * Check whether given string represents any of the known boolean keyword data pairs
 	 *
 	 * @param   str        String to be checked
@@ -75,9 +91,10 @@ public class BooleanString {
 
 	/**
 	 * @param word    Word to get shifted
+	 * @param isUp    Shifting up or down?
 	 * @return        Shifting result
 	 */
-	public String getShifted(String word) {
+	public String getShifted(String word, Boolean isUp) {
 		word  = word.toLowerCase();
 
 		String toggled;

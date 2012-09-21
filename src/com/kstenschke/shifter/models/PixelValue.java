@@ -42,7 +42,7 @@ public class PixelValue {
 
 
 
-	/**
+	/**                                                      di
 	 * Shift PX value up/down by 1px
 	 *
 	 * @param	pxValue		Current word

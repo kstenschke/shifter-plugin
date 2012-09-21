@@ -26,7 +26,7 @@ import java.awt.*;
 import java.util.Date;
 
 /**
- * Numeric value class
+ * Numeric value class, also contains UNIX timestamp handling
  */
 public class NumericValue {
 
