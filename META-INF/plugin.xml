@@ -32,7 +32,7 @@
         <li>PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS pixel values - Shifts px-values up/down by 1</li>
-        <li>* CSS orientations and positioning: top/right/bottom/left and absolute/relative, and geographical directions (north/east/south/west)</li>
+        <li>CSS orientations and positioning: top/right/bottom/left and absolute/relative, and geographical directions (north/east/south/west)</li>
         <li>Accessibility types: public/private/protected</li>
         <li>MySql data types: Shifts to next bigger/smaller numeric/string type</li>
         <li>Primitive data types of Java, JavaScript, PHP, Objective-C</li>
