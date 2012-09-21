@@ -58,8 +58,7 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
-    1.0.9<br>
-    <ul>
+    1.0.9<br><ul>
         <li>Added shifting of metasyntax terms</li>
         <li>Added shifting of logical operators, arithmetical operations and elements</li>
         <li>Added shifting of geographical orientations and time units</li>
