@@ -45,11 +45,14 @@ import java.util.List;
 public class ShiftDownAction extends AnAction {
 
 	/**
-	 * @param   event    ActionSystem event
+	 * Disable when no editor available
+	 *
+	 * @param	event		Action system event
 	 */
-	public void update(AnAction event) {
-//        event.getPresentation().setEnabled(event.getDataContext().getData(DataConstants.EDITOR) != null);
+	public void update( AnActionEvent event ) {
+		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
+
 
 
 

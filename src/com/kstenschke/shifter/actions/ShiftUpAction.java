@@ -46,11 +46,12 @@ import java.util.List;
 public class ShiftUpAction extends AnAction {
 
 	/**
-	 * @param   event    ActionSystem event
+	 * Disable when no editor available
+	 *
+	 * @param	event		Action system event
 	 */
-	public void update(AnAction event) {
-//      Boolean enabled   = event.getDataContext().getData(DataKeys.EDITOR) != null;
-//      event.getPresentation().setEnabled( enabled );
+	public void update( AnActionEvent event ) {
+		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
 
 

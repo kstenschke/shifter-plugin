@@ -58,6 +58,9 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.0.10<br><ul>
+        <li>Changed menu items labels and order, disable items when no editor available</li>
+    </ul>
     1.0.9<br><ul>
         <li>Added shifting of metasyntax terms</li>
         <li>Added shifting of logical operators, arithmetical operations and elements</li>
@@ -131,17 +134,16 @@
     </project-components>
 
     <actions>
-        <group id="ShifterActionGroup" text="Shift Words at Cart" popup="false">
+        <group id="ShifterActionGroup" text="Shift Word at Caret / Line / Selection" popup="false">
             <separator/>
 
-            <action id="ShiftDownAction" class="com.kstenschke.shifter.actions.ShiftDownAction" text="Shift-Down Word at Caret"
-                    description="Shift-Down Word at Caret">
-                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt COMMA"/>
-            </action>
-
-            <action id="ShiftUpAction" class="com.kstenschke.shifter.actions.ShiftUpAction" text="Shift-Up Word at Caret"
-                    description="Shift-Up Word at Caret">
+            <action id="ShiftUpAction" class="com.kstenschke.shifter.actions.ShiftUpAction" text="Shift-Up"
+                    description="Shift-Up Word at Caret / Line / Selection">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt PERIOD"/>
+            </action>
+            <action id="ShiftDownAction" class="com.kstenschke.shifter.actions.ShiftDownAction" text="Shift-Down"
+                    description="Shift-Down Word at Caret / Line / Selection">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt COMMA"/>
             </action>
 
             <add-to-group group-id="EditMenu" anchor="last"/>
