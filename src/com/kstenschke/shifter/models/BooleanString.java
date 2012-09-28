@@ -38,6 +38,7 @@ public class BooleanString {
 		{"ok", "cancel"},
 		{"on", "off"},
 		{"open", "close"},
+		{"padding", "margin"},
 		{"pass", "fail"},
 		{"positive", "negative"},
 		{"pre", "post"},
