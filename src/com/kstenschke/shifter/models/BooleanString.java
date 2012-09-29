@@ -44,6 +44,7 @@ public class BooleanString {
 		{"pre", "post"},
 		{"show", "hide"},
 		{"shown", "hidden"},
+		{"single", "double"},
 		{"true", "false"},
 		{"username", "password"},
 		{"width", "height"},
