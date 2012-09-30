@@ -89,7 +89,7 @@ public class ShiftableLine {
 
 				testShiftedWord   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
 
-				if( testShiftedWord != null && !testShiftedWord.matches(word)) {
+				if( testShiftedWord != null && !testShiftedWord.equals(word)) {
 					amountShiftableWordsInSentence++;
 					unshiftedWord  = word;
 					shiftedWord    = testShiftedWord;

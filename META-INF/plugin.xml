@@ -54,11 +54,12 @@
     <br>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.0.9</version>
+    <version>1.0.10</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     1.0.10<br><ul>
+        <li>Bugfix: shifting line with regex meta characters possibly caused exception</li>
         <li>Changed menu items labels and order, disable items when no editor available</li>
     </ul>
     1.0.9<br><ul>
