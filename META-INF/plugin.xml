@@ -39,6 +39,7 @@
         <li>Doc comment tags (Java, JavaScript, PHP)</li>
         <li>JavaScript event types (mouse, keyboard, frame/object, form)</li>
         <li>Named colors from the sRGB color space (white/lightgray/gray...)</li>
+        <li>Web Image format extensions (gif/jpg/png)</li>
         <li>Full and abbreviated names of months and weekdays and units of time</li>
         <li>Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)</li>
         <li>Metasyntax terms: foo/bar/baz...</li>
@@ -58,6 +59,9 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.0.11<br><ul>
+        <li>Added shifting of web image format extensions</li>
+    </ul>
     1.0.10<br><ul>
         <li>Bugfix: shifting line with regex meta characters possibly caused exception</li>
         <li>Changed menu items labels and order, disable items when no editor available</li>

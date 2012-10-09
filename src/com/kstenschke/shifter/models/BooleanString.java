@@ -28,11 +28,12 @@ public class BooleanString {
 		{"enable", "disable"}, {"enabled", "disabled"},
 		{"expand", "collapse"},
 		{"first", "last"},
+		{"file", "folder"},
 		{"from", "until"},
 		{"horizontal", "vertical"},
 		{"increment", "decrement"},
 		{"min", "max"}, {"minimum", "maximum"},
-//		{"multiple", "single"},	@todo move to dictionary word: single->double->multiple
+		{"odd", "even"},
 		{"ok", "cancel"},
 		{"on", "off"},
 		{"open", "close"},
@@ -41,7 +42,6 @@ public class BooleanString {
 		{"positive", "negative"},
 		{"pre", "post"}, {"prefix", "postfix"},
 		{"show", "hide"}, {"shown", "hidden"},
-		{"single", "double"},	// ..see above todo
 		{"true", "false"},
 		{"username", "password"},
 		{"width", "height"},

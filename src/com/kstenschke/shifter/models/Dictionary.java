@@ -32,8 +32,9 @@ public class Dictionary {
 	private static final int TYPE_JSEVENT_FRAMEOBJ		= 32;
 	private static final int TYPE_JSEVENT_FORM			= 33;
 	private static final int TYPE_COLOR					= 40;
-	private static final int TYPE_ORIENTATION			= 41;
-	private static final int TYPE_GEODIRECTION			= 42;
+	private static final int TYPE_IMAGEEXTENSION		= 41;
+	private static final int TYPE_ORIENTATION			= 42;
+	private static final int TYPE_GEODIRECTION			= 43;
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING	= 50;
@@ -67,6 +68,7 @@ public class Dictionary {
 	private final StaticWordType wordTypeWeekdaysAbbr;
 	private final StaticWordType wordTypeTimeUnit;
 	private final StaticWordType wordTypeColors;
+	private final StaticWordType wordTypeImageExtensions;
 	private final StaticWordType wordTypeOrientations;
 	private final StaticWordType wordTypeGeoDirections;
 
@@ -163,14 +165,18 @@ public class Dictionary {
 		String[] keywordsColors = {"white", "lightgray", "gray", "darkgray", "black", "red", "pink", "orange", "yellow", "green", "magenta", "cyan", "blue"};
 		this.wordTypeColors = new StaticWordType(TYPE_COLOR, keywordsColors);
 
+			// Image format file extensions
+		String[] keywordsImageFileExtension = {"gif", "jpg", "png"};
+		this.wordTypeImageExtensions = new StaticWordType(TYPE_IMAGEEXTENSION, keywordsImageFileExtension);
 
-			// CSS and geographical orientations
+		// CSS and geographical orientations
 		String[] keywordsOrientation = {"top", "right", "bottom", "left"};
 		this.wordTypeOrientations = new StaticWordType(TYPE_ORIENTATION, keywordsOrientation);
 
 		String[] keywordsGeoDirections = {"north", "east", "south", "west"};
 		this.wordTypeGeoDirections = new StaticWordType(TYPE_GEODIRECTION, keywordsGeoDirections);
 
+		// @todo	add single->double->multiple
 
 
 
@@ -256,6 +262,7 @@ public class Dictionary {
 			this.wordTypeArithmeticOperations,
 			this.wordTypeMetaSyntax,
 			this.wordTypeMonths,
+			this.wordTypeImageExtensions,
 			this.wordTypeMonthsAbbr,
 			this.wordTypeWeekdays,
 			this.wordTypeWeekdaysAbbr,
@@ -357,6 +364,9 @@ public class Dictionary {
 
 			case TYPE_COLOR:
 				return this.wordTypeColors.getShifted(word, isUp);
+
+			case TYPE_IMAGEEXTENSION:
+				return this.wordTypeImageExtensions.getShifted(word, isUp);
 
 			case TYPE_ORIENTATION:
 				return this.wordTypeOrientations.getShifted(word, isUp);
