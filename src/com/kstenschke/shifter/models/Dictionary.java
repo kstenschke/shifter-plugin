@@ -22,6 +22,8 @@ public class Dictionary {
 	private static final int TYPE_ARITHMETICELEMENTS	= 14;
 	private static final int TYPE_ARITHMETICOPERATIONS	= 15;
 	private static final int TYPE_METASYNTAX			= 16;
+	private static final int TYPE_NUMBER				= 17;
+	private static final int TYPE_ORDINALNUMBER			= 18;
 	private static final int TYPE_MONTH					= 20;
 	private static final int TYPE_MONTH_ABBR			= 21;
 	private static final int TYPE_WEEKDAY				= 22;
@@ -32,9 +34,11 @@ public class Dictionary {
 	private static final int TYPE_JSEVENT_FRAMEOBJ		= 32;
 	private static final int TYPE_JSEVENT_FORM			= 33;
 	private static final int TYPE_COLOR					= 40;
-	private static final int TYPE_IMAGEEXTENSION		= 41;
-	private static final int TYPE_ORIENTATION			= 42;
-	private static final int TYPE_GEODIRECTION			= 43;
+	private static final int TYPE_FILEEXTENSION_IMAGE 	= 41;
+	private static final int TYPE_FILEEXTENSION_AUDIO 	= 42;
+	private static final int TYPE_ORIENTATION			= 43;
+	private static final int TYPE_GEODIRECTION			= 44;
+	private static final int TYPE_SCALE					= 45;
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING	= 50;
@@ -61,14 +65,18 @@ public class Dictionary {
 	private final StaticWordType wordTypeArithmeticElements;
 	private final StaticWordType wordTypeArithmeticOperations;
 	private final StaticWordType wordTypeMetaSyntax;
+	private final StaticWordType wordTypeScales;
 
+	private final StaticWordType wordTypeNumbers;
+	private final StaticWordType wordTypeOrdinalNumbers;
 	private final StaticWordType wordTypeMonths;
 	private final StaticWordType wordTypeMonthsAbbr;
 	private final StaticWordType wordTypeWeekdays;
 	private final StaticWordType wordTypeWeekdaysAbbr;
 	private final StaticWordType wordTypeTimeUnit;
 	private final StaticWordType wordTypeColors;
-	private final StaticWordType wordTypeImageExtensions;
+	private final StaticWordType wordTypeFileExtensionImage;
+	private final StaticWordType wordTypeFileExtensionAudio;
 	private final StaticWordType wordTypeOrientations;
 	private final StaticWordType wordTypeGeoDirections;
 
@@ -144,7 +152,13 @@ public class Dictionary {
 		this.wordTypeJsEventsForm = new StaticWordType(TYPE_JSEVENT_FORM, keywordsJsEventsForm);
 
 
-			// Months, weekdays, time units
+			// Numbers, ordinal numbers, months, weekdays, time units
+		String[] keywordsNumber = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
+		this.wordTypeNumbers = new StaticWordType(TYPE_NUMBER, keywordsNumber);
+
+		String[] keywordsOrdinalNumber = {"first", "second", "third", "fourth", "fifth", "sixth", "seventh", "ninth", "tenth"};
+		this.wordTypeOrdinalNumbers = new StaticWordType(TYPE_NUMBER, keywordsOrdinalNumber);
+
 		String[] keywordsMonth = {"january", "february", "march", "april", "mai", "june", "july", "august", "september", "october", "november", "december"};
 		this.wordTypeMonths = new StaticWordType(TYPE_MONTH, keywordsMonth);
 
@@ -166,8 +180,11 @@ public class Dictionary {
 		this.wordTypeColors = new StaticWordType(TYPE_COLOR, keywordsColors);
 
 			// Image format file extensions
-		String[] keywordsImageFileExtension = {"gif", "jpg", "png"};
-		this.wordTypeImageExtensions = new StaticWordType(TYPE_IMAGEEXTENSION, keywordsImageFileExtension);
+		String[] keywordsFileExtensionImage = {"gif", "jpg", "png"};
+		this.wordTypeFileExtensionImage = new StaticWordType(TYPE_FILEEXTENSION_IMAGE, keywordsFileExtensionImage);
+
+		String[] keywordsFileExtensionAudio = {"aif", "au", "mpeg", "mpg", "mp3", "ra", "ram", "wav"};
+		this.wordTypeFileExtensionAudio = new StaticWordType(TYPE_FILEEXTENSION_AUDIO, keywordsFileExtensionAudio);
 
 		// CSS and geographical orientations
 		String[] keywordsOrientation = {"top", "right", "bottom", "left"};
@@ -175,6 +192,10 @@ public class Dictionary {
 
 		String[] keywordsGeoDirections = {"north", "east", "south", "west"};
 		this.wordTypeGeoDirections = new StaticWordType(TYPE_GEODIRECTION, keywordsGeoDirections);
+
+		// General scale sizes
+		String[] keywordsScale = {"small", "medium", "large"};
+		this.wordTypeScales = new StaticWordType(TYPE_SCALE, keywordsScale);
 
 		// @todo	add single->double->multiple
 
@@ -261,14 +282,18 @@ public class Dictionary {
 			this.wordTypeArithmeticElements,
 			this.wordTypeArithmeticOperations,
 			this.wordTypeMetaSyntax,
+			this.wordTypeNumbers,
+			this.wordTypeOrdinalNumbers,
 			this.wordTypeMonths,
-			this.wordTypeImageExtensions,
+			this.wordTypeFileExtensionImage,
+			this.wordTypeFileExtensionAudio,
 			this.wordTypeMonthsAbbr,
 			this.wordTypeWeekdays,
 			this.wordTypeWeekdaysAbbr,
 			this.wordTypeTimeUnit,
 			this.wordTypeColors,
 			this.wordTypeOrientations,
+			this.wordTypeScales,
 			this.wordTypeGeoDirections,
 		};
 		for (StaticWordType wordType: staticWordTypeList) {
@@ -347,6 +372,12 @@ public class Dictionary {
 			case TYPE_MYSQLDATATYPESTRING:
 				return this.wordTypeMySqlDataTypesString.getShifted(word, isUp);
 
+			case TYPE_NUMBER:
+				return this.wordTypeNumbers.getShifted(word, isUp);
+
+			case TYPE_ORDINALNUMBER:
+				return this.wordTypeOrdinalNumbers.getShifted(word, isUp);
+
 			case TYPE_MONTH:
 				return this.wordTypeMonths.getShifted(word, isUp);
 
@@ -365,8 +396,14 @@ public class Dictionary {
 			case TYPE_COLOR:
 				return this.wordTypeColors.getShifted(word, isUp);
 
-			case TYPE_IMAGEEXTENSION:
-				return this.wordTypeImageExtensions.getShifted(word, isUp);
+			case TYPE_SCALE:
+				return this.wordTypeScales.getShifted(word, isUp);
+
+			case TYPE_FILEEXTENSION_IMAGE:
+				return this.wordTypeFileExtensionImage.getShifted(word, isUp);
+
+			case TYPE_FILEEXTENSION_AUDIO:
+				return this.wordTypeFileExtensionAudio.getShifted(word, isUp);
 
 			case TYPE_ORIENTATION:
 				return this.wordTypeOrientations.getShifted(word, isUp);

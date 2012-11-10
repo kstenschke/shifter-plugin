@@ -32,6 +32,7 @@ public class BooleanString {
 		{"from", "until"},
 		{"horizontal", "vertical"},
 		{"increment", "decrement"},
+		{"key", "value"},
 		{"min", "max"}, {"minimum", "maximum"},
 		{"odd", "even"},
 		{"ok", "cancel"},
