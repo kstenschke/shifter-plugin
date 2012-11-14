@@ -33,12 +33,15 @@ public class Dictionary {
 	private static final int TYPE_JSEVENT_KEYBOARD		= 31;
 	private static final int TYPE_JSEVENT_FRAMEOBJ		= 32;
 	private static final int TYPE_JSEVENT_FORM			= 33;
+	private static final int TYPE_JSEVENT_TOUCH			= 34;
+	private static final int TYPE_JSEVENT_CONTROL		= 35;
 	private static final int TYPE_COLOR					= 40;
-	private static final int TYPE_FILEEXTENSION_IMAGE 	= 41;
-	private static final int TYPE_FILEEXTENSION_AUDIO 	= 42;
-	private static final int TYPE_ORIENTATION			= 43;
-	private static final int TYPE_GEODIRECTION			= 44;
-	private static final int TYPE_SCALE					= 45;
+	private static final int TYPE_TEXTSTYLE				= 41;
+	private static final int TYPE_FILEEXTENSION_IMAGE 	= 42;
+	private static final int TYPE_FILEEXTENSION_AUDIO 	= 43;
+	private static final int TYPE_ORIENTATION			= 44;
+	private static final int TYPE_GEODIRECTION			= 45;
+	private static final int TYPE_SCALE					= 46;
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING	= 50;
@@ -75,6 +78,7 @@ public class Dictionary {
 	private final StaticWordType wordTypeWeekdaysAbbr;
 	private final StaticWordType wordTypeTimeUnit;
 	private final StaticWordType wordTypeColors;
+	private final StaticWordType wordTypeTextStyles;
 	private final StaticWordType wordTypeFileExtensionImage;
 	private final StaticWordType wordTypeFileExtensionAudio;
 	private final StaticWordType wordTypeOrientations;
@@ -84,6 +88,8 @@ public class Dictionary {
 	private final StaticWordType wordTypeJsEventsKeyboard;
 	private final StaticWordType wordTypeJsEventsFrameObj;
 	private final StaticWordType wordTypeJsEventsForm;
+	private final StaticWordType wordTypeJsEventsTouch;
+	private final StaticWordType wordTypeJsEventsControl;
 
 		// Generic types (calculated when shifted)
 	private final BooleanString typeBooleanString;
@@ -151,6 +157,12 @@ public class Dictionary {
 		String[] keywordsJsEventsForm   = { "blur", "change", "focus", "reset", "select", "submit" };
 		this.wordTypeJsEventsForm = new StaticWordType(TYPE_JSEVENT_FORM, keywordsJsEventsForm);
 
+		String[] keywordsJsEventsTouch   = { "touchstart", "touchmove", "touchend", "touchcancel" };
+		this.wordTypeJsEventsTouch = new StaticWordType(TYPE_JSEVENT_TOUCH, keywordsJsEventsTouch);
+
+		String[] keywordsJsEventsControl   = { "resize", "scroll", "zoom", "focus", "blur", "select", "change", "submit", "reset" };
+		this.wordTypeJsEventsControl = new StaticWordType(TYPE_JSEVENT_CONTROL, keywordsJsEventsControl);
+
 
 			// Numbers, ordinal numbers, months, weekdays, time units
 		String[] keywordsNumber = {"zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"};
@@ -179,6 +191,10 @@ public class Dictionary {
 		String[] keywordsColors = {"white", "lightgray", "gray", "darkgray", "black", "red", "pink", "orange", "yellow", "green", "magenta", "cyan", "blue"};
 		this.wordTypeColors = new StaticWordType(TYPE_COLOR, keywordsColors);
 
+			// Text styles
+		String[] keywordsTextStyles = {"bold", "italic", "strikethrough", "subscript", "superscript", "underline"};
+		this.wordTypeTextStyles = new StaticWordType(TYPE_TEXTSTYLE, keywordsTextStyles);
+
 			// Image format file extensions
 		String[] keywordsFileExtensionImage = {"gif", "jpg", "png"};
 		this.wordTypeFileExtensionImage = new StaticWordType(TYPE_FILEEXTENSION_IMAGE, keywordsFileExtensionImage);
@@ -186,14 +202,14 @@ public class Dictionary {
 		String[] keywordsFileExtensionAudio = {"aif", "au", "mpeg", "mpg", "mp3", "ra", "ram", "wav"};
 		this.wordTypeFileExtensionAudio = new StaticWordType(TYPE_FILEEXTENSION_AUDIO, keywordsFileExtensionAudio);
 
-		// CSS and geographical orientations
+			// CSS and geographical orientations
 		String[] keywordsOrientation = {"top", "right", "bottom", "left"};
 		this.wordTypeOrientations = new StaticWordType(TYPE_ORIENTATION, keywordsOrientation);
 
 		String[] keywordsGeoDirections = {"north", "east", "south", "west"};
 		this.wordTypeGeoDirections = new StaticWordType(TYPE_GEODIRECTION, keywordsGeoDirections);
 
-		// General scale sizes
+			// General scale sizes
 		String[] keywordsScale = {"small", "medium", "large"};
 		this.wordTypeScales = new StaticWordType(TYPE_SCALE, keywordsScale);
 
@@ -277,6 +293,8 @@ public class Dictionary {
 			this.wordTypeJsEventsKeyboard,
 			this.wordTypeJsEventsFrameObj,
 			this.wordTypeJsEventsForm,
+			this.wordTypeJsEventsControl,
+			this.wordTypeJsEventsTouch,
 			this.wordTypeDataCollectionType,
 			this.wordTypeLogicalOperators,
 			this.wordTypeArithmeticElements,
@@ -292,6 +310,7 @@ public class Dictionary {
 			this.wordTypeWeekdaysAbbr,
 			this.wordTypeTimeUnit,
 			this.wordTypeColors,
+			this.wordTypeTextStyles,
 			this.wordTypeOrientations,
 			this.wordTypeScales,
 			this.wordTypeGeoDirections,
@@ -396,6 +415,9 @@ public class Dictionary {
 			case TYPE_COLOR:
 				return this.wordTypeColors.getShifted(word, isUp);
 
+			case TYPE_TEXTSTYLE:
+				return this.wordTypeTextStyles.getShifted(word, isUp);
+
 			case TYPE_SCALE:
 				return this.wordTypeScales.getShifted(word, isUp);
 
@@ -423,6 +445,12 @@ public class Dictionary {
 
 			case TYPE_JSEVENT_FORM:
 				return this.wordTypeJsEventsForm.getShifted(word, isUp);
+
+			case TYPE_JSEVENT_CONTROL:
+				return this.wordTypeJsEventsControl.getShifted(word, isUp);
+
+			case TYPE_JSEVENT_TOUCH:
+				return this.wordTypeJsEventsTouch.getShifted(word, isUp);
 
 
 

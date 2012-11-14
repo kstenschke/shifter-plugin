@@ -36,8 +36,9 @@ Supported shifting / keyword types:
 * MySql data types: Shifts to next bigger/smaller numeric/string type
 * Primitive data types of Java, JavaScript, PHP, Objective-C
 * Doc comment tags (Java, JavaScript, PHP)
-* JavaScript event types (mouse, keyboard, frame/object, form)
+* JavaScript event types (mouse, keyboard, frame/object, form, control, touch)
 * Named colors from the sRGB color space (white, lightgray, gray...)
+* Text styles (bold, italic...)
 * Full and abbreviated names of months and weekdays and units of time
 * Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)
 * Names of common data collection types (list, set, bag, dictionary, tree, etc.)

@@ -37,13 +37,15 @@
         <li>MySql data types: Shifts to next bigger/smaller numeric/string type</li>
         <li>Primitive data types of Java, JavaScript, PHP, Objective-C</li>
         <li>Doc comment tags (Java, JavaScript, PHP)</li>
-        <li>JavaScript event types (mouse, keyboard, frame/object, form)</li>
+        <li>JavaScript event types (mouse, keyboard, frame/object, forml, control, touch)</li>
         <li>Named colors from the sRGB color space (white/lightgray/gray...)</li>
-        <li>Web Image format extensions (gif/jpg/png)</li>
+        <li>Text styles (bold, italic...)</li>
+        <li>Web image (gif/jpg/png) and audio (au/aif/wav etc.) format extensions </li>
         <li>Full and abbreviated names of months and weekdays and units of time</li>
         <li>Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)</li>
         <li>Metasyntax terms: foo/bar/baz...</li>
         <li>Names of common data collection types (list/set/bag/dictionary/tree...)</li>
+        <li>Names of numbers (one/two/three etc.) and ordinal numbers (first/second/third  etc.)
         <li>Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
         </li>
     </ul>
@@ -60,7 +62,10 @@
 
     <change-notes><![CDATA[
     1.0.11<br><ul>
-        <li>Added shifting of web image format extensions</li>
+        <li>Added shifting of DOM touch and control events</li>
+        <li>Added shifting of text styles</li>
+        <li>Added shifting of web image and audio format file extensions</li>
+        <li>Added shifting of names of ordinal numbers and numbers</li>
     </ul>
     1.0.10<br><ul>
         <li>Bugfix: shifting line with regex meta characters possibly caused exception</li>
