@@ -45,6 +45,7 @@ public class BooleanString {
 		{"show", "hide"}, {"shown", "hidden"},
 		{"true", "false"},
 		{"username", "password"},
+		{"undo", "redo"},
 		{"width", "height"},
 		{"yes", "no"}
 	};

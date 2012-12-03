@@ -40,7 +40,8 @@
         <li>JavaScript event types (mouse, keyboard, frame/object, forml, control, touch)</li>
         <li>Named colors from the sRGB color space (white/lightgray/gray...)</li>
         <li>Text styles (bold, italic...)</li>
-        <li>Web image (gif/jpg/png) and audio (au/aif/wav etc.) format extensions </li>
+        <li>Web image (gif/jpg/png) and audio (au/aif/wav etc.) format extensions</li>
+        <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ascii value</li>
         <li>Full and abbreviated names of months and weekdays and units of time</li>
         <li>Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)</li>
         <li>Metasyntax terms: foo/bar/baz...</li>
@@ -57,15 +58,16 @@
     <br>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.0.10</version>
+    <version>1.0.11</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     1.0.11<br><ul>
+        <li>Added shifting of words consisting from any amount of the same character to the next ascii character</li>
+        <li>Added shifting of web image and audio format file extensions</li>
+        <li>Added shifting of names of english ordinal numbers and numbers</li>
         <li>Added shifting of DOM touch and control events</li>
         <li>Added shifting of text styles</li>
-        <li>Added shifting of web image and audio format file extensions</li>
-        <li>Added shifting of names of ordinal numbers and numbers</li>
     </ul>
     1.0.10<br><ul>
         <li>Bugfix: shifting line with regex meta characters possibly caused exception</li>

@@ -44,13 +44,14 @@ public class Dictionary {
 	private static final int TYPE_SCALE					= 46;
 
 		// Generic types
-	public static final int TYPE_QUOTEDSTRING	= 50;
-	public static final int TYPE_RGBCOLOR		= 51;
-	public static final int TYPE_PIXELVALUE		= 52;
-	public static final int TYPE_DOCCOMMENTTAG	= 53;
-	public static final int TYPE_PHPVARIABLE	= 54;
-	public static final int TYPE_NUMERICVALUE	= 55;
-	public static final int TYPE_BOOLEANSTRING	= 56;
+	public static final int TYPE_QUOTEDSTRING			= 50;
+	public static final int TYPE_MONOCHARACTERSTRING	= 51;
+	public static final int TYPE_RGBCOLOR				= 52;
+	public static final int TYPE_PIXELVALUE				= 53;
+	public static final int TYPE_DOCCOMMENTTAG			= 54;
+	public static final int TYPE_PHPVARIABLE			= 55;
+	public static final int TYPE_NUMERICVALUE			= 56;
+	public static final int TYPE_BOOLEANSTRING			= 57;
 
 		// Data types of different contexts
 	private static final int TYPE_DATATYPE_IN_DOCCOMMENT	= 60;
@@ -94,6 +95,7 @@ public class Dictionary {
 		// Generic types (calculated when shifted)
 	private final BooleanString typeBooleanString;
 	private final QuotedString typeQuotedString;
+	private final MonoCharacterString typeMonoCharacterString;
 	private final RbgColor typeRgbColor;
 	private final PixelValue typePixelValue;
 	private final NumericValue typeNumericValue;
@@ -235,6 +237,9 @@ public class Dictionary {
 			// Must be wrapped in single or double quotes or backticks
 		this.typeQuotedString = new QuotedString();
 
+			// String constisting from any amount of one character
+		this.typeMonoCharacterString	= new MonoCharacterString();
+
 		this.typeNumericValue = new NumericValue();
 
 			// Must be prefixed with "$"
@@ -324,6 +329,8 @@ public class Dictionary {
 		if (this.typeBooleanString.isBooleanString(word)) return TYPE_BOOLEANSTRING;
 
 		if (this.typeQuotedString.isQuotedString(word, prefixChar, postfixChar)) return TYPE_QUOTEDSTRING;
+
+		if (this.typeMonoCharacterString.isMonoCharacterString(word)) return TYPE_MONOCHARACTERSTRING;
 
 		if (this.typeRgbColor.isRgbColorString(word, prefixChar)) return TYPE_RGBCOLOR;
 
@@ -469,6 +476,9 @@ public class Dictionary {
 
 			case TYPE_QUOTEDSTRING:
 				return this.typeQuotedString.getShifted(word, editor, editorText, isUp);
+
+			case TYPE_MONOCHARACTERSTRING:
+				return this.typeMonoCharacterString.getShifted(word, isUp);
 
 			case TYPE_DOCCOMMENTTAG:
 				String textAfterCaret   = editorText.toString().substring(caretOffset);

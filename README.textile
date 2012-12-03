@@ -39,6 +39,8 @@ Supported shifting / keyword types:
 * JavaScript event types (mouse, keyboard, frame/object, form, control, touch)
 * Named colors from the sRGB color space (white, lightgray, gray...)
 * Text styles (bold, italic...)
+* Web image (gif/jpg/png) and audio (au/aif/wav etc.) format extensions
+* Single characters and string consisting from any amount of the same character can be shifted to the prev/next ascii value
 * Full and abbreviated names of months and weekdays and units of time
 * Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)
 * Names of common data collection types (list, set, bag, dictionary, tree, etc.)
