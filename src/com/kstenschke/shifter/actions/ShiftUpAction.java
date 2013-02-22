@@ -119,6 +119,12 @@ public class ShiftUpAction extends AnAction {
 								String sortedList = ArrayHelper.implode(items, ", ");
 
 								document.replaceString(offsetStart, offsetEnd, sortedList);
+							} else if( TextualHelper.containsAnyQuotes(selectedText) ) {
+								String swoppedString = TextualHelper.swapQuotes(selectedText);
+								document.replaceString(offsetStart, offsetEnd, swoppedString);
+							} else if( TextualHelper.containsAnySlashes(selectedText) ) {
+								String swoppedString = TextualHelper.swapSlashes(selectedText);
+								document.replaceString(offsetStart, offsetEnd, swoppedString);
 							}
 						}
 					} else {

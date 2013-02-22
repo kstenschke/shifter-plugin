@@ -29,6 +29,7 @@
         <li>UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
         <li>PHP variables - Shifts to alphabetically next/previous variable name found in current document</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
+        <li>Swapping of characters inside single-lined selection: single quote versus double quote OR slash versus backslash</li>
         <li>PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS pixel values - Shifts px-values up/down by 1</li>
@@ -58,10 +59,13 @@
     <br>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.0.11</version>
+    <version>1.0.12</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.0.12<br><ul>
+        <li>Added character swapping inside single-line selection: single versus double quote OR slash versus backslash</li>
+    </ul>
     1.0.11<br><ul>
         <li>Added shifting of words consisting from any amount of the same character to the next ASCII character</li>
         <li>Added shifting of web image and audio format file extensions</li>

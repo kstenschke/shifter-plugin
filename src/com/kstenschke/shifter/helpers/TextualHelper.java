@@ -63,6 +63,62 @@ public class TextualHelper {
 
 
 	/**
+	 * Check whether the given string contains any slash or backslash
+	 *
+	 * @param   str         String to be checked
+	 * @return  Boolean
+	 */
+	public static boolean containsAnySlashes(String str) {
+		return str.contains("\\") || str.contains("/");
+	}
+
+
+
+	/**
+	 * Check whether the given string contains single or double quotes
+	 *
+	 * @param   str         String to be checked
+	 * @return  Boolean
+	 */
+	public static boolean containsAnyQuotes(String str) {
+		return str.contains("\"") || str.contains("'");
+	}
+
+
+
+	/**
+	 * Swap slashes inside the given string against backslashes and vise versa
+	 *
+	 * @param   str         String to be checked
+	 * @return  Boolean
+	 */
+	public static String swapSlashes(String str) {
+		str	= str.replace("\\", "###SHIFTERSLASH###");
+		str	= str.replace("/", "\\");
+		str	= str.replace("###SHIFTERSLASH###", "/");
+
+		return str;
+	}
+
+
+
+	/**
+	 * Swap single quotes inside the given string against double quotes and vise versa
+	 *
+	 * @param   str         String to be checked
+	 * @return  Boolean
+	 */
+	public static String swapQuotes(String str) {
+		str	= str.replace("\"", "###SHIFTERSINGLEQUOTE###");
+		str	= str.replace("'", "\"");
+		str	= str.replace("###SHIFTERSINGLEQUOTE###", "'");
+
+		return str;
+	}
+
+
+
+	/**
 	 * Convert given string to lower case with only first char in upper case
 	 *
 	 * @param   str      String to be converted

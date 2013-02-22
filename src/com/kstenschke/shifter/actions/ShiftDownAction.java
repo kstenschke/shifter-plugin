@@ -112,12 +112,19 @@ public class ShiftDownAction extends AnAction {
 						} else {
 							// Selection within one line
 							String selectedText  = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+
 							if( TextualHelper.isCommaSeparatedList(selectedText) ) {
 								String[] items = selectedText.split(",(\\s)*");
 								Arrays.sort(items);
 								String sortedList = ArrayHelper.implode(items, ", ");
 
 								document.replaceString(offsetStart, offsetEnd, sortedList);
+							} else if( TextualHelper.containsAnyQuotes(selectedText) ) {
+								String swoppedString = TextualHelper.swapQuotes(selectedText);
+								document.replaceString(offsetStart, offsetEnd, swoppedString);
+							} else if( TextualHelper.containsAnySlashes(selectedText) ) {
+								String swoppedString = TextualHelper.swapSlashes(selectedText);
+								document.replaceString(offsetStart, offsetEnd, swoppedString);
 							}
 						}
 					} else {
