@@ -47,17 +47,15 @@ class Dictionary {
 	public static final int TYPE_QUOTEDSTRING			= 50;
 	private static final int TYPE_MONOCHARACTERSTRING	= 51;
 	private static final int TYPE_RGBCOLOR				= 52;
-	private static final int TYPE_PIXELVALUE				= 53;
+	private static final int TYPE_PIXELVALUE			= 53;
 	private static final int TYPE_DOCCOMMENTTAG			= 54;
 	public static final int TYPE_PHPVARIABLE			= 55;
 	private static final int TYPE_NUMERICVALUE			= 56;
-	public static final int TYPE_BOOLEANSTRING			= 57;
+	private static final int TYPE_BOOLEANSTRING			= 57;
 
 		// Data types of different contexts
-	private static final int TYPE_DATATYPE_IN_DOCCOMMENT	= 60;
-	private static final int TYPE_DATATYPE_GENERAL			= 61;
-
-
+	private static final int TYPE_DATATYPE_IN_DOCCOMMENT= 60;
+	private static final int TYPE_DATATYPE_GENERAL		= 61;
 
 		// Word type objects
 	private final StaticWordType wordTypeAccessibilities;

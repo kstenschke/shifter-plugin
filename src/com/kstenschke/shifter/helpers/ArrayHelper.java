@@ -89,9 +89,8 @@ public class ArrayHelper {
 		}
 
 		List<String> array1List = Arrays.asList(array1);
-		List array2List = Arrays.asList(array2);
+		List<String> array2List = Arrays.asList(array2);
 
-		//List result = new ArrayList(array1List);
 		List<String> result = new ArrayList<String>(array1List);
 
 		List tmp = new ArrayList<String>(array1List);

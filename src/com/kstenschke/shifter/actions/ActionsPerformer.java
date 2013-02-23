@@ -99,11 +99,9 @@ class ActionsPerformer {
 
 						document.replaceString(offsetStart, offsetEnd, sortedList);
 					} else if( TextualHelper.containsAnyQuotes(selectedText) ) {
-						String swoppedString = TextualHelper.swapQuotes(selectedText);
-						document.replaceString(offsetStart, offsetEnd, swoppedString);
+						document.replaceString(offsetStart, offsetEnd, TextualHelper.swapQuotes(selectedText));
 					} else if( TextualHelper.containsAnySlashes(selectedText) ) {
-						String swoppedString = TextualHelper.swapSlashes(selectedText);
-						document.replaceString(offsetStart, offsetEnd, swoppedString);
+						document.replaceString(offsetStart, offsetEnd, TextualHelper.swapSlashes(selectedText));
 					}
 				}
 			} else {
