@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2011-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,18 +19,7 @@ package com.kstenschke.shifter.models;
 /**
  * Numeric value class
  */
-public class StringsList {
-
-//	/**
-//	 * Constructor
-//	 *
-//	 * @param	str		A string
-//	 */
-//	public StringsList(String str) {
-//
-//	}
-
-
+class StringsList {
 
 	/**
 	 * Shift numeric value up/down by 1

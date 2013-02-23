@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * DocCommentType class
  */
-public class DocCommentType {
+class DocCommentType {
 
 	/**
 	 * Constructor

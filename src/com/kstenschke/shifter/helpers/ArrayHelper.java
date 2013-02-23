@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2011-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,24 +25,6 @@ import java.util.List;
  * Static helper methods for arrays
  */
 public class ArrayHelper {
-
-	/**
-	 * Check haystack for existence of needle
-	 *
-	 * @param haystack		List of strings
-	 * @param needle		String
-	 * @return				Boolean
-	 */
-	public static boolean in_array(DefaultListModel haystack, String needle) {
-		for(int i=0; i<haystack.size(); i++) {
-			if(haystack.get(i).toString().equals(needle)) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-
 
 	/**
 	 * Find strings position in array

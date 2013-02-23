@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2011-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,18 +25,6 @@ import java.util.List;
  * Static helper methods for analysis and manipulation of texts
  */
 public class TextualHelper {
-
-	/**
-	 * Check whether given string is fully lower case
-	 *
-	 * @param   str      String to be checked
-	 * @return  Boolean
-	 */
-	public static boolean isAllLowercase(String str) {
-		return str.equals(str.toLowerCase());
-	}
-
-
 
 	/**
 	 * Check whether given string is fully lower case

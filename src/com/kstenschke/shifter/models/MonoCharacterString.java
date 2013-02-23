@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2011-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,7 +28,7 @@ import java.util.regex.Pattern;
 /**
  * Mono-Character String = String that contains only one character (no matter how often)
  */
-public class MonoCharacterString {
+class MonoCharacterString {
 
 	/**
 	 * Constructor

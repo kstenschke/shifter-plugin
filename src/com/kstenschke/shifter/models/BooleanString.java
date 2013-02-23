@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2011-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package com.kstenschke.shifter.models;
 /**
  * "BooleanString" class
  */
-public class BooleanString {
+class BooleanString {
 
 	private String [] [] keywordPairs = {
 		{"absolute", "relative"},
@@ -67,17 +67,6 @@ public class BooleanString {
 
 
 	/**
-	 * Get word type ID
-	 *
-	 * @return	int
-	 */
-	public int getTypeId() {
-		return Dictionary.TYPE_BOOLEANSTRING;
-	}
-
-
-
-	/**
 	 * Check whether given string represents any of the known boolean keyword data pairs
 	 *
 	 * @param   str        String to be checked
@@ -92,10 +81,9 @@ public class BooleanString {
 
 	/**
 	 * @param word    Word to get shifted
-	 * @param isUp    Shifting up or down?
 	 * @return        Shifting result
 	 */
-	public String getShifted(String word, Boolean isUp) {
+	public String getShifted(String word) {
 		word  = word.toLowerCase();
 
 		String toggled;

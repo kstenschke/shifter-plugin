@@ -1,5 +1,5 @@
 /*
- * Copyright 2012 Kay Stenschke
+ * Copyright 2011-2013 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ package com.kstenschke.shifter.models;
 /**
  * Pixel value class
  */
-public class PixelValue {
+class PixelValue {
 
 	/**
 	 * Constructor

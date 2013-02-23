@@ -8,7 +8,7 @@ import com.intellij.openapi.editor.Editor;
 /**
  * Dictionary of "shiftable" keywords
  */
-public class Dictionary {
+class Dictionary {
 
 	public static final int TYPE_UNKNOWN = 0;
 
@@ -45,12 +45,12 @@ public class Dictionary {
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING			= 50;
-	public static final int TYPE_MONOCHARACTERSTRING	= 51;
-	public static final int TYPE_RGBCOLOR				= 52;
-	public static final int TYPE_PIXELVALUE				= 53;
-	public static final int TYPE_DOCCOMMENTTAG			= 54;
+	private static final int TYPE_MONOCHARACTERSTRING	= 51;
+	private static final int TYPE_RGBCOLOR				= 52;
+	private static final int TYPE_PIXELVALUE				= 53;
+	private static final int TYPE_DOCCOMMENTTAG			= 54;
 	public static final int TYPE_PHPVARIABLE			= 55;
-	public static final int TYPE_NUMERICVALUE			= 56;
+	private static final int TYPE_NUMERICVALUE			= 56;
 	public static final int TYPE_BOOLEANSTRING			= 57;
 
 		// Data types of different contexts
@@ -369,7 +369,7 @@ public class Dictionary {
 		switch (idWordType) {
 				// ================== String based word types
 			case TYPE_BOOLEANSTRING:
-				return this.typeBooleanString.getShifted(word, isUp);
+				return this.typeBooleanString.getShifted(word);
 
 			case TYPE_ACCESSIBILITY:
 				return this.wordTypeAccessibilities.getShifted(word, isUp);

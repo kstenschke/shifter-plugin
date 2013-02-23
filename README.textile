@@ -24,6 +24,7 @@ Supported shifting / keyword types:
 
 * Shifting a multi line selection sorts the lines alphabetically ascending/descending.
 * Shifting a single line selection, that is a comma separated list, sorts the items ascending/descending.
+* Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash
 * Numeric values - Increments/decrements numbers by 1
 * UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
@@ -49,7 +50,7 @@ Supported shifting / keyword types:
 
 h2. License
 
-Copyright 2012 Kay Stenschke
+Copyright 2011-2013 Kay Stenschke
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

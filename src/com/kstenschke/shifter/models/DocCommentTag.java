@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * DocCommentType class
  */
-public class DocCommentTag {
+class DocCommentTag {
 
 	private final String[] tagsJavaScript;
 
@@ -61,7 +61,7 @@ public class DocCommentTag {
 	 * @param   line       Line the caret is at
 	 * @return  Boolean.
 	 */
-	public Boolean isDocCommentLineContext(String line) {
+	Boolean isDocCommentLineContext(String line) {
 		line  = line.toLowerCase();
 
 		String allTagsPiped = this.getAllTagsPiped();

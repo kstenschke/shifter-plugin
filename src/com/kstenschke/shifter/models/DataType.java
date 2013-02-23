@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * DocCommentType class
  */
-public class DataType {
+class DataType {
 
 	private final String[] typesJavaScript;
 	private final String[] typesJava;
@@ -37,7 +37,7 @@ public class DataType {
 	 *
 	 * @return	Array
 	 */
-	public String[] getAllTypes() {
+	String[] getAllTypes() {
 		return ArrayHelper.mergeStringArrays(this.typesJavaScript, this.typesJava, this.typesPHP, this.typesObjectiveC);
 	}
 
@@ -48,7 +48,7 @@ public class DataType {
 	 *
 	 * @return	String
 	 */
-	public String getAllTypesPiped() {
+	String getAllTypesPiped() {
 		String[] allTypes = this.getAllTypes();
 
 		return ArrayHelper.implode(allTypes, "|");
@@ -112,7 +112,7 @@ public class DataType {
 	 * @param	filename	Filename of edited file
 	 * @return	String[]
 	 */
-	public String[] getDataTypesByFilename(String filename) {
+	String[] getDataTypesByFilename(String filename) {
 		if( filename != null ) {
 			filename = filename.toLowerCase();
 
