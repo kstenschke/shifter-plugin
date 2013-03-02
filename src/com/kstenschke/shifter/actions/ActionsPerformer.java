@@ -25,8 +25,8 @@ import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.helpers.ArrayHelper;
 import com.kstenschke.shifter.helpers.TextualHelper;
-import com.kstenschke.shifter.models.ShiftableLine;
-import com.kstenschke.shifter.models.ShiftableWord;
+import com.kstenschke.shifter.ShiftableLine;
+import com.kstenschke.shifter.ShiftableWord;
 
 import java.util.Arrays;
 import java.util.Collections;

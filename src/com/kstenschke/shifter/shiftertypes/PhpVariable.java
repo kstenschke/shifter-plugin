@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 /**
  * PHP Variable (word with $ prefix)
  */
-class PhpVariable {
+public class PhpVariable {
 
 	/**
 	 * Constructor

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import com.intellij.openapi.editor.Editor;
 
@@ -27,7 +27,7 @@ import java.util.regex.Pattern;
 /**
  * Quoted String.
  */
-class QuotedString {
+public class QuotedString {
 
 	private String quoteChar;
 

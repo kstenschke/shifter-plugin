@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import java.awt.*;
 
 /**
  * RGB color class
  */
-class RbgColor {
+public class RbgColor {
 
 
 	/**

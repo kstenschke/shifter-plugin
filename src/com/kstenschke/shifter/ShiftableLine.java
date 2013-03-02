@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
 
@@ -34,8 +34,6 @@ public class ShiftableLine {
 
 	private final String filename;
 
-//	private final Dictionary dictionary;
-
 
 
 	/**
@@ -47,8 +45,6 @@ public class ShiftableLine {
 	 * @param	filename		Name of the edited file if any
 	 */
 	public ShiftableLine(String line,  CharSequence editorText, int caretOffset, String filename) {
-//		this.dictionary   = new Dictionary();
-
 		this.line			= line;
 		this.editorText		= editorText;
 		this.caretOffset	= caretOffset;
@@ -84,8 +80,6 @@ public class ShiftableLine {
 					prefixChar  = "#";
 					word  = word.substring(1);
 				}
-
-				//@todo  grab postfix char
 
 				testShiftedWord   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
 

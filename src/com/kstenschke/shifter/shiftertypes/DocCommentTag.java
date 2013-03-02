@@ -1,4 +1,4 @@
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import com.kstenschke.shifter.helpers.ArrayHelper;
 
@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 /**
  * DocCommentType class
  */
-class DocCommentTag {
+public class DocCommentTag {
 
 	private final String[] tagsJavaScript;
 

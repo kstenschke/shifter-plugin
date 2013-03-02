@@ -1,0 +1,84 @@
+(|htm|html|js|) {
+	|array|boolean|element|event|function|number|null|object|string|undefined|
+	|click|dblclick|mousedown|mousemove|mouseover|mouseout|mouseup|
+	|keydown|keypress|keyup|
+	|abort|error|load|resize|scroll|unload|
+	|blur|change|focus|reset|select|submit|
+	|touchstart|touchmove|touchend|touchcancel|
+	|resize|scroll|zoom|focus|blur|select|change|submit|reset|
+	|alert|prompt|
+}
+(|css|scss|) {
+	|bold|italic|strikethrough|subscript|superscript|underline|
+}
+(|java|php) {
+	|public|private|protected|
+}
+(|java|) {
+	|boolean|byte|char|double|float|int|long|short|string|
+}
+(|php|phtml|twig|) {
+	|array|boolean|float|integer|null|object|resource|string|
+	|__dir__|__file__|__namespace__|__class__|__line__|__function__|__method__|__trait__|
+}
+(|m|) {
+	|int|char|float|double|id|BOOL|long|short|signed|unsigned|
+}
+(|sql|) {
+	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
+	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+}
+(|*|) {
+	|and|or|xor|not|
+	|small|medium|large|
+	|foo|bar|baz|qux|
+	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
+	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth
+	|seconds|minutes|hours|day|month|year|
+	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
+	|mon|tue|wed|thu|fri|sat|sun|
+	|january|february|march|april|mai|june|july|august|september|october|november|december|
+	|jan|feb|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec|
+	|top|right|bottom|left|
+	|north|east|south|west|
+	|gif|jpg|png|
+	|aif|au|mpeg|mpg|mp3|ra|ram|wav|
+	|sum|difference|product|quotient|remainder|opposite|
+	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
+	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
+	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
+	|absolute|relative|
+	|asc|desc|
+	|ascend|descend|
+	|ascending|descending|
+	|before|after|
+	|enable|disable|
+	|enabled|disabled|
+	|expand|collapse|
+	|file|folder|
+	|first|last|
+	|from|until|
+	|horizontal|vertical|
+	|increment|decrement|
+	|key|value|
+	|min|max|
+	|minimum|maximum|
+	|odd|even|
+	|ok|cancel|
+	|on|off|
+	|open|close|
+	|padding|margin|
+	|pass|fail|
+	|positive|negative|
+	|pre|post|
+	|prefix|postfix|
+	|show|hide|
+	|shown|hidden|
+	|true|false|
+	|undo|redo|
+	|username|password|
+	|width|height|
+	|yes|no|
+	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
+	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+}

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 /**
  * Numeric value class

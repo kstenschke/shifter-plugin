@@ -14,14 +14,14 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import com.kstenschke.shifter.helpers.ArrayHelper;
 
 /**
  * Shifter general word type class
  */
-class StaticWordType {
+public class StaticWordType {
 
 	private int typeID;
 
@@ -37,9 +37,8 @@ class StaticWordType {
 	 * Constructor
 	 */
 	public StaticWordType(int typeID, String[] keywords) {
-		this.typeID	= typeID;
-
-		this.keywords = keywords;
+		this.typeID			= typeID;
+		this.keywords		= keywords;
 		this.amountKeywords = keywords.length;
 		this.regExPattern = ArrayHelper.implode(this.keywords, "|").toLowerCase();
 	}

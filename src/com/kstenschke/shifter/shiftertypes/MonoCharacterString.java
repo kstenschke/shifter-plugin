@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
-import com.intellij.openapi.editor.Editor;
 import org.apache.commons.lang.StringUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Mono-Character String = String that contains only one character (no matter how often)
  */
-class MonoCharacterString {
+public class MonoCharacterString {
 
 	/**
 	 * Constructor

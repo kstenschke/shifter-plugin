@@ -59,10 +59,13 @@
     <br>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.0.12</version>
+    <version>1.1.0</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.1.0<br><ul>
+        <li>Made shifter dictionary customizable via plugin configuration</li>
+    </ul>
     1.0.12<br><ul>
         <li>Added character swapping inside single-line selection: single vs. double quote OR slash vs. backslash</li>
     </ul>
@@ -147,6 +150,10 @@
     </application-components>
 
     <project-components>
+        <component>
+            <implementation-class>com.kstenschke.shifter.ShifterSettingsComponent</implementation-class>
+            <loadForDefaultProject/>
+        </component>
     </project-components>
 
     <actions>

@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.ShifterTypesManager;
 import com.kstenschke.shifter.helpers.TextualHelper;
 
 /**
@@ -24,19 +25,15 @@ import com.kstenschke.shifter.helpers.TextualHelper;
  */
 public class ShiftableWord {
 
-	private final Dictionary dictionary;
+	private final ShifterTypesManager dictionary;
 
 	private final String word;
-
-//	private String prefixChar;
-//	private String postfixChar;
 
 	private final String filename;
 
 	private final int wordType;
 
 	private final Boolean isShiftable;
-
 
 	private final CharSequence editorText;
 
@@ -56,21 +53,18 @@ public class ShiftableWord {
 	 * @param	filename		Filename of the edited file
 	 */
 	public ShiftableWord(String word, String prefixChar, String postfixChar, String line, CharSequence editorText, int caretOffset, String filename) {
-		this.dictionary = new Dictionary();
+		this.dictionary = new ShifterTypesManager();
 
 		this.word         = word;
-//		this.prefixChar   = prefixChar;
-//		this.postfixChar  = postfixChar;
 		this.editorText   = editorText;
 		this.caretOffset  = caretOffset;
 		this.filename     = filename;
 
 			// Detect word type
 		this.wordType = dictionary.getWordType(word, prefixChar, postfixChar, line, filename);
-//		JOptionPane.showMessageDialog(null, String.valueOf(this.wordType), "word type", 1);
 
 			// Can the word be shifted?
-		this.isShiftable = this.wordType != Dictionary.TYPE_UNKNOWN;
+		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
 	}
 
 
@@ -90,8 +84,8 @@ public class ShiftableWord {
 		String shiftedWord = dictionary.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, filename, editor);
 
 			// Keep original word casing
-		if(      this.wordType != Dictionary.TYPE_PHPVARIABLE
-			 &&   this.wordType != Dictionary.TYPE_QUOTEDSTRING
+		if(      this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
+			 &&   this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
 		) {
 			if ( TextualHelper.isAllUppercase(this.word) ) {
 					// Convert result to upper case

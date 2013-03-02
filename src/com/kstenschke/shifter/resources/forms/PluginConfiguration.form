@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="com.kstenschke.shifter.resources.forms.PluginConfiguration">
+  <grid id="27dc6" binding="rootPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="796" height="434"/>
+    </constraints>
+    <properties>
+      <preferredSize width="200" height="177"/>
+      <requestFocusEnabled value="true"/>
+    </properties>
+    <border type="none"/>
+    <children>
+      <grid id="66bc5" binding="buttons" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="North"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="8f090" class="javax.swing.JButton" binding="buttonReset">
+            <constraints border-constraint="West"/>
+            <properties>
+              <actionCommand value="Reset factory default"/>
+              <enabled value="true"/>
+              <hideActionText value="false"/>
+              <icon value="com/kstenschke/shifter/resources/images/reset.png"/>
+              <text value="&amp;Reset Factory Settings"/>
+            </properties>
+          </component>
+        </children>
+      </grid>
+      <scrollpane id="2ce97" binding="jspane">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="d2285" class="javax.swing.JTextArea" binding="textAreaDictionary">
+            <constraints/>
+            <properties>
+              <rows value="10"/>
+              <text value=""/>
+            </properties>
+          </component>
+        </children>
+      </scrollpane>
+    </children>
+  </grid>
+  <inspectionSuppressions>
+    <suppress inspection="NoLabelFor" id="5a62a"/>
+    <suppress inspection="NoLabelFor" id="d2285"/>
+  </inspectionSuppressions>
+</form>

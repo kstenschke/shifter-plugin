@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 /**
  * Pixel value class
  */
-class PixelValue {
+public class PixelValue {
 
 	/**
 	 * Constructor

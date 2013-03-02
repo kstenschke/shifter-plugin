@@ -1,9 +1,6 @@
-package com.kstenschke.shifter.models;
-
-import com.kstenschke.shifter.helpers.ArrayHelper;
+package com.kstenschke.shifter.shiftertypes;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -11,7 +8,7 @@ import java.util.regex.Pattern;
 /**
  * DocCommentType class
  */
-class DocCommentType {
+public class DocCommentType {
 
 	/**
 	 * Constructor
@@ -73,7 +70,7 @@ class DocCommentType {
 	 * @return                Shifting result
 	 */
 	public String getShifted(String word, CharSequence editorText, boolean isUp, String filename) {
-		return new DataType().getShifted(word, filename, isUp);
+		return new DocCommentDataType().getShifted(word, filename, isUp);
 	}
 
 }

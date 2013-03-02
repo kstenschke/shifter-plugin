@@ -1,17 +1,14 @@
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import com.kstenschke.shifter.helpers.ArrayHelper;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * DocCommentType class
  */
-class DataType {
+class DocCommentDataType {
 
 	private final String[] typesJavaScript;
 	private final String[] typesJava;
@@ -23,7 +20,7 @@ class DataType {
 	/**
 	 * Constructor
 	 */
-	public DataType() {
+	public DocCommentDataType() {
 		typesJavaScript = new String[]{ "array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined" };
 		typesJava       = new String[]{ "boolean", "byte", "char", "double", "float", "int", "long", "short", "string" };
 		typesPHP        = new String[]{ "array", "boolean", "float", "integer", "null", "object", "resource", "string" };
@@ -38,7 +35,12 @@ class DataType {
 	 * @return	Array
 	 */
 	String[] getAllTypes() {
-		return ArrayHelper.mergeStringArrays(this.typesJavaScript, this.typesJava, this.typesPHP, this.typesObjectiveC);
+		return ArrayHelper.mergeStringArrays(
+				this.typesJavaScript,
+				this.typesJava,
+				this.typesPHP,
+				this.typesObjectiveC
+		);
 	}
 
 

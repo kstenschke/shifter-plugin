@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.shiftertypes;
 
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.popup.Balloon;
@@ -28,7 +28,7 @@ import java.util.Date;
 /**
  * Numeric value class, also contains UNIX timestamp handling
  */
-class NumericValue {
+public class NumericValue {
 
 	private static final int SECS_PER_DAY	= 86400000;
 
