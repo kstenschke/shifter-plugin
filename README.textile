@@ -7,45 +7,50 @@ This is a plugin for the various intellij IDEs, working in IDEA, PhpStorm, AppCo
 
 h2. Description
 
-The Shifter plugin is helpful for quickly manipulating various patterns of code (keywords of multiple types), 
-hopefully sparing the lazy programmer from some manual typing ;)
+When evoked, shifter detects the type of keyword at caret and shifts it "up" or "down".
+If there's only one shiftable word in a line, it can be shifted without the caret touching it.
+Lowercase/uppercase or lower case with upper first character of shifted words is maintained.
 
 Shifter adds the following editing tools:
 
 * Ctrl+Shift+Alt+Comma  - Shift Down
 * Ctrl+Shift+Alt+Period - Shift Up
 
-When evoked, shifter detects the type of keyword at caret and shifts it "up" or "down".
-If there's only one shiftable word in a line, it can be shifted without the caret touching it.
-Lowercase/uppercase or lower case with upper first character of shifted words is maintained.
 
 
-Supported shifting / keyword types:
+Supported generic shifting types:
 
-* Shifting a multi line selection sorts the lines alphabetically ascending/descending.
-* Shifting a single line selection, that is a comma separated list, sorts the items ascending/descending.
+* Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
+* Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending.
 * Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash
 * Numeric values - Increments/decrements numbers by 1
 * UNIX timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
-* PHP core magical constants - Shifts PHP's magic constants (==__FILE__, __LINE__==, etc.)
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS pixel values - Shifts px-values up/down by 1
+* Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
+
+
+Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally useable dictionary of shiftable keywords.
+Some keyword types from the default dictionary:
+
+* PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)
 * CSS orientations and positioning: top/right/bottom/left and absolute/relative, and geographical directions (north/east/south/west)
 * Accessibility types: public/private/protected
 * MySql data types: Shifts to next bigger/smaller numeric/string type
 * Primitive data types of Java, JavaScript, PHP, Objective-C
 * Doc comment tags (Java, JavaScript, PHP)
-* JavaScript event types (mouse, keyboard, frame/object, form, control, touch)
-* Named colors from the sRGB color space (white, lightgray, gray...)
+* JavaScript event types (mouse, keyboard, frame/object, forml, control, touch)
+* Named colors from the sRGB color space (white/lightgray/gray...)
 * Text styles (bold, italic...)
 * Web image (gif/jpg/png) and audio (au/aif/wav etc.) format extensions
-* Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
 * Full and abbreviated names of months and weekdays and units of time
 * Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)
-* Names of common data collection types (list, set, bag, dictionary, tree, etc.)
-* Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse
+* Metasyntax terms: foo/bar/baz...
+* Names of common data collection types (list/set/bag/dictionary/tree...)
+* Names of numbers (one/two/three etc.) and ordinal numbers (first/second/third  etc.)
+* Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
 
 
 h2. License
