@@ -32,6 +32,7 @@
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS pixel values - Shifts px-values up/down by 1</li>
+        <li>Encoding/decoding of HTML special characters</li>
         <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value</li>
     </ul>
     Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally useable dictionary of shiftable keywords.
