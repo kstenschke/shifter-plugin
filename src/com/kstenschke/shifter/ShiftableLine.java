@@ -17,6 +17,7 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.shiftertypes.HtmlEncodableString;
 
 /**
  * Shiftable Line
@@ -92,9 +93,13 @@ public class ShiftableLine {
 		}
 
 			// Actual shifting
+
 		if( amountShiftableWordsInSentence == 1 ) {
 				// Shift detected word in line
 			return this.line.replace(unshiftedWord, shiftedWord);
+		} else if(HtmlEncodableString.isHTMLencodable(this.line)) {
+				// Encode or decode contained HTML special chars
+			return HtmlEncodableString.getShifted(this.line);
 		}
 
 			// No shiftability detected, return original line

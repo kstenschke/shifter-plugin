@@ -34,13 +34,14 @@ public class ShifterTypesManager {
 
 		// Generic types
 	public static final int TYPE_QUOTEDSTRING			= 50;
-	private static final int TYPE_MONOCHARACTERSTRING	= 51;
-	private static final int TYPE_RGBCOLOR				= 52;
-	private static final int TYPE_PIXELVALUE			= 53;
-	private static final int TYPE_DOCCOMMENT_TAG 		= 54;
-	private static final int TYPE_DOCCOMMENT_DATATYPE	= 55;
-	public static final int TYPE_PHPVARIABLE			= 56;
-	private static final int TYPE_NUMERICVALUE			= 57;
+	private static final int TYPE_HTMLENCODABLESTRING	= 51;
+	private static final int TYPE_MONOCHARACTERSTRING	= 52;
+	private static final int TYPE_RGBCOLOR				= 53;
+	private static final int TYPE_PIXELVALUE			= 54;
+	private static final int TYPE_DOCCOMMENT_TAG 		= 55;
+	private static final int TYPE_DOCCOMMENT_DATATYPE	= 56;
+	public static final int TYPE_PHPVARIABLE			= 57;
+	private static final int TYPE_NUMERICVALUE			= 58;
 
 		// Word type objects
 	private StaticWordType wordTypeAccessibilities;
@@ -140,6 +141,10 @@ public class ShifterTypesManager {
 			return TYPE_DICTIONARYWORD_GLOBAL;
 		}
 
+		if( HtmlEncodableString.isHTMLencodable(word) ) {
+			return TYPE_HTMLENCODABLESTRING;
+		}
+
 		return TYPE_UNKNOWN;
 	}
 
@@ -196,6 +201,9 @@ public class ShifterTypesManager {
 
 			case TYPE_DOCCOMMENT_DATATYPE:
 				return this.typeDataTypeInDocComment.getShifted(word, editorText, isUp, filename);
+
+			case TYPE_HTMLENCODABLESTRING:
+				return HtmlEncodableString.getShifted(word);
 		}
 
 		return word;

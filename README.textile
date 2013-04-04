@@ -32,7 +32,7 @@ Supported generic shifting types:
 * Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
 
 
-Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally useable dictionary of shiftable keywords.
+Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally useable, dictionary of shiftable keywords.
 Some keyword types from the default dictionary:
 
 * PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)

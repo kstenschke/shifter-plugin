@@ -27,6 +27,7 @@ import com.kstenschke.shifter.helpers.ArrayHelper;
 import com.kstenschke.shifter.helpers.TextualHelper;
 import com.kstenschke.shifter.ShiftableLine;
 import com.kstenschke.shifter.ShiftableWord;
+import com.kstenschke.shifter.shiftertypes.HtmlEncodableString;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -102,6 +103,8 @@ class ActionsPerformer {
 						document.replaceString(offsetStart, offsetEnd, TextualHelper.swapQuotes(selectedText));
 					} else if( TextualHelper.containsAnySlashes(selectedText) ) {
 						document.replaceString(offsetStart, offsetEnd, TextualHelper.swapSlashes(selectedText));
+					} else if(HtmlEncodableString.isHTMLencodable(selectedText)) {
+						document.replaceString( offsetStart, offsetEnd, HtmlEncodableString.getShifted(selectedText) );
 					}
 				}
 			} else {

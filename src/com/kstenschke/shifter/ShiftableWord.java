@@ -17,7 +17,6 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.ShifterTypesManager;
 import com.kstenschke.shifter.helpers.TextualHelper;
 
 /**
@@ -25,7 +24,7 @@ import com.kstenschke.shifter.helpers.TextualHelper;
  */
 public class ShiftableWord {
 
-	private final ShifterTypesManager dictionary;
+	private final ShifterTypesManager shifterTypesManager;
 
 	private final String word;
 
@@ -53,7 +52,7 @@ public class ShiftableWord {
 	 * @param	filename		Filename of the edited file
 	 */
 	public ShiftableWord(String word, String prefixChar, String postfixChar, String line, CharSequence editorText, int caretOffset, String filename) {
-		this.dictionary = new ShifterTypesManager();
+		this.shifterTypesManager = new ShifterTypesManager();
 
 		this.word         = word;
 		this.editorText   = editorText;
@@ -61,7 +60,7 @@ public class ShiftableWord {
 		this.filename     = filename;
 
 			// Detect word type
-		this.wordType = dictionary.getWordType(word, prefixChar, postfixChar, line, filename);
+		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
 
 			// Can the word be shifted?
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
@@ -81,7 +80,7 @@ public class ShiftableWord {
 		}
 
 			// Call actual shifting
-		String shiftedWord = dictionary.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, filename, editor);
+		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, filename, editor);
 
 			// Keep original word casing
 		if(      this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
