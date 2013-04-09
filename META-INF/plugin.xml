@@ -31,7 +31,7 @@
         <li>PHP variables - Shifts to alphabetically next/previous variable name found in current document</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
-        <li>CSS pixel values - Shifts px-values up/down by 1</li>
+        <li>CSS length values - Shifts numeric length values up/down by 1 (units: em, px, pt, cm)</li>
         <li>Encoding/decoding of HTML special characters</li>
         <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value</li>
     </ul>
@@ -64,10 +64,14 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
+    1.1.2<br/><ul>
+        <li>Added support for shifting negative numeric- and CSS pixel values</li>
+        <li>Added support for shifting more CSS length types: em, pt, cm, in</li>
+    </ul>
     1.1.1<br/><ul>
         <li>Added HTML special chars encoding/decoding</li>
     </ul>

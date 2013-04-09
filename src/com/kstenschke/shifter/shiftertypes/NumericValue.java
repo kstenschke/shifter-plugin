@@ -32,8 +32,6 @@ public class NumericValue {
 
 	private static final int SECS_PER_DAY	= 86400000;
 
-
-
 	/**
 	 * Constructor
 	 */
@@ -41,26 +39,18 @@ public class NumericValue {
 
 	}
 
-
-
 	/**
-	 * Check whether given String represents a CSS px value
-	 *
 	 * @param	str			String to be checked
-	 * @return	Boolean.
+	 * @return	Boolean     Does the given string represent a CSS length value?
 	 */
-	public Boolean isNumericValue(String str) {
+	public static Boolean isNumericValue(String str) {
 		return (str.matches("[0-9]+"));
 	}
 
-
-
 	/**
-	 * Shift numeric value up/down by 1
-	 *
-	 * @param	numericValue		String representing a numeric value
+	 * @param	numericValue	String representing a numeric value
 	 * @param	isUp				Shifting up or down?
-	 * @return	String
+	 * @return	String         Value shifted up or down by one
 	 */
 	public String getShifted(String numericValue, Boolean isUp, Editor editor) {
 			// Integer

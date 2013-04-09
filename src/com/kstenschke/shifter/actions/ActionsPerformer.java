@@ -27,7 +27,9 @@ import com.kstenschke.shifter.helpers.ArrayHelper;
 import com.kstenschke.shifter.helpers.TextualHelper;
 import com.kstenschke.shifter.ShiftableLine;
 import com.kstenschke.shifter.ShiftableWord;
+import com.kstenschke.shifter.shiftertypes.CssLengthValue;
 import com.kstenschke.shifter.shiftertypes.HtmlEncodableString;
+import com.kstenschke.shifter.shiftertypes.NumericValue;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -126,12 +128,22 @@ class ActionsPerformer {
 					String prefixChar = TextualHelper.getCharBeforeOffset(editorText, wordOffset);
 					String postfixChar = TextualHelper.getCharAfterOffset(editorText, wordOffset + word.length() - 1);
 
-					// Identify word type and shift it accordingly
+						// Identify word type and shift it accordingly
 					ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, editorText, caretOffset, filename);
+
+						// Comprehend negative values of numeric types
+					if( NumericValue.isNumericValue(word) || CssLengthValue.isCssLengthValue(word) ) {
+						if ( prefixChar.equals("-") ) {
+//							prefixChar  = "";
+							word = "-" + word;
+							wordOffset--;
+						}
+					}
+
 					String newWord = shiftableWord.getShifted(shiftUp, editor);
 
 					if (newWord != null && newWord.length() > 0 && !newWord.matches(word)) {
-						// Replace word at caret by shifted one (if any)
+							// Replace word at caret by shifted one (if any)
 						document.replaceString(wordOffset, wordOffset + word.length(), newWord);
 						wordShifted = true;
 					}

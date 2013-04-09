@@ -28,7 +28,7 @@ Supported generic shifting types:
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * CSS hex RGB colors - Shifts color value lighter/darker
-* CSS pixel values - Shifts px-values up/down by 1
+* CSS length values - Shifts numeric length values up/down by 1 (units: em, px, pt, cm)
 * Encoding/decoding of HTML special characters
 * Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
 

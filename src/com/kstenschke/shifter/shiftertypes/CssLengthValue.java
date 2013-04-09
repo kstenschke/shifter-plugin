@@ -19,46 +19,39 @@ package com.kstenschke.shifter.shiftertypes;
 /**
  * Pixel value class
  */
-public class PixelValue {
+public class CssLengthValue {
 
 	/**
 	 * Constructor
 	 */
-	public PixelValue() {
+	public CssLengthValue() {
 
 	}
-
-
 
 	/**
-	 * Check whether given String represents a CSS px value
-	 *
 	 * @param	str			String to be checked
-	 * @return	Boolean.
+	 * @return	Boolean     Does the given string represents a CSS length value?
 	 */
-	public Boolean isPixelValue(String str) {
-		return (str.matches("[0-9]*px"));
+	public static Boolean isCssLengthValue(String str) {
+		return ( str.matches("[0-9]*(cm|em|in|pt|px)") );
 	}
 
-
-
-	/**                                                      di
-	 * Shift PX value up/down by 1px
-	 *
-	 * @param	pxValue		Current word
-	 * @param	isUp		Shifting up or down?
-	 * @return	String
+	/**
+	 * @param	lengthValue		The full length value, post-fixed by its unit
+	 * @param	isUp		      Shifting up or down?
+	 * @return	String         Length (em / px / pt / cm / in) value shifted up or down by 1px
 	 */
-	public String getShifted(String pxValue, Boolean isUp) {
+	public String getShifted(String lengthValue, Boolean isUp) {
 			// Get int from PX value
-		pxValue = pxValue.replace("px", "");
-		int numericValue = Integer.parseInt(pxValue);
+		String unit       = lengthValue.substring(lengthValue.length() -2);
+		lengthValue       = lengthValue.replace(unit, "");
+		int numericValue  = Integer.parseInt(lengthValue);
 
-			// Shift up/down by 1px
+			// Shift up/down by 1
 		numericValue = numericValue + (isUp ? 1 : -1);
 
-			// Add "px" to numeric value
-		return Integer.toString(numericValue).concat("px");
+			// prepend with unit again
+		return Integer.toString(numericValue).concat(unit);
 	}
 
 }

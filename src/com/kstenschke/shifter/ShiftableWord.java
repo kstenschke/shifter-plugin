@@ -54,13 +54,20 @@ public class ShiftableWord {
 	public ShiftableWord(String word, String prefixChar, String postfixChar, String line, CharSequence editorText, int caretOffset, String filename) {
 		this.shifterTypesManager = new ShifterTypesManager();
 
-		this.word         = word;
 		this.editorText   = editorText;
 		this.caretOffset  = caretOffset;
 		this.filename     = filename;
 
 			// Detect word type
 		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
+
+			// Comprehend negative values of numeric types
+		if( this.wordType == ShifterTypesManager.TYPE_CSS_LENGTH_VALUE || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE) {
+			if( prefixChar.equals("-") ) {
+				word = "-" + word;
+			}
+		}
+		this.word   = word;
 
 			// Can the word be shifted?
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
