@@ -13,6 +13,7 @@
 }
 (|java|php) {
 	|public|private|protected|
+	|extends|implements|
 }
 (|java|) {
 	|boolean|byte|char|double|float|int|long|short|string|
