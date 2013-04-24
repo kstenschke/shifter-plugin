@@ -4,6 +4,7 @@
 	|abort|error|load|resize|scroll|unload|
 	|button|submit|
 	|blur|change|focus|reset|select|submit|
+	|class|id|name|type|value|
 	|click|dblclick|mousedown|mousemove|mouseover|mouseout|mouseup|
 	|h1|h2|h3|h4|
 	|indexof|lastindexof|
