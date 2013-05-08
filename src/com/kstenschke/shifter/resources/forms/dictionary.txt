@@ -37,40 +37,37 @@
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 }
 (|*|) {
-	|and|or|xor|not|
-	|small|medium|large|
-	|foo|bar|baz|qux|
-	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
-	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth
-	|seconds|minutes|hours|day|month|year|
-	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
-	|mon|tue|wed|thu|fri|sat|sun|
-	|january|february|march|april|mai|june|july|august|september|october|november|december|
-	|jan|feb|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec|
-	|top|right|bottom|left|
-	|north|east|south|west|
-	|gif|jpg|png|
-	|aif|au|mpeg|mpg|mp3|ra|ram|wav|
-	|sum|difference|product|quotient|remainder|opposite|
-	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
-	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
-	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
 	|absolute|relative|
-	|asc|desc|
-	|ascend|descend|
+	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
+	|aif|au|mpeg|mpg|mp3|ra|ram|wav|
+	|and|or|xor|not|
 	|ascending|descending|
+	|ascend|descend|
+	|asc|desc|
 	|before|after|
-	|enable|disable|
+	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
+	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+	|en|de|fr|it|
 	|enabled|disabled|
+	|enable|disable|
 	|expand|collapse|
 	|file|folder|
 	|first|last|
+	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth
+	|foo|bar|baz|qux|
 	|from|until|
+	|gif|jpg|png|
 	|horizontal|vertical|
 	|increment|decrement|
+	|january|february|march|april|mai|june|july|august|september|october|november|december|
+	|jan|feb|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec|
 	|key|value|
-	|min|max|
+	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
 	|minimum|maximum|
+	|min|max|
+	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
+	|mon|tue|wed|thu|fri|sat|sun|
+	|north|east|south|west|
 	|odd|even|
 	|ok|cancel|
 	|on|off|
@@ -78,15 +75,20 @@
 	|padding|margin|
 	|pass|fail|
 	|positive|negative|
-	|pre|post|
 	|prefix|postfix|
-	|show|hide|
+	|pre|post|
+	|seconds|minutes|hours|day|month|year|
 	|shown|hidden|
+	|show|hide|
+	|small|medium|large|
+	|start|end|
+	|sum|difference|product|quotient|remainder|opposite|
+	|top|right|bottom|left|
 	|true|false|
 	|undo|redo|
 	|username|password|
+	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
 	|width|height|
 	|yes|no|
-	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
-	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
 }
