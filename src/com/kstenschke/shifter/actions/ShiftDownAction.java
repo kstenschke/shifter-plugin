@@ -54,7 +54,7 @@ public class ShiftDownAction extends AnAction {
 			public void run() {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-						new ActionsPerformer().write(event, false);
+						new ActionsPerformer(event).write(event, false);
 					}
 				});
 			}

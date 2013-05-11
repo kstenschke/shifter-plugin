@@ -54,7 +54,7 @@ public class ShiftUpAction extends AnAction {
 			public void run() {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-						new ActionsPerformer().write(event, true);
+						new ActionsPerformer(event).write(event, true);
 					}
 				});
 			}

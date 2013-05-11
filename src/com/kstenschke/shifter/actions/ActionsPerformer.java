@@ -38,21 +38,39 @@ import java.util.List;
 
 class ActionsPerformer {
 
+	private Editor editor;
+	private Document document;
+
+	private CharSequence editorText;
+
+	private int caretOffset;
+	private SelectionModel selectionModel;
+	boolean hasSelection;
+
+
+	/**
+	 * Constructor
+	 */
+	ActionsPerformer(final AnActionEvent event) {
+		editor = event.getData(PlatformDataKeys.EDITOR);
+
+		if (editor != null) {
+			document       = editor.getDocument();
+			editorText     = document.getCharsSequence();
+			caretOffset    = editor.getCaretModel().getOffset();
+			selectionModel = editor.getSelectionModel();
+			hasSelection   = selectionModel.hasSelection();
+		}
+	}
+
 	/**
 	 * @param   event    ActionSystem event
 	 * @param	shiftUp	 Shift up or down?
 	 */
 	public void write(final AnActionEvent event, boolean shiftUp) {
-		Editor editor = event.getData(PlatformDataKeys.EDITOR);
 
 		if (editor != null) {
-			final Document document = editor.getDocument();
-			CharSequence editorText = document.getCharsSequence();
-
-			int caretOffset = editor.getCaretModel().getOffset();
-
-			SelectionModel selectionModel = editor.getSelectionModel();
-			boolean hasSelection = selectionModel.hasSelection();
+//			final Document document = editor.getDocument();
 
 			if (hasSelection) {
 				//-------------------- Shift selection: sort lines alphabetically
@@ -70,35 +88,18 @@ class ActionsPerformer {
 				List<String> lines = TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
 
 				if( lines.size() > 1) {
-					if( shiftUp ) {
-						// Sort ascending
-						Collections.sort(lines);
-					} else {
-						// Sort descending
-						Comparator<String> comparator = Collections.reverseOrder();
-						Collections.sort(lines, comparator);
-					}
+						// Sort lines alphabetically
+					StringBuilder sortedText = TextualHelper.joinLines(this.sortLines(lines, shiftUp));
+					int offsetLineStart     = document.getLineStartOffset(lineNumberSelStart);
+					int offsetLineEnd       = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
 
-					StringBuilder sortedText = TextualHelper.joinLines(lines);
-
-					// Replace text
-					int offsetLineStart  = document.getLineStartOffset(lineNumberSelStart);
-					int offsetLineEnd    = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
-
-					editor.getDocument().replaceString(offsetLineStart, offsetLineEnd, sortedText);
+					document.replaceString(offsetLineStart, offsetLineEnd, sortedText);
 				} else {
 					// Selection within one line
 					String selectedText  = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
 
 					if( TextualHelper.isCommaSeparatedList(selectedText) ) {
-						String[] items = selectedText.split(",(\\s)*");
-						if( shiftUp ) {
-							Arrays.sort(items);
-						} else {
-							Arrays.sort(items, Collections.reverseOrder());
-						}
-
-						String sortedList = ArrayHelper.implode(items, ", ");
+						String sortedList = this.sortCommaSeparatedList(selectedText, shiftUp);
 
 						document.replaceString(offsetStart, offsetEnd, sortedList);
 					} else if( TextualHelper.containsAnyQuotes(selectedText) ) {
@@ -160,6 +161,38 @@ class ActionsPerformer {
 				}
 			}
 		}
+	}
+
+	/**
+	 * @param   lines
+	 * @param   shiftUp
+	 * @return  Given lines sorted alphabetically ascending / descending
+	 */
+	private List<String> sortLines(List<String> lines, Boolean shiftUp) {
+		Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
+
+		if( !shiftUp ) {
+			Collections.reverse(lines);
+		}
+
+		return lines;
+	}
+
+	/**
+	 * @param   selectedText
+	 * @param   shiftUp
+	 * @return  Given comma separated list, sorted alphabetically ascending / descending
+	 */
+	private String sortCommaSeparatedList(String selectedText, Boolean shiftUp) {
+		String[] items = selectedText.split(",(\\s)*");
+
+		Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
+
+		if( !shiftUp ) {
+			Collections.reverse(Arrays.asList(items));
+		}
+
+		return ArrayHelper.implode(items, ", ");
 	}
 
 }
