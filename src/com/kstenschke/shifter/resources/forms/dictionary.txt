@@ -17,6 +17,7 @@
 	|bold|italic|strikethrough|subscript|superscript|underline|
 }
 (|java|php) {
+	|assertFalse|assertTrue|
 	|public|private|protected|
 	|extends|implements|
 }
