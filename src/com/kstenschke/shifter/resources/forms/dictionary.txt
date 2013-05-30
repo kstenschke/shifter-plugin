@@ -92,5 +92,6 @@
 	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
 	|width|height|
 	|yes|no|
+	|yesterday|today|tomorrow|
 	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
 }
