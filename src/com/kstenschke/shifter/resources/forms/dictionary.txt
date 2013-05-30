@@ -47,6 +47,7 @@
 	|asc|desc|
 	|before|after|
 	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
+	|branches|tags|trunk|
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 	|en|de|fr|it|
 	|enabled|disabled|
