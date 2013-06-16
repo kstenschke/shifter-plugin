@@ -30,7 +30,7 @@ import java.util.Date;
  */
 public class NumericValue {
 
-	private static final int SECS_PER_DAY = 86400000;
+	private static final int SECS_PER_DAY	= 86400000;
 
 	/**
 	 * Constructor
@@ -40,43 +40,43 @@ public class NumericValue {
 	}
 
 	/**
-	 * @param   str         String to be checked
-	 * @return Boolean Does the given string represent a CSS length value?
+	 * @param	str			String to be checked
+	 * @return	Boolean     Does the given string represent a CSS length value?
 	 */
 	public static Boolean isNumericValue(String str) {
 		return (str.matches("[0-9]+"));
 	}
 
 	/**
-	 * @param   numericValue   String representing a numeric value
-	 * @param   isUp            Shifting up or down?
-	 * @return String Value shifted up or down by one
+	 * @param	numericValue	String representing a numeric value
+	 * @param	isUp				Shifting up or down?
+	 * @return	String         Value shifted up or down by one
 	 */
 	public String getShifted(String numericValue, Boolean isUp, Editor editor) {
-		// Integer
-		if (numericValue.length() <= 7) {
+			// Integer
+		if( numericValue.length() <= 7 ) {
 			int intValue = Integer.parseInt(numericValue);
 
-			// Shift up/down by 1
+				// Shift up/down by 1
 			intValue = intValue + (isUp ? 1 : -1);
 
 			return Integer.toString(intValue);
 		}
 
-		// UNIX timestamp? Shift it plus/minus one day
-		long shiftedTimestamp = Long.parseLong(numericValue) * 1000 + (isUp ? SECS_PER_DAY : -SECS_PER_DAY);
+			// UNIX timestamp? Shift it plus/minus one day
+		long shiftedTimestamp	= Long.parseLong(numericValue) * 1000 + (isUp ? SECS_PER_DAY : -SECS_PER_DAY);
 
-		// Create and show balloon with human-readable date
+			// Create and show balloon with human-readable date
 		Balloon.Position pos = Balloon.Position.above;
-		String balloonText = new Date(shiftedTimestamp).toString();
+		String balloonText   = new Date(shiftedTimestamp).toString();
 		BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new Color(255, 255, 231), null);
 		Balloon balloon = builder.createBalloon();
 
-		Point caretPos = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+		Point caretPos                = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
 		RelativePoint balloonPosition = new RelativePoint(editor.getContentComponent(), caretPos);
 		balloon.show(balloonPosition, pos);
 
-		return Long.toString(shiftedTimestamp / 1000);
+		return Long.toString( shiftedTimestamp / 1000 );
 	}
 
 }

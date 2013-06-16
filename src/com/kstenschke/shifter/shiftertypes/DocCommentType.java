@@ -17,14 +17,16 @@ public class DocCommentType {
 
 	}
 
+
+
 	/**
 	 * Check whether given String looks like a doc comment line
 	 *
-	 * @param line Line the caret is at
-	 * @return Boolean.
+	 * @param   line       Line the caret is at
+	 * @return  Boolean.
 	 */
 	public Boolean isDocCommentTypeLineContext(String line) {
-		line = line.toLowerCase();
+		line  = line.toLowerCase();
 
 		String allTags = new DocCommentTag().getAllTagsPiped();
 		String regExPatternLine = "\\s+\\*\\s+@(" + allTags + ")\\s";
@@ -32,36 +34,40 @@ public class DocCommentType {
 		List<String> allMatches = new ArrayList<String>();
 		Matcher m = Pattern.compile(regExPatternLine).matcher(line);
 		while (m.find()) {
-			if (!allMatches.contains(m.group())) {
+			if( !allMatches.contains(m.group())) {
 				allMatches.add(m.group());
 			}
 		}
 
-		return (allMatches.size() > 0);
+		return ( allMatches.size() > 0);
 	}
+
+
 
 	/**
 	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
 	 *
-	 * @param word       String to be checked
-	 * @param prefixChar Prefix character
-	 * @param line       Whole line containing the word
-	 * @return Boolean.
+	 * @param   word          String to be checked
+	 * @param   prefixChar    Prefix character
+	 * @param   line          Whole line containing the word
+	 * @return  Boolean.
 	 */
 	public Boolean isDocCommentType(String word, String prefixChar, String line) {
-		if (prefixChar.equals("#") || prefixChar.equals("@")) {
+		if ( prefixChar.equals("#") || prefixChar.equals("@") ) {
 			return false;
 		}
 
 		return this.isDocCommentTypeLineContext(line);
 	}
 
+
+
 	/**
-	 * @param word       String to be shifted
-	 * @param editorText Whole text of edited file
-	 * @param isUp       Shift up or down?
-	 * @param filename   Filename of the edited file
-	 * @return Shifting result
+	 * @param   word          String to be shifted
+	 * @param   editorText    Whole text of edited file
+	 * @param   isUp          Shift up or down?
+	 * @param   filename      Filename of the edited file
+	 * @return                Shifting result
 	 */
 	public String getShifted(String word, CharSequence editorText, boolean isUp, String filename) {
 		return new DocCommentDataType().getShifted(word, filename, isUp);

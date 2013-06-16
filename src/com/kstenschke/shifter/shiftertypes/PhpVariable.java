@@ -34,65 +34,69 @@ public class PhpVariable {
 
 	}
 
+
+
 	/**
 	 * Check whether given string represents a PHP variable
 	 *
-	 * @param   str         String to be checked
-	 * @return Boolean.
+	 * @param	str			String to be checked
+	 * @return	Boolean.
 	 */
 	public Boolean isPhpVariable(String str) {
-		// Must begin with "$"
-		if (!str.startsWith("$")) {
+			// Must begin with "$"
+		if ( ! str.startsWith("$") ) {
 			return false;
 		}
 
 		String identifier = str.substring(1);
-		// Must contain a-z,A-Z or 0-9, _
+			// Must contain a-z,A-Z or 0-9, _
 		return identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
 	}
+
+
 
 	/**
 	 * Shift PX value up/down by 16px
 	 *
-	 * @param   variable      Variable name string
-	 * @param   editorText      Text of edited document
-	 * @param   isUp         Shift up or down?
-	 * @return String
+	 * @param	variable		Variable name string
+	 * @param	editorText		Text of edited document
+	 * @param	isUp			Shift up or down?
+	 * @return	String
 	 */
 	public String getShifted(String variable, CharSequence editorText, Boolean isUp) {
-		// Get full text of currently edited document
-		String text = editorText.toString();
+         // Get full text of currently edited document
+	   String text = editorText.toString();
 
-		// Use regEx matcher to extract array of all PHP var names
+			// Use regEx matcher to extract array of all PHP var names
 
 		List<String> allMatches = new ArrayList<String>();
 		Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
 		while (m.find()) {
-			if (!allMatches.contains(m.group())) {
+			if( !allMatches.contains(m.group())) {
 				allMatches.add(m.group());
 			}
 		}
 
-		// Sort var names alphabetically
+			// Sort var names alphabetically
 		Collections.sort(allMatches);
 		int amountVars = allMatches.size();
 
-		// Find position of given variable
-		int curIndex = allMatches.indexOf(variable);
+			// Find position of given variable
+		int curIndex   = allMatches.indexOf(variable);
 
-		if (curIndex == -1 || amountVars == 0) {
+		if( curIndex == -1 || amountVars == 0 ) {
 			return variable;
 		}
 
-		// Return next/previous variable name
-		if (isUp) {
+			// Return next/previous variable name
+		if( isUp ) {
 			curIndex++;
-			if (curIndex == amountVars) {
+			if( curIndex == amountVars ) {
 				curIndex = 0;
 			}
 		} else {
 			curIndex--;
-			if (curIndex == -1) {
+			if( curIndex == -1 ) {
 				curIndex = amountVars - 1;
 			}
 		}

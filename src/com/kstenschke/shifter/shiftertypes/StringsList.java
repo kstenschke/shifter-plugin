@@ -24,17 +24,17 @@ class StringsList {
 	/**
 	 * Shift numeric value up/down by 1
 	 *
-	 * @param   numericValue String representing a numeric value
-	 * @param   isUp         Shifting up or down?
-	 * @return String
+	 * @param	numericValue    String representing a numeric value
+	 * @param	isUp			Shifting up or down?
+	 * @return	String
 	 */
 	public String getShifted(String numericValue, Boolean isUp) {
 		int intValue = Integer.parseInt(numericValue);
 
-		// Shift up/down by 1
+			// Shift up/down by 1
 		intValue = intValue + (isUp ? 1 : -1);
 
-		// Add "px" to numeric value
+			// Add "px" to numeric value
 		return Integer.toString(intValue);
 	}
 

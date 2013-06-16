@@ -32,57 +32,64 @@ public class StaticWordType {
 	private final String regExPattern;
 
 
+
 	/**
 	 * Constructor
 	 */
 	public StaticWordType(int typeID, String[] keywords) {
-		this.typeID = typeID;
-		this.keywords = keywords;
+		this.typeID			= typeID;
+		this.keywords		= keywords;
 		this.amountKeywords = keywords.length;
 		this.regExPattern = ArrayHelper.implode(this.keywords, "|").toLowerCase();
 	}
 
+
+
 	/**
 	 * Get word type ID
 	 *
-	 * @return int
+	 * @return	int
 	 */
 	public int getTypeID() {
 		return typeID;
 	}
 
+
+
 	/**
 	 * Check whether the given string is a known keyword of the word type
 	 *
-	 * @param   word      Word to be compared against keywords
-	 * @return Boolean
+	 * @param	word		Word to be compared against keywords
+	 * @return	Boolean
 	 */
 	public Boolean hasWord(String word) {
 		return (word.toLowerCase()).matches(this.regExPattern);
 	}
 
+
+
 	/**
-	 * @param   word      Word to be shifted
-	 * @param   isUp      Shifting up or down?
-	 * @return String      Shifting result
+	 * @param	word		Word to be shifted
+	 * @param	isUp		Shifting up or down?
+	 * @return	String		Shifting result
 	 */
 	public String getShifted(String word, Boolean isUp) {
 		int wordPositionOriginal = ArrayHelper.findPositionInArray(this.keywords, word.toLowerCase());
 
-		if (wordPositionOriginal == -1) {
+		if( wordPositionOriginal == -1 ) {
 			return word;
 		}
 
 		int wordPositionShifted;
 
 		if (isUp) {
-			// Shifting up
+				// Shifting up
 			wordPositionShifted = wordPositionOriginal + 1;
 			if (wordPositionShifted >= this.amountKeywords) {
 				wordPositionShifted = 0;
 			}
 		} else {
-			// Shifting down
+				// Shifting down
 			wordPositionShifted = wordPositionOriginal - 1;
 			if (wordPositionShifted < 0) {
 				wordPositionShifted = this.amountKeywords - 1;
