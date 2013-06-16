@@ -29,28 +29,28 @@ public class CssLengthValue {
 	}
 
 	/**
-	 * @param	str			String to be checked
-	 * @return	Boolean     Does the given string represents a CSS length value?
+	 * @param   str         String to be checked
+	 * @return Boolean Does the given string represents a CSS length value?
 	 */
 	public static Boolean isCssLengthValue(String str) {
-		return ( str.matches("[0-9]*(cm|em|in|pt|px)") );
+		return (str.matches("[0-9]*(cm|em|in|pt|px)"));
 	}
 
 	/**
-	 * @param	lengthValue		The full length value, post-fixed by its unit
-	 * @param	isUp		      Shifting up or down?
-	 * @return	String         Length (em / px / pt / cm / in) value shifted up or down by 1px
+	 * @param   lengthValue      The full length value, post-fixed by its unit
+	 * @param   isUp       Shifting up or down?
+	 * @return String Length (em / px / pt / cm / in) value shifted up or down by 1px
 	 */
 	public String getShifted(String lengthValue, Boolean isUp) {
-			// Get int from PX value
-		String unit       = lengthValue.substring(lengthValue.length() -2);
-		lengthValue       = lengthValue.replace(unit, "");
-		int numericValue  = Integer.parseInt(lengthValue);
+		// Get int from PX value
+		String unit = lengthValue.substring(lengthValue.length() - 2);
+		lengthValue = lengthValue.replace(unit, "");
+		int numericValue = Integer.parseInt(lengthValue);
 
-			// Shift up/down by 1
+		// Shift up/down by 1
 		numericValue = numericValue + (isUp ? 1 : -1);
 
-			// prepend with unit again
+		// prepend with unit again
 		return Integer.toString(numericValue).concat(unit);
 	}
 

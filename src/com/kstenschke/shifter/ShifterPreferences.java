@@ -26,16 +26,14 @@ import org.jetbrains.annotations.NonNls;
  */
 public class ShifterPreferences {
 
-		//  @NonNls = element is not a string requiring internationalization and it does not contain such strings.
+	//  @NonNls = element is not a string requiring internationalization and it does not contain such strings.
 	@NonNls
 	private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
-
-
 
 	/**
 	 * Store dictionary preference
 	 *
-	 * @param	dictionary		Contents to be stored in dictionary preference
+	 * @param   dictionary      Contents to be stored in dictionary preference
 	 */
 	public static void saveDictionary(String dictionary) {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
@@ -43,19 +41,17 @@ public class ShifterPreferences {
 		propertiesComponent.setValue(PROPERTY_DICTIONARY, dictionary);
 	}
 
-
-
 	/**
 	 * Get dictionary preference
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	public static String getDictionary() {
 		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
 
-		String dictionary	= propertiesComponent.getValue(PROPERTY_DICTIONARY);
+		String dictionary = propertiesComponent.getValue(PROPERTY_DICTIONARY);
 
-		if( dictionary == null ) {
+		if (dictionary == null) {
 			dictionary = "";
 		}
 

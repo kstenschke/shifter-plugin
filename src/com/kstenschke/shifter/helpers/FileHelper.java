@@ -19,24 +19,22 @@ package com.kstenschke.shifter.helpers;
 public class FileHelper {
 
 	/**
-	 * @param	filename		Filename from which to extract the extension
-	 * @return	The extension   Everything after the last "." in the full filename
+	 * @param   filename      Filename from which to extract the extension
+	 * @return The extension   Everything after the last "." in the full filename
 	 */
 	public static String extractFileExtension(String filename) {
-		if( filename.isEmpty() || filename.length() < 4 || !filename.contains(".") ) {
+		if (filename.isEmpty() || filename.length() < 4 || !filename.contains(".")) {
 			return null;
 		}
 
 		return filename.substring(filename.lastIndexOf('.') + 1);
 	}
 
-
-
 	/**
 	 * Get string from given stream
 	 *
-	 * @param	is		Input stream
-	 * @return	String	Full stream contents as string
+	 * @param   is      Input stream
+	 * @return String   Full stream contents as string
 	 */
 	public static String getFileStreamAsString(java.io.InputStream is) {
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");

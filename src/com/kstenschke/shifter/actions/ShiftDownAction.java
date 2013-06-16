@@ -25,7 +25,6 @@ import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.project.Project;
 
 
-
 /**
  * Shift-Down Action
  */
@@ -34,18 +33,16 @@ public class ShiftDownAction extends AnAction {
 	/**
 	 * Disable when no editor available
 	 *
-	 * @param	event		Action system event
+	 * @param   event      Action system event
 	 */
-	public void update( AnActionEvent event ) {
+	public void update(AnActionEvent event) {
 		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
-
-
 
 	/**
 	 * Perform shift down
 	 *
-	 * @param   event    ActionSystem event
+	 * @param event ActionSystem event
 	 */
 	public void actionPerformed(final AnActionEvent event) {
 		Project currentProject = event.getData(PlatformDataKeys.PROJECT);
@@ -54,7 +51,7 @@ public class ShiftDownAction extends AnAction {
 			public void run() {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-						new ActionsPerformer(event).write(event, false);
+						new ActionsPerformer(event).write(false);
 					}
 				});
 			}

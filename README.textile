@@ -31,7 +31,7 @@ Supported generic shifting types:
 * CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm)
 * Encoding/decoding of HTML special characters
 * Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
-
+* Strings ending with numbers - increments/decrements the postfix
 
 Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally useable, dictionary of shiftable keywords.
 Some keyword types from the default dictionary:

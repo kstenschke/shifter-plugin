@@ -31,75 +31,66 @@ public class RbgColor {
 
 	}
 
-
-
 	/**
 	 * Check whether given string represents a hex RGB color, prefix must be "#"
 	 *
-	 * @param	str			String to be checked
-	 * @param	prefix		Character found to precede that string
-	 * @return	Boolean.
+	 * @param str    String to be checked
+	 * @param prefix Character found to precede that string
+	 * @return Boolean.
 	 */
 	public Boolean isRgbColorString(String str, String prefix) {
-		return !( !prefix.equals("#")  || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")) );
+		return !(!prefix.equals("#") || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")));
 	}
 
-
 	/**
-	 * @param	rgbStr		String representing an RGB color
-	 * @param	isUp		Shifting up or down?
-	 * @return	String
+	 * @param rgbStr String representing an RGB color
+	 * @param isUp   Shifting up or down?
+	 * @return String
 	 */
 	public String getShifted(String rgbStr, Boolean isUp) {
 		if (rgbStr.length() == 3) {
-				// Convert 3-digit RGB color to 6 digits
+			// Convert 3-digit RGB color to 6 digits
 			rgbStr = sixfoldTripleColor(rgbStr);
 		}
 
 		if (isUp) {
-				// Shift up: lighten
+			// Shift up: lighten
 			if (!isWhite(rgbStr)) {
 				return lightenRgbString(rgbStr);
 			}
 		} else if (!isBlack(rgbStr)) {
-				// Shift down: darken
+			// Shift down: darken
 			return darkenRgbString(rgbStr);
 		}
 
 		return rgbStr;
 	}
 
-
-
 	/**
 	 * Check whether given String represents RGB white (fff, FFF, ffffff, FFFFFF)
 	 *
-	 * @param	str			RBG color string to be checked
-	 * @return	Boolean.
+	 * @param str RBG color string to be checked
+	 * @return Boolean.
 	 */
 	private static Boolean isWhite(String str) {
 		return str.equalsIgnoreCase("fff") || str.equalsIgnoreCase("ffffff");
 	}
 
-
-
 	/**
 	 * Check whether given String represents RGB black (000, 000000)
 	 *
-	 * @param	str			RGB color string
-	 * @return	Boolean.
+	 * @param str RGB color string
+	 * @return Boolean.
 	 */
 	private static Boolean isBlack(String str) {
 		return str.equalsIgnoreCase("000") || str.equalsIgnoreCase("000000");
 	}
 
-
-
 	/**
 	 * Convert three digit color string into six digits
 	 *
-	 * @param	rgbStr		RGB color string
-	 * @return	String
+	 * @param rgbStr RGB color string
+	 * @return String
 	 */
 	private static String sixfoldTripleColor(String rgbStr) {
 		String R = rgbStr.substring(0, 1);
@@ -109,13 +100,11 @@ public class RbgColor {
 		return "".concat(R).concat(R).concat(G).concat(G).concat(B).concat(B);
 	}
 
-
-
 	/**
 	 * Get Color object of given RGB string
 	 *
-	 * @param	rgbStr	String representing an RGB color
-	 * @return			Color object
+	 * @param rgbStr String representing an RGB color
+	 * @return Color object
 	 */
 	private static Color getColorFromRgbString(String rgbStr) {
 		int R = Integer.parseInt(rgbStr.substring(0, 2), 16);
@@ -125,13 +114,11 @@ public class RbgColor {
 		return new Color(R, G, B);
 	}
 
-
-
 	/**
 	 * Shift given RGB color hex string to be lighter
 	 *
-	 * @param	rgbStr		String of RGB color
-	 * @return	String
+	 * @param rgbStr String of RGB color
+	 * @return String
 	 */
 	private static String lightenRgbString(String rgbStr) {
 		Color lighterColor = lighter(getColorFromRgbString(rgbStr));
@@ -139,13 +126,11 @@ public class RbgColor {
 		return getHexFromColor(lighterColor);
 	}
 
-
-
 	/**
 	 * Shift given RGB color hex string to be darker
 	 *
-	 * @param	rgbStr		RGB color string
-	 * @return	String
+	 * @param rgbStr RGB color string
+	 * @return String
 	 */
 	private static String darkenRgbString(String rgbStr) {
 		Color darkerColor = darker(getColorFromRgbString(rgbStr));
@@ -154,12 +139,11 @@ public class RbgColor {
 	}
 
 
-
 	/**
 	 * Return the hex name of a specified color.
 	 *
-	 * @param	color	Color to get hex name of.
-	 * @return			Hex name of color: "rrggbb".
+	 * @param color Color to get hex name of.
+	 * @return Hex name of color: "rrggbb".
 	 */
 	private static String getHexFromColor(Color color) {
 		int r = color.getRed();
@@ -176,12 +160,11 @@ public class RbgColor {
 	}
 
 
-
 	/**
 	 * Darken given color.
 	 *
-	 * @param	color	Color to make darker
-	 * @return			Darker color.
+	 * @param color Color to make darker
+	 * @return Darker color.
 	 */
 	private static Color darker(Color color) {
 		int red = Math.round(color.getRed() - 1); //* .0955);
@@ -201,12 +184,11 @@ public class RbgColor {
 	}
 
 
-
 	/**
 	 * Lighten given color.
 	 *
-	 * @param	color		Color to be made lighter.
-	 * @return	Color		Lighter color.
+	 * @param color Color to be made lighter.
+	 * @return Color      Lighter color.
 	 */
 	private static Color lighter(Color color) {
 		int red = Math.round(color.getRed() + 1); //* .0955);

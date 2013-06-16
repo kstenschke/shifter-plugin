@@ -28,57 +28,52 @@ import java.util.regex.Pattern;
 /**
  * HTML encoded/encodable (=containing char(s) that be be encoded) String.
  */
-public class HtmlEncodableString {
+public class StringHtmlEncodable {
 
 	/**
 	 * Constructor
 	 */
-	public HtmlEncodableString() {
+	public StringHtmlEncodable() {
 
 	}
-
-
 
 	/**
 	 * Check whether given character can be encoded to an HTML special char / or is already HTML encoded
 	 *
-	 * @param   str            String to be shifted currently
-	 * @return  Boolean.
+	 * @param str String to be shifted currently
+	 * @return Boolean.
 	 */
-	public static Boolean isHTMLencodable(String str) {
-		Integer strLenOriginal	= str.length();
+	public static Boolean isHtmlEncodable(String str) {
+		Integer strLenOriginal = str.length();
 
-		String encoded			= StringEscapeUtils.escapeHtml(str);
-		String decoded			= StringEscapeUtils.unescapeHtml(str);
-		Integer strLenEncoded	= encoded.length();
-		Integer strLenDecoded	= decoded.length();
+		String encoded = StringEscapeUtils.escapeHtml(str);
+		String decoded = StringEscapeUtils.unescapeHtml(str);
+		Integer strLenEncoded = encoded.length();
+		Integer strLenDecoded = decoded.length();
 
 		return !strLenOriginal.equals(strLenEncoded) || !strLenOriginal.equals(strLenDecoded);
 	}
 
-
-
-
 	/**
 	 * Shift to HTML encoded/decoded variant of given string
 	 *
-	 * @param   word           word to be shifted
-	 * @return  String
+	 * @param word word to be shifted
+	 * @return String
 	 */
 	public static String getShifted(String word) {
-		Integer strLenOriginal	= word.length();
+		Integer strLenOriginal = word.length();
 
-		String decoded			= StringEscapeUtils.unescapeHtml(word);
-		Integer strLenDecoded	= decoded.length();
+		String decoded = StringEscapeUtils.unescapeHtml(word);
+		Integer strLenDecoded = decoded.length();
 
-		if( !strLenOriginal.equals(strLenDecoded) ) {
+		if (!strLenOriginal.equals(strLenDecoded)) {
 			return decoded;
 		}
 
-		String encoded			= StringEscapeUtils.escapeHtml(word);
-		Integer strLenEncoded	= encoded.length();
+		String encoded = StringEscapeUtils.escapeHtml(word);
+		Integer strLenEncoded = encoded.length();
 
-		if( !strLenOriginal.equals(strLenEncoded) ) {
+		if (!strLenOriginal.equals(strLenEncoded)) {
 			return encoded;
 		}
 

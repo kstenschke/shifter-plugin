@@ -17,7 +17,7 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.shiftertypes.HtmlEncodableString;
+import com.kstenschke.shifter.shiftertypes.StringHtmlEncodable;
 
 /**
  * Shiftable Line
@@ -35,74 +35,69 @@ public class ShiftableLine {
 
 	private final String filename;
 
-
-
 	/**
 	 * Constructor
 	 *
-	 * @param	line			Text of line
-	 * @param	editorText		Full text currently in editor
-	 * @param	caretOffset		Caret position in document
-	 * @param	filename		Name of the edited file if any
+	 * @param   line         Text of line
+	 * @param   editorText      Full text currently in editor
+	 * @param   caretOffset      Caret position in document
+	 * @param   filename      Name of the edited file if any
 	 */
-	public ShiftableLine(String line,  CharSequence editorText, int caretOffset, String filename) {
-		this.line			= line;
-		this.editorText		= editorText;
-		this.caretOffset	= caretOffset;
-		this.filename		= filename;
+	public ShiftableLine(String line, CharSequence editorText, int caretOffset, String filename) {
+		this.line = line;
+		this.editorText = editorText;
+		this.caretOffset = caretOffset;
+		this.filename = filename;
 	}
-
-
 
 	/**
 	 * Get shifted up/down word
 	 *
-	 * @param	isUp	Shift up or down?
-	 * @return			Next upper/lower word
+	 * @param   isUp   Shift up or down?
+	 * @return Next upper/lower word
 	 */
 	public String getShifted(Boolean isUp, Editor editor) {
-		String line  = this.line.trim();
+		String line = this.line.trim();
 
-		String[] words  = line.split("\\s+");
+		String[] words = line.split("\\s+");
 
-			// Check all words for shiftable types - shiftable if there's not more than one
+		// Check all words for shiftable types - shiftable if there's not more than one
 		int amountShiftableWordsInSentence = 0;
 		String testShiftedWord;
-		String unshiftedWord	= "";
-		String shiftedWord		= "";
-		String prefixChar		= "";
-		String postfixChar		= "";
-
+		String unshiftedWord = "";
+		String shiftedWord = "";
+		String prefixChar = "";
+		String postfixChar = "";
 
 		for (String word : words) {
-			if( word.length() > 2 ) {
-					// Check if word is a hex RGB color including the #-prefix
-				if( word.startsWith("#") ) {
-					prefixChar  = "#";
-					word  = word.substring(1);
+			if (word.length() > 2) {
+				// Check if word is a hex RGB color including the #-prefix
+				if (word.startsWith("#")) {
+					prefixChar = "#";
+					word = word.substring(1);
 				}
 
-				testShiftedWord   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
+				testShiftedWord = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
 
-				if( testShiftedWord != null && !testShiftedWord.equals(word)) {
+				if (testShiftedWord != null && !testShiftedWord.equals(word)) {
 					amountShiftableWordsInSentence++;
-					unshiftedWord  = word;
-					shiftedWord    = testShiftedWord;
+					unshiftedWord = word;
+					shiftedWord = testShiftedWord;
 				}
 			}
 		}
 
-			// Actual shifting
+		// Actual shifting
 
-		if( amountShiftableWordsInSentence == 1 ) {
-				// Shift detected word in line
+		if (amountShiftableWordsInSentence == 1) {
+			// Shift detected word in line
 			return this.line.replace(unshiftedWord, shiftedWord);
-		} else if(HtmlEncodableString.isHTMLencodable(this.line)) {
-				// Encode or decode contained HTML special chars
-			return HtmlEncodableString.getShifted(this.line);
+		} else if (StringHtmlEncodable.isHtmlEncodable(this.line)) {
+			// Encode or decode contained HTML special chars
+			return StringHtmlEncodable.getShifted(this.line);
 		}
 
-			// No shiftability detected, return original line
+		// No shiftability detected, return original line
 		return this.line;
 	}
 

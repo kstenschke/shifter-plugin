@@ -16,39 +16,34 @@ class DocCommentDataType {
 	private final String[] typesObjectiveC;
 
 
-
 	/**
 	 * Constructor
 	 */
 	public DocCommentDataType() {
-		typesJavaScript = new String[]{ "array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined" };
-		typesJava       = new String[]{ "boolean", "byte", "char", "double", "float", "int", "long", "short", "string" };
-		typesPHP        = new String[]{ "array", "boolean", "float", "integer", "null", "object", "resource", "string" };
-		typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
+		typesJavaScript = new String[]{"array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined"};
+		typesJava = new String[]{"boolean", "byte", "char", "double", "float", "int", "long", "short", "string"};
+		typesPHP = new String[]{"array", "boolean", "float", "integer", "null", "object", "resource", "string"};
+		typesObjectiveC = new String[]{"int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned"};
 	}
-
-
 
 	/**
 	 * Returns string array with all recognized doc comment data types
 	 *
-	 * @return	Array
+	 * @return Array
 	 */
 	String[] getAllTypes() {
 		return ArrayHelper.mergeStringArrays(
-				this.typesJavaScript,
-				this.typesJava,
-				this.typesPHP,
-				this.typesObjectiveC
+				  this.typesJavaScript,
+				  this.typesJava,
+				  this.typesPHP,
+				  this.typesObjectiveC
 		);
 	}
-
-
 
 	/**
 	 * Returns pipe-separated list (as string) with all recognized doc comment data types
 	 *
-	 * @return	String
+	 * @return String
 	 */
 	String getAllTypesPiped() {
 		String[] allTypes = this.getAllTypes();
@@ -56,80 +51,73 @@ class DocCommentDataType {
 		return ArrayHelper.implode(allTypes, "|");
 	}
 
-
-
 	/**
 	 * Check whether given String represents any known data type
 	 *
-	 * @param	word		String to be checked
-	 * @return	Boolean.
+	 * @param   word      String to be checked
+	 * @return Boolean.
 	 */
 	public Boolean isDataType(String word) {
-		return !(word == null || word.length() == 0)						// Word has content
-				  && this.getAllTypesPiped().contains(word.toLowerCase());	// Word is a keyword of the data type
+		return !(word == null || word.length() == 0)                  // Word has content
+				  && this.getAllTypesPiped().contains(word.toLowerCase());   // Word is a keyword of the data type
 	}
 
-
-
 	/**
-	 * @param	word		String to be shifted
-	 * @param	filename	Filename of the edited file
-	 * @param	isUp		Shifting up or down?
-	 * @return	String		Shifting result
+	 * @param   word      String to be shifted
+	 * @param   filename   Filename of the edited file
+	 * @param   isUp      Shifting up or down?
+	 * @return String      Shifting result
 	 */
 	public String getShifted(String word, String filename, Boolean isUp) {
-		String[] dataTypes   = this.getDataTypesByFilename(filename);
-		int amountTypes   = dataTypes.length;
+		String[] dataTypes = this.getDataTypesByFilename(filename);
+		int amountTypes = dataTypes.length;
 
-		if( amountTypes > 0 ) {
-			word  = word.toLowerCase();
+		if (amountTypes > 0) {
+			word = word.toLowerCase();
 			List<String> dataTypesList = Arrays.asList(dataTypes);
-			int curIndex   =  dataTypesList.indexOf(word);
+			int curIndex = dataTypesList.indexOf(word);
 
-				if( isUp ) {
-						// Shift up, if word at caret was not identified: take first item
-					curIndex++;
-					if( curIndex == amountTypes ) {
-						curIndex = 0;
-					}
-				} else {
-					curIndex--;
-					if( curIndex == -1 ) {
-						curIndex = amountTypes - 1;
-					}
+			if (isUp) {
+				// Shift up, if word at caret was not identified: take first item
+				curIndex++;
+				if (curIndex == amountTypes) {
+					curIndex = 0;
 				}
-
-				return dataTypesList.get(curIndex);
+			} else {
+				curIndex--;
+				if (curIndex == -1) {
+					curIndex = amountTypes - 1;
+				}
 			}
 
+			return dataTypesList.get(curIndex);
+		}
 
 		return word;
 	}
 
-
-
 	/**
 	 * Return array of data types of detected language of edited file
 	 *
-	 * @param	filename	Filename of edited file
-	 * @return	String[]
+	 * @param   filename   Filename of edited file
+	 * @return String[]
 	 */
 	String[] getDataTypesByFilename(String filename) {
-		if( filename != null ) {
+		if (filename != null) {
 			filename = filename.toLowerCase();
 
-			if( filename.endsWith(".js") ) {
+			if (filename.endsWith(".js")) {
 				// JavaScript data types
 				return this.typesJavaScript;
-			} else if (filename.endsWith(".java") ) {
+			} else if (filename.endsWith(".java")) {
 				// Java primitive data types
 				return this.typesJava;
-			} else if ( filename.endsWith(".m") ) {
+			} else if (filename.endsWith(".m")) {
 				// Objective-C "method" file
 				return this.typesObjectiveC;
 			}
 		}
-			// Default, e.g. PHP
+		// Default, e.g. PHP
 		return this.typesPHP;
 	}
 

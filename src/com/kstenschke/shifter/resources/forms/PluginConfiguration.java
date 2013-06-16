@@ -38,10 +38,10 @@ public class PluginConfiguration {
 	 * Constructor
 	 */
 	public PluginConfiguration() {
-			// Initialize the form
+		// Initialize the form
 		InitForm();
-		
-			// Add action listeners to buttons
+
+		// Add action listeners to buttons
 		this.buttonReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onClickReset(e);
@@ -49,81 +49,63 @@ public class PluginConfiguration {
 		});
 	}
 
-
-	
 	/**
 	 * Initialize the form: fill-in dictionary content from stored preference or factory default
 	 */
 	private void InitForm() {
-		String dictionary	= ShifterPreferences.getDictionary();
+		String dictionary = ShifterPreferences.getDictionary();
 
-		if( dictionary == null || dictionary.equals("") )  {
-			dictionary	= getDefaultDictionary();
+		if (dictionary == null || dictionary.equals("")) {
+			dictionary = getDefaultDictionary();
 		}
 
 		this.textAreaDictionary.setText(dictionary);
 	}
 
-
-
 	/**
 	 * Get default dictionary contents
 	 *
-	 * @return	Default dictionary
+	 * @return Default dictionary
 	 */
 	public String getDefaultDictionary() {
 		//@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
-		InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
+		InputStream dictionaryStream = this.getClass().getResourceAsStream("dictionary.txt");
 
 		return dictionaryStream == null ? "" : FileHelper.getFileStreamAsString(dictionaryStream);
 	}
-
-
 
 	public String getDictionaryContents() {
 		return this.textAreaDictionary.getText();
 	}
 
-
-
 	/**
 	 * Reset the form to factory default
 	 */
 	private void onClickReset(ActionEvent e) {
-		this.textAreaDictionary.setText( getDefaultDictionary() );
+		this.textAreaDictionary.setText(getDefaultDictionary());
 	}
-	
-	
+
 
 	public JPanel getRootPanel() {
 		return rootPanel;
 	}
 
-
-
 	/**
 	 * Config modified?
 	 *
-	 * @return	Boolean
+	 * @return Boolean
 	 */
 	public boolean isModified() {
-		return ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() );
+		return !this.textAreaDictionary.getText().equals(ShifterPreferences.getDictionary());
 	}
-
-
 
 	public void setData() {
 
 	}
 
-
-
 	public String getData() {
 		return this.textAreaDictionary.getText();
 	}
-
-
-
 
 	private void createUIComponents() {
 		// TODO: place custom component creation code here

@@ -39,65 +39,62 @@ public class ShiftableWord {
 	private final int caretOffset;
 
 
-
 	/**
 	 * Constructor
 	 *
-	 * @param	word			Shiftable word
-	 * @param	prefixChar		Char before the word, "#"?
-	 * @param	postfixChar		Char after the word, "#"?
-	 * @param	line			Whole line to possibly guess the context
-	 * @param	editorText		Whole text currently in editor
-	 * @param	caretOffset		Caret offset in document
-	 * @param	filename		Filename of the edited file
+	 * @param   word         Shiftable word
+	 * @param   prefixChar      Char before the word, "#"?
+	 * @param   postfixChar      Char after the word, "#"?
+	 * @param   line         Whole line to possibly guess the context
+	 * @param   editorText      Whole text currently in editor
+	 * @param   caretOffset      Caret offset in document
+	 * @param   filename      Filename of the edited file
 	 */
 	public ShiftableWord(String word, String prefixChar, String postfixChar, String line, CharSequence editorText, int caretOffset, String filename) {
 		this.shifterTypesManager = new ShifterTypesManager();
 
-		this.editorText   = editorText;
-		this.caretOffset  = caretOffset;
-		this.filename     = filename;
+		this.editorText = editorText;
+		this.caretOffset = caretOffset;
+		this.filename = filename;
 
-			// Detect word type
+		// Detect word type
 		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
 
-			// Comprehend negative values of numeric types
-		if( this.wordType == ShifterTypesManager.TYPE_CSS_LENGTH_VALUE || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE) {
-			if( prefixChar.equals("-") ) {
+		// Comprehend negative values of numeric types
+		if (this.wordType == ShifterTypesManager.TYPE_CSS_LENGTH_VALUE || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE) {
+			if (prefixChar.equals("-")) {
 				word = "-" + word;
 			}
 		}
-		this.word   = word;
+		this.word = word;
 
-			// Can the word be shifted?
+		// Can the word be shifted?
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
 	}
-
-
 
 	/**
 	 * Get shifted up/down word
 	 *
-	 * @param	isUp	Shift up or down?
-	 * @return			Next upper/lower word
+	 * @param   isUp   Shift up or down?
+	 * @return Next upper/lower word
 	 */
 	public String getShifted(Boolean isUp, Editor editor) {
 		if (!this.isShiftable) {
 			return this.word;
 		}
 
-			// Call actual shifting
+		// Call actual shifting
 		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, filename, editor);
 
-			// Keep original word casing
-		if(      this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
-			 &&   this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
-		) {
-			if ( TextualHelper.isAllUppercase(this.word) ) {
-					// Convert result to upper case
+		// Keep original word casing
+		if (this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
+				  && this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
+				  ) {
+			if (TextualHelper.isAllUppercase(this.word)) {
+				// Convert result to upper case
 				shiftedWord = shiftedWord.toUpperCase();
 			} else if (TextualHelper.isUcFirst(this.word)) {
-					// Convert result to upper case first char
+				// Convert result to upper case first char
 				shiftedWord = TextualHelper.toUcFirst(shiftedWord);
 			}
 		}
