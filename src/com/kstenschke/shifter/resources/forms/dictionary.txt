@@ -17,6 +17,7 @@
 	|bold|italic|strikethrough|subscript|superscript|underline|
 }
 (|java|php) {
+	|assertFalse|assertTrue|
 	|public|private|protected|
 	|extends|implements|
 }
@@ -46,6 +47,7 @@
 	|asc|desc|
 	|before|after|
 	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
+	|branches|tags|trunk|
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 	|en|de|fr|it|
 	|enabled|disabled|
@@ -90,5 +92,6 @@
 	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
 	|width|height|
 	|yes|no|
+	|yesterday|today|tomorrow|
 	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
 }
