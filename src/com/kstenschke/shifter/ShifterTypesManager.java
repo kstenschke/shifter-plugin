@@ -17,7 +17,6 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.helpers.FileHelper;
 import com.kstenschke.shifter.shiftertypes.*;
 
 /**
@@ -33,15 +32,15 @@ public class ShifterTypesManager {
 	private static final int TYPE_DICTIONARYWORD_GLOBAL 		= 3;
 
 		// Generic types
-	public static final int    TYPE_QUOTEDSTRING			   = 50;
+	public static final int    TYPE_QUOTEDSTRING		= 50;
 	private static final int   TYPE_HTMLENCODABLESTRING	= 51;
 	private static final int   TYPE_MONOCHARACTERSTRING	= 52;
-	private static final int   TYPE_RGBCOLOR				   = 53;
-	public static final int    TYPE_CSS_LENGTH_VALUE      = 54; // em, px, pt, cm, in
-	private static final int   TYPE_DOCCOMMENT_TAG 		   = 55;
+	private static final int   TYPE_RGBCOLOR			= 53;
+	public static final int    TYPE_CSS_LENGTH_VALUE    = 54; // em, px, pt, cm, in
+	private static final int   TYPE_DOCCOMMENT_TAG 		= 55;
 	private static final int   TYPE_DOCCOMMENT_DATATYPE	= 56;
 	public static final int    TYPE_PHPVARIABLE		   	= 57;
-	public static final int    TYPE_NUMERIC_VALUE         = 58;
+	public static final int    TYPE_NUMERIC_VALUE       = 58;
 	public static final int TYPE_NUMERICPOSTFIXEDSTRING = 59;
 
 		// Word type objects
@@ -58,16 +57,12 @@ public class ShifterTypesManager {
 	private DocCommentTag typeTagInDocComment;
 	private DocCommentType typeDataTypeInDocComment;
 
-
-
 	/**
 	 * Constructor
 	 */
 	public ShifterTypesManager() {
 
 	}
-
-
 
 	/**
 	 * Detect word type (get the one with highest priority to be shifted) of given string
@@ -110,7 +105,7 @@ public class ShifterTypesManager {
 
 			// File extension specific term in dictionary
 		this.typeDictionaryTerm = new Dictionary();
-		String fileExtension	= FileHelper.extractFileExtension(filename);
+		String fileExtension	= UtilsFile.extractFileExtension(filename);
 
 		if( 	fileExtension != null
 			&&	this.typeDictionaryTerm.isTermInDictionary(word, fileExtension)
@@ -152,8 +147,6 @@ public class ShifterTypesManager {
 
 		return TYPE_UNKNOWN;
 	}
-
-
 
 	/**
 	 * Shift given word

@@ -20,6 +20,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.popup.Balloon;
 import com.intellij.openapi.ui.popup.BalloonBuilder;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.ui.JBColor;
 import com.intellij.ui.awt.RelativePoint;
 
 import java.awt.*;
@@ -49,18 +50,13 @@ public class NumericValue {
 
 	/**
 	 * @param	numericValue	String representing a numeric value
-	 * @param	isUp				Shifting up or down?
-	 * @return	String         Value shifted up or down by one
+	 * @param	isUp		    Shifting up or down?
+	 * @return	String          Value shifted up or down by one
 	 */
 	public String getShifted(String numericValue, Boolean isUp, Editor editor) {
-			// Integer
 		if( numericValue.length() <= 7 ) {
-			int intValue = Integer.parseInt(numericValue);
-
-				// Shift up/down by 1
-			intValue = intValue + (isUp ? 1 : -1);
-
-			return Integer.toString(intValue);
+                // Integer
+			return Integer.toString( Integer.parseInt(numericValue) + (isUp ? 1 : -1) );
 		}
 
 			// UNIX timestamp? Shift it plus/minus one day
@@ -69,7 +65,7 @@ public class NumericValue {
 			// Create and show balloon with human-readable date
 		Balloon.Position pos = Balloon.Position.above;
 		String balloonText   = new Date(shiftedTimestamp).toString();
-		BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new Color(255, 255, 231), null);
+		BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new JBColor(new Color(255, 255, 231), new Color(255, 255, 231)), null);
 		Balloon balloon = builder.createBalloon();
 
 		Point caretPos                = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());

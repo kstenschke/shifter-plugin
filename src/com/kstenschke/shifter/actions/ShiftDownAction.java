@@ -23,7 +23,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.project.Project;
-
+import com.kstenschke.shifter.StaticTexts;
 
 
 /**
@@ -39,8 +39,6 @@ public class ShiftDownAction extends AnAction {
 	public void update( AnActionEvent event ) {
 		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
 	}
-
-
 
 	/**
 	 * Perform shift down
@@ -58,7 +56,7 @@ public class ShiftDownAction extends AnAction {
 					}
 				});
 			}
-		}, "Shift Down", UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+		}, StaticTexts.ACTION_LABEL_SHIFT_DOWN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
 	}
 
 }

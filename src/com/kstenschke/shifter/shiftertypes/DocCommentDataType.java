@@ -1,6 +1,6 @@
 package com.kstenschke.shifter.shiftertypes;
 
-import com.kstenschke.shifter.helpers.ArrayHelper;
+import com.kstenschke.shifter.UtilsArray;
 
 import java.util.Arrays;
 import java.util.List;
@@ -15,8 +15,6 @@ class DocCommentDataType {
 	private final String[] typesPHP;
 	private final String[] typesObjectiveC;
 
-
-
 	/**
 	 * Constructor
 	 */
@@ -27,23 +25,19 @@ class DocCommentDataType {
 		typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
 	}
 
-
-
 	/**
 	 * Returns string array with all recognized doc comment data types
 	 *
 	 * @return	Array
 	 */
 	String[] getAllTypes() {
-		return ArrayHelper.mergeStringArrays(
-				this.typesJavaScript,
-				this.typesJava,
-				this.typesPHP,
-				this.typesObjectiveC
-		);
+		return UtilsArray.mergeStringArrays(
+            this.typesJavaScript,
+            this.typesJava,
+            this.typesPHP,
+            this.typesObjectiveC
+        );
 	}
-
-
 
 	/**
 	 * Returns pipe-separated list (as string) with all recognized doc comment data types
@@ -53,10 +47,8 @@ class DocCommentDataType {
 	String getAllTypesPiped() {
 		String[] allTypes = this.getAllTypes();
 
-		return ArrayHelper.implode(allTypes, "|");
+		return UtilsArray.implode(allTypes, "|");
 	}
-
-
 
 	/**
 	 * Check whether given String represents any known data type
@@ -65,11 +57,9 @@ class DocCommentDataType {
 	 * @return	Boolean.
 	 */
 	public Boolean isDataType(String word) {
-		return !(word == null || word.length() == 0)						// Word has content
-				  && this.getAllTypesPiped().contains(word.toLowerCase());	// Word is a keyword of the data type
+		return !(word == null || word.length() == 0)					// Word has content
+			   && this.getAllTypesPiped().contains(word.toLowerCase());	// Word is a keyword of the data type
 	}
-
-
 
 	/**
 	 * @param	word		String to be shifted
@@ -105,8 +95,6 @@ class DocCommentDataType {
 
 		return word;
 	}
-
-
 
 	/**
 	 * Return array of data types of detected language of edited file

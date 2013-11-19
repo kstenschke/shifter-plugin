@@ -16,14 +16,7 @@
 
 package com.kstenschke.shifter.shiftertypes;
 
-import com.intellij.openapi.editor.Editor;
 import org.apache.commons.lang.StringEscapeUtils;
-
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * HTML encoded/encodable (=containing char(s) that be be encoded) String.
@@ -48,10 +41,8 @@ public class StringHtmlEncodable {
 
 		String encoded = StringEscapeUtils.escapeHtml(str);
 		String decoded = StringEscapeUtils.unescapeHtml(str);
-		Integer strLenEncoded = encoded.length();
-		Integer strLenDecoded = decoded.length();
 
-		return !strLenOriginal.equals(strLenEncoded) || !strLenOriginal.equals(strLenDecoded);
+		return !strLenOriginal.equals(encoded.length()) || !strLenOriginal.equals(decoded.length());
 	}
 
 	/**
@@ -66,16 +57,12 @@ public class StringHtmlEncodable {
 		String decoded = StringEscapeUtils.unescapeHtml(word);
 		Integer strLenDecoded = decoded.length();
 
-		if (!strLenOriginal.equals(strLenDecoded)) {
-			return decoded;
-		}
+		if (!strLenOriginal.equals(strLenDecoded)) return decoded;
 
 		String encoded = StringEscapeUtils.escapeHtml(word);
 		Integer strLenEncoded = encoded.length();
 
-		if (!strLenOriginal.equals(strLenEncoded)) {
-			return encoded;
-		}
+		if (!strLenOriginal.equals(strLenEncoded)) return encoded;
 
 		return word;
 	}

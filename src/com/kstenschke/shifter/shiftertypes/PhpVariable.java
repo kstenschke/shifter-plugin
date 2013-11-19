@@ -34,8 +34,6 @@ public class PhpVariable {
 
 	}
 
-
-
 	/**
 	 * Check whether given string represents a PHP variable
 	 *
@@ -52,8 +50,6 @@ public class PhpVariable {
 			// Must contain a-z,A-Z or 0-9, _
 		return identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
 	}
-
-
 
 	/**
 	 * Shift PX value up/down by 16px

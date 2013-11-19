@@ -35,8 +35,6 @@ public class ShiftableLine {
 
 	private final String filename;
 
-
-
 	/**
 	 * Constructor
 	 *
@@ -51,8 +49,6 @@ public class ShiftableLine {
 		this.caretOffset	= caretOffset;
 		this.filename		= filename;
 	}
-
-
 
 	/**
 	 * Get shifted up/down word

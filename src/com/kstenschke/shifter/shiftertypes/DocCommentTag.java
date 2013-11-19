@@ -1,6 +1,6 @@
 package com.kstenschke.shifter.shiftertypes;
 
-import com.kstenschke.shifter.helpers.ArrayHelper;
+import com.kstenschke.shifter.UtilsArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -19,8 +19,6 @@ public class DocCommentTag {
 
 	private final String[] tagsPHP;
 
-
-
 	/**
 	 * Constructor
 	 */
@@ -30,17 +28,14 @@ public class DocCommentTag {
 		tagsPHP        = new String[]{ "abstract", "access", "author", "constant", "deprecated", "final", "global", "magic", "module", "param", "package", "return", "see", "static", "subpackage", "throws", "todo", "var", "version" };
 	}
 
-
 	/**
 	 * Returns string array with all recognized doc comment tags
 	 *
 	 * @return  Array
 	 */
 	private String[]   getAllTags() {
-		return ArrayHelper.mergeStringArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
+		return UtilsArray.mergeStringArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
 	}
-
-
 
 	/**
 	 * Returns pipe-separated list (as string) with all recognized doc comment tags
@@ -50,10 +45,8 @@ public class DocCommentTag {
 	public String   getAllTagsPiped() {
 		String[] allTags = this.getAllTags();
 
-		return ArrayHelper.implode(allTags, "|");
+		return UtilsArray.implode(allTags, "|");
 	}
-
-
 
 	/**
 	 * Check whether given String looks like a doc comment line
@@ -78,8 +71,6 @@ public class DocCommentTag {
 		return ( allMatches.size() > 0);
 	}
 
-
-
 	/**
 	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
 	 *
@@ -89,14 +80,8 @@ public class DocCommentTag {
 	 * @return  Boolean.
 	 */
 	public Boolean isDocCommentTag(String word, String prefixChar, String line) {
-		if ( !prefixChar.equals("@") ) {
-			return false;
-		}
-
-		return this.isDocCommentLineContext(line);
+		return !prefixChar.equals("@") ? false : this.isDocCommentLineContext(line);
 	}
-
-
 
 	/**
 	 * @param   word              String to be shifted
@@ -140,8 +125,6 @@ public class DocCommentTag {
 		return word;
 	}
 
-
-
 	/**
 	 * Find first JavaScript function's name out of given code
 	 *
@@ -170,8 +153,6 @@ public class DocCommentTag {
 		return methodName;
 	}
 
-
-
 	/**
 	 * Return array of data types of detected language of edited file
 	 *
@@ -182,15 +163,10 @@ public class DocCommentTag {
 		if( filename != null ) {
 			filename = filename.toLowerCase();
 
-			if( filename.endsWith(".js") ) {
-				// JavaScript comment types
-				return this.tagsJavaScript;
-			} else if (filename.endsWith(".java") ) {
-				// Java comment tags in the recommended order
-				return this.tagsJava;
-			}
+			if( filename.endsWith(".js") )  return this.tagsJavaScript; // JavaScript comment types
+			if (filename.endsWith(".java")) return this.tagsJava;       // Java comment tags in the recommended order
 		}
-			// Default, e.g. PHP
+
 		return this.tagsPHP;
 	}
 

@@ -17,8 +17,6 @@ public class DocCommentType {
 
 	}
 
-
-
 	/**
 	 * Check whether given String looks like a doc comment line
 	 *
@@ -42,8 +40,6 @@ public class DocCommentType {
 		return ( allMatches.size() > 0);
 	}
 
-
-
 	/**
 	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
 	 *
@@ -59,8 +55,6 @@ public class DocCommentType {
 
 		return this.isDocCommentTypeLineContext(line);
 	}
-
-
 
 	/**
 	 * @param   word          String to be shifted

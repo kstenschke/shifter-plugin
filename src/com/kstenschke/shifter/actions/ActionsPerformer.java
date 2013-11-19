@@ -23,10 +23,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.kstenschke.shifter.helpers.ArrayHelper;
-import com.kstenschke.shifter.helpers.TextualHelper;
-import com.kstenschke.shifter.ShiftableLine;
-import com.kstenschke.shifter.ShiftableWord;
+import com.kstenschke.shifter.*;
 import com.kstenschke.shifter.shiftertypes.CssLengthValue;
 import com.kstenschke.shifter.shiftertypes.NumericValue;
 import com.kstenschke.shifter.shiftertypes.StringHtmlEncodable;
@@ -46,19 +43,18 @@ class ActionsPerformer {
 	private SelectionModel selectionModel;
 	boolean hasSelection;
 
-
 	/**
 	 * Constructor
 	 */
 	ActionsPerformer(final AnActionEvent event) {
-		editor = event.getData(PlatformDataKeys.EDITOR);
+		this.editor = event.getData(PlatformDataKeys.EDITOR);
 
-		if (editor != null) {
-			document       = editor.getDocument();
-			editorText     = document.getCharsSequence();
-			caretOffset    = editor.getCaretModel().getOffset();
-			selectionModel = editor.getSelectionModel();
-			hasSelection   = selectionModel.hasSelection();
+		if (this.editor != null) {
+			this.document       = this.editor.getDocument();
+            this.editorText     = this.document.getCharsSequence();
+            this.caretOffset    = this.editor.getCaretModel().getOffset();
+            this.selectionModel = this.editor.getSelectionModel();
+            this.hasSelection   = this.selectionModel.hasSelection();
 		}
 	}
 
@@ -67,44 +63,40 @@ class ActionsPerformer {
 	 * @param	shiftUp	 Shift up or down?
 	 */
 	public void write(final AnActionEvent event, boolean shiftUp) {
-
-		if (editor != null) {
-//			final Document document = editor.getDocument();
-
+		if (this.editor != null) {
 			if (hasSelection) {
 				//-------------------- Shift selection: sort lines alphabetically
-				int offsetStart   = selectionModel.getSelectionStart();
-				int offsetEnd     = selectionModel.getSelectionEnd();
-
-				int lineNumberSelStart = document.getLineNumber(offsetStart);
-				int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+				int offsetStart         = selectionModel.getSelectionStart();
+				int offsetEnd           = selectionModel.getSelectionEnd();
+				int lineNumberSelStart  = document.getLineNumber(offsetStart);
+				int lineNumberSelEnd    = document.getLineNumber(offsetEnd);
 
 				if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
 					lineNumberSelEnd--;
 				}
 
 				// Extract text as a list of lines
-				List<String> lines = TextualHelper.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+				List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
 
 				if( lines.size() > 1) {
 						// Sort lines alphabetically
-					StringBuilder sortedText = TextualHelper.joinLines(this.sortLines(lines, shiftUp));
+					StringBuilder sortedText = UtilsTextual.joinLines(this.sortLines(lines, shiftUp));
 					int offsetLineStart     = document.getLineStartOffset(lineNumberSelStart);
 					int offsetLineEnd       = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
 
 					document.replaceString(offsetLineStart, offsetLineEnd, sortedText);
 				} else {
 					// Selection within one line
-					String selectedText  = TextualHelper.getSubString(editorText, offsetStart, offsetEnd);
+					String selectedText  = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
 
-					if( TextualHelper.isCommaSeparatedList(selectedText) ) {
+					if( UtilsTextual.isCommaSeparatedList(selectedText) ) {
 						String sortedList = this.sortCommaSeparatedList(selectedText, shiftUp);
 
 						document.replaceString(offsetStart, offsetEnd, sortedList);
-					} else if( TextualHelper.containsAnyQuotes(selectedText) ) {
-						document.replaceString(offsetStart, offsetEnd, TextualHelper.swapQuotes(selectedText));
-					} else if( TextualHelper.containsAnySlashes(selectedText) ) {
-						document.replaceString(offsetStart, offsetEnd, TextualHelper.swapSlashes(selectedText));
+					} else if( UtilsTextual.containsAnyQuotes(selectedText) ) {
+						document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+					} else if( UtilsTextual.containsAnySlashes(selectedText) ) {
+						document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
 					} else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
 						document.replaceString( offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText) );
 					}
@@ -114,7 +106,7 @@ class ActionsPerformer {
 				VirtualFile file	= FileDocumentManager.getInstance().getFile(document);
 				String filename		= (file != null) ? file.getName() : "";
 
-				String word	= TextualHelper.getWordAtOffset(editorText, caretOffset);
+				String word	= UtilsTextual.getWordAtOffset(editorText, caretOffset);
 
 				int lineNumber = document.getLineNumber(caretOffset);
 				int offsetLineStart = document.getLineStartOffset(lineNumber);
@@ -124,9 +116,9 @@ class ActionsPerformer {
 				Boolean wordShifted = false;
 
 				if ( word != null && ! word.isEmpty() ) {
-					int wordOffset = TextualHelper.getStartOfWordAtOffset(editorText, caretOffset);
-					String prefixChar = TextualHelper.getCharBeforeOffset(editorText, wordOffset);
-					String postfixChar = TextualHelper.getCharAfterOffset(editorText, wordOffset + word.length() - 1);
+					int wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, caretOffset);
+					String prefixChar = UtilsTextual.getCharBeforeOffset(editorText, wordOffset);
+					String postfixChar = UtilsTextual.getCharAfterOffset(editorText, wordOffset + word.length() - 1);
 
 						// Identify word type and shift it accordingly
 					ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, editorText, caretOffset, filename);
@@ -134,7 +126,6 @@ class ActionsPerformer {
 						// Comprehend negative values of numeric types
 					if( NumericValue.isNumericValue(word) || CssLengthValue.isCssLengthValue(word) ) {
 						if ( prefixChar.equals("-") ) {
-//							prefixChar  = "";
 							word = "-" + word;
 							wordOffset--;
 						}
@@ -168,7 +159,11 @@ class ActionsPerformer {
 	 * @return  Given lines sorted alphabetically ascending / descending
 	 */
 	private List<String> sortLines(List<String> lines, Boolean shiftUp) {
-		Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
+        if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {
+		    Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
+        } else {
+		    Collections.sort(lines);
+        }
 
 		if( !shiftUp ) {
 			Collections.reverse(lines);
@@ -185,13 +180,17 @@ class ActionsPerformer {
 	private String sortCommaSeparatedList(String selectedText, Boolean shiftUp) {
 		String[] items = selectedText.split(",(\\s)*");
 
-		Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
+        if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {
+		    Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
+        } else {
+            Arrays.sort(items);
+        }
 
 		if( !shiftUp ) {
 			Collections.reverse(Arrays.asList(items));
 		}
 
-		return ArrayHelper.implode(items, ", ");
+		return UtilsArray.implode(items, ", ");
 	}
 
 }

@@ -15,7 +15,6 @@
  */
 
 package com.kstenschke.shifter.shiftertypes;
-import org.apache.commons.lang.StringUtils;
 
 /**
  * String with numeric postfix
@@ -37,7 +36,6 @@ public class StringNumericPostfix {
 		return word.matches("^.+?\\d$");
 	}
 
-
 	/**
 	 * Shift numeric postfix of string
 	 *
@@ -46,7 +44,7 @@ public class StringNumericPostfix {
 	 * @return String
 	 */
 	public static String getShifted(String word, Boolean isUp) {
-		int index = 0;
+		int index;
 		int startIndex = word.length()-1;
 		for (index = startIndex; index >= 0 ; index--) {
 			String curChar = word.substring(index, index+1);

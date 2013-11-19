@@ -17,7 +17,6 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.helpers.TextualHelper;
 
 /**
  * Shiftable word
@@ -37,8 +36,6 @@ public class ShiftableWord {
 	private final CharSequence editorText;
 
 	private final int caretOffset;
-
-
 
 	/**
 	 * Constructor
@@ -73,8 +70,6 @@ public class ShiftableWord {
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
 	}
 
-
-
 	/**
 	 * Get shifted up/down word
 	 *
@@ -93,12 +88,12 @@ public class ShiftableWord {
 		if(      this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
 			 &&   this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
 		) {
-			if ( TextualHelper.isAllUppercase(this.word) ) {
+			if ( UtilsTextual.isAllUppercase(this.word) ) {
 					// Convert result to upper case
 				shiftedWord = shiftedWord.toUpperCase();
-			} else if (TextualHelper.isUcFirst(this.word)) {
+			} else if (UtilsTextual.isUcFirst(this.word)) {
 					// Convert result to upper case first char
-				shiftedWord = TextualHelper.toUcFirst(shiftedWord);
+				shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
 			}
 		}
 

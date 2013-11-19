@@ -17,7 +17,7 @@
 package com.kstenschke.shifter;
 
 import com.intellij.ide.util.PropertiesComponent;
-import com.kstenschke.shifter.resources.forms.PluginConfiguration;
+import org.codehaus.groovy.util.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 /**
@@ -26,34 +26,31 @@ import org.jetbrains.annotations.NonNls;
  */
 public class ShifterPreferences {
 
-		//  @NonNls = element is not a string requiring internationalization and it does not contain such strings.
 	@NonNls
 	private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
+    @NonNls
+    public static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
 
-
+        // Sorting modes
+    public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
+    public static final Integer SORTING_MODE_CASE_INSENSITIVE   = 1;
 
 	/**
-	 * Store dictionary preference
+	 * Store dictionary
 	 *
 	 * @param	dictionary		Contents to be stored in dictionary preference
 	 */
 	public static void saveDictionary(String dictionary) {
-		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-
-		propertiesComponent.setValue(PROPERTY_DICTIONARY, dictionary);
+		PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY, dictionary);
 	}
 
-
-
 	/**
-	 * Get dictionary preference
+	 * Load dictionary
 	 *
 	 * @return	String
 	 */
 	public static String getDictionary() {
-		PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-
-		String dictionary	= propertiesComponent.getValue(PROPERTY_DICTIONARY);
+		String dictionary = PropertiesComponent.getInstance().getValue(PROPERTY_DICTIONARY);
 
 		if( dictionary == null ) {
 			dictionary = "";
@@ -62,4 +59,23 @@ public class ShifterPreferences {
 		return dictionary;
 	}
 
+    /**
+     * Store sorting mode
+     *
+     * @param	mode		case sensitive / insensitive
+     */
+    public static void saveSortingMode(Integer mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
+    }
+
+    /**
+     * Load sorting mode
+     *
+     * @return	Integer     mode: case sensitive / insensitive
+     */
+    public static Integer getSortingMode() {
+        String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SORTING_MODE);
+
+        return modeStr == null ? SORTING_MODE_CASE_INSENSITIVE : Integer.parseInt(modeStr);
+    }
 }

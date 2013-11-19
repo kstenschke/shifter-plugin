@@ -23,15 +23,12 @@ import java.awt.*;
  */
 public class RbgColor {
 
-
 	/**
 	 * Constructor
 	 */
 	public RbgColor() {
 
 	}
-
-
 
 	/**
 	 * Check whether given string represents a hex RGB color, prefix must be "#"
@@ -44,7 +41,6 @@ public class RbgColor {
 		return !( !prefix.equals("#")  || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")) );
 	}
 
-
 	/**
 	 * @param	rgbStr		String representing an RGB color
 	 * @param	isUp		Shifting up or down?
@@ -52,24 +48,15 @@ public class RbgColor {
 	 */
 	public String getShifted(String rgbStr, Boolean isUp) {
 		if (rgbStr.length() == 3) {
-				// Convert 3-digit RGB color to 6 digits
 			rgbStr = sixfoldTripleColor(rgbStr);
 		}
 
-		if (isUp) {
-				// Shift up: lighten
-			if (!isWhite(rgbStr)) {
-				return lightenRgbString(rgbStr);
-			}
-		} else if (!isBlack(rgbStr)) {
-				// Shift down: darken
-			return darkenRgbString(rgbStr);
-		}
+		if(isUp) {
+			if (!isWhite(rgbStr))   return lightenRgbString(rgbStr);
+		} else if(!isBlack(rgbStr)) return darkenRgbString(rgbStr);
 
 		return rgbStr;
 	}
-
-
 
 	/**
 	 * Check whether given String represents RGB white (fff, FFF, ffffff, FFFFFF)
@@ -81,8 +68,6 @@ public class RbgColor {
 		return str.equalsIgnoreCase("fff") || str.equalsIgnoreCase("ffffff");
 	}
 
-
-
 	/**
 	 * Check whether given String represents RGB black (000, 000000)
 	 *
@@ -92,8 +77,6 @@ public class RbgColor {
 	private static Boolean isBlack(String str) {
 		return str.equalsIgnoreCase("000") || str.equalsIgnoreCase("000000");
 	}
-
-
 
 	/**
 	 * Convert three digit color string into six digits
@@ -109,8 +92,6 @@ public class RbgColor {
 		return "".concat(R).concat(R).concat(G).concat(G).concat(B).concat(B);
 	}
 
-
-
 	/**
 	 * Get Color object of given RGB string
 	 *
@@ -125,8 +106,6 @@ public class RbgColor {
 		return new Color(R, G, B);
 	}
 
-
-
 	/**
 	 * Shift given RGB color hex string to be lighter
 	 *
@@ -138,8 +117,6 @@ public class RbgColor {
 
 		return getHexFromColor(lighterColor);
 	}
-
-
 
 	/**
 	 * Shift given RGB color hex string to be darker
@@ -153,8 +130,6 @@ public class RbgColor {
 		return getHexFromColor(darkerColor);
 	}
 
-
-
 	/**
 	 * Return the hex name of a specified color.
 	 *
@@ -162,20 +137,12 @@ public class RbgColor {
 	 * @return			Hex name of color: "rrggbb".
 	 */
 	private static String getHexFromColor(Color color) {
-		int r = color.getRed();
-		int g = color.getGreen();
-		int b = color.getBlue();
+		String rHex = Integer.toString(color.getRed(), 16);
+		String gHex = Integer.toString(color.getGreen(), 16);
+		String bHex = Integer.toString(color.getBlue(), 16);
 
-		String rHex = Integer.toString(r, 16);
-		String gHex = Integer.toString(g, 16);
-		String bHex = Integer.toString(b, 16);
-
-		return (rHex.length() == 2 ? "" + rHex : "0" + rHex) +
-				  (gHex.length() == 2 ? "" + gHex : "0" + gHex) +
-				  (bHex.length() == 2 ? "" + bHex : "0" + bHex);
+		return (rHex.length() == 2 ? "" + rHex : "0" + rHex) + (gHex.length() == 2 ? "" + gHex : "0" + gHex) +  (bHex.length() == 2 ? "" + bHex : "0" + bHex);
 	}
-
-
 
 	/**
 	 * Darken given color.
@@ -184,23 +151,8 @@ public class RbgColor {
 	 * @return			Darker color.
 	 */
 	private static Color darker(Color color) {
-		int red = Math.round(color.getRed() - 1); //* .0955);
-		int green = Math.round(color.getGreen() - 1); //* .0955);
-		int blue = Math.round(color.getBlue() - 1); //* .0955);
-
-		if (red < 0) red = 0;
-		else if (red > 255) red = 255;
-		if (green < 0) green = 0;
-		else if (green > 255) green = 255;
-		if (blue < 0) blue = 0;
-		else if (blue > 255) blue = 255;
-
-		int alpha = color.getAlpha();
-
-		return new Color(red, green, blue, alpha);
+        return addToRGB(color, -1);
 	}
-
-
 
 	/**
 	 * Lighten given color.
@@ -209,20 +161,26 @@ public class RbgColor {
 	 * @return	Color		Lighter color.
 	 */
 	private static Color lighter(Color color) {
-		int red = Math.round(color.getRed() + 1); //* .0955);
-		int green = Math.round(color.getGreen() + 1); //* .0955);
-		int blue = Math.round(color.getBlue() + 1); //* .0955);
-
-		if (red < 0) red = 0;
-		else if (red > 255) red = 255;
-		if (green < 0) green = 0;
-		else if (green > 255) green = 255;
-		if (blue < 0) blue = 0;
-		else if (blue > 255) blue = 255;
-
-		int alpha = color.getAlpha();
-
-		return new Color(red, green, blue, alpha);
+        return addToRGB(color, 1);
 	}
+
+    /**
+     * Increment RGB values of given color by given amount
+     *
+     * @param   color
+     * @param   amount
+     * @return  Color
+     */
+    private static Color addToRGB(Color color, int amount) {
+        int red = Math.round(color.getRed() + amount);
+        int green = Math.round(color.getGreen() + amount);
+        int blue = Math.round(color.getBlue() + amount);
+
+        red     = red < 0 ? 0 : red > 255 ? 255 : red;
+        green   = green < 0 ? 0 : green > 255 ? 255 : green;
+        blue    = blue < 0 ? 0 : blue > 255 ? 255 : blue;
+
+        return new Color(red, green, blue, color.getAlpha());
+    }
 
 }

@@ -17,7 +17,7 @@
 package com.kstenschke.shifter.shiftertypes;
 
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.helpers.TextualHelper;
+import com.kstenschke.shifter.UtilsTextual;
 import com.kstenschke.shifter.resources.forms.PluginConfiguration;
 import org.apache.commons.lang.StringUtils;
 
@@ -37,8 +37,6 @@ public class Dictionary {
 		// The complete dictionary
 	private final String dictionaryContents;
 
-
-
 	/**
 	 * Constructor
 	 */
@@ -50,8 +48,6 @@ public class Dictionary {
 
 		this.dictionaryContents = contents;
 	}
-
-
 
 	/**
 	 * Check whether the given term exists in any section of shift-lists of the dictionary
@@ -80,8 +76,6 @@ public class Dictionary {
 
 		return false;
 	}
-
-
 
 	/**
 	 * Check whether the given term exists in any section of shift-lists of the dictionary,
@@ -116,8 +110,6 @@ public class Dictionary {
 		return false;
 	}
 
-
-
 	/**
 	 * @param	termsLines	Terms lines from dictionary
 	 * @param	term		Word to be shifted
@@ -127,9 +119,10 @@ public class Dictionary {
 		String sword		= "|" + term + "|";
 		String[] allLines	= termsLines.split("\n");
 		int numLines		= allLines.length;
-		String curLine		= null;
 
+		String curLine;
 		int i = 0;
+
 		while(i < numLines) {
 			curLine	= allLines[i];
 			curLine	= curLine.replaceAll("\\s*", "").replaceAll("\\{*", "").replaceAll("\\}*", "").trim();
@@ -143,8 +136,6 @@ public class Dictionary {
 
 		return null;
 	}
-
-
 
 	/**
 	 * Get all starting lines of term-blocks (extensions) from dictionary
@@ -162,8 +153,6 @@ public class Dictionary {
 
 		return allMatches.toArray();
 	}
-
-
 
 	/**
 	 * Get all starting lines of term-blocks (extensions) from dictionary,
@@ -185,8 +174,6 @@ public class Dictionary {
 		return allMatches.toArray();
 	}
 
-
-
 	/**
 	 * Shift given word, using the (already fetched) list of relevant terms
 	 *
@@ -196,7 +183,7 @@ public class Dictionary {
 	 */
 	public String getShifted(String word, Boolean isUp) {
 		String shiftTerms	= this.relevantTermsList.replaceFirst("\\|", "");
-			   shiftTerms	= TextualHelper.replaceLast(shiftTerms, "|", "");
+			   shiftTerms	= UtilsTextual.replaceLast(shiftTerms, "|", "");
 
 		String[] termsList	= shiftTerms.split("\\|");
 		if( termsList.length > 0 ) {

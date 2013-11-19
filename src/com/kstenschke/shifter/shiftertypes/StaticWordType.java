@@ -16,7 +16,7 @@
 
 package com.kstenschke.shifter.shiftertypes;
 
-import com.kstenschke.shifter.helpers.ArrayHelper;
+import com.kstenschke.shifter.UtilsArray;
 
 /**
  * Shifter general word type class
@@ -31,8 +31,6 @@ public class StaticWordType {
 
 	private final String regExPattern;
 
-
-
 	/**
 	 * Constructor
 	 */
@@ -40,10 +38,8 @@ public class StaticWordType {
 		this.typeID			= typeID;
 		this.keywords		= keywords;
 		this.amountKeywords = keywords.length;
-		this.regExPattern = ArrayHelper.implode(this.keywords, "|").toLowerCase();
+		this.regExPattern = UtilsArray.implode(this.keywords, "|").toLowerCase();
 	}
-
-
 
 	/**
 	 * Get word type ID
@@ -53,8 +49,6 @@ public class StaticWordType {
 	public int getTypeID() {
 		return typeID;
 	}
-
-
 
 	/**
 	 * Check whether the given string is a known keyword of the word type
@@ -66,22 +60,19 @@ public class StaticWordType {
 		return (word.toLowerCase()).matches(this.regExPattern);
 	}
 
-
-
 	/**
 	 * @param	word		Word to be shifted
 	 * @param	isUp		Shifting up or down?
 	 * @return	String		Shifting result
 	 */
 	public String getShifted(String word, Boolean isUp) {
-		int wordPositionOriginal = ArrayHelper.findPositionInArray(this.keywords, word.toLowerCase());
+		int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word.toLowerCase());
 
 		if( wordPositionOriginal == -1 ) {
 			return word;
 		}
 
 		int wordPositionShifted;
-
 		if (isUp) {
 				// Shifting up
 			wordPositionShifted = wordPositionOriginal + 1;

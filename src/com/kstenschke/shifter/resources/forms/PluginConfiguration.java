@@ -16,25 +16,22 @@
 
 package com.kstenschke.shifter.resources.forms;
 
-import com.intellij.openapi.options.Configurable;
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.helpers.FileHelper;
+import com.kstenschke.shifter.UtilsFile;
 
 import javax.swing.*;
 import java.awt.event.*;
 import java.io.InputStream;
-
 
 public class PluginConfiguration {
 
 	public JPanel rootPanel;
 	private JButton buttonReset;
 	private JTextArea textAreaDictionary;
-	private JPanel buttons;
-	private JScrollPane jspane;
+    private JRadioButton caseSensitiveRadioButton;
+    private JRadioButton caseInsensitiveRadioButton;
 
-
-	/**
+    /**
 	 * Constructor
 	 */
 	public PluginConfiguration() {
@@ -49,13 +46,18 @@ public class PluginConfiguration {
 		});
 	}
 
-
-	
 	/**
 	 * Initialize the form: fill-in dictionary content from stored preference or factory default
 	 */
 	private void InitForm() {
 		String dictionary	= ShifterPreferences.getDictionary();
+
+        Integer mode    = ShifterPreferences.getSortingMode();
+        if( mode.equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
+            caseSensitiveRadioButton.setSelected(true);
+        } else {
+            caseInsensitiveRadioButton.setSelected(true);
+        }
 
 		if( dictionary == null || dictionary.equals("") )  {
 			dictionary	= getDefaultDictionary();
@@ -63,8 +65,6 @@ public class PluginConfiguration {
 
 		this.textAreaDictionary.setText(dictionary);
 	}
-
-
 
 	/**
 	 * Get default dictionary contents
@@ -75,31 +75,37 @@ public class PluginConfiguration {
 		//@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
 		InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
 
-		return dictionaryStream == null ? "" : FileHelper.getFileStreamAsString(dictionaryStream);
+		return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
 	}
 
-
-
+    /**
+     * @return  String
+     */
 	public String getDictionaryContents() {
 		return this.textAreaDictionary.getText();
 	}
 
-
-
 	/**
-	 * Reset the form to factory default
+	 * Reset default settings
 	 */
 	private void onClickReset(ActionEvent e) {
-		this.textAreaDictionary.setText( getDefaultDictionary() );
+        caseInsensitiveRadioButton.setSelected(true);
+        this.textAreaDictionary.setText( getDefaultDictionary() );
 	}
-	
-	
 
+    /**
+     * @return  JPanel
+     */
 	public JPanel getRootPanel() {
 		return rootPanel;
 	}
 
-
+    /**
+     * @return  Integer     Sorting mode
+     */
+    public Integer getSelectedSortingMode() {
+        return caseSensitiveRadioButton.isSelected() ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
+    }
 
 	/**
 	 * Config modified?
@@ -107,26 +113,23 @@ public class PluginConfiguration {
 	 * @return	Boolean
 	 */
 	public boolean isModified() {
-		return ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() );
+		return ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
+               || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() );
 	}
-
-
 
 	public void setData() {
 
 	}
 
-
-
+    /**
+     * @return  String
+     */
 	public String getData() {
 		return this.textAreaDictionary.getText();
 	}
 
-
-
-
 	private void createUIComponents() {
-		// TODO: place custom component creation code here
+
 	}
 
 }

@@ -29,13 +29,13 @@ import javax.swing.*;
 
 public class ShifterSettingsComponent implements ProjectComponent, Configurable {
 
-	// Note: Components shown in the IDEA settings dialog have 32x32 icons.
 	private ImageIcon icon = new ImageIcon("/com/kstenschke/shifter/resources/images/blank32x32.png");
 
 	private PluginConfiguration settingsPanel = null;
 
-
-
+    /**
+     * @return  JComponent
+     */
 	public JComponent createComponent() {
 		if (settingsPanel == null) {
 			settingsPanel = new PluginConfiguration();
@@ -46,35 +46,25 @@ public class ShifterSettingsComponent implements ProjectComponent, Configurable 
 		return settingsPanel.getRootPanel();
 	}
 
-
-
 	@Nls
 	public String getDisplayName() {
-		return "Shifter Dictionary";
+		return StaticTexts.SETTINGS_DISPLAY_NAME;
 	}
-
-
 
 	public boolean isModified() {
 		return settingsPanel != null && settingsPanel.isModified();
 	}
 
-
-
 	public void disposeUIResources() {
 		settingsPanel = null;
 	}
 
-
-
 	public void reset() {
-		if (settingsPanel != null ) {
-				// Reset settingsPanel data from component
+//		if (settingsPanel != null ) {
+//				// Reset settingsPanel data from component
 // 			settingsPanel.setData();
-		}
+//		}
 	}
-
-
 
 	/**
 	 * Get the icon of this {@link com.intellij.openapi.options.Configurable}.
@@ -87,11 +77,10 @@ public class ShifterSettingsComponent implements ProjectComponent, Configurable 
 		return icon;
 	}
 
-
-
 	public void apply() throws ConfigurationException {
 		if (settingsPanel != null) {
-				// Get data from settingsPanel to component
+            ShifterPreferences.saveSortingMode(settingsPanel.getSelectedSortingMode());
+
 			String dictionary	= settingsPanel.getData();
 			if( dictionary != null ) {
 				ShifterPreferences.saveDictionary(dictionary);
@@ -101,53 +90,34 @@ public class ShifterSettingsComponent implements ProjectComponent, Configurable 
 		}
 	}
 
-
-
 	public String getHelpTopic() {
 		return null;
 	}
-
-
 
 	private void applyGlobalSettings() {
 
 	}
 
-
-
-
-
-
 	public ShifterSettingsComponent(Project project) {
 
 	}
 
-
-
 	public void initComponent() {
-		// TODO: insert component initialization logic here
+
 	}
-
-
 
 	public void disposeComponent() {
 		settingsPanel = null;
 	}
 
-
-
 	@NotNull
 	public String getComponentName() {
-		return "Shifter Settings";
+		return StaticTexts.SETTINGS_COMPONENT_NAME;
 	}
-
-
 
 	public void projectOpened() {
 		// called when project is opened
 	}
-
-
 
 	public void projectClosed() {
 		// called when project is being closed
