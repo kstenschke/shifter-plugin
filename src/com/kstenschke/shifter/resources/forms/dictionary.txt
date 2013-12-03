@@ -15,6 +15,11 @@
 }
 (|css|scss|) {
 	|bold|italic|strikethrough|subscript|superscript|underline|
+	|block|inline|inline-block|list-item|none|inherit|
+	|left|right|both|none|inherit|
+	|collapse|visible|hidden|scroll|auto|inherit|
+	|absolute|fixed|inherit|relative|static|
+	|normal|nowrap|pre|pre-line|pre-wrap|inherit|
 }
 (|java|php) {
 	|assertFalse|assertTrue|
