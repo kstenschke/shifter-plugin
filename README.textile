@@ -16,6 +16,7 @@ Shifter adds the following editing tools:
 * Ctrl+Shift+Alt+Comma  - Shift Down
 * Ctrl+Shift+Alt+Period - Shift Up
 
+*Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 
 
 Supported generic shifting types:
