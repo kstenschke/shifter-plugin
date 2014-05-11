@@ -2,11 +2,11 @@
 	|array|boolean|element|event|function|number|null|object|string|undefined|
 	|alert|prompt|
 	|abort|error|load|resize|scroll|unload|
-	|button|submit|
+	|input|button|submit|
 	|blur|change|focus|reset|select|submit|
 	|class|id|name|type|value|
 	|click|dblclick|mousedown|mousemove|mouseover|mouseout|mouseup|
-	|h1|h2|h3|h4|
+	|h1|h2|h3|h4|h5|
 	|indexof|lastindexof|
 	|keydown|keypress|keyup|
 	|touchstart|touchmove|touchend|touchcancel|

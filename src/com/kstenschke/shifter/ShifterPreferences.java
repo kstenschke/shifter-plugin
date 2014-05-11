@@ -17,7 +17,6 @@
 package com.kstenschke.shifter;
 
 import com.intellij.ide.util.PropertiesComponent;
-import org.codehaus.groovy.util.StringUtil;
 import org.jetbrains.annotations.NonNls;
 
 /**

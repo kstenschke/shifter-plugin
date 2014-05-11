@@ -57,7 +57,7 @@ Some keyword types from the default dictionary:
 
 h2. License
 
-Copyright 2011-2013 Kay Stenschke
+Copyright 2011-2014 Kay Stenschke
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

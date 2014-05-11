@@ -30,7 +30,7 @@ public class UtilsArray {
 	 *
 	 * @param   haystack   String array to search in
 	 * @param   needle     String to be looked for
-	 * @return  int       Found position or -1
+	 * @return  int        Found position or -1
 	 */
 	public static int findPositionInArray(String[] haystack, String needle) {
 		for (int i = 0; i < haystack.length; i++) {
@@ -46,18 +46,14 @@ public class UtilsArray {
 	 * Concatenate strings of given array glued by given delimiter
 	 *
 	 * @param   stringsArr  Array of strings
-	 * @param   glue        Glue inbetween concatenated strings
+	 * @param   glue        Glue in between concatenated strings
 	 * @return  String      All items of stringsArr concatenated with glue
 	 */
 	public static String implode(String[] stringsArr, String glue) {
 		String out = "";
 
 		for (int i = 0; i < stringsArr.length; i++) {
-			if (i != 0) {
-				out += glue;
-			}
-
-			out += stringsArr[i];
+		    out += (i != 0 ? glue : "") + stringsArr[i];
 		}
 
 		return out;
