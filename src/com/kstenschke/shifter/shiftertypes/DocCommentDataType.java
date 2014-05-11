@@ -50,18 +50,7 @@ class DocCommentDataType {
 		return UtilsArray.implode(allTypes, "|");
 	}
 
-	/**
-	 * Check whether given String represents any known data type
-	 *
-	 * @param	word		String to be checked
-	 * @return	Boolean.
-	 */
-	public Boolean isDataType(String word) {
-		return !(word == null || word.length() == 0)					// Word has content
-			   && this.getAllTypesPiped().contains(word.toLowerCase());	// Word is a keyword of the data type
-	}
-
-	/**
+    /**
 	 * @param	word		String to be shifted
 	 * @param	filename	Filename of the edited file
 	 * @param	isUp		Shifting up or down?

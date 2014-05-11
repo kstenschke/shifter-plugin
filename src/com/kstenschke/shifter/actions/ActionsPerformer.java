@@ -34,14 +34,14 @@ import java.util.List;
 
 class ActionsPerformer {
 
-	private Editor editor;
+	private final Editor editor;
 	private Document document;
 
 	private CharSequence editorText;
 
 	private int caretOffset;
 	private SelectionModel selectionModel;
-	boolean hasSelection;
+	private boolean hasSelection;
 
 	/**
 	 * Constructor
@@ -59,10 +59,9 @@ class ActionsPerformer {
 	}
 
 	/**
-	 * @param   event    ActionSystem event
-	 * @param	shiftUp	 Shift up or down?
-	 */
-	public void write(final AnActionEvent event, boolean shiftUp) {
+     * @param    shiftUp     Shift up or down?
+     */
+	public void write(boolean shiftUp) {
 		if (this.editor != null) {
 			if (hasSelection) {
 				//-------------------- Shift selection: sort lines alphabetically

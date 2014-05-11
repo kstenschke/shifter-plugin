@@ -29,7 +29,7 @@ import com.kstenschke.shifter.StaticTexts;
 /**
  * Shift-Up Action
  */
-public class ShiftUpAction extends AnAction {
+class ShiftUpAction extends AnAction {
 
 	/**
 	 * Disable when no editor available
@@ -52,7 +52,7 @@ public class ShiftUpAction extends AnAction {
 			public void run() {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-						new ActionsPerformer(event).write(event, true);
+						new ActionsPerformer(event).write(true);
 					}
 				});
 			}

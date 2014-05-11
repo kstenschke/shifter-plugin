@@ -41,12 +41,11 @@ public class QuotedString {
 	/**
 	 * Check whether shifted word is wrapped in quote characters
 	 *
-	 * @param   str            String to be shifted currently
 	 * @param   prefixChar     Character preceding the string
 	 * @param   postfixChar    Character after the string
 	 * @return  Boolean.
 	 */
-	public Boolean isQuotedString(String str, String prefixChar, String postfixChar) {
+	public Boolean isQuotedString(String prefixChar, String postfixChar) {
 		this.quoteChar = prefixChar;
 
 			// Must begin be wrapped in single-, double quotes, or backticks
@@ -64,7 +63,7 @@ public class QuotedString {
 	 * @param   isUp           Shifting up or down?
 	 * @return  String
 	 */
-	public String getShifted(String word, Editor editor, CharSequence editorText, Boolean isUp) {
+	public String getShifted(String word, CharSequence editorText, Boolean isUp) {
 	   	// Get full text of currently edited document
 		String text = editorText.toString();
 

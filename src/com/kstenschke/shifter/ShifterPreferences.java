@@ -29,7 +29,7 @@ public class ShifterPreferences {
 	@NonNls
 	private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
     @NonNls
-    public static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
+    private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
 
         // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;

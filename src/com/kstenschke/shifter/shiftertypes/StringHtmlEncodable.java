@@ -23,14 +23,7 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class StringHtmlEncodable {
 
-	/**
-	 * Constructor
-	 */
-	public StringHtmlEncodable() {
-
-	}
-
-	/**
+    /**
 	 * Check whether given character can be encoded to an HTML special char / or is already HTML encoded
 	 *
 	 * @param str String to be shifted currently

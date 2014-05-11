@@ -23,7 +23,7 @@ import com.kstenschke.shifter.UtilsArray;
  */
 public class StaticWordType {
 
-	private int typeID;
+	private final int typeID;
 
 	private final String[] keywords;
 
@@ -41,16 +41,7 @@ public class StaticWordType {
 		this.regExPattern = UtilsArray.implode(this.keywords, "|").toLowerCase();
 	}
 
-	/**
-	 * Get word type ID
-	 *
-	 * @return	int
-	 */
-	public int getTypeID() {
-		return typeID;
-	}
-
-	/**
+    /**
 	 * Check whether the given string is a known keyword of the word type
 	 *
 	 * @param	word		Word to be compared against keywords

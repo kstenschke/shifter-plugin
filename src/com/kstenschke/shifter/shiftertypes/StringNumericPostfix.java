@@ -21,14 +21,7 @@ package com.kstenschke.shifter.shiftertypes;
  */
 public class StringNumericPostfix {
 
-	/**
-	 * Constructor
-	 */
-	public StringNumericPostfix() {
-
-	}
-
-	/**
+    /**
 	 * @param word String to be analyzed
 	 * @return Boolean.
 	 */

@@ -43,12 +43,11 @@ public class DocCommentType {
 	/**
 	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
 	 *
-	 * @param   word          String to be checked
 	 * @param   prefixChar    Prefix character
 	 * @param   line          Whole line containing the word
 	 * @return  Boolean.
 	 */
-	public Boolean isDocCommentType(String word, String prefixChar, String line) {
+	public Boolean isDocCommentType(String prefixChar, String line) {
 		if ( prefixChar.equals("#") || prefixChar.equals("@") ) {
 			return false;
 		}
@@ -58,12 +57,11 @@ public class DocCommentType {
 
 	/**
 	 * @param   word          String to be shifted
-	 * @param   editorText    Whole text of edited file
 	 * @param   isUp          Shift up or down?
 	 * @param   filename      Filename of the edited file
 	 * @return                Shifting result
 	 */
-	public String getShifted(String word, CharSequence editorText, boolean isUp, String filename) {
+	public String getShifted(String word, boolean isUp, String filename) {
 		return new DocCommentDataType().getShifted(word, filename, isUp);
 	}
 

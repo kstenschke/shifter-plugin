@@ -29,7 +29,7 @@ import com.kstenschke.shifter.StaticTexts;
 /**
  * Shift-Down Action
  */
-public class ShiftDownAction extends AnAction {
+class ShiftDownAction extends AnAction {
 
 	/**
 	 * Disable when no editor available
@@ -52,7 +52,7 @@ public class ShiftDownAction extends AnAction {
 			public void run() {
 				ApplicationManager.getApplication().runWriteAction(new Runnable() {
 					public void run() {
-						new ActionsPerformer(event).write(event, false);
+						new ActionsPerformer(event).write(false);
 					}
 				});
 			}

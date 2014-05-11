@@ -25,7 +25,7 @@ import java.io.InputStream;
 
 public class PluginConfiguration {
 
-	public JPanel rootPanel;
+	private JPanel rootPanel;
 	private JButton buttonReset;
 	private JTextArea textAreaDictionary;
     private JRadioButton caseSensitiveRadioButton;
@@ -41,7 +41,7 @@ public class PluginConfiguration {
 			// Add action listeners to buttons
 		this.buttonReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				onClickReset(e);
+				onClickReset();
 			}
 		});
 	}
@@ -88,7 +88,7 @@ public class PluginConfiguration {
 	/**
 	 * Reset default settings
 	 */
-	private void onClickReset(ActionEvent e) {
+	private void onClickReset() {
         caseInsensitiveRadioButton.setSelected(true);
         this.textAreaDictionary.setText( getDefaultDictionary() );
 	}

@@ -27,7 +27,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 
 
-public class ShifterSettingsComponent implements ProjectComponent, Configurable {
+class ShifterSettingsComponent implements ProjectComponent, Configurable {
 
 	private ImageIcon icon = new ImageIcon("/com/kstenschke/shifter/resources/images/blank32x32.png");
 
@@ -66,18 +66,7 @@ public class ShifterSettingsComponent implements ProjectComponent, Configurable 
 //		}
 	}
 
-	/**
-	 * Get the icon of this {@link com.intellij.openapi.options.Configurable}.
-	 */
-	public Icon getIcon() {
-		if( icon == null ) {
-			icon	= new ImageIcon("/com/kstenschke/shifter/resources/images/blank32x32.png");
-		}
-
-		return icon;
-	}
-
-	public void apply() throws ConfigurationException {
+    public void apply() throws ConfigurationException {
 		if (settingsPanel != null) {
             ShifterPreferences.saveSortingMode(settingsPanel.getSelectedSortingMode());
 

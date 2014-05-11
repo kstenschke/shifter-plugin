@@ -74,12 +74,11 @@ public class DocCommentTag {
 	/**
 	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
 	 *
-	 * @param   word          String to be checked
 	 * @param   prefixChar    Prefix character
 	 * @param   line          Whole line containing the word
 	 * @return  Boolean.
 	 */
-	public Boolean isDocCommentTag(String word, String prefixChar, String line) {
+	public Boolean isDocCommentTag(String prefixChar, String line) {
 		return !prefixChar.equals("@") ? false : this.isDocCommentLineContext(line);
 	}
 

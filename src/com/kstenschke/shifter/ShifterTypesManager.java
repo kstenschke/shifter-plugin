@@ -22,7 +22,7 @@ import com.kstenschke.shifter.shiftertypes.*;
 /**
  * Manager of "shiftable" word types - detects word type to evoke resp. shifting
  */
-public class ShifterTypesManager {
+class ShifterTypesManager {
 
 	public static final int TYPE_UNKNOWN = 0;
 
@@ -41,7 +41,7 @@ public class ShifterTypesManager {
 	private static final int   TYPE_DOCCOMMENT_DATATYPE	= 56;
 	public static final int    TYPE_PHPVARIABLE		   	= 57;
 	public static final int    TYPE_NUMERIC_VALUE       = 58;
-	public static final int TYPE_NUMERICPOSTFIXEDSTRING = 59;
+	private static final int   TYPE_NUMERICPOSTFIXEDSTRING = 59;
 
 		// Word type objects
 	private StaticWordType wordTypeAccessibilities;
@@ -86,11 +86,11 @@ public class ShifterTypesManager {
 		if( isDocCommentLineContext ) {
 			this.typeTagInDocComment = new DocCommentTag();
 
-			if ( prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(word, prefixChar, line) ) {
+			if ( prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line) ) {
 				return TYPE_DOCCOMMENT_TAG;
 			}
 
-			if (this.typeDataTypeInDocComment.isDocCommentType(word, prefixChar, line)) return TYPE_DOCCOMMENT_DATATYPE;
+			if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) return TYPE_DOCCOMMENT_DATATYPE;
 		}
 
 			// Object visibility
@@ -115,7 +115,7 @@ public class ShifterTypesManager {
 
 			// Quoted (must be wrapped in single or double quotes or backticks)
 		this.typeQuotedString = new QuotedString();
-		if (this.typeQuotedString.isQuotedString(word, prefixChar, postfixChar)) return TYPE_QUOTEDSTRING;
+		if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) return TYPE_QUOTEDSTRING;
 
 			// RGB (must be prefixed with "#")
 		this.typeRgbColor = new RbgColor();
@@ -188,7 +188,7 @@ public class ShifterTypesManager {
 				return this.typePhpVariable.getShifted(word, editorText, isUp);
 
 			case TYPE_QUOTEDSTRING:
-				return this.typeQuotedString.getShifted(word, editor, editorText, isUp);
+				return this.typeQuotedString.getShifted(word, editorText, isUp);
 
 			case TYPE_MONOCHARACTERSTRING:
 				return this.typeMonoCharacterString.getShifted(word, isUp);
@@ -198,7 +198,7 @@ public class ShifterTypesManager {
 				return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
 
 			case TYPE_DOCCOMMENT_DATATYPE:
-				return this.typeDataTypeInDocComment.getShifted(word, editorText, isUp, filename);
+				return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
 
 			case TYPE_HTMLENCODABLESTRING:
 				return StringHtmlEncodable.getShifted(word);
