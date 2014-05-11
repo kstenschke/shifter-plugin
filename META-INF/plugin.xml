@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2011-2013 Kay Stenschke
+  ~ Copyright 2011-2014 Kay Stenschke
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@
         <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value</li>
         <li>Strings ending with numbers - increments/decrements the postfix</li>
     </ul>
-    Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally useable dictionary of shiftable keywords.
+    Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally usable dictionary of shiftable keywords.
     Some keyword types from the default dictionary:<br/>
     <ul>
         <li>PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)</li>
@@ -45,13 +45,13 @@
         <li>MySql data types: Shifts to next bigger/smaller numeric/string type</li>
         <li>Primitive data types of Java, JavaScript, PHP, Objective-C</li>
         <li>Doc comment tags (Java, JavaScript, PHP)</li>
-        <li>JavaScript event types (mouse, keyboard, frame/object, forml, control, touch)</li>
+        <li>JavaScript event types (mouse, keyboard, frame/object, form, control, touch)</li>
         <li>Named colors from the sRGB color space (white/lightgray/gray...)</li>
         <li>Text styles (bold, italic...)</li>
         <li>Web image (gif/jpg/png) and audio (au/aif/wav etc.) format extensions</li>
         <li>Full and abbreviated names of months and weekdays and units of time</li>
         <li>Logical operators (and/or/xor/not), arithmetic operations (addition/subtraction...) and arithmetic elements (sum/difference/product..)</li>
-        <li>Metasyntax terms: foo/bar/baz...</li>
+        <li>Meta-syntax terms: foo/bar/baz...</li>
         <li>Names of common data collection types (list/set/bag/dictionary/tree...)</li>
         <li>Names of numbers (one/two/three etc.) and ordinal numbers (first/second/third  etc.)
         <li>Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
@@ -69,85 +69,99 @@
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
-    1.1.6<br/><ul><li>Improved compatibility: Compiled with JDK target bytecode version 1.6 (was 1.7)</li></ul>
-    1.1.5<br/><ul><li>Added sorting mode to settings: case sensitive/in-sensitive</li></ul>
-    1.1.4<br/><ul><li>Added shifting of numeric postfixes of strings</li></ul>
-    1.1.3<br/><ul><li>Made sorting of lines and lists case insensitive</li></ul>
-    1.1.2<br/><ul>
-        <li>Added support for shifting negative numeric- and CSS pixel values</li>
-        <li>Added support for shifting more CSS length types: em, pt, cm, in</li>
-    </ul>
-    1.1.1<br/><ul><li>Added HTML special chars encoding/decoding</li></ul>
-    1.1.0<br/><ul><li>Made shifter dictionary customizable via plugin configuration</li></ul>
-    1.0.12<br/><ul><li>Added character swapping inside single-line selection: single vs. double quote OR slash vs. backslash</li></ul>
-    1.0.11<br/><ul>
-        <li>Added shifting of words consisting from any amount of the same character to the next ASCII character</li>
-        <li>Added shifting of web image and audio format file extensions</li>
-        <li>Added shifting of names of english ordinal numbers and numbers</li>
-        <li>Added shifting of DOM touch and control events</li>
-        <li>Added shifting of text styles</li>
-    </ul>
-    1.0.10<br/><ul>
-        <li>Bugfix: shifting line with regex meta characters possibly caused exception</li>
-        <li>Changed menu items labels and order, disable items when no editor available</li>
-    </ul>
-    1.0.9<br/><ul>
-        <li>Added shifting of meta-syntax terms</li>
-        <li>Added shifting of logical operators, arithmetical operations and elements</li>
-        <li>Added shifting of geographical orientations and time units</li>
-        <li>Added shifting of data collection type names</li>
-        <li>Extended shiftable "boolean" keyword pairs</li>
-        <li>Bugfix: shifting with caret at EOF failed</li>
-    </ul>
-    1.0.8<br/><ul>
-        <li>Added shifting of strings wrapped in backticks</li>
-        <li>Added shifting of PHP core magical constants (__FILE__, __LINE__, etc.)</li>
-    </ul>
-    1.0.7<br/><ul>
-        <li>Added balloon info with human-readable date when shifting UNIX timestamps</li>
-        <li>Added shifting of UNIX timestamps +/- one day</li>
-        <li>Added shifting of named colors from the sRGB color space (white, lightGray, gray...)</li>
-        <li>Added shifting of abbreviated month and weekday names (jan, feb, ... and mon, tue, ...)</li>
-        <li>Added shifting of JavaScript event types (mouse, keyboard, frame/object, form)</li>
-    </ul>
-    1.0.6<br/><ul>
-        <li>Improved shiftable word types detection</li>
-        <li>Added Objective-C specific data types</li>
-        <li>Bugfix: Shifted quoted strings were partly maintaining wrong case</li>
-    </ul>
-    1.0.5<br/><ul>
-        <li>Added auto-completion of shifted JsDoc method tag with respective function name</li>
-        <li>Added shifting of data types inside Java, JavaScript and PHP doc comments</li>
-        <li>Added maintaining of lower case with upper first character</li>
-        <li>Added option to sort items of selected comma separated list</li>
-    </ul>
-    1.0.4<br/><ul>
-        <li>Added support for single/double quoted strings: shifts to aphabetically next/previous quoted string in current file</li>
-        <li>Added shifting of CSS positioning: absolute/relative</li>
-        <li>Added shifting of Objective-c booleans YES/NO</li>
-        <li>Bugfix: PHP variables containing underscores were not detected</li>
-    </ul>
-    1.0.3<br/><ul>
-        <li>Added support for PHP variables: shifts to alphabetically next/previous variable in current file</li>
-        <li>Added shifting of numeric values w/o units</li>
-        <li>Added ability to undo/redo shifter actions</li>
-        <li>Changed CSS pixel values shifting size to 1</li>
-    </ul>
-    1.0.2<br/><ul>
-        <li>Added alphabetical ascending/descending sorting of multi-line selections.</li>
-        <li>Added shifting of doc-params @param/@return</li>
-        <li>Added shifting of months, weekdays and CSS orientations: top/right/bottom/left</li>
-        <li>Added shifting of a whole line: a single shiftable word in the edited line is detected</li>
-        <li>Added maintaining of uppercase/lowercase for all types</li>
-    </ul>
-    1.0.1<br/><ul>
-        <li>Added shifting of MySql data type keywords</li>
-        <li>Added CSS pixel value shifting</li>
-        <li>Added accessibility keywords shifting</li>
-        <li>Added conversion of triple digit CSS RGB values to six digits</li>
-        <li>Added case sensitivity for booleans</li>
-    </ul>
-    1.0.0<br/><ul><li>Initial release</li></ul>
+    <ul>
+        <li>1.1.6 Improved compatibility: Compiled with JDK target bytecode version 1.6 (was 1.7)</li>
+        <li>1.1.5 Added sorting mode to settings: case sensitive/in-sensitive</li>
+        <li>1.1.4 Added shifting of numeric postfixes of strings</li>
+        <li>1.1.3 Made sorting of lines and lists case insensitive</li>
+        <li>1.1.2
+            <ul>
+                <li>Added support for shifting negative numeric- and CSS pixel values</li>
+                <li>Added support for shifting more CSS length types: em, pt, cm, in</li>
+            </ul>
+        </li><li>1.1.1 Added HTML special chars encoding/decoding</li>
+        <li>1.1.0 Made shifter dictionary customizable via plugin configuration</li>
+        <li>1.0.12  Added character swapping for single/double quote, slash/backslash, in single-line selection</li>
+        <li>1.0.11
+            <ul>
+                <li>Added shifting of words consisting from any amount of the same character to the next ASCII character</li>
+                <li>Added shifting of web image and audio format file extensions</li>
+                <li>Added shifting of names of english ordinal numbers and numbers</li>
+                <li>Added shifting of DOM touch and control events</li>
+                <li>Added shifting of text styles</li>
+            </ul>
+        </li><li>1.0.10
+            <ul>
+                <li>Bugfix: shifting line with regex meta characters possibly caused exception</li>
+                <li>Changed menu items labels and order, disable items when no editor available</li>
+            </ul>
+        </li><li>1.0.9
+            <ul>
+                <li>Added shifting of meta-syntax terms</li>
+                <li>Added shifting of logical operators, arithmetical operations and elements</li>
+                <li>Added shifting of geographical orientations and time units</li>
+                <li>Added shifting of data collection type names</li>
+                <li>Extended shiftable "boolean" keyword pairs</li>
+                <li>Bugfix: shifting with caret at EOF failed</li>
+            </ul>
+        </li><li>1.0.8
+            <ul>
+                <li>Added shifting of strings wrapped in backticks</li>
+                <li>Added shifting of PHP core magical constants (__FILE__, __LINE__, etc.)</li>
+            </ul>
+        </li><li>1.0.7
+            <ul>
+                <li>Added balloon info with human-readable date when shifting UNIX timestamps</li>
+                <li>Added shifting of UNIX timestamps +/- one day</li>
+                <li>Added shifting of named colors from the sRGB color space (white, lightGray, gray...)</li>
+                <li>Added shifting of abbreviated month and weekday names (jan, feb, ... and mon, tue, ...)</li>
+                <li>Added shifting of JavaScript event types (mouse, keyboard, frame/object, form)</li>
+            </ul>
+        </li><li>1.0.6
+            <ul>
+                <li>Improved shiftable word types detection</li>
+                <li>Added Objective-C specific data types</li>
+                <li>Bugfix: Shifted quoted strings were partly maintaining wrong case</li>
+            </ul>
+        </li><li>1.0.5
+            <ul>
+                <li>Added auto-completion of shifted JsDoc method tag with respective function name</li>
+                <li>Added shifting of data types inside Java, JavaScript and PHP doc comments</li>
+                <li>Added maintaining of lower case with upper first character</li>
+                <li>Added option to sort items of selected comma separated list</li>
+            </ul>
+        </li><li>1.0.4
+            <ul>
+                <li>Added support for single/double quoted strings: shifts to aphabetically next/previous quoted string in current file</li>
+                <li>Added shifting of CSS positioning: absolute/relative</li>
+                <li>Added shifting of Objective-c booleans YES/NO</li>
+                <li>Bugfix: PHP variables containing underscores were not detected</li>
+            </ul>
+        </li><li>1.0.3
+            <ul>
+                <li>Added support for PHP variables: shifts to alphabetically next/previous variable in current file</li>
+                <li>Added shifting of numeric values w/o units</li>
+                <li>Added ability to undo/redo shifter actions</li>
+                <li>Changed CSS pixel values shifting size to 1</li>
+            </ul>
+        </li><li>1.0.2
+            <ul>
+                <li>Added alphabetical ascending/descending sorting of multi-line selections.</li>
+                <li>Added shifting of doc-params @param/@return</li>
+                <li>Added shifting of months, weekdays and CSS orientations: top/right/bottom/left</li>
+                <li>Added shifting of a whole line: a single shiftable word in the edited line is detected</li>
+                <li>Added maintaining of uppercase/lowercase for all types</li>
+            </ul>
+        </li><li>1.0.1
+            <ul>
+                <li>Added shifting of MySql data type keywords</li>
+                <li>Added CSS pixel value shifting</li>
+                <li>Added accessibility keywords shifting</li>
+                <li>Added conversion of triple digit CSS RGB values to six digits</li>
+                <li>Added case sensitivity for booleans</li>
+            </ul>
+        </li><li>1.0.0 Initial release</li>
+  </ul>
   ]]></change-notes>
 
     <application-components>
@@ -179,7 +193,6 @@
 
 
     <extensions defaultExtensionNs="com.intellij">
-
     </extensions>
 
     <depends>com.intellij.modules.lang</depends>

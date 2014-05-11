@@ -1,0 +1,5 @@
+.idea
+.DS_Store
+shifter-plugin.iml
+atlassian-ide-plugin.xml
+out
