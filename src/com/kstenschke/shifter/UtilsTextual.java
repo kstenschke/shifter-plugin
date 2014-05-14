@@ -251,16 +251,17 @@ public class UtilsTextual {
 	 * @param   lineNumber	Number of line to be extracted
 	 * @return	String		The extracted line
 	 */
-	private static String extractLine(Document doc, int lineNumber) {
+	public static String extractLine(Document doc, int lineNumber) {
 		int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
+
 		int startOffset = doc.getLineStartOffset(lineNumber);
-		int endOffset = doc.getLineEndOffset(lineNumber) + lineSeparatorLength;
+		int endOffset   = doc.getLineEndOffset(lineNumber) + lineSeparatorLength;
 
 		String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
-		// If last line has no \n, add it one
-		// This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
-		// with \n... This is fixed after.
+		    // If last line has no \n, add it one
+		    // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
+		    // with \n... This is fixed after.
 		if (lineSeparatorLength == 0) {
 			line += "\n";
 		}
@@ -288,7 +289,7 @@ public class UtilsTextual {
 	 * @param	string
 	 * @param	toReplace
 	 * @param	replacement
-	 * @return
+	 * @return  string
 	 */
 	public static String replaceLast(String string, String toReplace, String replacement) {
 		int pos = string.lastIndexOf(toReplace);
