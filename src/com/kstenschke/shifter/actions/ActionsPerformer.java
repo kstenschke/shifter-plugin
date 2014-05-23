@@ -83,14 +83,15 @@ class ActionsPerformer {
 
 				Boolean isWordShifted = false;
 
-				if ( word != null && ! word.isEmpty() ) {
-                    isWordShifted = getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
+				if( word != null && ! word.isEmpty() ) {
+                    isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
 				}
+
 				    // Word at caret wasn't identified/shifted, try shifting the whole line
-				if ( !isWordShifted ) {
+				if( ! isWordShifted ) {
 					ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
 
-					// Replace line by shifted one
+					    // Replace line by shifted one
 					CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor);
 					if( shiftedLine != null ) {
 						document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);
@@ -101,9 +102,9 @@ class ActionsPerformer {
 	}
 
     /**
-     * @return  String  filename of currently edited document
+     * @see  String  filename of currently edited document
      */
-    private String getFilename() {
+    public String getFilename() {
         VirtualFile file	= FileDocumentManager.getInstance().getFile(document);
 
         return (file != null) ? file.getName() : "";
@@ -115,7 +116,7 @@ class ActionsPerformer {
      * @param   word
      * @param   line
      * @param   wordOffset  null = calculate from word at offset
-     * @return  Boolean
+     * @return  String      resulting shifted or original word if no shiftability was found
      */
     private String getShiftedWord(boolean shiftUp, String filename, String word, String line, @Nullable Integer wordOffset, Boolean replaceInDocument) {
         Boolean wordShifted = false;
