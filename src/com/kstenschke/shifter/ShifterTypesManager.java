@@ -95,21 +95,16 @@ class ShifterTypesManager {
 
 			// Object visibility
 		if ( !prefixChar.equals("@") ) {
-			String[] keywordsAccessibilities = {"public", "private", "protected"};
-			this.wordTypeAccessibilities = new StaticWordType(TYPE_ACCESSIBILITY, keywordsAccessibilities);
-
-			if( this.wordTypeAccessibilities.hasWord(word)) {
-				return TYPE_ACCESSIBILITY;
-			}
+            if( this.isKeywordAccessType(word) ) {
+                return TYPE_ACCESSIBILITY;
+            }
 		}
 
 			// File extension specific term in dictionary
 		this.typeDictionaryTerm = new Dictionary();
 		String fileExtension	= UtilsFile.extractFileExtension(filename);
 
-		if( 	fileExtension != null
-			&&	this.typeDictionaryTerm.isTermInDictionary(word, fileExtension)
-		) {
+		if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
 			return TYPE_DICTIONARYWORD_EXTSPECIFIC;
 		}
 
@@ -133,7 +128,7 @@ class ShifterTypesManager {
 		if (this.typeMonoCharacterString.isMonoCharacterString(word)) return TYPE_MONOCHARACTERSTRING;
 
 			// Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-		if( this.typeDictionaryTerm.isTermInDictionary(word) ) {
+		if( this.typeDictionaryTerm.isTermInDictionary(word, false) ) {
 			return TYPE_DICTIONARYWORD_GLOBAL;
 		}
 
@@ -147,6 +142,17 @@ class ShifterTypesManager {
 
 		return TYPE_UNKNOWN;
 	}
+
+    /**
+     * @param   word
+     * @return  Boolean
+     */
+    private Boolean isKeywordAccessType(String word) {
+        String[] keywordsAccessType = {"public", "private", "protected"};
+        this.wordTypeAccessibilities = new StaticWordType(TYPE_ACCESSIBILITY, keywordsAccessType);
+
+        return this.wordTypeAccessibilities.hasWord(word);
+    }
 
 	/**
 	 * Shift given word

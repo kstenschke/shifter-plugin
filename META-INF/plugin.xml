@@ -65,11 +65,13 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.1.7</version>
+    <version>1.1.9</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.1.9 Added case-insensitive fallback to failed word shifting</li>
+        <li>1.1.8 Bugfix: Line shifting was overriding word shifting with 1.1.7</li>
         <li>1.1.7 Added shifting of column mode selections (with identical items per line)</li>
         <li>1.1.6 Improved compatibility: Compiled with JDK target bytecode version 1.6 (was 1.7)</li>
         <li>1.1.5 Added sorting mode to settings: case sensitive/in-sensitive</li>

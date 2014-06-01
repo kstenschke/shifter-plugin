@@ -84,13 +84,18 @@ class ActionsPerformer {
 				Boolean isWordShifted = false;
 
 				if ( word != null && ! word.isEmpty() ) {
-                    isWordShifted = getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
+                    isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
+
+                    if( ! isWordShifted ) {
+                        String wordLower    = word.toLowerCase();
+                        isWordShifted       = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true).equals(wordLower);
+                    }
 				}
 				    // Word at caret wasn't identified/shifted, try shifting the whole line
-				if ( !isWordShifted ) {
+				if ( ! isWordShifted ) {
 					ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
 
-					// Replace line by shifted one
+					    // Replace line by shifted one
 					CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor);
 					if( shiftedLine != null ) {
 						document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);

@@ -63,9 +63,9 @@ public class ShiftableLine {
 
 			// Check all words for shiftable types - shiftable if there's not more than one
 		int amountShiftableWordsInSentence = 0;
-		String testShiftedWord;
-		String unshiftedWord	= "";
-		String shiftedWord		= "";
+		String wordShiftedTest;
+		String wordUnshifted	= "";
+		String wordShifted		= "";
 		String prefixChar		= "";
 		String postfixChar		= "";
 
@@ -78,12 +78,12 @@ public class ShiftableLine {
 					word  = word.substring(1);
 				}
 
-				testShiftedWord   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
+				wordShiftedTest   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
 
-				if( testShiftedWord != null && !testShiftedWord.equals(word)) {
+				if( wordShiftedTest != null && !wordShiftedTest.equals(word)) {
 					amountShiftableWordsInSentence++;
-					unshiftedWord  = word;
-					shiftedWord    = testShiftedWord;
+					wordUnshifted  = word;
+					wordShifted    = wordShiftedTest;
 				}
 			}
 		}
@@ -92,7 +92,7 @@ public class ShiftableLine {
 
 		if( amountShiftableWordsInSentence == 1 ) {
 				// Shift detected word in line
-			return this.line.replace(unshiftedWord, shiftedWord);
+			return this.line.replace(wordUnshifted, wordShifted);
 		} else if(StringHtmlEncodable.isHtmlEncodable(this.line)) {
 				// Encode or decode contained HTML special chars
 			return StringHtmlEncodable.getShifted(this.line);

@@ -56,15 +56,15 @@ public class Dictionary {
 	 * @param	term		String to be looked for in shifter dictionary
 	 * @return	Boolean
 	 */
-	public Boolean isTermInDictionary(String term) {
-		if( this.dictionaryContents.contains("|" + fileExtension + "|")) {
+	public Boolean isTermInDictionary(String term, Boolean isFileExtensionRelevant) {
+		if( ! isFileExtensionRelevant || this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
 				// Merge all terms-blocks
-			String dictionaryTerms	= this.dictionaryContents;
+			String dictionaryTerms              = this.dictionaryContents;
 			Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
 
 			for(Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
-				String curExtsList = dictionaryExtensionsBlock.toString();
-				dictionaryTerms = dictionaryTerms.replace(curExtsList, "");
+				String currentExtensionsList    = dictionaryExtensionsBlock.toString();
+				dictionaryTerms                 = dictionaryTerms.replace(currentExtensionsList, "");
 			}
 
 				// Term is contained? store list of shifting neighbours
@@ -72,6 +72,13 @@ public class Dictionary {
 				this.relevantTermsList	= extractFirstMatchingTermsLine(dictionaryTerms, term);
 				return true;
 			}
+                // Not found case-sensitive, try insensitive
+            String dictionaryTermsLower = dictionaryTerms.toLowerCase();
+            String termLower            = term.toLowerCase();
+            if( dictionaryTermsLower.contains("|" + termLower + "|") ) {
+                this.relevantTermsList	= extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
+                return true;
+            }
 		}
 
 		return false;

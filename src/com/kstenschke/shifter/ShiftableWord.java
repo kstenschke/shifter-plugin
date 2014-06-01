@@ -86,7 +86,7 @@ public class ShiftableWord {
 
 			// Keep original word casing
 		if(      this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
-			 &&   this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
+			 &&  this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
 		) {
 			if ( UtilsTextual.isAllUppercase(this.word) ) {
 					// Convert result to upper case

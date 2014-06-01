@@ -33,7 +33,7 @@ public class UtilsTextual {
 	 * @return  Boolean
 	 */
 	public static boolean isAllUppercase(String str) {
-		return str.equals(str.toUpperCase());
+		return str.equals( str.toUpperCase() );
 	}
 
 	/**
