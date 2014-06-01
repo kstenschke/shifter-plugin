@@ -16,8 +16,6 @@
 
 package com.kstenschke.shifter.shiftertypes;
 
-import com.intellij.openapi.editor.Editor;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

@@ -23,9 +23,7 @@ import com.kstenschke.shifter.UtilsArray;
  */
 public class StaticWordType {
 
-	private final int typeID;
-
-	private final String[] keywords;
+    private final String[] keywords;
 
 	private final int amountKeywords;
 
@@ -35,7 +33,6 @@ public class StaticWordType {
 	 * Constructor
 	 */
 	public StaticWordType(int typeID, String[] keywords) {
-		this.typeID			= typeID;
 		this.keywords		= keywords;
 		this.amountKeywords = keywords.length;
 		this.regExPattern = UtilsArray.implode(this.keywords, "|").toLowerCase();
