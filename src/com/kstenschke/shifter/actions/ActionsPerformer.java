@@ -91,6 +91,7 @@ class ActionsPerformer {
                         isWordShifted       = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true).equals(wordLower);
                     }
 				}
+
 				    // Word at caret wasn't identified/shifted, try shifting the whole line
 				if ( ! isWordShifted ) {
 					ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
@@ -120,7 +121,7 @@ class ActionsPerformer {
      * @param   word
      * @param   line
      * @param   wordOffset  null = calculate from word at offset
-     * @return  Boolean
+     * @return  String      resulting shifted or original word if no shiftability was found
      */
     private String getShiftedWord(boolean shiftUp, String filename, String word, String line, @Nullable Integer wordOffset, Boolean replaceInDocument) {
         Boolean wordShifted = false;

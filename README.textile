@@ -1,8 +1,7 @@
 h1. Shifter Plugin
 
 Source code of the intellij IDEA "Shifter plugin":http://plugins.intellij.net/plugin/index?pr=&pluginId=6149
-This is a plugin for the various intellij IDEs, working in IntelliJ IDEA, RubyMine, WebStorm, PhpStorm,
-PyCharm, PyCharm CE, AppCode and Android Studio.
+This is a plugin for the various intellij IDEs, working in IntelliJ IDEA, RubyMine, WebStorm, PhpStorm, PyCharm, PyCharm CE, AppCode and Android Studio.
 
 
 h2. Description
