@@ -30,6 +30,7 @@ public class PluginConfiguration {
 	private JTextArea textAreaDictionary;
     private JRadioButton caseSensitiveRadioButton;
     private JRadioButton caseInsensitiveRadioButton;
+    private JCheckBox checkBoxpreserveCase;
 
     /**
 	 * Constructor
@@ -58,6 +59,9 @@ public class PluginConfiguration {
         } else {
             caseInsensitiveRadioButton.setSelected(true);
         }
+
+        Boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
+        checkBoxpreserveCase.setSelected(isActivePreserveCase);
 
 		if( dictionary == null || dictionary.equals("") )  {
 			dictionary	= getDefaultDictionary();
@@ -104,7 +108,15 @@ public class PluginConfiguration {
      * @return  Integer     Sorting mode
      */
     public Integer getSelectedSortingMode() {
-        return caseSensitiveRadioButton.isSelected() ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
+        return caseSensitiveRadioButton.isSelected() ?
+                ShifterPreferences.SORTING_MODE_CASE_SENSITIVE : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
+    }
+
+    /**
+     * @return  Boolean
+     */
+    public Boolean getIsActivePreserveCase() {
+        return checkBoxpreserveCase.isSelected();
     }
 
 	/**
@@ -113,8 +125,10 @@ public class PluginConfiguration {
 	 * @return	Boolean
 	 */
 	public boolean isModified() {
-		return ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
-               || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() );
+		return    ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
+               || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() )
+               || ! ShifterPreferences.getIsActivePreserveCase().equals( this.checkBoxpreserveCase.isSelected()
+        );
 	}
 
 	public void setData() {

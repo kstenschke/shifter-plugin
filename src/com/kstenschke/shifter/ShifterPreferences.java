@@ -29,6 +29,8 @@ public class ShifterPreferences {
 	private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
     @NonNls
     private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
+    @NonNls
+    private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
 
         // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
@@ -76,5 +78,21 @@ public class ShifterPreferences {
         String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SORTING_MODE);
 
         return modeStr == null ? SORTING_MODE_CASE_INSENSITIVE : Integer.parseInt(modeStr);
+    }
+
+    /**
+     * @param	isActive
+     */
+    public static void saveIsActivePreserveCase(Boolean isActive) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
+    }
+
+    /**
+     * @return  Boolean
+     */
+    public static Boolean getIsActivePreserveCase() {
+        String value    = PropertiesComponent.getInstance().getValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE);
+
+        return value == null || value.equals("1");
     }
 }

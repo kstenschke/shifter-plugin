@@ -69,6 +69,7 @@ class ShifterSettingsComponent implements ProjectComponent, Configurable {
     public void apply() throws ConfigurationException {
 		if (settingsPanel != null) {
             ShifterPreferences.saveSortingMode(settingsPanel.getSelectedSortingMode());
+            ShifterPreferences.saveIsActivePreserveCase(settingsPanel.getIsActivePreserveCase());
 
 			String dictionary	= settingsPanel.getData();
 			if( dictionary != null ) {
