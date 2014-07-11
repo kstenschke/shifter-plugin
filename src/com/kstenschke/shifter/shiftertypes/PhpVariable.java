@@ -40,7 +40,7 @@ public class PhpVariable {
 	 * @param	str			String to be checked
 	 * @return	boolean.
 	 */
-	public boolean isPhpVariable(String str) {
+	public Boolean isPhpVariable(String str) {
 			// Must begin with "$"
 		if ( ! str.startsWith("$") ) {
 			return false;
@@ -59,7 +59,7 @@ public class PhpVariable {
 	 * @param	isUp			Shift up or down?
 	 * @return	String
 	 */
-	public String getShifted(String variable, CharSequence editorText, boolean isUp) {
+	public String getShifted(String variable, CharSequence editorText, Boolean isUp) {
          // Get full text of currently edited document
 	   String text = editorText.toString();
 

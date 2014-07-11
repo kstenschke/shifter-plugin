@@ -49,30 +49,39 @@ public class NumericValue {
 	}
 
 	/**
-	 * @param	numericValue	String representing a numeric value
-	 * @param	isUp		    Shifting up or down?
-	 * @return	String          Value shifted up or down by one
+	 * @param	value       String representing a numeric value
+	 * @param	isUp		Shifting up or down?
+	 * @return	String      Value shifted up or down by one
 	 */
-	public String getShifted(String numericValue, boolean isUp, Editor editor) {
-		if( numericValue.length() <= 7 ) {
+	public String getShifted(String value, boolean isUp, Editor editor) {
+		if( value.length() <= 7 ) {
                 // Integer
-			return Integer.toString( Integer.parseInt(numericValue) + (isUp ? 1 : -1) );
+			return Integer.toString( Integer.parseInt(value) + (isUp ? 1 : -1) );
 		}
 
-			// UNIX timestamp? Shift it plus/minus one day
-		long shiftedTimestamp	= Long.parseLong(numericValue) * 1000 + (isUp ? SECS_PER_DAY : -SECS_PER_DAY);
+        return getShiftedUnixTimestamp(value, isUp, editor);
+    }
 
-			// Create and show balloon with human-readable date
-		Balloon.Position pos = Balloon.Position.above;
-		String balloonText   = new Date(shiftedTimestamp).toString();
-		BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new JBColor(new Color(255, 255, 231), new Color(255, 255, 231)), null);
-		Balloon balloon = builder.createBalloon();
+    /**
+     * @param   value
+     * @param   isUp
+     * @param   editor
+     * @return  String          UNIX timestamp shifted plus/minus one day
+     */
+    private String getShiftedUnixTimestamp(String value, boolean isUp, Editor editor) {
+        long shiftedTimestamp	= Long.parseLong(value) * 1000 + (isUp ? SECS_PER_DAY : -SECS_PER_DAY);
 
-		Point caretPos                = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-		RelativePoint balloonPosition = new RelativePoint(editor.getContentComponent(), caretPos);
-		balloon.show(balloonPosition, pos);
+        // Create and show balloon with human-readable date
+        Balloon.Position pos = Balloon.Position.above;
+        String balloonText   = new Date(shiftedTimestamp).toString();
+        BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new JBColor(new Color(255, 255, 231), new Color(255, 255, 231)), null);
+        Balloon balloon = builder.createBalloon();
 
-		return Long.toString( shiftedTimestamp / 1000 );
-	}
+        Point caretPos                = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+        RelativePoint balloonPosition = new RelativePoint(editor.getContentComponent(), caretPos);
+        balloon.show(balloonPosition, pos);
+
+        return Long.toString( shiftedTimestamp / 1000 );
+    }
 
 }

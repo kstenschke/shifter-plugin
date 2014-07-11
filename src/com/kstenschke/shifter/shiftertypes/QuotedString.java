@@ -65,14 +65,6 @@ public class QuotedString {
 	   	// Get full text of currently edited document
 		String text = editorText.toString();
 
-			// Detect quoted general shiftable types
-			// numeric value?
-		// @todo implement
-//		NumericValue typeNumericValue = new NumericValue();
-//		if( typeNumericValue.isNumericValue(text) ) {
-//			return typeNumericValue.getShifted(text, isUp, editor);
-//		}
-
 			// Use regEx matcher to extract array of all string wrapped in current quoting sign
 		List<String> allMatches = new ArrayList<String>();
 

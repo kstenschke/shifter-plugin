@@ -46,8 +46,8 @@ public class StringNumericPostfix {
 			}
 		}
 
-		String leadPart = word.substring(0, index);
-		String numericPart = word.substring(index);
+		String leadPart     = word.substring(0, index);
+		String numericPart  = word.substring(index);
 
 		int shiftedNumber = isUp ? Integer.parseInt(numericPart)+1 : Integer.parseInt(numericPart)-1;
 
