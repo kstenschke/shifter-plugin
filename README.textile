@@ -6,7 +6,7 @@ This is a plugin for the various intellij IDEs, working in IntelliJ IDEA, RubyMi
 
 h2. Description
 
-When evoked, shifter detects the type of keyword at caret and shifts it "up" or "down".
+When evoked, shifter detects the type of selection, line or keyword at caret and shifts it "up" or "down".
 If there's only one shiftable word in a line, it can be shifted without the caret touching it.
 Lowercase/uppercase or lower case with upper first character of shifted words is maintained.
 

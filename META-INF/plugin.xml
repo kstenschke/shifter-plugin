@@ -17,7 +17,7 @@
 <idea-plugin version="2">
     <name>Shifter</name>
     <description><![CDATA[
-    Detects type of keyword at caret and shifts it "up" or "down" on keyboard shortcut.
+    Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
     If there's only one shiftable word in a line, it can be shifted without the caret touching it.
     Lowercase/uppercase or lower case with upper first character of shifted words is maintained.<br/>
     <br/>
@@ -176,8 +176,7 @@
   </ul>
   ]]></change-notes>
 
-    <application-components>
-    </application-components>
+    <application-components/>
 
     <project-components>
         <component>
@@ -203,9 +202,7 @@
         </group>
     </actions>
 
-
-    <extensions defaultExtensionNs="com.intellij">
-    </extensions>
+    <extensions defaultExtensionNs="com.intellij"/>
 
     <depends>com.intellij.modules.lang</depends>
 </idea-plugin>
