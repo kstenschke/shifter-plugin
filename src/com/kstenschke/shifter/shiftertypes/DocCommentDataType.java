@@ -25,38 +25,13 @@ class DocCommentDataType {
 		typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
 	}
 
-	/**
-	 * Returns string array with all recognized doc comment data types
-	 *
-	 * @return	Array
-	 */
-	String[] getAllTypes() {
-		return UtilsArray.mergeStringArrays(
-            this.typesJavaScript,
-            this.typesJava,
-            this.typesPHP,
-            this.typesObjectiveC
-        );
-	}
-
-	/**
-	 * Returns pipe-separated list (as string) with all recognized doc comment data types
-	 *
-	 * @return	String
-	 */
-	String getAllTypesPiped() {
-		String[] allTypes = this.getAllTypes();
-
-		return UtilsArray.implode(allTypes, "|");
-	}
-
     /**
 	 * @param	word		String to be shifted
 	 * @param	filename	Filename of the edited file
 	 * @param	isUp		Shifting up or down?
 	 * @return	String		Shifting result
 	 */
-	public String getShifted(String word, String filename, Boolean isUp) {
+	public String getShifted(String word, String filename, boolean isUp) {
 		String[] dataTypes   = this.getDataTypesByFilename(filename);
 		int amountTypes   = dataTypes.length;
 

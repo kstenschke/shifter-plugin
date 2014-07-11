@@ -38,9 +38,9 @@ public class PhpVariable {
 	 * Check whether given string represents a PHP variable
 	 *
 	 * @param	str			String to be checked
-	 * @return	Boolean.
+	 * @return	boolean.
 	 */
-	public Boolean isPhpVariable(String str) {
+	public boolean isPhpVariable(String str) {
 			// Must begin with "$"
 		if ( ! str.startsWith("$") ) {
 			return false;
@@ -59,7 +59,7 @@ public class PhpVariable {
 	 * @param	isUp			Shift up or down?
 	 * @return	String
 	 */
-	public String getShifted(String variable, CharSequence editorText, Boolean isUp) {
+	public String getShifted(String variable, CharSequence editorText, boolean isUp) {
          // Get full text of currently edited document
 	   String text = editorText.toString();
 

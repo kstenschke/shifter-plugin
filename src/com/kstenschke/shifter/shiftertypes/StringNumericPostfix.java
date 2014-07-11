@@ -23,9 +23,9 @@ public class StringNumericPostfix {
 
     /**
 	 * @param word String to be analyzed
-	 * @return Boolean.
+	 * @return boolean.
 	 */
-	public static Boolean isNumericPostfix(String word) {
+	public static boolean isNumericPostfix(String word) {
 		return word.matches("^.+?\\d$");
 	}
 
@@ -36,7 +36,7 @@ public class StringNumericPostfix {
 	 * @param isUp Shifting up or down?
 	 * @return String
 	 */
-	public static String getShifted(String word, Boolean isUp) {
+	public static String getShifted(String word, boolean isUp) {
 		int index;
 		int startIndex = word.length()-1;
 		for (index = startIndex; index >= 0 ; index--) {

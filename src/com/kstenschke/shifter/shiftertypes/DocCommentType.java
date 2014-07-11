@@ -21,9 +21,9 @@ public class DocCommentType {
 	 * Check whether given String looks like a doc comment line
 	 *
 	 * @param   line       Line the caret is at
-	 * @return  Boolean.
+	 * @return  boolean.
 	 */
-	public Boolean isDocCommentTypeLineContext(String line) {
+	public boolean isDocCommentTypeLineContext(String line) {
 		line  = line.toLowerCase();
 
 		String allTags = new DocCommentTag().getAllTagsPiped();
@@ -45,9 +45,9 @@ public class DocCommentType {
 	 *
 	 * @param   prefixChar    Prefix character
 	 * @param   line          Whole line containing the word
-	 * @return  Boolean.
+	 * @return  boolean.
 	 */
-	public Boolean isDocCommentType(String prefixChar, String line) {
+	public boolean isDocCommentType(String prefixChar, String line) {
 		if ( prefixChar.equals("#") || prefixChar.equals("@") ) {
 			return false;
 		}

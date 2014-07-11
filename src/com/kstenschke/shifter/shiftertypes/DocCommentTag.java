@@ -29,18 +29,14 @@ public class DocCommentTag {
 	}
 
 	/**
-	 * Returns string array with all recognized doc comment tags
-	 *
-	 * @return  Array
+	 * @return  Array       String array with all recognized doc comment tags
 	 */
 	private String[]   getAllTags() {
 		return UtilsArray.mergeStringArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
 	}
 
 	/**
-	 * Returns pipe-separated list (as string) with all recognized doc comment tags
-	 *
-	 * @return  String
+	 * @return  String      Pipe-separated list (as string) with all recognized doc comment tags
 	 */
 	public String   getAllTagsPiped() {
 		String[] allTags = this.getAllTags();
@@ -52,9 +48,9 @@ public class DocCommentTag {
 	 * Check whether given String looks like a doc comment line
 	 *
 	 * @param   line       Line the caret is at
-	 * @return  Boolean.
+	 * @return  boolean.
 	 */
-	Boolean isDocCommentLineContext(String line) {
+	boolean isDocCommentLineContext(String line) {
 		line  = line.toLowerCase();
 
 		String allTagsPiped = this.getAllTagsPiped();
@@ -72,13 +68,11 @@ public class DocCommentTag {
 	}
 
 	/**
-	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
-	 *
-	 * @param   prefixChar    Prefix character
-	 * @param   line          Whole line containing the word
-	 * @return  Boolean.
+	 * @param   prefixChar  Prefix character
+	 * @param   line        Whole line containing the word
+	 * @return  boolean     Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
 	 */
-	public Boolean isDocCommentTag(String prefixChar, String line) {
+	public boolean isDocCommentTag(String prefixChar, String line) {
 		return !prefixChar.equals("@") ? false : this.isDocCommentLineContext(line);
 	}
 

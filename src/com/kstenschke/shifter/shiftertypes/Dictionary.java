@@ -54,9 +54,9 @@ public class Dictionary {
 	 * + Stores matching line containing the term for use in shifting later
 	 *
 	 * @param	term		String to be looked for in shifter dictionary
-	 * @return	Boolean
+	 * @return	boolean
 	 */
-	public Boolean isTermInDictionary(String term, Boolean isFileExtensionRelevant) {
+	public boolean isTermInDictionary(String term, boolean isFileExtensionRelevant) {
 		if( ! isFileExtensionRelevant || this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
 				// Merge all terms-blocks
 			String dictionaryTerms              = this.dictionaryContents;
@@ -91,9 +91,9 @@ public class Dictionary {
 	 *
 	 * @param	term			String to be looked for in shifter dictionary
 	 * @param	fileExtension	Extension of edited file
-	 * @return	Boolean
+	 * @return	boolean
 	 */
-	public Boolean isTermInDictionary(String term, String fileExtension) {
+	public boolean isTermInDictionary(String term, String fileExtension) {
 		if( fileExtension != null && this.dictionaryContents.contains("|" + fileExtension + "|")) {
 			this.fileExtension	= fileExtension;
 
@@ -188,7 +188,7 @@ public class Dictionary {
 	 * @param	isUp				Shifting up? (or down)
 	 * @return	The shifted word
 	 */
-	public String getShifted(String word, Boolean isUp) {
+	public String getShifted(String word, boolean isUp) {
 		String shiftTerms	= this.relevantTermsList.replaceFirst("\\|", "");
 			   shiftTerms	= UtilsTextual.replaceLast(shiftTerms, "|", "");
 

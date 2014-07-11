@@ -17,6 +17,7 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.editor.Document;
+import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,50 +28,76 @@ import java.util.List;
 public class UtilsTextual {
 
 	/**
-	 * Check whether given string is fully lower case
-	 *
-	 * @param   str      String to be checked
-	 * @return  Boolean
+	 * @param   str         String to be checked
+	 * @return  boolean     Is the given string fully lower case?
 	 */
 	public static boolean isAllUppercase(String str) {
 		return str.equals( str.toUpperCase() );
 	}
 
 	/**
-	 * Check whether the given string is a comma separated list
-	 *
 	 * @param   str         String to be checked
-	 * @return  Boolean
+	 * @return  boolean     Is the given string is a comma separated list?
 	 */
 	public static boolean isCommaSeparatedList(String str) {
-		return str.contains(",");
+        if( ! str.contains(",") ) {
+            return false;
+        }
+
+            // If the string is quoted: detect whether items are quoted each
+            // => there must be (amountCommas+1)*2 quotes altogether
+            // Ex:  "a","b"         => 1 comma, 4 quotes
+            //      "a","b","c","d" => 3 commas, 8 quotes
+            // Otherwise it should be treated as a quoted string and not as a list.
+        if( isWrappedIntoQuotes(str) ) {
+            String quoteChar    = str.substring(0, 1);
+            int amountQuotes    = StringUtils.countMatches(str, quoteChar);
+            int amountCommas    = StringUtils.countMatches(str, ",");
+
+            if( amountQuotes != (amountCommas + 1) * 2 ) {
+                return false;
+            }
+        }
+
+        return true;
 	}
 
+    /**
+     * @param   str
+     * @return  boolean     Is the given string wrapped into single- or double quotes?
+     */
+    public static boolean isWrappedIntoQuotes(String str) {
+        return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
+    }
+
+    /**
+     * @param   str
+     * @param   wrap
+     * @return  boolean Is the given string wrapped into the wrapper string?
+     */
+    public static boolean isWrappedWith(String str, String wrap) {
+        return str.startsWith(wrap) && str.endsWith(wrap);
+    }
+
 	/**
-	 * Check whether the given string contains any slash or backslash
-	 *
 	 * @param   str         String to be checked
-	 * @return  Boolean
+	 * @return  boolean     Does the given string contain any slash or backslash?
 	 */
 	public static boolean containsAnySlashes(String str) {
 		return str.contains("\\") || str.contains("/");
 	}
 
 	/**
-	 * Check whether the given string contains single or double quotes
-	 *
 	 * @param   str         String to be checked
-	 * @return  Boolean
+	 * @return  boolean     Does the given string contain single or double quotes?
 	 */
 	public static boolean containsAnyQuotes(String str) {
 		return str.contains("\"") || str.contains("'");
 	}
 
 	/**
-	 * Swap slashes inside the given string against backslashes and vise versa
-	 *
 	 * @param   str         String to be checked
-	 * @return  Boolean
+	 * @return  String      Given string w/ contained slashes swapped against backslashes and vise versa
 	 */
 	public static String swapSlashes(String str) {
 		str	= str.replace("\\", "###SHIFTERSLASH###");
@@ -81,10 +108,8 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * Swap single quotes inside the given string against double quotes and vise versa
-	 *
 	 * @param   str         String to be checked
-	 * @return  Boolean
+	 * @return  String      Given string w/ contained single quotes swapped against double quotes and vise versa
 	 */
 	public static String swapQuotes(String str) {
 		str	= str.replace("\"", "###SHIFTERSINGLEQUOTE###");
@@ -95,10 +120,8 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * Convert given string to lower case with only first char in upper case
-	 *
 	 * @param   str      String to be converted
-	 * @return           String with conversion result
+	 * @return  String   Given string converted to lower case with only first char in upper case
 	 */
 	public static String toUcFirst(String str) {
 		return Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
@@ -108,9 +131,9 @@ public class UtilsTextual {
 	 * Check whether given string is lower case with only first char in upper case
 	 *
 	 * @param   str      String to be checked
-	 * @return  Boolean  If the string is lower case with only first char in upper case.
+	 * @return  boolean  If the string is lower case with only first char in upper case.
 	 */
-	public static Boolean isUcFirst(String str) {
+	public static boolean isUcFirst(String str) {
 		return str.equals(UtilsTextual.toUcFirst(str));
 	}
 
@@ -151,12 +174,10 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * Get sub sequence of given offsets out of given text
-	 *
 	 * @param   text           Text containing the sequence
 	 * @param   offsetStart    Sub sequence start character offset
 	 * @param   offsetEnd      Sub sequence end character offset
-	 * @return                 Sub sequence
+	 * @return                 Sub sequence of given offsets out of given text
 	 */
 	public static String getSubString(CharSequence text, int offsetStart, int offsetEnd) {
 		if (text.length() == 0) return null;
@@ -165,11 +186,9 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * Get character BEFORE word at given caret offset
-	 *
-	 * @param   text     Full text
-	 * @param   offset   Offset from before which to extract one character
-	 * @return  String
+	 * @param   text        Full text
+	 * @param   offset      Offset from before which to extract one character
+	 * @return  String      Character BEFORE word at given caret offset
 	 */
 	public static String getCharBeforeOffset(CharSequence text, int offset) {
 		if (text.length() == 0 || offset == 0) return "";
@@ -182,11 +201,9 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * Get character AFTER word at caret offset
-	 *
-	 * @param   text     Full text
-	 * @param   offset   Offset from after which to extract one character
-	 * @return  String
+	 * @param   text        Full text
+	 * @param   offset      Offset from after which to extract one character
+	 * @return  String      Character AFTER word at caret offset
 	 */
 	public static String getCharAfterOffset(CharSequence text, int offset) {
 		if (text.length() < offset+2 || offset == 0) return "";
@@ -199,11 +216,9 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * Get starting position offset of word at given offset in given CharSequence
-	 *
 	 * @param   text		Text to be analyzed
 	 * @param   offset		Character offset in text, intersecting the word dealing with
-	 * @return  int
+	 * @return  int         Starting position offset of word at given offset in given CharSequence
 	 */
 	public static int getStartOfWordAtOffset(CharSequence text, int offset) {
 		if (text.length() == 0) return 0;

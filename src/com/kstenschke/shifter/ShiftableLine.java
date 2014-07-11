@@ -56,7 +56,7 @@ public class ShiftableLine {
 	 * @param	isUp	Shift up or down?
 	 * @return			Next upper/lower word
 	 */
-	public String getShifted(Boolean isUp, Editor editor) {
+	public String getShifted(boolean isUp, Editor editor) {
 		String line  = this.line.trim();
 
 		String[] words  = line.split("\\s+");

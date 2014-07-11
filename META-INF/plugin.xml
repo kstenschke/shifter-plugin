@@ -65,11 +65,16 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.1.9</version>
+    <version>1.1.10</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.1.10
+            <ul>
+                <li>Improved pattern detection: better distinguishing between quoted strings and comma separated lists</li>
+                <li>Reduced memory expense (changed Boolean objects into boolean primitives)</li>
+            </ul>
         <li>1.1.9
             <ul>
                 <li>Added setting: Preservation of camel- and upper case is now configurable</li>

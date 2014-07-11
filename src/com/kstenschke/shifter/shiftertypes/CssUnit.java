@@ -19,33 +19,33 @@ package com.kstenschke.shifter.shiftertypes;
 /**
  * Pixel value class
  */
-public class CssLengthValue {
+public class CssUnit {
 
 	/**
 	 * Constructor
 	 */
-	public CssLengthValue() {
+	public CssUnit() {
 
 	}
 
 	/**
 	 * @param	str			String to be checked
-	 * @return	Boolean     Does the given string represents a CSS length value?
+	 * @return	boolean     Does the given string represents a CSS length value?
 	 */
-	public static Boolean isCssLengthValue(String str) {
+	public static boolean isCssUnitValue(String str) {
 		return ( str.matches("[0-9]*(cm|em|in|pt|px)") );
 	}
 
 	/**
-	 * @param	lengthValue		The full length value, post-fixed by its unit
-	 * @param	isUp		      Shifting up or down?
-	 * @return	String         Length (em / px / pt / cm / in) value shifted up or down by 1px
+	 * @param	value       The full length value, post-fixed by its unit
+	 * @param	isUp		Shifting up or down?
+	 * @return	String      Length (em / px / pt / cm / in) value shifted up or down by 1px
 	 */
-	public String getShifted(String lengthValue, Boolean isUp) {
+	public String getShifted(String value, boolean isUp) {
 			// Get int from PX value
-		String unit       = lengthValue.substring(lengthValue.length() -2);
-		lengthValue       = lengthValue.replace(unit, "");
-		int numericValue  = Integer.parseInt(lengthValue);
+		String unit = value.substring(value.length() -2);
+		value       = value.replace(unit, "");
+		int numericValue  = Integer.parseInt(value);
 
 			// Shift up/down by 1
 		numericValue = numericValue + (isUp ? 1 : -1);

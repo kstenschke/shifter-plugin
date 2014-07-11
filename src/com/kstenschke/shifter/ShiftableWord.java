@@ -31,7 +31,7 @@ public class ShiftableWord {
 
 	private final int wordType;
 
-	private final Boolean isShiftable;
+	private final boolean isShiftable;
 
 	private final CharSequence editorText;
 
@@ -59,7 +59,7 @@ public class ShiftableWord {
 		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
 
 			// Comprehend negative values of numeric types
-		if( this.wordType == ShifterTypesManager.TYPE_CSS_LENGTH_VALUE || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE) {
+		if( this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE) {
 			if( prefixChar.equals("-") ) {
 				word = "-" + word;
 			}
@@ -76,7 +76,7 @@ public class ShiftableWord {
 	 * @param	isUp	Shift up or down?
 	 * @return			Next upper/lower word
 	 */
-	public String getShifted(Boolean isUp, Editor editor) {
+	public String getShifted(boolean isUp, Editor editor) {
 		if (!this.isShiftable) {
 			return this.word;
 		}
@@ -85,8 +85,8 @@ public class ShiftableWord {
 		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, filename, editor);
 
 			// Keep original word casing
-		if(      this.wordType != ShifterTypesManager.TYPE_PHPVARIABLE
-			 &&  this.wordType != ShifterTypesManager.TYPE_QUOTEDSTRING
+		if(      this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
+			 &&  this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
 		) {
             if( ShifterPreferences.getIsActivePreserveCase() ) {
                 if ( UtilsTextual.isAllUppercase(this.word) ) {

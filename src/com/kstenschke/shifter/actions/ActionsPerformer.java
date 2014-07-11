@@ -22,7 +22,7 @@ import com.intellij.openapi.editor.*;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.*;
-import com.kstenschke.shifter.shiftertypes.CssLengthValue;
+import com.kstenschke.shifter.shiftertypes.CssUnit;
 import com.kstenschke.shifter.shiftertypes.NumericValue;
 import com.kstenschke.shifter.shiftertypes.StringHtmlEncodable;
 import org.jetbrains.annotations.Nullable;
@@ -81,7 +81,7 @@ class ActionsPerformer {
 
                 String line = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
 
-				Boolean isWordShifted = false;
+				boolean isWordShifted = false;
 
 				if ( word != null && ! word.isEmpty() ) {
                     isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
@@ -124,7 +124,7 @@ class ActionsPerformer {
      * @return  String      resulting shifted or original word if no shiftability was found
      */
     private String getShiftedWord(boolean shiftUp, String filename, String word, String line, @Nullable Integer wordOffset, Boolean replaceInDocument) {
-        Boolean wordShifted = false;
+        boolean wordShifted = false;
 
         if( wordOffset == null ) {
                 // Extract offset of word at caret
@@ -138,7 +138,7 @@ class ActionsPerformer {
         ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename);
 
             // Comprehend negative values of numeric types
-        if( NumericValue.isNumericValue(word) || CssLengthValue.isCssLengthValue(word) ) {
+        if( NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) ) {
             if ( prefixChar.equals("-") ) {
                 word = "-" + word;
                 wordOffset--;
@@ -161,7 +161,7 @@ class ActionsPerformer {
     /**
      * @param   shiftUp
      */
-    private void shiftBlockSelection(Boolean shiftUp) {
+    private void shiftBlockSelection(boolean shiftUp) {
         int[] blockSelectionStarts                  = this.selectionModel.getBlockSelectionStarts();
         int[] blockSelectionEnds                    = this.selectionModel.getBlockSelectionEnds();
 
@@ -182,9 +182,9 @@ class ActionsPerformer {
     /**
      * @param   blockSelectionStarts
      * @param   blockSelectionEnds
-     * @return  Boolean
+     * @return  boolean
      */
-    private Boolean areBlockItemsIdentical(int[] blockSelectionStarts, int[] blockSelectionEnds) {
+    private boolean areBlockItemsIdentical(int[] blockSelectionStarts, int[] blockSelectionEnds) {
         String firstItem = editorText.subSequence( blockSelectionStarts[0], blockSelectionEnds[0]).toString();
         String currentItem;
 
@@ -244,7 +244,7 @@ class ActionsPerformer {
 	 * @param   shiftUp
 	 * @return  Given lines sorted alphabetically ascending / descending
 	 */
-	private List<String> sortLines(List<String> lines, Boolean shiftUp) {
+	private List<String> sortLines(List<String> lines, boolean shiftUp) {
         if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {
 		    Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
         } else {
@@ -263,7 +263,7 @@ class ActionsPerformer {
 	 * @param   shiftUp
 	 * @return  Given comma separated list, sorted alphabetically ascending / descending
 	 */
-	private String sortCommaSeparatedList(String selectedText, Boolean shiftUp) {
+	private String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
 		String[] items = selectedText.split(",(\\s)*");
 
         if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {

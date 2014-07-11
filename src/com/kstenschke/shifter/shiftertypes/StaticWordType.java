@@ -42,9 +42,9 @@ public class StaticWordType {
 	 * Check whether the given string is a known keyword of the word type
 	 *
 	 * @param	word		Word to be compared against keywords
-	 * @return	Boolean
+	 * @return	boolean
 	 */
-	public Boolean hasWord(String word) {
+	public boolean hasWord(String word) {
 		return (word.toLowerCase()).matches(this.regExPattern);
 	}
 
@@ -53,7 +53,7 @@ public class StaticWordType {
 	 * @param	isUp		Shifting up or down?
 	 * @return	String		Shifting result
 	 */
-	public String getShifted(String word, Boolean isUp) {
+	public String getShifted(String word, boolean isUp) {
 		int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word.toLowerCase());
 
 		if( wordPositionOriginal == -1 ) {

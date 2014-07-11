@@ -26,7 +26,6 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 
-
 class ShifterSettingsComponent implements ProjectComponent, Configurable {
 
 	private ImageIcon icon = new ImageIcon("/com/kstenschke/shifter/resources/images/blank32x32.png");

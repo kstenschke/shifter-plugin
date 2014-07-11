@@ -35,9 +35,9 @@ public class RbgColor {
 	 *
 	 * @param	str			String to be checked
 	 * @param	prefix		Character found to precede that string
-	 * @return	Boolean.
+	 * @return	boolean.
 	 */
-	public Boolean isRgbColorString(String str, String prefix) {
+	public boolean isRgbColorString(String str, String prefix) {
 		return !( !prefix.equals("#")  || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")) );
 	}
 
@@ -46,7 +46,7 @@ public class RbgColor {
 	 * @param	isUp		Shifting up or down?
 	 * @return	String
 	 */
-	public String getShifted(String rgbStr, Boolean isUp) {
+	public String getShifted(String rgbStr, boolean isUp) {
 		if (rgbStr.length() == 3) {
 			rgbStr = sixfoldTripleColor(rgbStr);
 		}
@@ -62,9 +62,9 @@ public class RbgColor {
 	 * Check whether given String represents RGB white (fff, FFF, ffffff, FFFFFF)
 	 *
 	 * @param	str			RBG color string to be checked
-	 * @return	Boolean.
+	 * @return	boolean.
 	 */
-	private static Boolean isWhite(String str) {
+	private static boolean isWhite(String str) {
 		return str.equalsIgnoreCase("fff") || str.equalsIgnoreCase("ffffff");
 	}
 
@@ -72,9 +72,9 @@ public class RbgColor {
 	 * Check whether given String represents RGB black (000, 000000)
 	 *
 	 * @param	str			RGB color string
-	 * @return	Boolean.
+	 * @return	boolean.
 	 */
-	private static Boolean isBlack(String str) {
+	private static boolean isBlack(String str) {
 		return str.equalsIgnoreCase("000") || str.equalsIgnoreCase("000000");
 	}
 

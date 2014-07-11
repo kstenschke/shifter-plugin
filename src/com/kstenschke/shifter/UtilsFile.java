@@ -31,10 +31,8 @@ public class UtilsFile {
 	}
 
 	/**
-	 * Get string from given stream
-	 *
 	 * @param	is		Input stream
-	 * @return	String	Full stream contents as string
+	 * @return	String	Full contents of given stream as string
 	 */
 	public static String getFileStreamAsString(java.io.InputStream is) {
 		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");

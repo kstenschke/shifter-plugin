@@ -32,9 +32,9 @@ public class StringMonoCharacter {
 
 	/**
 	 * @param word String to be shifted currently
-	 * @return Boolean.
+	 * @return boolean.
 	 */
-	public Boolean isMonoCharacterString(String word) {
+	public boolean isMonoCharacterString(String word) {
 		if (word.length() == 1) return true;
 
 		word = word.toLowerCase();
@@ -51,7 +51,7 @@ public class StringMonoCharacter {
 	 * @param isUp Shifting up or down?
 	 * @return String
 	 */
-	public String getShifted(String word, Boolean isUp) {
+	public String getShifted(String word, boolean isUp) {
 		char firstChar = word.toLowerCase().charAt(0);
 		int charVal = firstChar;
 

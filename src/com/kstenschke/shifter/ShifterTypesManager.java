@@ -28,20 +28,20 @@ class ShifterTypesManager {
 
 		// Dictionary (list of strings) based types
 	private static final int TYPE_ACCESSIBILITY      			= 1;
-	private static final int TYPE_DICTIONARYWORD_EXTSPECIFIC	= 2;
-	private static final int TYPE_DICTIONARYWORD_GLOBAL 		= 3;
+	private static final int TYPE_DICTIONARY_WORD_EXTSPECIFIC   = 2;
+	private static final int TYPE_DICTIONARY_WORD_GLOBAL        = 3;
 
 		// Generic types
-	public static final int    TYPE_QUOTEDSTRING		= 50;
-	private static final int   TYPE_HTMLENCODABLESTRING	= 51;
-	private static final int   TYPE_MONOCHARACTERSTRING	= 52;
-	private static final int   TYPE_RGBCOLOR			= 53;
-	public static final int    TYPE_CSS_LENGTH_VALUE    = 54; // em, px, pt, cm, in
-	private static final int   TYPE_DOCCOMMENT_TAG 		= 55;
-	private static final int   TYPE_DOCCOMMENT_DATATYPE	= 56;
-	public static final int    TYPE_PHPVARIABLE		   	= 57;
-	public static final int    TYPE_NUMERIC_VALUE       = 58;
-	private static final int   TYPE_NUMERICPOSTFIXEDSTRING = 59;
+	public static final int     TYPE_QUOTED_STRING            = 50;
+	private static final int    TYPE_HTML_ENCODABLE_STRING    = 51;
+	private static final int    TYPE_MONO_CHARACTER_STRING    = 52;
+	private static final int    TYPE_RGB_COLOR                = 53;
+	public static final int     TYPE_CSS_UNIT                 = 54; // em, px, pt, cm, in
+	private static final int    TYPE_DOCCOMMENT_TAG 		  = 55;
+	private static final int    TYPE_DOCCOMMENT_DATATYPE	  = 56;
+	public static final int     TYPE_PHP_VARIABLE             = 57;
+	public static final int     TYPE_NUMERIC_VALUE            = 58;
+	private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 59;
 
 		// Word type objects
 	private StaticWordType wordTypeAccessibilities;
@@ -51,7 +51,7 @@ class ShifterTypesManager {
 	private QuotedString typeQuotedString;
 	private StringMonoCharacter typeMonoCharacterString;
 	private RbgColor typeRgbColor;
-	private CssLengthValue typePixelValue;
+	private CssUnit typePixelValue;
 	private NumericValue typeNumericValue;
 	private PhpVariable typePhpVariable;
 	private DocCommentTag typeTagInDocComment;
@@ -77,7 +77,7 @@ class ShifterTypesManager {
 	public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
 			// PHP variable (must be prefixed with "$")
 		this.typePhpVariable = new PhpVariable();
-		if (this.typePhpVariable.isPhpVariable(word)) return TYPE_PHPVARIABLE;
+		if (this.typePhpVariable.isPhpVariable(word)) return TYPE_PHP_VARIABLE;
 
 			// DocComment types (must be prefixed with "@")
 		this.typeDataTypeInDocComment = new DocCommentType();
@@ -105,39 +105,39 @@ class ShifterTypesManager {
 		String fileExtension	= UtilsFile.extractFileExtension(filename);
 
 		if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
-			return TYPE_DICTIONARYWORD_EXTSPECIFIC;
+			return TYPE_DICTIONARY_WORD_EXTSPECIFIC;
 		}
 
 			// Quoted (must be wrapped in single or double quotes or backticks)
 		this.typeQuotedString = new QuotedString();
-		if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) return TYPE_QUOTEDSTRING;
+		if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) return TYPE_QUOTED_STRING;
 
 			// RGB (must be prefixed with "#")
 		this.typeRgbColor = new RbgColor();
-		if ( this.typeRgbColor.isRgbColorString(word, prefixChar) ) return TYPE_RGBCOLOR;
+		if ( this.typeRgbColor.isRgbColorString(word, prefixChar) ) return TYPE_RGB_COLOR;
 
 			// Pixel value (must consist of numeric value followed by "px")
-		this.typePixelValue = new CssLengthValue();
-		if (CssLengthValue.isCssLengthValue(word)) return TYPE_CSS_LENGTH_VALUE;
+		this.typePixelValue = new CssUnit();
+		if (CssUnit.isCssUnitValue(word)) return TYPE_CSS_UNIT;
 
 		this.typeNumericValue = new NumericValue();
 		if (NumericValue.isNumericValue(word)) return TYPE_NUMERIC_VALUE;
 
 			// MonoCharString (= consisting from any amount of the same character)
 		this.typeMonoCharacterString	= new StringMonoCharacter();
-		if (this.typeMonoCharacterString.isMonoCharacterString(word)) return TYPE_MONOCHARACTERSTRING;
+		if (this.typeMonoCharacterString.isMonoCharacterString(word)) return TYPE_MONO_CHARACTER_STRING;
 
 			// Term in dictionary (anywhere, that is w/o limiting to the current file extension)
 		if( this.typeDictionaryTerm.isTermInDictionary(word, false) ) {
-			return TYPE_DICTIONARYWORD_GLOBAL;
+			return TYPE_DICTIONARY_WORD_GLOBAL;
 		}
 
 		if( StringHtmlEncodable.isHtmlEncodable(word) ) {
-			return TYPE_HTMLENCODABLESTRING;
+			return TYPE_HTML_ENCODABLE_STRING;
 		}
 
 		if( StringNumericPostfix.isNumericPostfix(word)) {
-			return TYPE_NUMERICPOSTFIXEDSTRING;
+			return TYPE_NUMERIC_POSTFIXED_STRING;
 		}
 
 		return TYPE_UNKNOWN;
@@ -145,9 +145,9 @@ class ShifterTypesManager {
 
     /**
      * @param   word
-     * @return  Boolean
+     * @return  boolean
      */
-    private Boolean isKeywordAccessType(String word) {
+    private boolean isKeywordAccessType(String word) {
         String[] keywordsAccessType = {"public", "private", "protected"};
         this.wordTypeAccessibilities = new StaticWordType(TYPE_ACCESSIBILITY, keywordsAccessType);
 
@@ -169,34 +169,34 @@ class ShifterTypesManager {
 	 * @return					      The shifted word
 	 *
 	 */
-	public String getShiftedWord(String word, int idWordType, Boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
+	public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
 		switch (idWordType) {
 				// ================== String based word types
 			case TYPE_ACCESSIBILITY:
 				return this.wordTypeAccessibilities.getShifted(word, isUp);
 
-			case TYPE_DICTIONARYWORD_GLOBAL:
-			case TYPE_DICTIONARYWORD_EXTSPECIFIC:
+			case TYPE_DICTIONARY_WORD_GLOBAL:
+			case TYPE_DICTIONARY_WORD_EXTSPECIFIC:
 					// The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
 				return this.typeDictionaryTerm.getShifted(word, isUp);
 
 				// ================== Generic types (shifting is calculated)
-			case TYPE_RGBCOLOR:
+			case TYPE_RGB_COLOR:
 				return this.typeRgbColor.getShifted(word, isUp);
 
 			case TYPE_NUMERIC_VALUE:
 				return this.typeNumericValue.getShifted(word, isUp, editor);
 
-			case TYPE_CSS_LENGTH_VALUE:
+			case TYPE_CSS_UNIT:
 				return this.typePixelValue.getShifted(word, isUp);
 
-			case TYPE_PHPVARIABLE:
+			case TYPE_PHP_VARIABLE:
 				return this.typePhpVariable.getShifted(word, editorText, isUp);
 
-			case TYPE_QUOTEDSTRING:
+			case TYPE_QUOTED_STRING:
 				return this.typeQuotedString.getShifted(word, editorText, isUp);
 
-			case TYPE_MONOCHARACTERSTRING:
+			case TYPE_MONO_CHARACTER_STRING:
 				return this.typeMonoCharacterString.getShifted(word, isUp);
 
 			case TYPE_DOCCOMMENT_TAG:
@@ -206,10 +206,10 @@ class ShifterTypesManager {
 			case TYPE_DOCCOMMENT_DATATYPE:
 				return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
 
-			case TYPE_HTMLENCODABLESTRING:
+			case TYPE_HTML_ENCODABLE_STRING:
 				return StringHtmlEncodable.getShifted(word);
 
-			case TYPE_NUMERICPOSTFIXEDSTRING:
+			case TYPE_NUMERIC_POSTFIXED_STRING:
 				return StringNumericPostfix.getShifted(word, isUp);
 		}
 

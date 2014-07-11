@@ -60,7 +60,7 @@ public class PluginConfiguration {
             caseInsensitiveRadioButton.setSelected(true);
         }
 
-        Boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
+        boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
         checkBoxpreserveCase.setSelected(isActivePreserveCase);
 
 		if( dictionary == null || dictionary.equals("") )  {
@@ -113,16 +113,16 @@ public class PluginConfiguration {
     }
 
     /**
-     * @return  Boolean
+     * @return  boolean
      */
-    public Boolean getIsActivePreserveCase() {
+    public boolean getIsActivePreserveCase() {
         return checkBoxpreserveCase.isSelected();
     }
 
 	/**
 	 * Config modified?
 	 *
-	 * @return	Boolean
+	 * @return	boolean
 	 */
 	public boolean isModified() {
 		return    ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )

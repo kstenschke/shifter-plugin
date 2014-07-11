@@ -27,9 +27,9 @@ public class StringHtmlEncodable {
 	 * Check whether given character can be encoded to an HTML special char / or is already HTML encoded
 	 *
 	 * @param str String to be shifted currently
-	 * @return Boolean.
+	 * @return boolean.
 	 */
-	public static Boolean isHtmlEncodable(String str) {
+	public static boolean isHtmlEncodable(String str) {
 		Integer strLenOriginal = str.length();
 
 		String encoded = StringEscapeUtils.escapeHtml(str);

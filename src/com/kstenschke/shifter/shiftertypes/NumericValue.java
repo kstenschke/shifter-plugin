@@ -42,9 +42,9 @@ public class NumericValue {
 
 	/**
 	 * @param	str			String to be checked
-	 * @return	Boolean     Does the given string represent a CSS length value?
+	 * @return	boolean     Does the given string represent a CSS length value?
 	 */
-	public static Boolean isNumericValue(String str) {
+	public static boolean isNumericValue(String str) {
 		return (str.matches("[0-9]+"));
 	}
 
@@ -53,7 +53,7 @@ public class NumericValue {
 	 * @param	isUp		    Shifting up or down?
 	 * @return	String          Value shifted up or down by one
 	 */
-	public String getShifted(String numericValue, Boolean isUp, Editor editor) {
+	public String getShifted(String numericValue, boolean isUp, Editor editor) {
 		if( numericValue.length() <= 7 ) {
                 // Integer
 			return Integer.toString( Integer.parseInt(numericValue) + (isUp ? 1 : -1) );
