@@ -1,0 +1,79 @@
+h1. Shifter Plugin - Changelog
+
+* 1.1.11
+    ** Reduced inline changelog to previous five versions, moved full changelog to separate file
+* 1.1.10
+    ** Improved pattern detection: better distinguishing between quoted strings and comma separated lists
+    ** Reduced memory expense (changed Boolean objects into boolean primitives)
+* 1.1.9
+    ** Added setting: Preservation of camel- and upper case is now configurable
+    ** Added case-insensitive fallback to failed word shifting
+* 1.1.8 Bugfix: Line shifting was overriding word shifting with 1.1.7
+* 1.1.7 Added shifting of column mode selections (with identical items per line)
+* 1.1.6 Improved compatibility: Compiled with JDK target bytecode version 1.6 (was 1.7)
+* 1.1.5 Added sorting mode to settings: case sensitive/in-sensitive
+* 1.1.4 Added shifting of numeric postfixes of strings
+* 1.1.3 Made sorting of lines and lists case insensitive
+* 1.1.2
+    ** Added support for shifting negative numeric- and CSS pixel values
+    ** Added support for shifting more CSS length types: em, pt, cm, in
+* 1.1.1 Added HTML special chars encoding/decoding
+* 1.1.0 Made shifter dictionary customizable via plugin configuration
+* 1.0.12  Added character swapping for single/double quote, slash/backslash, in single-line selection
+* 1.0.11
+    ** Added shifting of words consisting from any amount of the same character to the next ASCII character
+    ** Added shifting of web image and audio format file extensions
+    ** Added shifting of names of english ordinal numbers and numbers
+    ** Added shifting of DOM touch and control events
+    ** Added shifting of text styles
+* 1.0.10
+    ** Bugfix: shifting line with regex meta characters possibly caused exception
+    ** Changed menu items labels and order, disable items when no editor available
+* 1.0.9
+    ** Added shifting of meta-syntax terms
+    ** Added shifting of logical operators, arithmetical operations and elements
+    ** Added shifting of geographical orientations and time units
+    ** Added shifting of data collection type names
+    ** Extended shiftable "boolean" keyword pairs
+    ** Bugfix: shifting with caret at EOF failed
+* 1.0.8
+    ** Added shifting of strings wrapped in backticks
+    ** Added shifting of PHP core magical constants (__FILE__, __LINE__, etc.)
+* 1.0.7
+    ** Added balloon info with human-readable date when shifting UNIX timestamps
+    ** Added shifting of UNIX timestamps +/- one day
+    ** Added shifting of named colors from the sRGB color space (white, lightGray, gray...)
+    ** Added shifting of abbreviated month and weekday names (jan, feb, ... and mon, tue, ...)
+    ** Added shifting of JavaScript event types (mouse, keyboard, frame/object, form)
+* 1.0.6
+    ** Improved shiftable word types detection
+    ** Added Objective-C specific data types
+    ** Bugfix: Shifted quoted strings were partly maintaining wrong case
+* 1.0.5
+    ** Added auto-completion of shifted JsDoc method tag with respective function name
+    ** Added shifting of data types inside Java, JavaScript and PHP doc comments
+    ** Added maintaining of lower case with upper first character
+    ** Added option to sort items of selected comma separated list
+* 1.0.4
+    ** Added support for single/double quoted strings: shifts to aphabetically next/previous quoted string in current file
+    ** Added shifting of CSS positioning: absolute/relative
+    ** Added shifting of Objective-c booleans YES/NO
+    ** Bugfix: PHP variables containing underscores were not detected
+* 1.0.3
+    ** Added support for PHP variables: shifts to alphabetically next/previous variable in current file
+    ** Added shifting of numeric values w/o units
+    ** Added ability to undo/redo shifter actions
+    ** Changed CSS pixel values shifting size to 1
+* 1.0.2
+    ** Added alphabetical ascending/descending sorting of multi-line selections.
+    ** Added shifting of doc-params @param/@return
+    ** Added shifting of months, weekdays and CSS orientations: top/right/bottom/left
+    ** Added shifting of a whole line: a single shiftable word in the edited line is detected
+    ** Added maintaining of uppercase/lowercase for all types
+* 1.0.1
+    ** Added shifting of MySql data type keywords
+    ** Added CSS pixel value shifting
+    ** Added accessibility keywords shifting
+    ** Added conversion of triple digit CSS RGB values to six digits
+    ** Added case sensitivity for booleans
+* 1.0.0 Initial release
