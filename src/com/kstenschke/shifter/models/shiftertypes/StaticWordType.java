@@ -14,9 +14,9 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
-import com.kstenschke.shifter.UtilsArray;
+import com.kstenschke.shifter.utils.UtilsArray;
 
 /**
  * Shifter general word type class

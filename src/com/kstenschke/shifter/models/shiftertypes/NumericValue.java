@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.ui.popup.Balloon;

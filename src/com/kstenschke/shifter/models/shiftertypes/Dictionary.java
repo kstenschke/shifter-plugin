@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
-import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.UtilsTextual;
+import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.forms.PluginConfiguration;
 import org.apache.commons.lang.StringUtils;
 

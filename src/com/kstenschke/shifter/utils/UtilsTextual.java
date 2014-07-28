@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter;
+package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
 import org.apache.commons.lang.StringUtils;

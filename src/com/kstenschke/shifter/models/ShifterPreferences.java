@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter;
+package com.kstenschke.shifter.models;
 
 import com.intellij.ide.util.PropertiesComponent;
 import org.jetbrains.annotations.NonNls;
@@ -25,8 +25,8 @@ import org.jetbrains.annotations.NonNls;
  */
 public class ShifterPreferences {
 
-	@NonNls
-	private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
+    @NonNls
+    private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
     @NonNls
     private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
     @NonNls
@@ -36,27 +36,27 @@ public class ShifterPreferences {
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
     public static final Integer SORTING_MODE_CASE_INSENSITIVE   = 1;
 
-	/**
-	 * Store dictionary
-	 *
-	 * @param	dictionary		Contents to be stored in dictionary preference
-	 */
-	public static void saveDictionary(String dictionary) {
-		PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY, dictionary);
-	}
+    /**
+     * Store dictionary
+     *
+     * @param	dictionary		Contents to be stored in dictionary preference
+     */
+    public static void saveDictionary(String dictionary) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY, dictionary);
+    }
 
-	/**
-	 * @return	String  Dictionary
-	 */
-	public static String getDictionary() {
-		String dictionary = PropertiesComponent.getInstance().getValue(PROPERTY_DICTIONARY);
+    /**
+     * @return	String  Dictionary
+     */
+    public static String getDictionary() {
+        String dictionary = PropertiesComponent.getInstance().getValue(PROPERTY_DICTIONARY);
 
-		if( dictionary == null ) {
-			dictionary = "";
-		}
+        if( dictionary == null ) {
+            dictionary = "";
+        }
 
-		return dictionary;
-	}
+        return dictionary;
+    }
 
     /**
      * Store sorting mode

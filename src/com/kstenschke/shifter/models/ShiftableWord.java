@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter;
+package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.utils.UtilsTextual;
 
 /**
  * Shiftable word

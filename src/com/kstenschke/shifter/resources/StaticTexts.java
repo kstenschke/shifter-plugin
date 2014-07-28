@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter;
+package com.kstenschke.shifter.resources;
 
 import org.jetbrains.annotations.NonNls;
 

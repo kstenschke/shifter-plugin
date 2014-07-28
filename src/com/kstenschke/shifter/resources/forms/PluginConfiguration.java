@@ -16,8 +16,8 @@
 
 package com.kstenschke.shifter.resources.forms;
 
-import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.UtilsFile;
+import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.swing.*;
 import java.awt.event.*;

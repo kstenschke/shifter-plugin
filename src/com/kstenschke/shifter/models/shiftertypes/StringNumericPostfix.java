@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
 /**
  * String with numeric postfix

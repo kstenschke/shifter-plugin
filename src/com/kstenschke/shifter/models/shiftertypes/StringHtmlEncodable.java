@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
 import org.apache.commons.lang.StringEscapeUtils;
 

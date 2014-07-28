@@ -23,7 +23,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.project.Project;
-import com.kstenschke.shifter.StaticTexts;
+import com.kstenschke.shifter.resources.StaticTexts;
 
 
 /**

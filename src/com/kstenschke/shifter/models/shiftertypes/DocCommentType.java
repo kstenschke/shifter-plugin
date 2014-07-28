@@ -1,4 +1,4 @@
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
 import java.util.ArrayList;
 import java.util.List;

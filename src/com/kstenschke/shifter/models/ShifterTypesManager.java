@@ -14,10 +14,10 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter;
+package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.shiftertypes.*;
+import com.kstenschke.shifter.utils.UtilsFile;
 
 /**
  * Manager of "shiftable" word types - detects word type to evoke resp. shifting
@@ -44,18 +44,18 @@ class ShifterTypesManager {
 	private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 59;
 
 		// Word type objects
-	private StaticWordType wordTypeAccessibilities;
-	private Dictionary typeDictionaryTerm;
+	private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
+	private com.kstenschke.shifter.models.shiftertypes.Dictionary typeDictionaryTerm;
 
 		// Generic types (calculated when shifted)
-	private QuotedString typeQuotedString;
-	private StringMonoCharacter typeMonoCharacterString;
-	private RbgColor typeRgbColor;
-	private CssUnit typePixelValue;
-	private NumericValue typeNumericValue;
-	private PhpVariable typePhpVariable;
-	private DocCommentTag typeTagInDocComment;
-	private DocCommentType typeDataTypeInDocComment;
+	private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
+	private com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter typeMonoCharacterString;
+	private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
+	private com.kstenschke.shifter.models.shiftertypes.CssUnit typePixelValue;
+	private com.kstenschke.shifter.models.shiftertypes.NumericValue typeNumericValue;
+	private com.kstenschke.shifter.models.shiftertypes.PhpVariable typePhpVariable;
+	private com.kstenschke.shifter.models.shiftertypes.DocCommentTag typeTagInDocComment;
+	private com.kstenschke.shifter.models.shiftertypes.DocCommentType typeDataTypeInDocComment;
 
 	/**
 	 * Constructor
@@ -76,15 +76,15 @@ class ShifterTypesManager {
 	 */
 	public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
 			// PHP variable (must be prefixed with "$")
-		this.typePhpVariable = new PhpVariable();
+		this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
 		if (this.typePhpVariable.isPhpVariable(word)) return TYPE_PHP_VARIABLE;
 
 			// DocComment types (must be prefixed with "@")
-		this.typeDataTypeInDocComment = new DocCommentType();
+		this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
 		boolean isDocCommentLineContext   = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
 
 		if( isDocCommentLineContext ) {
-			this.typeTagInDocComment = new DocCommentTag();
+			this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentTag();
 
 			if ( prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line) ) {
 				return TYPE_DOCCOMMENT_TAG;
@@ -101,7 +101,7 @@ class ShifterTypesManager {
 		}
 
 			// File extension specific term in dictionary
-		this.typeDictionaryTerm = new Dictionary();
+		this.typeDictionaryTerm = new com.kstenschke.shifter.models.shiftertypes.Dictionary();
 		String fileExtension	= UtilsFile.extractFileExtension(filename);
 
 		if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
@@ -109,22 +109,22 @@ class ShifterTypesManager {
 		}
 
 			// Quoted (must be wrapped in single or double quotes or backticks)
-		this.typeQuotedString = new QuotedString();
+		this.typeQuotedString = new com.kstenschke.shifter.models.shiftertypes.QuotedString();
 		if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) return TYPE_QUOTED_STRING;
 
 			// RGB (must be prefixed with "#")
-		this.typeRgbColor = new RbgColor();
+		this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
 		if ( this.typeRgbColor.isRgbColorString(word, prefixChar) ) return TYPE_RGB_COLOR;
 
 			// Pixel value (must consist of numeric value followed by "px")
-		this.typePixelValue = new CssUnit();
-		if (CssUnit.isCssUnitValue(word)) return TYPE_CSS_UNIT;
+		this.typePixelValue = new com.kstenschke.shifter.models.shiftertypes.CssUnit();
+		if (com.kstenschke.shifter.models.shiftertypes.CssUnit.isCssUnitValue(word)) return TYPE_CSS_UNIT;
 
-		this.typeNumericValue = new NumericValue();
-		if (NumericValue.isNumericValue(word)) return TYPE_NUMERIC_VALUE;
+		this.typeNumericValue = new com.kstenschke.shifter.models.shiftertypes.NumericValue();
+		if (com.kstenschke.shifter.models.shiftertypes.NumericValue.isNumericValue(word)) return TYPE_NUMERIC_VALUE;
 
 			// MonoCharString (= consisting from any amount of the same character)
-		this.typeMonoCharacterString	= new StringMonoCharacter();
+		this.typeMonoCharacterString	= new com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter();
 		if (this.typeMonoCharacterString.isMonoCharacterString(word)) return TYPE_MONO_CHARACTER_STRING;
 
 			// Term in dictionary (anywhere, that is w/o limiting to the current file extension)
@@ -132,11 +132,11 @@ class ShifterTypesManager {
 			return TYPE_DICTIONARY_WORD_GLOBAL;
 		}
 
-		if( StringHtmlEncodable.isHtmlEncodable(word) ) {
+		if( com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.isHtmlEncodable(word) ) {
 			return TYPE_HTML_ENCODABLE_STRING;
 		}
 
-		if( StringNumericPostfix.isNumericPostfix(word)) {
+		if( com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
 			return TYPE_NUMERIC_POSTFIXED_STRING;
 		}
 
@@ -149,7 +149,7 @@ class ShifterTypesManager {
      */
     private boolean isKeywordAccessType(String word) {
         String[] keywordsAccessType = {"public", "private", "protected"};
-        this.wordTypeAccessibilities = new StaticWordType(TYPE_ACCESSIBILITY, keywordsAccessType);
+        this.wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftertypes.StaticWordType(TYPE_ACCESSIBILITY, keywordsAccessType);
 
         return this.wordTypeAccessibilities.hasWord(word);
     }
@@ -207,10 +207,10 @@ class ShifterTypesManager {
 				return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
 
 			case TYPE_HTML_ENCODABLE_STRING:
-				return StringHtmlEncodable.getShifted(word);
+				return com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.getShifted(word);
 
 			case TYPE_NUMERIC_POSTFIXED_STRING:
-				return StringNumericPostfix.getShifted(word, isUp);
+				return com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.getShifted(word, isUp);
 		}
 
 		return word;

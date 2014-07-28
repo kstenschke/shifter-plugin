@@ -1,6 +1,6 @@
-package com.kstenschke.shifter.shiftertypes;
+package com.kstenschke.shifter.models.shiftertypes;
 
-import com.kstenschke.shifter.UtilsArray;
+import com.kstenschke.shifter.utils.UtilsArray;
 
 import java.util.ArrayList;
 import java.util.Arrays;

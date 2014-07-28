@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter;
+package com.kstenschke.shifter.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;

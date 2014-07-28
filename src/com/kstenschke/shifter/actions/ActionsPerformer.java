@@ -21,10 +21,14 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.kstenschke.shifter.*;
-import com.kstenschke.shifter.shiftertypes.CssUnit;
-import com.kstenschke.shifter.shiftertypes.NumericValue;
-import com.kstenschke.shifter.shiftertypes.StringHtmlEncodable;
+import com.kstenschke.shifter.models.ShiftableLine;
+import com.kstenschke.shifter.models.ShiftableWord;
+import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.models.shiftertypes.CssUnit;
+import com.kstenschke.shifter.models.shiftertypes.NumericValue;
+import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
+import com.kstenschke.shifter.utils.UtilsArray;
+import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
