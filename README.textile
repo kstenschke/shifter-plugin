@@ -54,6 +54,11 @@ Some keyword types from the default dictionary:
 * Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
 
 
+h2. Changelog
+
+Read full changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
+
+
 h2. License
 
 Copyright 2011-2014 Kay Stenschke
