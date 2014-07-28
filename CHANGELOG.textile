@@ -1,6 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.1.11
+    ** Made icons retina and darcula compatible
     ** Reduced inline changelog to previous five versions, moved full changelog to separate file
 * 1.1.10
     ** Improved pattern detection: better distinguishing between quoted strings and comma separated lists
