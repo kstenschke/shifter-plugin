@@ -51,11 +51,7 @@ public class ShifterPreferences {
     public static String getDictionary() {
         String dictionary = PropertiesComponent.getInstance().getValue(PROPERTY_DICTIONARY);
 
-        if( dictionary == null ) {
-            dictionary = "";
-        }
-
-        return dictionary;
+        return dictionary == null ? "" : dictionary;
     }
 
     /**

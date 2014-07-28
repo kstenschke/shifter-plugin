@@ -47,21 +47,13 @@ public class StringMonoCharacter {
 	/**
 	 * Shift mono-character string
 	 *
-	 * @param word Quoted word to be shifted
-	 * @param isUp Shifting up or down?
-	 * @return String
+	 * @param   word Quoted word to be shifted
+	 * @param   isUp Shifting up or down?
+	 * @return  String
 	 */
 	public String getShifted(String word, boolean isUp) {
-		char firstChar = word.toLowerCase().charAt(0);
-		int charVal = firstChar;
-
-		if (isUp) {
-			charVal++;
-		} else {
-			charVal--;
-		}
-
-		firstChar = (char) charVal;
+		char firstChar  = word.toLowerCase().charAt(0);
+		firstChar       = (char) (firstChar + (isUp ? 1 : -1));
 
 		return StringUtils.repeat(String.valueOf(firstChar), word.length());
 	}

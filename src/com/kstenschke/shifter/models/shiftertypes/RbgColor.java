@@ -99,11 +99,11 @@ public class RbgColor {
 	 * @return			Color object
 	 */
 	private static Color getColorFromRgbString(String rgbStr) {
-		int R = Integer.parseInt(rgbStr.substring(0, 2), 16);
-		int G = Integer.parseInt(rgbStr.substring(2, 4), 16);
-		int B = Integer.parseInt(rgbStr.substring(4, 6), 16);
+		int red     = Integer.parseInt(rgbStr.substring(0, 2), 16);
+		int green   = Integer.parseInt(rgbStr.substring(2, 4), 16);
+		int blue    = Integer.parseInt(rgbStr.substring(4, 6), 16);
 
-		return new Color(R, G, B);
+		return new Color(red, green, blue);
 	}
 
 	/**

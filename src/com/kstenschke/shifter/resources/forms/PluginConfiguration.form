@@ -27,7 +27,7 @@
               <actionCommand value="Reset factory default"/>
               <enabled value="true"/>
               <hideActionText value="false"/>
-              <icon value="com/kstenschke/shifter/resources/images/reset.png"/>
+              <icon value="com/kstenschke/shifter/resources/icons/reset.png"/>
               <text value="&amp;Reset Factory Settings"/>
             </properties>
           </component>

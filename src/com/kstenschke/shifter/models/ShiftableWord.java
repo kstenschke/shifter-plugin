@@ -25,17 +25,11 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 public class ShiftableWord {
 
 	private final ShifterTypesManager shifterTypesManager;
-
 	private final String word;
-
 	private final String filename;
-
 	private final int wordType;
-
 	private final boolean isShiftable;
-
 	private final CharSequence editorText;
-
 	private final int caretOffset;
 
 	/**

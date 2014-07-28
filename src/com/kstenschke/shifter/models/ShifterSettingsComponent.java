@@ -29,8 +29,6 @@ import javax.swing.*;
 
 class ShifterSettingsComponent implements ProjectComponent, Configurable {
 
-	private ImageIcon icon = new ImageIcon("/com/kstenschke/shifter/resources/images/blank32x32.png");
-
 	private PluginConfiguration settingsPanel = null;
 
     /**
@@ -60,10 +58,7 @@ class ShifterSettingsComponent implements ProjectComponent, Configurable {
 	}
 
 	public void reset() {
-//		if (settingsPanel != null ) {
-//				// Reset settingsPanel data from component
-// 			settingsPanel.setData();
-//		}
+
 	}
 
     public void apply() throws ConfigurationException {

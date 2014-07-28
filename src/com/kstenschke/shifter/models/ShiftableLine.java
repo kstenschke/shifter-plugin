@@ -28,11 +28,8 @@ import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
 public class ShiftableLine {
 
 	private final String line;
-
 	private final CharSequence editorText;
-
 	private final int caretOffset;
-
 	private final String filename;
 
 	/**
@@ -57,8 +54,7 @@ public class ShiftableLine {
 	 * @return			Next upper/lower word
 	 */
 	public String getShifted(boolean isUp, Editor editor) {
-		String line  = this.line.trim();
-
+		String line     = this.line.trim();
 		String[] words  = line.split("\\s+");
 
 			// Check all words for shiftable types - shiftable if there's not more than one
@@ -68,7 +64,6 @@ public class ShiftableLine {
 		String wordShifted		= "";
 		String prefixChar		= "";
 		String postfixChar		= "";
-
 
 		for (String word : words) {
 			if( word.length() > 2 ) {
@@ -89,7 +84,6 @@ public class ShiftableLine {
 		}
 
 			// Actual shifting
-
 		if( amountShiftableWordsInSentence == 1 ) {
 				// Shift detected word in line
 			return this.line.replace(wordUnshifted, wordShifted);
@@ -101,5 +95,4 @@ public class ShiftableLine {
 			// No shiftability detected, return original line
 		return this.line;
 	}
-
 }

@@ -28,7 +28,7 @@ class ShifterTypesManager {
 
 		// Dictionary (list of strings) based types
 	private static final int TYPE_ACCESSIBILITY      			= 1;
-	private static final int TYPE_DICTIONARY_WORD_EXTSPECIFIC   = 2;
+	private static final int TYPE_DICTIONARY_WORD_EXT_SPECIFIC  = 2;
 	private static final int TYPE_DICTIONARY_WORD_GLOBAL        = 3;
 
 		// Generic types
@@ -105,7 +105,7 @@ class ShifterTypesManager {
 		String fileExtension	= UtilsFile.extractFileExtension(filename);
 
 		if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
-			return TYPE_DICTIONARY_WORD_EXTSPECIFIC;
+			return TYPE_DICTIONARY_WORD_EXT_SPECIFIC;
 		}
 
 			// Quoted (must be wrapped in single or double quotes or backticks)
@@ -176,7 +176,7 @@ class ShifterTypesManager {
 				return this.wordTypeAccessibilities.getShifted(word, isUp);
 
 			case TYPE_DICTIONARY_WORD_GLOBAL:
-			case TYPE_DICTIONARY_WORD_EXTSPECIFIC:
+			case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
 					// The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
 				return this.typeDictionaryTerm.getShifted(word, isUp);
 

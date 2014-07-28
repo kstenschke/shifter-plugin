@@ -22,8 +22,8 @@ package com.kstenschke.shifter.models.shiftertypes;
 public class StringNumericPostfix {
 
     /**
-	 * @param word String to be analyzed
-	 * @return boolean.
+	 * @param   word    String to be analyzed
+	 * @return  boolean
 	 */
 	public static boolean isNumericPostfix(String word) {
 		return word.matches("^.+?\\d$");
@@ -32,9 +32,9 @@ public class StringNumericPostfix {
 	/**
 	 * Shift numeric postfix of string
 	 *
-	 * @param word Quoted word to be shifted
-	 * @param isUp Shifting up or down?
-	 * @return String
+	 * @param   word    Quoted word to be shifted
+	 * @param   isUp    Shifting up or down?
+	 * @return  String
 	 */
 	public static String getShifted(String word, boolean isUp) {
 		int index;

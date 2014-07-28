@@ -24,9 +24,7 @@ import com.kstenschke.shifter.utils.UtilsArray;
 public class StaticWordType {
 
     private final String[] keywords;
-
 	private final int amountKeywords;
-
 	private final String regExPattern;
 
 	/**

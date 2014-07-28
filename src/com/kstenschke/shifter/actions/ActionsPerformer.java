@@ -255,9 +255,7 @@ class ActionsPerformer {
 		    Collections.sort(lines);
         }
 
-		if( !shiftUp ) {
-			Collections.reverse(lines);
-		}
+		if( !shiftUp ) Collections.reverse(lines);
 
 		return lines;
 	}
@@ -276,9 +274,7 @@ class ActionsPerformer {
             Arrays.sort(items);
         }
 
-		if( !shiftUp ) {
-			Collections.reverse(Arrays.asList(items));
-		}
+		if( !shiftUp ) Collections.reverse(Arrays.asList(items));
 
 		return UtilsArray.implode(items, ", ");
 	}

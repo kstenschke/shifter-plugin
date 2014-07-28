@@ -17,6 +17,7 @@
 package com.kstenschke.shifter.resources.forms;
 
 import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.resources.Icons;
 import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.swing.*;
@@ -36,10 +37,8 @@ public class PluginConfiguration {
 	 * Constructor
 	 */
 	public PluginConfiguration() {
-			// Initialize the form
-		InitForm();
+		initForm();
 		
-			// Add action listeners to buttons
 		this.buttonReset.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				onClickReset();
@@ -50,24 +49,25 @@ public class PluginConfiguration {
 	/**
 	 * Initialize the form: fill-in dictionary content from stored preference or factory default
 	 */
-	private void InitForm() {
+	private void initForm() {
 		String dictionary	= ShifterPreferences.getDictionary();
+        Integer mode        = ShifterPreferences.getSortingMode();
 
-        Integer mode    = ShifterPreferences.getSortingMode();
         if( mode.equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
-            caseSensitiveRadioButton.setSelected(true);
+            this.caseSensitiveRadioButton.setSelected(true);
         } else {
-            caseInsensitiveRadioButton.setSelected(true);
+            this.caseInsensitiveRadioButton.setSelected(true);
         }
 
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
-        checkBoxpreserveCase.setSelected(isActivePreserveCase);
+        this.checkBoxpreserveCase.setSelected(isActivePreserveCase);
 
 		if( dictionary == null || dictionary.equals("") )  {
 			dictionary	= getDefaultDictionary();
 		}
 
 		this.textAreaDictionary.setText(dictionary);
+        this.buttonReset.setIcon(Icons.ICON_RESET);
 	}
 
 	/**
@@ -108,8 +108,9 @@ public class PluginConfiguration {
      * @return  Integer     Sorting mode
      */
     public Integer getSelectedSortingMode() {
-        return caseSensitiveRadioButton.isSelected() ?
-                ShifterPreferences.SORTING_MODE_CASE_SENSITIVE : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
+        return caseSensitiveRadioButton.isSelected()
+                ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE
+                : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
     }
 
     /**
