@@ -1,5 +1,5 @@
 .idea
 .DS_Store
-shifter-plugin.iml
+*iml
 atlassian-ide-plugin.xml
 out
