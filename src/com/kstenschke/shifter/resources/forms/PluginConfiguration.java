@@ -37,6 +37,8 @@ public class PluginConfiguration {
     private JRadioButton radioButtonCaseInsensitive;
     private JRadioButton radioButtonShiftInSeconds;
     private JRadioButton radioButtonShiftInMilliseconds;
+    private JScrollPane scrollPaneDictionary;
+    private JPanel jPanelOptions;
 
     public Boolean hasSomethingChanged = false;
 
