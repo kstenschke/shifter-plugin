@@ -63,24 +63,22 @@ class ShifterSettingsComponent implements ProjectComponent, Configurable {
 
     public void apply() throws ConfigurationException {
 		if (settingsPanel != null) {
+                // Store configuration
             ShifterPreferences.saveSortingMode(settingsPanel.getSelectedSortingMode());
             ShifterPreferences.saveIsActivePreserveCase(settingsPanel.getIsActivePreserveCase());
-
+            ShifterPreferences.saveShiftingModeTimestamps(settingsPanel.getSelectedShiftingModeOfTimestamps());
+                // Store dictionary
 			String dictionary	= settingsPanel.getData();
 			if( dictionary != null ) {
 				ShifterPreferences.saveDictionary(dictionary);
 			}
 
-			applyGlobalSettings();
+            settingsPanel.hasSomethingChanged = false;
 		}
 	}
 
 	public String getHelpTopic() {
 		return null;
-	}
-
-	private void applyGlobalSettings() {
-
 	}
 
 	public ShifterSettingsComponent(Project project) {

@@ -30,11 +30,17 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
     @NonNls
+    private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
+    @NonNls
     private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
 
         // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
     public static final Integer SORTING_MODE_CASE_INSENSITIVE   = 1;
+
+        // Timestamp shifting modes
+    public static final Integer SHIFTING_MODE_TIMESTAMP_SECONDS     = 0;
+    public static final Integer SHIFTING_MODE_TIMESTAMP_MILLISECONDS= 1;
 
     /**
      * Store dictionary
@@ -63,13 +69,23 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
     }
 
+    public static void saveShiftingModeTimestamps(Integer mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_SHIFTING_MODE_TIMESTAMP, mode.toString());
+    }
+
     /**
-     * @return	Integer     Sorting mode: case sensitive / insensitive
+     * @return	int     Sorting mode: case sensitive / insensitive
      */
     public static Integer getSortingMode() {
         String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SORTING_MODE);
 
         return modeStr == null ? SORTING_MODE_CASE_INSENSITIVE : Integer.parseInt(modeStr);
+    }
+
+    public static Integer getShiftingModeOfTimestamps() {
+        String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SHIFTING_MODE_TIMESTAMP);
+
+        return modeStr == null ? SHIFTING_MODE_TIMESTAMP_SECONDS : Integer.parseInt(modeStr);
     }
 
     /**

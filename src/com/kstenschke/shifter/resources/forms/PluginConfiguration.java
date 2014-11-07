@@ -21,6 +21,8 @@ import com.kstenschke.shifter.resources.Icons;
 import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 import java.io.InputStream;
 
@@ -29,45 +31,73 @@ public class PluginConfiguration {
 	private JPanel rootPanel;
 	private JButton buttonReset;
 	private JTextArea textAreaDictionary;
-    private JRadioButton caseSensitiveRadioButton;
-    private JRadioButton caseInsensitiveRadioButton;
-    private JCheckBox checkBoxpreserveCase;
+    private JCheckBox checkBoxPreserveCase;
+
+    private JRadioButton radioButtonCaseSensitive;
+    private JRadioButton radioButtonCaseInsensitive;
+    private JRadioButton radioButtonShiftInSeconds;
+    private JRadioButton radioButtonShiftInMilliseconds;
+
+    public Boolean hasSomethingChanged = false;
 
     /**
 	 * Constructor
 	 */
 	public PluginConfiguration() {
-		initForm();
-		
-		this.buttonReset.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				onClickReset();
-			}
-		});
-	}
+		initFormValues();
+        initFormListeners();
+        initFormIcons();
+    }
 
-	/**
+    private void initFormIcons() {
+        this.buttonReset.setIcon(Icons.ICON_RESET);
+    }
+
+    private void initFormListeners() {
+        ChangeListener somethingChangedListener = new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                hasSomethingChanged = true;
+            }
+        };
+        radioButtonShiftInSeconds.addChangeListener(somethingChangedListener);
+        radioButtonShiftInMilliseconds.addChangeListener(somethingChangedListener);
+        radioButtonCaseSensitive.addChangeListener(somethingChangedListener);
+        radioButtonCaseInsensitive.addChangeListener(somethingChangedListener);
+
+        this.buttonReset.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onClickReset();
+            }
+        });
+    }
+
+    /**
 	 * Initialize the form: fill-in dictionary content from stored preference or factory default
 	 */
-	private void initForm() {
-		String dictionary	= ShifterPreferences.getDictionary();
-        Integer mode        = ShifterPreferences.getSortingMode();
+	private void initFormValues() {
+		String dictionary   = ShifterPreferences.getDictionary();
 
-        if( mode.equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
-            this.caseSensitiveRadioButton.setSelected(true);
+        if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
+            this.radioButtonCaseSensitive.setSelected(true);
         } else {
-            this.caseInsensitiveRadioButton.setSelected(true);
+            this.radioButtonCaseInsensitive.setSelected(true);
+        }
+
+        if( ShifterPreferences.getShiftingModeOfTimestamps().equals(ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS)) {
+            this.radioButtonShiftInSeconds.setSelected(true);
+        } else {
+            this.radioButtonShiftInMilliseconds.setSelected(true);
         }
 
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
-        this.checkBoxpreserveCase.setSelected(isActivePreserveCase);
+        this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
 
 		if( dictionary == null || dictionary.equals("") )  {
 			dictionary	= getDefaultDictionary();
 		}
 
 		this.textAreaDictionary.setText(dictionary);
-        this.buttonReset.setIcon(Icons.ICON_RESET);
 	}
 
 	/**
@@ -93,7 +123,8 @@ public class PluginConfiguration {
 	 * Reset default settings
 	 */
 	private void onClickReset() {
-        caseInsensitiveRadioButton.setSelected(true);
+        radioButtonCaseInsensitive.setSelected(true);
+        radioButtonShiftInSeconds.setSelected(true);
         this.textAreaDictionary.setText( getDefaultDictionary() );
 	}
 
@@ -108,16 +139,22 @@ public class PluginConfiguration {
      * @return  Integer     Sorting mode
      */
     public Integer getSelectedSortingMode() {
-        return caseSensitiveRadioButton.isSelected()
+        return radioButtonCaseSensitive.isSelected()
                 ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE
                 : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
+    }
+
+    public Integer getSelectedShiftingModeOfTimestamps() {
+        return radioButtonShiftInSeconds.isSelected()
+                ? ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS
+                : ShifterPreferences.SHIFTING_MODE_TIMESTAMP_MILLISECONDS;
     }
 
     /**
      * @return  boolean
      */
     public boolean getIsActivePreserveCase() {
-        return checkBoxpreserveCase.isSelected();
+        return checkBoxPreserveCase.isSelected();
     }
 
 	/**
@@ -126,9 +163,11 @@ public class PluginConfiguration {
 	 * @return	boolean
 	 */
 	public boolean isModified() {
-		return    ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
+		return      this.hasSomethingChanged
+               || ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
                || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() )
-               || ! ShifterPreferences.getIsActivePreserveCase().equals( this.checkBoxpreserveCase.isSelected()
+               || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
+               || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
         );
 	}
 

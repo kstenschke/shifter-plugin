@@ -65,11 +65,18 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.1.11</version>
+    <version>1.1.12</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.1.12
+            <ul>
+                <li>Added timestamp configuration: shift day-wise in seconds or milliseconds?</li>
+                <li>Extended timestamp shifting info balloon: shows date from seconds (UNIX timestamp) and milliseconds (JavaScript) now</li>
+                <li>Improved timestamp shifting: leading zeros of timestamps are now maintained</li>
+            </ul>
+        <li>
         <li>1.1.11
             <ul>
                 <li>Made icons retina and darcula compatible</li>
@@ -87,7 +94,6 @@
                 <li>Added case-insensitive fallback to failed word shifting</li>
             </ul>
         <li>1.1.8 Bugfix: Line shifting was overriding word shifting with 1.1.7</li>
-        <li>1.1.7 Added shifting of column mode selections (with identical items per line)</li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

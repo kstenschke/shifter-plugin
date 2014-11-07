@@ -1,5 +1,9 @@
 h1. Shifter Plugin - Changelog
 
+* 1.1.12
+    ** Added timestamp configuration: shift day-wise in seconds or milliseconds?
+    ** Extended timestamp shifting info balloon: shows date from seconds (UNIX timestamp) and milliseconds (JavaScript) now
+    ** Improved timestamp shifting: leading zeros of timestamps are now maintained
 * 1.1.11
     ** Made icons retina and darcula compatible
     ** Reduced inline changelog to previous five versions, moved full changelog to separate file

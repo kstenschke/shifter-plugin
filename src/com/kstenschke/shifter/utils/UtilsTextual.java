@@ -317,4 +317,17 @@ public class UtilsTextual {
 		}
 	}
 
+    /**
+     * @param   numberString
+     * @param   length
+     * @return  Given numerical string, with given length (if >= original length)
+     */
+    public static String formatAmountDigits(String numberString, int length) {
+        while(numberString.length() < length) {
+            numberString = "0" + numberString;
+        }
+
+        return numberString;
+    }
+
 }
