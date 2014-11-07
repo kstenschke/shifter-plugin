@@ -149,7 +149,7 @@ class ShifterTypesManager {
      */
     private boolean isKeywordAccessType(String word) {
         String[] keywordsAccessType = {"public", "private", "protected"};
-        this.wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftertypes.StaticWordType(TYPE_ACCESSIBILITY, keywordsAccessType);
+        this.wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftertypes.StaticWordType(keywordsAccessType);
 
         return this.wordTypeAccessibilities.hasWord(word);
     }

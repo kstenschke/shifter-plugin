@@ -105,17 +105,4 @@ public class UtilsArray {
 		return mergeStringArrays(mergeStringArrays(array1, array2), array3);
 	}
 
-	/**
-	 * Merge four string arrays
-	 *
-	 * @param   array1      Array of strings
-	 * @param   array2      Array of strings
-	 * @param   array3      Array of strings
-	 * @param   array4      Array of strings
-	 * @return  array       Merged array containing each of the elements of array1, array2 and array3
-	 */
-	public static String[] mergeStringArrays(String array1[], String array2[], String array3[], String array4[]) {
-		return mergeStringArrays( mergeStringArrays( mergeStringArrays(array1, array2), array3), array4);
-	}
-
 }

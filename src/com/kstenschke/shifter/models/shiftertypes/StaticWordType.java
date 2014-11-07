@@ -30,7 +30,7 @@ public class StaticWordType {
 	/**
 	 * Constructor
 	 */
-	public StaticWordType(int typeID, String[] keywords) {
+	public StaticWordType(String[] keywords) {
 		this.keywords		= keywords;
 		this.amountKeywords = keywords.length;
 		this.regExPattern = UtilsArray.implode(this.keywords, "|").toLowerCase();

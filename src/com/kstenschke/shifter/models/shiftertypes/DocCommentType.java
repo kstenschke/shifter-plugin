@@ -48,12 +48,9 @@ public class DocCommentType {
 	 * @return  boolean.
 	 */
 	public boolean isDocCommentType(String prefixChar, String line) {
-		if( prefixChar.equals("#") || prefixChar.equals("@") ) {
-			return false;
-		}
+        return !(prefixChar.equals("#") || prefixChar.equals("@")) && this.isDocCommentTypeLineContext(line);
 
-		return this.isDocCommentTypeLineContext(line);
-	}
+    }
 
 	/**
 	 * @param   word          String to be shifted

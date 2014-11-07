@@ -39,6 +39,7 @@ public class PluginConfiguration {
     private JRadioButton radioButtonShiftInMilliseconds;
     private JScrollPane scrollPaneDictionary;
     private JPanel jPanelOptions;
+    private JPanel jPanelTopBar;
 
     public Boolean hasSomethingChanged = false;
 
@@ -114,13 +115,6 @@ public class PluginConfiguration {
 		return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
 	}
 
-    /**
-     * @return  String
-     */
-	public String getDictionaryContents() {
-		return this.textAreaDictionary.getText();
-	}
-
 	/**
 	 * Reset default settings
 	 */
@@ -171,10 +165,6 @@ public class PluginConfiguration {
                || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
                || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
         );
-	}
-
-	public void setData() {
-
 	}
 
     /**

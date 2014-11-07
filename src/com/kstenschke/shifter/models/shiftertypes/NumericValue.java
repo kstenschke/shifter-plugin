@@ -37,7 +37,7 @@ public class NumericValue {
 	private static final int SECONDS_PER_DAY = 86400;
 
     /** Shift timestamps day-wise as seconds (or milliseconds: 1000) */
-    private int timestampShiftMode;
+    private final int timestampShiftMode;
 
 	/**
 	 * Constructor

@@ -39,9 +39,7 @@ class ActionsPerformer {
 
 	private final Editor editor;
 	private Document document;
-
 	private CharSequence editorText;
-
 	private int caretOffset;
 	private SelectionModel selectionModel;
 	private boolean hasSelection;
@@ -62,6 +60,8 @@ class ActionsPerformer {
 	}
 
 	/**
+     * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
+     *
      * @param    shiftUp     Shift up or down?
      */
 	public void write(boolean shiftUp) {
@@ -77,38 +77,53 @@ class ActionsPerformer {
 			} else {
 				// Shift word at caret
                 String filename     = this.getFilename();
-				String word	        = UtilsTextual.getWordAtOffset(editorText, caretOffset);
-
-				int lineNumber      = document.getLineNumber(caretOffset);
-				int offsetLineStart = document.getLineStartOffset(lineNumber);
-				int offsetLineEnd   = document.getLineEndOffset(lineNumber);
+                int lineNumber      = document.getLineNumber(caretOffset);
+                int offsetLineStart = document.getLineStartOffset(lineNumber);
+                int offsetLineEnd   = document.getLineEndOffset(lineNumber);
 
                 String line = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
 
-				boolean isWordShifted = false;
-
-				if ( word != null && ! word.isEmpty() ) {
-                    isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
-
-                    if( ! isWordShifted ) {
-                        String wordLower    = word.toLowerCase();
-                        isWordShifted       = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true).equals(wordLower);
-                    }
-				}
+                boolean isWordShifted = shiftWordAtCaret(shiftUp, filename, line);
 
 				    // Word at caret wasn't identified/shifted, try shifting the whole line
 				if ( ! isWordShifted ) {
-					ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
-
-					    // Replace line by shifted one
-					CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor);
-					if( shiftedLine != null ) {
-						document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);
-					}
+                    shiftLine(shiftUp, filename, offsetLineStart, line);
 				}
 			}
 		}
 	}
+
+    private void shiftLine(boolean shiftUp, String filename, int offsetLineStart, String line) {
+        ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
+
+        // Replace line by shifted one
+        CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor);
+        if( shiftedLine != null ) {
+            document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);
+        }
+    }
+
+    /**
+     * Get shifted word (and replace if possible)
+     *
+     * @param   shiftUp
+     * @param   filename
+     * @param   line
+     * @return  boolean
+     */
+    private boolean shiftWordAtCaret(boolean shiftUp, String filename, String line) {
+        String word	          = UtilsTextual.getWordAtOffset(editorText, caretOffset);
+        boolean isWordShifted = false;
+        if ( word != null && ! word.isEmpty() ) {
+            isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
+            if( ! isWordShifted ) {
+                String wordLower    = word.toLowerCase();
+                isWordShifted       = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true).equals(wordLower);
+            }
+        }
+
+        return isWordShifted;
+    }
 
     /**
      * @return  String  filename of currently edited document
