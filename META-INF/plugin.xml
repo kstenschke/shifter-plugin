@@ -31,6 +31,7 @@
     <br/>
     Shift more: repeats shifting the selected value multiple times. The amount of repetitions can be configured in the plugin configuration (default: 10).
     <br/>
+    <br/>
     Supported generic shifting types:
     <ul>
         <li>Shifting a multi-line selection sorts the lines alphabetically ascending/descending.</li>
