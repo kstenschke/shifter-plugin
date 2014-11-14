@@ -40,6 +40,7 @@ public class PluginConfiguration {
     private JScrollPane scrollPaneDictionary;
     private JPanel jPanelOptions;
     private JPanel jPanelTopBar;
+    private JSpinner spinnerShiftMore;
 
     public Boolean hasSomethingChanged = false;
 
@@ -81,6 +82,9 @@ public class PluginConfiguration {
 	private void initFormValues() {
 		String dictionary   = ShifterPreferences.getDictionary();
 
+        int shiftMoreValue = ShifterPreferences.getShiftMoreSize();
+        this.spinnerShiftMore.setModel( new SpinnerNumberModel(shiftMoreValue, 2, 999, 1));
+
         if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
             this.radioButtonCaseSensitive.setSelected(true);
         } else {
@@ -119,6 +123,7 @@ public class PluginConfiguration {
 	 * Reset default settings
 	 */
 	private void onClickReset() {
+        spinnerShiftMore.setValue(10);
         radioButtonCaseInsensitive.setSelected(true);
         radioButtonShiftInSeconds.setSelected(true);
         this.textAreaDictionary.setText( getDefaultDictionary() );
@@ -130,6 +135,10 @@ public class PluginConfiguration {
 	public JPanel getRootPanel() {
 		return rootPanel;
 	}
+
+    public String getShiftMoreSize() {
+        return spinnerShiftMore.getValue().toString();
+    }
 
     /**
      * @return  Integer     Sorting mode
@@ -159,7 +168,8 @@ public class PluginConfiguration {
 	 * @return	boolean
 	 */
 	public boolean isModified() {
-		return      this.hasSomethingChanged
+		return    this.hasSomethingChanged
+               || Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
                || ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
                || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() )
                || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()

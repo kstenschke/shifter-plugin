@@ -9,11 +9,14 @@ h2. Description
 When evoked, shifter detects the type of selection, line or keyword at caret and shifts it "up" or "down".
 If there's only one shiftable word in a line, it can be shifted without the caret touching it.
 Lowercase/uppercase or lower case with upper first character of shifted words is maintained.
+To shift values instantly multiple times, there are additional "Shift More" actions, the amount of repetitions can be configured in the plugin configurations (default: 10).
 
-Shifter adds the following editing tools:
+Shifter adds the following editing tools (you can change the keymap in the IDE preferences):
 
-* Ctrl+Shift+Alt+Comma  - Shift Down
-* Ctrl+Shift+Alt+Period - Shift Up
+* Ctrl+Shift+Alt+Comma  - Shift-Down
+* Ctrl+Shift+Alt+Period - Shift-Up
+* Ctrl+Shift+Alt+J  - Shift-Down More
+* Ctrl+Shift+Alt+K  - Shift-Up More
 
 *Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 

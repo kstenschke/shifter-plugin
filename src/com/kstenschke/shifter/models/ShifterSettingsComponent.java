@@ -64,6 +64,7 @@ class ShifterSettingsComponent implements ProjectComponent, Configurable {
     public void apply() throws ConfigurationException {
 		if (settingsPanel != null) {
                 // Store configuration
+            ShifterPreferences.saveShiftMoreSize(settingsPanel.getShiftMoreSize());
             ShifterPreferences.saveSortingMode(settingsPanel.getSelectedSortingMode());
             ShifterPreferences.saveIsActivePreserveCase(settingsPanel.getIsActivePreserveCase());
             ShifterPreferences.saveShiftingModeTimestamps(settingsPanel.getSelectedShiftingModeOfTimestamps());

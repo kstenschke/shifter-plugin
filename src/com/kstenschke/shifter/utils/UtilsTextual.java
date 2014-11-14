@@ -66,7 +66,7 @@ public class UtilsTextual {
      * @param   str
      * @return  boolean     Is the given string wrapped into single- or double quotes?
      */
-    public static boolean isWrappedIntoQuotes(String str) {
+    private static boolean isWrappedIntoQuotes(String str) {
         return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
     }
 
@@ -75,7 +75,7 @@ public class UtilsTextual {
      * @param   wrap
      * @return  boolean Is the given string wrapped into the wrapper string?
      */
-    public static boolean isWrappedWith(String str, String wrap) {
+    private static boolean isWrappedWith(String str, String wrap) {
         return str.startsWith(wrap) && str.endsWith(wrap);
     }
 

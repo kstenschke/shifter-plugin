@@ -21,6 +21,15 @@
     If there's only one shiftable word in a line, it can be shifted without the caret touching it.
     Lowercase/uppercase or lower case with upper first character of shifted words is maintained.<br/>
     <br/>
+    <br/>Default keyboard shortcuts:
+    <ul>
+        <li>Ctrl+Shift+Alt+Comma  - Shift Down</li>
+        <li>Ctrl+Shift+Alt+Period - Shift Up</li>
+        <li>Ctrl+Shift+Alt+K - Shift Up More*</li>
+        <li>Ctrl+Shift+Alt+J - Shift Down More*</li>
+    </ul>
+    Shift more: repeats shifting the selected value multiple times. The amount of repetitions can be configured in the plugin configuration (default: 10).
+    <br/>
     Supported generic shifting types:
     <ul>
         <li>Shifting a multi-line selection sorts the lines alphabetically ascending/descending.</li>
@@ -57,19 +66,20 @@
         <li>Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
         </li>
     </ul>
-    <br/>Default keyboard shortcuts:
-    <ul>
-        <li>Ctrl+Shift+Alt+Comma  - Shift Down
-        <li>Ctrl+Shift+Alt+Period - Shift Up
-    </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.1.12</version>
+    <version>1.2.0</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.0
+            <ul>
+                <li>Added actions to instantly shift values more than 1 time: "Shift-Up More" and "Shift-Down More"</li>
+                <li>Added configuration of repetition amount of "Shift-Up More" / "Shift-Down More" to plugin configuration</li>
+            </ul>
+        </li>
         <li>1.1.12
             <ul>
                 <li>Added timestamp configuration: shift day-wise in seconds or milliseconds?</li>
@@ -93,7 +103,6 @@
                 <li>Added setting: Preservation of camel- and upper case is now configurable</li>
                 <li>Added case-insensitive fallback to failed word shifting</li>
             </ul>
-        <li>1.1.8 Bugfix: Line shifting was overriding word shifting with 1.1.7</li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
@@ -120,11 +129,18 @@
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt COMMA"/>
             </action>
 
+            <action id="ShiftUpMoreAction" class="com.kstenschke.shifter.actions.ShiftUpMoreAction" text="Shift-Up more"
+                    description="Shift-Up word at care / Line / selection multiple times">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt K"/>
+            </action>
+            <action id="ShiftDownMoreAction" class="com.kstenschke.shifter.actions.ShiftDownMoreAction" text="Shift-Down more"
+                    description="Shift-Down word at care / Line / selection multiple times">
+                <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt J"/>
+            </action>
+
             <add-to-group group-id="EditMenu" anchor="last"/>
         </group>
     </actions>
-
     <extensions defaultExtensionNs="com.intellij"/>
-
     <depends>com.intellij.modules.lang</depends>
 </idea-plugin>

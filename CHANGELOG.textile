@@ -1,5 +1,8 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.0
+    ** Added actions to instantly shift values more than 1 time: "Shift-Up More" and "Shift-Down More"
+    ** Added configuration of repetition amount of "Shift-Up More" / "Shift-Down More" to plugin configuration
 * 1.1.12
     ** Added timestamp configuration: shift day-wise in seconds or milliseconds?
     ** Extended timestamp shifting info balloon: shows date from seconds (UNIX timestamp) and milliseconds (JavaScript) now

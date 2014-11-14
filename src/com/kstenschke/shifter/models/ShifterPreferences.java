@@ -33,6 +33,8 @@ public class ShifterPreferences {
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
     @NonNls
     private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
+    @NonNls
+    private static final String PROPERTY_SIZE_SHIFT_MORE = "PluginShifter.SizeShiftMore";
 
         // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
@@ -61,12 +63,25 @@ public class ShifterPreferences {
     }
 
     /**
+     * @return	int
+     */
+    public static int getShiftMoreSize() {
+        String size = PropertiesComponent.getInstance().getValue(PROPERTY_SIZE_SHIFT_MORE);
+
+        return size == null ? 10 : Integer.parseInt(size);
+    }
+
+    /**
      * Store sorting mode
      *
      * @param	mode		case sensitive / insensitive
      */
     public static void saveSortingMode(Integer mode) {
         PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
+    }
+
+    public static void saveShiftMoreSize(String size) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_SIZE_SHIFT_MORE, size);
     }
 
     public static void saveShiftingModeTimestamps(Integer mode) {
