@@ -3,6 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.2.1
     ** Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0
     ** Improved shifting of CSS lengths: numbers different to 0 are appended with the unit most prominently used in the current file (cm / em / in / mm / pc / pt / px. Fallback: px)
+    ** Bugfix: "Shift-Down More" of CSS shorthand was shifting also right-hand-sided value during shift of left-hand-sided value when decreasing digits amount
 * 1.2.0
     ** Added actions to instantly shift values more than 1 time: "Shift-Up More" and "Shift-Down More"
     ** Added configuration of repetition amount of "Shift-Up More" / "Shift-Down More" to plugin configuration

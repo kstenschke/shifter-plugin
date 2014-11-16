@@ -26,13 +26,13 @@ import java.util.HashMap;
  */
 public class CssUnit {
 
-	public static final String UNIT_CM		= "cm";
-	public static final String UNIT_EM		= "em";
-	public static final String UNIT_IN		= "in";
-	public static final String UNIT_MM		= "mm";
-	public static final String UNIT_PC		= "pc";
-	public static final String UNIT_PT		= "pt";
-	public static final String UNIT_PX		= "px";
+	private static final String UNIT_CM		= "cm";
+	private static final String UNIT_EM		= "em";
+	private static final String UNIT_IN		= "in";
+	private static final String UNIT_MM		= "mm";
+	private static final String UNIT_PC		= "pc";
+	private static final String UNIT_PT		= "pt";
+	private static final String UNIT_PX		= "px";
 
 	/**
 	 * Constructor

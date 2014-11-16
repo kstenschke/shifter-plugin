@@ -80,6 +80,7 @@
             <ul>
                 <li>Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0</li>
                 <li>Improved shifting of CSS lengths: numbers different to 0 are appended with the unit most prominently used in the current file (cm / em / in / mm / pc / pt / px. Fallback: px)</li>
+                <li>Bugfix: "Shift-Down More" of CSS shorthand was shifting also right-hand-sided value during shift of left-hand-sided value when decreasing digits amount</li>
             </ul>
         </li>
         <li>1.2.0

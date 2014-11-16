@@ -7,6 +7,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.project.Project;
+import com.kstenschke.shifter.models.ShifterPreferences;
 import com.kstenschke.shifter.resources.StaticTexts;
 
 class ShiftDownMoreAction extends AnAction {
@@ -28,14 +29,17 @@ class ShiftDownMoreAction extends AnAction {
     public void actionPerformed(final AnActionEvent event) {
         Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
-        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-            public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    public void run() {
-                        new ActionsPerformer(event).write(false, true);
-                    }
-                });
-            }
-        }, StaticTexts.ACTION_LABEL_SHIFT_DOWN_MORE, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+        int times = ShifterPreferences.getShiftMoreSize();
+        for(int i=1; i <= times; i++) {
+            CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+                public void run() {
+                    ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                        public void run() {
+                            new ActionsPerformer(event).write(false);
+                        }
+                    });
+                }
+            }, StaticTexts.ACTION_LABEL_SHIFT_DOWN_MORE, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);       
+        }
     }
 }

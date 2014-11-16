@@ -31,6 +31,7 @@ public class ShiftableWord {
 	private final int wordType;
 	private final boolean isShiftable;
 	private final CharSequence editorText;
+
 	private final int caretOffset;
 
 	/**
@@ -125,6 +126,7 @@ public class ShiftableWord {
 					}
 					break;
 			}
+
 		}
 
 		return word;

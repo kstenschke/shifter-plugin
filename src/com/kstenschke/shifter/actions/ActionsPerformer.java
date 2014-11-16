@@ -24,7 +24,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.models.ShiftableLine;
 import com.kstenschke.shifter.models.ShiftableWord;
 import com.kstenschke.shifter.models.ShifterPreferences;
-import com.kstenschke.shifter.models.ShifterTypesManager;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.models.shiftertypes.NumericValue;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
@@ -62,52 +61,38 @@ class ActionsPerformer {
 		}
 	}
 
-    /**
-     * Wrapper for write method, for "regular" shifting (= once)
-     *
-     * @param   shiftUp
-     */
-    public void write(boolean shiftUp) {
-        this.write(shiftUp, false);
-    }
-
 	/**
      * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
      *
      * @param   shiftUp     Shift up or down?
-     * @param   more        More than one time?
      */
-	public void write(boolean shiftUp, boolean more) {
-
-        int times = more ? ShifterPreferences.getShiftMoreSize() : 1;
-        for(int i=1; i <= times; i++) {
-            if (this.editor != null) {
-                if (this.hasSelection) {
-                    if( this.selectionModel.getBlockSelectionStarts().length > 1 ) {
-                            // Shift block selection: do word-shifting if all items are identical
-                        shiftBlockSelection(shiftUp);
-                    } else {
-                            // Shift regular selection: sort lines alphabetically
-                        shiftSelection(shiftUp);
-                    }
+	public void write(boolean shiftUp) {
+        if (this.editor != null) {
+            if (this.hasSelection) {
+                if( this.selectionModel.getBlockSelectionStarts().length > 1 ) {
+                        // Shift block selection: do word-shifting if all items are identical
+                    shiftBlockSelection(shiftUp);
                 } else {
-                    // Shift word at caret
-                    String filename     = this.getFilename();
-                    int lineNumber      = document.getLineNumber(caretOffset);
-                    int offsetLineStart = document.getLineStartOffset(lineNumber);
-                    int offsetLineEnd   = document.getLineEndOffset(lineNumber);
+                        // Shift regular selection: sort lines alphabetically
+                    shiftSelection(shiftUp);
+                }
+            } else {
+                // Shift word at caret
+                String filename     = this.getFilename();
+                int lineNumber      = document.getLineNumber(caretOffset);
+                int offsetLineStart = document.getLineStartOffset(lineNumber);
+                int offsetLineEnd   = document.getLineEndOffset(lineNumber);
 
-                    String line = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
+                String line = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
 
-                    boolean isWordShifted = shiftWordAtCaret(shiftUp, filename, line);
+                boolean isWordShifted = shiftWordAtCaret(shiftUp, filename, line);
 
-                        // Word at caret wasn't identified/shifted, try shifting the whole line
-                    if ( ! isWordShifted ) {
-                        shiftLine(shiftUp, filename, offsetLineStart, line);
-                    }
+                    // Word at caret wasn't identified/shifted, try shifting the whole line
+                if ( ! isWordShifted ) {
+                    shiftLine(shiftUp, filename, offsetLineStart, line);
                 }
             }
-		}
+        }
 	}
 
     private void shiftLine(boolean shiftUp, String filename, int offsetLineStart, String line) {
@@ -170,10 +155,10 @@ class ActionsPerformer {
         String prefixChar   = UtilsTextual.getCharBeforeOffset(this.editorText, wordOffset);
         String postfixChar  = UtilsTextual.getCharAfterOffset(this.editorText, wordOffset + word.length() - 1);
 
-            // Identify word type and shift it accordingly
+        // Identify word type and shift it accordingly
         ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename);
 
-            // Comprehend negative values of numeric types
+        // Comprehend negative values of numeric types
         if( NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) ) {
             if ( prefixChar.equals("-") ) {
                 word = "-" + word;
@@ -184,10 +169,10 @@ class ActionsPerformer {
         String newWord = shiftableWord.getShifted(shiftUp, editor);
 
         if (newWord != null && newWord.length() > 0 && !newWord.matches(word) && wordOffset != null ) {
-            newWord = shiftableWord.postProcess(newWord);
+            newWord     = shiftableWord.postProcess(newWord);
 
             if( replaceInDocument ) {
-                    // Replace word at caret by shifted one (if any)
+                   // Replace word at caret by shifted one (if any)
                 document.replaceString(wordOffset, wordOffset + word.length(), newWord);
             }
             wordShifted = true;
