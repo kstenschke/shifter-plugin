@@ -62,6 +62,19 @@ h2. Changelog
 Read full changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
 
 
+h2. Contributors
+
+Thanks for their input and contribution
+
+* Andriy Bazanov
+* Eike Thies
+* John Fearnside from Moz
+* John Lindquist from Jetbrains
+* Nicolaj Schumacher
+* Srdjan Marković
+* Steve Smith from NOLS
+
+
 h2. License
 
 Copyright 2011-2014 Kay Stenschke
