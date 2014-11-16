@@ -71,11 +71,19 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.1</version>
+    <version>1.2.2</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.2
+            <ul>
+                <li>not yet: Implemented toggle of order of operands of calculations (addition, subtraction, multiplication, division) w/ two operands</li>
+                <li>not yet: Implemented toggle of order of PHP concatenation items (if two)</li>
+                <li>not yet: Implemented toggling of operator signs, if surrounded by whitespace (<, >, +, -)</li>
+                <li>not yet: Improved lines sorting to detect and maintain common lines delimiter</li>
+            </ul>
+        </li>
         <li>1.2.1
             <ul>
                 <li>Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0</li>
