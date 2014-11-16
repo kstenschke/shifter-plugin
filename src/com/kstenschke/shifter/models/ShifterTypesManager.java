@@ -22,7 +22,7 @@ import com.kstenschke.shifter.utils.UtilsFile;
 /**
  * Manager of "shiftable" word types - detects word type to evoke resp. shifting
  */
-class ShifterTypesManager {
+public class ShifterTypesManager {
 
     public static final int TYPE_UNKNOWN = 0;
 

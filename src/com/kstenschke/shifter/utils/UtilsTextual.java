@@ -274,9 +274,9 @@ public class UtilsTextual {
 
 		String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
-		    // If last line has no \n, add it one
-		    // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
-		    // with \n... This is fixed after.
+			// If last line has no \n, add it one
+			// This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
+			// with \n... This is fixed after.
 		if (lineSeparatorLength == 0) {
 			line += "\n";
 		}
@@ -285,8 +285,8 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * @param   lines			List of lines (strings) to be joined
-	 * @return 	StringBuilder
+	 * @param lines List of lines (strings) to be joined
+	 * @return StringBuilder
 	 */
 	public static StringBuilder joinLines(List<String> lines) {
 		StringBuilder builder = new StringBuilder();
@@ -317,17 +317,17 @@ public class UtilsTextual {
 		}
 	}
 
-    /**
-     * @param   numberString
-     * @param   length
-     * @return  Given numerical string, with given length (if >= original length)
-     */
-    public static String formatAmountDigits(String numberString, int length) {
-        while(numberString.length() < length) {
-            numberString = "0" + numberString;
-        }
+	/**
+	 * @param   numberString
+	 * @param   length
+	 * @return  Given numerical string, with given length (if >= original length)
+	 */
+	public static String formatAmountDigits(String numberString, int length) {
+		while(numberString.length() < length) {
+			numberString = "0" + numberString;
+		}
 
-        return numberString;
-    }
+		return numberString;
+	}
 
 }

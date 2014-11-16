@@ -71,11 +71,17 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.0</version>
+    <version>1.2.1</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.1
+            <ul>
+                <li>Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0</li>
+                <li>Improved shifting of CSS lengths: numbers different to 0 get 'px' appended automatically</li>
+            </ul>
+        </li>
         <li>1.2.0
             <ul>
                 <li>Added actions to instantly shift values more than 1 time: "Shift-Up More" and "Shift-Down More"</li>
@@ -88,23 +94,19 @@
                 <li>Extended timestamp shifting info balloon: shows date from seconds (UNIX timestamp) and milliseconds (JavaScript) now</li>
                 <li>Improved timestamp shifting: leading zeros of timestamps are now maintained</li>
             </ul>
-        <li>
+        </li>
         <li>1.1.11
             <ul>
                 <li>Made icons retina and darcula compatible</li>
                 <li>Reduced inline changelog to previous five versions, moved full changelog into separate file</li>
             </ul>
-        <li>
+        </li>
         <li>1.1.10
             <ul>
                 <li>Improved pattern detection: better distinguishing between quoted strings and comma separated lists</li>
                 <li>Reduced memory expense (changed Boolean objects into boolean primitives)</li>
             </ul>
-        <li>1.1.9
-            <ul>
-                <li>Added setting: Preservation of camel- and upper case is now configurable</li>
-                <li>Added case-insensitive fallback to failed word shifting</li>
-            </ul>
+        </li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

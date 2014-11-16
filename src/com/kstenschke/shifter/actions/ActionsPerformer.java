@@ -24,6 +24,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.models.ShiftableLine;
 import com.kstenschke.shifter.models.ShiftableWord;
 import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.models.ShifterTypesManager;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.models.shiftertypes.NumericValue;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
@@ -40,6 +41,7 @@ class ActionsPerformer {
 	private final Editor editor;
 	private Document document;
 	private CharSequence editorText;
+	private CaretModel caretModel;
 	private int caretOffset;
 	private SelectionModel selectionModel;
 	private boolean hasSelection;
@@ -53,7 +55,8 @@ class ActionsPerformer {
 		if (this.editor != null) {
 			this.document       = this.editor.getDocument();
             this.editorText     = this.document.getCharsSequence();
-            this.caretOffset    = this.editor.getCaretModel().getOffset();
+            this.caretModel     = this.editor.getCaretModel();
+            this.caretOffset    = this.caretModel.getOffset();
             this.selectionModel = this.editor.getSelectionModel();
             this.hasSelection   = this.selectionModel.hasSelection();
 		}
@@ -75,6 +78,7 @@ class ActionsPerformer {
      * @param   more        More than one time?
      */
 	public void write(boolean shiftUp, boolean more) {
+
         int times = more ? ShifterPreferences.getShiftMoreSize() : 1;
         for(int i=1; i <= times; i++) {
             if (this.editor != null) {
@@ -180,6 +184,8 @@ class ActionsPerformer {
         String newWord = shiftableWord.getShifted(shiftUp, editor);
 
         if (newWord != null && newWord.length() > 0 && !newWord.matches(word) && wordOffset != null ) {
+            newWord = shiftableWord.postProcess(newWord);
+
             if( replaceInDocument ) {
                     // Replace word at caret by shifted one (if any)
                 document.replaceString(wordOffset, wordOffset + word.length(), newWord);

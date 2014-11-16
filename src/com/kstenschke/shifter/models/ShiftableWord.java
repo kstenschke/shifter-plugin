@@ -65,6 +65,10 @@ public class ShiftableWord {
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
 	}
 
+	public int getWordType() {
+		return wordType;
+	}
+
 	/**
 	 * Get shifted up/down word
 	 *
@@ -95,6 +99,34 @@ public class ShiftableWord {
 		}
 
 		return shiftedWord;
+	}
+
+	/**
+	 * Post-process: do additional modifications on word after it has been shifted
+	 *
+	 * @param	word
+	 * @return	Post-processed word
+	 */
+	public String postProcess(String word) {
+		int wordType = this.getWordType();
+
+		if(this.filename.toLowerCase().endsWith(".css")) {
+			switch(wordType) {
+				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
+				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
+					word	+= "px";	//@todo	determine and use most prominent measure unit from current file
+					break;
+
+				case ShifterTypesManager.TYPE_CSS_UNIT:
+					// Correct "0px" (or other unit) to "0"
+					if( word.startsWith("0") ) {
+						word = "0";
+					}
+					break;
+			}
+		}
+
+		return word;
 	}
 
 }
