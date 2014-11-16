@@ -16,10 +16,23 @@
 
 package com.kstenschke.shifter.models.shiftertypes;
 
+import com.kstenschke.shifter.utils.UtilsMap;
+import org.apache.commons.lang.StringUtils;
+
+import java.util.HashMap;
+
 /**
  * Pixel value class
  */
 public class CssUnit {
+
+	public static final String UNIT_CM		= "cm";
+	public static final String UNIT_EM		= "em";
+	public static final String UNIT_IN		= "in";
+	public static final String UNIT_MM		= "mm";
+	public static final String UNIT_PC		= "pc";
+	public static final String UNIT_PT		= "pt";
+	public static final String UNIT_PX		= "px";
 
 	/**
 	 * Constructor
@@ -53,5 +66,30 @@ public class CssUnit {
 			// prepend with unit again
 		return Integer.toString(numericValue).concat(unit);
 	}
+
+	/**
+	 * @param	stylesheet
+	 * @return	most prominently used unit of given stylesheet, 'px' if none used yet
+	 */
+	public static String determineMostProminentUnit(String stylesheet) {
+		HashMap<String, Integer> map = new HashMap<String, Integer>();
+
+		map.put(UNIT_CM, StringUtils.countMatches(stylesheet, UNIT_CM + ";"));
+		map.put(UNIT_EM, StringUtils.countMatches(stylesheet, UNIT_EM + ";"));
+		map.put(UNIT_IN, StringUtils.countMatches(stylesheet, UNIT_IN + ";"));
+		map.put(UNIT_MM, StringUtils.countMatches(stylesheet, UNIT_MM + ";"));
+		map.put(UNIT_PC, StringUtils.countMatches(stylesheet, UNIT_PC + ";"));
+		map.put(UNIT_PT, StringUtils.countMatches(stylesheet, UNIT_PT + ";"));
+		map.put(UNIT_PX, StringUtils.countMatches(stylesheet, UNIT_PX + ";"));
+
+		int sum = UtilsMap.getSumOfValues(map);
+		if( sum == 0 ) {
+			return "px";
+		}
+
+		return UtilsMap.getKeyOfHighestValue(map);
+	}
+
+
 
 }

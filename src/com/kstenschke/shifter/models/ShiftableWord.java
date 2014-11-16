@@ -17,6 +17,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 /**
@@ -114,7 +115,7 @@ public class ShiftableWord {
 			switch(wordType) {
 				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
 				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
-					word	+= "px";	//@todo	determine and use most prominent measure unit from current file
+					word	+= CssUnit.determineMostProminentUnit( this.editorText.toString() );
 					break;
 
 				case ShifterTypesManager.TYPE_CSS_UNIT:

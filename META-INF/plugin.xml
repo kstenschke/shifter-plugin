@@ -79,7 +79,7 @@
         <li>1.2.1
             <ul>
                 <li>Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0</li>
-                <li>Improved shifting of CSS lengths: numbers different to 0 get 'px' appended automatically</li>
+                <li>Improved shifting of CSS lengths: numbers different to 0 are appended with the unit most prominently used in the current file (cm / em / in / mm / pc / pt / px. Fallback: px)</li>
             </ul>
         </li>
         <li>1.2.0
