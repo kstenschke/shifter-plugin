@@ -112,7 +112,11 @@ public class ShiftableWord {
 	public String postProcess(String word) {
 		int wordType = this.getWordType();
 
-		if(this.filename.toLowerCase().endsWith(".css")) {
+		if(this.filename.toLowerCase().endsWith(".css")
+		|| this.filename.toLowerCase().endsWith(".scss")
+		|| this.filename.toLowerCase().endsWith(".sass")
+		|| this.filename.toLowerCase().endsWith(".less")
+		|| this.filename.toLowerCase().endsWith(".styl")) {
 			switch(wordType) {
 				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
 				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
