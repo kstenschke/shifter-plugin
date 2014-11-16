@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 /**
@@ -110,14 +111,9 @@ public class ShiftableWord {
 	 * @return	Post-processed word
 	 */
 	public String postProcess(String word) {
-		int wordType = this.getWordType();
-
-		if(this.filename.toLowerCase().endsWith(".css")
-		|| this.filename.toLowerCase().endsWith(".scss")
-		|| this.filename.toLowerCase().endsWith(".sass")
-		|| this.filename.toLowerCase().endsWith(".less")
-		|| this.filename.toLowerCase().endsWith(".styl")) {
-			switch(wordType) {
+		String fileExtension = UtilsFile.extractFileExtension(this.filename.toLowerCase());
+		if(fileExtension != null && fileExtension.matches("(css|scss|sass|less|styl)")) {
+			switch(this.getWordType()) {
 				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
 				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
 					word	+= CssUnit.determineMostProminentUnit( this.editorText.toString() );
@@ -130,7 +126,6 @@ public class ShiftableWord {
 					}
 					break;
 			}
-
 		}
 
 		return word;
