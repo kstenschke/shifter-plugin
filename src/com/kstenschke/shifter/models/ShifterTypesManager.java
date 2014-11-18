@@ -204,7 +204,7 @@ public class ShifterTypesManager {
                 return this.typeQuotedString.getShifted(word, editorText, isUp);
 
             case TYPE_OPERATOR_SIGN:
-                return this.typeOperatorSign.getShifted(word, isUp);
+                return this.typeOperatorSign.getShifted(word);
 
             case TYPE_MONO_CHARACTER_STRING:
                 return this.typeMonoCharacterString.getShifted(word, isUp);

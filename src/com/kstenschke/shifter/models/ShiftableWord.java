@@ -68,10 +68,6 @@ public class ShiftableWord {
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
 	}
 
-	public int getWordType() {
-		return wordType;
-	}
-
 	/**
 	 * Get shifted up/down word
 	 *

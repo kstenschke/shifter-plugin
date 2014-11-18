@@ -58,7 +58,7 @@ public class UtilsLinesList {
      */
     public static class DelimiterDetector {
 
-        private List<String> lines;
+        private final List<String> lines;
         private boolean findingDelimiterFailed = true;
         private char commonDelimiter = ' ';
         private boolean isDelimitedLastLine = false;

@@ -16,8 +16,6 @@
 
 package com.kstenschke.shifter.models.shiftertypes;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * Mono-Character String = String that contains only one character (no matter how often)
  */
@@ -53,10 +51,9 @@ public class OperatorSign {
 	 * Shift mono-character string
 	 *
 	 * @param   word Quoted word to be shifted
-	 * @param   isUp Shifting up or down?
 	 * @return  String
 	 */
-	public String getShifted(String word, boolean isUp) {
+	public String getShifted(String word) {
 
 		if( word.equals("-")) return "+";
 		if( word.equals("+")) return "-";

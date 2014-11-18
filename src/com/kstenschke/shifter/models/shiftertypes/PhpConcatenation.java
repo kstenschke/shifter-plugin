@@ -18,12 +18,6 @@ package com.kstenschke.shifter.models.shiftertypes;
 
 import com.kstenschke.shifter.utils.UtilsTextual;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
 /**
  * PHP Variable (word with $ prefix)
  */
