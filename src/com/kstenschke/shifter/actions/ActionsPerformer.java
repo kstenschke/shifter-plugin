@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kstenschke.shifter.actions;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
@@ -26,24 +25,29 @@ import com.kstenschke.shifter.models.ShiftableWord;
 import com.kstenschke.shifter.models.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.models.shiftertypes.NumericValue;
+import com.kstenschke.shifter.models.shiftertypes.PhpConcatenation;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsArray;
+import com.kstenschke.shifter.utils.UtilsFile;
+import com.kstenschke.shifter.utils.UtilsLinesList;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 class ActionsPerformer {
 
 	private final Editor editor;
 	private Document document;
 	private CharSequence editorText;
-	private CaretModel caretModel;
-	private int caretOffset;
+    private int caretOffset;
 	private SelectionModel selectionModel;
 	private boolean hasSelection;
+
+    private String filename = null;
 
 	/**
 	 * Constructor
@@ -54,8 +58,8 @@ class ActionsPerformer {
 		if (this.editor != null) {
 			this.document       = this.editor.getDocument();
             this.editorText     = this.document.getCharsSequence();
-            this.caretModel     = this.editor.getCaretModel();
-            this.caretOffset    = this.caretModel.getOffset();
+            CaretModel caretModel = this.editor.getCaretModel();
+            this.caretOffset    = caretModel.getOffset();
             this.selectionModel = this.editor.getSelectionModel();
             this.hasSelection   = this.selectionModel.hasSelection();
 		}
@@ -114,13 +118,22 @@ class ActionsPerformer {
      * @return  boolean
      */
     private boolean shiftWordAtCaret(boolean shiftUp, String filename, String line) {
-        String word	          = UtilsTextual.getWordAtOffset(editorText, caretOffset);
+        String word;
+        boolean isOperator = false;
+
+        word = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
+        if( word == null) {
+            word = UtilsTextual.getWordAtOffset(editorText, caretOffset);
+        } else {
+            isOperator = true;
+        }
+
         boolean isWordShifted = false;
         if ( word != null && ! word.isEmpty() ) {
-            isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true).equals(word);
+            isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true, isOperator).equals(word);
             if( ! isWordShifted ) {
-                String wordLower    = word.toLowerCase();
-                isWordShifted       = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true).equals(wordLower);
+                String wordLower= word.toLowerCase();
+                isWordShifted   = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true, false).equals(wordLower);
             }
         }
 
@@ -131,9 +144,12 @@ class ActionsPerformer {
      * @return  String  filename of currently edited document
      */
     private String getFilename() {
-        VirtualFile file	= FileDocumentManager.getInstance().getFile(document);
+        if (this.filename == null) {
+            VirtualFile file = FileDocumentManager.getInstance().getFile(document);
+            this.filename = file != null ? file.getName() : "";
+        }
 
-        return (file != null) ? file.getName() : "";
+        return this.filename;
     }
 
     /**
@@ -142,14 +158,23 @@ class ActionsPerformer {
      * @param   word
      * @param   line
      * @param   wordOffset  null = calculate from word at offset
+     * @param   replaceInDocument
+     * @param   isOperator
      * @return  String      resulting shifted or original word if no shiftability was found
      */
-    private String getShiftedWord(boolean shiftUp, String filename, String word, String line, @Nullable Integer wordOffset, Boolean replaceInDocument) {
+    private String getShiftedWord(
+            boolean shiftUp,
+            String filename, String word, String line, @Nullable Integer wordOffset,
+            Boolean replaceInDocument,
+            boolean isOperator
+    ) {
         boolean wordShifted = false;
 
         if( wordOffset == null ) {
                 // Extract offset of word at caret
-            wordOffset = UtilsTextual.getStartOfWordAtOffset(this.editorText, this.caretOffset);
+            wordOffset = isOperator
+                    ? UtilsTextual.getStartOfOperatorAtOffset(this.editorText, this.caretOffset)
+                    : UtilsTextual.getStartOfWordAtOffset(this.editorText, this.caretOffset);
         }
 
         String prefixChar   = UtilsTextual.getCharBeforeOffset(this.editorText, wordOffset);
@@ -158,17 +183,19 @@ class ActionsPerformer {
         // Identify word type and shift it accordingly
         ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename);
 
-        // Comprehend negative values of numeric types
-        if( NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) ) {
-            if ( prefixChar.equals("-") ) {
-                word = "-" + word;
-                wordOffset--;
+        if(!isOperator) {
+            // Comprehend negative values of numeric types
+            if( NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) ) {
+                if ( prefixChar.equals("-") ) {
+                    word = "-" + word;
+                    wordOffset--;
+                }
             }
         }
 
         String newWord = shiftableWord.getShifted(shiftUp, editor);
 
-        if (newWord != null && newWord.length() > 0 && !newWord.matches(word) && wordOffset != null ) {
+        if (newWord != null && newWord.length() > 0 && !newWord.matches( Pattern.quote(word) ) && wordOffset != null ) {
             newWord     = shiftableWord.postProcess(newWord);
 
             if( replaceInDocument ) {
@@ -192,7 +219,7 @@ class ActionsPerformer {
             String word         = editorText.subSequence( blockSelectionStarts[0], blockSelectionEnds[0]).toString();
             String line         = UtilsTextual.extractLine( this.document, this.document.getLineNumber(blockSelectionStarts[0]) ).trim();
             Integer wordOffset  = UtilsTextual.getStartOfWordAtOffset(this.editorText, blockSelectionStarts[0]);
-            String newWord      = this.getShiftedWord(shiftUp, this.getFilename(), word, line, wordOffset, false);
+            String newWord      = this.getShiftedWord(shiftUp, this.getFilename(), word, line, wordOffset, false, false);
 
             if( newWord != null && ! newWord.equals(word) ) {
                 for(int i= blockSelectionEnds.length-1; i >= 0; i--) {
@@ -250,14 +277,26 @@ class ActionsPerformer {
 
             if( UtilsTextual.isCommaSeparatedList(selectedText) ) {
                 String sortedList = this.sortCommaSeparatedList(selectedText, shiftUp);
-
                 document.replaceString(offsetStart, offsetEnd, sortedList);
-            } else if( UtilsTextual.containsAnyQuotes(selectedText) ) {
-                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
-            } else if( UtilsTextual.containsAnySlashes(selectedText) ) {
-                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
-            } else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
-                document.replaceString( offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText) );
+            } else {
+                boolean isDone = false;
+                if( UtilsFile.isPhpFile(this.getFilename()) ) {
+                    PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
+                    if (phpConcatenation.isPhpConcatenation()) {
+                        isDone = true;
+                        document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+                    }
+                }
+
+                if(!isDone) {
+                    if( UtilsTextual.containsAnyQuotes(selectedText) ) {
+                        document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                    } else if( UtilsTextual.containsAnySlashes(selectedText) ) {
+                        document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+                    } else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
+                        document.replaceString( offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText) );
+                    }
+                }
             }
         }
     }
@@ -268,6 +307,8 @@ class ActionsPerformer {
 	 * @return  Given lines sorted alphabetically ascending / descending
 	 */
 	private List<String> sortLines(List<String> lines, boolean shiftUp) {
+        UtilsLinesList.DelimiterDetector delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+
         if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {
 		    Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
         } else {
@@ -275,6 +316,11 @@ class ActionsPerformer {
         }
 
 		if( !shiftUp ) Collections.reverse(lines);
+
+        if( delimiterDetector.isFoundDelimiter() ) {
+            // Maintain detected lines delimiter
+            lines   = UtilsLinesList.addDelimiter(lines, delimiterDetector.getCommonDelimiter(), delimiterDetector.isDelimitedLastLine());
+        }
 
 		return lines;
 	}

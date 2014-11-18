@@ -17,6 +17,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import com.kstenschke.shifter.utils.UtilsFile;
 
 /**
@@ -34,14 +35,15 @@ public class ShifterTypesManager {
         // Generic types
     public static final int     TYPE_QUOTED_STRING            = 50;
     private static final int    TYPE_HTML_ENCODABLE_STRING    = 51;
-    private static final int    TYPE_MONO_CHARACTER_STRING    = 52;
-    private static final int    TYPE_RGB_COLOR                = 53;
-    public static final int     TYPE_CSS_UNIT                 = 54; // em, px, pt, cm, in
-    private static final int    TYPE_DOCCOMMENT_TAG           = 55;
-    private static final int    TYPE_DOCCOMMENT_DATATYPE      = 56;
-    public static final int     TYPE_PHP_VARIABLE             = 57;
-    public static final int     TYPE_NUMERIC_VALUE            = 58;
-    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 59;
+    private static final int    TYPE_OPERATOR_SIGN            = 53; // <, >, +, -
+    private static final int    TYPE_MONO_CHARACTER_STRING    = 54;
+    private static final int    TYPE_RGB_COLOR                = 55;
+    public static final int     TYPE_CSS_UNIT                 = 56; // em, px, pt, cm, in
+    private static final int    TYPE_DOC_COMMENT_TAG          = 57;
+    private static final int    TYPE_DOC_COMMENT_DATATYPE     = 58;
+    public static final int     TYPE_PHP_VARIABLE             = 59;
+    public static final int     TYPE_NUMERIC_VALUE            = 60;
+    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 61;
 
         // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -49,6 +51,7 @@ public class ShifterTypesManager {
 
         // Generic types (calculated when shifted)
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
+    private com.kstenschke.shifter.models.shiftertypes.OperatorSign typeOperatorSign;
     private com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter typeMonoCharacterString;
     private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftertypes.CssUnit typePixelValue;
@@ -87,10 +90,10 @@ public class ShifterTypesManager {
             this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentTag();
 
             if ( prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line) ) {
-                return TYPE_DOCCOMMENT_TAG;
+                return TYPE_DOC_COMMENT_TAG;
             }
 
-            if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) return TYPE_DOCCOMMENT_DATATYPE;
+            if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) return TYPE_DOC_COMMENT_DATATYPE;
         }
 
             // Object visibility
@@ -122,6 +125,10 @@ public class ShifterTypesManager {
 
         this.typeNumericValue = new com.kstenschke.shifter.models.shiftertypes.NumericValue();
         if (com.kstenschke.shifter.models.shiftertypes.NumericValue.isNumericValue(word)) return TYPE_NUMERIC_VALUE;
+
+            // Operator sign (<, >, +, -)
+        this.typeOperatorSign	= new com.kstenschke.shifter.models.shiftertypes.OperatorSign();
+        if ( OperatorSign.isOperatorSign(word)) return TYPE_OPERATOR_SIGN;
 
             // MonoCharString (= consisting from any amount of the same character)
         this.typeMonoCharacterString	= new com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter();
@@ -196,14 +203,17 @@ public class ShifterTypesManager {
             case TYPE_QUOTED_STRING:
                 return this.typeQuotedString.getShifted(word, editorText, isUp);
 
+            case TYPE_OPERATOR_SIGN:
+                return this.typeOperatorSign.getShifted(word, isUp);
+
             case TYPE_MONO_CHARACTER_STRING:
                 return this.typeMonoCharacterString.getShifted(word, isUp);
 
-            case TYPE_DOCCOMMENT_TAG:
+            case TYPE_DOC_COMMENT_TAG:
                 String textAfterCaret   = editorText.toString().substring(caretOffset);
                 return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
 
-            case TYPE_DOCCOMMENT_DATATYPE:
+            case TYPE_DOC_COMMENT_DATATYPE:
                 return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
 
             case TYPE_HTML_ENCODABLE_STRING:

@@ -78,10 +78,9 @@
     <ul>
         <li>1.2.2
             <ul>
-                <li>not yet: Implemented toggle of order of operands of calculations (addition, subtraction, multiplication, division) w/ two operands</li>
-                <li>not yet: Implemented toggle of order of PHP concatenation items (if two)</li>
-                <li>not yet: Implemented toggling of operator signs, if surrounded by whitespace (<, >, +, -)</li>
-                <li>not yet: Improved lines sorting to detect and maintain common lines delimiter</li>
+                <li>Implemented toggle of order of selected PHP concatenation items (if two)</li>
+                <li>Improved lines sorting to detect and maintain common lines delimiter</li>
+                <li>Implemented toggling of operator signs, if surrounded by whitespace (+, -, *, /, <, >)</li>
             </ul>
         </li>
         <li>1.2.1
@@ -108,12 +107,6 @@
             <ul>
                 <li>Made icons retina and darcula compatible</li>
                 <li>Reduced inline changelog to previous five versions, moved full changelog into separate file</li>
-            </ul>
-        </li>
-        <li>1.1.10
-            <ul>
-                <li>Improved pattern detection: better distinguishing between quoted strings and comma separated lists</li>
-                <li>Reduced memory expense (changed Boolean objects into boolean primitives)</li>
             </ul>
         </li>
   </ul><br />

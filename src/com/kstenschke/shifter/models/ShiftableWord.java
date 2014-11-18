@@ -111,9 +111,8 @@ public class ShiftableWord {
 	 * @return	Post-processed word
 	 */
 	public String postProcess(String word) {
-		String fileExtension = UtilsFile.extractFileExtension(this.filename.toLowerCase());
-		if(fileExtension != null && fileExtension.matches("(css|scss|sass|less|styl)")) {
-			switch(this.getWordType()) {
+		if(UtilsFile.isCssFile(this.filename)) {
+			switch(this.wordType) {
 				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
 				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
 					word	+= CssUnit.determineMostProminentUnit( this.editorText.toString() );

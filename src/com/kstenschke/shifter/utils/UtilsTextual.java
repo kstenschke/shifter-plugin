@@ -13,10 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
+import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -138,6 +138,58 @@ public class UtilsTextual {
 	}
 
 	/**
+	 * @param	text
+	 * @param	cursorOffset
+	 * @return	Null|String
+	 */
+	public static String getOperatorAtOffset(CharSequence text, int cursorOffset) {
+		int textLength = text.length();
+		if (textLength == 0 || cursorOffset >= textLength) return null;
+
+		String operatorToTheLeft = cursorOffset > 2
+				? text.subSequence(cursorOffset - 2, cursorOffset + 1).toString()
+				: null;
+
+		if(	operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft) ) {
+			return operatorToTheLeft.trim();
+		}
+
+		String operatorToTheRight = cursorOffset < textLength - 2 && (cursorOffset == 0 || Character.isWhitespace(text.charAt(cursorOffset-1)))
+				? text.subSequence(cursorOffset - 1, cursorOffset + 2).toString()
+				: null;
+
+		if( operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight) ) {
+			return operatorToTheRight.trim();
+		}
+
+			// No operator found
+		return null;
+	}
+
+	public static Integer getStartOfOperatorAtOffset(CharSequence text, int cursorOffset) {
+		int textLength = text.length();
+		if (textLength == 0 || cursorOffset >= textLength) return null;
+
+		String operatorToTheLeft = cursorOffset > 2
+				? text.subSequence(cursorOffset - 2, cursorOffset + 1).toString()
+				: null;
+
+		if(	operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft) ) {
+			return cursorOffset - 1;
+		}
+
+		String operatorToTheRight = cursorOffset < textLength - 2 && (cursorOffset == 0 || Character.isWhitespace(text.charAt(cursorOffset-1)))
+				? text.subSequence(cursorOffset - 1, cursorOffset + 2).toString()
+				: null;
+
+		if( operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight) ) {
+			return cursorOffset;
+		}
+
+		return null;
+	}
+
+	/**
 	 * Get word at caret offset out of given text
 	 *
 	 * @param   text           The full text
@@ -145,8 +197,9 @@ public class UtilsTextual {
 	 * @return                 The extracted word or null
 	 */
 	public static String getWordAtOffset(CharSequence text, int cursorOffset) {
-		if (	text.length() == 0
-			||	cursorOffset >= text.length())  return null;
+		int textLength = text.length();
+
+		if ( textLength == 0 || cursorOffset >= textLength )  return null;
 
 		if (cursorOffset > 0
 				  && !Character.isJavaIdentifierPart(text.charAt(cursorOffset))
@@ -163,7 +216,7 @@ public class UtilsTextual {
 				start--;
 			}
 
-			while (end < text.length() && Character.isJavaIdentifierPart(text.charAt(end))) {
+			while (end < textLength && Character.isJavaIdentifierPart((text.charAt(end)))) {
 				end++;
 			}
 
@@ -296,6 +349,10 @@ public class UtilsTextual {
 		}
 
 		return builder;
+	}
+
+	public static String removeLineBreaks(String str) {
+		return str.replaceAll("\n", "").replaceAll("\r", "");
 	}
 
 	/**

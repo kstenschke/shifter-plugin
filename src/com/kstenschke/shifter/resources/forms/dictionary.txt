@@ -13,7 +13,7 @@
 	|resize|scroll|zoom|focus|blur|select|change|submit|reset|
 	|<!--|-->|
 }
-(|css|scss|) {
+(|css|scss|styl|less|sass) {
 	|bold|italic|strikethrough|subscript|superscript|underline|
 	|block|inline|inline-block|list-item|none|inherit|
 	|left|right|both|none|inherit|

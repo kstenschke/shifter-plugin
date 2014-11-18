@@ -30,6 +30,18 @@ public class UtilsFile {
 		return filename.substring(filename.lastIndexOf('.') + 1);
 	}
 
+	private static boolean filenameEndsWithExtension(String filename) {
+		return !((filename == null) || filename.isEmpty() || (filename.length() < 4) || !filename.contains("."));
+	}
+
+	public static boolean isPhpFile(String filename) {
+		return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(php|phtml)");
+	}
+
+	public static boolean isCssFile(String filename) {
+		return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(css|scss|sass|less|styl)");
+	}
+
 	/**
 	 * @param	is		Input stream
 	 * @return	String	Full contents of given stream as string
