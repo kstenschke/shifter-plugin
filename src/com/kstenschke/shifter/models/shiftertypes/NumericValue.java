@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.kstenschke.shifter.models.shiftertypes;
 
 import com.intellij.openapi.editor.Editor;
