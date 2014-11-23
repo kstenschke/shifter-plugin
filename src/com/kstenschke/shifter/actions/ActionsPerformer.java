@@ -262,15 +262,9 @@ class ActionsPerformer {
         }
 
         // Extract text as a list of lines
-        List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-
-        if( lines.size() > 1) {
-                // Sort lines alphabetically
-            StringBuilder sortedText = UtilsTextual.joinLines(this.sortLines(lines, shiftUp));
-            int offsetLineStart     = document.getLineStartOffset(lineNumberSelStart);
-            int offsetLineEnd       = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
-
-            document.replaceString(offsetLineStart, offsetLineEnd, sortedText);
+        if( (lineNumberSelEnd - lineNumberSelStart) > 1) {
+            List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+            sortLinesInDocument(shiftUp, lineNumberSelStart, lineNumberSelEnd, lines);
         } else {
             // Selection within one line
             String selectedText  = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
@@ -299,6 +293,22 @@ class ActionsPerformer {
                 }
             }
         }
+    }
+
+    /**
+     * Sort lines in document alphabetically ascending / descending
+     *
+     * @param shiftUp
+     * @param lineNumberSelStart
+     * @param lineNumberSelEnd
+     * @param lines
+     */
+    private void sortLinesInDocument(boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd, List<String> lines) {
+        StringBuilder sortedText = UtilsTextual.joinLines(this.sortLines(lines, shiftUp));
+        int offsetLineStart     = document.getLineStartOffset(lineNumberSelStart);
+        int offsetLineEnd       = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
+
+        document.replaceString(offsetLineStart, offsetLineEnd, sortedText);
     }
 
     /**

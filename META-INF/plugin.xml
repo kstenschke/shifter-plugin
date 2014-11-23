@@ -71,11 +71,17 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.2</version>
+    <version>1.2.3</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.3
+            <ul>
+                <li>Improved detection of PHP concatenations</li>
+                <li>Improved performance of lines sorting</li>
+            </ul>
+        </li>
         <li>1.2.2
             <ul>
                 <li>Implemented toggle of order of selected PHP concatenation items (if two)</li>

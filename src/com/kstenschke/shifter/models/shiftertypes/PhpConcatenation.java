@@ -34,12 +34,15 @@ public class PhpConcatenation {
 	 */
 	public PhpConcatenation(String str) {
 		str = UtilsTextual.removeLineBreaks( str.trim() );
-		this.parts = str.split("\\.");	//@todo	improve to ignore dots that are inlined inside single/double quoted strings
 
-		if( parts.length == 2 ) {
-			this.isPhpConcatenation = true;
-			this.isConcatenatorWhitespaceWrapped = Character.isWhitespace( parts[1].charAt(0) ) && Character.isWhitespace( parts[0].charAt( parts[0].length()-1 ) );
-			this.concatenatorWrap = String.valueOf( parts[1].charAt(0) );
+		if(str.length() > 4) {
+			this.parts = str.split("\\.");	//@todo	improve to ignore dots that are inlined inside single/double quoted strings
+
+			if( parts.length == 2 ) {
+				this.isPhpConcatenation = true;
+				this.isConcatenatorWhitespaceWrapped = Character.isWhitespace( parts[1].charAt(0) ) && Character.isWhitespace( parts[0].charAt( parts[0].length()-1 ) );
+				this.concatenatorWrap = String.valueOf( parts[1].charAt(0) );
+			}
 		}
 	}
 
