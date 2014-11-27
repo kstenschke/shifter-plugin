@@ -77,6 +77,11 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.4
+            <ul>
+                <li>Improved shifting of single selected words (recognizes more types now)</li>
+            </ul>
+        </li>
         <li>1.2.3
             <ul>
                 <li>Improved detection of PHP concatenations: supports also strings containing dots and escaped quotes now</li>
@@ -101,19 +106,6 @@
             <ul>
                 <li>Added actions to instantly shift values more than 1 time: "Shift-Up More" and "Shift-Down More"</li>
                 <li>Added configuration of repetition amount of "Shift-Up More" / "Shift-Down More" to plugin configuration</li>
-            </ul>
-        </li>
-        <li>1.1.12
-            <ul>
-                <li>Added timestamp configuration: shift day-wise in seconds or milliseconds?</li>
-                <li>Extended timestamp shifting info balloon: shows date from seconds (UNIX timestamp) and milliseconds (JavaScript) now</li>
-                <li>Improved timestamp shifting: leading zeros of timestamps are now maintained</li>
-            </ul>
-        </li>
-        <li>1.1.11
-            <ul>
-                <li>Made icons retina and darcula compatible</li>
-                <li>Reduced inline changelog to previous five versions, moved full changelog into separate file</li>
             </ul>
         </li>
   </ul><br />

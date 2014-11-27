@@ -338,6 +338,29 @@ public class UtilsTextual {
 	}
 
 	/**
+	 * @param	text
+	 * @param	offset
+	 * @return	String
+	 */
+	public static String extractLineAroundOffset(String text, int offset) {
+		int offsetStart = offset;
+		while(offsetStart > 0 && text.charAt(offsetStart) != '\n') {
+			offsetStart--;
+		}
+
+		int lenText	  = text.length();
+		int offsetEnd = offset;
+		while(offsetEnd < lenText && text.charAt(offsetStart) != '\n') {
+			offsetEnd++;
+		}
+		if(offsetEnd < lenText) {
+			offsetEnd--;
+		}
+
+		return text.substring(offsetStart, offsetEnd);
+	}
+
+	/**
 	 * @param lines List of lines (strings) to be joined
 	 * @return StringBuilder
 	 */

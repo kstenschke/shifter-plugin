@@ -23,10 +23,8 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.models.ShiftableLine;
 import com.kstenschke.shifter.models.ShiftableWord;
 import com.kstenschke.shifter.models.ShifterPreferences;
-import com.kstenschke.shifter.models.shiftertypes.CssUnit;
-import com.kstenschke.shifter.models.shiftertypes.NumericValue;
-import com.kstenschke.shifter.models.shiftertypes.PhpConcatenation;
-import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
+import com.kstenschke.shifter.models.ShifterTypesManager;
+import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsLinesList;
@@ -77,7 +75,7 @@ class ActionsPerformer {
                         // Shift block selection: do word-shifting if all items are identical
                     shiftBlockSelection(shiftUp);
                 } else {
-                        // Shift regular selection: sort lines alphabetically
+                        // Shift regular selection: sort CSV, multi-line selection: sort lines alphabetically
                     shiftSelection(shiftUp);
                 }
             } else {
@@ -289,6 +287,12 @@ class ActionsPerformer {
                         document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
                     } else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
                         document.replaceString( offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText) );
+                    } else {
+                        // Detect and shift various types
+                        ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
+                        document.replaceString( offsetStart, offsetEnd,
+                                shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, filename, editor)
+                        );
                     }
                 }
             }

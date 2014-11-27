@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import com.kstenschke.shifter.utils.UtilsFile;
+import com.kstenschke.shifter.utils.UtilsTextual;
 
 /**
  * Manager of "shiftable" word types - detects word type to evoke resp. shifting
@@ -173,9 +174,8 @@ public class ShifterTypesManager {
      * @param	filename		      Filename of currently edited file
      * @param	editor			   Editor instance
      * @return					      The shifted word
-     *
      */
-    public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
+        public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
         switch (idWordType) {
                 // ================== String based word types
             case TYPE_ACCESSIBILITY:
@@ -223,6 +223,13 @@ public class ShifterTypesManager {
         }
 
         return word;
+    }
+
+    public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
+        String line    = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
+        int idWordType = this.getWordType(word, "", "", line, filename);
+
+        return this.getShiftedWord(word, idWordType, isUp, editorText, caretOffset, filename, editor);
     }
 
 }
