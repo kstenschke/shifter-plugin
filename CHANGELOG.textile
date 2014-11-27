@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.4
+    ** Improved shifting of single-lined selection (recognizes more types now)
 * 1.2.3
     ** Improved detection of PHP concatenations: supports also strings containing dots and escaped quotes now
     ** Improved performance of lines sorting
