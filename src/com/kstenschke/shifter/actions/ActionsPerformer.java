@@ -290,9 +290,18 @@ class ActionsPerformer {
                     } else {
                         // Detect and shift various types
                         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
-                        document.replaceString( offsetStart, offsetEnd,
-                                shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, filename, editor)
-                        );
+                        String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, filename, editor);
+
+                        if( UtilsTextual.isUcFirst(selectedText)) {
+                            // Maintain casing: all upper / upper first
+                            if(UtilsTextual.isAllUppercase(selectedText)) {
+                                shiftedWord = shiftedWord.toUpperCase();
+                            } else {
+                                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
+                            }
+                        }
+
+                        document.replaceString( offsetStart, offsetEnd, shiftedWord);
                     }
                 }
             }

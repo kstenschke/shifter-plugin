@@ -353,7 +353,7 @@ public class UtilsTextual {
 		while(offsetEnd < lenText && text.charAt(offsetStart) != '\n') {
 			offsetEnd++;
 		}
-		if(offsetEnd < lenText) {
+		if(offsetEnd < lenText && offsetEnd > 0) {
 			offsetEnd--;
 		}
 

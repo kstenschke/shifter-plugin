@@ -79,7 +79,7 @@
     <ul>
         <li>1.2.4
             <ul>
-                <li>Improved shifting of single-lined selection (recognizes more types now)</li>
+                <li>Improved shifting of single-lined selection (recognizes all regular shifter types now)</li>
             </ul>
         </li>
         <li>1.2.3
