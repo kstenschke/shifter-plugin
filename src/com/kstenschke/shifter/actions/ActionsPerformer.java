@@ -292,21 +292,18 @@ class ActionsPerformer {
                         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
                         String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, filename, editor);
 
-                        if( UtilsTextual.isUcFirst(selectedText)) {
-                            // Maintain casing: all upper / upper first
-                            if(UtilsTextual.isAllUppercase(selectedText)) {
-                                shiftedWord = shiftedWord.toUpperCase();
-                            } else {
-                                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
-                            }
+                        if(UtilsTextual.isAllUppercase(selectedText)) {
+                            shiftedWord = shiftedWord.toUpperCase();
+                        } else if( UtilsTextual.isUcFirst(selectedText)) {
+                            shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
                         }
-
-                        document.replaceString( offsetStart, offsetEnd, shiftedWord);
+                        document.replaceString( offsetStart, offsetEnd, shiftedWord );
                     }
                 }
             }
         }
     }
+
 
     /**
      * Sort lines in document alphabetically ascending / descending

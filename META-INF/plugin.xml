@@ -72,11 +72,16 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.4</version>
+    <version>1.2.5</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.5
+            <ul>
+                <li>Improved case maintaining during shifting of single-lined selection</li>
+            </ul>
+        </li>
         <li>1.2.4
             <ul>
                 <li>Improved shifting of single-lined selection (recognizes all regular shifter types now)</li>
@@ -100,12 +105,6 @@
                 <li>Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0</li>
                 <li>Improved shifting of CSS lengths: numbers different to 0 are appended with the unit most prominently used in the current file (cm / em / in / mm / pc / pt / px. Fallback: px)</li>
                 <li>Bugfix: "Shift-Down More" of CSS shorthand was shifting also right-hand-sided value during shift of left-hand-sided value when decreasing digits amount</li>
-            </ul>
-        </li>
-        <li>1.2.0
-            <ul>
-                <li>Added actions to instantly shift values more than 1 time: "Shift-Up More" and "Shift-Down More"</li>
-                <li>Added configuration of repetition amount of "Shift-Up More" / "Shift-Down More" to plugin configuration</li>
             </ul>
         </li>
   </ul><br />
