@@ -16,9 +16,11 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.vcs.history.VcsRevisionNumber;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Shiftable word
@@ -28,6 +30,7 @@ public class ShiftableWord {
 	private final ShifterTypesManager shifterTypesManager;
 	private final String word;
 	private final String filename;
+	private final Integer moreCount; // "more" count, starting with 1. If non-more shift: null
 	private final int wordType;
 	private final boolean isShiftable;
 	private final CharSequence editorText;
@@ -44,13 +47,21 @@ public class ShiftableWord {
 	 * @param	editorText		Whole text currently in editor
 	 * @param	caretOffset		Caret offset in document
 	 * @param	filename		Filename of the edited file
+	 * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
 	 */
-	public ShiftableWord(String word, String prefixChar, String postfixChar, String line, CharSequence editorText, int caretOffset, String filename) {
+	public ShiftableWord(
+			String word, String prefixChar, String postfixChar,
+			String line, CharSequence editorText,
+			int caretOffset,
+			String filename,
+			@Nullable Integer moreCount
+	) {
 		this.shifterTypesManager = new ShifterTypesManager();
 
 		this.editorText   = editorText;
 		this.caretOffset  = caretOffset;
 		this.filename     = filename;
+		this.moreCount    = moreCount;
 
 			// Detect word type
 		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
@@ -79,7 +90,7 @@ public class ShiftableWord {
 		}
 
 			// Call actual shifting
-		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, filename, editor);
+		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
 
 			// Keep original word casing
 		if(      this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE

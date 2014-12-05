@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Shiftable Line
@@ -50,9 +51,11 @@ public class ShiftableLine {
 	 * Get shifted up/down word
 	 *
 	 * @param	isUp	Shift up or down?
+	 * @param	editor
+	 * @param	moreCount
 	 * @return			Next upper/lower word
 	 */
-	public String getShifted(boolean isUp, Editor editor) {
+	public String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
 		String line     = this.line.trim();
 		String[] words  = line.split("\\s+");
 
@@ -72,7 +75,7 @@ public class ShiftableLine {
 					word  = word.substring(1);
 				}
 
-				wordShiftedTest   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename).getShifted(isUp, editor);
+				wordShiftedTest   = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename, moreCount).getShifted(isUp, editor);
 
 				if( wordShiftedTest != null && !wordShiftedTest.equals(word)) {
 					amountShiftableWordsInSentence++;

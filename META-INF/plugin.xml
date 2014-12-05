@@ -39,7 +39,7 @@
         <li>Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash</li>
         <li>Numeric values - Increments/decrements numbers by 1</li>
         <li>UNIX (and millisecond based) timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
-        <li>PHP variables - Shifts to alphabetically next/previous variable name found in current document</li>
+        <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
@@ -72,21 +72,14 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.5</version>
+    <version>1.2.6</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.2.5
-            <ul>
-                <li>Improved case maintaining during shifting of single-lined selection</li>
-            </ul>
-        </li>
-        <li>1.2.4
-            <ul>
-                <li>Improved shifting of single-lined selection (recognizes all regular shifter types now)</li>
-            </ul>
-        </li>
+        <li>1.2.6 Shift more on PHP variables shifts until first variable with a different first letter</li>
+        <li>1.2.5 Improved case maintaining during shifting of single-lined selection</li>
+        <li>1.2.4 Improved shifting of single-lined selection (recognizes all regular shifter types now)</li>
         <li>1.2.3
             <ul>
                 <li>Improved detection of PHP concatenations: supports also strings containing dots and escaped quotes now</li>
@@ -98,13 +91,6 @@
                 <li>Implemented toggle of order of selected PHP concatenation items (if two)</li>
                 <li>Improved lines sorting to detect and maintain common lines delimiter</li>
                 <li>Implemented toggling of operator signs, if surrounded by whitespace (+, -, *, /, <, >)</li>
-            </ul>
-        </li>
-        <li>1.2.1
-            <ul>
-                <li>Improved shifting of CSS lengths: 0px (or other unit) is auto-corrected to 0</li>
-                <li>Improved shifting of CSS lengths: numbers different to 0 are appended with the unit most prominently used in the current file (cm / em / in / mm / pc / pt / px. Fallback: px)</li>
-                <li>Bugfix: "Shift-Down More" of CSS shorthand was shifting also right-hand-sided value during shift of left-hand-sided value when decreasing digits amount</li>
             </ul>
         </li>
   </ul><br />

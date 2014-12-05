@@ -1,5 +1,9 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.6
+    ** Shift more on PHP variables shifts until first variable with a different first letter
+* 1.2.5
+    ** Improved case maintaining during shifting of single-lined selection
 * 1.2.4
     ** Improved shifting of single-lined selection (recognizes all regular shifter types now)
 * 1.2.3

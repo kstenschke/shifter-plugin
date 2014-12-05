@@ -46,11 +46,12 @@ class ShiftUpMoreAction extends AnAction {
 
         int times = ShifterPreferences.getShiftMoreSize();
         for(int i=1; i <= times; i++) {
+            final int moreCount = i;
             CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
                 public void run() {
                     ApplicationManager.getApplication().runWriteAction(new Runnable() {
                         public void run() {
-                            new ActionsPerformer(event).write(true);
+                            new ActionsPerformer(event).write(true, moreCount);
                         }
                     });
                 }

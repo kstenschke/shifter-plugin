@@ -19,6 +19,7 @@ import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Manager of "shiftable" word types - detects word type to evoke resp. shifting
@@ -166,16 +167,17 @@ public class ShifterTypesManager {
      * ShifterTypesManager: get next/previous keyword of given word group
      * Generic: calculate shifted value
      *
-     * @param	word			      Word to be shifted
-     * @param	idWordType		   Word type ID
-     * @param	isUp			      Shift up or down?
-     * @param	editorText		   Full text of currently edited document
-     * @param	caretOffset		   Caret offset in document
-     * @param	filename		      Filename of currently edited file
-     * @param	editor			   Editor instance
-     * @return					      The shifted word
+     * @param	word			Word to be shifted
+     * @param	idWordType		Word type ID
+     * @param	isUp			Shift up or down?
+     * @param	editorText		Full text of currently edited document
+     * @param	caretOffset		Caret offset in document
+     * @param	filename		Filename of currently edited file
+     * @param	editor			Editor instance
+     * @param   moreCount       Current "more" count, starting with 1. If non-more shift: null
+     * @return					The shifted word
      */
-        public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
+        public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, Editor editor) {
         switch (idWordType) {
                 // ================== String based word types
             case TYPE_ACCESSIBILITY:
@@ -197,7 +199,7 @@ public class ShifterTypesManager {
                 return this.typePixelValue.getShifted(word, isUp);
 
             case TYPE_PHP_VARIABLE:
-                return this.typePhpVariable.getShifted(word, editorText, isUp);
+                return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
 
             case TYPE_QUOTED_STRING:
                 return this.typeQuotedString.getShifted(word, editorText, isUp);
@@ -225,11 +227,11 @@ public class ShifterTypesManager {
         return word;
     }
 
-    public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, String filename, Editor editor) {
+    public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
         String line    = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
         int idWordType = this.getWordType(word, "", "", line, filename);
 
-        return this.getShiftedWord(word, idWordType, isUp, editorText, caretOffset, filename, editor);
+        return this.getShiftedWord(word, idWordType, isUp, editorText, caretOffset, moreCount, filename, editor);
     }
 
 }

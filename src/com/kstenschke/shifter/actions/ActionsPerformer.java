@@ -67,16 +67,17 @@ class ActionsPerformer {
      * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
      *
      * @param   shiftUp     Shift up or down?
+     * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
-	public void write(boolean shiftUp) {
+	public void write(boolean shiftUp, @Nullable Integer moreCount) {
         if (this.editor != null) {
             if (this.hasSelection) {
                 if( this.selectionModel.getBlockSelectionStarts().length > 1 ) {
                         // Shift block selection: do word-shifting if all items are identical
-                    shiftBlockSelection(shiftUp);
+                    shiftBlockSelection(shiftUp, moreCount);
                 } else {
                         // Shift regular selection: sort CSV, multi-line selection: sort lines alphabetically
-                    shiftSelection(shiftUp);
+                    shiftSelection(shiftUp, moreCount);
                 }
             } else {
                 // Shift word at caret
@@ -87,21 +88,28 @@ class ActionsPerformer {
 
                 String line = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
 
-                boolean isWordShifted = shiftWordAtCaret(shiftUp, filename, line);
+                boolean isWordShifted = shiftWordAtCaret(shiftUp, filename, line, moreCount);
 
                     // Word at caret wasn't identified/shifted, try shifting the whole line
                 if ( ! isWordShifted ) {
-                    shiftLine(shiftUp, filename, offsetLineStart, line);
+                    shiftLine(shiftUp, filename, offsetLineStart, line, moreCount);
                 }
             }
         }
 	}
 
-    private void shiftLine(boolean shiftUp, String filename, int offsetLineStart, String line) {
+    /**
+     * @param   shiftUp
+     * @param   filename
+     * @param   offsetLineStart
+     * @param   line
+     * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
+     */
+    private void shiftLine(boolean shiftUp, String filename, int offsetLineStart, String line, @Nullable Integer moreCount) {
         ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
 
         // Replace line by shifted one
-        CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor);
+        CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor, moreCount);
         if( shiftedLine != null ) {
             document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);
         }
@@ -113,9 +121,10 @@ class ActionsPerformer {
      * @param   shiftUp
      * @param   filename
      * @param   line
+     * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      * @return  boolean
      */
-    private boolean shiftWordAtCaret(boolean shiftUp, String filename, String line) {
+    private boolean shiftWordAtCaret(boolean shiftUp, String filename, String line, @Nullable Integer moreCount) {
         String word;
         boolean isOperator = false;
 
@@ -128,10 +137,10 @@ class ActionsPerformer {
 
         boolean isWordShifted = false;
         if ( word != null && ! word.isEmpty() ) {
-            isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true, isOperator).equals(word);
+            isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
             if( ! isWordShifted ) {
                 String wordLower= word.toLowerCase();
-                isWordShifted   = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true, false).equals(wordLower);
+                isWordShifted   = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
             }
         }
 
@@ -158,13 +167,15 @@ class ActionsPerformer {
      * @param   wordOffset  null = calculate from word at offset
      * @param   replaceInDocument
      * @param   isOperator
+     * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      * @return  String      resulting shifted or original word if no shiftability was found
      */
     private String getShiftedWord(
             boolean shiftUp,
             String filename, String word, String line, @Nullable Integer wordOffset,
             Boolean replaceInDocument,
-            boolean isOperator
+            boolean isOperator,
+            @Nullable Integer moreCount
     ) {
         boolean wordShifted = false;
 
@@ -179,7 +190,7 @@ class ActionsPerformer {
         String postfixChar  = UtilsTextual.getCharAfterOffset(this.editorText, wordOffset + word.length() - 1);
 
         // Identify word type and shift it accordingly
-        ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename);
+        ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename, moreCount);
 
         if(!isOperator) {
             // Comprehend negative values of numeric types
@@ -208,8 +219,9 @@ class ActionsPerformer {
 
     /**
      * @param   shiftUp
+     * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
-    private void shiftBlockSelection(boolean shiftUp) {
+    private void shiftBlockSelection(boolean shiftUp, @Nullable Integer moreCount) {
         int[] blockSelectionStarts                  = this.selectionModel.getBlockSelectionStarts();
         int[] blockSelectionEnds                    = this.selectionModel.getBlockSelectionEnds();
 
@@ -217,7 +229,7 @@ class ActionsPerformer {
             String word         = editorText.subSequence( blockSelectionStarts[0], blockSelectionEnds[0]).toString();
             String line         = UtilsTextual.extractLine( this.document, this.document.getLineNumber(blockSelectionStarts[0]) ).trim();
             Integer wordOffset  = UtilsTextual.getStartOfWordAtOffset(this.editorText, blockSelectionStarts[0]);
-            String newWord      = this.getShiftedWord(shiftUp, this.getFilename(), word, line, wordOffset, false, false);
+            String newWord      = this.getShiftedWord(shiftUp, this.getFilename(), word, line, wordOffset, false, false, moreCount);
 
             if( newWord != null && ! newWord.equals(word) ) {
                 for(int i= blockSelectionEnds.length-1; i >= 0; i--) {
@@ -248,8 +260,9 @@ class ActionsPerformer {
 
     /**
      * @param   shiftUp
+     * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
-    private void shiftSelection(boolean shiftUp) {
+    private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
         int offsetStart         = selectionModel.getSelectionStart();
         int offsetEnd           = selectionModel.getSelectionEnd();
         int lineNumberSelStart  = document.getLineNumber(offsetStart);
@@ -290,7 +303,7 @@ class ActionsPerformer {
                     } else {
                         // Detect and shift various types
                         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
-                        String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, filename, editor);
+                        String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, moreCount, filename, editor);
 
                         if(UtilsTextual.isAllUppercase(selectedText)) {
                             shiftedWord = shiftedWord.toUpperCase();

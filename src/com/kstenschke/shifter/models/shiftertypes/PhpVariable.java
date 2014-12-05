@@ -56,14 +56,14 @@ public class PhpVariable {
 	 * @param	variable		Variable name string
 	 * @param	editorText		Text of edited document
 	 * @param	isUp			Shift up or down?
+	 * @param	moreCount		Current "more" count, starting with 1. If non-more shift: null
 	 * @return	String
 	 */
-	public String getShifted(String variable, CharSequence editorText, Boolean isUp) {
+	public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
          // Get full text of currently edited document
 	   String text = editorText.toString();
 
 			// Use regEx matcher to extract array of all PHP var names
-
 		List<String> allMatches = new ArrayList<String>();
 		Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
 		while (m.find()) {
@@ -74,29 +74,72 @@ public class PhpVariable {
 
 			// Sort var names alphabetically
 		Collections.sort(allMatches);
+		List<String> allLeadChars = null;
+		if( moreCount != null && moreCount == 1) {
+			// During "shift more": iterate over variables reduced to first per every lead-character
+			allMatches 		= this.reducePhpVarsToFirstPerLeadChar(allMatches);
+			allLeadChars	= this.getLeadChars(allMatches);
+		}
+
 		int amountVars = allMatches.size();
 
 			// Find position of given variable
-		int curIndex   = allMatches.indexOf(variable);
+		Integer curIndex = (moreCount== null || moreCount > 1)
+				? allMatches.indexOf(variable) : allLeadChars.indexOf(variable.substring(1,2));
 
 		if( curIndex == -1 || amountVars == 0 ) {
 			return variable;
 		}
 
-			// Return next/previous variable name
-		if( isUp ) {
-			curIndex++;
-			if( curIndex == amountVars ) {
-				curIndex = 0;
-			}
-		} else {
-			curIndex--;
-			if( curIndex == -1 ) {
-				curIndex = amountVars - 1;
+			// Find next/previous variable name (only once during iterations of "shift more")
+		if(moreCount == null || moreCount == 1) {
+			if (isUp) {
+				curIndex++;
+				if (curIndex == amountVars) {
+					curIndex = 0;
+				}
+			} else {
+				curIndex--;
+				if (curIndex == -1) {
+					curIndex = amountVars - 1;
+				}
 			}
 		}
 
 		return allMatches.get(curIndex);
+	}
+
+	/**
+	 * @param	allMatches
+	 * @return
+	 */
+	private List<String> reducePhpVarsToFirstPerLeadChar(List<String> allMatches) {
+		List<String> reducedMatches = new ArrayList<String>();
+		String leadCharPrev = "";
+		String leadCharCur;
+		for(String currentMatch : allMatches) {
+			leadCharCur = currentMatch.substring(1,2);
+			if(!leadCharCur.matches(leadCharPrev)) {
+				reducedMatches.add(currentMatch);
+			}
+			leadCharPrev = leadCharCur;
+		}
+
+		return reducedMatches;
+	}
+
+	/**
+	 * @param	matches
+	 * @return	List of first letters of given matches
+	 */
+	private List<String> getLeadChars(List<String> matches) {
+		List<String> leadChars = new ArrayList<String>();
+
+		for(String currentMatch : matches) {
+			leadChars.add(currentMatch.substring(1,2));
+		}
+
+		return leadChars;
 	}
 
 }

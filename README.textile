@@ -31,7 +31,7 @@ Supported generic shifting types:
 * Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash
 * Numeric values - Increments/decrements numbers by 1
 * UNIX (and millisecond based)  timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
-* PHP variables - Shifts to alphabetically next/previous variable name found in current document
+* PHP variables - Shifts to alphabetically next/previous variable name found in current document ("shift more" shifts until first variable with a different first letter)
 * Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * CSS hex RGB colors - Shifts color value lighter/darker
