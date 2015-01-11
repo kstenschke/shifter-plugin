@@ -343,21 +343,19 @@ public class UtilsTextual {
 	 * @return	String
 	 */
 	public static String extractLineAroundOffset(String text, int offset) {
+		int lenText	  = text.length();
+
 		int offsetStart = offset;
 		while(offsetStart > 0 && text.charAt(offsetStart) != '\n') {
 			offsetStart--;
 		}
 
-		int lenText	  = text.length();
 		int offsetEnd = offset;
-		while(offsetEnd < lenText && text.charAt(offsetStart) != '\n') {
+		while(offsetEnd < lenText && text.charAt(offsetEnd) != '\n') {
 			offsetEnd++;
 		}
-		if(offsetEnd < lenText && offsetEnd > 0) {
-			offsetEnd--;
-		}
 
-		return text.substring(offsetStart, offsetEnd);
+		return text.substring(offsetStart, offsetEnd).trim();
 	}
 
 	/**
@@ -388,13 +386,12 @@ public class UtilsTextual {
 	 */
 	public static String replaceLast(String string, String toReplace, String replacement) {
 		int pos = string.lastIndexOf(toReplace);
-		if (pos > -1) {
-			return string.substring(0, pos)
-					+ replacement
-					+ string.substring(pos + toReplace.length(), string.length());
-		} else {
-			return string;
-		}
+
+		return pos == -1
+			? string
+			:   string.substring(0, pos)
+			  + replacement
+			  + string.substring(pos + toReplace.length(), string.length());
 	}
 
 	/**

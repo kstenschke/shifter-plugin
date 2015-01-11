@@ -52,7 +52,7 @@ public class ShifterTypesManager {
 
         // Generic types (calculated when shifted)
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
-    private com.kstenschke.shifter.models.shiftertypes.OperatorSign typeOperatorSign;
+    private OperatorSign typeOperatorSign;
     private com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter typeMonoCharacterString;
     private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftertypes.CssUnit typePixelValue;
@@ -128,7 +128,7 @@ public class ShifterTypesManager {
         if (com.kstenschke.shifter.models.shiftertypes.NumericValue.isNumericValue(word)) return TYPE_NUMERIC_VALUE;
 
             // Operator sign (<, >, +, -)
-        this.typeOperatorSign	= new com.kstenschke.shifter.models.shiftertypes.OperatorSign();
+        this.typeOperatorSign	= new OperatorSign();
         if ( OperatorSign.isOperatorSign(word)) return TYPE_OPERATOR_SIGN;
 
             // MonoCharString (= consisting from any amount of the same character)
