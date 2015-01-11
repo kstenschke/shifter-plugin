@@ -177,7 +177,7 @@ public class ShifterTypesManager {
      * @param   moreCount       Current "more" count, starting with 1. If non-more shift: null
      * @return					The shifted word
      */
-        public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, Editor editor) {
+        public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
         switch (idWordType) {
                 // ================== String based word types
             case TYPE_ACCESSIBILITY:

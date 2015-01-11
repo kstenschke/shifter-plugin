@@ -23,6 +23,7 @@ import com.intellij.ui.JBColor;
 import com.intellij.ui.awt.RelativePoint;
 import com.kstenschke.shifter.models.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.Nullable;
 
 import java.awt.*;
 import java.util.Date;
@@ -58,7 +59,7 @@ public class NumericValue {
 	 * @param	isUp		Shifting up or down?
 	 * @return	String      Value shifted up or down by one
 	 */
-	public String getShifted(String value, boolean isUp, Editor editor) {
+	public String getShifted(String value, boolean isUp, @Nullable Editor editor) {
 		int strLen  = value.length();
 
         if( strLen <= 7 ) {
@@ -72,27 +73,30 @@ public class NumericValue {
     /**
      * @param   value
      * @param   isUp
-     * @param   editor
-     * @return  String          UNIX timestamp shifted plus/minus one day
+     * @param   editor      Needed to gather position of info balloon (not shown if editor == null)
+     * @return  String      UNIX timestamp shifted plus/minus one day
      */
-    private String getShiftedUnixTimestamp(String value, boolean isUp, Editor editor) {
+    private String getShiftedUnixTimestamp(String value, boolean isUp, @Nullable Editor editor) {
         int strLenOriginal  = value.length();
         long shiftedTimestamp;
 
             shiftedTimestamp = Long.parseLong(value)
           + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * (timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000));
 
-        // Create and show balloon with human-readable date
-        Balloon.Position pos = Balloon.Position.above;
-        String balloonText   =
-                "UNIX Time: "    + new Date(shiftedTimestamp*1000).toString()
-            + "\nMilliseconds: " + new Date(shiftedTimestamp).toString();
-        BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new JBColor(new Color(255, 255, 231), new Color(255, 255, 231)), null);
-        Balloon balloon = builder.createBalloon();
+        if( editor != null ) {
+            // Create and show balloon with human-readable date
+            Balloon.Position pos = Balloon.Position.above;
+            String balloonText   =
+                    "UNIX Time: "    + new Date(shiftedTimestamp * 1000).toString()
+                            + "\nMilliseconds: " + new Date(shiftedTimestamp).toString();
+            BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new JBColor(new Color(255, 255, 231), new Color(255, 255, 231)), null);
+            Balloon balloon = builder.createBalloon();
 
-        Point caretPos                = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
-        RelativePoint balloonPosition = new RelativePoint(editor.getContentComponent(), caretPos);
-        balloon.show(balloonPosition, pos);
+            Point caretPos = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+            RelativePoint balloonPosition = new RelativePoint(editor.getContentComponent(), caretPos);
+
+            balloon.show(balloonPosition, pos);
+        }
 
         String valueShifted = Long.toString( shiftedTimestamp );
 
