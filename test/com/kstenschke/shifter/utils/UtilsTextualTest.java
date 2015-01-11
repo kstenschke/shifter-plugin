@@ -52,7 +52,8 @@ public class UtilsTextualTest {
 
     @Test
     public void testSwapSlashes() throws Exception {
-
+        assertEquals( "http://www.domain.com/", UtilsTextual.swapSlashes("http:\\\\www.domain.com\\") );
+        assertEquals( "http:\\\\www.domain.com\\", UtilsTextual.swapSlashes("http://www.domain.com/") );
     }
 
     @Test
@@ -71,6 +72,7 @@ public class UtilsTextualTest {
     @Test
     public void testIsUcFirst() throws Exception {
         assertTrue( UtilsTextual.isUcFirst("Bam bam hey") );
+        assertTrue( UtilsTextual.isUcFirst("") );
 
         assertFalse( UtilsTextual.isUcFirst("bam bam hey") );
         assertFalse( UtilsTextual.isUcFirst("BAM BAM HEY") );
@@ -78,7 +80,29 @@ public class UtilsTextualTest {
 
     @Test
     public void testGetOperatorAtOffset() throws Exception {
+        assertEquals("+", UtilsTextual.getOperatorAtOffset("1 + 2", 2) );
+        assertEquals("-", UtilsTextual.getOperatorAtOffset("2 - 1", 2) );
+        assertEquals("*", UtilsTextual.getOperatorAtOffset("2 * 1", 2) );
+        assertEquals("/", UtilsTextual.getOperatorAtOffset("2 / 1", 2) );
+        assertEquals("%", UtilsTextual.getOperatorAtOffset("2 % 1", 2) );
+        assertEquals("<", UtilsTextual.getOperatorAtOffset("2 < 1", 2) );
+        assertEquals(">", UtilsTextual.getOperatorAtOffset("2 > 1", 2) );
 
+        assertNull("+", UtilsTextual.getOperatorAtOffset("1 + 2", 0) );
+        assertNull("-", UtilsTextual.getOperatorAtOffset("2 - 1", 0) );
+        assertNull("*", UtilsTextual.getOperatorAtOffset("2 * 1", 0) );
+        assertNull("/", UtilsTextual.getOperatorAtOffset("2 / 1", 0) );
+        assertNull("%", UtilsTextual.getOperatorAtOffset("2 % 1", 0) );
+        assertNull("<", UtilsTextual.getOperatorAtOffset("2 < 1", 0) );
+        assertNull(">", UtilsTextual.getOperatorAtOffset("2 > 1", 0) );
+
+        assertNull("+", UtilsTextual.getOperatorAtOffset("1  + 2", 2));
+        assertNull("-", UtilsTextual.getOperatorAtOffset("2  - 1", 2));
+        assertNull("*", UtilsTextual.getOperatorAtOffset("2  * 1", 2));
+        assertNull("/", UtilsTextual.getOperatorAtOffset("2  / 1", 2));
+        assertNull("%", UtilsTextual.getOperatorAtOffset("2  % 1", 2));
+        assertNull("<", UtilsTextual.getOperatorAtOffset("2  < 1", 2));
+        assertNull(">", UtilsTextual.getOperatorAtOffset("2  > 1", 2));
     }
 
     @Test
@@ -88,7 +112,11 @@ public class UtilsTextualTest {
 
     @Test
     public void testGetWordAtOffset() throws Exception {
+        assertEquals( "bam", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 0) );
+        assertEquals( "lam", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 5) );
+        assertEquals( "ding", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 10) );
 
+        assertEquals( null, UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", -1) );
     }
 
     @Test

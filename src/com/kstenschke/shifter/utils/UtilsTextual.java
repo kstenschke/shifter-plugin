@@ -124,7 +124,7 @@ public class UtilsTextual {
 	 * @return  String   Given string converted to lower case with only first char in upper case
 	 */
 	public static String toUcFirst(String str) {
-		return Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
+		return str.isEmpty() ? "" : Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
 	}
 
 	/**
@@ -134,17 +134,22 @@ public class UtilsTextual {
 	 * @return  boolean  If the string is lower case with only first char in upper case.
 	 */
 	public static boolean isUcFirst(String str) {
-		return str.equals(UtilsTextual.toUcFirst(str));
+		return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
 	}
 
 	/**
+	 * Find operator DIRECTLY neighbouring (closer than any other character)
+	 *
 	 * @param	text
 	 * @param	cursorOffset
 	 * @return	Null|String
 	 */
 	public static String getOperatorAtOffset(CharSequence text, int cursorOffset) {
 		int textLength = text.length();
-		if (textLength == 0 || cursorOffset >= textLength) return null;
+		if (	   textLength == 0
+				|| cursorOffset >= textLength
+				|| text.toString().trim().isEmpty()
+		) return null;
 
 		String operatorToTheLeft = cursorOffset > 2
 				? text.subSequence(cursorOffset - 2, cursorOffset + 1).toString()
@@ -154,7 +159,10 @@ public class UtilsTextual {
 			return operatorToTheLeft.trim();
 		}
 
-		String operatorToTheRight = cursorOffset < textLength - 2 && (cursorOffset == 0 || Character.isWhitespace(text.charAt(cursorOffset-1)))
+		String operatorToTheRight =
+				cursorOffset < textLength - 2
+				&& cursorOffset > 0 && Character.isWhitespace(text.charAt(cursorOffset-1))
+
 				? text.subSequence(cursorOffset - 1, cursorOffset + 2).toString()
 				: null;
 
@@ -178,7 +186,8 @@ public class UtilsTextual {
 			return cursorOffset - 1;
 		}
 
-		String operatorToTheRight = cursorOffset < textLength - 2 && (cursorOffset == 0 || Character.isWhitespace(text.charAt(cursorOffset-1)))
+		String operatorToTheRight = cursorOffset < (textLength - 2) &&
+				(cursorOffset > 0 && Character.isWhitespace(text.charAt(cursorOffset-1)))
 				? text.subSequence(cursorOffset - 1, cursorOffset + 2).toString()
 				: null;
 
@@ -193,24 +202,24 @@ public class UtilsTextual {
 	 * Get word at caret offset out of given text
 	 *
 	 * @param   text           The full text
-	 * @param   cursorOffset   Character offset of caret
+	 * @param   offset   Character offset of caret
 	 * @return                 The extracted word or null
 	 */
-	public static String getWordAtOffset(CharSequence text, int cursorOffset) {
+	public static String getWordAtOffset(CharSequence text, int offset) {
 		int textLength = text.length();
 
-		if ( textLength == 0 || cursorOffset >= textLength )  return null;
+		if ( textLength == 0 || offset < 0  || offset >= textLength )  return null;
 
-		if (cursorOffset > 0
-				  && !Character.isJavaIdentifierPart(text.charAt(cursorOffset))
-				  && Character.isJavaIdentifierPart(text.charAt(cursorOffset - 1))
+		if (offset > 0
+				  && !Character.isJavaIdentifierPart(text.charAt(offset))
+				  && Character.isJavaIdentifierPart(text.charAt(offset - 1))
 		) {
-			cursorOffset--;
+			offset--;
 		}
 
-		if (Character.isJavaIdentifierPart(text.charAt(cursorOffset))) {
-			int start = cursorOffset;
-			int end = cursorOffset;
+		if (Character.isJavaIdentifierPart(text.charAt(offset))) {
+			int start = offset;
+			int end = offset;
 
 			while (start > 0 && Character.isJavaIdentifierPart(text.charAt(start - 1))) {
 				start--;
@@ -227,7 +236,7 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * @param   text           Text containing the sequence
+	 * @param   text
 	 * @param   offsetStart    Sub sequence start character offset
 	 * @param   offsetEnd      Sub sequence end character offset
 	 * @return                 Sub sequence of given offsets out of given text

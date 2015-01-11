@@ -34,9 +34,13 @@ public class OperatorSign {
 	public static boolean isOperatorSign(String word) {
 
 		return 		word.length() == 1 && (
-				word.equals("+") || word.equals("-")
-			 || word.equals("<") || word.equals(">")
-			 || word.equals("*") || word.equals("/")
+				word.equals("+")
+			 || word.equals("-")
+			 || word.equals("<")
+			 || word.equals(">")
+			 || word.equals("*")
+			 || word.equals("/")
+			 || word.equals("%")
 		);
 	}
 

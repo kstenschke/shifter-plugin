@@ -22,15 +22,23 @@ public class UtilsFile {
 	 * @return	The extension   Everything after the last "." in the full filename
 	 */
 	public static String extractFileExtension(String filename) {
-		if( filename.isEmpty() || filename.length() < 4 || !filename.contains(".") ) {
+		if( filename.isEmpty() ) return null;
+
+		if( filename.contains("/")) filename = filename.substring(filename.lastIndexOf("/") + 1);
+
+		if( filename.length() < 3 || ! filename.contains(".") ) {
 			return null;
 		}
 
 		return filename.substring(filename.lastIndexOf('.') + 1);
 	}
 
-	private static boolean filenameEndsWithExtension(String filename) {
-		return !((filename == null) || filename.isEmpty() || (filename.length() < 4) || !filename.contains("."));
+	public static boolean filenameEndsWithExtension(String filename) {
+		if (filename == null || filename.isEmpty() || ! filename.contains(".")) return false;
+
+		String[] parts = filename.split("\\.");
+
+		return parts.length > 1 && parts[0].length() > 0 && parts[1].length() > 2;
 	}
 
 	public static boolean isPhpFile(String filename) {
