@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.ide.util.PropertiesComponent;
+import com.thoughtworks.xstream.mapper.Mapper;
 import org.jetbrains.annotations.NonNls;
 
 /**
@@ -56,7 +57,16 @@ public class ShifterPreferences {
      * @return	String  Dictionary
      */
     public static String getDictionary() {
-        String dictionary = PropertiesComponent.getInstance().getValue(PROPERTY_DICTIONARY);
+        String dictionary = null;
+
+        try {
+            PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+            if (propertiesComponent != null) {
+                dictionary = propertiesComponent.getValue(PROPERTY_DICTIONARY);
+            }
+        } catch(NullPointerException e) {
+            return "";
+        }
 
         return dictionary == null ? "" : dictionary;
     }
@@ -65,9 +75,13 @@ public class ShifterPreferences {
      * @return	int
      */
     public static int getShiftMoreSize() {
-        String size = PropertiesComponent.getInstance().getValue(PROPERTY_SIZE_SHIFT_MORE);
+        try {
+            String size = PropertiesComponent.getInstance().getValue(PROPERTY_SIZE_SHIFT_MORE);
 
-        return size == null ? 10 : Integer.parseInt(size);
+            return size == null ? 10 : Integer.parseInt(size);
+        } catch(NullPointerException e) {
+            return 10;
+        }
     }
 
     /**
@@ -91,15 +105,23 @@ public class ShifterPreferences {
      * @return	int     Sorting mode: case sensitive / insensitive
      */
     public static Integer getSortingMode() {
-        String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SORTING_MODE);
+        try {
+            String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SORTING_MODE);
 
-        return modeStr == null ? SORTING_MODE_CASE_INSENSITIVE : Integer.parseInt(modeStr);
+            return modeStr == null ? SORTING_MODE_CASE_INSENSITIVE : Integer.parseInt(modeStr);
+        } catch(NullPointerException e) {
+            return SORTING_MODE_CASE_INSENSITIVE;
+        }
     }
 
     public static Integer getShiftingModeOfTimestamps() {
-        String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SHIFTING_MODE_TIMESTAMP);
+        try {
+            String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SHIFTING_MODE_TIMESTAMP);
 
-        return modeStr == null ? SHIFTING_MODE_TIMESTAMP_SECONDS : Integer.parseInt(modeStr);
+            return modeStr == null ? SHIFTING_MODE_TIMESTAMP_SECONDS : Integer.parseInt(modeStr);
+        } catch(NullPointerException e) {
+            return SHIFTING_MODE_TIMESTAMP_SECONDS;
+        }
     }
 
     /**
@@ -113,8 +135,12 @@ public class ShifterPreferences {
      * @return  Boolean     (Note: Object and not primitive boolean is required here)
      */
     public static Boolean getIsActivePreserveCase() {
-        String value    = PropertiesComponent.getInstance().getValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE);
+        try {
+            String value = PropertiesComponent.getInstance().getValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE);
 
-        return value == null || value.equals("1");
+            return value == null || value.equals("1");
+        } catch (NullPointerException e) {
+            return true;
+        }
     }
 }

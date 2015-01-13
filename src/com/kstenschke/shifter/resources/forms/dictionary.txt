@@ -90,6 +90,7 @@
 	|show|hide|
 	|small|medium|large|
 	|start|end|
+	|starts|ends|
 	|sum|difference|product|quotient|remainder|opposite|
 	|top|right|bottom|left|
 	|true|false|
