@@ -54,6 +54,30 @@ public class ShifterPreferences {
     }
 
     /**
+     * Store sorting mode
+     *
+     * @param	mode		case sensitive / insensitive
+     */
+    public static void saveSortingMode(Integer mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
+    }
+
+    public static void saveShiftMoreSize(String size) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_SIZE_SHIFT_MORE, size);
+    }
+
+    public static void saveShiftingModeTimestamps(Integer mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_SHIFTING_MODE_TIMESTAMP, mode.toString());
+    }
+
+    /**
+     * @param	isActive
+     */
+    public static void saveIsActivePreserveCase(boolean isActive) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
+    }
+
+    /**
      * @return	String  Dictionary
      */
     public static String getDictionary() {
@@ -85,23 +109,6 @@ public class ShifterPreferences {
     }
 
     /**
-     * Store sorting mode
-     *
-     * @param	mode		case sensitive / insensitive
-     */
-    public static void saveSortingMode(Integer mode) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
-    }
-
-    public static void saveShiftMoreSize(String size) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_SIZE_SHIFT_MORE, size);
-    }
-
-    public static void saveShiftingModeTimestamps(Integer mode) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_SHIFTING_MODE_TIMESTAMP, mode.toString());
-    }
-
-    /**
      * @return	int     Sorting mode: case sensitive / insensitive
      */
     public static Integer getSortingMode() {
@@ -122,13 +129,6 @@ public class ShifterPreferences {
         } catch(NullPointerException e) {
             return SHIFTING_MODE_TIMESTAMP_SECONDS;
         }
-    }
-
-    /**
-     * @param	isActive
-     */
-    public static void saveIsActivePreserveCase(boolean isActive) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
     }
 
     /**

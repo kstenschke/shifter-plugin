@@ -54,12 +54,12 @@ class ActionsPerformer {
 		this.editor = event.getData(PlatformDataKeys.EDITOR);
 
 		if (this.editor != null) {
-			this.document       = this.editor.getDocument();
-            this.editorText     = this.document.getCharsSequence();
-            CaretModel caretModel = this.editor.getCaretModel();
-            this.caretOffset    = caretModel.getOffset();
-            this.selectionModel = this.editor.getSelectionModel();
-            this.hasSelection   = this.selectionModel.hasSelection();
+			this.document           = this.editor.getDocument();
+            this.editorText         = this.document.getCharsSequence();
+            CaretModel caretModel   = this.editor.getCaretModel();
+            this.caretOffset        = caretModel.getOffset();
+            this.selectionModel     = this.editor.getSelectionModel();
+            this.hasSelection       = this.selectionModel.hasSelection();
 		}
 	}
 
