@@ -93,6 +93,7 @@
 	|starts|ends|
 	|sum|difference|product|quotient|remainder|opposite|
 	|top|right|bottom|left|
+	|trace|debug|info|warn|error|
 	|true|false|
 	|undo|redo|
 	|username|password|
