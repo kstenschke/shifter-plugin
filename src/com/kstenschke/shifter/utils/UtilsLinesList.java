@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2014 Kay Stenschke
+ * Copyright 2011-2015 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -83,7 +83,7 @@ public class UtilsLinesList {
                     lenLine = line.length();
 
                     if( lenLine > 0) {
-                        char currentDelimiter = line.charAt( line.length()-1 );
+                        char currentDelimiter = line.charAt( lenLine - 1 );
 
                         if( lineNumber == 0 ) {
                             this.commonDelimiter = currentDelimiter;
