@@ -307,9 +307,12 @@ class ActionsPerformer {
 
                         if(UtilsTextual.isAllUppercase(selectedText)) {
                             shiftedWord = shiftedWord.toUpperCase();
+                        } else if( UtilsTextual.isCamelCase(selectedText) ) {
+
                         } else if( UtilsTextual.isUcFirst(selectedText)) {
                             shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
                         }
+
                         document.replaceString( offsetStart, offsetEnd, shiftedWord );
                     }
                 }

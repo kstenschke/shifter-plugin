@@ -71,21 +71,27 @@ public class UtilsLinesList {
         public DelimiterDetector(List<String> lines) {
             this.lines = lines;
             this.commonDelimiter    = ' ';
+
             int amountLines = this.lines.size();
+            int lenLine;
 
             if( amountLines > 2) {
                 this.findingDelimiterFailed = false;
                 int lineNumber = 0;
                 for(String line : this.lines) {
                     line = line.trim();
-                    char currentDelimiter = line.charAt( line.length()-1 );
+                    lenLine = line.length();
 
-                    if( lineNumber == 0 ) {
-                        this.commonDelimiter = currentDelimiter;
-                    } else {
-                        boolean isLastLine = lineNumber == amountLines-1;
-                        if( !isLastLine && currentDelimiter != this.commonDelimiter) {
-                            this.findingDelimiterFailed = true;
+                    if( lenLine > 0) {
+                        char currentDelimiter = line.charAt( line.length()-1 );
+
+                        if( lineNumber == 0 ) {
+                            this.commonDelimiter = currentDelimiter;
+                        } else {
+                            boolean isLastLine = lineNumber == amountLines-1;
+                            if( !isLastLine && currentDelimiter != this.commonDelimiter) {
+                                this.findingDelimiterFailed = true;
+                            }
                         }
                     }
                     lineNumber++;

@@ -137,22 +137,26 @@ public class UtilsTextual {
 		return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
 	}
 
+	public static boolean isCamelCase(String str) {
+		return str.matches("/\\b([A-Z][a-z]*){2,}\\b/");
+	}
+
 	/**
 	 * Find operator DIRECTLY neighbouring (closer than any other character)
 	 *
-	 * @param	text
-	 * @param	cursorOffset
+	 * @param	str
+	 * @param	offset
 	 * @return	Null|String
 	 */
-	public static String getOperatorAtOffset(CharSequence text, int cursorOffset) {
-		int textLength = text.length();
+	public static String getOperatorAtOffset(CharSequence str, int offset) {
+		int textLength = str.length();
 		if (	   textLength == 0
-				|| cursorOffset >= textLength
-				|| text.toString().trim().isEmpty()
+				|| offset >= textLength
+				|| str.toString().trim().isEmpty()
 		) return null;
 
-		String operatorToTheLeft = cursorOffset > 2
-				? text.subSequence(cursorOffset - 2, cursorOffset + 1).toString()
+		String operatorToTheLeft = offset > 2
+				? str.subSequence(offset - 2, offset + 1).toString()
 				: null;
 
 		if(	operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft) ) {
@@ -160,10 +164,10 @@ public class UtilsTextual {
 		}
 
 		String operatorToTheRight =
-				cursorOffset < textLength - 2
-				&& cursorOffset > 0 && Character.isWhitespace(text.charAt(cursorOffset-1))
+				offset < textLength - 2
+				&& offset > 0 && Character.isWhitespace(str.charAt(offset-1))
 
-				? text.subSequence(cursorOffset - 1, cursorOffset + 2).toString()
+				? str.subSequence(offset - 1, offset + 2).toString()
 				: null;
 
 		if( operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight) ) {
@@ -174,25 +178,25 @@ public class UtilsTextual {
 		return null;
 	}
 
-	public static Integer getStartOfOperatorAtOffset(CharSequence text, int cursorOffset) {
-		int textLength = text.length();
-		if (textLength == 0 || cursorOffset >= textLength) return null;
+	public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
+		int textLength = str.length();
+		if (textLength == 0 || offset >= textLength) return null;
 
-		String operatorToTheLeft = cursorOffset > 2
-				? text.subSequence(cursorOffset - 2, cursorOffset + 1).toString()
+		String operatorToTheLeft = offset > 2
+				? str.subSequence(offset - 2, offset + 1).toString()
 				: null;
 
 		if(	operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft) ) {
-			return cursorOffset - 1;
+			return offset - 1;
 		}
 
-		String operatorToTheRight = cursorOffset < (textLength - 2) &&
-				(cursorOffset > 0 && Character.isWhitespace(text.charAt(cursorOffset-1)))
-				? text.subSequence(cursorOffset - 1, cursorOffset + 2).toString()
+		String operatorToTheRight = offset < (textLength - 2) &&
+				(offset > 0 && Character.isWhitespace(str.charAt(offset-1)))
+				? str.subSequence(offset - 1, offset + 2).toString()
 				: null;
 
 		if( operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight) ) {
-			return cursorOffset;
+			return offset;
 		}
 
 		return null;
@@ -201,101 +205,101 @@ public class UtilsTextual {
 	/**
 	 * Get word at caret offset out of given text
 	 *
-	 * @param   text           The full text
+	 * @param   str      The full text
 	 * @param   offset   Character offset of caret
-	 * @return                 The extracted word or null
+	 * @return           The extracted word or null
 	 */
-	public static String getWordAtOffset(CharSequence text, int offset) {
-		int textLength = text.length();
+	public static String getWordAtOffset(CharSequence str, int offset) {
+		int textLength = str.length();
 
 		if ( textLength == 0 || offset < 0  || offset >= textLength )  return null;
 
 		if (offset > 0
-				  && !Character.isJavaIdentifierPart(text.charAt(offset))
-				  && Character.isJavaIdentifierPart(text.charAt(offset - 1))
+				  && !Character.isJavaIdentifierPart(str.charAt(offset))
+				  && Character.isJavaIdentifierPart(str.charAt(offset - 1))
 		) {
 			offset--;
 		}
 
-		if (Character.isJavaIdentifierPart(text.charAt(offset))) {
+		if (Character.isJavaIdentifierPart(str.charAt(offset))) {
 			int start = offset;
 			int end = offset;
 
-			while (start > 0 && Character.isJavaIdentifierPart(text.charAt(start - 1))) {
+			while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
 				start--;
 			}
 
-			while (end < textLength && Character.isJavaIdentifierPart((text.charAt(end)))) {
+			while (end < textLength && Character.isJavaIdentifierPart((str.charAt(end)))) {
 				end++;
 			}
 
-			return text.subSequence(start, end).toString();
+			return str.subSequence(start, end).toString();
 		}
 
 		return null;
 	}
 
 	/**
-	 * @param   text
+	 * @param   str
 	 * @param   offsetStart    Sub sequence start character offset
 	 * @param   offsetEnd      Sub sequence end character offset
 	 * @return                 Sub sequence of given offsets out of given text
 	 */
-	public static String getSubString(CharSequence text, int offsetStart, int offsetEnd) {
-		if (text.length() == 0) return null;
+	public static String getSubString(CharSequence str, int offsetStart, int offsetEnd) {
+		if (str.length() == 0) return null;
 
-		return text.subSequence(offsetStart, offsetEnd).toString();
+		return str.subSequence(offsetStart, offsetEnd).toString();
 	}
 
 	/**
-	 * @param   text        Full text
+	 * @param   str        Full text
 	 * @param   offset      Offset from before which to extract one character
 	 * @return  String      Character BEFORE word at given caret offset
 	 */
-	public static String getCharBeforeOffset(CharSequence text, int offset) {
-		if (text.length() == 0 || offset == 0) return "";
+	public static String getCharBeforeOffset(CharSequence str, int offset) {
+		if (str.length() == 0 || offset == 0) return "";
 
 		if (offset > 0 ) {
-			return text.subSequence(offset-1, offset).toString();
+			return str.subSequence(offset-1, offset).toString();
 		}
 
 		return "";
 	}
 
 	/**
-	 * @param   text        Full text
+	 * @param   str        Full text
 	 * @param   offset      Offset from after which to extract one character
 	 * @return  String      Character AFTER word at caret offset
 	 */
-	public static String getCharAfterOffset(CharSequence text, int offset) {
-		if (text.length() < offset+2 || offset == 0) return "";
+	public static String getCharAfterOffset(CharSequence str, int offset) {
+		if (str.length() < offset+2 || offset == 0) return "";
 
 		if (offset > 0 ) {
-			return text.subSequence(offset+1, offset+2).toString();
+			return str.subSequence(offset+1, offset+2).toString();
 		}
 
 		return "";
 	}
 
 	/**
-	 * @param   text		Text to be analyzed
+	 * @param   str			Text to be analyzed
 	 * @param   offset		Character offset in text, intersecting the word dealing with
 	 * @return  int         Starting position offset of word at given offset in given CharSequence
 	 */
-	public static int getStartOfWordAtOffset(CharSequence text, int offset) {
-		if (text.length() == 0) return 0;
+	public static int getStartOfWordAtOffset(CharSequence str, int offset) {
+		if (str.length() == 0) return 0;
 
 		if (offset > 0
-				  && !Character.isJavaIdentifierPart(text.charAt(offset))
-				  && Character.isJavaIdentifierPart(text.charAt(offset - 1))
+				  && !Character.isJavaIdentifierPart(str.charAt(offset))
+				  && Character.isJavaIdentifierPart(str.charAt(offset - 1))
 				  ) {
 			offset--;
 		}
 
-		if (Character.isJavaIdentifierPart(text.charAt(offset))) {
+		if (Character.isJavaIdentifierPart(str.charAt(offset))) {
 			int start = offset;
 
-			while (start > 0 && Character.isJavaIdentifierPart(text.charAt(start - 1))) {
+			while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
 				start--;
 			}
 
@@ -347,24 +351,24 @@ public class UtilsTextual {
 	}
 
 	/**
-	 * @param	text
+	 * @param	str
 	 * @param	offset
 	 * @return	String
 	 */
-	public static String extractLineAroundOffset(String text, int offset) {
-		int lenText	  = text.length();
+	public static String extractLineAroundOffset(String str, int offset) {
+		int lenText	  = str.length();
 
 		int offsetStart = offset;
-		while(offsetStart > 0 && text.charAt(offsetStart) != '\n') {
+		while(offsetStart > 0 && str.charAt(offsetStart) != '\n') {
 			offsetStart--;
 		}
 
 		int offsetEnd = offset;
-		while(offsetEnd < lenText && text.charAt(offsetEnd) != '\n') {
+		while(offsetEnd < lenText && str.charAt(offsetEnd) != '\n') {
 			offsetEnd++;
 		}
 
-		return text.substring(offsetStart, offsetEnd).trim();
+		return str.substring(offsetStart, offsetEnd).trim();
 	}
 
 	/**
