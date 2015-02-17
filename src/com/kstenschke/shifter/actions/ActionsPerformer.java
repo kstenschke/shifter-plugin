@@ -259,7 +259,7 @@ class ActionsPerformer {
     }
 
     /**
-     * @param   shiftUp
+     * @param   shiftUp     Are we shifting up or down?
      * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
     private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
@@ -294,12 +294,18 @@ class ActionsPerformer {
                 }
 
                 if(!isDone) {
-                    if( UtilsTextual.containsAnyQuotes(selectedText) ) {
+                    if( TernaryExpression.isTernaryExpression(selectedText, "")) {
+                        document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText, shiftUp));
+
+                    } else if( UtilsTextual.containsAnyQuotes(selectedText) ) {
                         document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+
                     } else if( UtilsTextual.containsAnySlashes(selectedText) ) {
                         document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+
                     } else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
                         document.replaceString( offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText) );
+
                     } else {
                         // Detect and shift various types
                         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
@@ -307,9 +313,9 @@ class ActionsPerformer {
 
                         if(UtilsTextual.isAllUppercase(selectedText)) {
                             shiftedWord = shiftedWord.toUpperCase();
-                        } else if( UtilsTextual.isCamelCase(selectedText) ) {
 
-                        } else if( UtilsTextual.isUcFirst(selectedText)) {
+                        } else if( UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
+                            // @todo    check is there a way to implement a toCamelCase conversion?
                             shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
                         }
 

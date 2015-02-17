@@ -17,6 +17,8 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
+import com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter;
+import com.kstenschke.shifter.models.shiftertypes.TernaryExpression;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -45,6 +47,7 @@ public class ShifterTypesManager {
     public static final int     TYPE_PHP_VARIABLE             = 59;
     public static final int     TYPE_NUMERIC_VALUE            = 60;
     private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 61;
+    private static final int    TYPE_TERNARY_EXPRESSION       = 62;
 
         // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -112,28 +115,43 @@ public class ShifterTypesManager {
             return TYPE_DICTIONARY_WORD_EXT_SPECIFIC;
         }
 
+        // Ternary Expression - swap IF and ELSE
+        if (TernaryExpression.isTernaryExpression(word, prefixChar)) {
+            return TYPE_TERNARY_EXPRESSION;
+        }
+
             // Quoted (must be wrapped in single or double quotes or backticks)
         this.typeQuotedString = new com.kstenschke.shifter.models.shiftertypes.QuotedString();
         if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) return TYPE_QUOTED_STRING;
 
             // RGB (must be prefixed with "#")
-        this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
-        if ( this.typeRgbColor.isRgbColorString(word, prefixChar) ) return TYPE_RGB_COLOR;
+        if ( com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar) ) {
+            this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
+            return TYPE_RGB_COLOR;
+        }
 
             // Pixel value (must consist of numeric value followed by "px")
-        this.typePixelValue = new com.kstenschke.shifter.models.shiftertypes.CssUnit();
-        if (com.kstenschke.shifter.models.shiftertypes.CssUnit.isCssUnitValue(word)) return TYPE_CSS_UNIT;
+        if (com.kstenschke.shifter.models.shiftertypes.CssUnit.isCssUnitValue(word)) {
+            this.typePixelValue = new com.kstenschke.shifter.models.shiftertypes.CssUnit();
+            return TYPE_CSS_UNIT;
+        }
 
-        this.typeNumericValue = new com.kstenschke.shifter.models.shiftertypes.NumericValue();
-        if (com.kstenschke.shifter.models.shiftertypes.NumericValue.isNumericValue(word)) return TYPE_NUMERIC_VALUE;
+        if (com.kstenschke.shifter.models.shiftertypes.NumericValue.isNumericValue(word)) {
+            this.typeNumericValue = new com.kstenschke.shifter.models.shiftertypes.NumericValue();
+            return TYPE_NUMERIC_VALUE;
+        }
 
             // Operator sign (<, >, +, -)
-        this.typeOperatorSign	= new OperatorSign();
-        if ( OperatorSign.isOperatorSign(word)) return TYPE_OPERATOR_SIGN;
+        if ( OperatorSign.isOperatorSign(word)) {
+            this.typeOperatorSign	= new OperatorSign();
+            return TYPE_OPERATOR_SIGN;
+        }
 
             // MonoCharString (= consisting from any amount of the same character)
-        this.typeMonoCharacterString	= new com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter();
-        if (this.typeMonoCharacterString.isMonoCharacterString(word)) return TYPE_MONO_CHARACTER_STRING;
+        if (StringMonoCharacter.isMonoCharacterString(word)) {
+            this.typeMonoCharacterString	= new com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter();
+            return TYPE_MONO_CHARACTER_STRING;
+        }
 
             // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if( this.typeDictionaryTerm.isTermInDictionary(word, false) ) {
@@ -200,6 +218,9 @@ public class ShifterTypesManager {
 
             case TYPE_PHP_VARIABLE:
                 return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
+
+            case TYPE_TERNARY_EXPRESSION:
+                return TernaryExpression.getShifted(word, isUp);
 
             case TYPE_QUOTED_STRING:
                 return this.typeQuotedString.getShifted(word, editorText, isUp);

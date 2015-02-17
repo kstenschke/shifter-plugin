@@ -50,10 +50,10 @@ public class ShiftableLine {
 	/**
 	 * Get shifted up/down word
 	 *
-	 * @param	isUp	Shift up or down?
-	 * @param	editor
-	 * @param	moreCount
-	 * @return			Next upper/lower word
+	 * @param	isUp		Shift up or down?
+	 * @param	editor      Editor
+	 * @param	moreCount	Current counter while iterating multi-shift
+	 * @return				Next upper/lower word
 	 */
 	public String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
 		String line     = this.line.trim();
@@ -86,15 +86,11 @@ public class ShiftableLine {
 		}
 
 			// Actual shifting
-		if( amountShiftableWordsInSentence == 1 ) {
-				// Shift detected word in line
-			return this.line.replace(wordUnshifted, wordShifted);
-		} else if(StringHtmlEncodable.isHtmlEncodable(this.line)) {
-				// Encode or decode contained HTML special chars
-			return StringHtmlEncodable.getShifted(this.line);
-		}
+		return amountShiftableWordsInSentence == 1
+				? this.line.replace(wordUnshifted, wordShifted)		// Shift detected word in line
+				: StringHtmlEncodable.isHtmlEncodable(this.line)
+					? StringHtmlEncodable.getShifted(this.line)		// Encode or decode contained HTML special chars
+					: this.line;									// No shiftability detected, return original line
 
-			// No shiftability detected, return original line
-		return this.line;
 	}
 }

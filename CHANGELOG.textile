@@ -1,6 +1,9 @@
 h1. Shifter Plugin - Changelog
 
 * 1.2.7
+    ** Added swapping of if and else parts of selected ternary expression
+    ** Alleviated type detection by replacing premature object-instantiation by static detector methods
+* 1.2.7
     ** Fixed potential "index out of range" error in common delimiter detection of multi-lines shifting
 * 1.2.6
     ** Shift more on PHP variables shifts until first variable with a different first letter

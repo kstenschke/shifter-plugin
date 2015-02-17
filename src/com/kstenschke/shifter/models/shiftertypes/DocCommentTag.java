@@ -88,7 +88,7 @@ public class DocCommentTag {
 	 * @return  boolean     Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
 	 */
 	public boolean isDocCommentTag(String prefixChar, String line) {
-		return !prefixChar.equals("@") ? false : this.isDocCommentLineContext(line);
+		return prefixChar.equals("@") && this.isDocCommentLineContext(line);
 	}
 
 	/**
@@ -172,6 +172,7 @@ public class DocCommentTag {
 			filename = filename.toLowerCase();
 
 			if( filename.endsWith(".js") )  return this.tagsJavaScript; // JavaScript comment types
+
 			if (filename.endsWith(".java")) return this.tagsJava;       // Java comment tags in the recommended order
 		}
 

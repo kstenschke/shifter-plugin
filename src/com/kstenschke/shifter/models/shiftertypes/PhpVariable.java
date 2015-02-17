@@ -85,7 +85,8 @@ public class PhpVariable {
 
 			// Find position of given variable
 		Integer curIndex = (moreCount== null || moreCount > 1)
-				? allMatches.indexOf(variable) : allLeadChars.indexOf(variable.substring(1,2));
+				? allMatches.indexOf(variable)
+				: allLeadChars.indexOf(variable.substring(1, 2));
 
 		if( curIndex == -1 || amountVars == 0 ) {
 			return variable;

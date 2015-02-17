@@ -33,11 +33,11 @@ public class RbgColor {
 	 * Check whether given string represents a hex RGB color, prefix must be "#"
 	 *
 	 * @param	str			String to be checked
-	 * @param	prefix		Character found to precede that string
+	 * @param	prefixChar	Character preceding the string
 	 * @return	boolean.
 	 */
-	public boolean isRgbColorString(String str, String prefix) {
-		return !( !prefix.equals("#")  || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")) );
+	public static boolean isRgbColorString(String str, String prefixChar) {
+		return !( !prefixChar.equals("#")  || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")) );
 	}
 
 	/**

@@ -33,7 +33,7 @@ public class StringMonoCharacter {
 	 * @param word String to be shifted currently
 	 * @return boolean.
 	 */
-	public boolean isMonoCharacterString(String word) {
+	public static boolean isMonoCharacterString(String word) {
 		if (word.length() == 1) return true;
 
 		word = word.toLowerCase();

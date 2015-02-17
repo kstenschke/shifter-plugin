@@ -14,7 +14,7 @@
   ~ limitations under the License.
   -->
 
-<idea-plugin version="2">
+<idea-plugin version="2" url="http://www.coexec.com/en/tools-software-development/">
     <name>Shifter</name>
     <description><![CDATA[
     Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
@@ -71,22 +71,22 @@
     </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
-    <vendor url="" email="info@stenschke.com">Kay Stenschke</vendor>
-    <version>1.2.7</version>
+    <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
+    <version>1.2.8</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.8
+            <ul>
+                <li>Added swapping of if- and else-parts of a selected (from ? on) ternary expression</li>
+                <li>Alleviated type detection by replacing premature object-instantiation by static detector methods</li>
+            </ul>
+        </li>
         <li>1.2.7 Fixed potential "index out of range" error in common delimiter detection of multi-lines shifting</li>
         <li>1.2.6 Shift more on PHP variables shifts until first variable with a different first letter</li>
         <li>1.2.5 Improved case maintaining during shifting of single-lined selection</li>
         <li>1.2.4 Improved shifting of single-lined selection (recognizes all regular shifter types now)</li>
-        <li>1.2.3
-            <ul>
-                <li>Improved detection of PHP concatenations: supports also strings containing dots and escaped quotes now</li>
-                <li>Improved performance of lines sorting</li>
-            </ul>
-        </li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

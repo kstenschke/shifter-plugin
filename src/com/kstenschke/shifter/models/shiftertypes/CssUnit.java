@@ -67,7 +67,7 @@ public class CssUnit {
 	}
 
 	/**
-	 * @param	stylesheet
+	 * @param	stylesheet	CSS content
 	 * @return	most prominently used unit of given stylesheet, 'px' if none used yet
 	 */
 	public static String determineMostProminentUnit(String stylesheet) {
