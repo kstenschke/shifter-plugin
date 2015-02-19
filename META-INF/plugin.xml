@@ -39,6 +39,7 @@
         <li>Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash</li>
         <li>Numeric values - Increments/decrements numbers by 1</li>
         <li>UNIX (and millisecond based) timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
+        <li>Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements</li>
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
