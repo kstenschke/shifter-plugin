@@ -45,8 +45,12 @@ public class CssUnit {
 	 * @return	boolean     Does the given string represents a CSS length value?
 	 */
 	public static boolean isCssUnitValue(String str) {
-		return ( str.matches("[0-9]*(cm|em|in|pt|px)") );
+		return ( str.matches("[0-9]*(%|cm|em|in|pt|px)") );
 	}
+
+    public static boolean isCssUnit(String str) {
+        return ( str.matches("(%|cm|em|in|pt|px)") );
+    }
 
 	/**
 	 * @param	value       The full length value, post-fixed by its unit

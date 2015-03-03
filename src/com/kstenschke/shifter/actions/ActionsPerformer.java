@@ -205,7 +205,7 @@ class ActionsPerformer {
         String newWord = shiftableWord.getShifted(shiftUp, editor);
 
         if (newWord != null && newWord.length() > 0 && !newWord.matches( Pattern.quote(word) ) && wordOffset != null ) {
-            newWord     = shiftableWord.postProcess(newWord);
+            newWord     = shiftableWord.postProcess(newWord, postfixChar);
 
             if( replaceInDocument ) {
                    // Replace word at caret by shifted one (if any)

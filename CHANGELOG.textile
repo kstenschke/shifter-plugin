@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.9
+    ** Improved CSS units detection - added % (was: cm|em|in|pt|px)
 * 1.2.7
     ** Added swapping of if and else parts of selected ternary expression
     ** Alleviated type detection by replacing premature object-instantiation by static detector methods

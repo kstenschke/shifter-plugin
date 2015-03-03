@@ -115,14 +115,17 @@ public class ShiftableWord {
 	 * Post-process: do additional modifications on word after it has been shifted
 	 *
 	 * @param	word
+	 * @param	postfix
 	 * @return	Post-processed word
 	 */
-	public String postProcess(String word) {
+	public String postProcess(String word, String postfix) {
 		if(UtilsFile.isCssFile(this.filename)) {
 			switch(this.wordType) {
 				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
 				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
-					word	+= CssUnit.determineMostProminentUnit( this.editorText.toString() );
+                    if( !CssUnit.isCssUnit(postfix) ) {
+                        word += CssUnit.determineMostProminentUnit(this.editorText.toString());
+                    }
 					break;
 
 				case ShifterTypesManager.TYPE_CSS_UNIT:
