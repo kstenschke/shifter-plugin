@@ -84,6 +84,7 @@
 	|positive|negative|
 	|prefix|postfix|
 	|pre|post|
+	|request|response|
 	|second|minute|hour|day|month|year|
 	|seconds|minutes|hours|days|months|years|
 	|shown|hidden|
