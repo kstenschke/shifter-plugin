@@ -79,7 +79,9 @@
 	|ok|cancel|
 	|on|off|
 	|open|close|
+	|over|under|
 	|padding|margin|
+	|parent|child|
 	|pass|fail|
 	|positive|negative|
 	|prefix|postfix|
