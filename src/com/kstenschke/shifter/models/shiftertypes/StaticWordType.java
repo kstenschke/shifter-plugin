@@ -32,7 +32,7 @@ public class StaticWordType {
 	public StaticWordType(String[] keywords) {
 		this.keywords		= keywords;
 		this.amountKeywords = keywords.length;
-		this.regExPattern = UtilsArray.implode(this.keywords, "|").toLowerCase();
+		this.regExPattern = UtilsArray.implode(this.keywords, "|");
 	}
 
     /**
@@ -42,7 +42,7 @@ public class StaticWordType {
 	 * @return	boolean
 	 */
 	public boolean hasWord(String word) {
-		return (word.toLowerCase()).matches(this.regExPattern);
+		return (word).matches(this.regExPattern);
 	}
 
 	/**
@@ -51,7 +51,7 @@ public class StaticWordType {
 	 * @return	String		Shifting result
 	 */
 	public String getShifted(String word, boolean isUp) {
-		int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word.toLowerCase());
+		int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word);
 
 		if( wordPositionOriginal == -1 ) {
 			return word;

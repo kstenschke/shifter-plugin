@@ -73,11 +73,12 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
-    <version>1.2.9</version>
+    <version>1.2.10</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
         <li>1.2.9 Improved CSS units detection - added % (was: cm|em|in|pt|px)</li>
         <li>1.2.8
             <ul>

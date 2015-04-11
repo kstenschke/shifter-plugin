@@ -21,6 +21,7 @@ import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Static helper methods for analysis and manipulation of texts
@@ -60,6 +61,10 @@ public class UtilsTextual {
         }
 
         return true;
+	}
+
+	public static boolean containsCaseInSensitive(String haystack, String needle) {
+		return Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
 	}
 
     /**

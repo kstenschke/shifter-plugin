@@ -137,10 +137,12 @@ class ActionsPerformer {
 
         boolean isWordShifted = false;
         if ( word != null && ! word.isEmpty() ) {
-            isWordShifted = ! getShiftedWord(shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
+            isWordShifted = ! this.getShiftedWord(shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
+
+            // Shifting failed, try shifting lower-cased string
             if( ! isWordShifted ) {
                 String wordLower= word.toLowerCase();
-                isWordShifted   = ! getShiftedWord(shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
+                isWordShifted   = ! this.getShiftedWord(shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
             }
         }
 
