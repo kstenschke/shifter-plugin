@@ -102,11 +102,11 @@ public class Dictionary {
 				// Go over all blocks of lists of shift-terms, fetch first one containing the term
 			for (Object aBlocksOfExtension : blocksOfExtension) {
 				String curExtsList = aBlocksOfExtension.toString();
-				String curShiftTermsBlock = StringUtils.substringBetween(
-						this.dictionaryContents, curExtsList, "}");
+				String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtsList, "}");
 
 					// Term is contained? store list of shifting neighbours
-				if (curShiftTermsBlock.contains("|" + term + "|")) {
+//				if (curShiftTermsBlock.contains("|" + term + "|")) {
+				if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
 					this.relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
 					return true;
 				}
