@@ -52,6 +52,7 @@
 	|ascend|descend|
 	|asc|desc|
 	|back|forward|
+	|background|foreground|
 	|before|after|
 	|binary|octal|decimal|hexadecimal|
 	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
@@ -66,8 +67,7 @@
 	|explode|implode|
 	|file|folder|
 	|first|last|
-	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth
-	|foo|bar|baz|qux|
+	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|foo|bar|baz|qux|
 	|from|until|
 	|gif|jpg|png|
 	|horizontal|vertical|
