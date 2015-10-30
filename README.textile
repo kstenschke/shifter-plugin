@@ -3,7 +3,7 @@
 
 h1. Shifter Plugin
 
-Source code of the intellij IDEA "Shifter plugin":http://plugins.jetbrains.com/plugin/6149?pr=idea
+Source code of the intellij IDEA "Shifter plugin":http://plugins.jetbrains.com/plugin/6149
 This is a plugin for the various intellij IDEs, working in IntelliJ IDEA, RubyMine, WebStorm, PhpStorm, PyCharm, PyCharm CE, AppCode, Android Studio and 0xDBE.
 
 
