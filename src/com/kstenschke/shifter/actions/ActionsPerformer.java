@@ -129,6 +129,7 @@ class ActionsPerformer {
         boolean isOperator = false;
 
         String fileExtension = UtilsFile.extractFileExtension(filename, true);
+        // @todo make hyphen-inclusion configurable in dictionary per file type
         boolean isCSS = fileExtension != null && fileExtension.endsWith("css");
 
         word = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
