@@ -280,6 +280,7 @@ class ActionsPerformer {
 
         // Extract text as a list of lines
         if( (lineNumberSelEnd - lineNumberSelStart) > 1) {
+            // Selection is multi-lined
             List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
             sortLinesInDocument(shiftUp, lineNumberSelStart, lineNumberSelEnd, lines);
         } else {

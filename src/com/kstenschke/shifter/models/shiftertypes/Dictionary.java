@@ -194,7 +194,11 @@ public class Dictionary {
 		String[] termsList	= shiftTerms.split("\\|");
 		if( termsList.length > 0 ) {
 			StaticWordType wordType = new StaticWordType(termsList);
-			return wordType.getShifted(word, isUp);
+			String shiftedWord = wordType.getShifted(word, isUp);
+
+			return shiftedWord.equals(word)
+				? wordType.getShifted(word.toLowerCase(), isUp)
+				: shiftedWord;
 		}
 
 		return word;

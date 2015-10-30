@@ -248,6 +248,16 @@ public class ShifterTypesManager {
         return word;
     }
 
+    /**
+     * @param   word
+     * @param   isUp
+     * @param   editorText
+     * @param   caretOffset
+     * @param   moreCount
+     * @param   filename
+     * @param   editor
+     * @return  String
+     */
     public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
         String line    = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
         int idWordType = this.getWordType(word, "", "", line, filename);

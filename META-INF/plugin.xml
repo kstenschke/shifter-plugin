@@ -80,6 +80,7 @@
     <ul>
         <li>1.2.11
             <ul>Highlighted source URL in change notes</ul>
+            <ul>Bugfix: Shifting selected dictionary strings was detecting words case sensitive only</ul>
             <ul>Bugfix: Hyphened CSS styles were treated as two separate words</ul>
          </li>
         <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
