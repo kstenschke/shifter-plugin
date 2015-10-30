@@ -67,6 +67,21 @@ public class UtilsTextual {
 		return Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
 	}
 
+	/**
+	 * @param	str
+	 * @param	characters
+	 * @return	boolean
+	 */
+	public static boolean containsOnly(String str, String[] characters) {
+		if( str == null || str.isEmpty() ) return false;
+
+		for(String c : characters) {
+			str = str.replaceAll(c, "");
+		}
+
+		return str.isEmpty();
+	}
+
     /**
      * @param   str
      * @return  boolean     Is the given string wrapped into single- or double quotes?

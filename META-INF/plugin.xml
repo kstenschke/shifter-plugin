@@ -46,6 +46,7 @@
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm)</li>
         <li>Encoding/decoding of HTML special characters</li>
+        <li>Roman Numerals</li>
         <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value</li>
         <li>Strings ending with numbers - increments/decrements the postfix</li>
     </ul>
@@ -79,9 +80,10 @@
     <change-notes><![CDATA[
     <ul>
         <li>1.2.11
-            <ul>Highlighted source URL in change notes</ul>
+            <ul>Added: Shifting of roman numerals</ul>
             <ul>Bugfix: Shifting selected dictionary strings was detecting words case sensitive only</ul>
             <ul>Bugfix: Hyphened CSS styles were treated as two separate words</ul>
+            <ul>Highlighted source URL in change notes</ul>
          </li>
         <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
         <li>1.2.9 Improved CSS units detection - added % (was: cm|em|in|pt|px)</li>

@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
+import com.kstenschke.shifter.models.shiftertypes.RomanNumber;
 import com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter;
 import com.kstenschke.shifter.models.shiftertypes.TernaryExpression;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -46,8 +47,9 @@ public class ShifterTypesManager {
     private static final int    TYPE_DOC_COMMENT_DATATYPE     = 58;
     public static final int     TYPE_PHP_VARIABLE             = 59;
     public static final int     TYPE_NUMERIC_VALUE            = 60;
-    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 61;
-    private static final int    TYPE_TERNARY_EXPRESSION       = 62;
+    public static final int     TYPE_ROMAN_NUMERAL            = 61;
+    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 62;
+    private static final int    TYPE_TERNARY_EXPRESSION       = 63;
 
         // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -56,6 +58,7 @@ public class ShifterTypesManager {
         // Generic types (calculated when shifted)
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
     private OperatorSign typeOperatorSign;
+    private RomanNumber typeRomanNumber;
     private StringMonoCharacter typeMonoCharacterString;
     private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftertypes.CssUnit typePixelValue;
@@ -147,6 +150,12 @@ public class ShifterTypesManager {
             return TYPE_OPERATOR_SIGN;
         }
 
+            // Roman Numeral
+        if (RomanNumber.isRomanNumber(word)) {
+            this.typeRomanNumber    = new RomanNumber();
+            return TYPE_ROMAN_NUMERAL;
+        }
+
             // MonoCharString (= consisting from any amount of the same character)
         if (StringMonoCharacter.isMonoCharacterString(word)) {
             this.typeMonoCharacterString	= new StringMonoCharacter();
@@ -227,6 +236,9 @@ public class ShifterTypesManager {
 
             case TYPE_OPERATOR_SIGN:
                 return this.typeOperatorSign.getShifted(word);
+
+            case TYPE_ROMAN_NUMERAL:
+                return this.typeRomanNumber.getShifted(word, isUp);
 
             case TYPE_MONO_CHARACTER_STRING:
                 return this.typeMonoCharacterString.getShifted(word, isUp);
