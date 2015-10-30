@@ -67,7 +67,7 @@
 	|explode|implode|
 	|file|folder|
 	|first|last|
-	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|foo|bar|baz|qux|-
+	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|
 	|foo|bar|baz|qux|
 	|from|until|
 	|gif|jpg|png|

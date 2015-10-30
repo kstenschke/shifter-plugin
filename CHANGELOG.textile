@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.11
+    ** Highlighted source URL in change notes
 * 1.2.10
     ** Bugfix: Case maintaining failed for dictionary terms
 * 1.2.9

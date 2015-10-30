@@ -73,11 +73,14 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
-    <version>1.2.10</version>
+    <version>1.2.11</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.11
+            <ul>Highlighted source URL in change notes</ul>
+         </li>
         <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
         <li>1.2.9 Improved CSS units detection - added % (was: cm|em|in|pt|px)</li>
         <li>1.2.8
@@ -87,9 +90,8 @@
             </ul>
         </li>
         <li>1.2.7 Fixed potential "index out of range" error in common delimiter detection of multi-lines shifting</li>
-        <li>1.2.6 Shift more on PHP variables shifts until first variable with a different first letter</li>
   </ul><br />
-   <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" target="_blank">...Read full changelog on github</a>
+   <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
 
     <application-components/>

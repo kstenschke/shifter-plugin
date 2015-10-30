@@ -56,7 +56,7 @@ public class ShifterTypesManager {
         // Generic types (calculated when shifted)
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
     private OperatorSign typeOperatorSign;
-    private com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter typeMonoCharacterString;
+    private StringMonoCharacter typeMonoCharacterString;
     private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftertypes.CssUnit typePixelValue;
     private com.kstenschke.shifter.models.shiftertypes.NumericValue typeNumericValue;
@@ -149,7 +149,7 @@ public class ShifterTypesManager {
 
             // MonoCharString (= consisting from any amount of the same character)
         if (StringMonoCharacter.isMonoCharacterString(word)) {
-            this.typeMonoCharacterString	= new com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter();
+            this.typeMonoCharacterString	= new StringMonoCharacter();
             return TYPE_MONO_CHARACTER_STRING;
         }
 
