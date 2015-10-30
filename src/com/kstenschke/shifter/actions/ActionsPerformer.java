@@ -76,7 +76,7 @@ class ActionsPerformer {
                         // Shift block selection: do word-shifting if all items are identical
                     shiftBlockSelection(shiftUp, moreCount);
                 } else {
-                        // Shift regular selection: sort CSV, multi-line selection: sort lines alphabetically
+                        // Shift regular selection: sort CSV or multi-line selection: sort lines alphabetically
                     shiftSelection(shiftUp, moreCount);
                 }
             } else {
@@ -128,9 +128,12 @@ class ActionsPerformer {
         String word;
         boolean isOperator = false;
 
+        String fileExtension = UtilsFile.extractFileExtension(filename, true);
+        boolean isCSS = fileExtension != null && fileExtension.endsWith("css");
+
         word = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
         if( word == null) {
-            word = UtilsTextual.getWordAtOffset(editorText, caretOffset);
+            word = UtilsTextual.getWordAtOffset(editorText, caretOffset, isCSS);
         } else {
             isOperator = true;
         }

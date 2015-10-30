@@ -19,9 +19,10 @@ public class UtilsFile {
 
 	/**
 	 * @param	filename		Filename from which to extract the extension
+	 * @param	toLowerCase
 	 * @return	The extension   Everything after the last "." in the full filename
 	 */
-	public static String extractFileExtension(String filename) {
+	public static String extractFileExtension(String filename, boolean toLowerCase) {
 		if( filename.isEmpty() ) return null;
 
 		if( filename.contains("/")) filename = filename.substring(filename.lastIndexOf("/") + 1);
@@ -30,7 +31,12 @@ public class UtilsFile {
 			return null;
 		}
 
-		return filename.substring(filename.lastIndexOf('.') + 1);
+		return toLowerCase
+				? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase()
+				: filename.substring(filename.lastIndexOf('.') + 1);
+	}
+	public static String extractFileExtension(String filename) {
+		return extractFileExtension(filename, false);
 	}
 
 	public static boolean filenameEndsWithExtension(String filename) {

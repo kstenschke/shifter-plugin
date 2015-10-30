@@ -210,31 +210,32 @@ public class UtilsTextual {
 	/**
 	 * Get word at caret offset out of given text
 	 *
-	 * @param   str      The full text
-	 * @param   offset   Character offset of caret
-	 * @return           The extracted word or null
+	 * @param   str      		The full text
+	 * @param   offset   		Character offset of caret
+	 * @param   allowHyphens	Treat "-" as word character?
+	 * @return           		The extracted word or null
 	 */
-	public static String getWordAtOffset(CharSequence str, int offset) {
+	public static String getWordAtOffset(CharSequence str, int offset, boolean allowHyphens) {
 		int textLength = str.length();
 
 		if ( textLength == 0 || offset < 0  || offset >= textLength )  return null;
 
 		if (offset > 0
-				  && !Character.isJavaIdentifierPart(str.charAt(offset))
-				  && Character.isJavaIdentifierPart(str.charAt(offset - 1))
+				  && ! isJavaIdentifierPart(str.charAt(offset), allowHyphens)
+				  &&   isJavaIdentifierPart(str.charAt(offset - 1), allowHyphens)
 		) {
 			offset--;
 		}
 
-		if (Character.isJavaIdentifierPart(str.charAt(offset))) {
+		if ( isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
 			int start = offset;
 			int end = offset;
 
-			while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
+			while (start > 0 && isJavaIdentifierPart(str.charAt(start - 1), allowHyphens)) {
 				start--;
 			}
 
-			while (end < textLength && Character.isJavaIdentifierPart((str.charAt(end)))) {
+			while (end < textLength && isJavaIdentifierPart((str.charAt(end)), allowHyphens)) {
 				end++;
 			}
 
@@ -242,6 +243,21 @@ public class UtilsTextual {
 		}
 
 		return null;
+	}
+
+	public static String getWordAtOffset(CharSequence str, int offset) {
+		return getWordAtOffset(str, offset, false);
+	}
+
+	/**
+	 * @param c
+	 * @param allowHyphens
+	 * @return
+	 */
+	public static boolean isJavaIdentifierPart(char c, boolean allowHyphens) {
+		return ( allowHyphens )
+				? Character.isJavaIdentifierPart(c) || c == '-'
+				: Character.isJavaIdentifierPart(c);
 	}
 
 	/**
