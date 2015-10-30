@@ -84,6 +84,7 @@
             <ul>Bugfix: Shifting selected dictionary strings was detecting words case sensitive only</ul>
             <ul>Bugfix: Hyphened CSS styles were treated as two separate words</ul>
             <ul>Highlighted source URL in change notes</ul>
+            <ul>Extended default dictionary</ul>
          </li>
         <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
         <li>1.2.9 Improved CSS units detection - added % (was: cm|em|in|pt|px)</li>

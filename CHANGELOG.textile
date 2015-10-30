@@ -5,6 +5,7 @@ h1. Shifter Plugin - Changelog
     ** Bugfix: Shifting selected dictionary strings was detecting words case sensitive only
     ** Bugfix: Hyphened CSS styles were treated as two separate words
     ** Highlighted source URL in change notes
+    ** Extended default dictionary
 * 1.2.10
     ** Bugfix: Case maintaining failed for dictionary terms
 * 1.2.9
