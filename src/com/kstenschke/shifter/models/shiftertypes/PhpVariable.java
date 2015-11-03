@@ -15,6 +15,8 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+import com.kstenschke.shifter.utils.UtilsTextual;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -22,9 +24,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * PHP Variable (word with $ prefix)
+ * PHP Variable (word with $ prefix), includes array definition (toggle long versus shorthand syntax)
  */
 public class PhpVariable {
+
+	// Detected array? Shifts among long and shorthand than: array(...) <=> [...]
+	private boolean isArray = false;
+
+	private boolean isConventionalArray = false; // shorthand (since PHP5.4) or long syntax array?
 
 	/**
 	 * Constructor
@@ -47,7 +54,26 @@ public class PhpVariable {
 
 		String identifier = str.substring(1);
 			// Must contain a-z,A-Z or 0-9, _
-		return identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
+		boolean isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
+
+		if( ! isVariable ) {
+			// Detect array definition
+			this.isArray = this.isPhpArray(str);
+			isVariable = this.isArray;
+		}
+
+		return isVariable;
+	}
+
+	/**
+	 * @param	str
+	 * @return	Boolean
+	 */
+	private Boolean isPhpArray(String str) {
+		this.isConventionalArray =     str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+		boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(\\])");
+
+		return this.isConventionalArray || isShorthandArray;
 	}
 
 	/**
@@ -60,6 +86,8 @@ public class PhpVariable {
 	 * @return	String
 	 */
 	public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
+		if( this.isArray ) return getShiftedArray(variable);
+
          // Get full text of currently edited document
 	   String text = editorText.toString();
 
@@ -141,6 +169,23 @@ public class PhpVariable {
 		}
 
 		return leadChars;
+	}
+
+	/**
+	 * @param   variable
+	 * @return	String		converted array(...) <=> [...]
+	 */
+	public String getShiftedArray(String variable) {
+		if( this.isConventionalArray ) {
+			variable = variable.replaceFirst("array", "[");
+			variable = variable.replaceFirst("\\(", "");
+			variable = UtilsTextual.replaceLast(variable, ")", "]");
+		} else {
+			variable = variable.replaceFirst("\\[", "array(");
+			variable = UtilsTextual.replaceLast(variable, "]", ")");
+		}
+
+		return variable;
 	}
 
 }

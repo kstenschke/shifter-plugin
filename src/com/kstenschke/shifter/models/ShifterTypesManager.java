@@ -178,6 +178,12 @@ public class ShifterTypesManager {
         return TYPE_UNKNOWN;
     }
 
+    public int getWordType(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
+        String line = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
+
+        return this.getWordType(word, "", "", line, filename);
+    }
+
     /**
      * @param   word
      * @return  boolean
@@ -219,7 +225,7 @@ public class ShifterTypesManager {
             case TYPE_RGB_COLOR:
                 return this.typeRgbColor.getShifted(word, isUp);
 
-            case TYPE_NUMERIC_VALUE:
+            case TYPE_NUMERIC_VALUE:    // numeric values including UNIX and millisecond timestamps
                 return this.typeNumericValue.getShifted(word, isUp, editor);
 
             case TYPE_CSS_UNIT:

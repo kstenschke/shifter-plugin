@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.12
+    ** Added shifting (selected) PHP array among long and shorthand syntax (PHP >= 5.4)
 * 1.2.11
     ** Added: Shifting of roman numerals
     ** Bugfix: Shifting selected dictionary strings was detecting words case sensitive only

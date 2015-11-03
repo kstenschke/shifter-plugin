@@ -74,11 +74,12 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
-    <version>1.2.11</version>
+    <version>1.2.12</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.12 Added shifting (selected) PHP array among long and shorthand syntax (PHP >= 5.4)</li>
         <li>1.2.11
             <ul>Added: Shifting of roman numerals</ul>
             <ul>Bugfix: Shifting selected dictionary strings was detecting words case sensitive only</ul>
@@ -94,7 +95,6 @@
                 <li>Alleviated type detection by replacing premature object-instantiation by static detector methods</li>
             </ul>
         </li>
-        <li>1.2.7 Fixed potential "index out of range" error in common delimiter detection of multi-lines shifting</li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

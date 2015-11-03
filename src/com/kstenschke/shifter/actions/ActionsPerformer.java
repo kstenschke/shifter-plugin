@@ -54,7 +54,8 @@ class ActionsPerformer {
 		this.editor = event.getData(PlatformDataKeys.EDITOR);
 
 		if (this.editor != null) {
-			this.document           = this.editor.getDocument();
+            this.document           = this.editor.getDocument();
+            this.filename           = this.getFilename();
             this.editorText         = this.document.getCharsSequence();
             CaretModel caretModel   = this.editor.getCaretModel();
             this.caretOffset        = caretModel.getOffset();
@@ -81,18 +82,17 @@ class ActionsPerformer {
                 }
             } else {
                 // Shift word at caret
-                String filename     = this.getFilename();
                 int lineNumber      = document.getLineNumber(caretOffset);
                 int offsetLineStart = document.getLineStartOffset(lineNumber);
                 int offsetLineEnd   = document.getLineEndOffset(lineNumber);
 
                 String line = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
 
-                boolean isWordShifted = shiftWordAtCaret(shiftUp, filename, line, moreCount);
+                boolean isWordShifted = shiftWordAtCaret(shiftUp, this.filename, line, moreCount);
 
                     // Word at caret wasn't identified/shifted, try shifting the whole line
                 if ( ! isWordShifted ) {
-                    shiftLine(shiftUp, filename, offsetLineStart, line, moreCount);
+                    shiftLine(shiftUp, this.filename, offsetLineStart, line, moreCount);
                 }
             }
         }
@@ -157,8 +157,8 @@ class ActionsPerformer {
      * @return  String  filename of currently edited document
      */
     private String getFilename() {
-        if (this.filename == null) {
-            VirtualFile file = FileDocumentManager.getInstance().getFile(document);
+        if (this.filename == null && this.document != null ) {
+            VirtualFile file = FileDocumentManager.getInstance().getFile(this.document);
             this.filename = file != null ? file.getName() : "";
         }
 
@@ -235,7 +235,7 @@ class ActionsPerformer {
             String word         = editorText.subSequence( blockSelectionStarts[0], blockSelectionEnds[0]).toString();
             String line         = UtilsTextual.extractLine( this.document, this.document.getLineNumber(blockSelectionStarts[0]) ).trim();
             Integer wordOffset  = UtilsTextual.getStartOfWordAtOffset(this.editorText, blockSelectionStarts[0]);
-            String newWord      = this.getShiftedWord(shiftUp, this.getFilename(), word, line, wordOffset, false, false, moreCount);
+            String newWord      = this.getShiftedWord(shiftUp, this.filename, word, line, wordOffset, false, false, moreCount);
 
             if( newWord != null && ! newWord.equals(word) ) {
                 for(int i= blockSelectionEnds.length-1; i >= 0; i--) {
@@ -265,10 +265,10 @@ class ActionsPerformer {
     }
 
     /**
-     * @param   shiftUp     Are we shifting up or down?
+     * @param   isUp        Are we shifting up or down?
      * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
-    private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
+    private void shiftSelection(boolean isUp, @Nullable Integer moreCount) {
         int offsetStart         = selectionModel.getSelectionStart();
         int offsetEnd           = selectionModel.getSelectionEnd();
         int lineNumberSelStart  = document.getLineNumber(offsetStart);
@@ -278,21 +278,24 @@ class ActionsPerformer {
             lineNumberSelEnd--;
         }
 
-        // Extract text as a list of lines
-        if( (lineNumberSelEnd - lineNumberSelStart) > 1) {
-            // Selection is multi-lined
-            List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-            sortLinesInDocument(shiftUp, lineNumberSelStart, lineNumberSelEnd, lines);
-        } else {
-            // Selection within one line
-            String selectedText  = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
+        ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
+        String selectedText  = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
+        int wordType    = shifterTypesManager.getWordType(selectedText, isUp, editorText, offsetStart, moreCount, filename, editor);
+        boolean isPhpVariable   = wordType == ShifterTypesManager.TYPE_PHP_VARIABLE;
 
-            if( UtilsTextual.isCommaSeparatedList(selectedText) ) {
-                String sortedList = this.sortCommaSeparatedList(selectedText, shiftUp);
+        if( (lineNumberSelEnd - lineNumberSelStart) > 1 && ! isPhpVariable ) {
+            // Selection is multi-lined: sort lines alphabetical
+            List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+            sortLinesInDocument(isUp, lineNumberSelStart, lineNumberSelEnd, lines);
+
+        } else {
+            // Selection within one line, or PHP array definition over 1 or more lines
+            if( ! isPhpVariable && UtilsTextual.isCommaSeparatedList(selectedText) ) {
+                String sortedList = this.sortCommaSeparatedList(selectedText, isUp);
                 document.replaceString(offsetStart, offsetEnd, sortedList);
             } else {
                 boolean isDone = false;
-                if( UtilsFile.isPhpFile(this.getFilename()) ) {
+                if( ! isPhpVariable && UtilsFile.isPhpFile(this.filename) ) {
                     PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
                     if (phpConcatenation.isPhpConcatenation()) {
                         isDone = true;
@@ -302,21 +305,27 @@ class ActionsPerformer {
 
                 if(!isDone) {
                     if( TernaryExpression.isTernaryExpression(selectedText, "")) {
-                        document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText, shiftUp));
+                        document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText, isUp));
+                        isDone = true;
 
-                    } else if( UtilsTextual.containsAnyQuotes(selectedText) ) {
-                        document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                    } else if(! isPhpVariable ) {
+                        if( UtilsTextual.containsAnyQuotes(selectedText) ) {
+                            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                            isDone = true;
 
-                    } else if( UtilsTextual.containsAnySlashes(selectedText) ) {
-                        document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+                        } else if( UtilsTextual.containsAnySlashes(selectedText) ) {
+                            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+                            isDone = true;
 
-                    } else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
-                        document.replaceString( offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText) );
+                        } else if(StringHtmlEncodable.isHtmlEncodable(selectedText)) {
+                            document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
+                            isDone = true;
+                        }
+                    }
 
-                    } else {
+                    if( ! isDone ) {
                         // Detect and shift various types
-                        ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
-                        String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, shiftUp, editorText, caretOffset, moreCount, filename, editor);
+                        String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
 
                         if(UtilsTextual.isAllUppercase(selectedText)) {
                             shiftedWord = shiftedWord.toUpperCase();

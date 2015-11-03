@@ -23,18 +23,15 @@ public class UtilsFile {
 	 * @return	The extension   Everything after the last "." in the full filename
 	 */
 	public static String extractFileExtension(String filename, boolean toLowerCase) {
-		if( filename.isEmpty() ) return null;
+		if( filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".") ) return null;
 
 		if( filename.contains("/")) filename = filename.substring(filename.lastIndexOf("/") + 1);
-
-		if( filename.length() < 3 || ! filename.contains(".") ) {
-			return null;
-		}
 
 		return toLowerCase
 				? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase()
 				: filename.substring(filename.lastIndexOf('.') + 1);
 	}
+
 	public static String extractFileExtension(String filename) {
 		return extractFileExtension(filename, false);
 	}
