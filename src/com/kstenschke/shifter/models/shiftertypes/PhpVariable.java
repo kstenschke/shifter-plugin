@@ -59,10 +59,9 @@ public class PhpVariable {
 		if( ! isVariable ) {
 			// Detect array definition
 			this.isArray = this.isPhpArray(str);
-			isVariable = this.isArray;
 		}
 
-		return isVariable;
+		return isVariable || this.isArray;
 	}
 
 	/**
