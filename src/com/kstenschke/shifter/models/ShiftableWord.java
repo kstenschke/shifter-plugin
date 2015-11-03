@@ -94,7 +94,7 @@ public class ShiftableWord {
 		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
 
 			// Keep original word casing
-		if(      this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
+		if(      this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE		//@todo extract this and its redundancy in ActionsPerformer
 			 &&  this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
 		) {
             if( ShifterPreferences.getIsActivePreserveCase() ) {

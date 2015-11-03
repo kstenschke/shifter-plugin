@@ -327,12 +327,14 @@ class ActionsPerformer {
                         // Detect and shift various types
                         String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
 
-                        if(UtilsTextual.isAllUppercase(selectedText)) {
-                            shiftedWord = shiftedWord.toUpperCase();
+                        if( ! isPhpVariable ) { // @todo extract this and its redundancy in ShiftableWord
+                            if (UtilsTextual.isAllUppercase(selectedText)) {
+                                shiftedWord = shiftedWord.toUpperCase();
 
-                        } else if( UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
-                            // @todo    check is there a way to implement a toCamelCase conversion?
-                            shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
+                            } else if (UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
+                                // @todo    check is there a way to implement a toCamelCase conversion?
+                                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
+                            }
                         }
 
                         document.replaceString( offsetStart, offsetEnd, shiftedWord );

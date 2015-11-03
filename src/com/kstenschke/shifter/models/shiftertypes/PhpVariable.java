@@ -28,10 +28,11 @@ import java.util.regex.Pattern;
  */
 public class PhpVariable {
 
-	// Detected array? Shifts among long and shorthand than: array(...) <=> [...]
-	private boolean isArray = false;
+	// Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
+	private boolean isArrayDefinition = false;
 
-	private boolean isConventionalArray = false; // shorthand (since PHP5.4) or long syntax array?
+	// Shorthand (since PHP5.4) or long syntax array?
+	private boolean isConventionalArray = false;
 
 	/**
 	 * Constructor
@@ -47,30 +48,29 @@ public class PhpVariable {
 	 * @return	boolean.
 	 */
 	public Boolean isPhpVariable(String str) {
-			// Must begin with "$"
-		if ( ! str.startsWith("$") ) {
-			return false;
-		}
+		boolean isVariable = false;
 
-		String identifier = str.substring(1);
+		if ( str.startsWith("$") ) {
+			String identifier = str.substring(1);
 			// Must contain a-z,A-Z or 0-9, _
-		boolean isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
+			isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
+		}
 
 		if( ! isVariable ) {
 			// Detect array definition
-			this.isArray = this.isPhpArray(str);
+			this.isArrayDefinition = this.isPhpArrayDefinition(str);
 		}
 
-		return isVariable || this.isArray;
+		return isVariable || this.isArrayDefinition;
 	}
 
 	/**
 	 * @param	str
 	 * @return	Boolean
 	 */
-	private Boolean isPhpArray(String str) {
+	private Boolean isPhpArrayDefinition(String str) {
 		this.isConventionalArray =     str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-		boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(\\])");
+		boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(\\])(;)*");
 
 		return this.isConventionalArray || isShorthandArray;
 	}
@@ -85,7 +85,7 @@ public class PhpVariable {
 	 * @return	String
 	 */
 	public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
-		if( this.isArray ) return getShiftedArray(variable);
+		if( this.isArrayDefinition) return getShiftedArray(variable);
 
          // Get full text of currently edited document
 	   String text = editorText.toString();
