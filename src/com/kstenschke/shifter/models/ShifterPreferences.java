@@ -16,7 +16,6 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.ide.util.PropertiesComponent;
-import com.thoughtworks.xstream.mapper.Mapper;
 import org.jetbrains.annotations.NonNls;
 
 /**

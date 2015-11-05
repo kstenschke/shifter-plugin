@@ -16,7 +16,6 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.vcs.history.VcsRevisionNumber;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
