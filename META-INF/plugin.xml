@@ -75,11 +75,12 @@
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
-    <version>1.2.12</version>
+    <version>1.2.13</version>
     <idea-version since-build="8000"/>
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.13 Improved ternary expression shifting: can now end with semicolon</li>
         <li>1.2.12 Added shifting (selected) PHP array among long and shorthand syntax (PHP >= 5.4)</li>
         <li>1.2.11
             <ul>Added: Shifting of roman numerals</ul>
@@ -90,12 +91,6 @@
          </li>
         <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
         <li>1.2.9 Improved CSS units detection - added % (was: cm|em|in|pt|px)</li>
-        <li>1.2.8
-            <ul>
-                <li>Added swapping of if- and else-parts of a selected (from ? on) ternary expression</li>
-                <li>Alleviated type detection by replacing premature object-instantiation by static detector methods</li>
-            </ul>
-        </li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

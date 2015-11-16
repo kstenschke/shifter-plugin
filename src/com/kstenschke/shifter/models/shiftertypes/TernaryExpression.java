@@ -20,6 +20,8 @@ package com.kstenschke.shifter.models.shiftertypes;
  */
 public class TernaryExpression {
 
+	private boolean endsWithSemicolon = false;
+
 	/**
 	 * Constructor
 	 */
@@ -54,11 +56,13 @@ public class TernaryExpression {
 	   	Integer offsetElse = str.indexOf(":");
 
 		if( offsetElse > -1 ) {
+			boolean endsWithSemicolon = str.endsWith(";");;
+
 			boolean isQuestionMarkInline = str.startsWith("?");
 			if (isQuestionMarkInline) str = str.substring(1);
 
 			String partThan = str.substring(0, offsetElse - 1);
-			String partElse = str.substring(offsetElse);
+			String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length()-1) : str.substring(offsetElse);
 
 			// Detect and maintain "glue" w/ (single) whitespace
 			boolean wrapWithSpace = partThan.endsWith(" ") || partElse.startsWith(" ");
@@ -69,6 +73,7 @@ public class TernaryExpression {
 			str = partElse.trim() + glue + ":" + glue + partThan.trim();
 
 			if( isQuestionMarkInline ) str = "?" + glue + str;
+			if( endsWithSemicolon ) str += ";";
 		}
 
 		return str;

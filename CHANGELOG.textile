@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.2.13
+    ** Improved ternary expression shifting: can now end with semicolon
 * 1.2.12
     ** Added shifting (selected) PHP array among long and shorthand syntax (PHP >= 5.4)
 * 1.2.11
