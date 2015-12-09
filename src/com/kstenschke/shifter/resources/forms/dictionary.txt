@@ -74,6 +74,7 @@
 	|gif|jpg|png|
 	|horizontal|vertical|
 	|increment|decrement|
+	|lower|upper|
 	|january|february|march|april|mai|june|july|august|september|october|november|december|
 	|jan|feb|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec|
 	|join|split|
