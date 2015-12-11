@@ -59,6 +59,7 @@
 	|branches|tags|trunk|
 	|cut|copy|paste|
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+	|clicked|entered|exited|pressed|released|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
 	|enabled|disabled|
