@@ -81,6 +81,7 @@
 	|join|split|
 	|key|value|
 	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
+	|linux|windows|mac|
 	|minimum|maximum|
 	|min|max|
 	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
