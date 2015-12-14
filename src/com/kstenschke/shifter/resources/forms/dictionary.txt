@@ -45,6 +45,7 @@
 (|*|) {
 	|absolute|relative|
 	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
+	|after|before|
 	|aif|au|mpeg|mpg|mp3|ra|ram|wav|
 	|and|or|xor|not|
 	|all|none|
@@ -53,26 +54,36 @@
 	|asc|desc|
 	|back|forward|
 	|background|foreground|
-	|before|after|
 	|binary|octal|decimal|hexadecimal|
 	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
 	|branches|tags|trunk|
-	|cut|copy|paste|
+	|cancel|ok|
+	|close|open|
+	|copy|cut|paste|
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+	|child|parent|
 	|clicked|entered|exited|pressed|released|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
 	|enabled|disabled|
 	|enable|disable|
+	|end|start|
+	|ends|starts|
+	|even|odd|
 	|expand|collapse|
 	|expanded|collapsed|
 	|explode|implode|
+	|fail|pass|
+	|false|true|
 	|file|folder|
 	|first|last|
 	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|
 	|foo|bar|baz|qux|
 	|from|until|
 	|gif|jpg|png|
+	|height|width|
+	|hidden|shown|
+	|hide|show|
 	|horizontal|vertical|
 	|increment|decrement|
 	|lower|upper|
@@ -82,40 +93,29 @@
 	|key|value|
 	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
 	|linux|windows|mac|
-	|minimum|maximum|
-	|min|max|
-	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
+	|maximum|minimum|
+	|max|min|
 	|mon|tue|wed|thu|fri|sat|sun|
+	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
+	|negative|positive|
+	|no|yes|
 	|north|east|south|west|
-	|odd|even|
-	|ok|cancel|
-	|on|off|
-	|open|close|
+	|off|on|
 	|over|under|
-	|padding|margin|
-	|parent|child|
-	|pass|fail|
+	|margin|padding|
+	|password|username|
 	|physic|quarks|atoms|molecules|organisms|
-	|positive|negative|
-	|prefix|postfix|
+	|postfix|prefix|
 	|pre|post|
+	|redo|undo|
 	|request|response|
 	|second|minute|hour|day|month|year|
 	|seconds|minutes|hours|days|months|years|
-	|shown|hidden|
-	|show|hide|
 	|small|medium|large|
-	|start|end|
-	|starts|ends|
 	|sum|difference|product|quotient|remainder|opposite|
 	|top|right|bottom|left|
 	|trace|debug|info|warn|error|
-	|true|false|
-	|undo|redo|
-	|username|password|
 	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
-	|width|height|
-	|yes|no|
 	|yesterday|today|tomorrow|
 	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
 }
