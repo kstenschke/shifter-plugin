@@ -63,12 +63,14 @@
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 	|child|parent|
 	|clicked|entered|exited|pressed|released|
+	|decade|century|millenium|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
 	|enabled|disabled|
 	|enable|disable|
 	|end|start|
 	|ends|starts|
+	|eon|era|period|epoch|
 	|even|odd|
 	|expand|collapse|
 	|expanded|collapsed|
