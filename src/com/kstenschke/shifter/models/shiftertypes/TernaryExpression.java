@@ -56,7 +56,7 @@ public class TernaryExpression {
 	   	Integer offsetElse = str.indexOf(":");
 
 		if( offsetElse > -1 ) {
-			boolean endsWithSemicolon = str.endsWith(";");;
+			boolean endsWithSemicolon = str.endsWith(";");
 
 			boolean isQuestionMarkInline = str.startsWith("?");
 			if (isQuestionMarkInline) str = str.substring(1);

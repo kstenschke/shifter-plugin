@@ -456,4 +456,46 @@ public class UtilsTextual {
 		return numberString;
 	}
 
+	/**
+	 * Check given (alphabetically sorted) lines for any line(s) being duplicated
+	 *
+	 * @param  lines
+	 * @return boolean
+     */
+	public static boolean hasDuplicateLines(String lines) {
+		String[] linesArray = lines.split("\n");
+		String previousLine = "";
+
+		int index = 0;
+		for(String currentLine : linesArray) {
+			if(index > 0 && currentLine.equals(previousLine)) {
+				return true;
+			}
+			index++;
+			previousLine = currentLine;
+		}
+
+		return false;
+	}
+
+	public static String reduceDuplicateLines(String lines) {
+		String[] linesArray = lines.split("\n");
+
+		String[] resultLines = new String[linesArray.length];
+		int index = 0;
+		int resultIndex = 0;
+		String previousLine = "";
+
+		for(String currentLine : linesArray) {
+			if(index > 0 && ! currentLine.equals(previousLine)) {
+				resultLines[resultIndex] = currentLine;
+				resultIndex++;
+			}
+			index++;
+			previousLine = currentLine;
+		}
+
+		return StringUtils.join(resultLines, "\n");
+	}
+
 }

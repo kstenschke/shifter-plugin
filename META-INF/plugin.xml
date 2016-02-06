@@ -80,6 +80,7 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.2.14 Added detection + optional reduction of duplicate lines to alphabetical line sorting</li>
         <li>1.2.13 Improved ternary expression shifting: can now end with semicolon</li>
         <li>1.2.12 Added shifting (selected) PHP array among long and shorthand syntax (PHP >= 5.4)</li>
         <li>1.2.11
@@ -90,7 +91,6 @@
             <ul>Extended default dictionary</ul>
          </li>
         <li>1.2.10 Bugfix: Case maintaining failed for dictionary terms</li>
-        <li>1.2.9 Improved CSS units detection - added % (was: cm|em|in|pt|px)</li>
   </ul><br />
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

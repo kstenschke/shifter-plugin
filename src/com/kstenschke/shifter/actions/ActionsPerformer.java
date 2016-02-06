@@ -31,6 +31,7 @@ import com.kstenschke.shifter.utils.UtilsLinesList;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
+import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -355,10 +356,20 @@ class ActionsPerformer {
      */
     private void sortLinesInDocument(boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd, List<String> lines) {
         StringBuilder sortedText = UtilsTextual.joinLines(this.sortLines(lines, shiftUp));
+        String sortedTextStr = sortedText.toString();
+
+        boolean hasDuplicates = UtilsTextual.hasDuplicateLines(sortedTextStr);
+        if(hasDuplicates) {
+            int reply = JOptionPane.showConfirmDialog(null, "Duplicated lines detected. Reduce to single occurrences?", "Reduce duplicate lines?", JOptionPane.OK_CANCEL_OPTION);
+            if(reply == JOptionPane.OK_OPTION) {
+                sortedTextStr = UtilsTextual.reduceDuplicateLines(sortedTextStr);
+            }
+        }
+
         int offsetLineStart     = document.getLineStartOffset(lineNumberSelStart);
         int offsetLineEnd       = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
 
-        document.replaceString(offsetLineStart, offsetLineEnd, sortedText);
+        document.replaceString(offsetLineStart, offsetLineEnd, sortedTextStr);
     }
 
     /**
