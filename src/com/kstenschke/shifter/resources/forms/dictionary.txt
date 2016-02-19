@@ -109,10 +109,11 @@
 	|physic|quarks|atoms|molecules|organisms|
 	|postfix|prefix|
 	|pre|post|
+	|previous|next|	
 	|redo|undo|
 	|request|response|
-	|second|minute|hour|day|month|year|
-	|seconds|minutes|hours|days|months|years|
+	|second|minute|hour|day|week|month|year|
+	|seconds|minutes|hours|days|weeks|months|years|
 	|small|medium|large|
 	|sum|difference|product|quotient|remainder|opposite|
 	|top|right|bottom|left|
