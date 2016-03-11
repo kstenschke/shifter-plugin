@@ -64,6 +64,7 @@
 	|child|parent|
 	|clicked|entered|exited|pressed|released|
 	|decade|century|millenium|
+	|development|testing|staging|production|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
 	|enabled|disabled|
