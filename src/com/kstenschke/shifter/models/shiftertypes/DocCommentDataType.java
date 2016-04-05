@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 Kay Stenschke
+ * Copyright 2011-2016 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -79,7 +79,7 @@ class DocCommentDataType {
 	 * @param	filename	Filename of edited file
 	 * @return	String[]
 	 */
-	String[] getDataTypesByFilename(String filename) {
+	private String[] getDataTypesByFilename(String filename) {
 		if( filename != null ) {
 			filename = filename.toLowerCase();
 

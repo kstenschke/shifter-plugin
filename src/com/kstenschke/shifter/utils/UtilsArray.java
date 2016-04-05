@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 Kay Stenschke
+ * Copyright 2011-2016 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -70,7 +70,7 @@ public class UtilsArray {
 	 * @param   array2   Array of strings
 	 * @return  array    Merged array containing each of the elements of array1 and array2
 	 */
-	public static String[] mergeStringArrays(String array1[], String array2[]) {
+	private static String[] mergeStringArrays(String array1[], String array2[]) {
 		if (array1 == null || array1.length == 0) {
 			return array2;
 		}

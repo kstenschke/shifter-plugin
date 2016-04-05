@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 Kay Stenschke
+ * Copyright 2011-2016 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -65,7 +65,7 @@ public class DocCommentTag {
 	 * @param   line       Line the caret is at
 	 * @return  boolean.
 	 */
-	boolean isDocCommentLineContext(String line) {
+	private boolean isDocCommentLineContext(String line) {
 		line  = line.toLowerCase();
 
 		String allTagsPiped = this.getAllTagsPiped();

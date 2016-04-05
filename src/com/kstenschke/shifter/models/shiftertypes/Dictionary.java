@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2015 Kay Stenschke
+ * Copyright 2011-2016 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.shiftertypes;
 
 import com.kstenschke.shifter.models.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import com.kstenschke.shifter.resources.forms.PluginConfiguration;
+import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
 import org.apache.commons.lang.StringUtils;
 
 import java.util.ArrayList;
@@ -42,7 +42,7 @@ public class Dictionary {
 	public Dictionary() {
 		String contents	= ShifterPreferences.getDictionary();
 		if( contents.isEmpty() ) {
-			contents	= new PluginConfiguration().getDefaultDictionary();
+			contents	= new ShifterConfiguration().getDefaultDictionary();
 		}
 
 		this.dictionaryContents = contents;

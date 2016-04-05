@@ -70,20 +70,22 @@ Read full changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CH
 
 h2. Contributors
 
-Thanks for their input and contribution
+Thanks for their input, ideas, help or other contribution
 
 * Andriy Bazanov
 * Eike Thies
 * John Fearnside from Moz
 * John Lindquist from Jetbrains
 * Nicolaj Schumacher
+* Vojtěch Krása
 * Srdjan Marković
 * Steve Smith from NOLS
+* Yann Cebron from Jetbrains
 
 
 h2. License
 
-Copyright 2011-2015 Kay Stenschke
+Copyright 2011-2016 Kay Stenschke
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
