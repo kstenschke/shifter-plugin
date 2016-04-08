@@ -17,7 +17,6 @@ package com.kstenschke.shifter;
 
 import com.intellij.openapi.options.Configurable;
 import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.project.Project;
 import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
@@ -25,9 +24,13 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 
 public class ShifterConfigurable implements Configurable {
+
     private ShifterConfiguration settingsPanel;
 
-    public ShifterConfigurable(Project project) {
+    /**
+     * Constructor
+     */
+    public ShifterConfigurable() {
 
     }
 
@@ -44,6 +47,8 @@ public class ShifterConfigurable implements Configurable {
     public JComponent createComponent() {
         if (settingsPanel == null) {
             settingsPanel = new ShifterConfiguration();
+        } else {
+            settingsPanel.init();
         }
         return settingsPanel.getRootPanel();
     }

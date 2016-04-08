@@ -14,8 +14,12 @@
   ~ limitations under the License.
   -->
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
-<idea-plugin>
+<idea-plugin url="http://www.coexec.com/">
+    <id>com.kstenschke.shifter</id>
     <name>Shifter</name>
+    <version>1.3.00</version>
+    <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
+
     <description><![CDATA[
     Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
     If there's only one shiftable word in a line, it can be shifted without the caret touching it.
@@ -74,6 +78,7 @@
     </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
+
     <change-notes><![CDATA[
     <ul>
         <li>1.3.00 Upgraded to support Idea version 2016.1 onwards</li>
@@ -90,18 +95,23 @@
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
-    <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
-    <version>1.3.00</version>
+
     <idea-version since-build="141.0"/>
 
-    <project-components>
-        <component>
-            <implementation-class>com.kstenschke.shifter.ShifterProjectComponent</implementation-class>
-            <interface-class>com.kstenschke.shifter.ShifterProjectComponent</interface-class>
-        </component>
-    </project-components>
+    <depends>com.intellij.modules.lang</depends>
 
-    <application-components/>
+    <!-- <application-components>
+        <component>
+            <implementation-class>com.kstenschke.shifter.ShifterApplicationComponent</implementation-class>
+            <interface-class>com.kstenschke.shifter.ShifterApplicationComponent</interface-class>
+        </component>
+    </application-components> -->
+
+    <project-components/>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <applicationConfigurable id="Shifter" displayName="Shifter" instance="com.kstenschke.shifter.ShifterConfigurable"/>
+    </extensions>
 
     <actions>
         <group id="ShifterActionGroup" text="Shift Word at Caret / Line / Selection" popup="false">
@@ -129,8 +139,4 @@
         </group>
     </actions>
 
-    <extensions defaultExtensionNs="com.intellij">
-        <projectConfigurable id="Shifter" displayName="Shifter" instance="com.kstenschke.shifter.ShifterConfigurable"/>
-    </extensions>
-    <depends>com.intellij.modules.lang</depends>
 </idea-plugin>

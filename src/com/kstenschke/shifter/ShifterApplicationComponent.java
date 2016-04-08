@@ -15,29 +15,43 @@
  */
 package com.kstenschke.shifter;
 
-import com.intellij.openapi.components.ProjectComponent;
-import com.intellij.openapi.options.Configurable;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.application.PathManager;
+import com.intellij.openapi.components.*;
 import com.intellij.openapi.options.ConfigurationException;
-import com.intellij.openapi.project.Project;
-import com.kstenschke.shifter.models.ShifterPreferences;
+import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
+import java.io.File;
 
-class ShifterProjectComponent implements ProjectComponent, Configurable {
+@State(name = "ShifterSettingsState", storages = {@Storage(id = "shifter", file = StoragePathMacros.APP_CONFIG + "/shifter.xml")})
+class ShifterApplicationComponent implements PersistentStateComponent<ShifterApplicationComponent>, ExportableApplicationComponent { //, ApplicationComponent, Configurable {
 
     private ShifterConfiguration settingsPanel = null;
 
 	/**
 	 * Constructor
-	 *
-	 * @param project
      */
-    public ShifterProjectComponent(Project project) {
+    public ShifterApplicationComponent() {
 
+    }
+
+    public static ShifterApplicationComponent getInstance() {
+        return ApplicationManager.getApplication().getComponent(ShifterApplicationComponent.class);
+    }
+
+    @Override
+    public ShifterApplicationComponent getState() {
+        return this;
+    }
+
+    @Override
+    public void loadState(ShifterApplicationComponent state) {
+        XmlSerializerUtil.copyBean(state, this);
     }
 
     /**
@@ -47,6 +61,8 @@ class ShifterProjectComponent implements ProjectComponent, Configurable {
         if (settingsPanel == null) {
             settingsPanel = new ShifterConfiguration();
         }
+
+        settingsPanel.init();
 
         reset();
 
@@ -93,12 +109,15 @@ class ShifterProjectComponent implements ProjectComponent, Configurable {
 		return StaticTexts.SETTINGS_COMPONENT_NAME;
 	}
 
-    public void projectOpened() {
-        // called when project is opened
+    @NotNull
+    @Override
+    public File[] getExportFiles() {
+        return new File[] {PathManager.getOptionsFile("shifter")};
     }
 
-    public void projectClosed() {
-        // called when project is being closed
+    @NotNull
+    @Override
+    public String getPresentableName() {
+        return "shifter";
     }
-
 }
