@@ -29,8 +29,7 @@ import java.io.InputStream;
 public class ShifterConfiguration {
 
 	private JPanel rootPanel;
-	private JButton buttonReset;
-	private JTextArea textAreaDictionary;
+    private JTextArea textAreaDictionary;
     private JCheckBox checkBoxPreserveCase;
 
     private JRadioButton radioButtonCaseSensitive;
@@ -54,11 +53,6 @@ public class ShifterConfiguration {
     public void init() {
         initFormValues();
         initFormListeners();
-        initFormIcons();
-    }
-
-    private void initFormIcons() {
-        this.buttonReset.setIcon(Icons.ICON_RESET);
     }
 
     private void initFormListeners() {
@@ -86,12 +80,6 @@ public class ShifterConfiguration {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
 
-            }
-        });
-
-        this.buttonReset.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                onClickReset();
             }
         });
     }
@@ -156,20 +144,20 @@ public class ShifterConfiguration {
 		return rootPanel;
 	}
 
-    private String getShiftMoreSize() {
+    public String getShiftMoreSize() {
         return spinnerShiftMore.getValue().toString();
     }
 
     /**
      * @return  Integer     Sorting mode
      */
-    private Integer getSelectedSortingMode() {
+    public Integer getSelectedSortingMode() {
         return radioButtonCaseSensitive.isSelected()
                 ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE
                 : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
     }
 
-    private Integer getSelectedShiftingModeOfTimestamps() {
+    public Integer getSelectedShiftingModeOfTimestamps() {
         return radioButtonShiftInSeconds.isSelected()
                 ? ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS
                 : ShifterPreferences.SHIFTING_MODE_TIMESTAMP_MILLISECONDS;
@@ -178,7 +166,7 @@ public class ShifterConfiguration {
     /**
      * @return  boolean
      */
-    private boolean getIsActivePreserveCase() {
+    public boolean getIsActivePreserveCase() {
         return checkBoxPreserveCase.isSelected();
     }
 
@@ -200,7 +188,7 @@ public class ShifterConfiguration {
     /**
      * @return  String
      */
-    private String getData() {
+    public String getDictionary() {
 		return this.textAreaDictionary.getText();
 	}
 
@@ -215,7 +203,7 @@ public class ShifterConfiguration {
         ShifterPreferences.saveIsActivePreserveCase(this.getIsActivePreserveCase());
         ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
         // Store dictionary
-        String dictionary	= this.getData();
+        String dictionary	= this.getDictionary();
         if( dictionary != null ) {
             ShifterPreferences.saveDictionary(dictionary);
         }

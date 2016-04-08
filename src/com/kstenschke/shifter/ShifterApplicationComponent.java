@@ -28,16 +28,16 @@ import org.jetbrains.annotations.NotNull;
 import javax.swing.*;
 import java.io.File;
 
-@State(name = "ShifterSettingsState", storages = {@Storage(id = "shifter", file = StoragePathMacros.APP_CONFIG + "/shifter.xml")})
+@State(name = "ShifterApplicationComponent", storages = {@Storage(id = "shifter", file = StoragePathMacros.APP_CONFIG + "/shifter.xml")})
 class ShifterApplicationComponent implements PersistentStateComponent<ShifterApplicationComponent>, ExportableApplicationComponent { //, ApplicationComponent, Configurable {
 
-    private ShifterConfiguration settingsPanel = null;
+    public ShifterConfiguration settingsPanel = null;
 
 	/**
 	 * Constructor
      */
-    public ShifterApplicationComponent() {
-
+    public ShifterApplicationComponent ShifterApplicationComponent() {
+        return this;
     }
 
     public static ShifterApplicationComponent getInstance() {
@@ -54,21 +54,6 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
         XmlSerializerUtil.copyBean(state, this);
     }
 
-    /**
-     * @return  JComponent
-     */
-    public JComponent createComponent() {
-        if (settingsPanel == null) {
-            settingsPanel = new ShifterConfiguration();
-        }
-
-        settingsPanel.init();
-
-        reset();
-
-        return settingsPanel.getRootPanel();
-    }
-
     @Nls
     public String getDisplayName() {
 		return StaticTexts.SETTINGS_DISPLAY_NAME;
@@ -83,7 +68,9 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
 	}
 
     public void reset() {
-
+        if (settingsPanel != null) {
+            settingsPanel.onClickReset();
+        }
     }
 
     public void apply() throws ConfigurationException {
@@ -101,7 +88,7 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
     }
 
     public void disposeComponent() {
-		settingsPanel = null;
+		/*settingsPanel = null;*/
 	}
 
     @NotNull
