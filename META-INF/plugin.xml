@@ -85,6 +85,7 @@
             <ul>
                 <li>Upgraded to support Idea version 2016.1 onwards</li>
                 <li>Removed custom reset button from plugin settings</li>
+                <li>Some code cleanup</li>
             </ul>
         <li>1.2.14 Added detection + optional reduction of duplicate lines to alphabetical line sorting</li>
         <li>1.2.13 Improved ternary expression shifting: can now end with semicolon</li>
@@ -104,12 +105,12 @@
 
     <depends>com.intellij.modules.lang</depends>
 
-    <!-- <application-components>
+    <application-components>
         <component>
             <implementation-class>com.kstenschke.shifter.ShifterApplicationComponent</implementation-class>
             <interface-class>com.kstenschke.shifter.ShifterApplicationComponent</interface-class>
         </component>
-    </application-components> -->
+    </application-components>
 
     <project-components/>
 

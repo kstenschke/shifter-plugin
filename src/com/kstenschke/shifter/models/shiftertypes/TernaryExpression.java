@@ -23,13 +23,6 @@ public class TernaryExpression {
 	private boolean endsWithSemicolon = false;
 
 	/**
-	 * Constructor
-	 */
-	public TernaryExpression() {
-
-	}
-
-	/**
 	 * Check whether shifted string is a ternary expression
 	 *
 	 * @param   str
@@ -37,11 +30,11 @@ public class TernaryExpression {
 	 * @return  boolean.
 	 */
 	public static boolean isTernaryExpression(String str, String prefixChar) {
-		str = str.trim();
+		String expression = str.trim();
 
-		return ((str.startsWith("?") || prefixChar.equals("?") )
-			 && (str.contains(":") && !str.endsWith(":") && !str.startsWith(":"))
-			 && str.length() >= 3
+		return (expression.startsWith("?") || "?".equals(prefixChar)
+			 && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
+			 && expression.length() >= 3
 		);
 	}
 
@@ -52,14 +45,16 @@ public class TernaryExpression {
 	 * @param   isUp            Shifting up or down? irrelevant w/ this type
 	 * @return  String			The shifted string
 	 */
-	public static String getShifted(String str, boolean isUp) {
+	public static String getShifted(String str) {
 	   	Integer offsetElse = str.indexOf(":");
 
 		if( offsetElse > -1 ) {
 			boolean endsWithSemicolon = str.endsWith(";");
 
 			boolean isQuestionMarkInline = str.startsWith("?");
-			if (isQuestionMarkInline) str = str.substring(1);
+			if (isQuestionMarkInline) {
+				str = str.substring(1);
+			}
 
 			String partThan = str.substring(0, offsetElse - 1);
 			String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length()-1) : str.substring(offsetElse);
@@ -72,8 +67,12 @@ public class TernaryExpression {
 
 			str = partElse.trim() + glue + ":" + glue + partThan.trim();
 
-			if( isQuestionMarkInline ) str = "?" + glue + str;
-			if( endsWithSemicolon ) str += ";";
+			if( isQuestionMarkInline ) {
+				str = "?" + glue + str;
+			}
+			if( endsWithSemicolon ) {
+				str += ";";
+			}
 		}
 
 		return str;

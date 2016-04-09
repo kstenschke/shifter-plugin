@@ -21,26 +21,19 @@ package com.kstenschke.shifter.models.shiftertypes;
 public class OperatorSign {
 
 	/**
-	 * Constructor
-	 */
-	public OperatorSign() {
-
-	}
-
-	/**
 	 * @param word String to be shifted currently
 	 * @return boolean.
 	 */
 	public static boolean isOperatorSign(String word) {
 
-		return 		word.length() == 1 && (
-				word.equals("+")
-			 || word.equals("-")
-			 || word.equals("<")
-			 || word.equals(">")
-			 || word.equals("*")
-			 || word.equals("/")
-			 || word.equals("%")
+		return  word != null && word.length() == 1 && (
+				"+".equals(word)
+			 || "-".equals(word)
+			 || "<".equals(word)
+			 || ">".equals(word)
+			 || "*".equals(word)
+			 || "/".equals(word)
+			 || "%".equals(word)
 		);
 	}
 
@@ -57,13 +50,24 @@ public class OperatorSign {
 	 * @return  String
 	 */
 	public String getShifted(String word) {
-
-		if( word.equals("-")) return "+";
-		if( word.equals("+")) return "-";
-		if( word.equals("<")) return ">";
-		if( word.equals(">")) return "<";
-		if( word.equals("*")) return "/";
-		if( word.equals("/")) return "*";
+		if( "-".equals(word)) {
+			return "+";
+		}
+		if( "+".equals(word)) {
+			return "-";
+		}
+		if( "<".equals(word)) {
+			return ">";
+		}
+		if( ">".equals(word)) {
+			return "<";
+		}
+		if( "*".equals(word)) {
+			return "/";
+		}
+		if( "/".equals(word)) {
+			return "*";
+		}
 
 		return word;
 	}

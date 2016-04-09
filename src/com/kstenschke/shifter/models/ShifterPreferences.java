@@ -137,7 +137,7 @@ public class ShifterPreferences {
         try {
             String value = PropertiesComponent.getInstance().getValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE);
 
-            return value == null || value.equals("1");
+            return value == null || "1".equals(value);
         } catch (NullPointerException e) {
             return true;
         }

@@ -62,18 +62,14 @@ public class ShiftableWord {
 		this.filename     = filename;
 		this.moreCount    = moreCount;
 
-			// Detect word type
+		// Detect word type
 		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
 
-			// Comprehend negative values of numeric types
-		if( this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE) {
-			if( prefixChar.equals("-") ) {
-				word = "-" + word;
-			}
-		}
-		this.word   = word;
+		// Comprehend negative values of numeric types
+		this.word = ( (this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)
+					  && "-".equals(prefixChar) ) ? "-" + word : word;
 
-			// Can the word be shifted?
+		// Can the word be shifted?
 		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
 	}
 
@@ -93,17 +89,16 @@ public class ShiftableWord {
 		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
 
 			// Keep original word casing
-		if(      this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE		//@todo extract this and its redundancy in ActionsPerformer
-			 &&  this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
+		if(    this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
+			&& this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
+			&& ShifterPreferences.getIsActivePreserveCase()
 		) {
-            if( ShifterPreferences.getIsActivePreserveCase() ) {
-                if ( UtilsTextual.isAllUppercase(this.word) ) {
-                        // Convert result to upper case
-                    shiftedWord = shiftedWord.toUpperCase();
-                } else if (UtilsTextual.isUcFirst(this.word)) {
-                        // Convert result to upper case first char
-                    shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
-                }
+			if ( UtilsTextual.isAllUppercase(this.word) ) {
+					// Convert result to upper case
+				shiftedWord = shiftedWord.toUpperCase();
+			} else if (UtilsTextual.isUcFirst(this.word)) {
+					// Convert result to upper case first char
+				shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
 			}
 		}
 
@@ -123,16 +118,17 @@ public class ShiftableWord {
 				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
 				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
                     if( !CssUnit.isCssUnit(postfix) ) {
-                        word += CssUnit.determineMostProminentUnit(this.editorText.toString());
+                        return word + CssUnit.determineMostProminentUnit(this.editorText.toString());
                     }
 					break;
-
 				case ShifterTypesManager.TYPE_CSS_UNIT:
 					// Correct "0px" (or other unit) to "0"
 					if( word.startsWith("0") ) {
-						word = "0";
+						return "0";
 					}
 					break;
+				default:
+					return word;
 			}
 		}
 

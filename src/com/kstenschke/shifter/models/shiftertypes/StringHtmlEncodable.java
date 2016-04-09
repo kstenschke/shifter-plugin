@@ -49,14 +49,14 @@ public class StringHtmlEncodable {
 		String decoded = StringEscapeUtils.unescapeHtml(word);
 		Integer strLenDecoded = decoded.length();
 
-		if (!strLenOriginal.equals(strLenDecoded)) return decoded;
+		if (!strLenOriginal.equals(strLenDecoded)) {
+			return decoded;
+		}
 
 		String encoded = StringEscapeUtils.escapeHtml(word);
 		Integer strLenEncoded = encoded.length();
 
-		if (!strLenOriginal.equals(strLenEncoded)) return encoded;
-
-		return word;
+		return !strLenOriginal.equals(strLenEncoded) ? encoded : word;
 	}
 
 }

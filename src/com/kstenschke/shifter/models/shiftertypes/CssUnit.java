@@ -34,22 +34,15 @@ public class CssUnit {
 	private static final String UNIT_PX		= "px";
 
 	/**
-	 * Constructor
-	 */
-	public CssUnit() {
-
-	}
-
-	/**
 	 * @param	str			String to be checked
 	 * @return	boolean     Does the given string represents a CSS length value?
 	 */
 	public static boolean isCssUnitValue(String str) {
-		return ( str.matches("[0-9]*(%|cm|em|in|pt|px)") );
+		return str.matches("[0-9]*(%|cm|em|in|pt|px)");
 	}
 
     public static boolean isCssUnit(String str) {
-        return ( str.matches("(%|cm|em|in|pt|px)") );
+        return str.matches("(%|cm|em|in|pt|px)");
     }
 
 	/**
@@ -60,8 +53,7 @@ public class CssUnit {
 	public String getShifted(String value, boolean isUp) {
 			// Get int from PX value
 		String unit = value.substring(value.length() -2);
-		value       = value.replace(unit, "");
-		int numericValue  = Integer.parseInt(value);
+		int numericValue  = Integer.parseInt( value.replace(unit, "") );
 
 			// Shift up/down by 1
 		numericValue = numericValue + (isUp ? 1 : -1);

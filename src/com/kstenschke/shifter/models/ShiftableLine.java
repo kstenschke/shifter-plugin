@@ -56,8 +56,7 @@ public class ShiftableLine {
 	 * @return				Next upper/lower word
 	 */
 	public String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
-		String line     = this.line.trim();
-		String[] words  = line.split("\\s+");
+		String[] words  = this.line.trim().split("\\s+");
 
 			// Check all words for shiftable types - shiftable if there's not more than one
 		int amountShiftableWordsInSentence = 0;

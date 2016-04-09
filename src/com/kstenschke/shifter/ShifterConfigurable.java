@@ -47,9 +47,10 @@ public class ShifterConfigurable implements Configurable {
     public JComponent createComponent() {
         if (settingsPanel == null) {
             settingsPanel = new ShifterConfiguration();
-        } else {
-            settingsPanel.init();
         }
+
+        settingsPanel.init();
+
         return settingsPanel.getRootPanel();
     }
 
@@ -65,7 +66,7 @@ public class ShifterConfigurable implements Configurable {
 
     public void reset() {
         if (settingsPanel != null) {
-            settingsPanel.onClickReset();
+            settingsPanel.reset();
         }
     }
 

@@ -34,15 +34,15 @@ public class PhpConcatenation {
 	 * Constructor
 	 */
 	public PhpConcatenation(String str) {
-		str = UtilsTextual.removeLineBreaks( str.trim() );
+		String strJoined = UtilsTextual.removeLineBreaks( str.trim() );
 
-		if(str.length() > 4) {
-			this.extractParts(str);
+		if(strJoined.length() > 4) {
+			this.extractParts(strJoined);
 			if(this.partLHS != null && this.partRHS != null) {
 				this.isPhpConcatenation = true;
 				if( this.offsetDot != null ) {
-					char charBeforeDot = str.charAt(this.offsetDot - 1);
-					char charAfterDot = str.charAt(this.offsetDot + 1);
+					char charBeforeDot = strJoined.charAt(this.offsetDot - 1);
+					char charAfterDot = strJoined.charAt(this.offsetDot + 1);
 					if((charBeforeDot == ' ' && charAfterDot == ' ') || (charBeforeDot == '\t' && charAfterDot == '\t')) {
 						this.isDotWhitespaceWrapped = true;
 						this.dotWrapChar = String.valueOf(charAfterDot);
@@ -65,51 +65,50 @@ public class PhpConcatenation {
 	 * @param	str
 	 */
 	private void extractParts(String str) {
-		str		= str.trim();
-		Integer strLen	= str.length();
+		String strTrimmed		= str.trim();
+		Integer strLen	= strTrimmed.length();
 
 		if( strLen > 4 ) {
 			// Detect LHS Type / how it ends
-			String partLHS = str.substring(0, 1);
-			String endChar = detectConcatenationTypeAndGetEndingChar(partLHS, false);
+			String leftHandSide = strTrimmed.substring(0, 1);
+			String endChar = detectConcatenationTypeAndGetEndingChar(leftHandSide, false);
 
 			if( endChar != null ) {
 				Integer currentOffset = 1;
-				String currentChar = "";
+				String currentChar;
 				boolean isFailed = false;
 
 				// Iterate until the end of the LHS part (denoted by ending character of detected operand type)
 				boolean isFoundEndOfLHS = false;
 				boolean isFoundDot = false;
 				while(currentOffset < strLen && ! isFoundEndOfLHS) {
-					currentChar	= str.substring(currentOffset, currentOffset+1);
+					currentChar	= strTrimmed.substring(currentOffset, currentOffset+1);
 					if( currentChar.equals(endChar)) {
-						if( currentOffset > 0
-							&& ! str.substring(currentOffset-1, currentOffset).equals("\\")	// ignore escaped end-char
-						  ) {
+						// ignore escaped end-char
+						if( currentOffset > 0 && ! "\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
 							isFoundEndOfLHS = true;
-							if( endChar.equals(".")) {
+							if( ".".equals(endChar) ) {
 								isFoundDot = true;
 								this.offsetDot	= currentOffset;
 							} else {
-								partLHS += currentChar;
+								leftHandSide += currentChar;
 							}
 						}
 					} else {
-						partLHS += currentChar;
+						leftHandSide += currentChar;
 					}
 					currentOffset++;
 				}
 				// Iterate until dot found, abort search if illegal (=other than dot or white-space) character found
 				while(currentOffset < strLen && ! isFoundDot && ! isFailed) {
-					currentChar = str.substring(currentOffset, currentOffset+1);
-					if( currentChar.equals(".")) {
-						if( currentOffset > 0 && ! str.substring(currentOffset-1, currentOffset).equals("\\")) {
+					currentChar = strTrimmed.substring(currentOffset, currentOffset+1);
+					if( ".".equals(currentChar)) {
+						if( currentOffset > 0 && ! "\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
 							isFoundDot = true;
 							this.offsetDot = currentOffset;
 							currentOffset++;
 						}
-					} else if(currentChar.equals(" ") || currentChar.equals("\t")) {
+					} else if(" ".equals(currentChar) || "\t".equals(currentChar)) {
 						currentOffset++;
 					} else {
 						isFailed	= true;
@@ -117,40 +116,38 @@ public class PhpConcatenation {
 				}
 				// Look for RHS part
 				if(!isFailed && isFoundDot) {
-					str = str.substring(currentOffset).trim();
-					strLen = str.length();
+					strTrimmed = strTrimmed.substring(currentOffset).trim();
+					strLen = strTrimmed.length();
 					currentOffset = 0;
 
-					String partRHS = str.substring(currentOffset, currentOffset+1);
+					String rightHandSide = strTrimmed.substring(currentOffset, currentOffset+1);
 
-					endChar	= detectConcatenationTypeAndGetEndingChar(partRHS, true);
+					endChar	= detectConcatenationTypeAndGetEndingChar(rightHandSide, true);
 					if( endChar != null ) {
 						currentOffset+=1;
 						boolean isFoundEndOfRHS = false;
 						while(currentOffset < strLen && ! isFoundEndOfRHS) {
-							currentChar	= str.substring(currentOffset, currentOffset+1);
-							if( currentChar.equals(endChar) || (endChar.equals("") && strLen==currentOffset+1) ) {
-								if( currentOffset > 0
-										&& ! str.substring(currentOffset-1, currentOffset).equals("\\")	// ignore escaped end-char
-										) {
+							currentChar	= strTrimmed.substring(currentOffset, currentOffset+1);
+							if( currentChar.equals(endChar) || ("".equals(endChar) && strLen == currentOffset+1) ) {
+								// ignore escaped end-char
+								if(currentOffset > 0 && ! "\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
 									isFoundEndOfRHS = true;
-									partRHS += currentChar;
+									rightHandSide += currentChar;
 									currentOffset++;
 
-									if( strLen > currentOffset) {
-										// Any concatenation should end here, does the string do?
-										if( str.substring(currentOffset).trim().length() == 0) {
-											isFailed = true;
-										}
+									// If concatenation ends at current offset,
+									if( strLen > currentOffset && strTrimmed.substring(currentOffset).trim().length() == 0) {
+										// the string should as well
+										isFailed = true;
 									}
 
 									if(!isFailed) {
-										this.partLHS	= partLHS;
-										this.partRHS	= partRHS;
+										this.partLHS	= leftHandSide;
+										this.partRHS	= rightHandSide;
 									}
 								}
 							} else {
-								partRHS += currentChar;
+								rightHandSide += currentChar;
 								currentOffset++;
 							}
 						}
@@ -166,13 +163,15 @@ public class PhpConcatenation {
 	 * @return	Ending character	. / " / ' / empty char (=ending is end of string) / null (=no type detected)
 	 */
 	private String detectConcatenationTypeAndGetEndingChar(String str, boolean isRHS) {
-		if( str.equals("$")) {
+		if("$".equals(str)) {
 				// Identified part as PHP Variable
 			return isRHS ? "" : ".";
-		} else if( str.equals("\"")) {
+		}
+		if("\"".equals(str)) {
 				// Identified parts as string wrapped within double quotes
 			return "\"";
-		} else if( str.equals("\'")) {
+		}
+		if("\'".equals(str)) {
 				// Identified parts as string wrapped within single quotes
 			return "\'";
 		}

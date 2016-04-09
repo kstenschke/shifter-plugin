@@ -68,13 +68,6 @@ public class ShifterTypesManager {
     private com.kstenschke.shifter.models.shiftertypes.DocCommentType typeDataTypeInDocComment;
 
     /**
-     * Constructor
-     */
-    public ShifterTypesManager() {
-
-    }
-
-    /**
      * Detect word type (get the one with highest priority to be shifted) of given string
      *
      * @param	word			Word whose type shall be identified
@@ -87,7 +80,9 @@ public class ShifterTypesManager {
     public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
             // PHP variable (must be prefixed with "$")
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
-        if (this.typePhpVariable.isPhpVariable(word)) return TYPE_PHP_VARIABLE;
+        if (this.typePhpVariable.isPhpVariable(word)) {
+            return TYPE_PHP_VARIABLE;
+        }
 
             // DocComment types (must be prefixed with "@")
         this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
@@ -100,14 +95,14 @@ public class ShifterTypesManager {
                 return TYPE_DOC_COMMENT_TAG;
             }
 
-            if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) return TYPE_DOC_COMMENT_DATATYPE;
+            if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) {
+                return TYPE_DOC_COMMENT_DATATYPE;
+            }
         }
 
             // Object visibility
-        if ( !prefixChar.equals("@") ) {
-            if( this.isKeywordAccessType(word) ) {
-                return TYPE_ACCESSIBILITY;
-            }
+        if ( !"@".equals(prefixChar) && this.isKeywordAccessType(word) ) {
+            return TYPE_ACCESSIBILITY;
         }
 
             // File extension specific term in dictionary
@@ -125,7 +120,9 @@ public class ShifterTypesManager {
 
             // Quoted (must be wrapped in single or double quotes or backticks)
         this.typeQuotedString = new com.kstenschke.shifter.models.shiftertypes.QuotedString();
-        if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) return TYPE_QUOTED_STRING;
+        if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
+            return TYPE_QUOTED_STRING;
+        }
 
             // RGB (must be prefixed with "#")
         if ( com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar) ) {
@@ -178,7 +175,7 @@ public class ShifterTypesManager {
         return TYPE_UNKNOWN;
     }
 
-    public int getWordType(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
+    public int getWordType(String word, CharSequence editorText, int caretOffset, String filename) {
         String line = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
 
         return this.getWordType(word, "", "", line, filename);
@@ -215,7 +212,6 @@ public class ShifterTypesManager {
                 // ================== String based word types
             case TYPE_ACCESSIBILITY:
                 return this.wordTypeAccessibilities.getShifted(word, isUp);
-
             case TYPE_DICTIONARY_WORD_GLOBAL:
             case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
                     // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
@@ -224,46 +220,34 @@ public class ShifterTypesManager {
                 // ================== Generic types (shifting is calculated)
             case TYPE_RGB_COLOR:
                 return this.typeRgbColor.getShifted(word, isUp);
-
             case TYPE_NUMERIC_VALUE:    // numeric values including UNIX and millisecond timestamps
                 return this.typeNumericValue.getShifted(word, isUp, editor);
-
             case TYPE_CSS_UNIT:
                 return this.typePixelValue.getShifted(word, isUp);
-
             case TYPE_PHP_VARIABLE:
                 return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
-
             case TYPE_TERNARY_EXPRESSION:
-                return TernaryExpression.getShifted(word, isUp);
-
+                return TernaryExpression.getShifted(word);
             case TYPE_QUOTED_STRING:
                 return this.typeQuotedString.getShifted(word, editorText, isUp);
-
             case TYPE_OPERATOR_SIGN:
                 return this.typeOperatorSign.getShifted(word);
-
             case TYPE_ROMAN_NUMERAL:
                 return this.typeRomanNumber.getShifted(word, isUp);
-
             case TYPE_MONO_CHARACTER_STRING:
                 return this.typeMonoCharacterString.getShifted(word, isUp);
-
             case TYPE_DOC_COMMENT_TAG:
                 String textAfterCaret   = editorText.toString().substring(caretOffset);
                 return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
-
             case TYPE_DOC_COMMENT_DATATYPE:
                 return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
-
             case TYPE_HTML_ENCODABLE_STRING:
                 return com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.getShifted(word);
-
             case TYPE_NUMERIC_POSTFIXED_STRING:
                 return com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.getShifted(word, isUp);
+            default:
+                return word;
         }
-
-        return word;
     }
 
     /**

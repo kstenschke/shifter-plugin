@@ -29,13 +29,6 @@ public class QuotedString {
 	private String quoteChar;
 
 	/**
-	 * Constructor
-	 */
-	public QuotedString() {
-
-	}
-
-	/**
 	 * Check whether shifted word is wrapped in quote characters
 	 *
 	 * @param   prefixChar     Character preceding the string
@@ -46,10 +39,9 @@ public class QuotedString {
 		this.quoteChar = prefixChar;
 
 			// Must begin be wrapped in single-, double quotes, or backticks
-		return (     ( prefixChar.equals("'")    && postfixChar.equals("'") )     // word is wrapped in single quotes
-				  || ( prefixChar.equals("\"")   && postfixChar.equals("\"") )    // word is wrapped in double quotes
-				  || ( prefixChar.equals("`")    && postfixChar.equals("`") )     // word is wrapped in backticks
-		);
+		return  ( "'".equals(prefixChar)    && "'".equals(postfixChar) )     // word is wrapped in single quotes
+			 || ( "\"".equals(prefixChar)   && "\"".equals(postfixChar) )    // word is wrapped in double quotes
+			 || ( "`".equals(prefixChar)    && "`".equals(postfixChar) );    // word is wrapped in backticks
 	}
 
 	/**

@@ -23,24 +23,19 @@ import org.apache.commons.lang.StringUtils;
 public class StringMonoCharacter {
 
 	/**
-	 * Constructor
-	 */
-	public StringMonoCharacter() {
-
-	}
-
-	/**
 	 * @param word String to be shifted currently
 	 * @return boolean.
 	 */
 	public static boolean isMonoCharacterString(String word) {
-		if (word.length() == 1) return true;
+		if (word.length() == 1) {
+			return true;
+		}
 
-		word = word.toLowerCase();
+		String wordLower = word.toLowerCase();
 
-		String firstChar = word.substring(0, 1);
+		String firstChar = wordLower.substring(0, 1);
 
-		return word.replace(firstChar, "").length() == 0;
+		return wordLower.replace(firstChar, "").length() == 0;
 	}
 
 	/**

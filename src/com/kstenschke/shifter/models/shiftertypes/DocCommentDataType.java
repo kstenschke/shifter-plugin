@@ -47,11 +47,11 @@ class DocCommentDataType {
 	public String getShifted(String word, String filename, boolean isUp) {
 		String[] dataTypes   = this.getDataTypesByFilename(filename);
 		int amountTypes   = dataTypes.length;
+		String wordLower  = word.toLowerCase();
 
 		if( amountTypes > 0 ) {
-			word  = word.toLowerCase();
 			List<String> dataTypesList = Arrays.asList(dataTypes);
-			int curIndex   =  dataTypesList.indexOf(word);
+			int curIndex   =  dataTypesList.indexOf(wordLower);
 
 				if( isUp ) {
 						// Shift up, if word at caret was not identified: take first item
@@ -70,7 +70,7 @@ class DocCommentDataType {
 			}
 
 
-		return word;
+		return wordLower;
 	}
 
 	/**
@@ -81,15 +81,15 @@ class DocCommentDataType {
 	 */
 	private String[] getDataTypesByFilename(String filename) {
 		if( filename != null ) {
-			filename = filename.toLowerCase();
+			String filenameLower = filename.toLowerCase();
 
-			if( filename.endsWith(".js") ) {
+			if( filenameLower.endsWith(".js") ) {
 				// JavaScript data types
 				return this.typesJavaScript;
-			} else if (filename.endsWith(".java") ) {
+			} else if (filenameLower.endsWith(".java") ) {
 				// Java primitive data types
 				return this.typesJava;
-			} else if ( filename.endsWith(".m") ) {
+			} else if ( filenameLower.endsWith(".m") ) {
 				// Objective-C "method" file
 				return this.typesObjectiveC;
 			}

@@ -27,32 +27,34 @@ import com.kstenschke.shifter.resources.StaticTexts;
  */
 class ShiftDownAction extends AnAction {
 
-	/**
-	 * Disable when no editor available
-	 *
-	 * @param	event		Action system event
-	 */
-	public void update( AnActionEvent event ) {
-		event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
-	}
+    /**
+     * Disable when no editor available
+     *
+     * @param event Action system event
+     */
+    public void update( AnActionEvent event ) {
+        event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
+    }
 
-	/**
-	 * Perform shift down
-	 *
-	 * @param   event    ActionSystem event
-	 */
-	public void actionPerformed(final AnActionEvent event) {
-		Project currentProject = event.getData(PlatformDataKeys.PROJECT);
+    /**
+     * Perform shift down
+     *
+     * @param event ActionSystem event
+     */
+    public void actionPerformed(final AnActionEvent event) {
+        Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
-		CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-			public void run() {
-				ApplicationManager.getApplication().runWriteAction(new Runnable() {
-					public void run() {
-						new ActionsPerformer(event).write(false, null);
-					}
-				});
-			}
-		}, StaticTexts.ACTION_LABEL_SHIFT_DOWN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
-	}
+        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
+            @Override
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        new ActionsPerformer(event).write(false, null);
+                    }
+                });
+            }
+        }, StaticTexts.ACTION_LABEL_SHIFT_DOWN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+    }
 
 }

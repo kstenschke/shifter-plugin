@@ -65,6 +65,8 @@
 	|child|parent|
 	|clicked|entered|exited|pressed|released|
 	|decade|century|millenium|
+	|deci|centi|mili|micro|nano|pico|femto|atto|zepto|yocto|
+	|deka|hekto|kilo|mega|giga|tera|peta|exa|zetta|yotta|
 	|development|testing|staging|production|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
@@ -97,6 +99,7 @@
 	|key|value|
 	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
 	|linux|windows|mac|
+	|milliard|billion|billiard|trillion|trilliard|quadrillion|
 	|maximum|minimum|
 	|max|min|
 	|mon|tue|wed|thu|fri|sat|sun|

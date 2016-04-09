@@ -199,14 +199,9 @@ class ActionsPerformer {
         // Identify word type and shift it accordingly
         ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename, moreCount);
 
-        if(!isOperator) {
-            // Comprehend negative values of numeric types
-            if( NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) ) {
-                if ( prefixChar.equals("-") ) {
-                    word = "-" + word;
-                    wordOffset--;
-                }
-            }
+        if(!isOperator && NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) && "-".equals(prefixChar) ) {
+            word = "-" + word;
+            wordOffset--;
         }
 
         String newWord = shiftableWord.getShifted(shiftUp, editor);
@@ -281,7 +276,7 @@ class ActionsPerformer {
 
         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
         String selectedText  = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
-        int wordType    = shifterTypesManager.getWordType(selectedText, isUp, editorText, offsetStart, moreCount, filename, editor);
+        int wordType    = shifterTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
         boolean isPhpVariable   = wordType == ShifterTypesManager.TYPE_PHP_VARIABLE;
 
         if( (lineNumberSelEnd - lineNumberSelStart) > 1 && ! isPhpVariable ) {
@@ -306,7 +301,7 @@ class ActionsPerformer {
 
                 if(!isDone) {
                     if( TernaryExpression.isTernaryExpression(selectedText, "")) {
-                        document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText, isUp));
+                        document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
                         isDone = true;
 
                     } else if(! isPhpVariable ) {
@@ -386,7 +381,9 @@ class ActionsPerformer {
 		    Collections.sort(lines);
         }
 
-		if( !shiftUp ) Collections.reverse(lines);
+		if( !shiftUp ) {
+            Collections.reverse(lines);
+        }
 
         if( delimiterDetector.isFoundDelimiter() ) {
             // Maintain detected lines delimiter
@@ -410,7 +407,9 @@ class ActionsPerformer {
             Arrays.sort(items);
         }
 
-		if( !shiftUp ) Collections.reverse(Arrays.asList(items));
+		if( !shiftUp ) {
+            Collections.reverse(Arrays.asList(items));
+        }
 
 		return UtilsArray.implode(items, ", ");
 	}

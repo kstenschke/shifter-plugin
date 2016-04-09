@@ -51,7 +51,7 @@ public class NumericValue {
 	 * @return	boolean     Does the given string represent a CSS length value?
 	 */
 	public static boolean isNumericValue(String str) {
-		return (str.matches("[0-9]+"));
+		return str.matches("[0-9]+");
 	}
 
 	/**

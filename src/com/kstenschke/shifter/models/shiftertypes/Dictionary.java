@@ -105,7 +105,6 @@ public class Dictionary {
 				String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtsList, "}");
 
 					// Term is contained? store list of shifting neighbours
-//				if (curShiftTermsBlock.contains("|" + term + "|")) {
 				if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
 					this.relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
 					return true;

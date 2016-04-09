@@ -66,20 +66,18 @@ public class DocCommentTag {
 	 * @return  boolean.
 	 */
 	private boolean isDocCommentLineContext(String line) {
-		line  = line.toLowerCase();
-
 		String allTagsPiped = this.getAllTagsPiped();
 		String regExPatternLine = "\\s+\\*\\s+@(" + allTagsPiped + ")";
 
 		List<String> allMatches = new ArrayList<String>();
-		Matcher m = Pattern.compile(regExPatternLine).matcher(line);
+		Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 		while (m.find()) {
 			if( !allMatches.contains(m.group())) {
 				allMatches.add(m.group());
 			}
 		}
 
-		return ( allMatches.size() > 0);
+		return !allMatches.isEmpty();
 	}
 
 	/**
@@ -88,7 +86,7 @@ public class DocCommentTag {
 	 * @return  boolean     Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
 	 */
 	public boolean isDocCommentTag(String prefixChar, String line) {
-		return prefixChar.equals("@") && this.isDocCommentLineContext(line);
+		return "@".equals(prefixChar) && this.isDocCommentLineContext(line);
 	}
 
 	/**
@@ -103,9 +101,9 @@ public class DocCommentTag {
 		int amountTags   = commentTags.length;
 
 		if( amountTags > 0 ) {
-			word  = word.toLowerCase();
+			String wordLower  = word.toLowerCase();
 			List<String> commentTagsList = Arrays.asList(commentTags);
-			int curIndex   =  commentTagsList.indexOf(word);
+			int curIndex   =  commentTagsList.indexOf(wordLower);
 
 			if( curIndex > -1 ) {
 				if( isUp ) {
@@ -122,7 +120,7 @@ public class DocCommentTag {
 
 				String shiftedWord   = commentTagsList.get(curIndex);
 
-				if( shiftedWord.equals("method") ) {
+				if( "method".equals(shiftedWord) ) {
 					shiftedWord = shiftedWord + parseNextMethod(textAfterCaret);
 				}
 
@@ -153,7 +151,7 @@ public class DocCommentTag {
 
 		String methodName  = "";
 
-		if(allMatches.size() > 0) {
+		if(!allMatches.isEmpty()) {
 			methodName  = allMatches.get(0).replace("function", "").replace(":", "").trim();
 			methodName  = "\t" + methodName;
 		}
@@ -169,11 +167,17 @@ public class DocCommentTag {
 	 */
 	private String[] getTagsByFilename(String filename) {
 		if( filename != null ) {
-			filename = filename.toLowerCase();
+			String filenameLower = filename.toLowerCase();
 
-			if( filename.endsWith(".js") )  return this.tagsJavaScript; // JavaScript comment types
+			if( filenameLower.endsWith(".js") )  {
+				// JavaScript comment types
+				return this.tagsJavaScript;
+			}
 
-			if (filename.endsWith(".java")) return this.tagsJava;       // Java comment tags in the recommended order
+			if (filenameLower.endsWith(".java")) {
+				// Java comment tags in the recommended order
+				return this.tagsJava;
+			}
 		}
 
 		return this.tagsPHP;

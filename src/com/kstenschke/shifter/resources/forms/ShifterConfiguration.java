@@ -17,7 +17,6 @@
 package com.kstenschke.shifter.resources.forms;
 
 import com.kstenschke.shifter.models.ShifterPreferences;
-import com.kstenschke.shifter.resources.Icons;
 import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.swing.*;
@@ -108,7 +107,7 @@ public class ShifterConfiguration {
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
         this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
 
-		if( dictionary == null || dictionary.equals("") )  {
+		if( dictionary == null || dictionary.isEmpty() )  {
 			dictionary	= getDefaultDictionary();
 		}
 
@@ -130,10 +129,11 @@ public class ShifterConfiguration {
 	/**
 	 * Reset default settings
 	 */
-	public void onClickReset() {
+	public void reset() {
         spinnerShiftMore.setValue(10);
         radioButtonCaseInsensitive.setSelected(true);
         radioButtonShiftInSeconds.setSelected(true);
+
         this.textAreaDictionary.setText( getDefaultDictionary() );
 	}
 
@@ -190,10 +190,6 @@ public class ShifterConfiguration {
      */
     public String getDictionary() {
 		return this.textAreaDictionary.getText();
-	}
-
-	private void createUIComponents() {
-
 	}
 
     public void apply() {

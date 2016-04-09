@@ -25,25 +25,32 @@ import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
 import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.io.File;
 
-@State(name = "ShifterApplicationComponent", storages = {@Storage(id = "shifter", file = StoragePathMacros.APP_CONFIG + "/shifter.xml")})
-class ShifterApplicationComponent implements PersistentStateComponent<ShifterApplicationComponent>, ExportableApplicationComponent { //, ApplicationComponent, Configurable {
+@State(
+    name = "ShifterApplicationComponent",
+    storages = {@Storage(id = "shifter", file = StoragePathMacros.APP_CONFIG + "/shifter.xml")}
+)
+class ShifterApplicationComponent implements PersistentStateComponent<ShifterApplicationComponent>, ExportableApplicationComponent {
 
-    public ShifterConfiguration settingsPanel = null;
+    public String stateValue;
+
+    private ShifterConfiguration settingsPanel = null;
 
 	/**
 	 * Constructor
      */
-    public ShifterApplicationComponent ShifterApplicationComponent() {
-        return this;
+    public ShifterApplicationComponent() {
+//        return this;
     }
 
     public static ShifterApplicationComponent getInstance() {
         return ApplicationManager.getApplication().getComponent(ShifterApplicationComponent.class);
     }
 
+    /**
+     * @return  default state
+     */
     @Override
     public ShifterApplicationComponent getState() {
         return this;
@@ -53,35 +60,6 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
     public void loadState(ShifterApplicationComponent state) {
         XmlSerializerUtil.copyBean(state, this);
     }
-
-    @Nls
-    public String getDisplayName() {
-		return StaticTexts.SETTINGS_DISPLAY_NAME;
-	}
-
-    public boolean isModified() {
-        return settingsPanel != null && settingsPanel.isModified();
-    }
-
-    public void disposeUIResources() {
-		settingsPanel = null;
-	}
-
-    public void reset() {
-        if (settingsPanel != null) {
-            settingsPanel.onClickReset();
-        }
-    }
-
-    public void apply() throws ConfigurationException {
-        if (settingsPanel != null) {
-            settingsPanel.apply();
-        }
-    }
-
-    public String getHelpTopic() {
-		return null;
-	}
 
     public void initComponent() {
         if(settingsPanel != null) settingsPanel.init();
@@ -105,6 +83,6 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
     @NotNull
     @Override
     public String getPresentableName() {
-        return "shifter";
+        return StaticTexts.SETTINGS_DISPLAY_NAME;
     }
 }
