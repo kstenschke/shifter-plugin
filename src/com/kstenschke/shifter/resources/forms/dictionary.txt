@@ -34,6 +34,7 @@
 	|__dir__|__file__|__namespace__|__class__|__line__|__function__|__method__|__trait__|
 	|foreach|endforeach|
 	|if|else|endif|
+    |self|static|
 }
 (|m|) {
 	|int|char|float|double|id|BOOL|long|short|signed|unsigned|
@@ -63,9 +64,9 @@
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 	|child|parent|
 	|clicked|entered|exited|pressed|released|
-	|deka|hekto|kilo|mega|giga|tera|peta|exa|zetta|yotta|
 	|decade|century|millenium|
 	|deci|centi|mili|micro|nano|pico|femto|atto|zepto|yocto|
+	|deka|hekto|kilo|mega|giga|tera|peta|exa|zetta|yotta|
 	|development|testing|staging|production|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
