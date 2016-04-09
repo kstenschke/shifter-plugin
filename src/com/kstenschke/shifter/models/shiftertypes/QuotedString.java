@@ -38,7 +38,7 @@ public class QuotedString {
 	public boolean isQuotedString(String prefixChar, String postfixChar) {
 		this.quoteChar = prefixChar;
 
-			// Must begin be wrapped in single-, double quotes, or backticks
+		// Must begin be wrapped in single-, double quotes, or backticks
 		return  ( "'".equals(prefixChar)    && "'".equals(postfixChar) )     // word is wrapped in single quotes
 			 || ( "\"".equals(prefixChar)   && "\"".equals(postfixChar) )    // word is wrapped in double quotes
 			 || ( "`".equals(prefixChar)    && "`".equals(postfixChar) );    // word is wrapped in backticks
@@ -56,7 +56,7 @@ public class QuotedString {
 	   	// Get full text of currently edited document
 		String text = editorText.toString();
 
-			// Use regEx matcher to extract array of all string wrapped in current quoting sign
+		// Use regEx matcher to extract array of all string wrapped in current quoting sign
 		List<String> allMatches = new ArrayList<String>();
 
 		String pattern = "(?<=" + this.quoteChar + ")[a-zA-Z0-9_]+(?=" + this.quoteChar + ")";
@@ -68,14 +68,14 @@ public class QuotedString {
 			}
 		}
 
-			// Sort var names alphabetically
+		// Sort var names alphabetically
 		Collections.sort(allMatches);
 		int amountVars = allMatches.size();
 
-			// Find position of given variable
+		// Find position of given variable
 		int curIndex   = allMatches.indexOf(word);
 
-			// Return next/previous variable name
+		// Return next/previous variable name
 		if( isUp ) {
 			curIndex++;
 			if( curIndex == amountVars ) {

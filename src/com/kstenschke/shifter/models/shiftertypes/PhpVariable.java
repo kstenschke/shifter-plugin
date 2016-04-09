@@ -87,10 +87,10 @@ public class PhpVariable {
 	public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
 		if( this.isArrayDefinition) return getShiftedArray(variable);
 
-         // Get full text of currently edited document
+	   // Get full text of currently edited document
 	   String text = editorText.toString();
 
-			// Use regEx matcher to extract array of all PHP var names
+		// Use regEx matcher to extract array of all PHP var names
 		List<String> allMatches = new ArrayList<String>();
 		Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
 		while (m.find()) {
@@ -99,7 +99,7 @@ public class PhpVariable {
 			}
 		}
 
-			// Sort var names alphabetically
+		// Sort var names alphabetically
 		Collections.sort(allMatches);
 		List<String> allLeadChars = null;
 		if( moreCount != null && moreCount == 1) {
@@ -110,7 +110,7 @@ public class PhpVariable {
 
 		int amountVars = allMatches.size();
 
-			// Find position of given variable
+		// Find position of given variable
 		Integer curIndex = (moreCount== null || moreCount > 1)
 				? allMatches.indexOf(variable)
 				: allLeadChars.indexOf(variable.substring(1, 2));
@@ -119,7 +119,7 @@ public class PhpVariable {
 			return variable;
 		}
 
-			// Find next/previous variable name (only once during iterations of "shift more")
+		// Find next/previous variable name (only once during iterations of "shift more")
 		if(moreCount == null || moreCount == 1) {
 			if (isUp) {
 				curIndex++;

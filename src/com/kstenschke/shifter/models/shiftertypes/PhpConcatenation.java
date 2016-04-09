@@ -164,13 +164,15 @@ public class PhpConcatenation {
 	 */
 	private String detectConcatenationTypeAndGetEndingChar(String str, boolean isRHS) {
 		if("$".equals(str)) {
-				// Identified part as PHP Variable
+			// Identified part as PHP Variable
 			return isRHS ? "" : ".";
-		} else if("\"".equals(str)) {
-				// Identified parts as string wrapped within double quotes
+		}
+		if("\"".equals(str)) {
+			// Identified parts as string wrapped within double quotes
 			return "\"";
-		} else if("\'".equals(str)) {
-				// Identified parts as string wrapped within single quotes
+		}
+		if("\'".equals(str)) {
+			// Identified parts as string wrapped within single quotes
 			return "\'";
 		}
 

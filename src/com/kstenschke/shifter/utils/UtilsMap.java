@@ -41,7 +41,8 @@ public class UtilsMap {
 				max = value;
 				key = pairs.getKey().toString();
 			}
-			it.remove(); // avoids a ConcurrentModificationException
+			// avoid ConcurrentModificationException
+			it.remove();
 		}
 
 		return key;

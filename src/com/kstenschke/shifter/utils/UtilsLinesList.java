@@ -34,11 +34,8 @@ public class UtilsLinesList {
 
             boolean isLastLine = index+1 == amountLines;
 
-            if( !isLastLine || isDelimitedLastLine ) {
-                    // Add delimiter to all lines
-                if( !line.endsWith(delimiter)) {
-                    line = line + delimiter;
-                }
+            if((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {
+                line = line + delimiter;
             }
 
             if( isLastLine && ! isDelimitedLastLine && line.endsWith(delimiter) ) {

@@ -27,13 +27,13 @@ import java.util.regex.Pattern;
 
 public class Dictionary {
 
-		// Set during extension specific detection of dictionary term
+	// Set during extension specific detection of dictionary term
 	private String fileExtension;
 
-		// Terms-list containing the term to be shifted, set during detection
+	// Terms-list containing the term to be shifted, set during detection
 	private String relevantTermsList;
 
-		// The complete dictionary
+	// The complete dictionary
 	private final String dictionaryContents;
 
 	/**
@@ -57,7 +57,7 @@ public class Dictionary {
 	 */
 	public boolean isTermInDictionary(String term, boolean isFileExtensionRelevant) {
 		if( ! isFileExtensionRelevant || this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
-				// Merge all terms-blocks
+			// Merge all terms-blocks
 			String dictionaryTerms              = this.dictionaryContents;
 			Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
 
@@ -66,12 +66,12 @@ public class Dictionary {
 				dictionaryTerms                 = dictionaryTerms.replace(currentExtensionsList, "");
 			}
 
-				// Term is contained? store list of shifting neighbours
+			// Term is contained? store list of shifting neighbours
 			if( dictionaryTerms.contains("|" + term + "|") ) {
 				this.relevantTermsList	= extractFirstMatchingTermsLine(dictionaryTerms, term);
 				return true;
 			}
-                // Not found case-sensitive, try insensitive
+			// Not found case-sensitive, try insensitive
             String dictionaryTermsLower = dictionaryTerms.toLowerCase();
             String termLower            = term.toLowerCase();
             if( dictionaryTermsLower.contains("|" + termLower + "|") ) {
@@ -96,15 +96,15 @@ public class Dictionary {
 		if( fileExtension != null && this.dictionaryContents.contains("|" + fileExtension + "|")) {
 			this.fileExtension	= fileExtension;
 
-				// Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
+			// Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
 			Object[] blocksOfExtension	= getAllFileExtensionsBlockStarts(fileExtension);
 
-				// Go over all blocks of lists of shift-terms, fetch first one containing the term
+			// Go over all blocks of lists of shift-terms, fetch first one containing the term
 			for (Object aBlocksOfExtension : blocksOfExtension) {
-				String curExtsList = aBlocksOfExtension.toString();
-				String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtsList, "}");
+				String curExtensionsList = aBlocksOfExtension.toString();
+				String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtensionsList, "}");
 
-					// Term is contained? store list of shifting neighbours
+				// Term is contained? store list of shifting neighbours
 				if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
 					this.relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
 					return true;

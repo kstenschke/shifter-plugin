@@ -51,14 +51,14 @@ public class CssUnit {
 	 * @return	String      Length (em / px / pt / cm / in) value shifted up or down by 1px
 	 */
 	public String getShifted(String value, boolean isUp) {
-			// Get int from PX value
+		// Get int from PX value
 		String unit = value.substring(value.length() -2);
 		int numericValue  = Integer.parseInt( value.replace(unit, "") );
 
-			// Shift up/down by 1
+		// Shift up/down by 1
 		numericValue = numericValue + (isUp ? 1 : -1);
 
-			// prepend with unit again
+		// prepend with unit again
 		return Integer.toString(numericValue).concat(unit);
 	}
 

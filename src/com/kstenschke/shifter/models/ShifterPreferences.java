@@ -35,11 +35,11 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_SIZE_SHIFT_MORE = "PluginShifter.SizeShiftMore";
 
-        // Sorting modes
+    // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
     public static final Integer SORTING_MODE_CASE_INSENSITIVE   = 1;
 
-        // Timestamp shifting modes
+    // Timestamp shifting modes
     public static final Integer SHIFTING_MODE_TIMESTAMP_SECONDS     = 0;
     public static final Integer SHIFTING_MODE_TIMESTAMP_MILLISECONDS= 1;
 

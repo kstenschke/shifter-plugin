@@ -58,7 +58,7 @@ public class ShiftableLine {
 	public String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
 		String[] words  = this.line.trim().split("\\s+");
 
-			// Check all words for shiftable types - shiftable if there's not more than one
+		// Check all words for shiftable types - shiftable if there's not more than one
 		int amountShiftableWordsInSentence = 0;
 		String wordShiftedTest;
 		String wordUnshifted	= "";
@@ -68,7 +68,7 @@ public class ShiftableLine {
 
 		for (String word : words) {
 			if( word.length() > 2 ) {
-					// Check if word is a hex RGB color including the #-prefix
+				// Check if word is a hex RGB color including the #-prefix
 				if( word.startsWith("#") ) {
 					prefixChar  = "#";
 					word  = word.substring(1);
@@ -84,7 +84,7 @@ public class ShiftableLine {
 			}
 		}
 
-			// Actual shifting
+		// Actual shifting
 		return amountShiftableWordsInSentence == 1
 				? this.line.replace(wordUnshifted, wordShifted)		// Shift detected word in line
 				: StringHtmlEncodable.isHtmlEncodable(this.line)

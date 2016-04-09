@@ -63,10 +63,10 @@ public class NumericValue {
 		int strLen  = value.length();
 
         if( strLen <= 7 ) {
-                // Integer
+            // Integer
 			return Integer.toString( Integer.parseInt(value) + (isUp ? 1 : -1) );
 		}
-            // Guessing that it is a UNIX or milliseconds timestamp
+        // Guessing that it is a UNIX or milliseconds timestamp
         return getShiftedUnixTimestamp(value, isUp, editor);
     }
 

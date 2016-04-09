@@ -23,9 +23,13 @@ public class UtilsFile {
 	 * @return	The extension   Everything after the last "." in the full filename
 	 */
 	public static String extractFileExtension(String filename, boolean toLowerCase) {
-		if( filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".") ) return null;
+		if( filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".") ) {
+			return null;
+		}
 
-		if( filename.contains("/")) filename = filename.substring(filename.lastIndexOf("/") + 1);
+		if( filename.contains("/")) {
+			filename = filename.substring(filename.lastIndexOf("/") + 1);
+		}
 
 		return toLowerCase
 				? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase()
@@ -37,7 +41,9 @@ public class UtilsFile {
 	}
 
 	public static boolean filenameEndsWithExtension(String filename) {
-		if (filename == null || filename.isEmpty() || ! filename.contains(".")) return false;
+		if (filename == null || filename.isEmpty() || ! filename.contains(".")) {
+			return false;
+		}
 
 		String[] parts = filename.split("\\.");
 

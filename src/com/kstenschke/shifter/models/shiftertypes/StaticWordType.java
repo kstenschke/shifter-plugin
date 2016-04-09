@@ -59,13 +59,13 @@ public class StaticWordType {
 
 		int wordPositionShifted;
 		if (isUp) {
-				// Shifting up
+			// Shifting up
 			wordPositionShifted = wordPositionOriginal + 1;
 			if (wordPositionShifted >= this.amountKeywords) {
 				wordPositionShifted = 0;
 			}
 		} else {
-				// Shifting down
+			// Shifting down
 			wordPositionShifted = wordPositionOriginal - 1;
 			if (wordPositionShifted < 0) {
 				wordPositionShifted = this.amountKeywords - 1;

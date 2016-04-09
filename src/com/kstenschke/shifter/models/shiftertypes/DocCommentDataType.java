@@ -54,7 +54,7 @@ class DocCommentDataType {
 			int curIndex   =  dataTypesList.indexOf(wordLower);
 
 				if( isUp ) {
-						// Shift up, if word at caret was not identified: take first item
+					// Shift up, if word at caret was not identified: take first item
 					curIndex++;
 					if( curIndex == amountTypes ) {
 						curIndex = 0;
@@ -86,15 +86,18 @@ class DocCommentDataType {
 			if( filenameLower.endsWith(".js") ) {
 				// JavaScript data types
 				return this.typesJavaScript;
-			} else if (filenameLower.endsWith(".java") ) {
+			}
+			if (filenameLower.endsWith(".java") ) {
 				// Java primitive data types
 				return this.typesJava;
-			} else if ( filenameLower.endsWith(".m") ) {
+			}
+			if ( filenameLower.endsWith(".m") ) {
 				// Objective-C "method" file
 				return this.typesObjectiveC;
 			}
 		}
-			// Default, e.g. PHP
+
+		// Default, e.g. PHP
 		return this.typesPHP;
 	}
 

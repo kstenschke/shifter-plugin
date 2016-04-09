@@ -75,10 +75,10 @@ class ActionsPerformer {
         if (this.editor != null) {
             if (this.hasSelection) {
                 if( this.selectionModel.getBlockSelectionStarts().length > 1 ) {
-                        // Shift block selection: do word-shifting if all items are identical
+                    // Shift block selection: do word-shifting if all items are identical
                     shiftBlockSelection(shiftUp, moreCount);
                 } else {
-                        // Shift regular selection: sort CSV or multi-line selection: sort lines alphabetically
+                    // Shift regular selection: sort CSV or multi-line selection: sort lines alphabetically
                     shiftSelection(shiftUp, moreCount);
                 }
             } else {
@@ -91,7 +91,7 @@ class ActionsPerformer {
 
                 boolean isWordShifted = shiftWordAtCaret(shiftUp, this.filename, line, moreCount);
 
-                    // Word at caret wasn't identified/shifted, try shifting the whole line
+                // Word at caret wasn't identified/shifted, try shifting the whole line
                 if ( ! isWordShifted ) {
                     shiftLine(shiftUp, this.filename, offsetLineStart, line, moreCount);
                 }
@@ -187,7 +187,7 @@ class ActionsPerformer {
         boolean wordShifted = false;
 
         if( wordOffset == null ) {
-                // Extract offset of word at caret
+            // Extract offset of word at caret
             wordOffset = isOperator
                     ? UtilsTextual.getStartOfOperatorAtOffset(this.editorText, this.caretOffset)
                     : UtilsTextual.getStartOfWordAtOffset(this.editorText, this.caretOffset);
@@ -210,7 +210,7 @@ class ActionsPerformer {
             newWord     = shiftableWord.postProcess(newWord, postfixChar);
 
             if( replaceInDocument ) {
-                   // Replace word at caret by shifted one (if any)
+               // Replace word at caret by shifted one (if any)
                 document.replaceString(wordOffset, wordOffset + word.length(), newWord);
             }
             wordShifted = true;
@@ -323,7 +323,8 @@ class ActionsPerformer {
                         // Detect and shift various types
                         String shiftedWord = shifterTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
 
-                        if( ! isPhpVariable ) { // @todo extract this and its redundancy in ShiftableWord
+                        if( ! isPhpVariable ) {
+                            // @todo extract this and its redundancy in ShiftableWord
                             if (UtilsTextual.isAllUppercase(selectedText)) {
                                 shiftedWord = shiftedWord.toUpperCase();
 

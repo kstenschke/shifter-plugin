@@ -26,113 +26,114 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableWord {
 
-	private final ShifterTypesManager shifterTypesManager;
-	private final String word;
-	private final String filename;
-	private final Integer moreCount; // "more" count, starting with 1. If non-more shift: null
-	private final int wordType;
-	private final boolean isShiftable;
-	private final CharSequence editorText;
+    private final ShifterTypesManager shifterTypesManager;
+    private final String word;
+    private final String filename;
+    private final Integer moreCount; // "more" count, starting with 1. If non-more shift: null
+    private final int wordType;
+    private final boolean isShiftable;
+    private final CharSequence editorText;
 
-	private final int caretOffset;
+    private final int caretOffset;
 
-	/**
-	 * Constructor
-	 *
-	 * @param	word			Shiftable word
-	 * @param	prefixChar		Char before the word, "#"?
-	 * @param	postfixChar		Char after the word, "#"?
-	 * @param	line			Whole line to possibly guess the context
-	 * @param	editorText		Whole text currently in editor
-	 * @param	caretOffset		Caret offset in document
-	 * @param	filename		Filename of the edited file
-	 * @param   moreCount   	Current "more" count, starting with 1. If non-more shift: null
-	 */
-	public ShiftableWord(
-			String word, String prefixChar, String postfixChar,
-			String line, CharSequence editorText,
-			int caretOffset,
-			String filename,
-			@Nullable Integer moreCount
-	) {
-		this.shifterTypesManager = new ShifterTypesManager();
+    /**
+     * Constructor
+     *
+     * @param word            Shiftable word
+     * @param prefixChar      Char before the word, "#"?
+     * @param postfixChar     Char after the word, "#"?
+     * @param line            Whole line to possibly guess the context
+     * @param editorText      Whole text currently in editor
+     * @param caretOffset     Caret offset in document
+     * @param filename        Filename of the edited file
+     * @param moreCount       Current "more" count, starting with 1. If non-more shift: null
+     */
+    public ShiftableWord(
+            String word, String prefixChar, String postfixChar,
+            String line, CharSequence editorText,
+            int caretOffset,
+            String filename,
+            @Nullable Integer moreCount
+    ) {
+        this.shifterTypesManager = new ShifterTypesManager();
 
-		this.editorText   = editorText;
-		this.caretOffset  = caretOffset;
-		this.filename     = filename;
-		this.moreCount    = moreCount;
+        this.editorText   = editorText;
+        this.caretOffset  = caretOffset;
+        this.filename     = filename;
+        this.moreCount    = moreCount;
 
-		// Detect word type
-		this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
+        // Detect word type
+        this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
 
-		// Comprehend negative values of numeric types
-		this.word = ( (this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)
-					  && "-".equals(prefixChar) ) ? "-" + word : word;
+        // Comprehend negative values of numeric types
+        this.word = ( (this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)
+                      && "-".equals(prefixChar) ) ? "-" + word : word;
 
-		// Can the word be shifted?
-		this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
-	}
+        // Can the word be shifted?
+        this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
+    }
 
-	/**
-	 * Get shifted up/down word
-	 *
-	 * @param	isUp	Shift up or down?
-	 * @param	editor	Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
-	 * @return			Next upper/lower word
-	 */
-	public String getShifted(boolean isUp, @Nullable Editor editor) {
-		if (!this.isShiftable) {
-			return this.word;
-		}
+    /**
+     * Get shifted up/down word
+     *
+     * @param  isUp    Shift up or down?
+     * @param  editor  Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
+     * @return String  Next upper/lower word
+     */
+    public String getShifted(boolean isUp, @Nullable Editor editor) {
+        if (!this.isShiftable) {
+            return this.word;
+        }
 
-			// Call actual shifting
-		String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
+        // Call actual shifting
+        String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
+        
+        // Keep original word casing
+        if(    this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
+            && this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
+            && ShifterPreferences.getIsActivePreserveCase()
+        ) {
+            if ( UtilsTextual.isAllUppercase(this.word) ) {
+                    // Convert result to upper case
+                shiftedWord = shiftedWord.toUpperCase();
+            } else if (UtilsTextual.isUcFirst(this.word)) {
+                    // Convert result to upper case first char
+                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
+            }
 
-			// Keep original word casing
-		if(    this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
-			&& this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
-			&& ShifterPreferences.getIsActivePreserveCase()
-		) {
-			if ( UtilsTextual.isAllUppercase(this.word) ) {
-					// Convert result to upper case
-				shiftedWord = shiftedWord.toUpperCase();
-			} else if (UtilsTextual.isUcFirst(this.word)) {
-					// Convert result to upper case first char
-				shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
-			}
-		}
+        }
 
-		return shiftedWord;
-	}
+        return shiftedWord;
+    }
 
-	/**
-	 * Post-process: do additional modifications on word after it has been shifted
-	 *
-	 * @param	word
-	 * @param	postfix
-	 * @return	Post-processed word
-	 */
-	public String postProcess(String word, String postfix) {
-		if(UtilsFile.isCssFile(this.filename)) {
-			switch(this.wordType) {
-				// "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
-				case ShifterTypesManager.TYPE_NUMERIC_VALUE:
+    /**
+     * Post-process: do additional modifications on word after it has been shifted
+     *
+     * @param  word
+     * @param  postfix
+     * @return Post-processed word
+     */
+    public String postProcess(String word, String postfix) {
+        if(UtilsFile.isCssFile(this.filename)) {
+            switch(this.wordType) {
+                // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
+                case ShifterTypesManager.TYPE_NUMERIC_VALUE:
                     if( !CssUnit.isCssUnit(postfix) ) {
                         return word + CssUnit.determineMostProminentUnit(this.editorText.toString());
                     }
-					break;
-				case ShifterTypesManager.TYPE_CSS_UNIT:
-					// Correct "0px" (or other unit) to "0"
-					if( word.startsWith("0") ) {
-						return "0";
-					}
-					break;
-				default:
-					return word;
-			}
-		}
+                    break;
+                case ShifterTypesManager.TYPE_CSS_UNIT:
+                    // Correct "0px" (or other unit) to "0"
+                    if( word.startsWith("0") ) {
+                        return "0";
+                    }
+                    break;
+                default:
+                    return word;
+            }
+        }
 
-		return word;
-	}
+        return word;
+    }
 
 }

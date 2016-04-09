@@ -99,7 +99,7 @@ public class RomanNumber {
             if (roman.length() == 0)
                 throw new NumberFormatException("An empty string does not define a Roman numeral.");
 
-            roman = roman.toUpperCase();  // Convert to upper case letters.
+            roman = roman.toUpperCase();
 
             int i = 0;       // A position in the string, roman;
             int arabic = 0;  // Arabic numeral equivalent of the part of the string that has

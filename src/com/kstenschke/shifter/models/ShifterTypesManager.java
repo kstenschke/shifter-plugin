@@ -31,12 +31,12 @@ public class ShifterTypesManager {
 
     public static final int TYPE_UNKNOWN = 0;
 
-        // Dictionary (list of strings) based types
+    // Dictionary (list of strings) based types
     private static final int TYPE_ACCESSIBILITY                 = 1;
     private static final int TYPE_DICTIONARY_WORD_EXT_SPECIFIC  = 2;
     private static final int TYPE_DICTIONARY_WORD_GLOBAL        = 3;
 
-        // Generic types
+    // Generic types
     public static final int     TYPE_QUOTED_STRING            = 50;
     private static final int    TYPE_HTML_ENCODABLE_STRING    = 51;
     private static final int    TYPE_OPERATOR_SIGN            = 53; // <, >, +, -
@@ -51,11 +51,11 @@ public class ShifterTypesManager {
     private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 62;
     private static final int    TYPE_TERNARY_EXPRESSION       = 63;
 
-        // Word type objects
+    // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
     private com.kstenschke.shifter.models.shiftertypes.Dictionary typeDictionaryTerm;
 
-        // Generic types (calculated when shifted)
+    // Generic types (calculated when shifted)
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
     private OperatorSign typeOperatorSign;
     private RomanNumber typeRomanNumber;
@@ -78,13 +78,13 @@ public class ShifterTypesManager {
      * @return	int
      */
     public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
-            // PHP variable (must be prefixed with "$")
+        // PHP variable (must be prefixed with "$")
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
         if (this.typePhpVariable.isPhpVariable(word)) {
             return TYPE_PHP_VARIABLE;
         }
 
-            // DocComment types (must be prefixed with "@")
+        // DocComment types (must be prefixed with "@")
         this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
         boolean isDocCommentLineContext   = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
 
@@ -100,12 +100,12 @@ public class ShifterTypesManager {
             }
         }
 
-            // Object visibility
+        // Object visibility
         if ( !"@".equals(prefixChar) && this.isKeywordAccessType(word) ) {
             return TYPE_ACCESSIBILITY;
         }
 
-            // File extension specific term in dictionary
+        // File extension specific term in dictionary
         this.typeDictionaryTerm = new com.kstenschke.shifter.models.shiftertypes.Dictionary();
         String fileExtension	= UtilsFile.extractFileExtension(filename);
 
@@ -118,19 +118,19 @@ public class ShifterTypesManager {
             return TYPE_TERNARY_EXPRESSION;
         }
 
-            // Quoted (must be wrapped in single or double quotes or backticks)
+        // Quoted (must be wrapped in single or double quotes or backticks)
         this.typeQuotedString = new com.kstenschke.shifter.models.shiftertypes.QuotedString();
         if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
             return TYPE_QUOTED_STRING;
         }
 
-            // RGB (must be prefixed with "#")
+        // RGB (must be prefixed with "#")
         if ( com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar) ) {
             this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
             return TYPE_RGB_COLOR;
         }
 
-            // Pixel value (must consist of numeric value followed by "px")
+        // Pixel value (must consist of numeric value followed by "px")
         if (com.kstenschke.shifter.models.shiftertypes.CssUnit.isCssUnitValue(word)) {
             this.typePixelValue = new com.kstenschke.shifter.models.shiftertypes.CssUnit();
             return TYPE_CSS_UNIT;
@@ -141,25 +141,25 @@ public class ShifterTypesManager {
             return TYPE_NUMERIC_VALUE;
         }
 
-            // Operator sign (<, >, +, -)
+        // Operator sign (<, >, +, -)
         if ( OperatorSign.isOperatorSign(word)) {
             this.typeOperatorSign	= new OperatorSign();
             return TYPE_OPERATOR_SIGN;
         }
 
-            // Roman Numeral
+        // Roman Numeral
         if (RomanNumber.isRomanNumber(word)) {
             this.typeRomanNumber    = new RomanNumber();
             return TYPE_ROMAN_NUMERAL;
         }
 
-            // MonoCharString (= consisting from any amount of the same character)
+        // MonoCharString (= consisting from any amount of the same character)
         if (StringMonoCharacter.isMonoCharacterString(word)) {
             this.typeMonoCharacterString	= new StringMonoCharacter();
             return TYPE_MONO_CHARACTER_STRING;
         }
 
-            // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
+        // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if( this.typeDictionaryTerm.isTermInDictionary(word, false) ) {
             return TYPE_DICTIONARY_WORD_GLOBAL;
         }
@@ -209,18 +209,19 @@ public class ShifterTypesManager {
      */
         public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
         switch (idWordType) {
-                // ================== String based word types
+            // ================== String based word types
             case TYPE_ACCESSIBILITY:
                 return this.wordTypeAccessibilities.getShifted(word, isUp);
             case TYPE_DICTIONARY_WORD_GLOBAL:
             case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
-                    // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
+                // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return this.typeDictionaryTerm.getShifted(word, isUp);
 
-                // ================== Generic types (shifting is calculated)
+            // ================== Generic types (shifting is calculated)
             case TYPE_RGB_COLOR:
                 return this.typeRgbColor.getShifted(word, isUp);
-            case TYPE_NUMERIC_VALUE:    // numeric values including UNIX and millisecond timestamps
+            case TYPE_NUMERIC_VALUE:
+                // numeric values including UNIX and millisecond timestamps
                 return this.typeNumericValue.getShifted(word, isUp, editor);
             case TYPE_CSS_UNIT:
                 return this.typePixelValue.getShifted(word, isUp);
