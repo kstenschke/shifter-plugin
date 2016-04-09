@@ -21,31 +21,31 @@ import java.util.Map;
 
 public class UtilsMap {
 
-	public static int getSumOfValues(HashMap<String, Integer> map) {
-		int sum = 0;
-		for(int value : map.values()){
-			sum+= value;
-		}
-		return sum;
-	}
+    public static int getSumOfValues(HashMap<String, Integer> map) {
+        int sum = 0;
+        for(int value : map.values()){
+            sum+= value;
+        }
+        return sum;
+    }
 
-	public static String getKeyOfHighestValue(HashMap<String, Integer> map) {
-		int max		= 0;
-		String key	= "";
+    public static String getKeyOfHighestValue(HashMap<String, Integer> map) {
+        int max    = 0;
+        String key = "";
 
-		Iterator it = map.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry pairs = (Map.Entry) it.next();
-			int value = Integer.parseInt( pairs.getValue().toString() );
-			if( value > max ) {
-				max = value;
-				key = pairs.getKey().toString();
-			}
-			// avoid ConcurrentModificationException
-			it.remove();
-		}
+        Iterator it = map.entrySet().iterator();
+        while (it.hasNext()) {
+            Map.Entry pairs = (Map.Entry) it.next();
+            int value = Integer.parseInt( pairs.getValue().toString() );
+            if( value > max ) {
+                max = value;
+                key = pairs.getKey().toString();
+            }
+            // avoid ConcurrentModificationException
+            it.remove();
+        }
 
-		return key;
-	}
+        return key;
+    }
 
 }
