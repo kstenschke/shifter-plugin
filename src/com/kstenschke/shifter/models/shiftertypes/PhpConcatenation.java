@@ -166,12 +166,10 @@ public class PhpConcatenation {
 		if("$".equals(str)) {
 				// Identified part as PHP Variable
 			return isRHS ? "" : ".";
-		}
-		if("\"".equals(str)) {
+		} else if("\"".equals(str)) {
 				// Identified parts as string wrapped within double quotes
 			return "\"";
-		}
-		if("\'".equals(str)) {
+		} else if("\'".equals(str)) {
 				// Identified parts as string wrapped within single quotes
 			return "\'";
 		}

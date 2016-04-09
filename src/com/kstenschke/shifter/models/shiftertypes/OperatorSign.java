@@ -25,16 +25,7 @@ public class OperatorSign {
 	 * @return boolean.
 	 */
 	public static boolean isOperatorSign(String word) {
-
-		return  word != null && word.length() == 1 && (
-				"+".equals(word)
-			 || "-".equals(word)
-			 || "<".equals(word)
-			 || ">".equals(word)
-			 || "*".equals(word)
-			 || "/".equals(word)
-			 || "%".equals(word)
-		);
+		return word != null && word.length() == 1 && "+-<>*/%".contains(word);
 	}
 
 	public static boolean isWhitespaceWrappedOperator(String str) {
@@ -50,6 +41,7 @@ public class OperatorSign {
 	 * @return  String
 	 */
 	public String getShifted(String word) {
+
 		if( "-".equals(word)) {
 			return "+";
 		}
