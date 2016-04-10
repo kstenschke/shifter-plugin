@@ -28,163 +28,161 @@ import java.util.regex.Pattern;
  */
 public class PhpVariable {
 
-	// Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
-	private boolean isArrayDefinition = false;
+    // Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
+    private boolean isArrayDefinition = false;
 
-	// Shorthand (since PHP5.4) or long syntax array?
-	private boolean isConventionalArray = false;
+    // Shorthand (since PHP5.4) or long syntax array?
+    private boolean isConventionalArray = false;
 
-	/**
-	 * Constructor
-	 */
-	public PhpVariable() {
+    /**
+     * Check whether given string represents a PHP variable
+     *
+     * @param  str     String to be checked
+     * @return boolean
+     */
+    public Boolean isPhpVariable(String str) {
+        boolean isVariable = false;
 
-	}
+        if ( str.startsWith("$") ) {
+            String identifier = str.substring(1);
+            // Must contain a-z,A-Z or 0-9, _
+            isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
+        }
 
-	/**
-	 * Check whether given string represents a PHP variable
-	 *
-	 * @param	str			String to be checked
-	 * @return	boolean.
-	 */
-	public Boolean isPhpVariable(String str) {
-		boolean isVariable = false;
+        if( ! isVariable ) {
+            // Detect array definition
+            this.isArrayDefinition = this.isPhpArrayDefinition(str);
+        }
 
-		if ( str.startsWith("$") ) {
-			String identifier = str.substring(1);
-			// Must contain a-z,A-Z or 0-9, _
-			isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
-		}
+        return isVariable || this.isArrayDefinition;
+    }
 
-		if( ! isVariable ) {
-			// Detect array definition
-			this.isArrayDefinition = this.isPhpArrayDefinition(str);
-		}
+    /**
+     * @param  str
+     * @return Boolean
+     */
+    private Boolean isPhpArrayDefinition(String str) {
+        this.isConventionalArray =     str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(\\])(;)*");
 
-		return isVariable || this.isArrayDefinition;
-	}
+        return this.isConventionalArray || isShorthandArray;
+    }
 
-	/**
-	 * @param	str
-	 * @return	Boolean
-	 */
-	private Boolean isPhpArrayDefinition(String str) {
-		this.isConventionalArray =     str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-		boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(\\])(;)*");
+    /**
+     * Shift PX value up/down by 16px
+     *
+     * @param  variable     Variable name string
+     * @param  editorText   Text of edited document
+     * @param  isUp         Shift up or down?
+     * @param  moreCount    Current "more" count, starting with 1. If non-more shift: null
+     * @return String
+     */
+    public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
+        if( this.isArrayDefinition) {
+            return getShiftedArray(variable);
+        }
 
-		return this.isConventionalArray || isShorthandArray;
-	}
+       // Get full text of currently edited document
+       String text = editorText.toString();
 
-	/**
-	 * Shift PX value up/down by 16px
-	 *
-	 * @param	variable		Variable name string
-	 * @param	editorText		Text of edited document
-	 * @param	isUp			Shift up or down?
-	 * @param	moreCount		Current "more" count, starting with 1. If non-more shift: null
-	 * @return	String
-	 */
-	public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
-		if( this.isArrayDefinition) return getShiftedArray(variable);
+        // Use regEx matcher to extract array of all PHP var names
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
+        while (m.find()) {
+            if( !allMatches.contains(m.group())) {
+                allMatches.add(m.group());
+            }
+        }
 
-	   // Get full text of currently edited document
-	   String text = editorText.toString();
+        // Sort var names alphabetically
+        Collections.sort(allMatches);
+        List<String> allLeadChars = null;
+        if( moreCount != null && moreCount == 1) {
+            // During "shift more": iterate over variables reduced to first per every lead-character
+            allMatches         = this.reducePhpVarsToFirstPerLeadChar(allMatches);
+            allLeadChars    = this.getLeadChars(allMatches);
+        }
 
-		// Use regEx matcher to extract array of all PHP var names
-		List<String> allMatches = new ArrayList<String>();
-		Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
-		while (m.find()) {
-			if( !allMatches.contains(m.group())) {
-				allMatches.add(m.group());
-			}
-		}
+        int amountVars = allMatches.size();
 
-		// Sort var names alphabetically
-		Collections.sort(allMatches);
-		List<String> allLeadChars = null;
-		if( moreCount != null && moreCount == 1) {
-			// During "shift more": iterate over variables reduced to first per every lead-character
-			allMatches 		= this.reducePhpVarsToFirstPerLeadChar(allMatches);
-			allLeadChars	= this.getLeadChars(allMatches);
-		}
+        // Find position of given variable
+        Integer curIndex = (moreCount== null || moreCount > 1)
+                ? allMatches.indexOf(variable)
+                : allLeadChars.indexOf(variable.substring(1, 2));
 
-		int amountVars = allMatches.size();
+        if( curIndex == -1 || amountVars == 0 ) {
+            return variable;
+        }
 
-		// Find position of given variable
-		Integer curIndex = (moreCount== null || moreCount > 1)
-				? allMatches.indexOf(variable)
-				: allLeadChars.indexOf(variable.substring(1, 2));
+        // Find next/previous variable name (only once during iterations of "shift more")
+        if(moreCount == null || moreCount == 1) {
+            if (isUp) {
+                curIndex++;
+                if (curIndex == amountVars) {
+                    curIndex = 0;
+                }
+            } else {
+                curIndex--;
+                if (curIndex == -1) {
+                    curIndex = amountVars - 1;
+                }
+            }
+        }
 
-		if( curIndex == -1 || amountVars == 0 ) {
-			return variable;
-		}
+        return allMatches.get(curIndex);
+    }
 
-		// Find next/previous variable name (only once during iterations of "shift more")
-		if(moreCount == null || moreCount == 1) {
-			if (isUp) {
-				curIndex++;
-				if (curIndex == amountVars) {
-					curIndex = 0;
-				}
-			} else {
-				curIndex--;
-				if (curIndex == -1) {
-					curIndex = amountVars - 1;
-				}
-			}
-		}
+    /**
+     * @param  allMatches
+     * @return List<String>
+     */
+    private List<String> reducePhpVarsToFirstPerLeadChar(List<String> allMatches) {
+        List<String> reducedMatches = new ArrayList<String>();
+        String leadCharPrev = "";
+        String leadCharCur;
+        for(String currentMatch : allMatches) {
+            leadCharCur = currentMatch.substring(1,2);
+            if(!leadCharCur.matches(leadCharPrev)) {
+                reducedMatches.add(currentMatch);
+            }
+            leadCharPrev = leadCharCur;
+        }
 
-		return allMatches.get(curIndex);
-	}
+        return reducedMatches;
+    }
 
-	/**
-	 * @param	allMatches
-	 * @return
-	 */
-	private List<String> reducePhpVarsToFirstPerLeadChar(List<String> allMatches) {
-		List<String> reducedMatches = new ArrayList<String>();
-		String leadCharPrev = "";
-		String leadCharCur;
-		for(String currentMatch : allMatches) {
-			leadCharCur = currentMatch.substring(1,2);
-			if(!leadCharCur.matches(leadCharPrev)) {
-				reducedMatches.add(currentMatch);
-			}
-			leadCharPrev = leadCharCur;
-		}
+    /**
+     * @param  matches
+     * @return List of first letters of given matches
+     */
+    private List<String> getLeadChars(List<String> matches) {
+        List<String> leadChars = new ArrayList<String>();
 
-		return reducedMatches;
-	}
+        for(String currentMatch : matches) {
+            leadChars.add(currentMatch.substring(1,2));
+        }
 
-	/**
-	 * @param	matches
-	 * @return	List of first letters of given matches
-	 */
-	private List<String> getLeadChars(List<String> matches) {
-		List<String> leadChars = new ArrayList<String>();
+        return leadChars;
+    }
 
-		for(String currentMatch : matches) {
-			leadChars.add(currentMatch.substring(1,2));
-		}
+    /**
+     * @param  variable
+     * @return String   converted array(...) <=> [...]
+     */
+    public String getShiftedArray(String variable) {
+        if( this.isConventionalArray ) {
+            return UtilsTextual.replaceLast(
+                    variable.replaceFirst("array", "[").replaceFirst("\\(", ""),
+                    ")",
+                    "]"
+            );
+        }
 
-		return leadChars;
-	}
-
-	/**
-	 * @param   variable
-	 * @return	String		converted array(...) <=> [...]
-	 */
-	public String getShiftedArray(String variable) {
-		if( this.isConventionalArray ) {
-			variable = variable.replaceFirst("array", "[");
-			variable = variable.replaceFirst("\\(", "");
-			variable = UtilsTextual.replaceLast(variable, ")", "]");
-		} else {
-			variable = variable.replaceFirst("\\[", "array(");
-			variable = UtilsTextual.replaceLast(variable, "]", ")");
-		}
-
-		return variable;
-	}
+        return UtilsTextual.replaceLast(
+                variable.replaceFirst("\\[", "array("),
+                "]",
+                ")"
+        );
+    }
 
 }

@@ -41,7 +41,6 @@ public class OperatorSign {
 	 * @return  String
 	 */
 	public String getShifted(String word) {
-
 		if( "-".equals(word)) {
 			return "+";
 		}

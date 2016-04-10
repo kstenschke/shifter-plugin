@@ -69,7 +69,6 @@ class DocCommentDataType {
 				return dataTypesList.get(curIndex);
 			}
 
-
 		return wordLower;
 	}
 

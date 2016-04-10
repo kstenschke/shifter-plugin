@@ -25,13 +25,13 @@ import java.util.HashMap;
  */
 public class CssUnit {
 
-	private static final String UNIT_CM		= "cm";
-	private static final String UNIT_EM		= "em";
-	private static final String UNIT_IN		= "in";
-	private static final String UNIT_MM		= "mm";
-	private static final String UNIT_PC		= "pc";
-	private static final String UNIT_PT		= "pt";
-	private static final String UNIT_PX		= "px";
+	private static final String UNIT_CM	= "cm";
+	private static final String UNIT_EM	= "em";
+	private static final String UNIT_IN	= "in";
+	private static final String UNIT_MM	= "mm";
+	private static final String UNIT_PC	= "pc";
+	private static final String UNIT_PT	= "pt";
+	private static final String UNIT_PX	= "px";
 
 	/**
 	 * @param	str			String to be checked
@@ -84,7 +84,5 @@ public class CssUnit {
 
 		return UtilsMap.getKeyOfHighestValue(map);
 	}
-
-
 
 }

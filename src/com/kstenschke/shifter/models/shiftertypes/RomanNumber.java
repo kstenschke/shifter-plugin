@@ -23,13 +23,6 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 public class RomanNumber {
 
 	/**
-	 * Constructor
-	 */
-	public RomanNumber() {
-
-	}
-
-	/**
 	 * @param	str			String to be checked
 	 * @return	boolean     Does the given string represent a CSS length value?
 	 */
@@ -45,7 +38,9 @@ public class RomanNumber {
 	public String getShifted(String value, boolean isUp) {
         int intVal = new RomanNumeral(value).toInt();
 
-        if( intVal == 1 && ! isUp ) return value;
+        if( intVal == 1 && ! isUp ) {
+            return value;
+        }
 
         return isUp
                 ? new RomanNumeral(intVal + 1).toString()
@@ -87,7 +82,6 @@ public class RomanNumber {
             num = arabic;
         }
 
-
         /*
          * Constructor.  Creates the Roman number with the given representation.
          * For example, RomanNumeral("xvii") is 17.  If the parameter is not a
@@ -95,24 +89,23 @@ public class RomanNumber {
          * lower case letters are allowed.
          */
         public RomanNumeral(String roman) {
-
             if (roman.length() == 0)
                 throw new NumberFormatException("An empty string does not define a Roman numeral.");
 
-            roman = roman.toUpperCase();
+            String romanUpper = roman.toUpperCase();
 
-            int i = 0;       // A position in the string, roman;
+            int i = 0;       // A position in the string, roman
             int arabic = 0;  // Arabic numeral equivalent of the part of the string that has
             //    been converted so far.
 
-            while (i < roman.length()) {
+            while (i < romanUpper.length()) {
 
-                char letter = roman.charAt(i);        // Letter at current position in string.
+                char letter = romanUpper.charAt(i);        // Letter at current position in string.
                 int number = letterToNumber(letter);  // Numerical equivalent of letter.
 
                 i++;  // Move on to next position in the string
 
-                if (i == roman.length()) {
+                if (i == romanUpper.length()) {
                     // There is no letter in the string following the one we have just processed.
                     // So just add the number corresponding to the single letter to arabic.
                     arabic += number;
@@ -121,7 +114,7 @@ public class RomanNumber {
                     // Look at the next letter in the string.  If it has a larger Roman numeral
                     // equivalent than number, then the two letters are counted together as
                     // a Roman numeral with value (nextNumber - number).
-                    int nextNumber = letterToNumber(roman.charAt(i));
+                    int nextNumber = letterToNumber(romanUpper.charAt(i));
                     if (nextNumber > number) {
                         // Combine the two letters to get one value, and move on to next position in string.
                         arabic += (nextNumber - number);
@@ -142,7 +135,6 @@ public class RomanNumber {
 
         } // end constructor
 
-
         /**
          * Find the integer value of letter considered as a Roman numeral.  Throws
          * NumberFormatException if letter is not a legal Roman numeral.  The letter
@@ -162,23 +154,22 @@ public class RomanNumber {
             }
         }
 
-
         /**
          * Return the standard representation of this Roman numeral.
          */
         public String toString() {
-            String roman = "";  // The roman numeral.
-            int N = num;        // N represents the part of num that still has
-            //   to be converted to Roman numeral representation.
+            String roman = "";
+            // N represents the part of num that still has to be converted to Roman numeral representation.
+            int nonRoman = num;
             for (int i = 0; i < numbers.length; i++) {
-                while (N >= numbers[i]) {
+                while (nonRoman >= numbers[i]) {
                     roman += letters[i];
-                    N -= numbers[i];
+                    nonRoman -= numbers[i];
                 }
             }
+
             return roman;
         }
-
 
         /**
          * Return the value of this Roman numeral as an int.

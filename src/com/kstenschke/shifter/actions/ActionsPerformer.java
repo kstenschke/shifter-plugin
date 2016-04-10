@@ -341,7 +341,6 @@ class ActionsPerformer {
         }
     }
 
-
     /**
      * Sort lines in document alphabetically ascending / descending
      *
