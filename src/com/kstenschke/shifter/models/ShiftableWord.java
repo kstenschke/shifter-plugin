@@ -39,14 +39,14 @@ public class ShiftableWord {
     /**
      * Constructor
      *
-     * @param word            Shiftable word
-     * @param prefixChar      Char before the word, "#"?
-     * @param postfixChar     Char after the word, "#"?
-     * @param line            Whole line to possibly guess the context
-     * @param editorText      Whole text currently in editor
-     * @param caretOffset     Caret offset in document
-     * @param filename        Filename of the edited file
-     * @param moreCount       Current "more" count, starting with 1. If non-more shift: null
+     * @param word        Shiftable word
+     * @param prefixChar  Char before the word, "#"?
+     * @param postfixChar Char after the word, "#"?
+     * @param line        Whole line to possibly guess the context
+     * @param editorText  Whole text currently in editor
+     * @param caretOffset Caret offset in document
+     * @param filename    Filename of the edited file
+     * @param moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
     public ShiftableWord(
             String word, String prefixChar, String postfixChar,
@@ -57,17 +57,17 @@ public class ShiftableWord {
     ) {
         this.shifterTypesManager = new ShifterTypesManager();
 
-        this.editorText   = editorText;
-        this.caretOffset  = caretOffset;
-        this.filename     = filename;
-        this.moreCount    = moreCount;
+        this.editorText = editorText;
+        this.caretOffset = caretOffset;
+        this.filename = filename;
+        this.moreCount = moreCount;
 
         // Detect word type
         this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
 
         // Comprehend negative values of numeric types
-        this.word = ( (this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)
-                      && "-".equals(prefixChar) ) ? "-" + word : word;
+        this.word = ((this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)
+                && "-".equals(prefixChar)) ? "-" + word : word;
 
         // Can the word be shifted?
         this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
@@ -76,9 +76,9 @@ public class ShiftableWord {
     /**
      * Get shifted up/down word
      *
-     * @param  isUp    Shift up or down?
-     * @param  editor  Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
-     * @return String  Next upper/lower word
+     * @param isUp    Shift up or down?
+     * @param editor  Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
+     * @return String Next upper/lower word
      */
     public String getShifted(boolean isUp, @Nullable Editor editor) {
         if (!this.isShiftable) {
@@ -87,17 +87,17 @@ public class ShiftableWord {
 
         // Call actual shifting
         String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
-        
+
         // Keep original word casing
-        if(    this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
-            && this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
-            && ShifterPreferences.getIsActivePreserveCase()
-        ) {
-            if ( UtilsTextual.isAllUppercase(this.word) ) {
-                    // Convert result to upper case
+        if (this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
+                && this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
+                && ShifterPreferences.getIsActivePreserveCase()
+                ) {
+            if (UtilsTextual.isAllUppercase(this.word)) {
+                // Convert result to upper case
                 shiftedWord = shiftedWord.toUpperCase();
             } else if (UtilsTextual.isUcFirst(this.word)) {
-                    // Convert result to upper case first char
+                // Convert result to upper case first char
                 shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
             }
 
@@ -109,22 +109,22 @@ public class ShiftableWord {
     /**
      * Post-process: do additional modifications on word after it has been shifted
      *
-     * @param  word
-     * @param  postfix
+     * @param word
+     * @param postfix
      * @return Post-processed word
      */
     public String postProcess(String word, String postfix) {
-        if(UtilsFile.isCssFile(this.filename)) {
-            switch(this.wordType) {
+        if (UtilsFile.isCssFile(this.filename)) {
+            switch (this.wordType) {
                 // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
                 case ShifterTypesManager.TYPE_NUMERIC_VALUE:
-                    if( !CssUnit.isCssUnit(postfix) ) {
+                    if (!CssUnit.isCssUnit(postfix)) {
                         return word + CssUnit.determineMostProminentUnit(this.editorText.toString());
                     }
                     break;
                 case ShifterTypesManager.TYPE_CSS_UNIT:
                     // Correct "0px" (or other unit) to "0"
-                    if( word.startsWith("0") ) {
+                    if (word.startsWith("0")) {
                         return "0";
                     }
                     break;

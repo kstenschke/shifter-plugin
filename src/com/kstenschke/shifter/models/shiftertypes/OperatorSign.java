@@ -29,34 +29,34 @@ public class OperatorSign {
     }
 
     public static boolean isWhitespaceWrappedOperator(String str) {
-        return Character.isWhitespace( str.charAt(0) )
-                && OperatorSign.isOperatorSign( String.valueOf(str.charAt(1)) )
-                && Character.isWhitespace( str.charAt(2) );
+        return Character.isWhitespace(str.charAt(0))
+                && OperatorSign.isOperatorSign(String.valueOf(str.charAt(1)))
+                && Character.isWhitespace(str.charAt(2));
     }
 
     /**
      * Shift mono-character string
      *
-     * @param   word Quoted word to be shifted
-     * @return  String
+     * @param word Quoted word to be shifted
+     * @return String
      */
     public String getShifted(String word) {
-        if( "-".equals(word)) {
+        if ("-".equals(word)) {
             return "+";
         }
-        if( "+".equals(word)) {
+        if ("+".equals(word)) {
             return "-";
         }
-        if( "<".equals(word)) {
+        if ("<".equals(word)) {
             return ">";
         }
-        if( ">".equals(word)) {
+        if (">".equals(word)) {
             return "<";
         }
-        if( "*".equals(word)) {
+        if ("*".equals(word)) {
             return "/";
         }
-        if( "/".equals(word)) {
+        if ("/".equals(word)) {
             return "*";
         }
 

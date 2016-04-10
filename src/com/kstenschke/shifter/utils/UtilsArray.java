@@ -27,9 +27,9 @@ public class UtilsArray {
     /**
      * Find strings position in array
      *
-     * @param   haystack   String array to search in
-     * @param   needle     String to be looked for
-     * @return  int        Found position or -1
+     * @param haystack String array to search in
+     * @param needle   String to be looked for
+     * @return int        Found position or -1
      */
     public static int findPositionInArray(String[] haystack, String needle) {
         for (int i = 0; i < haystack.length; i++) {
@@ -44,9 +44,9 @@ public class UtilsArray {
     /**
      * Concatenate strings of given array glued by given delimiter
      *
-     * @param   stringsArr  Array of strings
-     * @param   glue        Glue in between concatenated strings
-     * @return  String      All items of stringsArr concatenated with glue
+     * @param stringsArr Array of strings
+     * @param glue       Glue in between concatenated strings
+     * @return String      All items of stringsArr concatenated with glue
      */
     public static String implode(String[] stringsArr, String glue) {
         String out = "";
@@ -63,12 +63,12 @@ public class UtilsArray {
      * string values. If the input arrays are like this array1 = {"a", "b" ,
      * "c"} array2 = {"c", "d", "e"} Then the output array will have {"a", "b" ,
      * "c", "d", "e"}
-     *
+     * <p/>
      * This takes care of eliminating duplicates and checks null values.
      *
-     * @param   array1   Array of strings
-     * @param   array2   Array of strings
-     * @return  array    Merged array containing each of the elements of array1 and array2
+     * @param array1 Array of strings
+     * @param array2 Array of strings
+     * @return array    Merged array containing each of the elements of array1 and array2
      */
     private static String[] mergeStringArrays(String[] array1, String[] array2) {
         if (array1 == null || array1.length == 0) {
@@ -95,10 +95,10 @@ public class UtilsArray {
     /**
      * Merge three string arrays
      *
-     * @param   array1     Array of strings
-     * @param   array2     Array of strings
-     * @param   array3     Array of strings
-     * @return  array    Merged array containing each of the elements of array1, array2 and array3
+     * @param array1 Array of strings
+     * @param array2 Array of strings
+     * @param array3 Array of strings
+     * @return array    Merged array containing each of the elements of array1, array2 and array3
      */
     public static String[] mergeStringArrays(String[] array1, String[] array2, String[] array3) {
         return mergeStringArrays(mergeStringArrays(array1, array2), array3);

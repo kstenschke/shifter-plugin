@@ -20,27 +20,27 @@ import java.util.List;
 public class UtilsLinesList {
 
     /**
-     * @param   lines
-     * @param   delimiter
-     * @param   isDelimitedLastLine
-     * @return  Given lines ending with given delimiter, optionally also the last line
+     * @param lines
+     * @param delimiter
+     * @param isDelimitedLastLine
+     * @return Given lines ending with given delimiter, optionally also the last line
      */
     public static List<String> addDelimiter(List<String> lines, String delimiter, boolean isDelimitedLastLine) {
         int amountLines = lines.size();
         int index = 0;
 
-        for(String line : lines) {
+        for (String line : lines) {
             line = line.trim();
 
-            boolean isLastLine = index+1 == amountLines;
+            boolean isLastLine = index + 1 == amountLines;
 
-            if((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {
+            if ((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {
                 line = line + delimiter;
             }
 
-            if( isLastLine && ! isDelimitedLastLine && line.endsWith(delimiter) ) {
+            if (isLastLine && !isDelimitedLastLine && line.endsWith(delimiter)) {
                 // Optional: remove delimiter from last line
-                line    = line.substring(0, line.length()-1);
+                line = line.substring(0, line.length() - 1);
             }
 
             lines.set(index, line + "\n");
@@ -67,26 +67,26 @@ public class UtilsLinesList {
          */
         public DelimiterDetector(List<String> lines) {
             this.lines = lines;
-            this.commonDelimiter    = ' ';
+            this.commonDelimiter = ' ';
 
             int amountLines = this.lines.size();
             int lenLine;
 
-            if( amountLines > 2) {
+            if (amountLines > 2) {
                 this.findingDelimiterFailed = false;
                 int lineNumber = 0;
-                for(String line : this.lines) {
+                for (String line : this.lines) {
                     line = line.trim();
                     lenLine = line.length();
 
-                    if( lenLine > 0) {
-                        char currentDelimiter = line.charAt( lenLine - 1 );
+                    if (lenLine > 0) {
+                        char currentDelimiter = line.charAt(lenLine - 1);
 
-                        if( lineNumber == 0 ) {
+                        if (lineNumber == 0) {
                             this.commonDelimiter = currentDelimiter;
                         } else {
-                            boolean isLastLine = lineNumber == amountLines-1;
-                            if( !isLastLine && currentDelimiter != this.commonDelimiter) {
+                            boolean isLastLine = lineNumber == amountLines - 1;
+                            if (!isLastLine && currentDelimiter != this.commonDelimiter) {
                                 this.findingDelimiterFailed = true;
                             }
                         }
@@ -94,7 +94,7 @@ public class UtilsLinesList {
                     lineNumber++;
                 }
 
-                String lastLine = lines.get(amountLines-1).trim();
+                String lastLine = lines.get(amountLines - 1).trim();
                 this.isDelimitedLastLine = lastLine.endsWith(String.valueOf(this.commonDelimiter));
 
             } else {
@@ -103,10 +103,10 @@ public class UtilsLinesList {
         }
 
         /**
-         * @return  String|null     Common delimiter if found, or null
+         * @return String|null  Common delimiter if found, or null
          */
         public String getCommonDelimiter() {
-            return this.findingDelimiterFailed ? null : String.valueOf( this.commonDelimiter );
+            return this.findingDelimiterFailed ? null : String.valueOf(this.commonDelimiter);
         }
 
         public boolean isFoundDelimiter() {

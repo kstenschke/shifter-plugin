@@ -28,22 +28,22 @@ class ShiftUpMoreAction extends AnAction {
     /**
      * Disable when no editor available
      *
-     * @param event    Action system event
+     * @param event Action system event
      */
-    public void update( AnActionEvent event ) {
+    public void update(AnActionEvent event) {
         event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
     }
 
     /**
      * Perform shift up
      *
-     * @param   event    ActionSystem event
+     * @param event ActionSystem event
      */
     public void actionPerformed(final AnActionEvent event) {
         Project currentProject = event.getData(PlatformDataKeys.PROJECT);
 
         int times = ShifterPreferences.getShiftMoreSize();
-        for(int i=1; i <= times; i++) {
+        for (int i = 1; i <= times; i++) {
             final int moreCount = i;
             CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
                 @Override

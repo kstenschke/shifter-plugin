@@ -31,26 +31,26 @@ public class QuotedString {
     /**
      * Check whether shifted word is wrapped in quote characters
      *
-     * @param   prefixChar     Character preceding the string
-     * @param   postfixChar    Character after the string
-     * @return  boolean.
+     * @param prefixChar  Character preceding the string
+     * @param postfixChar Character after the string
+     * @return boolean.
      */
     public boolean isQuotedString(String prefixChar, String postfixChar) {
         this.quoteChar = prefixChar;
 
         // Must begin be wrapped in single-, double quotes, or backticks
-        return  ( "'".equals(prefixChar)    && "'".equals(postfixChar) )     // word is wrapped in single quotes
-             || ( "\"".equals(prefixChar)   && "\"".equals(postfixChar) )    // word is wrapped in double quotes
-             || ( "`".equals(prefixChar)    && "`".equals(postfixChar) );    // word is wrapped in backticks
+        return ("'".equals(prefixChar) && "'".equals(postfixChar))     // word is wrapped in single quotes
+                || ("\"".equals(prefixChar) && "\"".equals(postfixChar))    // word is wrapped in double quotes
+                || ("`".equals(prefixChar) && "`".equals(postfixChar));    // word is wrapped in backticks
     }
 
     /**
      * Shift to prev/next quoted string
      *
-     * @param   word           Quoted word to be shifted
-     * @param   editorText     Full text of editor
-     * @param   isUp           Shifting up or down?
-     * @return  String
+     * @param word       Quoted word to be shifted
+     * @param editorText Full text of editor
+     * @param isUp       Shifting up or down?
+     * @return String
      */
     public String getShifted(String word, CharSequence editorText, boolean isUp) {
         // Get full text of currently edited document
@@ -63,7 +63,7 @@ public class QuotedString {
         Matcher m = Pattern.compile(pattern).matcher(text);
 
         while (m.find()) {
-            if( !allMatches.contains(m.group())) {
+            if (!allMatches.contains(m.group())) {
                 allMatches.add(m.group());
             }
         }
@@ -73,17 +73,17 @@ public class QuotedString {
         int amountVars = allMatches.size();
 
         // Find position of given variable
-        int curIndex   = allMatches.indexOf(word);
+        int curIndex = allMatches.indexOf(word);
 
         // Return next/previous variable name
-        if( isUp ) {
+        if (isUp) {
             curIndex++;
-            if( curIndex == amountVars ) {
+            if (curIndex == amountVars) {
                 curIndex = 0;
             }
         } else {
             curIndex--;
-            if( curIndex == -1 ) {
+            if (curIndex == -1) {
                 curIndex = amountVars - 1;
             }
         }

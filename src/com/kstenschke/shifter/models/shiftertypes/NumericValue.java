@@ -36,7 +36,9 @@ public class NumericValue {
 
     private static final int SECONDS_PER_DAY = 86400;
 
-    /** Shift timestamps day-wise as seconds (or milliseconds: 1000) */
+    /**
+     * Shift timestamps day-wise as seconds (or milliseconds: 1000)
+     */
     private final int timestampShiftMode;
 
     /**
@@ -47,7 +49,7 @@ public class NumericValue {
     }
 
     /**
-     * @param  str         String to be checked
+     * @param str String to be checked
      * @return boolean     Does the given string represent a CSS length value?
      */
     public static boolean isNumericValue(String str) {
@@ -55,39 +57,39 @@ public class NumericValue {
     }
 
     /**
-     * @param  value       String representing a numeric value
-     * @param  isUp        Shifting up or down?
+     * @param value String representing a numeric value
+     * @param isUp  Shifting up or down?
      * @return String      Value shifted up or down by one
      */
     public String getShifted(String value, boolean isUp, @Nullable Editor editor) {
-        int strLen  = value.length();
+        int strLen = value.length();
 
-        if( strLen <= 7 ) {
+        if (strLen <= 7) {
             // Integer
-            return Integer.toString( Integer.parseInt(value) + (isUp ? 1 : -1) );
+            return Integer.toString(Integer.parseInt(value) + (isUp ? 1 : -1));
         }
         // Guessing that it is a UNIX or milliseconds timestamp
         return getShiftedUnixTimestamp(value, isUp, editor);
     }
 
     /**
-     * @param   value
-     * @param   isUp
-     * @param   editor      Needed to gather position of info balloon (not shown if editor == null)
-     * @return  String      UNIX timestamp shifted plus/minus one day
+     * @param value
+     * @param isUp
+     * @param editor Needed to gather position of info balloon (not shown if editor == null)
+     * @return String      UNIX timestamp shifted plus/minus one day
      */
     private String getShiftedUnixTimestamp(String value, boolean isUp, @Nullable Editor editor) {
-        int strLenOriginal  = value.length();
+        int strLenOriginal = value.length();
         long shiftedTimestamp;
 
-            shiftedTimestamp = Long.parseLong(value)
-          + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * (timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000));
+        shiftedTimestamp = Long.parseLong(value)
+                + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * (timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000));
 
-        if( editor != null ) {
+        if (editor != null) {
             // Create and show balloon with human-readable date
             Balloon.Position pos = Balloon.Position.above;
-            String balloonText   =
-                    "UNIX Time: "    + new Date(shiftedTimestamp * 1000).toString()
+            String balloonText =
+                    "UNIX Time: " + new Date(shiftedTimestamp * 1000).toString()
                             + "\nMilliseconds: " + new Date(shiftedTimestamp).toString();
             BalloonBuilder builder = JBPopupFactory.getInstance().createHtmlTextBalloonBuilder(balloonText, null, new JBColor(new Color(255, 255, 231), new Color(255, 255, 231)), null);
             Balloon balloon = builder.createBalloon();
@@ -98,9 +100,9 @@ public class NumericValue {
             balloon.show(balloonPosition, pos);
         }
 
-        String valueShifted = Long.toString( shiftedTimestamp );
+        String valueShifted = Long.toString(shiftedTimestamp);
 
-        if( strLenOriginal > valueShifted.length() ) {
+        if (strLenOriginal > valueShifted.length()) {
             // String has shrunk in length - maintain original leading zero's
             valueShifted = UtilsTextual.formatAmountDigits(valueShifted, strLenOriginal);
         }
