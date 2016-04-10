@@ -34,38 +34,38 @@ import java.util.Date;
  */
 public class NumericValue {
 
-	private static final int SECONDS_PER_DAY = 86400;
+    private static final int SECONDS_PER_DAY = 86400;
 
     /** Shift timestamps day-wise as seconds (or milliseconds: 1000) */
     private final int timestampShiftMode;
 
-	/**
-	 * Constructor
-	 */
-	public NumericValue() {
+    /**
+     * Constructor
+     */
+    public NumericValue() {
         timestampShiftMode = ShifterPreferences.getShiftingModeOfTimestamps();
-	}
+    }
 
-	/**
-	 * @param	str			String to be checked
-	 * @return	boolean     Does the given string represent a CSS length value?
-	 */
-	public static boolean isNumericValue(String str) {
-		return str.matches("[0-9]+");
-	}
+    /**
+     * @param  str         String to be checked
+     * @return boolean     Does the given string represent a CSS length value?
+     */
+    public static boolean isNumericValue(String str) {
+        return str.matches("[0-9]+");
+    }
 
-	/**
-	 * @param	value       String representing a numeric value
-	 * @param	isUp		Shifting up or down?
-	 * @return	String      Value shifted up or down by one
-	 */
-	public String getShifted(String value, boolean isUp, @Nullable Editor editor) {
-		int strLen  = value.length();
+    /**
+     * @param  value       String representing a numeric value
+     * @param  isUp        Shifting up or down?
+     * @return String      Value shifted up or down by one
+     */
+    public String getShifted(String value, boolean isUp, @Nullable Editor editor) {
+        int strLen  = value.length();
 
         if( strLen <= 7 ) {
             // Integer
-			return Integer.toString( Integer.parseInt(value) + (isUp ? 1 : -1) );
-		}
+            return Integer.toString( Integer.parseInt(value) + (isUp ? 1 : -1) );
+        }
         // Guessing that it is a UNIX or milliseconds timestamp
         return getShiftedUnixTimestamp(value, isUp, editor);
     }

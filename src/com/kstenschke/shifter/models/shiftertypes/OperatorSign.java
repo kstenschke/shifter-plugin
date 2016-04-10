@@ -20,47 +20,47 @@ package com.kstenschke.shifter.models.shiftertypes;
  */
 public class OperatorSign {
 
-	/**
-	 * @param word String to be shifted currently
-	 * @return boolean.
-	 */
-	public static boolean isOperatorSign(String word) {
-		return word != null && word.length() == 1 && "+-<>*/%".contains(word);
-	}
+    /**
+     * @param word String to be shifted currently
+     * @return boolean.
+     */
+    public static boolean isOperatorSign(String word) {
+        return word != null && word.length() == 1 && "+-<>*/%".contains(word);
+    }
 
-	public static boolean isWhitespaceWrappedOperator(String str) {
-		return Character.isWhitespace( str.charAt(0) )
-				&& OperatorSign.isOperatorSign( String.valueOf(str.charAt(1)) )
-				&& Character.isWhitespace( str.charAt(2) );
-	}
+    public static boolean isWhitespaceWrappedOperator(String str) {
+        return Character.isWhitespace( str.charAt(0) )
+                && OperatorSign.isOperatorSign( String.valueOf(str.charAt(1)) )
+                && Character.isWhitespace( str.charAt(2) );
+    }
 
-	/**
-	 * Shift mono-character string
-	 *
-	 * @param   word Quoted word to be shifted
-	 * @return  String
-	 */
-	public String getShifted(String word) {
-		if( "-".equals(word)) {
-			return "+";
-		}
-		if( "+".equals(word)) {
-			return "-";
-		}
-		if( "<".equals(word)) {
-			return ">";
-		}
-		if( ">".equals(word)) {
-			return "<";
-		}
-		if( "*".equals(word)) {
-			return "/";
-		}
-		if( "/".equals(word)) {
-			return "*";
-		}
+    /**
+     * Shift mono-character string
+     *
+     * @param   word Quoted word to be shifted
+     * @return  String
+     */
+    public String getShifted(String word) {
+        if( "-".equals(word)) {
+            return "+";
+        }
+        if( "+".equals(word)) {
+            return "-";
+        }
+        if( "<".equals(word)) {
+            return ">";
+        }
+        if( ">".equals(word)) {
+            return "<";
+        }
+        if( "*".equals(word)) {
+            return "/";
+        }
+        if( "/".equals(word)) {
+            return "*";
+        }
 
-		return word;
-	}
+        return word;
+    }
 
 }

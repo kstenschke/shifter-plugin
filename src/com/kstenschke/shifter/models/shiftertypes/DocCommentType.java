@@ -25,47 +25,47 @@ import java.util.regex.Pattern;
  */
 public class DocCommentType {
 
-	/**
-	 * Check whether given String looks like a doc comment line
-	 *
-	 * @param   line       Line the caret is at
-	 * @return  boolean.
-	 */
-	public boolean isDocCommentTypeLineContext(String line) {
-		String allTags = new DocCommentTag().getAllTagsPiped();
-		String regExPatternLine = "\\s+\\*\\s+@(" + allTags + ")\\s";
+    /**
+     * Check whether given String looks like a doc comment line
+     *
+     * @param line Line the caret is at
+     * @return boolean.
+     */
+    public boolean isDocCommentTypeLineContext(String line) {
+        String allTags = new DocCommentTag().getAllTagsPiped();
+        String regExPatternLine = "\\s+\\*\\s+@(" + allTags + ")\\s";
 
-		List<String> allMatches = new ArrayList<String>();
-		Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
-		while (m.find()) {
-			if( !allMatches.contains(m.group())) {
-				allMatches.add(m.group());
-			}
-		}
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
+        while (m.find()) {
+            if (!allMatches.contains(m.group())) {
+                allMatches.add(m.group());
+            }
+        }
 
-		return !allMatches.isEmpty();
-	}
+        return !allMatches.isEmpty();
+    }
 
-	/**
-	 * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
-	 *
-	 * @param   prefixChar    Prefix character
-	 * @param   line          Whole line containing the word
-	 * @return  boolean.
-	 */
-	public boolean isDocCommentType(String prefixChar, String line) {
+    /**
+     * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
+     *
+     * @param prefixChar Prefix character
+     * @param line       Whole line containing the word
+     * @return boolean.
+     */
+    public boolean isDocCommentType(String prefixChar, String line) {
         return !("#".equals(prefixChar) || "@".equals(prefixChar)) && this.isDocCommentTypeLineContext(line);
 
     }
 
-	/**
-	 * @param   word          String to be shifted
-	 * @param   isUp          Shift up or down?
-	 * @param   filename      Filename of the edited file
-	 * @return                Shifting result
-	 */
-	public String getShifted(String word, boolean isUp, String filename) {
-		return new DocCommentDataType().getShifted(word, filename, isUp);
-	}
+    /**
+     * @param word     String to be shifted
+     * @param isUp     Shift up or down?
+     * @param filename Filename of the edited file
+     * @return Shifting result
+     */
+    public String getShifted(String word, boolean isUp, String filename) {
+        return new DocCommentDataType().getShifted(word, filename, isUp);
+    }
 
 }

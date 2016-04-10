@@ -27,180 +27,180 @@ import java.util.regex.Pattern;
 
 public class Dictionary {
 
-	// Set during extension specific detection of dictionary term
-	private String fileExtension;
+    // Set during extension specific detection of dictionary term
+    private String fileExtension;
 
-	// Terms-list containing the term to be shifted, set during detection
-	private String relevantTermsList;
+    // Terms-list containing the term to be shifted, set during detection
+    private String relevantTermsList;
 
-	// The complete dictionary
-	private final String dictionaryContents;
+    // The complete dictionary
+    private final String dictionaryContents;
 
-	/**
-	 * Constructor
-	 */
-	public Dictionary() {
-		String contents	= ShifterPreferences.getDictionary();
-		if( contents.isEmpty() ) {
-			contents	= new ShifterConfiguration().getDefaultDictionary();
-		}
+    /**
+     * Constructor
+     */
+    public Dictionary() {
+        String contents = ShifterPreferences.getDictionary();
+        if (contents.isEmpty()) {
+            contents = new ShifterConfiguration().getDefaultDictionary();
+        }
 
-		this.dictionaryContents = contents;
-	}
+        this.dictionaryContents = contents;
+    }
 
-	/**
-	 * Check whether the given term exists in any section of shift-lists of the dictionary
-	 * + Stores matching line containing the term for use in shifting later
-	 *
-	 * @param	term		String to be looked for in shifter dictionary
-	 * @return	boolean
-	 */
-	public boolean isTermInDictionary(String term, boolean isFileExtensionRelevant) {
-		if( ! isFileExtensionRelevant || this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
-			// Merge all terms-blocks
-			String dictionaryTerms              = this.dictionaryContents;
-			Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
+    /**
+     * Check whether the given term exists in any section of shift-lists of the dictionary
+     * + Stores matching line containing the term for use in shifting later
+     *
+     * @param  term        String to be looked for in shifter dictionary
+     * @return boolean
+     */
+    public boolean isTermInDictionary(String term, boolean isFileExtensionRelevant) {
+        if (!isFileExtensionRelevant || this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
+            // Merge all terms-blocks
+            String dictionaryTerms = this.dictionaryContents;
+            Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
 
-			for(Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
-				String currentExtensionsList    = dictionaryExtensionsBlock.toString();
-				dictionaryTerms                 = dictionaryTerms.replace(currentExtensionsList, "");
-			}
+            for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
+                String currentExtensionsList = dictionaryExtensionsBlock.toString();
+                dictionaryTerms = dictionaryTerms.replace(currentExtensionsList, "");
+            }
 
-			// Term is contained? store list of shifting neighbours
-			if( dictionaryTerms.contains("|" + term + "|") ) {
-				this.relevantTermsList	= extractFirstMatchingTermsLine(dictionaryTerms, term);
-				return true;
-			}
-			// Not found case-sensitive, try insensitive
-            String dictionaryTermsLower = dictionaryTerms.toLowerCase();
-            String termLower            = term.toLowerCase();
-            if( dictionaryTermsLower.contains("|" + termLower + "|") ) {
-                this.relevantTermsList	= extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
+            // Term is contained? store list of shifting neighbours
+            if (dictionaryTerms.contains("|" + term + "|")) {
+                this.relevantTermsList = extractFirstMatchingTermsLine(dictionaryTerms, term);
                 return true;
             }
-		}
+            // Not found case-sensitive, try insensitive
+            String dictionaryTermsLower = dictionaryTerms.toLowerCase();
+            String termLower = term.toLowerCase();
+            if (dictionaryTermsLower.contains("|" + termLower + "|")) {
+                this.relevantTermsList = extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * Check whether the given term exists in any section of shift-lists of the dictionary,
-	 * looking only at lists in blocks having assigned the given extension
-	 * + Stores first matching line containing the term for use in shifting later
-	 *
-	 * @param	term			String to be looked for in shifter dictionary
-	 * @param	fileExtension	Extension of edited file
-	 * @return	boolean
-	 */
-	public boolean isTermInDictionary(String term, String fileExtension) {
-		if( fileExtension != null && this.dictionaryContents.contains("|" + fileExtension + "|")) {
-			this.fileExtension	= fileExtension;
+    /**
+     * Check whether the given term exists in any section of shift-lists of the dictionary,
+     * looking only at lists in blocks having assigned the given extension
+     * + Stores first matching line containing the term for use in shifting later
+     *
+     * @param  term            String to be looked for in shifter dictionary
+     * @param  fileExtension   Extension of edited file
+     * @return boolean
+     */
+    public boolean isTermInDictionary(String term, String fileExtension) {
+        if (fileExtension != null && this.dictionaryContents.contains("|" + fileExtension + "|")) {
+            this.fileExtension = fileExtension;
 
-			// Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
-			Object[] blocksOfExtension	= getAllFileExtensionsBlockStarts(fileExtension);
+            // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
+            Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(fileExtension);
 
-			// Go over all blocks of lists of shift-terms, fetch first one containing the term
-			for (Object aBlocksOfExtension : blocksOfExtension) {
-				String curExtensionsList = aBlocksOfExtension.toString();
-				String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtensionsList, "}");
+            // Go over all blocks of lists of shift-terms, fetch first one containing the term
+            for (Object aBlocksOfExtension : blocksOfExtension) {
+                String curExtensionsList = aBlocksOfExtension.toString();
+                String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtensionsList, "}");
 
-				// Term is contained? store list of shifting neighbours
-				if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
-					this.relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
-					return true;
-				}
-			}
-		}
+                // Term is contained? store list of shifting neighbours
+                if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
+                    this.relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
+                    return true;
+                }
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	/**
-	 * @param	termsLines	Terms lines from dictionary
-	 * @param	term		Word to be shifted
-	 * @return	First matching term line
-	 */
-	private static String extractFirstMatchingTermsLine(String termsLines, String term) {
-		String sword		= "|" + term + "|";
-		String[] allLines	= termsLines.split("\n");
-		int numLines		= allLines.length;
+    /**
+     * @param  termsLines  Terms lines from dictionary
+     * @param  term        Word to be shifted
+     * @return First matching term line
+     */
+    private static String extractFirstMatchingTermsLine(String termsLines, String term) {
+        String sword = "|" + term + "|";
+        String[] allLines = termsLines.split("\n");
+        int numLines = allLines.length;
 
-		String curLine;
-		int i = 0;
+        String curLine;
+        int i = 0;
 
-		while(i < numLines) {
-			curLine	= allLines[i];
-			curLine	= curLine.replaceAll("\\s*", "").replaceAll("\\{*", "").replaceAll("\\}*", "").trim();
+        while (i < numLines) {
+            curLine = allLines[i];
+            curLine = curLine.replaceAll("\\s*", "").replaceAll("\\{*", "").replaceAll("\\}*", "").trim();
 
-			if( ! curLine.isEmpty() && curLine.contains(sword) ) {
-				return curLine;
-			}
+            if (!curLine.isEmpty() && curLine.contains(sword)) {
+                return curLine;
+            }
 
-			i++;
-		}
+            i++;
+        }
 
-		return null;
-	}
+        return null;
+    }
 
-	/**
-	 * Get all starting lines of term-blocks (extensions) from dictionary
-	 *
-	 * @return	Object[]	e.g. [0 => "('js') {", 1 => "('html') {", 2 => ...]
-	 */
-	private Object[] getAllFileExtensionsBlockStarts() {
-		List<String> allMatches = new ArrayList<String>();
+    /**
+     * Get all starting lines of term-blocks (extensions) from dictionary
+     *
+     * @return Object[]    e.g. [0 => "('js') {", 1 => "('html') {", 2 => ...]
+     */
+    private Object[] getAllFileExtensionsBlockStarts() {
+        List<String> allMatches = new ArrayList<String>();
 
-		String pattern	= "\\(\\|([a-z|\\*]+\\|)*\\)(\\s)*\\{";
-		Matcher m = Pattern.compile(pattern).matcher(this.dictionaryContents);
-		while (m.find()) {
-			allMatches.add(m.group());
-		}
+        String pattern = "\\(\\|([a-z|\\*]+\\|)*\\)(\\s)*\\{";
+        Matcher m = Pattern.compile(pattern).matcher(this.dictionaryContents);
+        while (m.find()) {
+            allMatches.add(m.group());
+        }
 
-		return allMatches.toArray();
-	}
+        return allMatches.toArray();
+    }
 
-	/**
-	 * Get all starting lines of term-blocks (extensions) from dictionary,
-	 * limited to those containing the given file extension
-	 *
-	 * @return	Object[]
-	 */
-	private Object[] getAllFileExtensionsBlockStarts(String fileExtension) {
-		List<String> allMatches = new ArrayList<String>();
-		Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
+    /**
+     * Get all starting lines of term-blocks (extensions) from dictionary,
+     * limited to those containing the given file extension
+     *
+     * @return Object[]
+     */
+    private Object[] getAllFileExtensionsBlockStarts(String fileExtension) {
+        List<String> allMatches = new ArrayList<String>();
+        Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
 
-		for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
-			String curBlock = dictionaryExtensionsBlock.toString();
-			if (curBlock.contains("|" + fileExtension + "|")) {
-				allMatches.add(curBlock);
-			}
-		}
+        for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
+            String curBlock = dictionaryExtensionsBlock.toString();
+            if (curBlock.contains("|" + fileExtension + "|")) {
+                allMatches.add(curBlock);
+            }
+        }
 
-		return allMatches.toArray();
-	}
+        return allMatches.toArray();
+    }
 
-	/**
-	 * Shift given word, using the (already fetched) list of relevant terms
-	 *
-	 * @param	word				Word to be shifted
-	 * @param	isUp				Shifting up? (or down)
-	 * @return	The shifted word
-	 */
-	public String getShifted(String word, boolean isUp) {
-		String shiftTerms	= this.relevantTermsList.replaceFirst("\\|", "");
-			   shiftTerms	= UtilsTextual.replaceLast(shiftTerms, "|", "");
+    /**
+     * Shift given word, using the (already fetched) list of relevant terms
+     *
+     * @param  word     Word to be shifted
+     * @param  isUp     Shifting up? (otherwise down)
+     * @return The shifted word
+     */
+    public String getShifted(String word, boolean isUp) {
+        String shiftTerms = this.relevantTermsList.replaceFirst("\\|", "");
+        shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
-		String[] termsList	= shiftTerms.split("\\|");
-		if( termsList.length > 0 ) {
-			StaticWordType wordType = new StaticWordType(termsList);
-			String shiftedWord = wordType.getShifted(word, isUp);
+        String[] termsList = shiftTerms.split("\\|");
+        if (termsList.length > 0) {
+            StaticWordType wordType = new StaticWordType(termsList);
+            String shiftedWord = wordType.getShifted(word, isUp);
 
-			return shiftedWord.equals(word)
-				? wordType.getShifted(word.toLowerCase(), isUp)
-				: shiftedWord;
-		}
+            return shiftedWord.equals(word)
+                    ? wordType.getShifted(word.toLowerCase(), isUp)
+                    : shiftedWord;
+        }
 
-		return word;
-	}
+        return word;
+    }
 
 }

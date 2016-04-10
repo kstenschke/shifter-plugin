@@ -20,62 +20,61 @@ package com.kstenschke.shifter.models.shiftertypes;
  */
 public class TernaryExpression {
 
-	private boolean endsWithSemicolon = false;
+    private boolean endsWithSemicolon = false;
 
-	/**
-	 * Check whether shifted string is a ternary expression
-	 *
-	 * @param   str
-	 * @param   prefixChar     Character preceding the string
-	 * @return  boolean.
-	 */
-	public static boolean isTernaryExpression(String str, String prefixChar) {
-		String expression = str.trim();
+    /**
+     * Check whether shifted string is a ternary expression
+     *
+     * @param str
+     * @param prefixChar Character preceding the string
+     * @return boolean
+     */
+    public static boolean isTernaryExpression(String str, String prefixChar) {
+        String expression = str.trim();
 
-		return (expression.startsWith("?") || "?".equals(prefixChar)
-			 && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
-			 && expression.length() >= 3
-		);
-	}
+        return (expression.startsWith("?") || "?".equals(prefixChar)
+                && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
+                && expression.length() >= 3
+        );
+    }
 
-	/**
-	 * Shift: swap IF and ELSE parts
-	 *
-	 * @param   str				string to be shifted
-	 * @param   isUp            Shifting up or down? irrelevant w/ this type
-	 * @return  String			The shifted string
-	 */
-	public static String getShifted(String str) {
-	   	Integer offsetElse = str.indexOf(":");
+    /**
+     * Shift: swap IF and ELSE parts
+     *
+     * @param str  string to be shifted
+     * @return String   The shifted string
+     */
+    public static String getShifted(String str) {
+        Integer offsetElse = str.indexOf(":");
 
-		if( offsetElse > -1 ) {
-			boolean endsWithSemicolon = str.endsWith(";");
+        if (offsetElse > -1) {
+            boolean endsWithSemicolon = str.endsWith(";");
 
-			boolean isQuestionMarkInline = str.startsWith("?");
-			if (isQuestionMarkInline) {
-				str = str.substring(1);
-			}
+            boolean isQuestionMarkInline = str.startsWith("?");
+            if (isQuestionMarkInline) {
+                str = str.substring(1);
+            }
 
-			String partThan = str.substring(0, offsetElse - 1);
-			String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length()-1) : str.substring(offsetElse);
+            String partThan = str.substring(0, offsetElse - 1);
+            String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length() - 1) : str.substring(offsetElse);
 
-			// Detect and maintain "glue" w/ (single) whitespace
-			boolean wrapWithSpace = partThan.endsWith(" ") || partElse.startsWith(" ");
-			boolean wrapWithTab   = partThan.endsWith("\t") || partElse.startsWith("\t");
+            // Detect and maintain "glue" w/ (single) whitespace
+            boolean wrapWithSpace = partThan.endsWith(" ") || partElse.startsWith(" ");
+            boolean wrapWithTab = partThan.endsWith("\t") || partElse.startsWith("\t");
 
-			String glue = wrapWithSpace ? " " : (wrapWithTab ? "\t" : "");
+            String glue = wrapWithSpace ? " " : (wrapWithTab ? "\t" : "");
 
-			str = partElse.trim() + glue + ":" + glue + partThan.trim();
+            str = partElse.trim() + glue + ":" + glue + partThan.trim();
 
-			if( isQuestionMarkInline ) {
-				str = "?" + glue + str;
-			}
-			if( endsWithSemicolon ) {
-				str += ";";
-			}
-		}
+            if (isQuestionMarkInline) {
+                str = "?" + glue + str;
+            }
+            if (endsWithSemicolon) {
+                str += ";";
+            }
+        }
 
-		return str;
-	}
+        return str;
+    }
 
 }

@@ -26,69 +26,69 @@ import java.util.regex.Pattern;
  */
 public class QuotedString {
 
-	private String quoteChar;
+    private String quoteChar;
 
-	/**
-	 * Check whether shifted word is wrapped in quote characters
-	 *
-	 * @param   prefixChar     Character preceding the string
-	 * @param   postfixChar    Character after the string
-	 * @return  boolean.
-	 */
-	public boolean isQuotedString(String prefixChar, String postfixChar) {
-		this.quoteChar = prefixChar;
+    /**
+     * Check whether shifted word is wrapped in quote characters
+     *
+     * @param   prefixChar     Character preceding the string
+     * @param   postfixChar    Character after the string
+     * @return  boolean.
+     */
+    public boolean isQuotedString(String prefixChar, String postfixChar) {
+        this.quoteChar = prefixChar;
 
-		// Must begin be wrapped in single-, double quotes, or backticks
-		return  ( "'".equals(prefixChar)    && "'".equals(postfixChar) )     // word is wrapped in single quotes
-			 || ( "\"".equals(prefixChar)   && "\"".equals(postfixChar) )    // word is wrapped in double quotes
-			 || ( "`".equals(prefixChar)    && "`".equals(postfixChar) );    // word is wrapped in backticks
-	}
+        // Must begin be wrapped in single-, double quotes, or backticks
+        return  ( "'".equals(prefixChar)    && "'".equals(postfixChar) )     // word is wrapped in single quotes
+             || ( "\"".equals(prefixChar)   && "\"".equals(postfixChar) )    // word is wrapped in double quotes
+             || ( "`".equals(prefixChar)    && "`".equals(postfixChar) );    // word is wrapped in backticks
+    }
 
-	/**
-	 * Shift to prev/next quoted string
-	 *
-	 * @param   word           Quoted word to be shifted
-	 * @param   editorText     Full text of editor
-	 * @param   isUp           Shifting up or down?
-	 * @return  String
-	 */
-	public String getShifted(String word, CharSequence editorText, boolean isUp) {
-	   	// Get full text of currently edited document
-		String text = editorText.toString();
+    /**
+     * Shift to prev/next quoted string
+     *
+     * @param   word           Quoted word to be shifted
+     * @param   editorText     Full text of editor
+     * @param   isUp           Shifting up or down?
+     * @return  String
+     */
+    public String getShifted(String word, CharSequence editorText, boolean isUp) {
+        // Get full text of currently edited document
+        String text = editorText.toString();
 
-		// Use regEx matcher to extract array of all string wrapped in current quoting sign
-		List<String> allMatches = new ArrayList<String>();
+        // Use regEx matcher to extract array of all string wrapped in current quoting sign
+        List<String> allMatches = new ArrayList<String>();
 
-		String pattern = "(?<=" + this.quoteChar + ")[a-zA-Z0-9_]+(?=" + this.quoteChar + ")";
-		Matcher m = Pattern.compile(pattern).matcher(text);
+        String pattern = "(?<=" + this.quoteChar + ")[a-zA-Z0-9_]+(?=" + this.quoteChar + ")";
+        Matcher m = Pattern.compile(pattern).matcher(text);
 
-		while (m.find()) {
-			if( !allMatches.contains(m.group())) {
-				allMatches.add(m.group());
-			}
-		}
+        while (m.find()) {
+            if( !allMatches.contains(m.group())) {
+                allMatches.add(m.group());
+            }
+        }
 
-		// Sort var names alphabetically
-		Collections.sort(allMatches);
-		int amountVars = allMatches.size();
+        // Sort var names alphabetically
+        Collections.sort(allMatches);
+        int amountVars = allMatches.size();
 
-		// Find position of given variable
-		int curIndex   = allMatches.indexOf(word);
+        // Find position of given variable
+        int curIndex   = allMatches.indexOf(word);
 
-		// Return next/previous variable name
-		if( isUp ) {
-			curIndex++;
-			if( curIndex == amountVars ) {
-				curIndex = 0;
-			}
-		} else {
-			curIndex--;
-			if( curIndex == -1 ) {
-				curIndex = amountVars - 1;
-			}
-		}
+        // Return next/previous variable name
+        if( isUp ) {
+            curIndex++;
+            if( curIndex == amountVars ) {
+                curIndex = 0;
+            }
+        } else {
+            curIndex--;
+            if( curIndex == -1 ) {
+                curIndex = amountVars - 1;
+            }
+        }
 
-		return allMatches.get(curIndex);
-	}
+        return allMatches.get(curIndex);
+    }
 
 }

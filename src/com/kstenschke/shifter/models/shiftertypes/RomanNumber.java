@@ -22,20 +22,20 @@ import com.kstenschke.shifter.utils.UtilsTextual;
  */
 public class RomanNumber {
 
-	/**
-	 * @param	str			String to be checked
-	 * @return	boolean     Does the given string represent a CSS length value?
-	 */
-	public static boolean isRomanNumber(String str) {
+    /**
+     * @param  str      String to be checked
+     * @return boolean  Does the given string represent a CSS length value?
+     */
+    public static boolean isRomanNumber(String str) {
         return UtilsTextual.containsOnly(str, new String[]{"I", "V", "X", "L", "C", "D", "M"});
-	}
+    }
 
-	/**
-	 * @param	value       String representing a roman numeral
-	 * @param	isUp		Shifting up or down?
-	 * @return	String      Value shifted up or down by one
-	 */
-	public String getShifted(String value, boolean isUp) {
+    /**
+     * @param  value    String representing a roman numeral
+     * @param  isUp     Shifting up or down?
+     * @return String   Value shifted up or down by one
+     */
+    public String getShifted(String value, boolean isUp) {
         int intVal = new RomanNumeral(value).toInt();
 
         if( intVal == 1 && ! isUp ) {

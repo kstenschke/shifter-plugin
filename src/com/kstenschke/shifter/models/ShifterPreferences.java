@@ -46,7 +46,7 @@ public class ShifterPreferences {
     /**
      * Store dictionary
      *
-     * @param	dictionary		Contents to be stored in dictionary preference
+     * @param dictionary    Contents to be stored in dictionary preference
      */
     public static void saveDictionary(String dictionary) {
         PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY, dictionary);
@@ -55,7 +55,7 @@ public class ShifterPreferences {
     /**
      * Store sorting mode
      *
-     * @param	mode		case sensitive / insensitive
+     * @param mode  case sensitive / insensitive
      */
     public static void saveSortingMode(Integer mode) {
         PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
@@ -70,14 +70,14 @@ public class ShifterPreferences {
     }
 
     /**
-     * @param	isActive
+     * @param isActive
      */
     public static void saveIsActivePreserveCase(boolean isActive) {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
     }
 
     /**
-     * @return	String  Dictionary
+     * @return String  Dictionary
      */
     public static String getDictionary() {
         String dictionary = null;
@@ -95,7 +95,7 @@ public class ShifterPreferences {
     }
 
     /**
-     * @return	int
+     * @return int
      */
     public static int getShiftMoreSize() {
         try {
@@ -108,7 +108,7 @@ public class ShifterPreferences {
     }
 
     /**
-     * @return	int     Sorting mode: case sensitive / insensitive
+     * @return int  Sorting mode: case sensitive / insensitive
      */
     public static Integer getSortingMode() {
         try {
@@ -131,7 +131,7 @@ public class ShifterPreferences {
     }
 
     /**
-     * @return  Boolean     (Note: Object and not primitive boolean is required here)
+     * @return Boolean  Note: Object and not primitive boolean is required here
      */
     public static Boolean getIsActivePreserveCase() {
         try {

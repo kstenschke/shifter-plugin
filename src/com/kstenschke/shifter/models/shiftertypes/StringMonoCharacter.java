@@ -22,34 +22,34 @@ import org.apache.commons.lang.StringUtils;
  */
 public class StringMonoCharacter {
 
-	/**
-	 * @param word String to be shifted currently
-	 * @return boolean.
-	 */
-	public static boolean isMonoCharacterString(String word) {
-		if (word.length() == 1) {
-			return true;
-		}
+    /**
+     * @param word String to be shifted currently
+     * @return boolean.
+     */
+    public static boolean isMonoCharacterString(String word) {
+        if (word.length() == 1) {
+            return true;
+        }
 
-		String wordLower = word.toLowerCase();
+        String wordLower = word.toLowerCase();
 
-		String firstChar = wordLower.substring(0, 1);
+        String firstChar = wordLower.substring(0, 1);
 
-		return wordLower.replace(firstChar, "").length() == 0;
-	}
+        return wordLower.replace(firstChar, "").length() == 0;
+    }
 
-	/**
-	 * Shift mono-character string
-	 *
-	 * @param   word Quoted word to be shifted
-	 * @param   isUp Shifting up or down?
-	 * @return  String
-	 */
-	public String getShifted(String word, boolean isUp) {
-		char firstChar  = word.toLowerCase().charAt(0);
-		firstChar       = (char) (firstChar + (isUp ? 1 : -1));
+    /**
+     * Shift mono-character string
+     *
+     * @param word Quoted word to be shifted
+     * @param isUp Shifting up or down?
+     * @return String
+     */
+    public String getShifted(String word, boolean isUp) {
+        char firstChar = word.toLowerCase().charAt(0);
+        firstChar = (char) (firstChar + (isUp ? 1 : -1));
 
-		return StringUtils.repeat(String.valueOf(firstChar), word.length());
-	}
+        return StringUtils.repeat(String.valueOf(firstChar), word.length());
+    }
 
 }

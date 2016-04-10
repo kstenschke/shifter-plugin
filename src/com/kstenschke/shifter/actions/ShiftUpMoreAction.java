@@ -28,7 +28,7 @@ class ShiftUpMoreAction extends AnAction {
     /**
      * Disable when no editor available
      *
-     * @param	event		Action system event
+     * @param event    Action system event
      */
     public void update( AnActionEvent event ) {
         event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);

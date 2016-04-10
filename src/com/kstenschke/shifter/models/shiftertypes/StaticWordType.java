@@ -23,56 +23,56 @@ import com.kstenschke.shifter.utils.UtilsArray;
 public class StaticWordType {
 
     private final String[] keywords;
-	private final int amountKeywords;
-	private final String regExPattern;
-
-	/**
-	 * Constructor
-	 */
-	public StaticWordType(String[] keywords) {
-		this.keywords		= keywords;
-		this.amountKeywords = keywords.length;
-		this.regExPattern = UtilsArray.implode(this.keywords, "|");
-	}
+    private final int amountKeywords;
+    private final String regExPattern;
 
     /**
-	 * Check whether the given string is a known keyword of the word type
-	 *
-	 * @param	word		Word to be compared against keywords
-	 * @return	boolean
-	 */
-	public boolean hasWord(String word) {
-		return (word).matches(this.regExPattern);
-	}
+     * Constructor
+     */
+    public StaticWordType(String[] keywords) {
+        this.keywords        = keywords;
+        this.amountKeywords = keywords.length;
+        this.regExPattern = UtilsArray.implode(this.keywords, "|");
+    }
 
-	/**
-	 * @param	word		Word to be shifted
-	 * @param	isUp		Shifting up or down?
-	 * @return	String		Shifting result
-	 */
-	public String getShifted(String word, boolean isUp) {
-		int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word);
+    /**
+     * Check whether the given string is a known keyword of the word type
+     *
+     * @param  word        Word to be compared against keywords
+     * @return boolean
+     */
+    public boolean hasWord(String word) {
+        return (word).matches(this.regExPattern);
+    }
 
-		if( wordPositionOriginal == -1 ) {
-			return word;
-		}
+    /**
+     * @param  word     Word to be shifted
+     * @param  isUp     Shifting up or down?
+     * @return String   Shifting result
+     */
+    public String getShifted(String word, boolean isUp) {
+        int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word);
 
-		int wordPositionShifted;
-		if (isUp) {
-			// Shifting up
-			wordPositionShifted = wordPositionOriginal + 1;
-			if (wordPositionShifted >= this.amountKeywords) {
-				wordPositionShifted = 0;
-			}
-		} else {
-			// Shifting down
-			wordPositionShifted = wordPositionOriginal - 1;
-			if (wordPositionShifted < 0) {
-				wordPositionShifted = this.amountKeywords - 1;
-			}
-		}
+        if( wordPositionOriginal == -1 ) {
+            return word;
+        }
 
-		return this.keywords[wordPositionShifted];
-	}
+        int wordPositionShifted;
+        if (isUp) {
+            // Shifting up
+            wordPositionShifted = wordPositionOriginal + 1;
+            if (wordPositionShifted >= this.amountKeywords) {
+                wordPositionShifted = 0;
+            }
+        } else {
+            // Shifting down
+            wordPositionShifted = wordPositionOriginal - 1;
+            if (wordPositionShifted < 0) {
+                wordPositionShifted = this.amountKeywords - 1;
+            }
+        }
+
+        return this.keywords[wordPositionShifted];
+    }
 
 }

@@ -39,22 +39,22 @@ import java.util.regex.Pattern;
 
 class ActionsPerformer {
 
-	private final Editor editor;
-	private Document document;
-	private CharSequence editorText;
+    private final Editor editor;
+    private Document document;
+    private CharSequence editorText;
     private int caretOffset;
-	private SelectionModel selectionModel;
-	private boolean hasSelection;
+    private SelectionModel selectionModel;
+    private boolean hasSelection;
 
     private String filename = null;
 
-	/**
-	 * Constructor
-	 */
-	ActionsPerformer(final AnActionEvent event) {
-		this.editor = event.getData(PlatformDataKeys.EDITOR);
+    /**
+     * Constructor
+     */
+    ActionsPerformer(final AnActionEvent event) {
+        this.editor = event.getData(PlatformDataKeys.EDITOR);
 
-		if (this.editor != null) {
+        if (this.editor != null) {
             this.document           = this.editor.getDocument();
             this.filename           = this.getFilename();
             this.editorText         = this.document.getCharsSequence();
@@ -62,16 +62,16 @@ class ActionsPerformer {
             this.caretOffset        = caretModel.getOffset();
             this.selectionModel     = this.editor.getSelectionModel();
             this.hasSelection       = this.selectionModel.hasSelection();
-		}
-	}
+        }
+    }
 
-	/**
+    /**
      * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
      *
      * @param   shiftUp     Shift up or down?
      * @param   moreCount   Current "more" count, starting with 1. If non-more shift: null
      */
-	public void write(boolean shiftUp, @Nullable Integer moreCount) {
+    public void write(boolean shiftUp, @Nullable Integer moreCount) {
         if (this.editor != null) {
             if (this.hasSelection) {
                 if( this.selectionModel.getBlockSelectionStarts().length > 1 ) {
@@ -97,7 +97,7 @@ class ActionsPerformer {
                 }
             }
         }
-	}
+    }
 
     /**
      * @param   shiftUp
@@ -368,20 +368,20 @@ class ActionsPerformer {
     }
 
     /**
-	 * @param   lines
-	 * @param   shiftUp
-	 * @return  Given lines sorted alphabetically ascending / descending
-	 */
-	private List<String> sortLines(List<String> lines, boolean shiftUp) {
+     * @param   lines
+     * @param   shiftUp
+     * @return  Given lines sorted alphabetically ascending / descending
+     */
+    private List<String> sortLines(List<String> lines, boolean shiftUp) {
         UtilsLinesList.DelimiterDetector delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
 
         if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {
-		    Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
+            Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
         } else {
-		    Collections.sort(lines);
+            Collections.sort(lines);
         }
 
-		if( !shiftUp ) {
+        if( !shiftUp ) {
             Collections.reverse(lines);
         }
 
@@ -390,28 +390,28 @@ class ActionsPerformer {
             lines   = UtilsLinesList.addDelimiter(lines, delimiterDetector.getCommonDelimiter(), delimiterDetector.isDelimitedLastLine());
         }
 
-		return lines;
-	}
+        return lines;
+    }
 
-	/**
-	 * @param   selectedText
-	 * @param   shiftUp
-	 * @return  Given comma separated list, sorted alphabetically ascending / descending
-	 */
-	private String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
-		String[] items = selectedText.split(",(\\s)*");
+    /**
+     * @param   selectedText
+     * @param   shiftUp
+     * @return  Given comma separated list, sorted alphabetically ascending / descending
+     */
+    private String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
+        String[] items = selectedText.split(",(\\s)*");
 
         if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE) ) {
-		    Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
+            Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
         } else {
             Arrays.sort(items);
         }
 
-		if( !shiftUp ) {
+        if( !shiftUp ) {
             Collections.reverse(Arrays.asList(items));
         }
 
-		return UtilsArray.implode(items, ", ");
-	}
+        return UtilsArray.implode(items, ", ");
+    }
 
 }

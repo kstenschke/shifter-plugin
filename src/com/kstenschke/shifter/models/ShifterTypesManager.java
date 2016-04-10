@@ -70,12 +70,12 @@ public class ShifterTypesManager {
     /**
      * Detect word type (get the one with highest priority to be shifted) of given string
      *
-     * @param	word			Word whose type shall be identified
-     * @param	prefixChar		Prefix character
-     * @param	postfixChar		Postfix character
-     * @param	line			Whole line the caret is in
-     * @param	filename		Name of edited file
-     * @return	int
+     * @param  word         Word whose type shall be identified
+     * @param  prefixChar   Prefix character
+     * @param  postfixChar  Postfix character
+     * @param  line         Whole line the caret is in
+     * @param  filename     Name of edited file
+     * @return int
      */
     public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
         // PHP variable (must be prefixed with "$")
@@ -107,7 +107,7 @@ public class ShifterTypesManager {
 
         // File extension specific term in dictionary
         this.typeDictionaryTerm = new com.kstenschke.shifter.models.shiftertypes.Dictionary();
-        String fileExtension	= UtilsFile.extractFileExtension(filename);
+        String fileExtension    = UtilsFile.extractFileExtension(filename);
 
         if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
             return TYPE_DICTIONARY_WORD_EXT_SPECIFIC;
@@ -143,7 +143,7 @@ public class ShifterTypesManager {
 
         // Operator sign (<, >, +, -)
         if ( OperatorSign.isOperatorSign(word)) {
-            this.typeOperatorSign	= new OperatorSign();
+            this.typeOperatorSign    = new OperatorSign();
             return TYPE_OPERATOR_SIGN;
         }
 
@@ -155,7 +155,7 @@ public class ShifterTypesManager {
 
         // MonoCharString (= consisting from any amount of the same character)
         if (StringMonoCharacter.isMonoCharacterString(word)) {
-            this.typeMonoCharacterString	= new StringMonoCharacter();
+            this.typeMonoCharacterString    = new StringMonoCharacter();
             return TYPE_MONO_CHARACTER_STRING;
         }
 
@@ -182,8 +182,8 @@ public class ShifterTypesManager {
     }
 
     /**
-     * @param   word
-     * @return  boolean
+     * @param  word
+     * @return boolean
      */
     private boolean isKeywordAccessType(String word) {
         String[] keywordsAccessType = {"public", "private", "protected"};
@@ -197,15 +197,15 @@ public class ShifterTypesManager {
      * ShifterTypesManager: get next/previous keyword of given word group
      * Generic: calculate shifted value
      *
-     * @param	word			Word to be shifted
-     * @param	idWordType		Word type ID
-     * @param	isUp			Shift up or down?
-     * @param	editorText		Full text of currently edited document
-     * @param	caretOffset		Caret offset in document
-     * @param	filename		Filename of currently edited file
-     * @param	editor			Editor instance
-     * @param   moreCount       Current "more" count, starting with 1. If non-more shift: null
-     * @return					The shifted word
+     * @param  word         Word to be shifted
+     * @param  idWordType   Word type ID
+     * @param  isUp         Shift up or down?
+     * @param  editorText   Full text of currently edited document
+     * @param  caretOffset  Caret offset in document
+     * @param  filename     Filename of currently edited file
+     * @param  editor       Editor instance
+     * @param  moreCount    Current "more" count, starting with 1. If non-more shift: null
+     * @return              The shifted word
      */
         public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
         switch (idWordType) {
@@ -252,14 +252,14 @@ public class ShifterTypesManager {
     }
 
     /**
-     * @param   word
-     * @param   isUp
-     * @param   editorText
-     * @param   caretOffset
-     * @param   moreCount
-     * @param   filename
-     * @param   editor
-     * @return  String
+     * @param  word
+     * @param  isUp
+     * @param  editorText
+     * @param  caretOffset
+     * @param  moreCount
+     * @param  filename
+     * @param  editor
+     * @return String
      */
     public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
         String line    = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);

@@ -27,7 +27,7 @@ import java.io.InputStream;
 
 public class ShifterConfiguration {
 
-	private JPanel rootPanel;
+    private JPanel rootPanel;
     private JTextArea textAreaDictionary;
     private JCheckBox checkBoxPreserveCase;
 
@@ -43,10 +43,10 @@ public class ShifterConfiguration {
     private Boolean hasSomethingChanged = false;
 
     /**
-	 * Constructor
-	 */
-	public ShifterConfiguration() {
-		init();
+     * Constructor
+     */
+    public ShifterConfiguration() {
+        init();
     }
 
     public void init() {
@@ -84,10 +84,10 @@ public class ShifterConfiguration {
     }
 
     /**
-	 * Initialize the form: fill-in dictionary content from stored preference or factory default
-	 */
-	private void initFormValues() {
-		String dictionary   = ShifterPreferences.getDictionary();
+     * Initialize the form: fill-in dictionary content from stored preference or factory default
+     */
+    private void initFormValues() {
+        String dictionary   = ShifterPreferences.getDictionary();
 
         int shiftMoreValue = ShifterPreferences.getShiftMoreSize();
         this.spinnerShiftMore.setModel( new SpinnerNumberModel(shiftMoreValue, 2, 999, 1));
@@ -107,42 +107,42 @@ public class ShifterConfiguration {
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
         this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
 
-		if( dictionary == null || dictionary.isEmpty() )  {
-			dictionary	= getDefaultDictionary();
-		}
+        if( dictionary == null || dictionary.isEmpty() )  {
+            dictionary = getDefaultDictionary();
+        }
 
-		this.textAreaDictionary.setText(dictionary);
-	}
+        this.textAreaDictionary.setText(dictionary);
+    }
 
-	/**
-	 * Get default dictionary contents
-	 *
-	 * @return	Default dictionary
-	 */
-	public String getDefaultDictionary() {
-		//@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
-		InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
+    /**
+     * Get default dictionary contents
+     *
+     * @return Default dictionary
+     */
+    public String getDefaultDictionary() {
+        //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
+        InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
 
-		return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
-	}
+        return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
+    }
 
-	/**
-	 * Reset default settings
-	 */
-	public void reset() {
+    /**
+     * Reset default settings
+     */
+    public void reset() {
         spinnerShiftMore.setValue(10);
         radioButtonCaseInsensitive.setSelected(true);
         radioButtonShiftInSeconds.setSelected(true);
 
         this.textAreaDictionary.setText( getDefaultDictionary() );
-	}
+    }
 
     /**
      * @return  JPanel
      */
-	public JPanel getRootPanel() {
-		return rootPanel;
-	}
+    public JPanel getRootPanel() {
+        return rootPanel;
+    }
 
     public String getShiftMoreSize() {
         return spinnerShiftMore.getValue().toString();
@@ -170,27 +170,27 @@ public class ShifterConfiguration {
         return checkBoxPreserveCase.isSelected();
     }
 
-	/**
-	 * Config modified?
-	 *
-	 * @return	boolean
-	 */
-	public boolean isModified() {
-		return    this.hasSomethingChanged
+    /**
+     * Config modified?
+     *
+     * @return boolean
+     */
+    public boolean isModified() {
+        return    this.hasSomethingChanged
                || Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
                || ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
                || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() )
                || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
                || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
         );
-	}
+    }
 
     /**
      * @return  String
      */
     public String getDictionary() {
-		return this.textAreaDictionary.getText();
-	}
+        return this.textAreaDictionary.getText();
+    }
 
     public void apply() {
         // Store configuration
@@ -199,7 +199,7 @@ public class ShifterConfiguration {
         ShifterPreferences.saveIsActivePreserveCase(this.getIsActivePreserveCase());
         ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
         // Store dictionary
-        String dictionary	= this.getDictionary();
+        String dictionary = this.getDictionary();
         if( dictionary != null ) {
             ShifterPreferences.saveDictionary(dictionary);
         }

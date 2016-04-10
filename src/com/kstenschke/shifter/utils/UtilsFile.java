@@ -17,55 +17,55 @@ package com.kstenschke.shifter.utils;
 
 public class UtilsFile {
 
-	/**
-	 * @param	filename		Filename from which to extract the extension
-	 * @param	toLowerCase
-	 * @return	The extension   Everything after the last "." in the full filename
-	 */
-	public static String extractFileExtension(String filename, boolean toLowerCase) {
-		if( filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".") ) {
-			return null;
-		}
+    /**
+     * @param  filename         Filename from which to extract the extension
+     * @param  toLowerCase
+     * @return The extension    Everything after the last "." in the full filename
+     */
+    public static String extractFileExtension(String filename, boolean toLowerCase) {
+        if( filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".") ) {
+            return null;
+        }
 
-		if( filename.contains("/")) {
-			filename = filename.substring(filename.lastIndexOf("/") + 1);
-		}
+        if( filename.contains("/")) {
+            filename = filename.substring(filename.lastIndexOf("/") + 1);
+        }
 
-		return toLowerCase
-				? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase()
-				: filename.substring(filename.lastIndexOf('.') + 1);
-	}
+        return toLowerCase
+                ? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase()
+                : filename.substring(filename.lastIndexOf('.') + 1);
+    }
 
-	public static String extractFileExtension(String filename) {
-		return extractFileExtension(filename, false);
-	}
+    public static String extractFileExtension(String filename) {
+        return extractFileExtension(filename, false);
+    }
 
-	public static boolean filenameEndsWithExtension(String filename) {
-		if (filename == null || filename.isEmpty() || ! filename.contains(".")) {
-			return false;
-		}
+    public static boolean filenameEndsWithExtension(String filename) {
+        if (filename == null || filename.isEmpty() || ! filename.contains(".")) {
+            return false;
+        }
 
-		String[] parts = filename.split("\\.");
+        String[] parts = filename.split("\\.");
 
-		return parts.length > 1 && parts[0].length() > 0 && parts[1].length() > 2;
-	}
+        return parts.length > 1 && parts[0].length() > 0 && parts[1].length() > 2;
+    }
 
-	public static boolean isPhpFile(String filename) {
-		return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(php|phtml)");
-	}
+    public static boolean isPhpFile(String filename) {
+        return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(php|phtml)");
+    }
 
-	public static boolean isCssFile(String filename) {
-		return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(css|scss|sass|less|styl)");
-	}
+    public static boolean isCssFile(String filename) {
+        return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(css|scss|sass|less|styl)");
+    }
 
-	/**
-	 * @param	is		Input stream
-	 * @return	String	Full contents of given stream as string
-	 */
-	public static String getFileStreamAsString(java.io.InputStream is) {
-		java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
+    /**
+     * @param  is       Input stream
+     * @return String   Full contents of given stream as string
+     */
+    public static String getFileStreamAsString(java.io.InputStream is) {
+        java.util.Scanner s = new java.util.Scanner(is).useDelimiter("\\A");
 
-		return s.hasNext() ? s.next() : "";
-	}
+        return s.hasNext() ? s.next() : "";
+    }
 
 }

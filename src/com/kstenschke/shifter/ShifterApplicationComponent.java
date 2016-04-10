@@ -37,8 +37,8 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
 
     private ShifterConfiguration settingsPanel = null;
 
-	/**
-	 * Constructor
+    /**
+     * Constructor
      */
     public ShifterApplicationComponent() {
 //        return this;
@@ -66,13 +66,13 @@ class ShifterApplicationComponent implements PersistentStateComponent<ShifterApp
     }
 
     public void disposeComponent() {
-		/*settingsPanel = null;*/
-	}
+        /*settingsPanel = null;*/
+    }
 
     @NotNull
     public String getComponentName() {
-		return StaticTexts.SETTINGS_COMPONENT_NAME;
-	}
+        return StaticTexts.SETTINGS_COMPONENT_NAME;
+    }
 
     @NotNull
     @Override
