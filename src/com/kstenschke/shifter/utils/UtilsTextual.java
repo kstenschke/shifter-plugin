@@ -327,16 +327,12 @@ public class UtilsTextual {
             return 0;
         }
 
-        if (offset > 0
-                  && !Character.isJavaIdentifierPart(str.charAt(offset))
-                  && Character.isJavaIdentifierPart(str.charAt(offset - 1))
-                  ) {
+        if (offset > 0 && !Character.isJavaIdentifierPart(str.charAt(offset)) && Character.isJavaIdentifierPart(str.charAt(offset - 1))) {
             offset--;
         }
 
         if (Character.isJavaIdentifierPart(str.charAt(offset))) {
             int start = offset;
-
             while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
                 start--;
             }

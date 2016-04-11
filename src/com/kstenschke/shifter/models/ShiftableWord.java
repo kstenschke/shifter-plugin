@@ -89,10 +89,10 @@ public class ShiftableWord {
         String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
 
         // Keep original word casing
-        if (this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
-                && this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
-                && ShifterPreferences.getIsActivePreserveCase()
-                ) {
+        if (    this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
+             && this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
+             && ShifterPreferences.getIsActivePreserveCase()
+        ) {
             if (UtilsTextual.isAllUppercase(this.word)) {
                 // Convert result to upper case
                 shiftedWord = shiftedWord.toUpperCase();

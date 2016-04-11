@@ -85,7 +85,7 @@ public class NumericValue {
         shiftedTimestamp = Long.parseLong(value)
                 + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * (timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000));
 
-        if (editor != null) {
+            if (editor != null) {
             // Create and show balloon with human-readable date
             Balloon.Position pos = Balloon.Position.above;
             String balloonText =

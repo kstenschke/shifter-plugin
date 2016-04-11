@@ -18,11 +18,9 @@ package com.kstenschke.shifter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.application.PathManager;
 import com.intellij.openapi.components.*;
-import com.intellij.openapi.options.ConfigurationException;
 import com.intellij.util.xmlb.XmlSerializerUtil;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
-import org.jetbrains.annotations.Nls;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;

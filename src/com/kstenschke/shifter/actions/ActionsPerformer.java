@@ -144,8 +144,8 @@ class ActionsPerformer {
         if (word != null && !word.isEmpty()) {
             isWordShifted = !this.getShiftedWord(shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
 
-            // Shifting failed, try shifting lower-cased string
             if (!isWordShifted) {
+                // Shifting failed, try shifting lower-cased string
                 String wordLower = word.toLowerCase();
                 isWordShifted = !this.getShiftedWord(shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
             }
@@ -167,15 +167,15 @@ class ActionsPerformer {
     }
 
     /**
-     * @param shiftUp
+     * @param shiftUp           shiftUp   ...or down?
      * @param filename
      * @param word
      * @param line
      * @param wordOffset        null = calculate from word at offset
      * @param replaceInDocument
      * @param isOperator
-     * @param moreCount         Current "more" count, starting with 1. If non-more shift: null
-     * @return String      resulting shifted or original word if no shiftability was found
+     * @param moreCount         current "more" count, starting with 1. If non-more shift: null
+     * @return String           resulting shifted or original word if no shiftability was found
      */
     private String getShiftedWord(
             boolean shiftUp,
@@ -193,13 +193,13 @@ class ActionsPerformer {
                     : UtilsTextual.getStartOfWordAtOffset(this.editorText, this.caretOffset);
         }
 
-        String prefixChar = UtilsTextual.getCharBeforeOffset(this.editorText, wordOffset);
+        String prefixChar  = UtilsTextual.getCharBeforeOffset(this.editorText, wordOffset);
         String postfixChar = UtilsTextual.getCharAfterOffset(this.editorText, wordOffset + word.length() - 1);
 
         // Identify word type and shift it accordingly
         ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, this.editorText, this.caretOffset, filename, moreCount);
 
-        if (!isOperator && NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word) && "-".equals(prefixChar)) {
+        if (!isOperator && (NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word)) && "-".equals(prefixChar)) {
             word = "-" + word;
             wordOffset--;
         }

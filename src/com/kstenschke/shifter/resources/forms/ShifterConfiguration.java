@@ -151,7 +151,7 @@ public class ShifterConfiguration {
     /**
      * @return  Integer     Sorting mode
      */
-    public Integer getSelectedSortingMode() {
+    private Integer getSelectedSortingMode() {
         return radioButtonCaseSensitive.isSelected()
                 ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE
                 : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
