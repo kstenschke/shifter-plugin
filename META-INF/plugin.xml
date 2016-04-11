@@ -15,7 +15,7 @@
   -->
 <!DOCTYPE idea-plugin PUBLIC "Plugin/DTD" "http://plugins.intellij.net/plugin.dtd">
 <idea-plugin url="http://www.coexec.com/">
-    <id>com.kstenschke.shifter</id>
+    <id>Shifter</id>
     <name>Shifter</name>
     <version>1.3.00</version>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
@@ -91,17 +91,20 @@
         <li>1.2.13 Improved ternary expression shifting: can now end with semicolon</li>
         <li>1.2.12 Added shifting (selected) PHP array among long and shorthand syntax (PHP >= 5.4)</li>
         <li>1.2.11
-            <ul>Added: Shifting of roman numerals</ul>
-            <ul>Bugfix: Shifting selected dictionary strings was detecting words case sensitive only</ul>
-            <ul>Bugfix: Hyphened CSS styles were treated as two separate words</ul>
-            <ul>Highlighted source URL in change notes</ul>
-            <ul>Extended default dictionary</ul>
+            <ul>
+                <li>Added: Shifting of roman numerals</li>
+                <li>Bugfix: Shifting selected dictionary strings was detecting words case sensitive only</li>
+                <li>Bugfix: Hyphened CSS styles were treated as two separate words</li>
+                <li>Highlighted source URL in change notes</li>
+                <li>Extended default dictionary</li>
+            </ul>
          </li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
 
-    <idea-version since-build="141.0"/>
+    <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
+    <idea-version since-build="8000"/>
 
     <depends>com.intellij.modules.lang</depends>
 
