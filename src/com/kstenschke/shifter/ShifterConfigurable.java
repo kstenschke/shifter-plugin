@@ -27,13 +27,6 @@ public class ShifterConfigurable implements Configurable {
 
     private ShifterConfiguration settingsPanel;
 
-    /**
-     * Constructor
-     */
-    public ShifterConfigurable() {
-
-    }
-
     public String getDisplayName() {
         return "Shifter";
     }
@@ -46,12 +39,10 @@ public class ShifterConfigurable implements Configurable {
 
     public JComponent createComponent() {
         if (settingsPanel == null) {
-            settingsPanel = new ShifterConfiguration();
+            settingsPanel = ShifterSettings.getInstance().settingsPanel;
         }
 
-        settingsPanel.init();
-
-        return settingsPanel.getRootPanel();
+        return settingsPanel != null ? settingsPanel.getRootPanel() : null;
     }
 
     public boolean isModified() {
@@ -61,12 +52,16 @@ public class ShifterConfigurable implements Configurable {
     public void apply() throws ConfigurationException {
         if (settingsPanel != null) {
             settingsPanel.apply();
+            settingsPanel.refreshFormValues();
         }
     }
 
+    /**
+     * Reset unsaved changes
+     */
     public void reset() {
         if (settingsPanel != null) {
-            settingsPanel.reset();
+            settingsPanel.refreshFormValues();
         }
     }
 

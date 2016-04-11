@@ -18,7 +18,19 @@
         </constraints>
         <properties/>
         <border type="none"/>
-        <children/>
+        <children>
+          <component id="b5de5" class="javax.swing.JTextField" binding="restoreSettings">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="5" fill="0" indent="3" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <editable value="false"/>
+              <font style="1"/>
+              <foreground color="-9980418"/>
+              <text value="Restore Factory Settings"/>
+            </properties>
+          </component>
+        </children>
       </grid>
       <scrollpane id="dea1" binding="scrollPaneDictionary">
         <constraints>
@@ -30,6 +42,8 @@
           <component id="da40c" class="javax.swing.JTextArea" binding="textAreaDictionary">
             <constraints/>
             <properties>
+              <dragEnabled value="false"/>
+              <editable value="true"/>
               <rows value="30"/>
               <text value=""/>
             </properties>

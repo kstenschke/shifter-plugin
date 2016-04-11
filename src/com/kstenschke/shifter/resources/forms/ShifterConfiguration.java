@@ -16,12 +16,14 @@
 
 package com.kstenschke.shifter.resources.forms;
 
+import com.kstenschke.shifter.listeners.ListenerRestoreSettings;
 import com.kstenschke.shifter.models.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import java.awt.*;
 import java.awt.event.*;
 import java.io.InputStream;
 
@@ -39,8 +41,9 @@ public class ShifterConfiguration {
     private JPanel jPanelOptions;
     private JPanel jPanelTopBar;
     private JSpinner spinnerShiftMore;
+    private JTextField restoreSettings;
 
-    private Boolean hasSomethingChanged = false;
+    public Boolean hasSomethingChanged = false;
 
     /**
      * Constructor
@@ -50,7 +53,7 @@ public class ShifterConfiguration {
     }
 
     public void init() {
-        initFormValues();
+        refreshFormValues();
         initFormListeners();
     }
 
@@ -61,6 +64,7 @@ public class ShifterConfiguration {
                 hasSomethingChanged = true;
             }
         };
+
         radioButtonShiftInSeconds.addChangeListener(somethingChangedListener);
         radioButtonShiftInMilliseconds.addChangeListener(somethingChangedListener);
         radioButtonCaseSensitive.addChangeListener(somethingChangedListener);
@@ -81,14 +85,17 @@ public class ShifterConfiguration {
 
             }
         });
+
+        restoreSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        restoreSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        ListenerRestoreSettings listenerRestoreSettings = new ListenerRestoreSettings(this);
+        restoreSettings.addMouseListener(listenerRestoreSettings);
     }
 
     /**
-     * Initialize the form: fill-in dictionary content from stored preference or factory default
+     * Refresh settings and dictionary content from stored preference or factory default
      */
-    private void initFormValues() {
-        String dictionary   = ShifterPreferences.getDictionary();
-
+    public void refreshFormValues() {
         int shiftMoreValue = ShifterPreferences.getShiftMoreSize();
         this.spinnerShiftMore.setModel( new SpinnerNumberModel(shiftMoreValue, 2, 999, 1));
 
@@ -107,11 +114,11 @@ public class ShifterConfiguration {
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
         this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
 
+        String dictionary   = ShifterPreferences.getDictionary();
         if( dictionary == null || dictionary.isEmpty() )  {
             dictionary = getDefaultDictionary();
         }
-
-        this.textAreaDictionary.setText(dictionary);
+        textAreaDictionary.setText(dictionary);
     }
 
     /**
@@ -134,7 +141,7 @@ public class ShifterConfiguration {
         radioButtonCaseInsensitive.setSelected(true);
         radioButtonShiftInSeconds.setSelected(true);
 
-        this.textAreaDictionary.setText( getDefaultDictionary() );
+        this.textAreaDictionary.setText(getDefaultDictionary());
     }
 
     /**

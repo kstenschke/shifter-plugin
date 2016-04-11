@@ -2,7 +2,7 @@ h1. Shifter Plugin - Changelog
 
 * 1.3.00
     ** Upgraded to support Idea version 2016.1 onwards
-    ** Removed custom reset button from plugin settings
+    ** Adapted "restore factory settings" more to general IDE look-and-feel
     ** Code cleanup
 * 1.2.14
     ** Added detection + optional reduction of duplicate lines to alphabetical line sorting
