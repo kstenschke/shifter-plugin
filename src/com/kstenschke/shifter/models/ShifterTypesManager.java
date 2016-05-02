@@ -16,10 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
-import com.kstenschke.shifter.models.shiftertypes.RomanNumber;
-import com.kstenschke.shifter.models.shiftertypes.StringMonoCharacter;
-import com.kstenschke.shifter.models.shiftertypes.TernaryExpression;
+import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -50,6 +47,7 @@ public class ShifterTypesManager {
     public static final int     TYPE_ROMAN_NUMERAL            = 61;
     private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 62;
     private static final int    TYPE_TERNARY_EXPRESSION       = 63;
+    private static final int    TYPE_WORDS_TUPEL              = 64;
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -172,6 +170,10 @@ public class ShifterTypesManager {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
 
+        if(WordsTupel.isWordsTupel(word)) {
+            return TYPE_WORDS_TUPEL;
+        }
+
         return TYPE_UNKNOWN;
     }
 
@@ -246,6 +248,8 @@ public class ShifterTypesManager {
                 return com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.getShifted(word);
             case TYPE_NUMERIC_POSTFIXED_STRING:
                 return com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.getShifted(word, isUp);
+            case TYPE_WORDS_TUPEL:
+                return WordsTupel.getShifted(word);
             default:
                 return word;
         }
