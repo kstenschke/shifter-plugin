@@ -304,6 +304,17 @@ class ActionsPerformer {
                         document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
                         isDone = true;
 
+                    } else if (wordType == ShifterTypesManager.TYPE_TRAILING_COMMENT) {
+                        if (selectedText != null) {
+                            int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
+                            int offsetEndCaretLine = document.getLineEndOffset(lineNumberSelStart);
+                            String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+
+                            String caretLine = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
+
+                            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
+                            isDone = true;
+                        }
                     } else if (!isPhpVariable) {
                         if (UtilsTextual.containsAnyQuotes(selectedText)) {
                             document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));

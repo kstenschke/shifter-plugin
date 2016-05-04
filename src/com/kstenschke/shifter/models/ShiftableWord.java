@@ -63,7 +63,7 @@ public class ShiftableWord {
         this.moreCount = moreCount;
 
         // Detect word type
-        this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, line, filename);
+        this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
 
         // Comprehend negative values of numeric types
         this.word = ((this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)

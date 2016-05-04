@@ -27,6 +27,8 @@ public class ListenerRestoreSettings implements MouseListener {
 
     private ShifterConfiguration shifterConfiguration;
 
+    Font original;
+
     /**
      * Constructor
      *
@@ -35,8 +37,6 @@ public class ListenerRestoreSettings implements MouseListener {
     public ListenerRestoreSettings(ShifterConfiguration shifterConfiguration) {
         this.shifterConfiguration = shifterConfiguration;
     }
-
-    Font original;
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {

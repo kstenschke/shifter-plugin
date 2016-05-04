@@ -35,6 +35,7 @@ Supported generic shifting types:
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document ("shift more" shifts until first variable with a different first letter)
 * Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
 * Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts
+* Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm)

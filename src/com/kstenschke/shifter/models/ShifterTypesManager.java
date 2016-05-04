@@ -48,6 +48,8 @@ public class ShifterTypesManager {
     private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 62;
     private static final int    TYPE_TERNARY_EXPRESSION       = 63;
     private static final int    TYPE_WORDS_TUPEL              = 64;
+    // @see trailing comment shifting is implemented in ActionsPerformer.shiftSelection()
+    public static final int    TYPE_TRAILING_COMMENT          = 65;
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -71,11 +73,12 @@ public class ShifterTypesManager {
      * @param  word         Word whose type shall be identified
      * @param  prefixChar   Prefix character
      * @param  postfixChar  Postfix character
+     * @param  isLastLineInDocument
      * @param  line         Whole line the caret is in
      * @param  filename     Name of edited file
      * @return int
      */
-    public int getWordType(String word, String prefixChar, String postfixChar, String line, String filename) {
+    public int getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, String line, String filename) {
         // PHP variable (must be prefixed with "$")
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
         if (this.typePhpVariable.isPhpVariable(word)) {
@@ -106,7 +109,6 @@ public class ShifterTypesManager {
         // File extension specific term in dictionary
         this.typeDictionaryTerm = new com.kstenschke.shifter.models.shiftertypes.Dictionary();
         String fileExtension    = UtilsFile.extractFileExtension(filename);
-
         if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
             return TYPE_DICTIONARY_WORD_EXT_SPECIFIC;
         }
@@ -116,60 +118,55 @@ public class ShifterTypesManager {
             return TYPE_TERNARY_EXPRESSION;
         }
 
+        // Selected code line with trailing //-comment: moves the comment into a new line before the code
+        if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
+            return TYPE_TRAILING_COMMENT;
+        }
+
         // Quoted (must be wrapped in single or double quotes or backticks)
         this.typeQuotedString = new com.kstenschke.shifter.models.shiftertypes.QuotedString();
         if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
             return TYPE_QUOTED_STRING;
         }
-
         // RGB (must be prefixed with "#")
         if ( com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar) ) {
             this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
             return TYPE_RGB_COLOR;
         }
-
         // Pixel value (must consist of numeric value followed by "px")
         if (com.kstenschke.shifter.models.shiftertypes.CssUnit.isCssUnitValue(word)) {
             this.typePixelValue = new com.kstenschke.shifter.models.shiftertypes.CssUnit();
             return TYPE_CSS_UNIT;
         }
-
         if (com.kstenschke.shifter.models.shiftertypes.NumericValue.isNumericValue(word)) {
             this.typeNumericValue = new com.kstenschke.shifter.models.shiftertypes.NumericValue();
             return TYPE_NUMERIC_VALUE;
         }
-
         // Operator sign (<, >, +, -)
         if ( OperatorSign.isOperatorSign(word)) {
             this.typeOperatorSign    = new OperatorSign();
             return TYPE_OPERATOR_SIGN;
         }
-
         // Roman Numeral
         if (RomanNumber.isRomanNumber(word)) {
             this.typeRomanNumber    = new RomanNumber();
             return TYPE_ROMAN_NUMERAL;
         }
-
         // MonoCharString (= consisting from any amount of the same character)
         if (StringMonoCharacter.isMonoCharacterString(word)) {
             this.typeMonoCharacterString    = new StringMonoCharacter();
             return TYPE_MONO_CHARACTER_STRING;
         }
-
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if( this.typeDictionaryTerm.isTermInDictionary(word, false) ) {
+        if (this.typeDictionaryTerm.isTermInDictionary(word, false)) {
             return TYPE_DICTIONARY_WORD_GLOBAL;
         }
-
-        if( com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.isHtmlEncodable(word) ) {
+        if (com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.isHtmlEncodable(word)) {
             return TYPE_HTML_ENCODABLE_STRING;
         }
-
-        if( com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
+        if (com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
-
         if(WordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
         }
@@ -180,7 +177,14 @@ public class ShifterTypesManager {
     public int getWordType(String word, CharSequence editorText, int caretOffset, String filename) {
         String line = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
 
-        return this.getWordType(word, "", "", line, filename);
+        int editorTextLength = editorText.length();
+        int offsetPostfixChar = caretOffset + word.length();
+        String postfixChar = editorTextLength > offsetPostfixChar
+                ? String.valueOf(editorText.charAt(offsetPostfixChar))
+                : "";
+        boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
+
+        return this.getWordType(word, "", postfixChar, isLastLineInDocument, line, filename);
     }
 
     /**
@@ -267,7 +271,7 @@ public class ShifterTypesManager {
      */
     public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
         String line    = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
-        int idWordType = this.getWordType(word, "", "", line, filename);
+        int idWordType = this.getWordType(word, "", "", false, line, filename);
 
         return this.getShiftedWord(word, idWordType, isUp, editorText, caretOffset, moreCount, filename, editor);
     }

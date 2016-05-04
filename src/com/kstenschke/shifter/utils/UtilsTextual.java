@@ -494,4 +494,16 @@ public class UtilsTextual {
         return StringUtils.join(resultLines, "\n");
     }
 
+    public static String getLeadingWhitespace(String str) {
+        String whitespace = "";
+        int offset = 0;
+        int length = str.length();
+        while (offset < length && Character.isWhitespace(str.charAt(offset))) {
+            whitespace += str.charAt(offset);
+            offset++;
+        }
+
+        return whitespace;
+    }
+
 }
