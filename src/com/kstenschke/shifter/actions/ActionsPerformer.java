@@ -267,6 +267,13 @@ class ActionsPerformer {
     private void shiftSelection(boolean isUp, @Nullable Integer moreCount) {
         int offsetStart = selectionModel.getSelectionStart();
         int offsetEnd = selectionModel.getSelectionEnd();
+
+        String selectedText = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
+
+        if (selectedText == null || selectedText.trim().isEmpty()) {
+            return;
+        }
+
         int lineNumberSelStart = document.getLineNumber(offsetStart);
         int lineNumberSelEnd = document.getLineNumber(offsetEnd);
 
@@ -275,7 +282,7 @@ class ActionsPerformer {
         }
 
         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
-        String selectedText = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
+
         int wordType = shifterTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
         boolean isPhpVariable = wordType == ShifterTypesManager.TYPE_PHP_VARIABLE;
 
