@@ -43,6 +43,7 @@ public class JsVariablesDeclarations {
     /**
      * @param  str      text selection to be shifted
      * @return String
+     * @todo    add handling for lines ending with comment after the ";"
      */
     public static String getShifted(String str) {
 

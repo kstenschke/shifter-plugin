@@ -34,23 +34,24 @@ public class ShifterTypesManager {
     private static final int TYPE_DICTIONARY_WORD_GLOBAL        = 3;
 
     // Generic types
-    public static final int     TYPE_QUOTED_STRING            = 50;
-    private static final int    TYPE_HTML_ENCODABLE_STRING    = 51;
-    private static final int    TYPE_OPERATOR_SIGN            = 53; // <, >, +, -
-    private static final int    TYPE_MONO_CHARACTER_STRING    = 54;
-    private static final int    TYPE_RGB_COLOR                = 55;
-    public static final int     TYPE_CSS_UNIT                 = 56; // %, cm, em, in, pt, px
-    private static final int    TYPE_DOC_COMMENT_TAG          = 57;
-    private static final int    TYPE_DOC_COMMENT_DATATYPE     = 58;
-    public static final int     TYPE_PHP_VARIABLE             = 59;
-    public static final int TYPE_JS_VARIABLES_DECLARATIONS = 60;
-    public static final int     TYPE_NUMERIC_VALUE            = 61;
-    public static final int     TYPE_ROMAN_NUMERAL            = 62;
-    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 63;
-    private static final int    TYPE_TERNARY_EXPRESSION       = 64;
-    private static final int    TYPE_WORDS_TUPEL              = 65;
+    public static final int     TYPE_QUOTED_STRING             = 50;
+    private static final int    TYPE_HTML_ENCODABLE_STRING     = 51;
+    private static final int    TYPE_OPERATOR_SIGN             = 53; // <, >, +, -
+    private static final int    TYPE_MONO_CHARACTER_STRING     = 54;
+    private static final int    TYPE_RGB_COLOR                 = 55;
+    public static final int     TYPE_CSS_UNIT                  = 56; // %, cm, em, in, pt, px
+    private static final int    TYPE_DOC_COMMENT_TAG           = 57;
+    private static final int    TYPE_DOC_COMMENT_DATATYPE      = 58;
+    public static final int     TYPE_PHP_VARIABLE              = 59;
+    public static final int     TYPE_JS_VARIABLES_DECLARATIONS = 60;
+    public static final int     TYPE_SIZZLE_SELECTOR           = 61;
+    public static final int     TYPE_NUMERIC_VALUE             = 62;
+    public static final int     TYPE_ROMAN_NUMERAL             = 63;
+    private static final int    TYPE_NUMERIC_POSTFIXED_STRING  = 64;
+    private static final int    TYPE_TERNARY_EXPRESSION        = 65;
+    private static final int    TYPE_WORDS_TUPEL               = 66;
     // @see trailing comment shifting is implemented in ActionsPerformer.shiftSelection()
-    public static final int    TYPE_TRAILING_COMMENT          = 66;
+    public static final int    TYPE_TRAILING_COMMENT           = 67;
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -88,6 +89,9 @@ public class ShifterTypesManager {
 
         if (JsVariablesDeclarations.isJsVariables(word)) {
             return TYPE_JS_VARIABLES_DECLARATIONS;
+        }
+        if (SizzleSelector.isSelector(word)) {
+            return TYPE_SIZZLE_SELECTOR;
         }
 
         // DocComment types (must be prefixed with "@")
@@ -229,6 +233,9 @@ public class ShifterTypesManager {
                 return this.typeDictionaryTerm.getShifted(word, isUp);
 
             // ================== Generic types (shifting is calculated)
+            case TYPE_SIZZLE_SELECTOR:
+                return SizzleSelector.getShifted(word);
+
             case TYPE_RGB_COLOR:
                 return this.typeRgbColor.getShifted(word, isUp);
             case TYPE_NUMERIC_VALUE:

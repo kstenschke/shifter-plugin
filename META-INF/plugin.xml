@@ -83,7 +83,8 @@
     <ul>
         <li>1.3.3
             <ul>
-                <li>Added: shift multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
+                <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
+                <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
                 <li>Prevent edge case (shifting empty lines/selection) exceptions</li>
             </ul>
         <li>1.3.2 Added: Shift trailing comment from a selected code line into a new line before the code</li>
