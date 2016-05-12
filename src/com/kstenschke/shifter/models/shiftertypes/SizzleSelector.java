@@ -40,6 +40,7 @@ public class SizzleSelector {
     /**
      * @param  selector      text selection to be shifted
      * @return String
+     * @todo    extend: duplicate line around selection, from 1st of the 2 resulting lines: strip all non-selector strings (making it a declaration as is already when shifting just the selector)
      */
     public static String getShifted(String selector) {
         String varName = selector
@@ -55,6 +56,7 @@ public class SizzleSelector {
                 .replaceAll("<",   "-")
                 .replaceAll("]",   "-")
                 .replaceAll("=",   "-")
+                .replaceAll("_",   "-")
                 .replaceAll(" ",   "-")
 
                 .replaceAll("--", "-");
