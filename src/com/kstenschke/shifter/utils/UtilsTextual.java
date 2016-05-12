@@ -393,7 +393,7 @@ public class UtilsTextual {
         int lenText      = str.length();
 
         int offsetStart = offset;
-        while(offsetStart > 0 && str.charAt(offsetStart) != '\n') {
+        while(offsetStart > 0 && str.charAt(offsetStart-1) != '\n') {
             offsetStart--;
         }
 

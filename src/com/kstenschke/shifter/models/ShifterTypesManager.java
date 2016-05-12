@@ -43,13 +43,14 @@ public class ShifterTypesManager {
     private static final int    TYPE_DOC_COMMENT_TAG          = 57;
     private static final int    TYPE_DOC_COMMENT_DATATYPE     = 58;
     public static final int     TYPE_PHP_VARIABLE             = 59;
-    public static final int     TYPE_NUMERIC_VALUE            = 60;
-    public static final int     TYPE_ROMAN_NUMERAL            = 61;
-    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 62;
-    private static final int    TYPE_TERNARY_EXPRESSION       = 63;
-    private static final int    TYPE_WORDS_TUPEL              = 64;
+    public static final int TYPE_JS_VARIABLES_DECLARATIONS = 60;
+    public static final int     TYPE_NUMERIC_VALUE            = 61;
+    public static final int     TYPE_ROMAN_NUMERAL            = 62;
+    private static final int    TYPE_NUMERIC_POSTFIXED_STRING = 63;
+    private static final int    TYPE_TERNARY_EXPRESSION       = 64;
+    private static final int    TYPE_WORDS_TUPEL              = 65;
     // @see trailing comment shifting is implemented in ActionsPerformer.shiftSelection()
-    public static final int    TYPE_TRAILING_COMMENT          = 65;
+    public static final int    TYPE_TRAILING_COMMENT          = 66;
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -83,6 +84,10 @@ public class ShifterTypesManager {
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
         if (this.typePhpVariable.isPhpVariable(word)) {
             return TYPE_PHP_VARIABLE;
+        }
+
+        if (JsVariablesDeclarations.isJsVariables(word)) {
+            return TYPE_JS_VARIABLES_DECLARATIONS;
         }
 
         // DocComment types (must be prefixed with "@")

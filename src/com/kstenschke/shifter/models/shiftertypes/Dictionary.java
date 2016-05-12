@@ -187,17 +187,19 @@ public class Dictionary {
      * @return The shifted word
      */
     public String getShifted(String word, boolean isUp) {
-        String shiftTerms = this.relevantTermsList.replaceFirst("\\|", "");
-        shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
+        if (this.relevantTermsList != null) {
+            String shiftTerms = this.relevantTermsList.replaceFirst("\\|", "");
+            shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
-        String[] termsList = shiftTerms.split("\\|");
-        if (termsList.length > 0) {
-            StaticWordType wordType = new StaticWordType(termsList);
-            String shiftedWord = wordType.getShifted(word, isUp);
+            String[] termsList = shiftTerms.split("\\|");
+            if (termsList.length > 0) {
+                StaticWordType wordType = new StaticWordType(termsList);
+                String shiftedWord = wordType.getShifted(word, isUp);
 
-            return shiftedWord.equals(word)
-                    ? wordType.getShifted(word.toLowerCase(), isUp)
-                    : shiftedWord;
+                return shiftedWord.equals(word)
+                        ? wordType.getShifted(word.toLowerCase(), isUp)
+                        : shiftedWord;
+            }
         }
 
         return word;
