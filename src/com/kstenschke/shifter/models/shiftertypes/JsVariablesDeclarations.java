@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftertypes;
 
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
+import org.apache.http.util.TextUtils;
 
 /**
  * JavaScript Variables (multi-lined declarations of multiple vars)
@@ -43,23 +44,31 @@ public class JsVariablesDeclarations {
     /**
      * @param  str      text selection to be shifted
      * @return String
-     * @todo    add handling for lines ending with comment after the ";"
      */
     public static String getShifted(String str) {
-
         String[] lines = str.split("\n");
-        String shifted = "";
+        String shiftedLines = "";
 
         int lineNumber = 0;
+        String shiftedLine;
         for(String line : lines) {
             // remove "var " from beginning
             line = line.trim().substring(4);
             // replace ";" from ending by ",\n"
-            shifted += (lineNumber == 0 ? "" : "\t") + line.substring(0, line.length()-1) + ",\n";
+            if (StringUtils.countMatches(line, "//") == 1) {
+                // handle line ending with comment intact
+                String[] parts = line.split("//");
+                parts[0] = parts[0].trim();
+                shiftedLine = parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];
+            } else {
+                shiftedLine = line.substring(0, line.length() - 1) + ",";
+            }
+
+            shiftedLines += (lineNumber == 0 ? "" : "\t") + shiftedLine + "\n";
             lineNumber++;
         }
 
-        return "var " + shifted.substring(0, shifted.length()-2) + ";";
+        return "var " + shiftedLines.substring(0, shiftedLines.length()-2) + ";";
     }
 
 }
