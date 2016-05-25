@@ -25,7 +25,12 @@ import org.apache.http.util.TextUtils;
 public class JsVariablesDeclarations {
 
     /**
-     * Check whether given string represents a declaration of JS variables
+     * Check whether given string represents a declaration of JS variables:
+     * -selection has multiple lines
+     * -each trimmed line starts w/ "var" (at least 2 occurrences)
+     * -each trimmed line ends w/ ";"
+     * -there can be empty lines
+     * -there can commented lines, beginning w/ "//"
      *
      * @param  str     String to be checked
      * @return boolean
@@ -52,16 +57,23 @@ public class JsVariablesDeclarations {
         int lineNumber = 0;
         String shiftedLine;
         for(String line : lines) {
-            // remove "var " from beginning
-            line = line.trim().substring(4);
-            // replace ";" from ending by ",\n"
-            if (StringUtils.countMatches(line, "//") == 1) {
-                // handle line ending with comment intact
-                String[] parts = line.split("//");
-                parts[0] = parts[0].trim();
-                shiftedLine = parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];
+            line = line.trim();
+
+            if (line.isEmpty() || line.startsWith("//")) {
+                // do not change empty or comment-lines
+                shiftedLine = line;
             } else {
-                shiftedLine = line.substring(0, line.length() - 1) + ",";
+                // remove "var " from beginning
+                line = line.substring(4);
+                // replace ";" from ending by ",\n"
+                if (StringUtils.countMatches(line, "//") == 1) {
+                    // handle line ending with comment intact
+                    String[] parts = line.split("//");
+                    parts[0] = parts[0].trim();
+                    shiftedLine = parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];
+                } else {
+                    shiftedLine = line.substring(0, line.length() - 1) + ",";
+                }
             }
 
             shiftedLines += (lineNumber == 0 ? "" : "\t") + shiftedLine + "\n";
