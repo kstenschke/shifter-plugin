@@ -17,7 +17,7 @@
 <idea-plugin url="http://www.coexec.com/">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.3.3</version>
+    <version>2.0.0</version>
     <vendor url="http://www.coexec.com/" email="kay@coexec.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -81,11 +81,13 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.3.3
+        <li>2.0.0
             <ul>
+                <li>Added: Dictionary of regular expressions of search+replacement shiftings by file type</li>
                 <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
                 <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
                 <li>Prevent edge case (shifting empty lines/selection) exceptions</li>
+                <li>Changed: tab size in dictionary settings (reduced to 4)</li>
             </ul>
         <li>1.3.2 Added: Shift trailing comment from a selected code line into a new line before the code</li>
         <li>1.3.1 Added: Toggle order of two space-separated words</li>

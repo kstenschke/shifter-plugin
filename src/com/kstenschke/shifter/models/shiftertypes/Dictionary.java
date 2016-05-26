@@ -40,9 +40,9 @@ public class Dictionary {
      * Constructor
      */
     public Dictionary() {
-        String contents = ShifterPreferences.getDictionary();
+        String contents = ShifterPreferences.getTermsDictionary();
         if (contents.isEmpty()) {
-            contents = new ShifterConfiguration().getDefaultDictionary();
+            contents = new ShifterConfiguration().getDefaultTerms();
         }
 
         this.dictionaryContents = contents;

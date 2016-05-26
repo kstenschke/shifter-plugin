@@ -25,7 +25,9 @@ import org.jetbrains.annotations.NonNls;
 public class ShifterPreferences {
 
     @NonNls
-    private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary";
+    private static final String PROPERTY_DICTIONARY_TERMS = "PluginShifter.Dictionary.Terms";
+    @NonNls
+    private static final String PROPERTY_DICTIONARY_EXPRESSIONS = "PluginShifter.Dictionary.Expressions";
     @NonNls
     private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
     @NonNls
@@ -49,7 +51,7 @@ public class ShifterPreferences {
      * @param dictionary    Contents to be stored in dictionary preference
      */
     public static void saveDictionary(String dictionary) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY, dictionary);
+        PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY_TERMS, dictionary);
     }
 
     /**
@@ -76,22 +78,33 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
     }
 
-    /**
-     * @return String  Dictionary
-     */
-    public static String getDictionary() {
+    private static String getDictionary(String dictionaryName) {
         String dictionary = null;
 
         try {
             PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
             if (propertiesComponent != null) {
-                dictionary = propertiesComponent.getValue(PROPERTY_DICTIONARY);
+                dictionary = propertiesComponent.getValue(dictionaryName);
             }
         } catch(NullPointerException e) {
             return "";
         }
 
         return dictionary == null ? "" : dictionary;
+    }
+
+    /**
+     * @return String  Dictionary
+     */
+    public static String getTermsDictionary() {
+        return getDictionary(PROPERTY_DICTIONARY_TERMS);
+    }
+
+    /**
+     * @return String  Dictionary
+     */
+    public static String getExpressionsDictionary() {
+        return getDictionary(PROPERTY_DICTIONARY_EXPRESSIONS);
     }
 
     /**

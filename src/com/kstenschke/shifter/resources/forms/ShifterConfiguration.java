@@ -19,6 +19,7 @@ package com.kstenschke.shifter.resources.forms;
 import com.kstenschke.shifter.listeners.ListenerRestoreSettings;
 import com.kstenschke.shifter.models.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsFile;
+import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -30,18 +31,20 @@ import java.io.InputStream;
 public class ShifterConfiguration {
 
     private JPanel rootPanel;
-    private JTextArea textAreaDictionary;
+    private JTextArea textAreaDictionaryTerms;
+    private JTextArea textAreaDictionaryExpressions;
     private JCheckBox checkBoxPreserveCase;
 
     private JRadioButton radioButtonCaseSensitive;
     private JRadioButton radioButtonCaseInsensitive;
     private JRadioButton radioButtonShiftInSeconds;
     private JRadioButton radioButtonShiftInMilliseconds;
-    private JScrollPane scrollPaneDictionary;
+    private JScrollPane scrollPaneDictionaryTerms;
     private JPanel jPanelOptions;
     private JPanel jPanelTopBar;
     private JSpinner spinnerShiftMore;
     private JTextField restoreSettings;
+    private JScrollPane scrollPaneDictionaryExpressions;
 
     public Boolean hasSomethingChanged = false;
 
@@ -53,6 +56,9 @@ public class ShifterConfiguration {
     }
 
     public void init() {
+        textAreaDictionaryTerms.setTabSize(2);
+        textAreaDictionaryExpressions.setTabSize(2);
+
         refreshFormValues();
         initFormListeners();
     }
@@ -69,7 +75,20 @@ public class ShifterConfiguration {
         radioButtonShiftInMilliseconds.addChangeListener(somethingChangedListener);
         radioButtonCaseSensitive.addChangeListener(somethingChangedListener);
         radioButtonCaseInsensitive.addChangeListener(somethingChangedListener);
-        textAreaDictionary.addKeyListener(new KeyListener() {
+
+        KeyListener keyListenerSomethingChanged = getKeyListenerSomethingChanged();
+        textAreaDictionaryTerms.addKeyListener(keyListenerSomethingChanged);
+        textAreaDictionaryExpressions.addKeyListener(keyListenerSomethingChanged);
+
+        restoreSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        restoreSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder());
+        ListenerRestoreSettings listenerRestoreSettings = new ListenerRestoreSettings(this);
+        restoreSettings.addMouseListener(listenerRestoreSettings);
+    }
+
+    @NotNull
+    private KeyListener getKeyListenerSomethingChanged() {
+        return new KeyListener() {
             @Override
             public void keyTyped(KeyEvent keyEvent) {
                 hasSomethingChanged = true;
@@ -84,12 +103,7 @@ public class ShifterConfiguration {
             public void keyReleased(KeyEvent keyEvent) {
 
             }
-        });
-
-        restoreSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
-        restoreSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder());
-        ListenerRestoreSettings listenerRestoreSettings = new ListenerRestoreSettings(this);
-        restoreSettings.addMouseListener(listenerRestoreSettings);
+        };
     }
 
     /**
@@ -114,21 +128,29 @@ public class ShifterConfiguration {
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
         this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
 
-        String dictionary   = ShifterPreferences.getDictionary();
-        if( dictionary == null || dictionary.isEmpty() )  {
-            dictionary = getDefaultDictionary();
+        String termsDictionary   = ShifterPreferences.getTermsDictionary();
+        if( termsDictionary == null || termsDictionary.isEmpty() )  {
+            termsDictionary = getDefaultTerms();
         }
-        textAreaDictionary.setText(dictionary);
+        textAreaDictionaryTerms.setText(termsDictionary);
+
+        String expressionsDictionary   = ShifterPreferences.getExpressionsDictionary();
+        if( expressionsDictionary == null || expressionsDictionary.isEmpty() )  {
+            expressionsDictionary = getDefaultExpressions();
+        }
+        textAreaDictionaryExpressions.setText(expressionsDictionary);
     }
 
-    /**
-     * Get default dictionary contents
-     *
-     * @return Default dictionary
-     */
-    public String getDefaultDictionary() {
+    public String getDefaultTerms() {
         //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
-        InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
+        InputStream dictionaryStream= this.getClass().getResourceAsStream("terms.txt");
+
+        return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
+    }
+
+    public String getDefaultExpressions() {
+        //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
+        InputStream dictionaryStream= this.getClass().getResourceAsStream("expressions.txt");
 
         return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
     }
@@ -141,7 +163,8 @@ public class ShifterConfiguration {
         radioButtonCaseInsensitive.setSelected(true);
         radioButtonShiftInSeconds.setSelected(true);
 
-        this.textAreaDictionary.setText(getDefaultDictionary());
+        this.textAreaDictionaryTerms.setText(getDefaultTerms());
+        this.textAreaDictionaryExpressions.setText(getDefaultExpressions());
     }
 
     /**
@@ -185,7 +208,7 @@ public class ShifterConfiguration {
     public boolean isModified() {
         return    this.hasSomethingChanged
                || Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
-               || ! this.textAreaDictionary.getText().equals( ShifterPreferences.getDictionary() )
+               || ! this.textAreaDictionaryTerms.getText().equals( ShifterPreferences.getTermsDictionary() )
                || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() )
                || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
                || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
@@ -196,7 +219,7 @@ public class ShifterConfiguration {
      * @return  String
      */
     public String getDictionary() {
-        return this.textAreaDictionary.getText();
+        return this.textAreaDictionaryTerms.getText();
     }
 
     public void apply() {

@@ -1,9 +1,11 @@
 h1. Shifter Plugin - Changelog
 
-* 1.3.3
+* 2.0.0
+    ** Added: Dictionary of regular expressions of search+replacement shiftings by file type
     ** Added: shift selected jQuery (sizzle) selector into local variable declaration
     ** Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration
     ** Prevent edge case (shifting empty lines/selection, shifting full document) exceptions
+    ** Changed: tab size in dictionary settings (reduced to 4)
 * 1.3.2
     ** Added: Shift trailing //-comment from a selected code line into a new line before the code
 * 1.3.1

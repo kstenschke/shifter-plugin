@@ -1,0 +1,5 @@
+(|html|html|phtml|js|) {
+	/(\s*)(function)(\s+)([a-z|A-Z|0-9]+)\s*\([a-z|A-Z|0-9| |,]+\)(\s*)(\{)/
+	/$4: function($4) {/
+	-
+}
