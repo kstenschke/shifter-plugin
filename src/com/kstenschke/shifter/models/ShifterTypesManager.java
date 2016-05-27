@@ -55,7 +55,7 @@ public class ShifterTypesManager {
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
-    private com.kstenschke.shifter.models.shiftertypes.Dictionary typeDictionaryTerm;
+    private DictionaryTerm typeDictionaryTerm;
 
     // Generic types (calculated when shifted)
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
@@ -116,7 +116,7 @@ public class ShifterTypesManager {
         }
 
         // File extension specific term in dictionary
-        this.typeDictionaryTerm = new com.kstenschke.shifter.models.shiftertypes.Dictionary();
+        this.typeDictionaryTerm = new DictionaryTerm();
         String fileExtension    = UtilsFile.extractFileExtension(filename);
         if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
             return TYPE_DICTIONARY_WORD_EXT_SPECIFIC;

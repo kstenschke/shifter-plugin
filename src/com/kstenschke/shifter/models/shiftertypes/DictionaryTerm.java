@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class Dictionary {
+public class DictionaryTerm {
 
     // Set during extension specific detection of dictionary term
     private String fileExtension;
@@ -39,7 +39,7 @@ public class Dictionary {
     /**
      * Constructor
      */
-    public Dictionary() {
+    public DictionaryTerm() {
         String contents = ShifterPreferences.getTermsDictionary();
         if (contents.isEmpty()) {
             contents = new ShifterConfiguration().getDefaultTerms();
