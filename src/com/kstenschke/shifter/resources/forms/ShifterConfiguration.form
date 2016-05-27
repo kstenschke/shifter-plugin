@@ -199,7 +199,7 @@
               </grid>
             </children>
           </grid>
-          <grid id="dfb61" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="dfb61" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Shiftable Terms"/>
@@ -209,7 +209,7 @@
             <children>
               <scrollpane id="dea1" binding="scrollPaneDictionaryTerms">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none" title=""/>
@@ -225,9 +225,24 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="9b681" class="javax.swing.JTextPane" binding="thisDictionaryConfiguresShiftableTextPane" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <alignmentX value="0.5"/>
+                  <alignmentY value="0.5"/>
+                  <editable value="false"/>
+                  <font swing-font="ToolTip.font"/>
+                  <margin top="2" left="2" bottom="2" right="2"/>
+                  <text value="This dictionary configures shiftable terms. Shifting a term from within the editor replaces it by the next term listed in the same group as the original term."/>
+                </properties>
+              </component>
             </children>
           </grid>
-          <grid id="8dbec" layout-manager="GridLayoutManager" row-count="1" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="8dbec" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <tabbedpane title="Shiftable Expressions"/>
@@ -237,7 +252,7 @@
             <children>
               <scrollpane id="92875" binding="scrollPaneDictionaryExpressions">
                 <constraints>
-                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties/>
                 <border type="none"/>
@@ -253,6 +268,21 @@
                   </component>
                 </children>
               </scrollpane>
+              <component id="dc5d7" class="javax.swing.JTextPane" binding="thisDictionaryDefinesShiftableTextPane" default-binding="true">
+                <constraints>
+                  <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="6" anchor="1" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="50"/>
+                  </grid>
+                </constraints>
+                <properties>
+                  <editable value="false"/>
+                  <enabled value="true"/>
+                  <font swing-font="ToolTip.font"/>
+                  <margin top="2" left="2" bottom="2" right="2"/>
+                  <opaque value="true"/>
+                  <text value="This dictionary defines shiftable selections, detected and transformed using regular expressions. Shifting a term of these expressions replaces it by the configured replacement."/>
+                </properties>
+              </component>
             </children>
           </grid>
         </children>

@@ -45,6 +45,8 @@ public class ShifterConfiguration {
     private JSpinner spinnerShiftMore;
     private JTextField restoreSettings;
     private JScrollPane scrollPaneDictionaryExpressions;
+    private JTextPane thisDictionaryConfiguresShiftableTextPane;
+    private JTextPane thisDictionaryDefinesShiftableTextPane;
 
     public Boolean hasSomethingChanged = false;
 
