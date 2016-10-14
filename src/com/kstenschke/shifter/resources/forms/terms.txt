@@ -86,6 +86,7 @@
 	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|
 	|foo|bar|baz|qux|
 	|from|until|
+	|connect|delete|get|head|options|patch|post|put|trace|
 	|gif|jpg|png|
 	|height|width|
 	|hidden|shown|
