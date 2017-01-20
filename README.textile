@@ -1,6 +1,3 @@
-"!http://api.flattr.com/button/flattr-badge-large.png!":https://flattr.com/submit/auto?user_id=kstenschke&url=https://github.com/kstenschke/shifter-plugin/&title=shifter-plugin&language=java&tags=github&category=software
-
-
 h1. Shifter Plugin
 
 Source code of the intellij IDEA "Shifter plugin":http://plugins.jetbrains.com/plugin/6149
