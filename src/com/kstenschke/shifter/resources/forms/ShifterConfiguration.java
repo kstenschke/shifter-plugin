@@ -32,7 +32,6 @@ public class ShifterConfiguration {
 
     private JPanel rootPanel;
     private JTextArea textAreaDictionaryTerms;
-    private JTextArea textAreaDictionaryExpressions;
     private JCheckBox checkBoxPreserveCase;
 
     private JRadioButton radioButtonCaseSensitive;
@@ -57,7 +56,6 @@ public class ShifterConfiguration {
 
     public void init() {
         textAreaDictionaryTerms.setTabSize(2);
-        textAreaDictionaryExpressions.setTabSize(2);
 
         refreshFormValues();
         initFormListeners();
@@ -78,7 +76,6 @@ public class ShifterConfiguration {
 
         KeyListener keyListenerSomethingChanged = getKeyListenerSomethingChanged();
         textAreaDictionaryTerms.addKeyListener(keyListenerSomethingChanged);
-        textAreaDictionaryExpressions.addKeyListener(keyListenerSomethingChanged);
 
         restoreSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         restoreSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder());
