@@ -32,23 +32,29 @@ public class CssUnit {
     private static final String UNIT_PC = "pc";
     private static final String UNIT_PT = "pt";
     private static final String UNIT_PX = "px";
+    private static final String UNIT_REM = "rem";
+    private static final String UNIT_VW = "vw";
+    private static final String UNIT_VH = "vh";
+    private static final String UNIT_VMIN = "vmin";
+    private static final String UNIT_VMAX = "vmax";
+
 
     /**
      * @param  str      String to be checked
      * @return boolean  Does the given string represents a CSS length value?
      */
     public static boolean isCssUnitValue(String str) {
-        return str.matches("[0-9]*(%|cm|em|in|pt|px)");
+        return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)");
     }
 
     public static boolean isCssUnit(String str) {
-        return str.matches("(%|cm|em|in|pt|px)");
+        return str.matches("(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)");
     }
 
     /**
      * @param  value    The full length value, post-fixed by its unit
      * @param  isUp     Shifting up or down?
-     * @return String   Length (em / px / pt / cm / in) value shifted up or down by 1px
+     * @return String   Length (em / px / pt / cm / in / rem / vw / vh / vmin / vmax) value shifted up or down by 1 unit
      */
     public String getShifted(String value, boolean isUp) {
         // Get int from PX value
@@ -76,6 +82,11 @@ public class CssUnit {
         map.put(UNIT_PC, StringUtils.countMatches(stylesheet, UNIT_PC + ";"));
         map.put(UNIT_PT, StringUtils.countMatches(stylesheet, UNIT_PT + ";"));
         map.put(UNIT_PX, StringUtils.countMatches(stylesheet, UNIT_PX + ";"));
+        map.put(UNIT_REM, StringUtils.countMatches(stylesheet, UNIT_REM + ";"));
+        map.put(UNIT_VW, StringUtils.countMatches(stylesheet, UNIT_VW + ";"));
+        map.put(UNIT_VH, StringUtils.countMatches(stylesheet, UNIT_VH + ";"));
+        map.put(UNIT_VMIN, StringUtils.countMatches(stylesheet, UNIT_VMIN + ";"));
+        map.put(UNIT_VMAX, StringUtils.countMatches(stylesheet, UNIT_VMAX + ";"));
 
         int sum = UtilsMap.getSumOfValues(map);
         if( sum == 0 ) {

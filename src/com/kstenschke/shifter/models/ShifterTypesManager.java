@@ -39,7 +39,7 @@ public class ShifterTypesManager {
     private static final int    TYPE_OPERATOR_SIGN             = 53; // <, >, +, -
     private static final int    TYPE_MONO_CHARACTER_STRING     = 54;
     private static final int    TYPE_RGB_COLOR                 = 55;
-    public static final int     TYPE_CSS_UNIT                  = 56; // %, cm, em, in, pt, px
+    public static final int     TYPE_CSS_UNIT                  = 56; // %, cm, em, in, pt, px, rem, vw, vh, vmin, vmax
     private static final int    TYPE_DOC_COMMENT_TAG           = 57;
     private static final int    TYPE_DOC_COMMENT_DATATYPE      = 58;
     public static final int     TYPE_PHP_VARIABLE              = 59;

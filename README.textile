@@ -38,7 +38,7 @@ Supported generic shifting types:
 * Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * CSS hex RGB colors - Shifts color value lighter/darker
-* CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm)
+* CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm, rem, vw, vh, vmin, vmax)
 * Encoding/decoding of HTML special characters
 * Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
 * Strings ending with numbers - increments/decrements the postfix
