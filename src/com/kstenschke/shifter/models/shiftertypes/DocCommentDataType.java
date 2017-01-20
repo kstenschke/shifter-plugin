@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -49,25 +49,25 @@ class DocCommentDataType {
         int amountTypes   = dataTypes.length;
         String wordLower  = word.toLowerCase();
 
-        if( amountTypes > 0 ) {
+        if (amountTypes > 0) {
             List<String> dataTypesList = Arrays.asList(dataTypes);
             int curIndex   =  dataTypesList.indexOf(wordLower);
 
-                if( isUp ) {
-                    // Shift up, if word at caret was not identified: take first item
-                    curIndex++;
-                    if( curIndex == amountTypes ) {
-                        curIndex = 0;
-                    }
-                } else {
-                    curIndex--;
-                    if( curIndex == -1 ) {
-                        curIndex = amountTypes - 1;
-                    }
+            if (isUp) {
+                // Shift up, if word at caret was not identified: take first item
+                curIndex++;
+                if (curIndex == amountTypes) {
+                    curIndex = 0;
                 }
-
-                return dataTypesList.get(curIndex);
+            } else {
+                curIndex--;
+                if (curIndex == -1) {
+                    curIndex = amountTypes - 1;
+                }
             }
+
+            return dataTypesList.get(curIndex);
+        }
 
         return wordLower;
     }
@@ -79,18 +79,18 @@ class DocCommentDataType {
      * @return String[]
      */
     private String[] getDataTypesByFilename(String filename) {
-        if( filename != null ) {
+        if (filename != null) {
             String filenameLower = filename.toLowerCase();
 
-            if( filenameLower.endsWith(".js") ) {
+            if (filenameLower.endsWith(".js")) {
                 // JavaScript data types
                 return this.typesJavaScript;
             }
-            if (filenameLower.endsWith(".java") ) {
+            if (filenameLower.endsWith(".java")) {
                 // Java primitive data types
                 return this.typesJava;
             }
-            if ( filenameLower.endsWith(".m") ) {
+            if (filenameLower.endsWith(".m")) {
                 // Objective-C "method" file
                 return this.typesObjectiveC;
             }

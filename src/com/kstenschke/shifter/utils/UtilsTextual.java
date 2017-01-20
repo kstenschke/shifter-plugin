@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ public class UtilsTextual {
      * @return boolean     Is the given string fully lower case?
      */
     public static boolean isAllUppercase(String str) {
-        return str.equals( str.toUpperCase() );
+        return str.equals( str.toUpperCase());
     }
 
     /**
@@ -41,7 +41,7 @@ public class UtilsTextual {
      * @return boolean     Is the given string is a comma separated list?
      */
     public static boolean isCommaSeparatedList(String str) {
-        if( ! str.contains(",") ) {
+        if (! str.contains(",")) {
             return false;
         }
 
@@ -50,12 +50,12 @@ public class UtilsTextual {
         // Ex:  "a","b"         => 1 comma, 4 quotes
         //      "a","b","c","d" => 3 commas, 8 quotes
         // Otherwise it should be treated as a quoted string and not as a list.
-        if( isWrappedIntoQuotes(str) ) {
+        if (isWrappedIntoQuotes(str)) {
             String quoteChar    = str.substring(0, 1);
             int amountQuotes    = StringUtils.countMatches(str, quoteChar);
             int amountCommas    = StringUtils.countMatches(str, ",");
 
-            if( amountQuotes != (amountCommas + 1) * 2 ) {
+            if (amountQuotes != (amountCommas + 1) * 2) {
                 return false;
             }
         }
@@ -73,7 +73,7 @@ public class UtilsTextual {
      * @return boolean
      */
     public static boolean containsOnly(String str, String[] characters) {
-        if( str == null || str.isEmpty() ) {
+        if (str == null || str.isEmpty()) {
             return false;
         }
 
@@ -172,17 +172,16 @@ public class UtilsTextual {
      */
     public static String getOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
-        if (       textLength == 0
-                || offset >= textLength
-                || str.toString().trim().isEmpty()
-        ) return null;
+        if (textLength == 0 || offset >= textLength || str.toString().trim().isEmpty()) {
+            return null;
+        }
 
         String operatorToTheLeft = offset > 2
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if(    operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft) ) {
-            return operatorToTheLeft.trim();
+        if (operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft)) {
+             return operatorToTheLeft.trim();
         }
 
         String operatorToTheRight =
@@ -192,12 +191,10 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
-        if( operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight) ) {
-            return operatorToTheRight.trim();
-        }
-
-        // No operator found
-        return null;
+        return (operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
+                ? operatorToTheRight.trim()
+                // No operator found
+                : null;
     }
 
     public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
@@ -210,7 +207,7 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if(    operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft) ) {
+        if (operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft)) {
             return offset - 1;
         }
 
@@ -219,11 +216,9 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
-        if( operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight) ) {
-            return offset;
-        }
-
-        return null;
+        return (operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
+                ? offset
+                : null;
     }
 
     /**
@@ -237,7 +232,7 @@ public class UtilsTextual {
     public static String getWordAtOffset(CharSequence str, int offset, boolean allowHyphens) {
         int textLength = str.length();
 
-        if ( textLength == 0 || offset < 0  || offset >= textLength ) {
+        if (textLength == 0 || offset < 0 || offset >= textLength) {
             return null;
         }
 
@@ -248,7 +243,7 @@ public class UtilsTextual {
             offset--;
         }
 
-        if ( isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
+        if (isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
             int start = offset;
             int end = offset;
 
@@ -297,11 +292,9 @@ public class UtilsTextual {
             return "";
         }
 
-        if (offset > 0 ) {
-            return str.subSequence(offset-1, offset).toString();
-        }
-
-        return "";
+        return (offset > 0)
+                ? str.subSequence(offset-1, offset).toString()
+                : "";
     }
 
     /**
@@ -393,12 +386,12 @@ public class UtilsTextual {
         int lenText      = str.length();
 
         int offsetStart = offset;
-        while(offsetStart > 0 && str.charAt(offsetStart-1) != '\n') {
+        while (offsetStart > 0 && str.charAt(offsetStart-1) != '\n') {
             offsetStart--;
         }
 
         int offsetEnd = offset;
-        while(offsetEnd < lenText && str.charAt(offsetEnd) != '\n') {
+        while (offsetEnd < lenText && str.charAt(offsetEnd) != '\n') {
             offsetEnd++;
         }
 
@@ -445,7 +438,7 @@ public class UtilsTextual {
      * @return Given numerical string, with given length (if >= original length)
      */
     public static String formatAmountDigits(String numberString, int length) {
-        while(numberString.length() < length) {
+        while (numberString.length() < length) {
             numberString = "0" + numberString;
         }
 
@@ -464,7 +457,7 @@ public class UtilsTextual {
 
         int index = 0;
         for(String currentLine : linesArray) {
-            if(index > 0 && currentLine.equals(previousLine)) {
+            if (index > 0 && currentLine.equals(previousLine)) {
                 return true;
             }
             index++;
@@ -483,7 +476,7 @@ public class UtilsTextual {
         String previousLine = "";
 
         for(String currentLine : linesArray) {
-            if(index > 0 && ! currentLine.equals(previousLine)) {
+            if (index > 0 && ! currentLine.equals(previousLine)) {
                 resultLines[resultIndex] = currentLine;
                 resultIndex++;
             }

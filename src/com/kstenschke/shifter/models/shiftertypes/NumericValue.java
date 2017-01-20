@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -68,6 +68,7 @@ public class NumericValue {
             // Integer
             return Integer.toString(Integer.parseInt(value) + (isUp ? 1 : -1));
         }
+
         // Guessing that it is a UNIX or milliseconds timestamp
         return getShiftedUnixTimestamp(value, isUp, editor);
     }

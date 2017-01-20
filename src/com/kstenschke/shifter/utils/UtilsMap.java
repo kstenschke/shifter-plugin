@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -36,8 +36,8 @@ public class UtilsMap {
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
             Map.Entry pairs = (Map.Entry) it.next();
-            int value = Integer.parseInt( pairs.getValue().toString() );
-            if( value > max ) {
+            int value = Integer.parseInt( pairs.getValue().toString());
+            if (value > max) {
                 max = value;
                 key = pairs.getKey().toString();
             }

@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -113,13 +113,13 @@ public class ShifterConfiguration {
         int shiftMoreValue = ShifterPreferences.getShiftMoreSize();
         this.spinnerShiftMore.setModel( new SpinnerNumberModel(shiftMoreValue, 2, 999, 1));
 
-        if( ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
+        if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
             this.radioButtonCaseSensitive.setSelected(true);
         } else {
             this.radioButtonCaseInsensitive.setSelected(true);
         }
 
-        if( ShifterPreferences.getShiftingModeOfTimestamps().equals(ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS)) {
+        if (ShifterPreferences.getShiftingModeOfTimestamps().equals(ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS)) {
             this.radioButtonShiftInSeconds.setSelected(true);
         } else {
             this.radioButtonShiftInMilliseconds.setSelected(true);
@@ -129,7 +129,7 @@ public class ShifterConfiguration {
         this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
 
         String termsDictionary   = ShifterPreferences.getTermsDictionary();
-        if( termsDictionary == null || termsDictionary.isEmpty() )  {
+        if (termsDictionary == null || termsDictionary.isEmpty())  {
             termsDictionary = getDefaultTerms();
         }
         textAreaDictionaryTerms.setText(termsDictionary);
@@ -194,8 +194,8 @@ public class ShifterConfiguration {
     public boolean isModified() {
         return    this.hasSomethingChanged
                || Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
-               || ! this.textAreaDictionaryTerms.getText().equals( ShifterPreferences.getTermsDictionary() )
-               || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode() )
+               || ! this.textAreaDictionaryTerms.getText().equals( ShifterPreferences.getTermsDictionary())
+               || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode())
                || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
                || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
         );
@@ -216,7 +216,7 @@ public class ShifterConfiguration {
         ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
         // Store dictionary
         String dictionary = this.getDictionary();
-        if( dictionary != null ) {
+        if (dictionary != null) {
             ShifterPreferences.saveDictionary(dictionary);
         }
 

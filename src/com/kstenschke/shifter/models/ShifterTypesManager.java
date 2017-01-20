@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -98,10 +98,10 @@ public class ShifterTypesManager {
         this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
         boolean isDocCommentLineContext   = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
 
-        if( isDocCommentLineContext ) {
+        if (isDocCommentLineContext) {
             this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentTag();
 
-            if ( prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line) ) {
+            if (prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
                 return TYPE_DOC_COMMENT_TAG;
             }
 
@@ -111,14 +111,14 @@ public class ShifterTypesManager {
         }
 
         // Object visibility
-        if ( !"@".equals(prefixChar) && this.isKeywordAccessType(word) ) {
+        if (!"@".equals(prefixChar) && this.isKeywordAccessType(word)) {
             return TYPE_ACCESSIBILITY;
         }
 
         // File extension specific term in dictionary
         this.typeDictionaryTerm = new DictionaryTerm();
         String fileExtension    = UtilsFile.extractFileExtension(filename);
-        if( fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension) ) {
+        if (fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
             return TYPE_DICTIONARY_WORD_EXT_SPECIFIC;
         }
 
@@ -138,7 +138,7 @@ public class ShifterTypesManager {
             return TYPE_QUOTED_STRING;
         }
         // RGB (must be prefixed with "#")
-        if ( com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar) ) {
+        if (com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar)) {
             this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
             return TYPE_RGB_COLOR;
         }
@@ -152,7 +152,7 @@ public class ShifterTypesManager {
             return TYPE_NUMERIC_VALUE;
         }
         // Operator sign (<, >, +, -)
-        if ( OperatorSign.isOperatorSign(word)) {
+        if (OperatorSign.isOperatorSign(word)) {
             this.typeOperatorSign    = new OperatorSign();
             return TYPE_OPERATOR_SIGN;
         }
@@ -176,7 +176,7 @@ public class ShifterTypesManager {
         if (com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
-        if(WordsTupel.isWordsTupel(word)) {
+        if (WordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
         }
 
@@ -231,11 +231,9 @@ public class ShifterTypesManager {
             case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return this.typeDictionaryTerm.getShifted(word, isUp);
-
             // ================== Generic types (shifting is calculated)
             case TYPE_SIZZLE_SELECTOR:
                 return SizzleSelector.getShifted(word);
-
             case TYPE_RGB_COLOR:
                 return this.typeRgbColor.getShifted(word, isUp);
             case TYPE_NUMERIC_VALUE:

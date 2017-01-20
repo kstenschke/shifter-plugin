@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -59,7 +59,7 @@ public class CssUnit {
     public String getShifted(String value, boolean isUp) {
         // Get int from PX value
         String unit = value.substring(value.length() -2);
-        int numericValue  = Integer.parseInt( value.replace(unit, "") );
+        int numericValue  = Integer.parseInt( value.replace(unit, ""));
 
         // Shift up/down by 1
         numericValue = numericValue + (isUp ? 1 : -1);
@@ -88,12 +88,7 @@ public class CssUnit {
         map.put(UNIT_VMIN, StringUtils.countMatches(stylesheet, UNIT_VMIN + ";"));
         map.put(UNIT_VMAX, StringUtils.countMatches(stylesheet, UNIT_VMAX + ";"));
 
-        int sum = UtilsMap.getSumOfValues(map);
-        if( sum == 0 ) {
-            return "px";
-        }
-
-        return UtilsMap.getKeyOfHighestValue(map);
+        return UtilsMap.getSumOfValues(map) == 0 ? "px" : UtilsMap.getKeyOfHighestValue(map);
     }
 
 }

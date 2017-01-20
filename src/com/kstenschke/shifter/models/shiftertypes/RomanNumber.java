@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -38,7 +38,7 @@ public class RomanNumber {
     public String getShifted(String value, boolean isUp) {
         int intVal = new RomanNumeral(value).toInt();
 
-        if( intVal == 1 && ! isUp ) {
+        if (intVal == 1 && ! isUp) {
             return value;
         }
 

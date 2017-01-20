@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,11 +23,11 @@ public class UtilsFile {
      * @return The extension    Everything after the last "." in the full filename
      */
     public static String extractFileExtension(String filename, boolean toLowerCase) {
-        if( filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".") ) {
+        if (filename == null || filename.isEmpty() || filename.length() < 3 || ! filename.contains(".")) {
             return null;
         }
 
-        if( filename.contains("/")) {
+        if (filename.contains("/")) {
             filename = filename.substring(filename.lastIndexOf("/") + 1);
         }
 

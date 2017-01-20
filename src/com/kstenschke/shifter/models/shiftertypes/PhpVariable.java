@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2016 Kay Stenschke
+ * Copyright 2011-2017 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -43,13 +43,13 @@ public class PhpVariable {
     public Boolean isPhpVariable(String str) {
         boolean isVariable = false;
 
-        if ( str.startsWith("$") ) {
+        if (str.startsWith("$")) {
             String identifier = str.substring(1);
             // Must contain a-z,A-Z or 0-9, _
             isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
         }
 
-        if( ! isVariable ) {
+        if (! isVariable) {
             // Detect array definition
             this.isArrayDefinition = this.isPhpArrayDefinition(str);
         }
@@ -78,7 +78,7 @@ public class PhpVariable {
      * @return String
      */
     public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
-        if( this.isArrayDefinition) {
+        if (this.isArrayDefinition) {
             return getShiftedArray(variable);
         }
 
@@ -89,7 +89,7 @@ public class PhpVariable {
         List<String> allMatches = new ArrayList<String>();
         Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
         while (m.find()) {
-            if( !allMatches.contains(m.group())) {
+            if (!allMatches.contains(m.group())) {
                 allMatches.add(m.group());
             }
         }
@@ -97,7 +97,7 @@ public class PhpVariable {
         // Sort var names alphabetically
         Collections.sort(allMatches);
         List<String> allLeadChars = null;
-        if( moreCount != null && moreCount == 1) {
+        if (moreCount != null && moreCount == 1) {
             // During "shift more": iterate over variables reduced to first per every lead-character
             allMatches         = this.reducePhpVarsToFirstPerLeadChar(allMatches);
             allLeadChars    = this.getLeadChars(allMatches);
@@ -110,12 +110,12 @@ public class PhpVariable {
                 ? allMatches.indexOf(variable)
                 : allLeadChars.indexOf(variable.substring(1, 2));
 
-        if( curIndex == -1 || amountVars == 0 ) {
+        if (curIndex == -1 || amountVars == 0) {
             return variable;
         }
 
         // Find next/previous variable name (only once during iterations of "shift more")
-        if(moreCount == null || moreCount == 1) {
+        if (moreCount == null || moreCount == 1) {
             if (isUp) {
                 curIndex++;
                 if (curIndex == amountVars) {
@@ -142,7 +142,7 @@ public class PhpVariable {
         String leadCharCur;
         for(String currentMatch : allMatches) {
             leadCharCur = currentMatch.substring(1,2);
-            if(!leadCharCur.matches(leadCharPrev)) {
+            if (!leadCharCur.matches(leadCharPrev)) {
                 reducedMatches.add(currentMatch);
             }
             leadCharPrev = leadCharCur;
@@ -170,19 +170,11 @@ public class PhpVariable {
      * @return String   converted array(...) <=> [...]
      */
     private String getShiftedArray(String variable) {
-        if( this.isConventionalArray ) {
-            return UtilsTextual.replaceLast(
-                    variable.replaceFirst("array", "[").replaceFirst("\\(", ""),
-                    ")",
-                    "]"
-            );
+        if (this.isConventionalArray) {
+            return UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]");
         }
 
-        return UtilsTextual.replaceLast(
-                variable.replaceFirst("\\[", "array("),
-                "]",
-                ")"
-        );
+        return UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
     }
 
 }
