@@ -59,15 +59,21 @@ public class CssUnit {
     public String getShifted(String value, boolean isUp) {
         // Get int from PX value
         String unit = detectUnit(value);
-        int numericValue  = unit.equals("")
-                ? Integer.parseInt(value)
-                : Integer.parseInt(value.replace(unit, ""));
+        try {
+            int numericValue = unit.equals("")
+                    ? Integer.parseInt(value)
+                    : Integer.parseInt(value.replace(unit, ""));
 
-        // Shift up/down by 1
-        numericValue = numericValue + (isUp ? 1 : -1);
+            // Shift up/down by 1
+            numericValue = numericValue + (isUp ? 1 : -1);
 
-        // prepend with unit again
-        return Integer.toString(numericValue).concat(unit);
+            // prepend with unit again
+            return Integer.toString(numericValue).concat(unit);
+        } catch(NumberFormatException e) {
+            // silence
+        }
+
+        return value;
     }
 
     @NotNull
@@ -88,7 +94,7 @@ public class CssUnit {
             || value.endsWith(UNIT_PC) || value.endsWith(UNIT_PT) || value.endsWith(UNIT_PX)
             || value.endsWith(UNIT_VH) || value.endsWith(UNIT_VW)
         ) {
-            return value.substring(value.length() - 3);
+            return value.substring(value.length() - 2);
         }
 
         return "";
