@@ -27,8 +27,6 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_DICTIONARY_TERMS = "PluginShifter.Dictionary.Terms";
     @NonNls
-    private static final String PROPERTY_DICTIONARY_EXPRESSIONS = "PluginShifter.Dictionary.Expressions";
-    @NonNls
     private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
     @NonNls
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
@@ -98,13 +96,6 @@ public class ShifterPreferences {
      */
     public static String getTermsDictionary() {
         return getDictionary(PROPERTY_DICTIONARY_TERMS);
-    }
-
-    /**
-     * @return String  Dictionary
-     */
-    public static String getExpressionsDictionary() {
-        return getDictionary(PROPERTY_DICTIONARY_EXPRESSIONS);
     }
 
     /**

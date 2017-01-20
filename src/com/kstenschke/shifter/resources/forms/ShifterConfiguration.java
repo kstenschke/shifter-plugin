@@ -44,9 +44,7 @@ public class ShifterConfiguration {
     private JPanel jPanelTopBar;
     private JSpinner spinnerShiftMore;
     private JTextField restoreSettings;
-    private JScrollPane scrollPaneDictionaryExpressions;
     private JTextPane thisDictionaryConfiguresShiftableTextPane;
-    private JTextPane thisDictionaryDefinesShiftableTextPane;
 
     public Boolean hasSomethingChanged = false;
 
@@ -135,24 +133,11 @@ public class ShifterConfiguration {
             termsDictionary = getDefaultTerms();
         }
         textAreaDictionaryTerms.setText(termsDictionary);
-
-        String expressionsDictionary   = ShifterPreferences.getExpressionsDictionary();
-        if( expressionsDictionary == null || expressionsDictionary.isEmpty() )  {
-            expressionsDictionary = getDefaultExpressions();
-        }
-        textAreaDictionaryExpressions.setText(expressionsDictionary);
     }
 
     public String getDefaultTerms() {
         //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
         InputStream dictionaryStream= this.getClass().getResourceAsStream("terms.txt");
-
-        return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
-    }
-
-    public String getDefaultExpressions() {
-        //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
-        InputStream dictionaryStream= this.getClass().getResourceAsStream("expressions.txt");
 
         return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
     }
@@ -166,7 +151,6 @@ public class ShifterConfiguration {
         radioButtonShiftInSeconds.setSelected(true);
 
         this.textAreaDictionaryTerms.setText(getDefaultTerms());
-        this.textAreaDictionaryExpressions.setText(getDefaultExpressions());
     }
 
     /**
