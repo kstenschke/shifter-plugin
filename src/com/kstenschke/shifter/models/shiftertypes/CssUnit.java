@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftertypes;
 
 import com.kstenschke.shifter.utils.UtilsMap;
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -25,19 +26,18 @@ import java.util.HashMap;
  */
 public class CssUnit {
 
-    private static final String UNIT_CM = "cm";
-    private static final String UNIT_EM = "em";
-    private static final String UNIT_IN = "in";
-    private static final String UNIT_MM = "mm";
-    private static final String UNIT_PC = "pc";
-    private static final String UNIT_PT = "pt";
-    private static final String UNIT_PX = "px";
-    private static final String UNIT_REM = "rem";
-    private static final String UNIT_VW = "vw";
-    private static final String UNIT_VH = "vh";
-    private static final String UNIT_VMIN = "vmin";
+    private static final String UNIT_CM   = "cm";
+    private static final String UNIT_EM   = "em";
+    private static final String UNIT_IN   = "in";
+    private static final String UNIT_MM   = "mm";
+    private static final String UNIT_PC   = "pc";
+    private static final String UNIT_PT   = "pt";
+    private static final String UNIT_PX   = "px";
+    private static final String UNIT_REM  = "rem";
+    private static final String UNIT_VH   = "vh";
     private static final String UNIT_VMAX = "vmax";
-
+    private static final String UNIT_VMIN = "vmin";
+    private static final String UNIT_VW   = "vw";
 
     /**
      * @param  str      String to be checked
@@ -58,14 +58,40 @@ public class CssUnit {
      */
     public String getShifted(String value, boolean isUp) {
         // Get int from PX value
-        String unit = value.substring(value.length() -2);
-        int numericValue  = Integer.parseInt( value.replace(unit, ""));
+        String unit = detectUnit(value);
+        int numericValue  = unit.equals("")
+                ? Integer.parseInt(value)
+                : Integer.parseInt(value.replace(unit, ""));
 
         // Shift up/down by 1
         numericValue = numericValue + (isUp ? 1 : -1);
 
         // prepend with unit again
         return Integer.toString(numericValue).concat(unit);
+    }
+
+    @NotNull
+    private String detectUnit(String value) {
+        // 4-digit units
+        if (value.endsWith(UNIT_VMAX) || value.endsWith(UNIT_VMIN)) {
+            return value.substring(value.length() - 4);
+        }
+
+        // 3-digit units
+        if (value.endsWith(UNIT_REM)) {
+            return value.substring(value.length() - 3);
+        }
+
+        // 2-digit units
+        if (   value.endsWith(UNIT_CM) || value.endsWith(UNIT_EM)
+            || value.endsWith(UNIT_IN) || value.endsWith(UNIT_MM)
+            || value.endsWith(UNIT_PC) || value.endsWith(UNIT_PT) || value.endsWith(UNIT_PX)
+            || value.endsWith(UNIT_VH) || value.endsWith(UNIT_VW)
+        ) {
+            return value.substring(value.length() - 3);
+        }
+
+        return "";
     }
 
     /**
