@@ -85,7 +85,6 @@
             <ul>
                 <li>Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
                 <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
-                <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
                 <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
                 <li>Prevent edge case (shifting empty lines/selection) exceptions</li>
                 <li>Changed: tab size in dictionary settings (reduced to 4)</li>
