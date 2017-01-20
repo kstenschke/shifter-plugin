@@ -15,9 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
-import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
-import org.apache.http.util.TextUtils;
 
 /**
  * JavaScript Variables (multi-lined declarations of multiple vars)
