@@ -83,7 +83,7 @@
     <ul>
         <li>1.4.0
             <ul>
-                <li>Added: more CSS units detections: rem|vw|vh|vmin|vmax</li>
+                <li>Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
                 <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
                 <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
                 <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>

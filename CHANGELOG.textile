@@ -1,7 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.4.0
-    ** Added: more CSS units detections: rem|vw|vh|vmin|vmax
+    ** Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)
     ** Added: shift selected jQuery (sizzle) selector into local variable declaration
     ** Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration
     ** Prevent edge case (shifting empty lines/selection, shifting full document) exceptions
