@@ -74,6 +74,7 @@ Thanks for their input, ideas, help or other contribution
 * Eike Thies
 * John Fearnside from Moz
 * John Lindquist from Jetbrains
+* Joshua David
 * Nicolaj Schumacher
 * Vojtěch Krása
 * Srdjan Marković
