@@ -99,27 +99,13 @@ public class DocCommentTag {
     public String getShifted(String word, boolean isUp, String filename, String textAfterCaret) {
         String[] commentTags = this.getTagsByFilename(filename);
         int amountTags = commentTags.length;
-
         if (amountTags > 0) {
             String wordLower = word.toLowerCase();
             List<String> commentTagsList = Arrays.asList(commentTags);
             int curIndex = commentTagsList.indexOf(wordLower);
-
             if (curIndex > -1) {
-                if (isUp) {
-                    curIndex++;
-                    if (curIndex == amountTags) {
-                        curIndex = 0;
-                    }
-                } else {
-                    curIndex--;
-                    if (curIndex == -1) {
-                        curIndex = amountTags - 1;
-                    }
-                }
-
+                curIndex           = NumericValue.moduloShiftInteger(curIndex, amountTags, isUp);
                 String shiftedWord = commentTagsList.get(curIndex);
-
                 if ("method".equals(shiftedWord)) {
                     shiftedWord = shiftedWord + parseNextMethod(textAfterCaret);
                 }

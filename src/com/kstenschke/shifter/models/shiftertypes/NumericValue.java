@@ -111,4 +111,20 @@ public class NumericValue {
         return valueShifted;
     }
 
+    /**
+     * @param value
+     * @param maxValue
+     * @param isUp
+     * @return int
+     */
+    public static int moduloShiftInteger(int value, int maxValue, boolean isUp) {
+        if (isUp) {
+            value++;
+            return value == maxValue ? 0 : value;
+        } else {
+            value--;
+            return value == -1 ? maxValue - 1 : value;
+        }
+    }
+
 }

@@ -288,7 +288,6 @@ class ActionsPerformer {
         boolean isJsVarsDeclarations = wordType == ShifterTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
         boolean isSizzleSelector = wordType == ShifterTypesManager.TYPE_SIZZLE_SELECTOR;
 
-
         // @todo refactor logical branches (cleanup flow, extract sub sections into private methods)
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 1 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines alphabetical
@@ -321,16 +320,13 @@ class ActionsPerformer {
                                 isDone = true;
 
                             } else if (wordType == ShifterTypesManager.TYPE_TRAILING_COMMENT) {
-                                if (selectedText != null) {
-                                    int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
-                                    int offsetEndCaretLine = document.getLineEndOffset(lineNumberSelStart);
-                                    String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+                                int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
+                                int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
+                                String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+                                String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
-                                    String caretLine = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
-
-                                    document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
-                                    isDone = true;
-                                }
+                                document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
+                                isDone = true;
                             } else if (!isPhpVariable) {
                                 if (UtilsTextual.containsAnyQuotes(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));

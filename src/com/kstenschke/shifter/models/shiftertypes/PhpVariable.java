@@ -116,17 +116,7 @@ public class PhpVariable {
 
         // Find next/previous variable name (only once during iterations of "shift more")
         if (moreCount == null || moreCount == 1) {
-            if (isUp) {
-                curIndex++;
-                if (curIndex == amountVars) {
-                    curIndex = 0;
-                }
-            } else {
-                curIndex--;
-                if (curIndex == -1) {
-                    curIndex = amountVars - 1;
-                }
-            }
+            curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
         }
 
         return allMatches.get(curIndex);

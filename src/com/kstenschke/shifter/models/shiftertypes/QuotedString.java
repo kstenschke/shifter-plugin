@@ -72,21 +72,9 @@ public class QuotedString {
         Collections.sort(allMatches);
         int amountVars = allMatches.size();
 
-        // Find position of given variable
+        // Find position of given variable, return next/previous variable name
         int curIndex = allMatches.indexOf(word);
-
-        // Return next/previous variable name
-        if (isUp) {
-            curIndex++;
-            if (curIndex == amountVars) {
-                curIndex = 0;
-            }
-        } else {
-            curIndex--;
-            if (curIndex == -1) {
-                curIndex = amountVars - 1;
-            }
-        }
+        curIndex     = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
 
         return allMatches.get(curIndex);
     }

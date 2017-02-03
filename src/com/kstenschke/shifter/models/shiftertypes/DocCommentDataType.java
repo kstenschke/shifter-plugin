@@ -46,30 +46,18 @@ class DocCommentDataType {
      */
     public String getShifted(String word, String filename, boolean isUp) {
         String[] dataTypes   = this.getDataTypesByFilename(filename);
-        int amountTypes   = dataTypes.length;
-        String wordLower  = word.toLowerCase();
+        int amountTypes      = dataTypes.length;
+        String wordLower     = word.toLowerCase();
 
-        if (amountTypes > 0) {
-            List<String> dataTypesList = Arrays.asList(dataTypes);
-            int curIndex   =  dataTypesList.indexOf(wordLower);
-
-            if (isUp) {
-                // Shift up, if word at caret was not identified: take first item
-                curIndex++;
-                if (curIndex == amountTypes) {
-                    curIndex = 0;
-                }
-            } else {
-                curIndex--;
-                if (curIndex == -1) {
-                    curIndex = amountTypes - 1;
-                }
-            }
-
-            return dataTypesList.get(curIndex);
+        if (amountTypes == 0) {
+            return wordLower;
         }
 
-        return wordLower;
+        List<String> dataTypesList = Arrays.asList(dataTypes);
+        int curIndex               = dataTypesList.indexOf(wordLower);
+        curIndex                   = NumericValue.moduloShiftInteger(curIndex, amountTypes, isUp);
+
+        return dataTypesList.get(curIndex);
     }
 
     /**
