@@ -36,10 +36,16 @@ public class ShifterTypesManager {
     // Generic types
     public static final int     TYPE_QUOTED_STRING             = 50;
     private static final int    TYPE_HTML_ENCODABLE_STRING     = 51;
-    private static final int    TYPE_OPERATOR_SIGN             = 53; // <, >, +, -
+
+    // <, >, +, -
+    private static final int    TYPE_OPERATOR_SIGN             = 53;
+
     private static final int    TYPE_MONO_CHARACTER_STRING     = 54;
     private static final int    TYPE_RGB_COLOR                 = 55;
-    public static final int     TYPE_CSS_UNIT                  = 56; // %, cm, em, in, pt, px, rem, vw, vh, vmin, vmax
+
+    // %, cm, em, in, pt, px, rem, vw, vh, vmin, vmax
+    public static final int     TYPE_CSS_UNIT                  = 56;
+
     private static final int    TYPE_DOC_COMMENT_TAG           = 57;
     private static final int    TYPE_DOC_COMMENT_DATATYPE      = 58;
     public static final int     TYPE_PHP_VARIABLE              = 59;
@@ -50,6 +56,7 @@ public class ShifterTypesManager {
     private static final int    TYPE_NUMERIC_POSTFIXED_STRING  = 64;
     private static final int    TYPE_TERNARY_EXPRESSION        = 65;
     private static final int    TYPE_WORDS_TUPEL               = 66;
+
     // @see trailing comment shifting is implemented in ActionsPerformer.shiftSelection()
     public static final int    TYPE_TRAILING_COMMENT           = 67;
 

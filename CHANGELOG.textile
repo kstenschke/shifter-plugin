@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.4.1
+    ** Bugfix: Remove duplicates when sorting lines was removing first item
 * 1.4.0
     ** Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)
     ** Added: shift selected jQuery (sizzle) selector into local variable declaration

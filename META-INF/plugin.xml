@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.4.0</version>
+    <version>1.4.1</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -81,9 +81,11 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.4.1 Bugfix: Remove duplicates when sorting lines was removing first item</li>
         <li>1.4.0
             <ul>
-                <li>Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
+                <li>Added: more CSS units detehttp://sites.arte.tv/metropolis/de/video/metropolis-44
+http://sites.arte.tv/metropolis/de/video/metropolis-36ctions: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
                 <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
                 <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
                 <li>Prevent edge case (shifting empty lines/selection) exceptions</li>
@@ -97,7 +99,6 @@
                 <li>Adapted "restore factory settings" more to general IDE look-and-feel</li>
                 <li>Code cleanup</li>
             </ul>
-        <li>1.2.14 Added detection + optional reduction of duplicate lines to alphabetical line sorting</li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

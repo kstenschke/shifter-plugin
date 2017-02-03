@@ -476,7 +476,7 @@ public class UtilsTextual {
         String previousLine = "";
 
         for(String currentLine : linesArray) {
-            if (index > 0 && ! currentLine.equals(previousLine)) {
+            if (index == 0 || !currentLine.equals(previousLine)) {
                 resultLines[resultIndex] = currentLine;
                 resultIndex++;
             }
