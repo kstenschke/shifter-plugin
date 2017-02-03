@@ -20,15 +20,29 @@ package com.kstenschke.shifter.models.shiftertypes;
  */
 public class WordsTupel {
 
+    private String delimiter;
+
     /**
      * Check whether shifted string is a ternary expression
      *
      * @param  str
      * @return boolean
      */
-    public static boolean isWordsTupel(String str) {
-        // @todo implement also for other delimiters than just space
-        return str.split(" ").length == 2;
+    public boolean isWordsTupel(String str) {
+        if (str.split(" ").length == 2) {
+            this.delimiter = " ";
+            return true;
+        }
+        if (str.split("\\|").length == 2) {
+            this.delimiter = "|";
+            return true;
+        }
+        if (str.split(" : ").length == 2) {
+            this.delimiter = " : ";
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -37,11 +51,11 @@ public class WordsTupel {
      * @param str  string to be shifted
      * @return String   The shifted string
      */
-    public static String getShifted(String str) {
+    public String getShifted(String str) {
 
-        String[] parts = str.split(" ");
+        String[] parts = str.split(this.delimiter == "|" ? "\\|" : this.delimiter);
 
-        return parts[1] + " " + parts[0];
+        return parts[1] + this.delimiter + parts[0];
     }
 
 }

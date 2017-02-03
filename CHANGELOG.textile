@@ -1,5 +1,8 @@
 h1. Shifter Plugin - Changelog
 
+* 1.4.2
+    ** Added: Shift Selection > Swap order of terms separated by "|" or " : "
+    ** Added: Updated feature list w/ several prior not mentioned shifting types
 * 1.4.1
     ** Bugfix: Remove duplicates when sorting lines was removing first item
 * 1.4.0

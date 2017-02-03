@@ -65,16 +65,17 @@ public class ShifterTypesManager {
     private DictionaryTerm typeDictionaryTerm;
 
     // Generic types (calculated when shifted)
-    private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
-    private OperatorSign typeOperatorSign;
-    private RomanNumber typeRomanNumber;
-    private StringMonoCharacter typeMonoCharacterString;
-    private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftertypes.CssUnit typePixelValue;
-    private com.kstenschke.shifter.models.shiftertypes.NumericValue typeNumericValue;
-    private com.kstenschke.shifter.models.shiftertypes.PhpVariable typePhpVariable;
     private com.kstenschke.shifter.models.shiftertypes.DocCommentTag typeTagInDocComment;
     private com.kstenschke.shifter.models.shiftertypes.DocCommentType typeDataTypeInDocComment;
+    private com.kstenschke.shifter.models.shiftertypes.NumericValue typeNumericValue;
+    private OperatorSign typeOperatorSign;
+    private com.kstenschke.shifter.models.shiftertypes.PhpVariable typePhpVariable;
+    private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
+    private RomanNumber typeRomanNumber;
+    private StringMonoCharacter typeMonoCharacterString;
+    private WordsTupel wordsTupel;
+    private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
 
     /**
      * Detect word type (get the one with highest priority to be shifted) of given string
@@ -183,7 +184,8 @@ public class ShifterTypesManager {
         if (com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
-        if (WordsTupel.isWordsTupel(word)) {
+        wordsTupel = new WordsTupel();
+        if (wordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
         }
 
@@ -231,14 +233,15 @@ public class ShifterTypesManager {
      */
         public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
         switch (idWordType) {
-            // ================== String based word types
+            // String based word types
             case TYPE_ACCESSIBILITY:
                 return this.wordTypeAccessibilities.getShifted(word, isUp);
             case TYPE_DICTIONARY_WORD_GLOBAL:
             case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return this.typeDictionaryTerm.getShifted(word, isUp);
-            // ================== Generic types (shifting is calculated)
+
+            // Generic types (shifting is calculated)
             case TYPE_SIZZLE_SELECTOR:
                 return SizzleSelector.getShifted(word);
             case TYPE_RGB_COLOR:
@@ -270,7 +273,7 @@ public class ShifterTypesManager {
             case TYPE_NUMERIC_POSTFIXED_STRING:
                 return com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.getShifted(word, isUp);
             case TYPE_WORDS_TUPEL:
-                return WordsTupel.getShifted(word);
+                return wordsTupel.getShifted(word);
             default:
                 return word;
         }
