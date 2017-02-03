@@ -318,7 +318,6 @@ class ActionsPerformer {
                             if (TernaryExpression.isTernaryExpression(selectedText, "")) {
                                 document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
                                 isDone = true;
-
                             } else if (wordType == ShifterTypesManager.TYPE_TRAILING_COMMENT) {
                                 int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
                                 int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
@@ -331,11 +330,9 @@ class ActionsPerformer {
                                 if (UtilsTextual.containsAnyQuotes(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                                     isDone = true;
-
                                 } else if (UtilsTextual.containsAnySlashes(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
                                     isDone = true;
-
                                 } else if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
                                     isDone = true;
