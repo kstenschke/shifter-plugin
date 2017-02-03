@@ -46,10 +46,13 @@
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
+        <li>Selection which is a Sizzle-Selector - Converts the selector into a responding JavaScript variable declaration</li>
+        <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
         <li>Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
         <li>CSS hex RGB colors - Shifts color value lighter/darker</li>
         <li>CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm, rem, vw, vh, vmin, vmax)</li>
+        <li>Logical operators: toggles between (selected) "&&" and "||"</li>
         <li>Encoding/decoding of HTML special characters</li>
         <li>Roman Numerals</li>
         <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value</li>
@@ -84,6 +87,7 @@
         <li>1.4.2
             <ul>
                 <li>Added: Shift Selection > Swap order of terms separated by "|" or " : "</li>
+                <li>Added: Toggle (selected) logical operators: "&&" versus "||"</li>
                 <li>Added: Updated feature list w/ several prior not mentioned shifting types</li>
             </ul>
         </ul>

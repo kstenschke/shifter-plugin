@@ -55,13 +55,12 @@ class ActionsPerformer {
         this.editor = event.getData(PlatformDataKeys.EDITOR);
 
         if (this.editor != null) {
-            this.document = this.editor.getDocument();
-            this.filename = this.getFilename();
-            this.editorText = this.document.getCharsSequence();
-            CaretModel caretModel = this.editor.getCaretModel();
-            this.caretOffset = caretModel.getOffset();
+            this.document       = this.editor.getDocument();
+            this.filename       = this.getFilename();
+            this.editorText     = this.document.getCharsSequence();
+            this.caretOffset    = this.editor.getCaretModel().getOffset();
             this.selectionModel = this.editor.getSelectionModel();
-            this.hasSelection = this.selectionModel.hasSelection();
+            this.hasSelection   = this.selectionModel.hasSelection();
         }
     }
 
@@ -284,9 +283,10 @@ class ActionsPerformer {
         ShifterTypesManager shifterTypesManager = new ShifterTypesManager();
 
         int wordType = shifterTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
-        boolean isPhpVariable = wordType == ShifterTypesManager.TYPE_PHP_VARIABLE;
-        boolean isJsVarsDeclarations = wordType == ShifterTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
-        boolean isSizzleSelector = wordType == ShifterTypesManager.TYPE_SIZZLE_SELECTOR;
+
+        boolean isPhpVariable        = wordType == ShifterTypesManager.TYPE_PHP_VARIABLE;
+        boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShifterTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
+        boolean isSizzleSelector     = !isPhpVariable && !isJsVarsDeclarations && wordType == ShifterTypesManager.TYPE_SIZZLE_SELECTOR;
 
         // @todo refactor logical branches (cleanup flow, extract sub sections into private methods)
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 1 && !isPhpVariable)) {
@@ -332,6 +332,9 @@ class ActionsPerformer {
                                     isDone = true;
                                 } else if (UtilsTextual.containsAnySlashes(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+                                    isDone = true;
+                                } else if (LogicalOperator.isLogicalOperator(selectedText)) {
+                                    document.replaceString(offsetStart, offsetEnd, LogicalOperator.getShifted(selectedText));
                                     isDone = true;
                                 } else if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));

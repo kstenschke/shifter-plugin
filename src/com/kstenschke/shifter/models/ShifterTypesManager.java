@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -26,39 +29,41 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShifterTypesManager {
 
-    public static final int TYPE_UNKNOWN = 0;
+    public static final int TYPE_UNKNOWN                        = 0;
 
     // Dictionary (list of strings) based types
     private static final int TYPE_ACCESSIBILITY                 = 1;
     private static final int TYPE_DICTIONARY_WORD_EXT_SPECIFIC  = 2;
     private static final int TYPE_DICTIONARY_WORD_GLOBAL        = 3;
 
+    public static final int  TYPE_NUMERIC_VALUE                 = 10;
+    private static final int TYPE_NUMERIC_POSTFIXED_STRING      = 11;
+    public static final int  TYPE_ROMAN_NUMERAL                 = 12;
+
     // Generic types
-    public static final int     TYPE_QUOTED_STRING             = 50;
-    private static final int    TYPE_HTML_ENCODABLE_STRING     = 51;
+    public static final int  TYPE_QUOTED_STRING                 = 20;
+    private static final int TYPE_HTML_ENCODABLE_STRING         = 21;
 
     // <, >, +, -
-    private static final int    TYPE_OPERATOR_SIGN             = 53;
+    private static final int TYPE_OPERATOR_SIGN                 = 30;
+    public static final int  TYPE_LOGICAL_OPERATOR              = 31;
+    private static final int TYPE_MONO_CHARACTER_STRING         = 32;
 
-    private static final int    TYPE_MONO_CHARACTER_STRING     = 54;
-    private static final int    TYPE_RGB_COLOR                 = 55;
-
+    private static final int TYPE_RGB_COLOR                     = 40;
     // %, cm, em, in, pt, px, rem, vw, vh, vmin, vmax
-    public static final int     TYPE_CSS_UNIT                  = 56;
+    public static final int  TYPE_CSS_UNIT                      = 41;
 
-    private static final int    TYPE_DOC_COMMENT_TAG           = 57;
-    private static final int    TYPE_DOC_COMMENT_DATATYPE      = 58;
-    public static final int     TYPE_PHP_VARIABLE              = 59;
-    public static final int     TYPE_JS_VARIABLES_DECLARATIONS = 60;
-    public static final int     TYPE_SIZZLE_SELECTOR           = 61;
-    public static final int     TYPE_NUMERIC_VALUE             = 62;
-    public static final int     TYPE_ROMAN_NUMERAL             = 63;
-    private static final int    TYPE_NUMERIC_POSTFIXED_STRING  = 64;
-    private static final int    TYPE_TERNARY_EXPRESSION        = 65;
-    private static final int    TYPE_WORDS_TUPEL               = 66;
+    private static final int TYPE_DOC_COMMENT_TAG               = 50;
+    private static final int TYPE_DOC_COMMENT_DATATYPE          = 51;
 
+    public static final int  TYPE_PHP_VARIABLE                  = 60;
+    public static final int  TYPE_JS_VARIABLES_DECLARATIONS     = 61;
+    public static final int  TYPE_SIZZLE_SELECTOR               = 62;
     // @see trailing comment shifting is implemented in ActionsPerformer.shiftSelection()
-    public static final int    TYPE_TRAILING_COMMENT           = 67;
+    public static final int  TYPE_TRAILING_COMMENT              = 63;
+
+    private static final int TYPE_TERNARY_EXPRESSION            = 70;
+    private static final int TYPE_WORDS_TUPEL                   = 71;
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftertypes.StaticWordType wordTypeAccessibilities;
@@ -103,16 +108,13 @@ public class ShifterTypesManager {
         }
 
         // DocComment types (must be prefixed with "@")
-        this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
-        boolean isDocCommentLineContext   = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
-
+        this.typeDataTypeInDocComment   = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
+        boolean isDocCommentLineContext = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
         if (isDocCommentLineContext) {
             this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentTag();
-
             if (prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
                 return TYPE_DOC_COMMENT_TAG;
             }
-
             if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) {
                 return TYPE_DOC_COMMENT_DATATYPE;
             }
@@ -168,6 +170,10 @@ public class ShifterTypesManager {
         if (RomanNumber.isRomanNumber(word)) {
             this.typeRomanNumber    = new RomanNumber();
             return TYPE_ROMAN_NUMERAL;
+        }
+        if (LogicalOperator.isLogicalOperator(word)) {
+            // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
+            return TYPE_LOGICAL_OPERATOR;
         }
         // MonoCharString (= consisting from any amount of the same character)
         if (StringMonoCharacter.isMonoCharacterString(word)) {
@@ -232,51 +238,53 @@ public class ShifterTypesManager {
      * @return              The shifted word
      */
         public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
-        switch (idWordType) {
-            // String based word types
-            case TYPE_ACCESSIBILITY:
-                return this.wordTypeAccessibilities.getShifted(word, isUp);
-            case TYPE_DICTIONARY_WORD_GLOBAL:
-            case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
-                // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                return this.typeDictionaryTerm.getShifted(word, isUp);
+            switch (idWordType) {
+                // String based word types
+                case TYPE_ACCESSIBILITY:
+                    return this.wordTypeAccessibilities.getShifted(word, isUp);
+                case TYPE_DICTIONARY_WORD_GLOBAL:
+                case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
+                    // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
+                    return this.typeDictionaryTerm.getShifted(word, isUp);
 
-            // Generic types (shifting is calculated)
-            case TYPE_SIZZLE_SELECTOR:
-                return SizzleSelector.getShifted(word);
-            case TYPE_RGB_COLOR:
-                return this.typeRgbColor.getShifted(word, isUp);
-            case TYPE_NUMERIC_VALUE:
-                // numeric values including UNIX and millisecond timestamps
-                return this.typeNumericValue.getShifted(word, isUp, editor);
-            case TYPE_CSS_UNIT:
-                return this.typePixelValue.getShifted(word, isUp);
-            case TYPE_PHP_VARIABLE:
-                return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
-            case TYPE_TERNARY_EXPRESSION:
-                return TernaryExpression.getShifted(word);
-            case TYPE_QUOTED_STRING:
-                return this.typeQuotedString.getShifted(word, editorText, isUp);
-            case TYPE_OPERATOR_SIGN:
-                return this.typeOperatorSign.getShifted(word);
-            case TYPE_ROMAN_NUMERAL:
-                return this.typeRomanNumber.getShifted(word, isUp);
-            case TYPE_MONO_CHARACTER_STRING:
-                return this.typeMonoCharacterString.getShifted(word, isUp);
-            case TYPE_DOC_COMMENT_TAG:
-                String textAfterCaret   = editorText.toString().substring(caretOffset);
-                return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
-            case TYPE_DOC_COMMENT_DATATYPE:
-                return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
-            case TYPE_HTML_ENCODABLE_STRING:
-                return com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.getShifted(word);
-            case TYPE_NUMERIC_POSTFIXED_STRING:
-                return com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.getShifted(word, isUp);
-            case TYPE_WORDS_TUPEL:
-                return wordsTupel.getShifted(word);
-            default:
-                return word;
-        }
+                // Generic types (shifting is calculated)
+                case TYPE_SIZZLE_SELECTOR:
+                    return SizzleSelector.getShifted(word);
+                case TYPE_RGB_COLOR:
+                    return this.typeRgbColor.getShifted(word, isUp);
+                case TYPE_NUMERIC_VALUE:
+                    // numeric values including UNIX and millisecond timestamps
+                    return this.typeNumericValue.getShifted(word, isUp, editor);
+                case TYPE_CSS_UNIT:
+                    return this.typePixelValue.getShifted(word, isUp);
+                case TYPE_PHP_VARIABLE:
+                    return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
+                case TYPE_TERNARY_EXPRESSION:
+                    return TernaryExpression.getShifted(word);
+                case TYPE_QUOTED_STRING:
+                    return this.typeQuotedString.getShifted(word, editorText, isUp);
+                case TYPE_OPERATOR_SIGN:
+                    return this.typeOperatorSign.getShifted(word);
+                case TYPE_ROMAN_NUMERAL:
+                    return this.typeRomanNumber.getShifted(word, isUp);
+                case TYPE_LOGICAL_OPERATOR:
+                    return LogicalOperator.getShifted(word);
+                case TYPE_MONO_CHARACTER_STRING:
+                    return this.typeMonoCharacterString.getShifted(word, isUp);
+                case TYPE_DOC_COMMENT_TAG:
+                    String textAfterCaret   = editorText.toString().substring(caretOffset);
+                    return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
+                case TYPE_DOC_COMMENT_DATATYPE:
+                    return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
+                case TYPE_HTML_ENCODABLE_STRING:
+                    return com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.getShifted(word);
+                case TYPE_NUMERIC_POSTFIXED_STRING:
+                    return com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.getShifted(word, isUp);
+                case TYPE_WORDS_TUPEL:
+                    return wordsTupel.getShifted(word);
+                default:
+                    return word;
+            }
     }
 
     /**
