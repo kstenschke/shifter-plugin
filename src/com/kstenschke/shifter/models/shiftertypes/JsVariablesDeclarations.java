@@ -23,7 +23,7 @@ import org.apache.commons.lang.StringUtils;
 public class JsVariablesDeclarations {
 
     /**
-     * Check whether given string represents a declaration of JS variables:
+     * Check whether given string represents a declaration of (multiple) JS variables:
      * -selection has multiple lines
      * -each trimmed line starts w/ "var" (at least 2 occurrences)
      * -each trimmed line ends w/ ";"
@@ -35,13 +35,12 @@ public class JsVariablesDeclarations {
      */
     public static Boolean isJsVariables(String str) {
         str = str.trim();
-        if (!str.startsWith("var") || !str.endsWith(";") || !str.contains("\n")
-            || StringUtils.countMatches(str, "var") < 2 || StringUtils.countMatches(str, ";") < 2
-        ) {
-            return false;
-        }
-
-        return true;
+        return !(!str.startsWith("var")
+              || !str.endsWith(";")
+              || !str.contains("\n")
+              || StringUtils.countMatches(str, "var") < 2
+              || StringUtils.countMatches(str, ";") < 2
+        );
     }
 
     /**
