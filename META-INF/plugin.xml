@@ -84,8 +84,7 @@
         <li>1.4.1 Bugfix: Remove duplicates when sorting lines was removing first item</li>
         <li>1.4.0
             <ul>
-                <li>Added: more CSS units detehttp://sites.arte.tv/metropolis/de/video/metropolis-44
-http://sites.arte.tv/metropolis/de/video/metropolis-36ctions: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
+                <li>Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
                 <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
                 <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
                 <li>Prevent edge case (shifting empty lines/selection) exceptions</li>
