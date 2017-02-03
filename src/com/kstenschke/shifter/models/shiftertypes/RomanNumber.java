@@ -42,9 +42,7 @@ public class RomanNumber {
             return value;
         }
 
-        return isUp
-                ? new RomanNumeral(intVal + 1).toString()
-                : new RomanNumeral(intVal - 1).toString();
+        return new RomanNumeral(isUp ? intVal + 1 : intVal -1).toString();
     }
 
     /**

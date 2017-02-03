@@ -93,9 +93,9 @@ public class RbgColor {
      * @return Color object
      */
     private static Color getColorFromRgbString(String rgbStr) {
-        int red = Integer.parseInt(rgbStr.substring(0, 2), 16);
+        int red   = Integer.parseInt(rgbStr.substring(0, 2), 16);
         int green = Integer.parseInt(rgbStr.substring(2, 4), 16);
-        int blue = Integer.parseInt(rgbStr.substring(4, 6), 16);
+        int blue  = Integer.parseInt(rgbStr.substring(4, 6), 16);
 
         return new Color(red, green, blue);
     }
@@ -168,9 +168,9 @@ public class RbgColor {
     private static Color addToRGB(Color color, int amount) {
         float amountF = (float) amount;
 
-        int red = Math.round(color.getRed() + amountF);
+        int red   = Math.round(color.getRed() + amountF);
         int green = Math.round(color.getGreen() + amountF);
-        int blue = Math.round(color.getBlue() + amountF);
+        int blue  = Math.round(color.getBlue() + amountF);
 
         red = red < 0 ? 0 : red > 255 ? 255 : red;
         green = green < 0 ? 0 : green > 255 ? 255 : green;

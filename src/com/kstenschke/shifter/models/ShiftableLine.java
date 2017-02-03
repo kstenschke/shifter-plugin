@@ -90,6 +90,5 @@ public class ShiftableLine {
                 : StringHtmlEncodable.isHtmlEncodable(this.line)
                 ? StringHtmlEncodable.getShifted(this.line)  // Encode or decode contained HTML special chars
                 : this.line;                                 // No shiftability detected, return original line
-
     }
 }

@@ -160,11 +160,9 @@ public class PhpVariable {
      * @return String   converted array(...) <=> [...]
      */
     private String getShiftedArray(String variable) {
-        if (this.isConventionalArray) {
-            return UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]");
-        }
-
-        return UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
+        return this.isConventionalArray
+            ? UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]")
+            : UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
     }
 
 }

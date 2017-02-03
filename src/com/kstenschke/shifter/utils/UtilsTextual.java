@@ -122,11 +122,10 @@ public class UtilsTextual {
      * @return String      Given string w/ contained slashes swapped against backslashes and vise versa
      */
     public static String swapSlashes(String str) {
-        str    = str.replace("\\", "###SHIFTERSLASH###");
-        str    = str.replace("/", "\\");
-        str    = str.replace("###SHIFTERSLASH###", "/");
-
-        return str;
+        return str.
+            replace("\\", "###SHIFTERSLASH###").
+            replace("/", "\\").
+            replace("###SHIFTERSLASH###", "/");
     }
 
     /**
@@ -134,11 +133,10 @@ public class UtilsTextual {
      * @return String      Given string w/ contained single quotes swapped against double quotes and vise versa
      */
     public static String swapQuotes(String str) {
-        str = str.replace("\"", "###SHIFTERSINGLEQUOTE###");
-        str = str.replace("'", "\"");
-        str = str.replace("###SHIFTERSINGLEQUOTE###", "'");
-
-        return str;
+        return str.
+            replace("\"", "###SHIFTERSINGLEQUOTE###").
+            replace("'", "\"").
+            replace("###SHIFTERSINGLEQUOTE###", "'");
     }
 
     /**
@@ -176,12 +174,12 @@ public class UtilsTextual {
             return null;
         }
 
-        String operatorToTheLeft = offset > 2
+        String operatorOnLHS = offset > 2
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if (operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft)) {
-             return operatorToTheLeft.trim();
+        if (operatorOnLHS != null && OperatorSign.isWhitespaceWrappedOperator(operatorOnLHS)) {
+             return operatorOnLHS.trim();
         }
 
         String operatorToTheRight =
@@ -243,22 +241,22 @@ public class UtilsTextual {
             offset--;
         }
 
-        if (isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
-            int start = offset;
-            int end = offset;
-
-            while (start > 0 && isJavaIdentifierPart(str.charAt(start - 1), allowHyphens)) {
-                start--;
-            }
-
-            while (end < textLength && isJavaIdentifierPart(str.charAt(end), allowHyphens)) {
-                end++;
-            }
-
-            return str.subSequence(start, end).toString();
+        if (! isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
+            return null;
         }
 
-        return null;
+        int start = offset;
+        int end   = offset;
+
+        while (start > 0 && isJavaIdentifierPart(str.charAt(start - 1), allowHyphens)) {
+            start--;
+        }
+
+        while (end < textLength && isJavaIdentifierPart(str.charAt(end), allowHyphens)) {
+            end++;
+        }
+
+        return str.subSequence(start, end).toString();
     }
 
     /**
@@ -292,7 +290,7 @@ public class UtilsTextual {
             return "";
         }
 
-        return (offset > 0)
+        return offset > 0
                 ? str.subSequence(offset-1, offset).toString()
                 : "";
     }
@@ -324,16 +322,16 @@ public class UtilsTextual {
             offset--;
         }
 
-        if (Character.isJavaIdentifierPart(str.charAt(offset))) {
-            int start = offset;
-            while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
-                start--;
-            }
-
-            return start;
+        if (! Character.isJavaIdentifierPart(str.charAt(offset))) {
+            return 0;
         }
 
-        return 0;
+        int start = offset;
+        while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
+            start--;
+        }
+
+        return start;
     }
 
     /**

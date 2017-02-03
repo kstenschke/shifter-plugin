@@ -64,13 +64,11 @@ public class NumericValue {
     public String getShifted(String value, boolean isUp, @Nullable Editor editor) {
         int strLen = value.length();
 
-        if (strLen <= 7) {
+        return strLen <= 7
             // Integer
-            return Integer.toString(Integer.parseInt(value) + (isUp ? 1 : -1));
-        }
-
-        // Guessing that it is a UNIX or milliseconds timestamp
-        return getShiftedUnixTimestamp(value, isUp, editor);
+            ? Integer.toString(Integer.parseInt(value) + (isUp ? 1 : -1))
+            // Guessing that it is a UNIX or milliseconds timestamp
+            : getShiftedUnixTimestamp(value, isUp, editor);
     }
 
     /**
@@ -103,12 +101,10 @@ public class NumericValue {
 
         String valueShifted = Long.toString(shiftedTimestamp);
 
-        if (strLenOriginal > valueShifted.length()) {
+        return strLenOriginal > valueShifted.length()
             // String has shrunk in length - maintain original leading zero's
-            valueShifted = UtilsTextual.formatAmountDigits(valueShifted, strLenOriginal);
-        }
-
-        return valueShifted;
+            ? UtilsTextual.formatAmountDigits(valueShifted, strLenOriginal)
+            : valueShifted;
     }
 
     /**
