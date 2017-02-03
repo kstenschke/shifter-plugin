@@ -40,22 +40,22 @@ public class SizzleSelector {
      */
     public static String getShifted(String selector) {
         String varName = selector
-                .replaceFirst("\\(", "")
-                .replaceAll("'", "")
-                .replaceAll("\"", "")
-                .replaceAll("\\)", "")
+            .replaceFirst("\\(", "")
+            .replaceAll("'", "")
+            .replaceAll("\"", "")
+            .replaceAll("\\)", "")
 
-                .replaceAll("#",   "-")
-                .replaceAll("\\[", "-")
-                .replaceAll("\\(", "-")
-                .replaceAll(">",   "-")
-                .replaceAll("<",   "-")
-                .replaceAll("]",   "-")
-                .replaceAll("=",   "-")
-                .replaceAll("_",   "-")
-                .replaceAll(" ",   "-")
+            .replaceAll("#",   "-")
+            .replaceAll("\\[", "-")
+            .replaceAll("\\(", "-")
+            .replaceAll(">",   "-")
+            .replaceAll("<",   "-")
+            .replaceAll("]",   "-")
+            .replaceAll("=",   "-")
+            .replaceAll("_",   "-")
+            .replaceAll(" ",   "-")
 
-                .replaceAll("--", "-");
+            .replaceAll("--", "-");
 
         String[] words = varName.split("-");
         varName = "";

@@ -23,7 +23,7 @@ public class WordsTupel {
     /**
      * Check whether shifted string is a ternary expression
      *
-     * @param str
+     * @param  str
      * @return boolean
      */
     public static boolean isWordsTupel(String str) {

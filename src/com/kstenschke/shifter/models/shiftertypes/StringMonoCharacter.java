@@ -46,7 +46,7 @@ public class StringMonoCharacter {
      */
     public String getShifted(String word, boolean isUp) {
         char firstChar = word.toLowerCase().charAt(0);
-        firstChar = (char) (firstChar + (isUp ? 1 : -1));
+        firstChar      = (char) (firstChar + (isUp ? 1 : -1));
 
         return StringUtils.repeat(String.valueOf(firstChar), word.length());
     }

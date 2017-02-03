@@ -44,8 +44,7 @@ public class TrailingComment {
     public static String getShifted(String selection, String leadingWhiteSpace) {
         String[] parts = selection.split("//");
 
-        return leadingWhiteSpace + "//" + parts[1] + "\n"
-             + parts[0];
+        return leadingWhiteSpace + "//" + parts[1] + "\n" + parts[0];
     }
 
 }

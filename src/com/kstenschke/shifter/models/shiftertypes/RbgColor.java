@@ -41,10 +41,8 @@ public class RbgColor {
     public String getShifted(String rgbStr, boolean isUp) {
         String rgbStrSixFold = rgbStr.length() == 3 ? sixfoldTripleColor(rgbStr) : rgbStr;
 
-        if (isUp) {
-            if (!isWhite(rgbStrSixFold)) {
-                return lightenRgbString(rgbStrSixFold);
-            }
+        if (isUp && !isWhite(rgbStrSixFold)) {
+            return lightenRgbString(rgbStrSixFold);
         } else if (!isBlack(rgbStrSixFold)) {
             return darkenRgbString(rgbStr);
         }
@@ -79,9 +77,9 @@ public class RbgColor {
      * @return String
      */
     private static String sixfoldTripleColor(String rgbStr) {
-        String red = rgbStr.substring(0, 1);
+        String red   = rgbStr.substring(0, 1);
         String green = rgbStr.substring(1, 2);
-        String blue = rgbStr.substring(2, 3);
+        String blue  = rgbStr.substring(2, 3);
 
         return "".concat(red).concat(red).concat(green).concat(green).concat(blue).concat(blue);
     }
@@ -135,7 +133,9 @@ public class RbgColor {
         String gHex = Integer.toString(color.getGreen(), 16);
         String bHex = Integer.toString(color.getBlue(), 16);
 
-        return (rHex.length() == 2 ? "" + rHex : "0" + rHex) + (gHex.length() == 2 ? "" + gHex : "0" + gHex) + (bHex.length() == 2 ? "" + bHex : "0" + bHex);
+        return (rHex.length() == 2 ? "" + rHex : "0" + rHex)
+             + (gHex.length() == 2 ? "" + gHex : "0" + gHex)
+             + (bHex.length() == 2 ? "" + bHex : "0" + bHex);
     }
 
     /**
@@ -172,9 +172,9 @@ public class RbgColor {
         int green = Math.round(color.getGreen() + amountF);
         int blue  = Math.round(color.getBlue() + amountF);
 
-        red = red < 0 ? 0 : red > 255 ? 255 : red;
+        red   = red < 0 ? 0 : red > 255 ? 255 : red;
         green = green < 0 ? 0 : green > 255 ? 255 : green;
-        blue = blue < 0 ? 0 : blue > 255 ? 255 : blue;
+        blue  = blue < 0 ? 0 : blue > 255 ? 255 : blue;
 
         return new Color(red, green, blue, color.getAlpha());
     }

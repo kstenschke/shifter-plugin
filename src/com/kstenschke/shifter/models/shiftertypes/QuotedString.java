@@ -15,11 +15,10 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
-import java.util.ArrayList;
+import com.kstenschke.shifter.utils.UtilsTextual;
+
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Quoted String.
@@ -53,20 +52,9 @@ public class QuotedString {
      * @return String
      */
     public String getShifted(String word, CharSequence editorText, boolean isUp) {
-        // Get full text of currently edited document
+        // Get array of all strings wrapped in current quoting sign
         String text = editorText.toString();
-
-        // Use regEx matcher to extract array of all string wrapped in current quoting sign
-        List<String> allMatches = new ArrayList<String>();
-
-        String pattern = "(?<=" + this.quoteChar + ")[a-zA-Z0-9_]+(?=" + this.quoteChar + ")";
-        Matcher m = Pattern.compile(pattern).matcher(text);
-
-        while (m.find()) {
-            if (!allMatches.contains(m.group())) {
-                allMatches.add(m.group());
-            }
-        }
+        List<String> allMatches = UtilsTextual.extractQuotedStrings(text, this.quoteChar);
 
         // Sort var names alphabetically
         Collections.sort(allMatches);

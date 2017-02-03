@@ -18,9 +18,11 @@ package com.kstenschke.shifter.utils;
 import com.intellij.openapi.editor.Document;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
@@ -495,6 +497,40 @@ public class UtilsTextual {
         }
 
         return whitespace;
+    }
+
+    /**
+     * Use regEx matcher to extract all variables in given code
+     *
+     * @param  str
+     * @return array of all PHP var names
+     */
+    @NotNull
+    public static List<String> extractPhpVariables(String str) {
+        List<String> allMatches = new ArrayList<String>();
+        Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(str);
+        while (m.find()) {
+            if (!allMatches.contains(m.group())) {
+                allMatches.add(m.group());
+            }
+        }
+
+        return allMatches;
+    }
+
+    @NotNull
+    public static List<String> extractQuotedStrings(String text, String quoteCaracter) {
+        List<String> allMatches = new ArrayList<String>();
+
+        String pattern = "(?<=" + quoteCaracter + ")[a-zA-Z0-9_]+(?=" + quoteCaracter + ")";
+        Matcher m = Pattern.compile(pattern).matcher(text);
+
+        while (m.find()) {
+            if (!allMatches.contains(m.group())) {
+                allMatches.add(m.group());
+            }
+        }
+        return allMatches;
     }
 
 }

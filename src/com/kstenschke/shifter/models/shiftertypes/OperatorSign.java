@@ -16,9 +16,6 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
-/**
- * Mono-Character String = String that contains only one character (no matter how often)
- */
 public class OperatorSign {
 
     /**

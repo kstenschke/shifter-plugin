@@ -20,8 +20,6 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * PHP Variable (word with $ prefix), includes array definition (toggle long versus shorthand syntax)
@@ -82,33 +80,25 @@ public class PhpVariable {
             return getShiftedArray(variable);
         }
 
-       // Get full text of currently edited document
-       String text = editorText.toString();
-
-        // Use regEx matcher to extract array of all PHP var names
-        List<String> allMatches = new ArrayList<String>();
-        Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(text);
-        while (m.find()) {
-            if (!allMatches.contains(m.group())) {
-                allMatches.add(m.group());
-            }
-        }
+        // Extract array of all PHP var names
+        String text = editorText.toString();
+        List<String> phpVariables = UtilsTextual.extractPhpVariables(text);
 
         // Sort var names alphabetically
-        Collections.sort(allMatches);
+        Collections.sort(phpVariables);
         List<String> allLeadChars = null;
         if (moreCount != null && moreCount == 1) {
             // During "shift more": iterate over variables reduced to first per every lead-character
-            allMatches         = this.reducePhpVarsToFirstPerLeadChar(allMatches);
-            allLeadChars    = this.getLeadChars(allMatches);
+            phpVariables = this.reducePhpVarsToFirstPerLeadChar(phpVariables);
+            allLeadChars = this.getLeadChars(phpVariables);
         }
 
-        int amountVars = allMatches.size();
+        int amountVars = phpVariables.size();
 
         // Find position of given variable
         Integer curIndex = (moreCount== null || moreCount > 1)
-                ? allMatches.indexOf(variable)
-                : allLeadChars.indexOf(variable.substring(1, 2));
+            ? phpVariables.indexOf(variable)
+            : allLeadChars.indexOf(variable.substring(1, 2));
 
         if (curIndex == -1 || amountVars == 0) {
             return variable;
@@ -119,7 +109,7 @@ public class PhpVariable {
             curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
         }
 
-        return allMatches.get(curIndex);
+        return phpVariables.get(curIndex);
     }
 
     /**
