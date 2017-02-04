@@ -21,7 +21,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.models.ShifterPreferences;
 
 import javax.swing.*;
-import javax.swing.text.Document;
 import java.awt.*;
 
 public class UtilsEnvironment {

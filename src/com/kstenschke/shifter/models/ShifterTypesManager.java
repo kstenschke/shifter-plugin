@@ -15,9 +15,6 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;

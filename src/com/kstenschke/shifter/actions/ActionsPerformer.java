@@ -18,20 +18,15 @@ package com.kstenschke.shifter.actions;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.vfs.VirtualFile;
 import com.kstenschke.shifter.models.*;
 import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.resources.forms.DialogNumericBlockOptions;
 import com.kstenschke.shifter.utils.*;
-import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Pattern;
 
 class ActionsPerformer {
@@ -44,6 +39,9 @@ class ActionsPerformer {
     private boolean hasSelection;
 
     private String filename = null;
+
+    private int[] blockSelectionStarts;
+    private int[] blockSelectionEnds;
 
     /**
      * Constructor
@@ -219,8 +217,8 @@ class ActionsPerformer {
      * @param moreCount Current "more" count, starting with 1. If non-more shift: null
      */
     private void shiftBlockSelection(boolean shiftUp, @Nullable Integer moreCount) {
-        int[] blockSelectionStarts = this.selectionModel.getBlockSelectionStarts();
-        int[] blockSelectionEnds = this.selectionModel.getBlockSelectionEnds();
+        blockSelectionStarts = this.selectionModel.getBlockSelectionStarts();
+        blockSelectionEnds   = this.selectionModel.getBlockSelectionEnds();
 
         if (ShiftableBlock.areNumericValues(blockSelectionStarts, blockSelectionEnds, editorText)) {
             // Block selection of numeric values: ask whether to 1. replace by enumeration or 2. in/decrement each
@@ -232,9 +230,9 @@ class ActionsPerformer {
             UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
 
             if (optionsDialog.isShiftModeEnumerate()) {
-                this.insertBlockEnumeration(optionsDialog.getFirstNumber(), blockSelectionStarts, blockSelectionEnds);
+                this.insertBlockEnumeration(optionsDialog.getFirstNumber());
             } else {
-                this.inOrDecrementNumericBlock(blockSelectionStarts, blockSelectionEnds, shiftUp);
+                this.inOrDecrementNumericBlock(shiftUp);
             }
         } else if (ShiftableBlock.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, editorText)) {
             String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
@@ -254,45 +252,67 @@ class ActionsPerformer {
      * Replace given block selection w/ enumeration starting w/ given value
      *
      * @param firstNumber
-     * @param blockSelectionStarts
-     * @param blockSelectionEnds
      */
-    private void insertBlockEnumeration(String firstNumber, int[] blockSelectionStarts, int[] blockSelectionEnds) {
+    private void insertBlockEnumeration(String firstNumber) {
         Integer currentValue = Integer.valueOf(firstNumber);
         if (null == currentValue) {
             currentValue = 0;
         }
 
-        for (int i = 0; i < blockSelectionStarts.length; i++) {
-            document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], currentValue.toString());
-            // @todo widen/narrow block-selection item when amount of digits changed
-            currentValue++;
+        List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+        CaretState caretsAndSelection;
+        LogicalPosition selectionStart, selectionEnd;
+        int offsetSelectionStart, offsetSelectionEnd;
+
+        for (CaretState caretsAndSelectionCurrent : caretsAndSelections) {
+            caretsAndSelection = caretsAndSelectionCurrent;
+            selectionStart = caretsAndSelection.getSelectionStart();
+            selectionEnd = caretsAndSelection.getSelectionEnd();
+            if (selectionStart != null && selectionEnd != null) {
+                offsetSelectionStart = editor.logicalPositionToOffset(selectionStart);
+                offsetSelectionEnd = editor.logicalPositionToOffset(selectionEnd);
+
+                document.replaceString(offsetSelectionStart, offsetSelectionEnd, currentValue.toString());
+
+                currentValue++;
+            }
         }
     }
 
     /**
      * Increment or decrement each item in given numeric block selection
      *
-     * @param blockSelectionStarts
-     * @param blockSelectionEnds
      * @param shiftUp
      */
-    private void inOrDecrementNumericBlock(int[] blockSelectionStarts, int[] blockSelectionEnds, boolean shiftUp) {
+    private void inOrDecrementNumericBlock(boolean shiftUp) {
         int addend = shiftUp ? 1 : -1;
         Integer value;
-        for (int i = 0; i < blockSelectionStarts.length; i++) {
+
+        List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+        CaretState caretsAndSelection;
+        LogicalPosition selectionStart, selectionEnd;
+        int offsetSelectionStart, offsetSelectionEnd;
+
+        for (CaretState caretsAndSelectionCurrent : caretsAndSelections) {
             value = null;
-            try {
-                value = Integer.valueOf(editorText.subSequence(blockSelectionStarts[i], blockSelectionEnds[i]).toString());
-            } catch (NumberFormatException e) {
+            caretsAndSelection = caretsAndSelectionCurrent;
+            selectionStart = caretsAndSelection.getSelectionStart();
+            selectionEnd = caretsAndSelection.getSelectionEnd();
+            if (selectionStart != null && selectionEnd != null) {
+                offsetSelectionStart = editor.logicalPositionToOffset(selectionStart);
+                offsetSelectionEnd = editor.logicalPositionToOffset(selectionEnd);
 
-            }
-            if (null == value) {
-                value = 0;
-            }
+                try {
+                    value = Integer.valueOf(editorText.subSequence(offsetSelectionStart, offsetSelectionEnd).toString());
+                } catch (NumberFormatException e) {
+                    // silently continue
+                }
+                if (null == value) {
+                    value = 0;
+                }
 
-            document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], String.valueOf(value + addend));
-            // @todo widen/narrow block-selection item when amount of digits changed
+                document.replaceString(offsetSelectionStart, offsetSelectionEnd, String.valueOf(value + addend));
+            }
         }
     }
 
