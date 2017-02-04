@@ -18,6 +18,7 @@ package com.kstenschke.shifter.actions;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.*;
 import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
@@ -228,11 +229,12 @@ class ActionsPerformer {
             }
             DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
             UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
-
-            if (optionsDialog.isShiftModeEnumerate()) {
-                this.insertBlockEnumeration(optionsDialog.getFirstNumber());
-            } else {
-                this.inOrDecrementNumericBlock(shiftUp);
+            if (!optionsDialog.wasCancelled()) {
+                if (optionsDialog.isShiftModeEnumerate()) {
+                    this.insertBlockEnumeration(optionsDialog.getFirstNumber());
+                } else {
+                    this.inOrDecrementNumericBlock(shiftUp);
+                }
             }
         } else if (ShiftableBlock.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, editorText)) {
             String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();

@@ -17,7 +17,7 @@
 package com.kstenschke.shifter.resources.forms;
 
 import com.kstenschke.shifter.listeners.ListenerRestoreSettings;
-import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.NotNull;
 

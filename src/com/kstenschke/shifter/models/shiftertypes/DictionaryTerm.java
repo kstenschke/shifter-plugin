@@ -15,7 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
-import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
 import org.apache.commons.lang.StringUtils;

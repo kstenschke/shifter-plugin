@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter;
 
 import com.intellij.ide.util.PropertiesComponent;
 import org.jetbrains.annotations.NonNls;
@@ -34,10 +34,16 @@ public class ShifterPreferences {
     private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
     @NonNls
     private static final String PROPERTY_SIZE_SHIFT_MORE = "PluginShifter.SizeShiftMore";
+    @NonNls
+    private static final String PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK = "PluginShifter.ModeShiftNumericalBlock";
 
     // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
     public static final Integer SORTING_MODE_CASE_INSENSITIVE   = 1;
+
+    // Sorting modes: numerical block selection
+    public static final Integer SORTING_MODE_NUMERIICAL_BLOCK_ENUM   = 0;
+    public static final Integer SORTING_MODE_NUMERIICAL_BLOCK_INCDEC = 1;
 
     // Timestamp shifting modes
     public static final Integer SHIFTING_MODE_TIMESTAMP_SECONDS     = 0;
@@ -95,6 +101,10 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_SIZE_SHIFT_MORE, size);
     }
 
+    public static void saveShiftNumericalBlockMode(int mode) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK, String.valueOf(mode));
+    }
+
     public static void saveShiftingModeTimestamps(Integer mode) {
         PropertiesComponent.getInstance().setValue(PROPERTY_SHIFTING_MODE_TIMESTAMP, mode.toString());
     }
@@ -138,6 +148,16 @@ public class ShifterPreferences {
             return size == null ? 10 : Integer.parseInt(size);
         } catch(NullPointerException e) {
             return 10;
+        }
+    }
+
+    public static int getShiftNumericalBlockMode() {
+        try {
+            String mode = PropertiesComponent.getInstance().getValue(PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK);
+
+            return mode == null ? SORTING_MODE_NUMERIICAL_BLOCK_ENUM : Integer.parseInt(mode);
+        } catch(NullPointerException e) {
+            return SORTING_MODE_NUMERIICAL_BLOCK_ENUM;
         }
     }
 

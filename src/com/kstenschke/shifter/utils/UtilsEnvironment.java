@@ -18,7 +18,7 @@ package com.kstenschke.shifter.utils;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.ShifterPreferences;
 
 import javax.swing.*;
 import java.awt.*;

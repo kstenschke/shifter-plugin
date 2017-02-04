@@ -20,7 +20,7 @@ import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.project.Project;
-import com.kstenschke.shifter.models.ShifterPreferences;
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.resources.StaticTexts;
 
 class ShiftUpMoreAction extends AnAction {

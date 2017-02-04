@@ -1,8 +1,8 @@
 package com.kstenschke.shifter.resources.forms;
 
+import com.kstenschke.shifter.ShifterPreferences;
+
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.event.*;
 
 public class DialogNumericBlockOptions extends JDialog {
@@ -11,18 +11,29 @@ public class DialogNumericBlockOptions extends JDialog {
     private JButton buttonCancel;
     private JRadioButton radioInsertEnumeration;
     private JRadioButton radionInDecrementEach;
-    private JSpinner spinnerFirstNumber;
+    private JSpinner spinnerFirstEnumerationNumber;
+
+    private boolean wasCancelled = false;
 
     public DialogNumericBlockOptions(Integer firstNumber) {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        spinnerFirstNumber.setValue(firstNumber);
-        spinnerFirstNumber.addChangeListener(new ChangeListener() {
+        boolean isEnumerationMode = ShifterPreferences.getShiftNumericalBlockMode() == ShifterPreferences.SORTING_MODE_NUMERIICAL_BLOCK_ENUM;
+        radioInsertEnumeration.setSelected(isEnumerationMode);
+        radionInDecrementEach.setSelected(!isEnumerationMode);
+        spinnerFirstEnumerationNumber.setValue(firstNumber);
+
+        spinnerFirstEnumerationNumber.addFocusListener(new FocusListener() {
             @Override
-            public void stateChanged(ChangeEvent changeEvent) {
+            public void focusGained(FocusEvent focusEvent) {
                 radioInsertEnumeration.setSelected(true);
+            }
+
+            @Override
+            public void focusLost(FocusEvent focusEvent) {
+
             }
         });
 
@@ -53,12 +64,25 @@ public class DialogNumericBlockOptions extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
 
+    public void saveSelectedMode() {
+        ShifterPreferences.saveShiftNumericalBlockMode(radioInsertEnumeration.isSelected()
+                ? ShifterPreferences.SORTING_MODE_NUMERIICAL_BLOCK_ENUM
+                : ShifterPreferences.SORTING_MODE_NUMERIICAL_BLOCK_INCDEC
+        );
+    }
+
     private void onOK() {
+        saveSelectedMode();
         dispose();
     }
 
     private void onCancel() {
+        wasCancelled = true;
         dispose();
+    }
+
+    public boolean wasCancelled() {
+        return wasCancelled;
     }
 
     public static void main(String[] args) {
@@ -73,6 +97,6 @@ public class DialogNumericBlockOptions extends JDialog {
     }
 
     public String getFirstNumber() {
-        return spinnerFirstNumber.getValue().toString();
+        return spinnerFirstEnumerationNumber.getValue().toString();
     }
 }

@@ -28,6 +28,7 @@ Supported generic shifting types:
 * Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash
 * Shifting a selection that contains two terms, separated by " " or "|" or " : ", swaps the order of the terms
 * Numeric values and roman numerals - Increments/decrements numbers by 1
+* Numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration
 * UNIX (and millisecond based)  timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document ("shift more" shifts until first variable with a different first letter)

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
