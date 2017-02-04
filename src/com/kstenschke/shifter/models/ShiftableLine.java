@@ -41,10 +41,10 @@ public class ShiftableLine {
      * @param filename    Name of the edited file if any
      */
     public ShiftableLine(String line, CharSequence editorText, int caretOffset, String filename) {
-        this.line = line;
-        this.editorText = editorText;
+        this.line        = line;
+        this.editorText  = editorText;
         this.caretOffset = caretOffset;
-        this.filename = filename;
+        this.filename    = filename;
     }
 
     /**
@@ -62,9 +62,9 @@ public class ShiftableLine {
         int amountShiftableWordsInSentence = 0;
         String wordShiftedTest;
         String wordUnshifted = "";
-        String wordShifted = "";
-        String prefixChar = "";
-        String postfixChar = "";
+        String wordShifted   = "";
+        String prefixChar    = "";
+        String postfixChar   = "";
 
         for (String word : words) {
             if (word.length() > 2) {

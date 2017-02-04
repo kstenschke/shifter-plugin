@@ -43,6 +43,36 @@ public class ShifterPreferences {
     public static final Integer SHIFTING_MODE_TIMESTAMP_SECONDS     = 0;
     public static final Integer SHIFTING_MODE_TIMESTAMP_MILLISECONDS= 1;
 
+    // Dialog IDs
+    @NonNls
+    public static final String ID_DIALOG_NUMERIC_BLOCK_OPTIONS = "PluginShifter.DialogBlockOptions";
+
+    /**
+     * @param   propertyName        Name of the preference property
+     * @param   defaultValue        Default value to be set if null
+     * @param   setDefaultIfEmpty   Set default also if empty?
+     * @return  String
+     */
+    private static String getProperty(String propertyName, String defaultValue, boolean setDefaultIfEmpty) {
+        String value = PropertiesComponent.getInstance().getValue(propertyName);
+        if (value == null) {
+            value = defaultValue;
+        }
+        if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
+            value = defaultValue;
+        }
+
+        return value;
+    }
+
+
+    /**
+     * @param   idDialog
+     */
+    public static String getDialogPosition(String idDialog) {
+        return getProperty( idDialog + ".Position", "0x0", false );
+    }
+
     /**
      * Store dictionary
      *

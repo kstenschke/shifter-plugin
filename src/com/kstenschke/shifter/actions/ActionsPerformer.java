@@ -20,15 +20,11 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.kstenschke.shifter.models.ShiftableLine;
-import com.kstenschke.shifter.models.ShiftableWord;
-import com.kstenschke.shifter.models.ShifterPreferences;
-import com.kstenschke.shifter.models.ShifterTypesManager;
+import com.kstenschke.shifter.models.*;
 import com.kstenschke.shifter.models.shiftertypes.*;
-import com.kstenschke.shifter.utils.UtilsArray;
-import com.kstenschke.shifter.utils.UtilsFile;
-import com.kstenschke.shifter.utils.UtilsLinesList;
-import com.kstenschke.shifter.utils.UtilsTextual;
+import com.kstenschke.shifter.resources.StaticTexts;
+import com.kstenschke.shifter.resources.forms.DialogNumericBlockOptions;
+import com.kstenschke.shifter.utils.*;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -158,8 +154,7 @@ class ActionsPerformer {
      */
     private String getFilename() {
         if (this.filename == null && this.document != null) {
-            VirtualFile file = FileDocumentManager.getInstance().getFile(this.document);
-            this.filename = file != null ? file.getName() : "";
+            this.filename = UtilsEnvironment.getDocumentFilename(this.document);
         }
 
         return this.filename;
@@ -183,7 +178,7 @@ class ActionsPerformer {
             boolean isOperator,
             @Nullable Integer moreCount
     ) {
-        boolean wordShifted = false;
+        boolean wasWordShifted = false;
 
         if (wordOffset == null) {
             // Extract offset of word at caret
@@ -212,10 +207,10 @@ class ActionsPerformer {
                 // Replace word at caret by shifted one (if any)
                 document.replaceString(wordOffset, wordOffset + word.length(), newWord);
             }
-            wordShifted = true;
+            wasWordShifted = true;
         }
 
-        return wordShifted ? newWord : word;
+        return wasWordShifted ? newWord : word;
     }
 
     /**
@@ -226,7 +221,12 @@ class ActionsPerformer {
         int[] blockSelectionStarts = this.selectionModel.getBlockSelectionStarts();
         int[] blockSelectionEnds = this.selectionModel.getBlockSelectionEnds();
 
-        if (this.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds)) {
+        if (ShiftableBlock.areNumericValues(blockSelectionStarts, blockSelectionEnds, editorText)) {
+            // Block selection of numeric values: ask whether to 1. replace by enumeration or 2. in/decrement each
+            DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions();
+            UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
+
+        } else if (ShiftableBlock.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, editorText)) {
             String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
             String line = UtilsTextual.extractLine(this.document, this.document.getLineNumber(blockSelectionStarts[0])).trim();
             Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(this.editorText, blockSelectionStarts[0]);
@@ -238,25 +238,6 @@ class ActionsPerformer {
                 }
             }
         }
-    }
-
-    /**
-     * @param blockSelectionStarts
-     * @param blockSelectionEnds
-     * @return boolean
-     */
-    private boolean areBlockItemsIdentical(int[] blockSelectionStarts, int[] blockSelectionEnds) {
-        String firstItem = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
-        String currentItem;
-
-        for (int i = 1; i < blockSelectionStarts.length; i++) {
-            currentItem = editorText.subSequence(blockSelectionStarts[i], blockSelectionEnds[i]).toString();
-            if (!currentItem.equals(firstItem)) {
-                return false;
-            }
-        }
-
-        return true;
     }
 
     /**

@@ -20,17 +20,19 @@ import org.jetbrains.annotations.NonNls;
 public class StaticTexts {
 
     @NonNls
-    public static final String SETTINGS_DISPLAY_NAME        = "Shifter";
+    public static final String SETTINGS_DISPLAY_NAME   = "Shifter";
     @NonNls
-    public static final String SETTINGS_COMPONENT_NAME      = "Shifter Settings";
+    public static final String SETTINGS_COMPONENT_NAME = "Shifter Settings";
 
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_DOWN      = "Shift-Down";
+    public static final String ACTION_LABEL_SHIFT_DOWN            = "Shift-Down";
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_UP        = "Shift-Up";
+    public static final String ACTION_LABEL_SHIFT_UP              = "Shift-Up";
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_UP_MORE   = "Shift-Up More";
+    public static final String ACTION_LABEL_SHIFT_UP_MORE         = "Shift-Up More";
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_DOWN_MORE   = "Shift-Down More";
+    public static final String ACTION_LABEL_SHIFT_DOWN_MORE       = "Shift-Down More";
+    @NonNls
+    public static final String DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS = "Shift Numeric Block Selection";
 
 }

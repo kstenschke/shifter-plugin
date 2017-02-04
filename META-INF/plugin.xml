@@ -86,6 +86,7 @@
     <ul>
         <li>1.4.2
             <ul>
+                <li>Added: Shift numeric block selection: opens dialog to chose whether 1. replace by enumeration or 2. in/decrement each</li>
                 <li>Added: Shift Selection > Swap order of terms separated by "|" or " : "</li>
                 <li>Added: Toggle (selected) logical operators: "&&" versus "||"</li>
                 <li>Added: Updated feature list w/ several prior not mentioned shifting types</li>
