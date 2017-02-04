@@ -41,6 +41,7 @@
         <li>Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending.</li>
         <li>Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash</li>
         <li>Numeric values - Increments/decrements numbers by 1</li>
+        <li>Numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration</li>
         <li>UNIX (and millisecond based) timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format</li>
         <li>Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements</li>
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
