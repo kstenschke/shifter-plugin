@@ -25,6 +25,7 @@ import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.resources.forms.DialogNumericBlockOptions;
 import com.kstenschke.shifter.utils.*;
+import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -223,9 +224,18 @@ class ActionsPerformer {
 
         if (ShiftableBlock.areNumericValues(blockSelectionStarts, blockSelectionEnds, editorText)) {
             // Block selection of numeric values: ask whether to 1. replace by enumeration or 2. in/decrement each
-            DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions();
+            Integer firstNumber = Integer.valueOf(editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString());
+            if (null == firstNumber) {
+                firstNumber = 0;
+            }
+            DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
             UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
 
+            if (optionsDialog.isShiftModeEnumerate()) {
+                this.insertBlockEnumeration(optionsDialog.getFirstNumber(), blockSelectionStarts, blockSelectionEnds);
+            } else {
+                this.inOrDecrementNumericBlock(blockSelectionStarts, blockSelectionEnds, shiftUp);
+            }
         } else if (ShiftableBlock.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, editorText)) {
             String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
             String line = UtilsTextual.extractLine(this.document, this.document.getLineNumber(blockSelectionStarts[0])).trim();
@@ -237,6 +247,52 @@ class ActionsPerformer {
                     document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], newWord);
                 }
             }
+        }
+    }
+
+    /**
+     * Replace given block selection w/ enumeration starting w/ given value
+     *
+     * @param firstNumber
+     * @param blockSelectionStarts
+     * @param blockSelectionEnds
+     */
+    private void insertBlockEnumeration(String firstNumber, int[] blockSelectionStarts, int[] blockSelectionEnds) {
+        Integer currentValue = Integer.valueOf(firstNumber);
+        if (null == currentValue) {
+            currentValue = 0;
+        }
+
+        for (int i = 0; i < blockSelectionStarts.length; i++) {
+            document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], currentValue.toString());
+            // @todo widen/narrow block-selection item when amount of digits changed
+            currentValue++;
+        }
+    }
+
+    /**
+     * Increment or decrement each item in given numeric block selection
+     *
+     * @param blockSelectionStarts
+     * @param blockSelectionEnds
+     * @param shiftUp
+     */
+    private void inOrDecrementNumericBlock(int[] blockSelectionStarts, int[] blockSelectionEnds, boolean shiftUp) {
+        int addend = shiftUp ? 1 : -1;
+        Integer value;
+        for (int i = 0; i < blockSelectionStarts.length; i++) {
+            value = null;
+            try {
+                value = Integer.valueOf(editorText.subSequence(blockSelectionStarts[i], blockSelectionEnds[i]).toString());
+            } catch (NumberFormatException e) {
+
+            }
+            if (null == value) {
+                value = 0;
+            }
+
+            document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], String.valueOf(value + addend));
+            // @todo widen/narrow block-selection item when amount of digits changed
         }
     }
 
