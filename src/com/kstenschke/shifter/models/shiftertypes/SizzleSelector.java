@@ -36,7 +36,7 @@ public class SizzleSelector {
     /**
      * @param  selector      text selection to be shifted
      * @return String
-     * @todo    extend: duplicate line around selection, from 1st of the 2 resulting lines: strip all non-selector strings (making it a declaration as is already when shifting just the selector)
+     * @todo   extend: duplicate line around selection, from 1st of the 2 resulting lines: strip all non-selector strings (making it a declaration as is already when shifting just the selector)
      */
     public static String getShifted(String selector) {
         String varName = selector
@@ -62,7 +62,7 @@ public class SizzleSelector {
 
         int index = 0;
         for (String word : words) {
-            varName += index > 0 ? UtilsTextual.toUcFirst(word) : word;
+            varName += index > 0 ? UtilsTextual.toLcFirst(word) : word;
             index++;
         }
 

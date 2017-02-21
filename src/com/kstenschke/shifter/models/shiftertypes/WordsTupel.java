@@ -48,7 +48,7 @@ public class WordsTupel {
     /**
      * Shift: tupel parts
      *
-     * @param str  string to be shifted
+     * @param  str      string to be shifted
      * @return String   The shifted string
      */
     public String getShifted(String str) {

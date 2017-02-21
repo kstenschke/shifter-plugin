@@ -143,17 +143,25 @@ public class UtilsTextual {
 
     /**
      * @param  str      String to be converted
-     * @return String   Given string converted to lower case with only first char in upper case
+     * @return String   Given string converted to lower case w/ only first char in upper case
      */
     public static String toUcFirst(String str) {
         return str.isEmpty() ? "" : Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
     }
 
     /**
-     * Check whether given string is lower case with only first char in upper case
+     * @param  str      String to be converted
+     * @return String   Given string w/ first char in lower case
+     */
+    public static String toLcFirst(String str) {
+        return str.isEmpty() ? "" : Character.toLowerCase(str.charAt(0)) + str.substring(1);
+    }
+
+    /**
+     * Check whether given string is lower case w/ only first char in upper case
      *
      * @param  str      String to be checked
-     * @return boolean  If the string is lower case with only first char in upper case.
+     * @return boolean  If the string is lower case w/ only first char in upper case.
      */
     public static boolean isUcFirst(String str) {
         return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
@@ -312,7 +320,7 @@ public class UtilsTextual {
 
     /**
      * @param  str         Text to be analyzed
-     * @param  offset      Character offset in text, intersecting the word dealing with
+     * @param  offset      Character offset in text, intersecting the word dealing w/
      * @return int         Starting position offset of word at given offset in given CharSequence
      */
     public static int getStartOfWordAtOffset(CharSequence str, int offset) {
@@ -369,7 +377,7 @@ public class UtilsTextual {
 
             // If last line has no \n, add it one
             // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
-            // with \n... This is fixed after.
+            // w/ \n... This is fixed after.
         if (lineSeparatorLength == 0) {
             line += "\n";
         }
@@ -399,7 +407,7 @@ public class UtilsTextual {
     }
 
     /**
-     * @param  lines List of lines (strings) to be joined
+     * @param  lines            List of lines (strings) to be joined
      * @return StringBuilder
      */
     public static StringBuilder joinLines(List<String> lines) {
@@ -420,7 +428,7 @@ public class UtilsTextual {
      * @param  string
      * @param  toReplace
      * @param  replacement
-     * @return string       Given string w/ last occurrence of "toReplace" replaced with "replacement"
+     * @return string       Given string w/ last occurrence of "toReplace" replaced w/ "replacement"
      */
     public static String replaceLast(String string, String toReplace, String replacement) {
         int pos = string.lastIndexOf(toReplace);
@@ -435,7 +443,7 @@ public class UtilsTextual {
     /**
      * @param  numberString
      * @param  length
-     * @return Given numerical string, with given length (if >= original length)
+     * @return String           Given numerical string, w/ given length (if >= original length)
      */
     public static String formatAmountDigits(String numberString, int length) {
         while (numberString.length() < length) {
@@ -503,7 +511,7 @@ public class UtilsTextual {
      * Use regEx matcher to extract all variables in given code
      *
      * @param  str
-     * @return array of all PHP var names
+     * @return List<String>     All PHP var names
      */
     @NotNull
     public static List<String> extractPhpVariables(String str) {

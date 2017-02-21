@@ -80,18 +80,18 @@ public class ShifterTypesManager {
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
 
     /**
-     * Detect word type (get the one with highest priority to be shifted) of given string
+     * Detect word type (get the one w/ highest priority to be shifted) of given string
      *
-     * @param  word         Word whose type shall be identified
-     * @param  prefixChar   Prefix character
-     * @param  postfixChar  Postfix character
+     * @param  word                     Word whose type shall be identified
+     * @param  prefixChar               Prefix character
+     * @param  postfixChar              Postfix character
      * @param  isLastLineInDocument
-     * @param  line         Whole line the caret is in
-     * @param  filename     Name of edited file
+     * @param  line                     Whole line the caret is in
+     * @param  filename                 Name of edited file
      * @return int
      */
     public int getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, String line, String filename) {
-        // PHP variable (must be prefixed with "$")
+        // PHP variable (must be prefixed w/ "$")
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
         if (this.typePhpVariable.isPhpVariable(word)) {
             return TYPE_PHP_VARIABLE;
@@ -104,7 +104,7 @@ public class ShifterTypesManager {
             return TYPE_SIZZLE_SELECTOR;
         }
 
-        // DocComment types (must be prefixed with "@")
+        // DocComment types (must be prefixed w/ "@")
         this.typeDataTypeInDocComment   = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
         boolean isDocCommentLineContext = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
         if (isDocCommentLineContext) {
@@ -134,7 +134,7 @@ public class ShifterTypesManager {
             return TYPE_TERNARY_EXPRESSION;
         }
 
-        // Selected code line with trailing //-comment: moves the comment into a new line before the code
+        // Selected code line w/ trailing //-comment: moves the comment into a new line before the code
         if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
             return TYPE_TRAILING_COMMENT;
         }
@@ -144,7 +144,7 @@ public class ShifterTypesManager {
         if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
             return TYPE_QUOTED_STRING;
         }
-        // RGB (must be prefixed with "#")
+        // RGB (must be prefixed w/ "#")
         if (com.kstenschke.shifter.models.shiftertypes.RbgColor.isRgbColorString(word, prefixChar)) {
             this.typeRgbColor = new com.kstenschke.shifter.models.shiftertypes.RbgColor();
             return TYPE_RGB_COLOR;
@@ -231,7 +231,7 @@ public class ShifterTypesManager {
      * @param  caretOffset  Caret offset in document
      * @param  filename     Filename of currently edited file
      * @param  editor       Editor instance
-     * @param  moreCount    Current "more" count, starting with 1. If non-more shift: null
+     * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return              The shifted word
      */
         public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {

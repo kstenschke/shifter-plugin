@@ -67,7 +67,7 @@ public class CssUnit {
             // Shift up/down by 1
             numericValue = numericValue + (isUp ? 1 : -1);
 
-            // prepend with unit again
+            // prepend w/ unit again
             return Integer.toString(numericValue).concat(unit);
         } catch(NumberFormatException e) {
             // silence
@@ -101,8 +101,8 @@ public class CssUnit {
     }
 
     /**
-     * @param  stylesheet    CSS content
-     * @return most prominently used unit of given stylesheet, 'px' if none used yet
+     * @param  stylesheet   CSS content
+     * @return String       most prominently used unit of given stylesheet, 'px' if none used yet
      */
     public static String determineMostProminentUnit(String stylesheet) {
         HashMap<String, Integer> map = new HashMap<String, Integer>();

@@ -116,9 +116,9 @@ public class DictionaryTerm {
     }
 
     /**
-     * @param  termsLines  Terms lines from dictionary
-     * @param  term        Word to be shifted
-     * @return First matching term line
+     * @param  termsLines   Terms lines from dictionary
+     * @param  term         Word to be shifted
+     * @return String       First matching term line
      */
     private static String extractFirstMatchingTermsLine(String termsLines, String term) {
         String sword = "|" + term + "|";
@@ -184,7 +184,7 @@ public class DictionaryTerm {
      *
      * @param  word     Word to be shifted
      * @param  isUp     Shifting up? (otherwise down)
-     * @return The shifted word
+     * @return String   The shifted word
      */
     public String getShifted(String word, boolean isUp) {
         if (this.relevantTermsList != null) {

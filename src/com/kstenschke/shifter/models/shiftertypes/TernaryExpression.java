@@ -25,8 +25,8 @@ public class TernaryExpression {
     /**
      * Check whether shifted string is a ternary expression
      *
-     * @param str
-     * @param prefixChar Character preceding the string
+     * @param  str
+     * @param  prefixChar   Character preceding the string
      * @return boolean
      */
     public static boolean isTernaryExpression(String str, String prefixChar) {
@@ -41,7 +41,7 @@ public class TernaryExpression {
     /**
      * Shift: swap IF and ELSE parts
      *
-     * @param str  string to be shifted
+     * @param  str      string to be shifted
      * @return String   The shifted string
      */
     public static String getShifted(String str) {

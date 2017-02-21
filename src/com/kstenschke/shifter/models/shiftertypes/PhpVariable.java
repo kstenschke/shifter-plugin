@@ -22,7 +22,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * PHP Variable (word with $ prefix), includes array definition (toggle long versus shorthand syntax)
+ * PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
  */
 public class PhpVariable {
 
@@ -72,7 +72,7 @@ public class PhpVariable {
      * @param  variable     Variable name string
      * @param  editorText   Text of edited document
      * @param  isUp         Shift up or down?
-     * @param  moreCount    Current "more" count, starting with 1. If non-more shift: null
+     * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return String
      */
     public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {

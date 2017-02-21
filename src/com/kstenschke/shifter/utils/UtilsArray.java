@@ -46,7 +46,7 @@ public class UtilsArray {
      *
      * @param stringsArr Array of strings
      * @param glue       Glue in between concatenated strings
-     * @return String      All items of stringsArr concatenated with glue
+     * @return String      All items of stringsArr concatenated w/ glue
      */
     public static String implode(String[] stringsArr, String glue) {
         String out = "";

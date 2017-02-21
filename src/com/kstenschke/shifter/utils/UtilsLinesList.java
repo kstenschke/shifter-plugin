@@ -23,7 +23,7 @@ public class UtilsLinesList {
      * @param lines
      * @param delimiter
      * @param isDelimitedLastLine
-     * @return Given lines ending with given delimiter, optionally also the last line
+     * @return Given lines ending w/ given delimiter, optionally also the last line
      */
     public static List<String> addDelimiter(List<String> lines, String delimiter, boolean isDelimitedLastLine) {
         int amountLines = lines.size();

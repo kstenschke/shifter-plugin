@@ -21,9 +21,8 @@ package com.kstenschke.shifter.models.shiftertypes;
 public class TrailingComment {
 
     /**
-     * @param word String to be shifted currently
-     * @return boolean.
-     *
+     * @param  word     String to be shifted currently
+     * @return boolean
      * @todo maybe later - implement also for multi-line selections(?)
      */
     public static boolean isTrailingComment(String word, String postfixChar, boolean isLastLineInDocument) {
@@ -37,9 +36,9 @@ public class TrailingComment {
     }
 
     /**
-     * @param   selection
-     * @param   leadingWhiteSpace
-     * @return
+     * @param  selection
+     * @param  leadingWhiteSpace
+     * @return String
      */
     public static String getShifted(String selection, String leadingWhiteSpace) {
         String[] parts = selection.split("//");

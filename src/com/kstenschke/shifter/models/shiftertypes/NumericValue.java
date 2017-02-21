@@ -85,7 +85,7 @@ public class NumericValue {
                 + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * (timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000));
 
             if (editor != null) {
-            // Create and show balloon with human-readable date
+            // Create and show balloon w/ human-readable date
             Balloon.Position pos = Balloon.Position.above;
             String balloonText =
                     "UNIX Time: " + new Date(shiftedTimestamp * 1000).toString()
@@ -108,19 +108,19 @@ public class NumericValue {
     }
 
     /**
-     * @param value
-     * @param maxValue
-     * @param isUp
+     * @param  value
+     * @param  maxValue
+     * @param  isUp         Shifting up or down?
      * @return int
      */
     public static int moduloShiftInteger(int value, int maxValue, boolean isUp) {
         if (isUp) {
             value++;
             return value == maxValue ? 0 : value;
-        } else {
-            value--;
-            return value == -1 ? maxValue - 1 : value;
         }
+
+        value--;
+        return value == -1 ? maxValue - 1 : value;
     }
 
 }

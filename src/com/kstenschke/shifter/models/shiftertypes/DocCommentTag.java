@@ -44,14 +44,14 @@ public class DocCommentTag {
     }
 
     /**
-     * @return Array    String array with all recognized doc comment tags
+     * @return Array    String array w/ all recognized doc comment tags
      */
     private String[] getAllTags() {
         return UtilsArray.mergeStringArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
     }
 
     /**
-     * @return String   Pipe-separated list (as string) with all recognized doc comment tags
+     * @return String   Pipe-separated list (as string) w/ all recognized doc comment tags
      */
     public String getAllTagsPiped() {
         String[] allTags = this.getAllTags();
@@ -63,7 +63,7 @@ public class DocCommentTag {
      * Check whether given String looks like a doc comment line
      *
      * @param  line     Line the caret is at
-     * @return boolean.
+     * @return boolean
      */
     private boolean isDocCommentLineContext(String line) {
         String allTagsPiped = this.getAllTagsPiped();
@@ -90,10 +90,10 @@ public class DocCommentTag {
     }
 
     /**
-     * @param  word           String to be shifted
-     * @param  isUp           Shift up or down?
-     * @param  filename       Filename of the edited file
-     * @param  textAfterCaret Document text after the caret
+     * @param  word             String to be shifted
+     * @param  isUp             Shift up or down?
+     * @param  filename         Filename of the edited file
+     * @param  textAfterCaret   Document text after the caret
      * @return Shifting result
      */
     public String getShifted(String word, boolean isUp, String filename, String textAfterCaret) {

@@ -64,7 +64,7 @@ class ActionsPerformer {
      * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
      *
      * @param shiftUp   Shift up or down?
-     * @param moreCount Current "more" count, starting with 1. If non-more shift: null
+     * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     public void write(boolean shiftUp, @Nullable Integer moreCount) {
         if (this.editor != null) {
@@ -99,7 +99,7 @@ class ActionsPerformer {
      * @param filename
      * @param offsetLineStart
      * @param line
-     * @param moreCount       Current "more" count, starting with 1. If non-more shift: null
+     * @param moreCount       Current "more" count, starting w/ 1. If non-more shift: null
      */
     private void shiftLine(boolean shiftUp, String filename, int offsetLineStart, String line, @Nullable Integer moreCount) {
         ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
@@ -117,7 +117,7 @@ class ActionsPerformer {
      * @param shiftUp
      * @param filename
      * @param line
-     * @param moreCount Current "more" count, starting with 1. If non-more shift: null
+     * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      * @return boolean
      */
     private boolean shiftWordAtCaret(boolean shiftUp, String filename, String line, @Nullable Integer moreCount) {
@@ -168,7 +168,7 @@ class ActionsPerformer {
      * @param wordOffset        null = calculate from word at offset
      * @param replaceInDocument
      * @param isOperator
-     * @param moreCount         current "more" count, starting with 1. If non-more shift: null
+     * @param moreCount         current "more" count, starting w/ 1. If non-more shift: null
      * @return String           resulting shifted or original word if no shiftability was found
      */
     private String getShiftedWord(
@@ -215,7 +215,7 @@ class ActionsPerformer {
 
     /**
      * @param shiftUp
-     * @param moreCount Current "more" count, starting with 1. If non-more shift: null
+     * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     private void shiftBlockSelection(boolean shiftUp, @Nullable Integer moreCount) {
         blockSelectionStarts = this.selectionModel.getBlockSelectionStarts();
@@ -320,7 +320,7 @@ class ActionsPerformer {
 
     /**
      * @param isUp      Are we shifting up or down?
-     * @param moreCount Current "more" count, starting with 1. If non-more shift: null
+     * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     private void shiftSelection(boolean isUp, @Nullable Integer moreCount) {
         int offsetStart = selectionModel.getSelectionStart();

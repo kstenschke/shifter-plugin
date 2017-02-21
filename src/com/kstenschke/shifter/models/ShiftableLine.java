@@ -50,10 +50,10 @@ public class ShiftableLine {
     /**
      * Get shifted up/down word
      *
-     * @param isUp      Shift up or down?
-     * @param editor    Editor
-     * @param moreCount Current counter while iterating multi-shift
-     * @return Next upper/lower word
+     * @param  isUp         Shift up or down?
+     * @param  editor       Editor
+     * @param  moreCount    Current counter while iterating multi-shift
+     * @return String       Next upper/lower word
      */
     public String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
         String[] words = this.line.trim().split("\\s+");

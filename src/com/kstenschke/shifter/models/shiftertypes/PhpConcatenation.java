@@ -18,7 +18,7 @@ package com.kstenschke.shifter.models.shiftertypes;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 /**
- * PHP Variable (word with $ prefix)
+ * PHP Variable (word w/ $ prefix)
  */
 public class PhpConcatenation {
 
@@ -162,7 +162,7 @@ public class PhpConcatenation {
     /**
      * @param  str
      * @param  isRHS    Boolean: PHP variables on right-hand-side of concatenation have NO ending character
-     * @return Ending character    . / " / ' / empty char (=ending is end of string) / null (=no type detected)
+     * @return String   Ending character    . / " / ' / empty char (=ending is end of string) / null (=no type detected)
      */
     private String detectConcatenationTypeAndGetEndingChar(String str, boolean isRHS) {
         if ("$".equals(str)) {

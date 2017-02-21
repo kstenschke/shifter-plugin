@@ -30,9 +30,9 @@ public class QuotedString {
     /**
      * Check whether shifted word is wrapped in quote characters
      *
-     * @param prefixChar  Character preceding the string
-     * @param postfixChar Character after the string
-     * @return boolean.
+     * @param  prefixChar  Character preceding the string
+     * @param  postfixChar Character after the string
+     * @return boolean
      */
     public boolean isQuotedString(String prefixChar, String postfixChar) {
         this.quoteChar = prefixChar;
@@ -46,9 +46,9 @@ public class QuotedString {
     /**
      * Shift to prev/next quoted string
      *
-     * @param word       Quoted word to be shifted
-     * @param editorText Full text of editor
-     * @param isUp       Shifting up or down?
+     * @param  word       Quoted word to be shifted
+     * @param  editorText Full text of editor
+     * @param  isUp       Shifting up or down?
      * @return String
      */
     public String getShifted(String word, CharSequence editorText, boolean isUp) {

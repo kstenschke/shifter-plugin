@@ -151,8 +151,8 @@ public class RbgColor {
     /**
      * Lighten given color.
      *
-     * @param color Color to be made lighter.
-     * @return Color        Lighter color.
+     * @param  color    Color to be made lighter.
+     * @return Color    Lighter color
      */
     private static Color lighter(Color color) {
         return addToRGB(color, 1);
@@ -161,8 +161,8 @@ public class RbgColor {
     /**
      * Increment RGB values of given color by given amount
      *
-     * @param color
-     * @param amount
+     * @param  color
+     * @param  amount
      * @return Color
      */
     private static Color addToRGB(Color color, int amount) {

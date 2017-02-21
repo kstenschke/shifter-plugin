@@ -23,8 +23,8 @@ import org.apache.commons.lang.StringUtils;
 public class StringMonoCharacter {
 
     /**
-     * @param word String to be shifted currently
-     * @return boolean.
+     * @param  word     String to be shifted currently
+     * @return boolean
      */
     public static boolean isMonoCharacterString(String word) {
         if (word.length() == 1) {
@@ -40,8 +40,8 @@ public class StringMonoCharacter {
     /**
      * Shift mono-character string
      *
-     * @param word Quoted word to be shifted
-     * @param isUp Shifting up or down?
+     * @param  word     Quoted word to be shifted
+     * @param  isUp     Shifting up or down?
      * @return String
      */
     public String getShifted(String word, boolean isUp) {

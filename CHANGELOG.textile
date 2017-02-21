@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.4.3
+    ** Changed: Lead character of shifted selected sizzle selector into a var declaration, is now lower case
 * 1.4.2
     ** Added: Shift numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration
     ** Added: Shift Selection > Swap order of terms separated by "|" or " : "

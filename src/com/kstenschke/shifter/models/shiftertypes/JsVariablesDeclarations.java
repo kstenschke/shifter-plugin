@@ -64,7 +64,7 @@ public class JsVariablesDeclarations {
                 line = line.substring(4);
                 // replace ";" from ending by ",\n"
                 if (StringUtils.countMatches(line, "//") == 1) {
-                    // handle line ending with comment intact
+                    // handle line ending w/ comment intact
                     String[] parts = line.split("//");
                     parts[0] = parts[0].trim();
                     shiftedLine = parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];

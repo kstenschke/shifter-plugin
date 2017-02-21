@@ -68,9 +68,8 @@ public class RomanNumber {
                 "L",  "XL",  "X",  "IX", "V",  "IV", "I" };
 
         /**
-         * Constructor.  Creates the Roman number with the int value specified
-         * by the parameter.  Throws a NumberFormatException if arabic is
-         * not in the range 1 to 3999 inclusive.
+         * Constructor.  Creates the Roman number w/ the int value specified by the parameter.
+         * Throws a NumberFormatException if arabic is not in the range 1 to 3999 inclusive.
          */
         public RomanNumeral(int arabic) {
             if (arabic < 1) {
@@ -83,7 +82,7 @@ public class RomanNumber {
         }
 
         /*
-         * Constructor.  Creates the Roman number with the given representation.
+         * Constructor.  Creates the Roman number w/ the given representation.
          * For example, RomanNumeral("xvii") is 17.  If the parameter is not a
          * legal Roman numeral, a NumberFormatException is thrown.  Both upper and
          * lower case letters are allowed.
@@ -111,7 +110,7 @@ public class RomanNumber {
                 } else {
                     // Look at the next letter in the string.  If it has a larger Roman numeral
                     // equivalent than number, then the two letters are counted together as
-                    // a Roman numeral with value (nextNumber - number).
+                    // a Roman numeral w/ value (nextNumber - number).
                     int nextNumber = letterToNumber(romanUpper.charAt(i));
                     if (nextNumber > number) {
                         // Combine the two letters to get one value, and move on to next position in string.
@@ -132,9 +131,8 @@ public class RomanNumber {
         }
 
         /**
-         * Find the integer value of letter considered as a Roman numeral.  Throws
-         * NumberFormatException if letter is not a legal Roman numeral.  The letter
-         * must be upper case.
+         * Find the integer value of letter considered as a Roman numeral.
+         * Throws NumberFormatException if letter is not a legal Roman numeral. The letter must be upper case.
          */
         private int letterToNumber(char letter) {
             switch (letter) {

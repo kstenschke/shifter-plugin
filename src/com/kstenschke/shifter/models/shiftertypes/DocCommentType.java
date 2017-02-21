@@ -49,9 +49,9 @@ public class DocCommentType {
     /**
      * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
      *
-     * @param prefixChar Prefix character
-     * @param line       Whole line containing the word
-     * @return boolean.
+     * @param  prefixChar Prefix character
+     * @param  line       Whole line containing the word
+     * @return boolean
      */
     public boolean isDocCommentType(String prefixChar, String line) {
         return !("#".equals(prefixChar) || "@".equals(prefixChar)) && this.isDocCommentTypeLineContext(line);
@@ -59,9 +59,9 @@ public class DocCommentType {
     }
 
     /**
-     * @param word     String to be shifted
-     * @param isUp     Shift up or down?
-     * @param filename Filename of the edited file
+     * @param  word     String to be shifted
+     * @param  isUp     Shift up or down?
+     * @param  filename Filename of the edited file
      * @return Shifting result
      */
     public String getShifted(String word, boolean isUp, String filename) {

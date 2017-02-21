@@ -19,8 +19,8 @@ package com.kstenschke.shifter.models.shiftertypes;
 public class OperatorSign {
 
     /**
-     * @param word String to be shifted currently
-     * @return boolean.
+     * @param  word     String to be shifted currently
+     * @return boolean
      */
     public static boolean isOperatorSign(String word) {
         return word != null && word.length() == 1 && "+-<>*/%".contains(word);
@@ -35,7 +35,7 @@ public class OperatorSign {
     /**
      * Shift mono-character string
      *
-     * @param word Quoted word to be shifted
+     * @param  word     Quoted word to be shifted
      * @return String
      */
     public String getShifted(String word) {

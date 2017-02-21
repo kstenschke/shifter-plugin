@@ -25,8 +25,8 @@ public class StringHtmlEncodable {
     /**
      * Check whether given character can be encoded to an HTML special char / or is already HTML encoded
      *
-     * @param str String to be shifted currently
-     * @return boolean.
+     * @param  str      String to be shifted currently
+     * @return boolean
      */
     public static boolean isHtmlEncodable(String str) {
         Integer strLenOriginal = str.length();
@@ -40,7 +40,7 @@ public class StringHtmlEncodable {
     /**
      * Shift to HTML encoded/decoded variant of given string
      *
-     * @param word word to be shifted
+     * @param  word     word to be shifted
      * @return String
      */
     public static String getShifted(String word) {
