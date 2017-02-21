@@ -98,7 +98,7 @@
                 <li>Added: Toggle (selected) logical operators: "&&" versus "||"</li>
                 <li>Added: Updated feature list w/ several prior not mentioned shifting types</li>
             </ul>
-        </ul>
+        </li>
         <li>1.4.1 Bugfix: Remove duplicates when sorting lines was removing first item</li>
         <li>1.4.0
             <ul>
