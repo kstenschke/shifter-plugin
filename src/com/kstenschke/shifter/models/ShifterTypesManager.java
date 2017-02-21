@@ -181,15 +181,15 @@ public class ShifterTypesManager {
         if (this.typeDictionaryTerm.isTermInDictionary(word, false)) {
             return TYPE_DICTIONARY_WORD_GLOBAL;
         }
-        if (com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.isHtmlEncodable(word)) {
-            return TYPE_HTML_ENCODABLE_STRING;
-        }
         if (com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
         wordsTupel = new WordsTupel();
         if (wordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
+        }
+        if (com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable.isHtmlEncodable(word)) {
+            return TYPE_HTML_ENCODABLE_STRING;
         }
 
         return TYPE_UNKNOWN;

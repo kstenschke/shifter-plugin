@@ -29,17 +29,37 @@ public class WordsTupel {
      * @return boolean
      */
     public boolean isWordsTupel(String str) {
-        if (str.split(" ").length == 2) {
-            this.delimiter = " ";
+        if (str.split(" \\| ").length == 2) {
+            this.delimiter = " | ";
             return true;
         }
         if (str.split("\\|").length == 2) {
             this.delimiter = "|";
             return true;
         }
-        if (str.split(" : ").length == 2) {
-            this.delimiter = " : ";
+        if (str.split("\\|\\|").length == 2) {
+            this.delimiter = "||";
             return true;
+        }
+        if (str.split(" \\|\\| ").length == 2) {
+            this.delimiter = " || ";
+            return true;
+        }
+
+        String glues[] = new String[]{
+            " ",
+            " : ",
+            " - ", " + ",
+            " < ", " <= ", " > ", " >= ",
+            " == ", " != ", " === ", " !== ",
+            " && "
+        };
+
+        for (String glue : glues) {
+            if (str.split(glue).length == 2) {
+                this.delimiter = glue;
+                return true;
+            }
         }
 
         return false;
@@ -52,8 +72,19 @@ public class WordsTupel {
      * @return String   The shifted string
      */
     public String getShifted(String str) {
+        String[] parts;
 
-        String[] parts = str.split(this.delimiter == "|" ? "\\|" : this.delimiter);
+        if (this.delimiter.equals("|")) {
+            parts = str.split("\\|");
+        } else if (this.delimiter.equals(" | ")) {
+            parts = str.split(" \\| ");
+        }  else if (this.delimiter.equals("||")) {
+            parts = str.split("\\|\\|");
+        }  else if (this.delimiter.equals(" || ")) {
+            parts = str.split(" \\|\\| ");
+        } else {
+            parts = str.split(this.delimiter);
+        }
 
         return parts[1] + this.delimiter + parts[0];
     }

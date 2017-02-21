@@ -395,9 +395,15 @@ class ActionsPerformer {
                                 } else if (LogicalOperator.isLogicalOperator(selectedText)) {
                                     document.replaceString(offsetStart, offsetEnd, LogicalOperator.getShifted(selectedText));
                                     isDone = true;
-                                } else if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
-                                    document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
-                                    isDone = true;
+                                } else {
+                                    WordsTupel wordsTupel = new WordsTupel();
+                                    if (wordsTupel.isWordsTupel(selectedText)) {
+                                        document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
+                                        isDone = true;
+                                    } else if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
+                                        document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
+                                        isDone = true;
+                                    }
                                 }
                             }
 
