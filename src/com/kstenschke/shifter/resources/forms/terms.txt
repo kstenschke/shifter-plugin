@@ -35,6 +35,7 @@
 	|foreach|endforeach|
 	|if|else|endif|
     |self|static|
+    |Y|N|
 }
 (|m|) {
 	|int|char|float|double|id|BOOL|long|short|signed|unsigned|
