@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.4.4
+    ** Improved: Shift selection that is a comma-separated tupel always toggles order (instead alphabetical sort, as w/ 3+ items)
 * 1.4.3
     ** Added: More word-tupel delimiters (" - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ",  " || ", " && ")
     ** Improved: Shifting of selected sizzle selector into a var declaration

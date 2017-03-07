@@ -491,6 +491,11 @@ class ActionsPerformer {
     private String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
         String[] items = selectedText.split(",(\\s)*");
 
+        if (items.length == 2) {
+            // Only 2 items: treat as tupel - always toggle order
+            return items[1] + ", " + items[0];
+        }
+
         if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE)) {
             Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
         } else {
