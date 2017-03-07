@@ -127,7 +127,7 @@ h1. Shifter Plugin - Changelog
     ** Added maintaining of lower case with upper first character
     ** Added option to sort items of selected comma separated list
 * 1.0.4
-    ** Added support for single/double quoted strings: shifts to aphabetically next/previous quoted string in current file
+    ** Added support for single/double quoted strings: shifts to alphabetical next/previous quoted string in current file
     ** Added shifting of CSS positioning: absolute/relative
     ** Added shifting of Objective-c booleans YES/NO
     ** Bugfix: PHP variables containing underscores were not detected

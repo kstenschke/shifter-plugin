@@ -42,8 +42,8 @@ public class ShifterPreferences {
     public static final Integer SORTING_MODE_CASE_INSENSITIVE   = 1;
 
     // Sorting modes: numerical block selection
-    public static final Integer SORTING_MODE_NUMERIICAL_BLOCK_ENUM   = 0;
-    public static final Integer SORTING_MODE_NUMERIICAL_BLOCK_INCDEC = 1;
+    public static final Integer SORTING_MODE_NUMERICAL_BLOCK_ENUM    = 0;
+    public static final Integer SORTING_MODE_NUMERICAL_BLOCK_INC_DEC = 1;
 
     // Timestamp shifting modes
     public static final Integer SHIFTING_MODE_TIMESTAMP_SECONDS     = 0;
@@ -155,9 +155,9 @@ public class ShifterPreferences {
         try {
             String mode = PropertiesComponent.getInstance().getValue(PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK);
 
-            return mode == null ? SORTING_MODE_NUMERIICAL_BLOCK_ENUM : Integer.parseInt(mode);
+            return mode == null ? SORTING_MODE_NUMERICAL_BLOCK_ENUM : Integer.parseInt(mode);
         } catch(NullPointerException e) {
-            return SORTING_MODE_NUMERIICAL_BLOCK_ENUM;
+            return SORTING_MODE_NUMERICAL_BLOCK_ENUM;
         }
     }
 

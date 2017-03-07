@@ -10,7 +10,7 @@ public class DialogNumericBlockOptions extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JRadioButton radioInsertEnumeration;
-    private JRadioButton radionInDecrementEach;
+    private JRadioButton radioInDecrementEach;
     private JSpinner spinnerFirstEnumerationNumber;
 
     private boolean wasCancelled = false;
@@ -20,9 +20,9 @@ public class DialogNumericBlockOptions extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
 
-        boolean isEnumerationMode = ShifterPreferences.getShiftNumericalBlockMode() == ShifterPreferences.SORTING_MODE_NUMERIICAL_BLOCK_ENUM;
+        boolean isEnumerationMode = ShifterPreferences.getShiftNumericalBlockMode() == ShifterPreferences.SORTING_MODE_NUMERICAL_BLOCK_ENUM;
         radioInsertEnumeration.setSelected(isEnumerationMode);
-        radionInDecrementEach.setSelected(!isEnumerationMode);
+        radioInDecrementEach.setSelected(!isEnumerationMode);
         spinnerFirstEnumerationNumber.setValue(firstNumber);
 
         spinnerFirstEnumerationNumber.addFocusListener(new FocusListener() {
@@ -66,8 +66,8 @@ public class DialogNumericBlockOptions extends JDialog {
 
     public void saveSelectedMode() {
         ShifterPreferences.saveShiftNumericalBlockMode(radioInsertEnumeration.isSelected()
-                ? ShifterPreferences.SORTING_MODE_NUMERIICAL_BLOCK_ENUM
-                : ShifterPreferences.SORTING_MODE_NUMERIICAL_BLOCK_INCDEC
+                ? ShifterPreferences.SORTING_MODE_NUMERICAL_BLOCK_ENUM
+                : ShifterPreferences.SORTING_MODE_NUMERICAL_BLOCK_INC_DEC
         );
     }
 

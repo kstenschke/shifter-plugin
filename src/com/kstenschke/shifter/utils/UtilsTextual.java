@@ -527,10 +527,10 @@ public class UtilsTextual {
     }
 
     @NotNull
-    public static List<String> extractQuotedStrings(String text, String quoteCaracter) {
+    public static List<String> extractQuotedStrings(String text, String quoteCharacter) {
         List<String> allMatches = new ArrayList<String>();
 
-        String pattern = "(?<=" + quoteCaracter + ")[a-zA-Z0-9_]+(?=" + quoteCaracter + ")";
+        String pattern = "(?<=" + quoteCharacter + ")[a-zA-Z0-9_]+(?=" + quoteCharacter + ")";
         Matcher m = Pattern.compile(pattern).matcher(text);
 
         while (m.find()) {
