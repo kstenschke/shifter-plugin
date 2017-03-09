@@ -54,6 +54,7 @@
 	|ascend|descend|
 	|asc|desc|
 	|back|forward|
+	|backend|frontend|
 	|background|foreground|
 	|binary|octal|decimal|hexadecimal|
 	|bit|tinyint|bool|boolean|smallint|mediumint|int|integer|bigint|float|double|decimal|dec|
