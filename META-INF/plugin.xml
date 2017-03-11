@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.4.4</version>
+    <version>1.5.0</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -86,6 +86,7 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.5.0 Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter</li>
         <li>1.4.4 Improved: Shift selection which is a comma-separated tupel always toggles order (instead of alphabetical sort, as w/ 3+ items)</li>
         <li>1.4.3
             <ul>
@@ -102,15 +103,6 @@
             </ul>
         </li>
         <li>1.4.1 Bugfix: Remove duplicates when sorting lines was removing first item</li>
-        <li>1.4.0
-            <ul>
-                <li>Added: more CSS units detections: rem|vw|vh|vmin|vmax (thanks to fireCoding)</li>
-                <li>Added: shift selected jQuery (sizzle) selector into local variable declaration</li>
-                <li>Added: shift selection of multiple consecutive lines of javascript var declarations into a comma-separated declaration</li>
-                <li>Prevent edge case (shifting empty lines/selection) exceptions</li>
-                <li>Changed: tab size in dictionary settings (reduced to 4)</li>
-            </ul>
-        </li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

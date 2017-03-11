@@ -107,18 +107,18 @@ public class CssUnit {
     public static String determineMostProminentUnit(String stylesheet) {
         HashMap<String, Integer> map = new HashMap<String, Integer>();
 
-        map.put(UNIT_CM, StringUtils.countMatches(stylesheet, UNIT_CM + ";"));
-        map.put(UNIT_EM, StringUtils.countMatches(stylesheet, UNIT_EM + ";"));
-        map.put(UNIT_IN, StringUtils.countMatches(stylesheet, UNIT_IN + ";"));
-        map.put(UNIT_MM, StringUtils.countMatches(stylesheet, UNIT_MM + ";"));
-        map.put(UNIT_PC, StringUtils.countMatches(stylesheet, UNIT_PC + ";"));
-        map.put(UNIT_PT, StringUtils.countMatches(stylesheet, UNIT_PT + ";"));
-        map.put(UNIT_PX, StringUtils.countMatches(stylesheet, UNIT_PX + ";"));
-        map.put(UNIT_REM, StringUtils.countMatches(stylesheet, UNIT_REM + ";"));
-        map.put(UNIT_VW, StringUtils.countMatches(stylesheet, UNIT_VW + ";"));
-        map.put(UNIT_VH, StringUtils.countMatches(stylesheet, UNIT_VH + ";"));
-        map.put(UNIT_VMIN, StringUtils.countMatches(stylesheet, UNIT_VMIN + ";"));
-        map.put(UNIT_VMAX, StringUtils.countMatches(stylesheet, UNIT_VMAX + ";"));
+        map.put(UNIT_CM,   StringUtils.countMatches(stylesheet,UNIT_CM + ";"));
+        map.put(UNIT_EM,   StringUtils.countMatches(stylesheet,UNIT_EM + ";"));
+        map.put(UNIT_IN,   StringUtils.countMatches(stylesheet,UNIT_IN + ";"));
+        map.put(UNIT_MM,   StringUtils.countMatches(stylesheet,UNIT_MM + ";"));
+        map.put(UNIT_PC,   StringUtils.countMatches(stylesheet,UNIT_PC + ";"));
+        map.put(UNIT_PT,   StringUtils.countMatches(stylesheet,UNIT_PT + ";"));
+        map.put(UNIT_PX,   StringUtils.countMatches(stylesheet,UNIT_PX + ";"));
+        map.put(UNIT_REM,  StringUtils.countMatches(stylesheet,UNIT_REM + ";"));
+        map.put(UNIT_VW,   StringUtils.countMatches(stylesheet,UNIT_VW + ";"));
+        map.put(UNIT_VH,   StringUtils.countMatches(stylesheet,UNIT_VH + ";"));
+        map.put(UNIT_VMIN, StringUtils.countMatches(stylesheet,UNIT_VMIN + ";"));
+        map.put(UNIT_VMAX, StringUtils.countMatches(stylesheet,UNIT_VMAX + ";"));
 
         return UtilsMap.getSumOfValues(map) == 0 ? "px" : UtilsMap.getKeyOfHighestValue(map);
     }

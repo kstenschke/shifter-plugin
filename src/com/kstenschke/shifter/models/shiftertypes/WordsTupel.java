@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Ternary Expression
  */
@@ -29,34 +32,29 @@ public class WordsTupel {
      * @return boolean
      */
     public boolean isWordsTupel(String str) {
-        if (str.split(" \\| ").length == 2) {
-            this.delimiter = " | ";
-            return true;
-        }
-        if (str.split("\\|").length == 2) {
-            this.delimiter = "|";
-            return true;
-        }
-        if (str.split("\\|\\|").length == 2) {
-            this.delimiter = "||";
-            return true;
-        }
-        if (str.split(" \\|\\| ").length == 2) {
-            this.delimiter = " || ";
-            return true;
-        }
-
         String glues[] = new String[]{
+            ".",
+            ",",
+            ":",
+            "/",
+            "*",
+            "+",
+            "-",
+            "%",
+            "<", "<=",
+            ">", ">=",
+            "=", "==", "===", "!=", "!==",
+            "&", "&&",
+            "|", "||",
+
+            // Space must be last to not be prematurely detected around other delimiter
             " ",
-            " : ",
-            " - ", " + ",
-            " < ", " <= ", " > ", " >= ",
-            " == ", " != ", " === ", " !== ",
-            " && "
         };
 
         for (String glue : glues) {
-            if (str.split(glue).length == 2) {
+            String delimiterPattern = Pattern.quote(glue);
+
+            if (str.split("\\s*" + delimiterPattern + "\\s*").length == 2) {
                 this.delimiter = glue;
                 return true;
             }
@@ -66,27 +64,23 @@ public class WordsTupel {
     }
 
     /**
-     * Shift: tupel parts
+     * Shift: swap tupel parts
      *
      * @param  str      string to be shifted
      * @return String   The shifted string
      */
     public String getShifted(String str) {
-        String[] parts;
+        String splitPattern = "^(\\s*" + Pattern.quote(this.delimiter) + "\\s*)";
+        // Split into tupel
+        String[] parts      = str.split(splitPattern);
 
-        if (this.delimiter.equals("|")) {
-            parts = str.split("\\|");
-        } else if (this.delimiter.equals(" | ")) {
-            parts = str.split(" \\| ");
-        }  else if (this.delimiter.equals("||")) {
-            parts = str.split("\\|\\|");
-        }  else if (this.delimiter.equals(" || ")) {
-            parts = str.split(" \\|\\| ");
-        } else {
-            parts = str.split(this.delimiter);
-        }
+        // Retain variable whitespace around delimiter
+        Pattern partsPattern      = Pattern.compile(splitPattern);
+        Matcher matcher           = partsPattern.matcher(str);
+        String glueWithWhitespace = matcher.group(1);
 
-        return parts[1] + this.delimiter + parts[0];
+        // Swap parts
+        return parts[1] + glueWithWhitespace + parts[0];
     }
 
 }
