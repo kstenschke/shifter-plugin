@@ -16,11 +16,14 @@
 package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -63,6 +66,58 @@ public class UtilsTextual {
         }
 
         return true;
+    }
+
+    /**
+     * @param selectedText
+     * @param shiftUp
+     * @return Given comma separated list, sorted alphabetically ascending / descending
+     */
+    public static String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
+        String[] items = selectedText.split(",(\\s)*");
+
+        if (items.length == 2) {
+            // Only 2 items: treat as tupel - always toggle order
+            return items[1] + ", " + items[0];
+        }
+
+        if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE)) {
+            Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
+        } else {
+            Arrays.sort(items);
+        }
+
+        if (!shiftUp) {
+            Collections.reverse(Arrays.asList(items));
+        }
+
+        return UtilsArray.implode(items, ", ");
+    }
+
+    /**
+     * @param  lines
+     * @param  shiftUp
+     * @return Given lines sorted alphabetically ascending / descending
+     */
+    public static List<String> sortLines(List<String> lines, boolean shiftUp) {
+        UtilsLinesList.DelimiterDetector delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+
+        if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE)) {
+            Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
+        } else {
+            Collections.sort(lines);
+        }
+
+        if (!shiftUp) {
+            Collections.reverse(lines);
+        }
+
+        if (delimiterDetector.isFoundDelimiter()) {
+            // Maintain detected lines delimiter
+            lines = UtilsLinesList.addDelimiter(lines, delimiterDetector.getCommonDelimiter(), delimiterDetector.isDelimitedLastLine());
+        }
+
+        return lines;
     }
 
     public static boolean containsCaseInSensitive(String haystack, String needle) {
@@ -205,6 +260,11 @@ public class UtilsTextual {
                 : null;
     }
 
+    /**
+     * @param  str
+     * @param  offset
+     * @return Integer
+     */
     public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
         if (textLength == 0 || offset >= textLength) {

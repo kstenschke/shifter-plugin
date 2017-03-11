@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Manager of "shiftable" word types - detects word type to evoke resp. shifting
  */
-public class ShifterTypesManager {
+public class ShiftingTypesManager {
 
     public static final int TYPE_UNKNOWN                        = 0;
 

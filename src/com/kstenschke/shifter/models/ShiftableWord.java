@@ -27,7 +27,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableWord {
 
-    private final ShifterTypesManager shifterTypesManager;
+    private final ShiftingTypesManager shifterTypesManager;
     private final String word;
     private final String filename;
 
@@ -59,7 +59,7 @@ public class ShiftableWord {
             String filename,
             @Nullable Integer moreCount
     ) {
-        this.shifterTypesManager = new ShifterTypesManager();
+        this.shifterTypesManager = new ShiftingTypesManager();
 
         this.editorText = editorText;
         this.caretOffset = caretOffset;
@@ -70,11 +70,11 @@ public class ShiftableWord {
         this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
 
         // Comprehend negative values of numeric types
-        this.word = ((this.wordType == ShifterTypesManager.TYPE_CSS_UNIT || this.wordType == ShifterTypesManager.TYPE_NUMERIC_VALUE)
+        this.word = ((this.wordType == ShiftingTypesManager.TYPE_CSS_UNIT || this.wordType == ShiftingTypesManager.TYPE_NUMERIC_VALUE)
                 && "-".equals(prefixChar)) ? "-" + word : word;
 
         // Can the word be shifted?
-        this.isShiftable = this.wordType != ShifterTypesManager.TYPE_UNKNOWN;
+        this.isShiftable = this.wordType != ShiftingTypesManager.TYPE_UNKNOWN;
     }
 
     /**
@@ -93,8 +93,8 @@ public class ShiftableWord {
         String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
 
         // Keep original word casing
-        if (    this.wordType != ShifterTypesManager.TYPE_PHP_VARIABLE
-             && this.wordType != ShifterTypesManager.TYPE_QUOTED_STRING
+        if (    this.wordType != ShiftingTypesManager.TYPE_PHP_VARIABLE
+             && this.wordType != ShiftingTypesManager.TYPE_QUOTED_STRING
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
             if (UtilsTextual.isAllUppercase(this.word)) {
@@ -121,12 +121,12 @@ public class ShiftableWord {
         if (UtilsFile.isCssFile(this.filename)) {
             switch (this.wordType) {
                 // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
-                case ShifterTypesManager.TYPE_NUMERIC_VALUE:
+                case ShiftingTypesManager.TYPE_NUMERIC_VALUE:
                     if (!CssUnit.isCssUnit(postfix)) {
                         return word + CssUnit.determineMostProminentUnit(this.editorText.toString());
                     }
                     break;
-                case ShifterTypesManager.TYPE_CSS_UNIT:
+                case ShiftingTypesManager.TYPE_CSS_UNIT:
                     // Correct "0px" (or other unit) to "0"
                     if (word.startsWith("0")) {
                         return "0";

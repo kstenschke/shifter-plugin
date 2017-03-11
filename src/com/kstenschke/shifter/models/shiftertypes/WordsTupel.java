@@ -33,25 +33,25 @@ public class WordsTupel {
      */
     public boolean isWordsTupel(String str) {
         String glues[] = new String[]{
+                ",",
+
                 // Multi-character delimiters containing singe-character delimiters must precede those
                 "!==", "!=",
                 "===", "==",
                 "<=", ">=",
                 "&&", "||",
 
-                ".", ",", ":",
-                "+", "-", "/", "*", "%",
-                "<", ">", "=",
+                ".", ":",
+                "+", "-", "*", "/", "%", "=",
                 "&", "|",
+                "<", ">",
 
                 // Space must be last to not be prematurely detected around other delimiter
                 " ",
         };
 
         for (String glue : glues) {
-            String delimiterPattern = Pattern.quote(glue);
-
-            if (str.split("\\s*" + delimiterPattern + "\\s*").length == 2) {
+            if (str.split("\\s*" + Pattern.quote(glue) + "\\s*").length == 2) {
                 this.delimiter = glue;
                 return true;
             }
@@ -67,17 +67,20 @@ public class WordsTupel {
      * @return String   The shifted string
      */
     public String getShifted(String str) {
-        String splitPattern = "^(\\s*" + Pattern.quote(this.delimiter) + "\\s*)";
         // Split into tupel
+        String splitPattern = "\\s*" + Pattern.quote(this.delimiter) + "\\s*";
         String[] parts      = str.split(splitPattern);
 
         // Retain variable whitespace around delimiter
-        Pattern partsPattern      = Pattern.compile(splitPattern);
-        Matcher matcher           = partsPattern.matcher(str);
-        String glueWithWhitespace = matcher.group(1);
+        Pattern partsPattern = Pattern.compile(splitPattern);
+        Matcher matcher      = partsPattern.matcher(str);
+        if (matcher.matches()) {
+            String glueWithWhitespace = matcher.group(0);
+            // Swap parts
+            return parts[1] + glueWithWhitespace + parts[0];
+        }
 
-        // Swap parts
-        return parts[1] + glueWithWhitespace + parts[0];
+        return str;
     }
 
 }

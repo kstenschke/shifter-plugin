@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
 import org.jetbrains.annotations.Nullable;
@@ -85,10 +86,35 @@ public class ShiftableLine {
         }
 
         // Actual shifting
-        return amountShiftableWordsInSentence == 1
-                ? this.line.replace(wordUnshifted, wordShifted)  // Shift detected word in line
-                : StringHtmlEncodable.isHtmlEncodable(this.line)
-                ? StringHtmlEncodable.getShifted(this.line)  // Encode or decode contained HTML special chars
-                : this.line;                                 // No shiftability detected, return original line
+        if (amountShiftableWordsInSentence == 1) {
+            // Shift detected word in line
+            return this.line.replace(wordUnshifted, wordShifted);
+        }
+
+        return StringHtmlEncodable.isHtmlEncodable(this.line)
+            // Encode or decode contained HTML special chars
+            ? StringHtmlEncodable.getShifted(this.line)
+            // No shift-ability detected, return original line
+            : this.line;
+    }
+
+    /**
+     * @param shiftUp
+     * @param filename
+     * @param offsetLineStart
+     * @param line
+     * @param moreCount       Current "more" count, starting w/ 1. If non-more shift: null
+     */
+    public static void shiftLine(Editor editor, Integer caretOffset, boolean shiftUp, String filename, int offsetLineStart, String line, @Nullable Integer moreCount) {
+        Document document       = editor.getDocument();
+        CharSequence editorText = document.getCharsSequence();
+
+        ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
+
+        // Replace line by shifted one
+        CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor, moreCount);
+        if (shiftedLine != null) {
+            document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);
+        }
     }
 }
