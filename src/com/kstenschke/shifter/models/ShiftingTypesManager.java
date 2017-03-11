@@ -76,7 +76,7 @@ public class ShiftingTypesManager {
     private com.kstenschke.shifter.models.shiftertypes.RbgColor typeRgbColor;
     private RomanNumber typeRomanNumber;
     private StringMonoCharacter typeMonoCharacterString;
-    private WordsTupel wordsTupel;
+    private Tupel wordsTupel;
     private com.kstenschke.shifter.models.shiftertypes.QuotedString typeQuotedString;
 
     /**
@@ -184,7 +184,7 @@ public class ShiftingTypesManager {
         if (com.kstenschke.shifter.models.shiftertypes.StringNumericPostfix.isNumericPostfix(word)) {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
-        wordsTupel = new WordsTupel();
+        wordsTupel = new Tupel();
         if (wordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
         }

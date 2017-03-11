@@ -61,10 +61,10 @@ public class RomanNumber {
             the number numbers[i] is represented by the corresponding string, letters[i].
          */
 
-        private int[]    numbers = { 1000,  900,  500,  400,  100,   90,
+        private final int[]    numbers = { 1000,  900,  500,  400,  100,   90,
                 50,   40,   10,    9,    5,    4,    1 };
 
-        private String[] letters = { "M",  "CM",  "D",  "CD", "C",  "XC",
+        private final String[] letters = { "M",  "CM",  "D",  "CD", "C",  "XC",
                 "L",  "XL",  "X",  "IX", "V",  "IV", "I" };
 
         /**

@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
+import com.kstenschke.shifter.utils.UtilsEnvironment;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -36,16 +37,15 @@ public class ShiftableLine {
     /**
      * Constructor
      *
+     * @param document
      * @param line        Text of line
-     * @param editorText  Full text currently in editor
      * @param caretOffset Caret position in document
-     * @param filename    Name of the edited file if any
      */
-    public ShiftableLine(String line, CharSequence editorText, int caretOffset, String filename) {
+    public ShiftableLine(Document document, String line, int caretOffset) {
         this.line        = line;
-        this.editorText  = editorText;
+        this.editorText  = document.getCharsSequence();
         this.caretOffset = caretOffset;
-        this.filename    = filename;
+        this.filename    = UtilsEnvironment.getDocumentFilename(document);;
     }
 
     /**
@@ -100,16 +100,14 @@ public class ShiftableLine {
 
     /**
      * @param shiftUp
-     * @param filename
      * @param offsetLineStart
      * @param line
      * @param moreCount       Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftLine(Editor editor, Integer caretOffset, boolean shiftUp, String filename, int offsetLineStart, String line, @Nullable Integer moreCount) {
-        Document document       = editor.getDocument();
-        CharSequence editorText = document.getCharsSequence();
+    public static void shiftLine(Editor editor, Integer caretOffset, boolean shiftUp, int offsetLineStart, String line, @Nullable Integer moreCount) {
+        Document document = editor.getDocument();
 
-        ShiftableLine shiftableLine = new ShiftableLine(line, editorText, caretOffset, filename);
+        ShiftableLine shiftableLine = new ShiftableLine(document, line, caretOffset);
 
         // Replace line by shifted one
         CharSequence shiftedLine = shiftableLine.getShifted(shiftUp, editor, moreCount);

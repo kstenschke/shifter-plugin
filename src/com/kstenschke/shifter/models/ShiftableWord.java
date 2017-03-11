@@ -15,12 +15,17 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
+import com.kstenschke.shifter.models.shiftertypes.NumericValue;
+import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.regex.Pattern;
 
 /**
  * Shiftable word
@@ -117,7 +122,7 @@ public class ShiftableWord {
      * @param  postfix
      * @return String   Post-processed word
      */
-    public String postProcess(String word, String postfix) {
+    private String postProcess(String word, String postfix) {
         if (UtilsFile.isCssFile(this.filename)) {
             switch (this.wordType) {
                 // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
@@ -138,6 +143,105 @@ public class ShiftableWord {
         }
 
         return word;
+    }
+
+    /**
+     * Get shifted word (and replace if possible)
+     *
+     * @param shiftUp
+     * @param line
+     * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
+     * @return boolean
+     */
+    public static boolean shiftWordAtCaret(Editor editor, Integer caretOffset, boolean shiftUp, String line, @Nullable Integer moreCount) {
+        Document document       = editor.getDocument();
+        CharSequence editorText = document.getCharsSequence();
+        String filename         = UtilsEnvironment.getDocumentFilename(document);
+
+        String word;
+        boolean isOperator = false;
+
+        String fileExtension = UtilsFile.extractFileExtension(filename, true);
+        // @todo make hyphen-inclusion configurable in dictionary per file type
+        boolean isCSS = fileExtension != null && fileExtension.endsWith("css");
+
+        word = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
+        if (word == null) {
+            word = UtilsTextual.getWordAtOffset(editorText, caretOffset, isCSS);
+        } else {
+            isOperator = true;
+        }
+
+        boolean isWordShifted = false;
+        if (word != null && !word.isEmpty()) {
+            isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
+
+            if (!isWordShifted) {
+                // Shifting failed, try shifting lower-cased string
+                String wordLower = word.toLowerCase();
+                isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
+            }
+        }
+
+        return isWordShifted;
+    }
+
+    /**
+     * @param shiftUp           shiftUp   ...or down?
+     * @param filename
+     * @param word
+     * @param line
+     * @param wordOffset        null = calculate from word at offset
+     * @param replaceInDocument
+     * @param isOperator
+     * @param moreCount         current "more" count, starting w/ 1. If non-more shift: null
+     * @return String           resulting shifted or original word if no shift-ability was found
+     */
+    public static String getShiftedWordInDocument(
+            Editor editor,
+            boolean shiftUp,
+            String filename, String word, String line, @Nullable Integer wordOffset,
+            Boolean replaceInDocument,
+            boolean isOperator,
+            @Nullable Integer moreCount
+    ) {
+        Document document       = editor.getDocument();
+        CharSequence editorText = document.getCharsSequence();
+        int caretOffset         = editor.getCaretModel().getOffset();
+
+        boolean wasWordShifted = false;
+
+        if (wordOffset == null) {
+            // Extract offset of word at caret
+            wordOffset = isOperator
+                    ? UtilsTextual.getStartOfOperatorAtOffset(editorText, caretOffset)
+                    : UtilsTextual.getStartOfWordAtOffset(editorText, caretOffset);
+        }
+
+        String prefixChar  = UtilsTextual.getCharBeforeOffset(editorText, wordOffset);
+        String postfixChar = UtilsTextual.getCharAfterOffset(editorText, wordOffset + word.length() - 1);
+
+        // Identify word type and shift it accordingly
+        ShiftableWord shiftableWord = new ShiftableWord(word, prefixChar, postfixChar, line, editorText, caretOffset, filename, moreCount);
+
+        if (!isOperator && (NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word)) && "-".equals(prefixChar)) {
+            word = "-" + word;
+            wordOffset--;
+        }
+
+        String newWord = shiftableWord.getShifted(shiftUp, editor);
+
+        if (newWord != null && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && wordOffset != null) {
+            newWord = shiftableWord.postProcess(newWord, postfixChar);
+
+            if (replaceInDocument) {
+                // Replace word at caret by shifted one (if any)
+                document.replaceString(wordOffset, wordOffset + word.length(), newWord);
+            }
+            wasWordShifted = true;
+        }
+
+        return wasWordShifted ? newWord : word;
     }
 
 }

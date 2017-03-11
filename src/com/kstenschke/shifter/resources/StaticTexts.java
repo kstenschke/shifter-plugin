@@ -20,8 +20,6 @@ import org.jetbrains.annotations.NonNls;
 public class StaticTexts {
 
     @NonNls
-    public static final String SETTINGS_DISPLAY_NAME   = "Shifter";
-    @NonNls
     public static final String SETTINGS_COMPONENT_NAME = "Shifter Settings";
 
     @NonNls

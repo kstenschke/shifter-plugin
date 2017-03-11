@@ -20,8 +20,6 @@ package com.kstenschke.shifter.models.shiftertypes;
  */
 public class TernaryExpression {
 
-    private boolean endsWithSemicolon = false;
-
     /**
      * Check whether shifted string is a ternary expression
      *

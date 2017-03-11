@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 /**
  * Ternary Expression
  */
-public class WordsTupel {
+public class Tupel {
 
     private String delimiter;
 

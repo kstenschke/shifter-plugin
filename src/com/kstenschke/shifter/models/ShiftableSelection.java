@@ -19,6 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.kstenschke.shifter.models.shiftertypes.*;
+import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -32,16 +33,15 @@ public class ShiftableSelection {
     /**
      *
      * @param editor
-     * @param filename
      * @param caretOffset
      * @param isUp          Are we shifting up or down?
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftSelectionInDocument(Editor editor, String filename, Integer caretOffset, boolean isUp, @Nullable Integer moreCount) {
+    public static void shiftSelectionInDocument(Editor editor, Integer caretOffset, boolean isUp, @Nullable Integer moreCount) {
         Document document = editor.getDocument();
         SelectionModel selectionModel = editor.getSelectionModel();
         CharSequence editorText = document.getCharsSequence();
-
+        String filename = UtilsEnvironment.getDocumentFilename(document);
 
         int offsetStart = selectionModel.getSelectionStart();
         int offsetEnd   = selectionModel.getSelectionEnd();
@@ -116,7 +116,7 @@ public class ShiftableSelection {
                                     document.replaceString(offsetStart, offsetEnd, LogicalOperator.getShifted(selectedText));
                                     isDone = true;
                                 } else {
-                                    WordsTupel wordsTupel = new WordsTupel();
+                                    Tupel wordsTupel = new Tupel();
                                     if (wordsTupel.isWordsTupel(selectedText)) {
                                         document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
                                         isDone = true;

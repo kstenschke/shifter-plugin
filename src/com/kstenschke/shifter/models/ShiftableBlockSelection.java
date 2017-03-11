@@ -106,7 +106,7 @@ public class ShiftableBlockSelection {
             String line = UtilsTextual.extractLine(document, document.getLineNumber(blockSelectionStarts[0])).trim();
 
             Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, blockSelectionStarts[0]);
-            String newWord     = actionsPerformer.getShiftedWordInDocument(shiftUp, filename, word, line, wordOffset, false, false, moreCount);
+            String newWord     = ShiftableWord.getShiftedWordInDocument(editor, shiftUp, filename, word, line, wordOffset, false, false, moreCount);
 
             if (newWord != null && !newWord.equals(word)) {
                 for (int i = blockSelectionEnds.length - 1; i >= 0; i--) {
