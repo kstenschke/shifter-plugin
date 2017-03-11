@@ -45,7 +45,7 @@ public class ShiftableLine {
         this.line        = line;
         this.editorText  = document.getCharsSequence();
         this.caretOffset = caretOffset;
-        this.filename    = UtilsEnvironment.getDocumentFilename(document);;
+        this.filename    = UtilsEnvironment.getDocumentFilename(document);
     }
 
     /**

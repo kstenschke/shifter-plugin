@@ -131,8 +131,11 @@ public class ShiftableBlockSelection {
 
         List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
         CaretState caretsAndSelection;
-        LogicalPosition selectionStart, selectionEnd;
-        int offsetSelectionStart, offsetSelectionEnd;
+        LogicalPosition selectionStart;
+        LogicalPosition selectionEnd;
+
+        int offsetSelectionStart;
+        int offsetSelectionEnd;
 
         for (CaretState caretsAndSelectionCurrent : caretsAndSelections) {
             caretsAndSelection = caretsAndSelectionCurrent;
@@ -163,8 +166,11 @@ public class ShiftableBlockSelection {
 
         List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
         CaretState caretsAndSelection;
-        LogicalPosition selectionStart, selectionEnd;
-        int offsetSelectionStart, offsetSelectionEnd;
+        LogicalPosition selectionStart;
+        LogicalPosition selectionEnd;
+
+        int offsetSelectionStart;
+        int offsetSelectionEnd;
 
         for (CaretState caretsAndSelectionCurrent : caretsAndSelections) {
             value = null;

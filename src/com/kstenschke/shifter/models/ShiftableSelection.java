@@ -31,7 +31,6 @@ import java.util.List;
 public class ShiftableSelection {
 
     /**
-     *
      * @param editor
      * @param caretOffset
      * @param isUp          Are we shifting up or down?
