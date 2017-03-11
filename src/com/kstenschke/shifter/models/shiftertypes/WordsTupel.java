@@ -33,22 +33,19 @@ public class WordsTupel {
      */
     public boolean isWordsTupel(String str) {
         String glues[] = new String[]{
-            ".",
-            ",",
-            ":",
-            "/",
-            "*",
-            "+",
-            "-",
-            "%",
-            "<", "<=",
-            ">", ">=",
-            "=", "==", "===", "!=", "!==",
-            "&", "&&",
-            "|", "||",
+                // Multi-character delimiters containing singe-character delimiters must precede those
+                "!==", "!=",
+                "===", "==",
+                "<=", ">=",
+                "&&", "||",
 
-            // Space must be last to not be prematurely detected around other delimiter
-            " ",
+                ".", ",", ":",
+                "+", "-", "/", "*", "%",
+                "<", ">", "=",
+                "&", "|",
+
+                // Space must be last to not be prematurely detected around other delimiter
+                " ",
         };
 
         for (String glue : glues) {
