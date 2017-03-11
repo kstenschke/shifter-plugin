@@ -69,15 +69,9 @@ public class DocCommentTag {
         String allTagsPiped = this.getAllTagsPiped();
         String regExPatternLine = "\\s+\\*\\s+@(" + allTagsPiped + ")";
 
-        List<String> allMatches = new ArrayList<String>();
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
-        while (m.find()) {
-            if (!allMatches.contains(m.group())) {
-                allMatches.add(m.group());
-            }
-        }
 
-        return !allMatches.isEmpty();
+        return m.find();
     }
 
     /**

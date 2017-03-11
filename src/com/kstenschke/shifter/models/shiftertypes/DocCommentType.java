@@ -15,8 +15,6 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,15 +33,9 @@ public class DocCommentType {
         String allTags = new DocCommentTag().getAllTagsPiped();
         String regExPatternLine = "\\s+\\*\\s+@(" + allTags + ")\\s";
 
-        List<String> allMatches = new ArrayList<String>();
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
-        while (m.find()) {
-            if (!allMatches.contains(m.group())) {
-                allMatches.add(m.group());
-            }
-        }
 
-        return !allMatches.isEmpty();
+        return m.find();
     }
 
     /**

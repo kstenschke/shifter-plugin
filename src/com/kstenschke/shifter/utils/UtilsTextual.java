@@ -575,24 +575,22 @@ public class UtilsTextual {
      */
     @NotNull
     public static List<String> extractPhpVariables(String str) {
-        List<String> allMatches = new ArrayList<String>();
-        Matcher m = Pattern.compile("\\$[a-zA-Z0-9_]+").matcher(str);
-        while (m.find()) {
-            if (!allMatches.contains(m.group())) {
-                allMatches.add(m.group());
-            }
-        }
-
-        return allMatches;
+        return getPregMatches(str, "\\$[a-zA-Z0-9_]+");
     }
 
     @NotNull
     public static List<String> extractQuotedStrings(String text, String quoteCharacter) {
+        return getPregMatches(
+                text,
+                "(?<=" + quoteCharacter + ")[a-zA-Z0-9_]+(?=" + quoteCharacter + ")"
+        );
+    }
+
+    @NotNull
+    public static List<String> getPregMatches(String str, String pattern) {
+        Matcher m = Pattern.compile(pattern).matcher(str);
+
         List<String> allMatches = new ArrayList<String>();
-
-        String pattern = "(?<=" + quoteCharacter + ")[a-zA-Z0-9_]+(?=" + quoteCharacter + ")";
-        Matcher m = Pattern.compile(pattern).matcher(text);
-
         while (m.find()) {
             if (!allMatches.contains(m.group())) {
                 allMatches.add(m.group());
