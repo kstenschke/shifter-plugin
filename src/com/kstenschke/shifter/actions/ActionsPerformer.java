@@ -133,7 +133,7 @@ public class ActionsPerformer {
      * @param replaceInDocument
      * @param isOperator
      * @param moreCount         current "more" count, starting w/ 1. If non-more shift: null
-     * @return String           resulting shifted or original word if no shiftability was found
+     * @return String           resulting shifted or original word if no shift-ability was found
      */
     public String getShiftedWordInDocument(
             boolean shiftUp,

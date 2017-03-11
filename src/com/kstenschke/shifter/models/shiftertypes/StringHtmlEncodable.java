@@ -18,7 +18,7 @@ package com.kstenschke.shifter.models.shiftertypes;
 import org.apache.commons.lang.StringEscapeUtils;
 
 /**
- * HTML encoded/encodable (=containing char(s) that be be encoded) String.
+ * HTML encoded/encode-able (=containing char(s) that be be encoded) String.
  */
 public class StringHtmlEncodable {
 

@@ -27,7 +27,7 @@ public class ListenerRestoreSettings implements MouseListener {
 
     private ShifterConfiguration shifterConfiguration;
 
-    Font original;
+    private Font original;
 
     /**
      * Constructor

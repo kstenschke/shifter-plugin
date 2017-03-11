@@ -61,7 +61,7 @@ public class PhpVariable {
      */
     private Boolean isPhpArrayDefinition(String str) {
         this.isConventionalArray =     str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-        boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(\\])(;)*");
+        boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
 
         return this.isConventionalArray || isShorthandArray;
     }

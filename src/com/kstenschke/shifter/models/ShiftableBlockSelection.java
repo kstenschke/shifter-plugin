@@ -36,7 +36,7 @@ public class ShiftableBlockSelection {
      * @param  editorText
      * @return boolean
      */
-    public static boolean areNumericValues(int[] blockSelectionStarts, int[] blockSelectionEnds, CharSequence editorText) {
+    private static boolean areNumericValues(int[] blockSelectionStarts, int[] blockSelectionEnds, CharSequence editorText) {
         String currentItem;
 
         for (int i = 1; i < blockSelectionStarts.length; i++) {
@@ -55,7 +55,7 @@ public class ShiftableBlockSelection {
      * @param  editorText
      * @return boolean
      */
-    public static boolean areBlockItemsIdentical(int[] blockSelectionStarts, int[] blockSelectionEnds, CharSequence editorText) {
+    private static boolean areBlockItemsIdentical(int[] blockSelectionStarts, int[] blockSelectionEnds, CharSequence editorText) {
         String firstItem = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
         String currentItem;
 

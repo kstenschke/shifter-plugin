@@ -159,7 +159,7 @@ public class ShiftableSelection {
      * @param lineNumberSelEnd
      * @param lines
      */
-    public static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd, List<String> lines) {
+    private static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd, List<String> lines) {
         StringBuilder sortedText = UtilsTextual.joinLines(UtilsTextual.sortLines(lines, shiftUp));
         String sortedTextStr = sortedText.toString();
 

@@ -45,16 +45,12 @@ public class ShifterConfiguration {
     private JTextField restoreSettings;
     private JTextPane thisDictionaryConfiguresShiftableTextPane;
 
-    public Boolean hasSomethingChanged = false;
+    private Boolean hasSomethingChanged = false;
 
     /**
      * Constructor
      */
     public ShifterConfiguration() {
-        init();
-    }
-
-    public void init() {
         textAreaDictionaryTerms.setTabSize(2);
 
         refreshFormValues();
@@ -157,7 +153,7 @@ public class ShifterConfiguration {
         return rootPanel;
     }
 
-    public String getShiftMoreSize() {
+    private String getShiftMoreSize() {
         return spinnerShiftMore.getValue().toString();
     }
 
@@ -170,7 +166,7 @@ public class ShifterConfiguration {
                 : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
     }
 
-    public Integer getSelectedShiftingModeOfTimestamps() {
+    private Integer getSelectedShiftingModeOfTimestamps() {
         return radioButtonShiftInSeconds.isSelected()
                 ? ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS
                 : ShifterPreferences.SHIFTING_MODE_TIMESTAMP_MILLISECONDS;
@@ -179,7 +175,7 @@ public class ShifterConfiguration {
     /**
      * @return  boolean
      */
-    public boolean getIsActivePreserveCase() {
+    private boolean getIsActivePreserveCase() {
         return checkBoxPreserveCase.isSelected();
     }
 
@@ -201,7 +197,7 @@ public class ShifterConfiguration {
     /**
      * @return  String
      */
-    public String getDictionary() {
+    private String getDictionary() {
         return this.textAreaDictionaryTerms.getText();
     }
 

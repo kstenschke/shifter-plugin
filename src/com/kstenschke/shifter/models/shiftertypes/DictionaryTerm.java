@@ -130,7 +130,7 @@ public class DictionaryTerm {
 
         while (i < numLines) {
             curLine = allLines[i];
-            curLine = curLine.replaceAll("\\s*", "").replaceAll("\\{*", "").replaceAll("\\}*", "").trim();
+            curLine = curLine.replaceAll("\\s*", "").replaceAll("\\{*", "").replaceAll("}*", "").trim();
 
             if (!curLine.isEmpty() && curLine.contains(sword)) {
                 return curLine;
@@ -150,7 +150,7 @@ public class DictionaryTerm {
     private Object[] getAllFileExtensionsBlockStarts() {
         List<String> allMatches = new ArrayList<String>();
 
-        String pattern = "\\(\\|([a-z|\\*]+\\|)*\\)(\\s)*\\{";
+        String pattern = "\\(\\|([a-z|*]+\\|)*\\)(\\s)*\\{";
         Matcher m = Pattern.compile(pattern).matcher(this.dictionaryContents);
         while (m.find()) {
             allMatches.add(m.group());
