@@ -74,12 +74,12 @@ public class Tupel {
         // Retain variable whitespace around delimiters
         Pattern partsPattern = Pattern.compile(splitPattern);
         Matcher matcher      = partsPattern.matcher(str);
-        if (matcher.matches()) {
+        if (matcher.find()) {
             String glueWithWhitespace = matcher.group(0);
             // Swap parts
-            return parts[1] + glueWithWhitespace + parts[0];
+            return parts[1].trim() + glueWithWhitespace + parts[0].trim();
         }
 
-        return str;
+        return parts[1].trim() + delimiter + parts[0].trim();
     }
 }

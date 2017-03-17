@@ -138,7 +138,6 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, LogicalOperator.getShifted(selectedText));
                 return;
             }
-
             if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
                 return;
