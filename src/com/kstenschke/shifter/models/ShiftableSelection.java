@@ -88,12 +88,6 @@ public class ShiftableSelection {
             document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
             return;
         }
-        if (!isPhpVariable && UtilsTextual.isCommaSeparatedList(selectedText)) {
-            // Selection within one line, or PHP array definition over 1 or more lines
-            String sortedList = UtilsTextual.sortCommaSeparatedList(selectedText, isUp);
-            document.replaceString(offsetStart, offsetEnd, sortedList);
-            return;
-        }
         if (!isPhpVariable && UtilsFile.isPhpFile(filename)) {
             PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
             if (phpConcatenation.isPhpConcatenation()) {
@@ -106,7 +100,27 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
             return;
         }
+
         if (!isPhpVariable) {
+            if (SeparatedList.isSeparatedList(selectedText,",")) {
+                // Comma-separated list
+                String sortedList = SeparatedList.sortSeparatedList(selectedText, ",(\\s)*", ", ", isUp);
+                document.replaceString(offsetStart, offsetEnd, sortedList);
+                return;
+            }
+            if (SeparatedList.isSeparatedList(selectedText,"|")) {
+                // Pipe-separated list
+                String sortedList = SeparatedList.sortSeparatedList(selectedText, "\\|(\\s)*", "|", isUp);
+                document.replaceString(offsetStart, offsetEnd, sortedList);
+                return;
+            }
+
+            Tupel wordsTupel = new Tupel();
+            if (wordsTupel.isWordsTupel(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
+                return;
+            }
+
             if (UtilsTextual.containsAnyQuotes(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                 return;
@@ -120,11 +134,6 @@ public class ShiftableSelection {
                 return;
             }
 
-            Tupel wordsTupel = new Tupel();
-            if (wordsTupel.isWordsTupel(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
-                return;
-            }
             if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
                 return;

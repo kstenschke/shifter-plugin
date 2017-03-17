@@ -38,7 +38,7 @@
     Supported generic shifting types:
     <ul>
         <li>Shifting a multi-line selection sorts the lines alphabetically ascending/descending.</li>
-        <li>Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending.</li>
+        <li>Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.</li>
         <li>Shifting a single-line selection, that is a tupel, toggles the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")</li>
         <li>Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash</li>
         <li>Numeric values - Increments/decrements numbers by 1</li>
@@ -90,6 +90,7 @@
             <ul>
                 <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter</li>
                 <li>Improved: Type detection hierarchy</li>
+                <li>Added: Shifting of selected pipe-separated values</li>
                 <li>Added: Detect and optionally remove duplicate items in shifted comma-separated list</li>
                 <li>Added: Natural sort for lines and comma-separated values</li>
             </ul>

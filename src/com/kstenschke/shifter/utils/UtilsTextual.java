@@ -43,66 +43,6 @@ public class UtilsTextual {
     }
 
     /**
-     * @param  str         String to be checked
-     * @return boolean     Is the given string is a comma separated list?
-     */
-    public static boolean isCommaSeparatedList(String str) {
-        if (! str.contains(",")) {
-            return false;
-        }
-
-        // If the string is quoted: detect whether items are quoted each
-        // => there must be (amountCommas+1)*2 quotes altogether
-        // Ex:  "a","b"         => 1 comma, 4 quotes
-        //      "a","b","c","d" => 3 commas, 8 quotes
-        // Otherwise it should be treated as a quoted string and not as a list.
-        if (isWrappedIntoQuotes(str)) {
-            String quoteChar    = str.substring(0, 1);
-            int amountQuotes    = StringUtils.countMatches(str, quoteChar);
-            int amountCommas    = StringUtils.countMatches(str, ",");
-
-            if (amountQuotes != (amountCommas + 1) * 2) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-    /**
-     * @param  selectedText
-     * @param  shiftUp
-     * @return Given comma separated list, sorted (natural) alphabetically ascending / descending
-     */
-    public static String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
-        String[] items = selectedText.split(",(\\s)*");
-
-        if (items.length == 2) {
-            // Only 2 items: treat as tupel - always toggle order
-            return items[1] + ", " + items[0];
-        }
-
-        List itemsList = Arrays.asList(items);
-        Collections.sort(itemsList, new NaturalOrderComparator());
-        items = (String[])itemsList.toArray();
-
-        if (!shiftUp) {
-            Collections.reverse(Arrays.asList(items));
-        }
-
-        if (UtilsArray.hasDuplicateItems(items) && JOptionPane.showConfirmDialog(
-                    null,
-                    "Duplicated items detected. Reduce to single occurrences?",
-                    "Reduce duplicate items?",
-                    JOptionPane.OK_CANCEL_OPTION
-            ) == JOptionPane.OK_OPTION) {
-                items = UtilsArray.reduceDuplicateItems(items);
-        }
-
-        return UtilsArray.implode(items, ", ");
-    }
-
-    /**
      * @param  lines
      * @param  shiftUp
      * @return Given lines sorted alphabetically ascending / descending
@@ -154,7 +94,7 @@ public class UtilsTextual {
      * @param  str
      * @return boolean  Is the given string wrapped into single- or double quotes?
      */
-    private static boolean isWrappedIntoQuotes(String str) {
+    public static boolean isWrappedIntoQuotes(String str) {
         return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
     }
 
