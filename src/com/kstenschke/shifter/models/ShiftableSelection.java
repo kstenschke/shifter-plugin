@@ -66,87 +66,87 @@ public class ShiftableSelection {
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftingTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
         boolean isSizzleSelector     = !isPhpVariable && !isJsVarsDeclarations && wordType == ShiftingTypesManager.TYPE_SIZZLE_SELECTOR;
 
-        // @todo refactor logical branches (cleanup flow, extract sub sections into private methods)
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 1 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines alphabetical
             ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
-        } else {
-            if (isJsVarsDeclarations) {
-                document.replaceString(offsetStart, offsetEnd, JsVariablesDeclarations.getShifted(selectedText));
-            } else {
-                if (isSizzleSelector) {
-                    document.replaceString(offsetStart, offsetEnd, SizzleSelector.getShifted(selectedText));
-                } else {
-                    // Selection within one line, or PHP array definition over 1 or more lines
-                    if (!isPhpVariable && UtilsTextual.isCommaSeparatedList(selectedText)) {
-                        String sortedList = UtilsTextual.sortCommaSeparatedList(selectedText, isUp);
-                        document.replaceString(offsetStart, offsetEnd, sortedList);
-                    } else {
-                        boolean isDone = false;
-                        if (!isPhpVariable && UtilsFile.isPhpFile(filename)) {
-                            PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
-                            if (phpConcatenation.isPhpConcatenation()) {
-                                isDone = true;
-                                document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
-                            }
-                        }
+            return;
+        }
+        if (isJsVarsDeclarations) {
+            document.replaceString(offsetStart, offsetEnd, JsVariablesDeclarations.getShifted(selectedText));
+            return;
+        }
+        if (isSizzleSelector) {
+            document.replaceString(offsetStart, offsetEnd, SizzleSelector.getShifted(selectedText));
+            return;
+        }
+        if (!isPhpVariable && UtilsTextual.isCommaSeparatedList(selectedText)) {
+            // Selection within one line, or PHP array definition over 1 or more lines
+            String sortedList = UtilsTextual.sortCommaSeparatedList(selectedText, isUp);
+            document.replaceString(offsetStart, offsetEnd, sortedList);
+            return;
+        }
 
-                        if (!isDone) {
-                            if (TernaryExpression.isTernaryExpression(selectedText, "")) {
-                                document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
-                                isDone = true;
-                            } else if (wordType == ShiftingTypesManager.TYPE_TRAILING_COMMENT) {
-                                int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
-                                int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
-                                String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
-                                String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
-
-                                document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
-                                isDone = true;
-                            } else if (!isPhpVariable) {
-                                if (UtilsTextual.containsAnyQuotes(selectedText)) {
-                                    document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
-                                    isDone = true;
-                                } else if (UtilsTextual.containsAnySlashes(selectedText)) {
-                                    document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
-                                    isDone = true;
-                                } else if (LogicalOperator.isLogicalOperator(selectedText)) {
-                                    document.replaceString(offsetStart, offsetEnd, LogicalOperator.getShifted(selectedText));
-                                    isDone = true;
-                                } else {
-                                    Tupel wordsTupel = new Tupel();
-                                    if (wordsTupel.isWordsTupel(selectedText)) {
-                                        document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
-                                        isDone = true;
-                                    } else if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
-                                        document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
-                                        isDone = true;
-                                    }
-                                }
-                            }
-
-                            if (!isDone) {
-                                // Detect and shift various types
-                                String shiftedWord = shiftingTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
-
-                                if (!isPhpVariable) {
-                                    // @todo extract this and its redundancy in ShiftableWord
-                                    if (UtilsTextual.isAllUppercase(selectedText)) {
-                                        shiftedWord = shiftedWord.toUpperCase();
-
-                                    } else if (UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
-                                        // @todo    check is there a way to implement a toCamelCase conversion?
-                                        shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
-                                    }
-                                }
-
-                                document.replaceString(offsetStart, offsetEnd, shiftedWord);
-                            }
-                        }
-                    }
-                }
+        if (!isPhpVariable && UtilsFile.isPhpFile(filename)) {
+            PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
+            if (phpConcatenation.isPhpConcatenation()) {
+                document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+                return;
             }
         }
+
+        if (TernaryExpression.isTernaryExpression(selectedText, "")) {
+            document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
+            return;
+        }
+        if (wordType == ShiftingTypesManager.TYPE_TRAILING_COMMENT) {
+            int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
+            int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
+            String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+            String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
+
+            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
+            return;
+        }
+        if (!isPhpVariable) {
+            if (UtilsTextual.containsAnyQuotes(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                return;
+            }
+            if (UtilsTextual.containsAnySlashes(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+                return;
+            }
+            if (LogicalOperator.isLogicalOperator(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, LogicalOperator.getShifted(selectedText));
+                return;
+            }
+
+            Tupel wordsTupel = new Tupel();
+            if (wordsTupel.isWordsTupel(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
+                return;
+            }
+            if (StringHtmlEncodable.isHtmlEncodable(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, StringHtmlEncodable.getShifted(selectedText));
+                return;
+            }
+        }
+
+        // Detect and shift various types
+        String shiftedWord = shiftingTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
+
+        if (!isPhpVariable) {
+            // @todo extract this and its redundancy in ShiftableWord
+            if (UtilsTextual.isAllUppercase(selectedText)) {
+                shiftedWord = shiftedWord.toUpperCase();
+
+            } else if (UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
+                // @todo    check is there a way to implement a toCamelCase conversion?
+                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
+            }
+        }
+
+        document.replaceString(offsetStart, offsetEnd, shiftedWord);
     }
 
     /**
