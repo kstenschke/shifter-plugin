@@ -71,7 +71,7 @@ public class Tupel {
         String splitPattern = "\\s*" + Pattern.quote(this.delimiter) + "\\s*";
         String[] parts      = str.split(splitPattern);
 
-        // Retain variable whitespace around delimiter
+        // Retain variable whitespace around delimiters
         Pattern partsPattern = Pattern.compile(splitPattern);
         Matcher matcher      = partsPattern.matcher(str);
         if (matcher.matches()) {

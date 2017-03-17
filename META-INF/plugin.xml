@@ -89,7 +89,7 @@
     <ul>
         <li>1.5.0
             <ul>
-                <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter</li>
+                <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters</li>
                 <li>Improved: Type detection hierarchy</li>
                 <li>Added: Toggle among selected single / multi-line comment types (//... vs. /*...*/)</li>
                 <li>Added: Shifting of selected pipe-separated values</li>

@@ -1,7 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.5.0
-    ** Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter
+    ** Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters
     ** Improved: Type detection hierarchy
     ** Added: Toggle among selected single / multi-line comment types (//... vs. /*...*/)
     ** Added: Shifting of selected pipe-separated values
