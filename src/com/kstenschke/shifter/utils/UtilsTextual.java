@@ -18,9 +18,11 @@ package com.kstenschke.shifter.utils;
 import com.intellij.openapi.editor.Document;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
+import com.kstenschke.shifter.utils.natorder.NaturalOrderComparator;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -69,9 +71,9 @@ public class UtilsTextual {
     }
 
     /**
-     * @param selectedText
-     * @param shiftUp
-     * @return Given comma separated list, sorted alphabetically ascending / descending
+     * @param  selectedText
+     * @param  shiftUp
+     * @return Given comma separated list, sorted (natural) alphabetically ascending / descending
      */
     public static String sortCommaSeparatedList(String selectedText, boolean shiftUp) {
         String[] items = selectedText.split(",(\\s)*");
@@ -81,14 +83,21 @@ public class UtilsTextual {
             return items[1] + ", " + items[0];
         }
 
-        if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE)) {
-            Arrays.sort(items, String.CASE_INSENSITIVE_ORDER);
-        } else {
-            Arrays.sort(items);
-        }
+        List itemsList = Arrays.asList(items);
+        Collections.sort(itemsList, new NaturalOrderComparator());
+        items = (String[])itemsList.toArray();
 
         if (!shiftUp) {
             Collections.reverse(Arrays.asList(items));
+        }
+
+        if (UtilsArray.hasDuplicateItems(items) && JOptionPane.showConfirmDialog(
+                    null,
+                    "Duplicated items detected. Reduce to single occurrences?",
+                    "Reduce duplicate items?",
+                    JOptionPane.OK_CANCEL_OPTION
+            ) == JOptionPane.OK_OPTION) {
+                items = UtilsArray.reduceDuplicateItems(items);
         }
 
         return UtilsArray.implode(items, ", ");
@@ -102,11 +111,7 @@ public class UtilsTextual {
     public static List<String> sortLines(List<String> lines, boolean shiftUp) {
         UtilsLinesList.DelimiterDetector delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
 
-        if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE)) {
-            Collections.sort(lines, String.CASE_INSENSITIVE_ORDER);
-        } else {
-            Collections.sort(lines);
-        }
+        Collections.sort(lines, new NaturalOrderComparator());
 
         if (!shiftUp) {
             Collections.reverse(lines);
@@ -120,6 +125,11 @@ public class UtilsTextual {
         return lines;
     }
 
+    /**
+     * @param  haystack
+     * @param  needle
+     * @return boolean
+     */
     public static boolean containsCaseInSensitive(String haystack, String needle) {
         return Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
     }
@@ -435,9 +445,9 @@ public class UtilsTextual {
 
         String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
-            // If last line has no \n, add it one
-            // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
-            // w/ \n... This is fixed after.
+        // If last line has no \n, add it one
+        // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
+        // w/ \n... This is fixed after.
         if (lineSeparatorLength == 0) {
             line += "\n";
         }

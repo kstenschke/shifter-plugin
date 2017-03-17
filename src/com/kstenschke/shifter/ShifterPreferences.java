@@ -27,8 +27,6 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_DICTIONARY_TERMS = "PluginShifter.Dictionary.Terms";
     @NonNls
-    private static final String PROPERTY_SORTING_MODE = "PluginShifter.SortingMode";
-    @NonNls
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
     @NonNls
     private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
@@ -86,15 +84,6 @@ public class ShifterPreferences {
      */
     public static void saveDictionary(String dictionary) {
         PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY_TERMS, dictionary);
-    }
-
-    /**
-     * Store sorting mode
-     *
-     * @param mode  case sensitive / insensitive
-     */
-    public static void saveSortingMode(Integer mode) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_SORTING_MODE, mode.toString());
     }
 
     public static void saveShiftMoreSize(String size) {
@@ -158,19 +147,6 @@ public class ShifterPreferences {
             return mode == null ? SORTING_MODE_NUMERICAL_BLOCK_ENUM : Integer.parseInt(mode);
         } catch(NullPointerException e) {
             return SORTING_MODE_NUMERICAL_BLOCK_ENUM;
-        }
-    }
-
-    /**
-     * @return int  Sorting mode: case sensitive / insensitive
-     */
-    public static Integer getSortingMode() {
-        try {
-            String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SORTING_MODE);
-
-            return modeStr == null ? SORTING_MODE_CASE_INSENSITIVE : Integer.parseInt(modeStr);
-        } catch(NullPointerException e) {
-            return SORTING_MODE_CASE_INSENSITIVE;
         }
     }
 

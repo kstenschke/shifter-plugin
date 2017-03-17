@@ -17,6 +17,7 @@ package com.kstenschke.shifter.utils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
 
 /**
@@ -104,4 +105,27 @@ public class UtilsArray {
         return mergeStringArrays(mergeStringArrays(array1, array2), array3);
     }
 
+    /**
+     * @param  array
+     * @return boolean
+     */
+    public static boolean hasDuplicateItems(String[] array) {
+        for (int j = 0; j < array.length; j++) {
+            for (int k = j + 1; k < array.length; k++) {
+                if (array[k].equals(array[j])) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    /**
+     * @param  items
+     * @return String[]
+     */
+    public static String[] reduceDuplicateItems(String[] items) {
+        return new HashSet<String>(Arrays.asList(items)).toArray(new String[0]);
+    }
 }

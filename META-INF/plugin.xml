@@ -86,7 +86,13 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.5.0 Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter</li>
+        <li>1.5.0
+            <ul>
+                <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter</li>
+                <li>Added: Detect and optionally remove duplicate items in shifted comma-separated list</li>
+                <li>Added: Natural sort for lines and comma-separated values</li>
+            </ul>
+        </li>
         <li>1.4.4 Improved: Shift selection which is a comma-separated tupel always toggles order (instead of alphabetical sort, as w/ 3+ items)</li>
         <li>1.4.3
             <ul>

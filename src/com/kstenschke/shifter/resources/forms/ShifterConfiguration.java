@@ -34,8 +34,6 @@ public class ShifterConfiguration {
     private JTextArea textAreaDictionaryTerms;
     private JCheckBox checkBoxPreserveCase;
 
-    private JRadioButton radioButtonCaseSensitive;
-    private JRadioButton radioButtonCaseInsensitive;
     private JRadioButton radioButtonShiftInSeconds;
     private JRadioButton radioButtonShiftInMilliseconds;
     private JScrollPane scrollPaneDictionaryTerms;
@@ -67,8 +65,6 @@ public class ShifterConfiguration {
 
         radioButtonShiftInSeconds.addChangeListener(somethingChangedListener);
         radioButtonShiftInMilliseconds.addChangeListener(somethingChangedListener);
-        radioButtonCaseSensitive.addChangeListener(somethingChangedListener);
-        radioButtonCaseInsensitive.addChangeListener(somethingChangedListener);
 
         KeyListener keyListenerSomethingChanged = getKeyListenerSomethingChanged();
         textAreaDictionaryTerms.addKeyListener(keyListenerSomethingChanged);
@@ -106,12 +102,6 @@ public class ShifterConfiguration {
         int shiftMoreValue = ShifterPreferences.getShiftMoreSize();
         this.spinnerShiftMore.setModel( new SpinnerNumberModel(shiftMoreValue, 2, 999, 1));
 
-        if (ShifterPreferences.getSortingMode().equals(ShifterPreferences.SORTING_MODE_CASE_SENSITIVE)) {
-            this.radioButtonCaseSensitive.setSelected(true);
-        } else {
-            this.radioButtonCaseInsensitive.setSelected(true);
-        }
-
         if (ShifterPreferences.getShiftingModeOfTimestamps().equals(ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS)) {
             this.radioButtonShiftInSeconds.setSelected(true);
         } else {
@@ -140,7 +130,6 @@ public class ShifterConfiguration {
      */
     public void reset() {
         spinnerShiftMore.setValue(10);
-        radioButtonCaseInsensitive.setSelected(true);
         radioButtonShiftInSeconds.setSelected(true);
 
         this.textAreaDictionaryTerms.setText(getDefaultTerms());
@@ -155,15 +144,6 @@ public class ShifterConfiguration {
 
     private String getShiftMoreSize() {
         return spinnerShiftMore.getValue().toString();
-    }
-
-    /**
-     * @return  Integer     Sorting mode
-     */
-    private Integer getSelectedSortingMode() {
-        return radioButtonCaseSensitive.isSelected()
-                ? ShifterPreferences.SORTING_MODE_CASE_SENSITIVE
-                : ShifterPreferences.SORTING_MODE_CASE_INSENSITIVE;
     }
 
     private Integer getSelectedShiftingModeOfTimestamps() {
@@ -188,7 +168,6 @@ public class ShifterConfiguration {
         return    this.hasSomethingChanged
                || Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
                || ! this.textAreaDictionaryTerms.getText().equals( ShifterPreferences.getTermsDictionary())
-               || ! ShifterPreferences.getSortingMode().equals( this.getSelectedSortingMode())
                || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
                || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
         );
@@ -204,7 +183,6 @@ public class ShifterConfiguration {
     public void apply() {
         // Store configuration
         ShifterPreferences.saveShiftMoreSize(this.getShiftMoreSize());
-        ShifterPreferences.saveSortingMode(this.getSelectedSortingMode());
         ShifterPreferences.saveIsActivePreserveCase(this.getIsActivePreserveCase());
         ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
         // Store dictionary

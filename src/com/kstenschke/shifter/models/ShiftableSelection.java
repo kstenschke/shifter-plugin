@@ -38,13 +38,12 @@ public class ShiftableSelection {
      */
     public static void shiftSelectionInDocument(Editor editor, Integer caretOffset, boolean isUp, @Nullable Integer moreCount) {
         Document document = editor.getDocument();
-        SelectionModel selectionModel = editor.getSelectionModel();
-        CharSequence editorText = document.getCharsSequence();
-        String filename = UtilsEnvironment.getDocumentFilename(document);
 
+        SelectionModel selectionModel = editor.getSelectionModel();
         int offsetStart = selectionModel.getSelectionStart();
         int offsetEnd   = selectionModel.getSelectionEnd();
 
+        CharSequence editorText = document.getCharsSequence();
         String selectedText = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
 
         if (selectedText == null || selectedText.trim().isEmpty()) {
@@ -60,6 +59,7 @@ public class ShiftableSelection {
 
         ShiftingTypesManager shiftingTypesManager = new ShiftingTypesManager();
 
+        String filename   = UtilsEnvironment.getDocumentFilename(document);
         int wordType = shiftingTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
 
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
@@ -69,8 +69,7 @@ public class ShiftableSelection {
         // @todo refactor logical branches (cleanup flow, extract sub sections into private methods)
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 1 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines alphabetical
-            List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-            ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd, lines);
+            ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
         } else {
             if (isJsVarsDeclarations) {
                 document.replaceString(offsetStart, offsetEnd, JsVariablesDeclarations.getShifted(selectedText));
@@ -156,24 +155,27 @@ public class ShiftableSelection {
      * @param shiftUp
      * @param lineNumberSelStart
      * @param lineNumberSelEnd
-     * @param lines
      */
-    private static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd, List<String> lines) {
-        StringBuilder sortedText = UtilsTextual.joinLines(UtilsTextual.sortLines(lines, shiftUp));
-        String sortedTextStr = sortedText.toString();
+    private static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd) {
+        List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+        List<String> linesSorted = UtilsTextual.sortLines(lines, shiftUp);
 
-        boolean hasDuplicates = UtilsTextual.hasDuplicateLines(sortedTextStr);
-        if (hasDuplicates) {
-            int reply = JOptionPane.showConfirmDialog(null, "Duplicated lines detected. Reduce to single occurrences?", "Reduce duplicate lines?", JOptionPane.OK_CANCEL_OPTION);
-            if (reply == JOptionPane.OK_OPTION) {
-                sortedTextStr = UtilsTextual.reduceDuplicateLines(sortedTextStr);
-            }
+        String linesString = UtilsTextual.joinLines(linesSorted).toString();
+
+        if (UtilsTextual.hasDuplicateLines(linesString) && JOptionPane.showConfirmDialog(
+                    null,
+                    "Duplicated lines detected. Reduce to single occurrences?",
+                    "Reduce duplicate lines?",
+                    JOptionPane.OK_CANCEL_OPTION
+            ) == JOptionPane.OK_OPTION)
+        {
+            linesString = UtilsTextual.reduceDuplicateLines(linesString);
         }
 
         int offsetLineStart = document.getLineStartOffset(lineNumberSelStart);
-        int offsetLineEnd = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
+        int offsetLineEnd   = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
 
-        document.replaceString(offsetLineStart, offsetLineEnd, sortedTextStr);
+        document.replaceString(offsetLineStart, offsetLineEnd, linesString);
     }
 
 }
