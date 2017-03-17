@@ -85,7 +85,6 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, sortedList);
             return;
         }
-
         if (!isPhpVariable && UtilsFile.isPhpFile(filename)) {
             PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
             if (phpConcatenation.isPhpConcatenation()) {
@@ -132,18 +131,18 @@ public class ShiftableSelection {
             }
         }
 
-        // Detect and shift various types
         String shiftedWord = shiftingTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
-
-        if (!isPhpVariable) {
-            // @todo extract this and its redundancy in ShiftableWord
-            if (UtilsTextual.isAllUppercase(selectedText)) {
-                shiftedWord = shiftedWord.toUpperCase();
-
-            } else if (UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
-                // @todo    check is there a way to implement a toCamelCase conversion?
-                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
-            }
+        if (isPhpVariable) {
+            document.replaceString(offsetStart, offsetEnd, shiftedWord);
+            return;
+        }
+        if (UtilsTextual.isAllUppercase(selectedText)) {
+            document.replaceString(offsetStart, offsetEnd, shiftedWord.toUpperCase());
+            return;
+        }
+        if (UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
+            document.replaceString(offsetStart, offsetEnd, UtilsTextual.toUcFirst(shiftedWord));
+            return;
         }
 
         document.replaceString(offsetStart, offsetEnd, shiftedWord);
