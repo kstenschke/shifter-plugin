@@ -3,7 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.5.0
     ** Added: Toggle among selected single / multi-line comment types
     ** Added: Natural sort for lines and comma- or pipe-separated values
-    ** Added: Shifting of selected pipe-separated values
+    ** Added: Sorting of selected pipe-separated values
     ** Added: Detect and optionally remove duplicate items in shifted comma- or pipe-separated list
     ** Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters
     ** Improved: Type detection hierarchy
