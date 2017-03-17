@@ -49,6 +49,11 @@ public class ShiftableSelection {
         if (selectedText == null || selectedText.trim().isEmpty()) {
             return;
         }
+        if (Comment.isComment(selectedText)) {
+            // Must be before multi-line sort to allow multi-line comment shifting
+            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText));
+            return;
+        }
 
         int lineNumberSelStart = document.getLineNumber(offsetStart);
         int lineNumberSelEnd = document.getLineNumber(offsetEnd);
