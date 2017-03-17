@@ -178,5 +178,4 @@ public class RbgColor {
 
         return new Color(red, green, blue, color.getAlpha());
     }
-
 }

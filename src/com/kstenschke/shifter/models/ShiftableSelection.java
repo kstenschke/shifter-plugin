@@ -176,5 +176,4 @@ public class ShiftableSelection {
 
         document.replaceString(offsetLineStart, offsetLineEnd, linesString);
     }
-
 }

@@ -116,6 +116,5 @@ public class UtilsLinesList {
         public boolean isDelimitedLastLine() {
             return !this.findingDelimiterFailed && this.isDelimitedLastLine;
         }
-
     }
 }

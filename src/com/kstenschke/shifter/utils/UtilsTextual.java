@@ -607,5 +607,4 @@ public class UtilsTextual {
         }
         return allMatches;
     }
-
 }

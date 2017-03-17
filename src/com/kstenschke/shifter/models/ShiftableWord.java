@@ -241,5 +241,4 @@ public class ShiftableWord {
 
         return wasWordShifted ? newWord : word;
     }
-
 }

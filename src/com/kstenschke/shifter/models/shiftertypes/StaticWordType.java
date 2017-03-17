@@ -74,5 +74,4 @@ public class StaticWordType {
 
         return this.keywords[wordPositionShifted];
     }
-
 }

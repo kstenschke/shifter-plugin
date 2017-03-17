@@ -300,5 +300,4 @@ public class ShiftingTypesManager {
 
         return this.getShiftedWord(word, idWordType, isUp, editorText, caretOffset, moreCount, filename, editor);
     }
-
 }

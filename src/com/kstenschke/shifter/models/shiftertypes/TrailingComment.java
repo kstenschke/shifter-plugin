@@ -45,5 +45,4 @@ public class TrailingComment {
 
         return leadingWhiteSpace + "//" + parts[1] + "\n" + parts[0];
     }
-
 }

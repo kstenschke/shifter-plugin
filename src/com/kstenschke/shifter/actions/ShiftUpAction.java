@@ -58,5 +58,4 @@ class ShiftUpAction extends AnAction {
             }
         }, StaticTexts.ACTION_LABEL_SHIFT_UP, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
     }
-
 }

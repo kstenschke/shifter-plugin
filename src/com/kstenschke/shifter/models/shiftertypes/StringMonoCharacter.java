@@ -50,5 +50,4 @@ public class StringMonoCharacter {
 
         return StringUtils.repeat(String.valueOf(firstChar), word.length());
     }
-
 }

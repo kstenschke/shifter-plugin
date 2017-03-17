@@ -58,5 +58,4 @@ public class StringHtmlEncodable {
 
         return !strLenOriginal.equals(strLenEncoded) ? encoded : word;
     }
-
 }

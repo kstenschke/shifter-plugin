@@ -32,5 +32,4 @@ public class StaticTexts {
     public static final String ACTION_LABEL_SHIFT_DOWN_MORE       = "Shift-Down More";
     @NonNls
     public static final String DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS = "Shift Numeric Block Selection";
-
 }

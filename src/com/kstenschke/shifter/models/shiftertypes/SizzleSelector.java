@@ -52,5 +52,4 @@ public class SizzleSelector {
 
         return "var $" + UtilsTextual.toLcFirst(varName) + " = " + selector + ";";
     }
-
 }

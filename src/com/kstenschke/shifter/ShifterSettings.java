@@ -49,5 +49,4 @@ public class ShifterSettings implements ApplicationComponent {
     public String getComponentName() {
         return StaticTexts.SETTINGS_COMPONENT_NAME;
     }
-
 }

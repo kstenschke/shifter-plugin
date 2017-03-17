@@ -68,5 +68,4 @@ public class ShifterConfigurable implements Configurable {
     public void disposeUIResources() {
         settingsPanel = null;
     }
-
 }

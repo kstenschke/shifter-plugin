@@ -52,5 +52,4 @@ public class StringNumericPostfix {
 
         return leadPart + shiftedNumber;
     }
-
 }

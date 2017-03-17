@@ -85,5 +85,4 @@ public class ActionsPerformer {
             ShiftableSelection.shiftSelectionInDocument(editor, caretOffset, shiftUp, moreCount);
         }
     }
-
 }

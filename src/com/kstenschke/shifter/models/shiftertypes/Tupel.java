@@ -82,5 +82,4 @@ public class Tupel {
 
         return str;
     }
-
 }
