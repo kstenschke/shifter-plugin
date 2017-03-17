@@ -103,13 +103,11 @@ public class ShiftableWord {
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
             if (UtilsTextual.isAllUppercase(this.word)) {
-                // Convert result to upper case
-                shiftedWord = shiftedWord.toUpperCase();
-            } else if (UtilsTextual.isUcFirst(this.word)) {
-                // Convert result to upper case first char
-                shiftedWord = UtilsTextual.toUcFirst(shiftedWord);
+                return shiftedWord.toUpperCase();
             }
-
+            if (UtilsTextual.isUcFirst(this.word)) {
+                return UtilsTextual.toUcFirst(shiftedWord);
+            }
         }
 
         return shiftedWord;
