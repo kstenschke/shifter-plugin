@@ -59,8 +59,8 @@ public class ShiftableSelection {
 
         ShiftingTypesManager shiftingTypesManager = new ShiftingTypesManager();
 
-        String filename   = UtilsEnvironment.getDocumentFilename(document);
-        int wordType = shiftingTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
+        String filename = UtilsEnvironment.getDocumentFilename(document);
+        int wordType    = shiftingTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
 
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftingTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
@@ -79,6 +79,15 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, SizzleSelector.getShifted(selectedText));
             return;
         }
+        if (wordType == ShiftingTypesManager.TYPE_TRAILING_COMMENT) {
+            int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
+            int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
+            String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+            String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
+
+            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
+            return;
+        }
         if (!isPhpVariable && UtilsTextual.isCommaSeparatedList(selectedText)) {
             // Selection within one line, or PHP array definition over 1 or more lines
             String sortedList = UtilsTextual.sortCommaSeparatedList(selectedText, isUp);
@@ -95,15 +104,6 @@ public class ShiftableSelection {
 
         if (TernaryExpression.isTernaryExpression(selectedText, "")) {
             document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
-            return;
-        }
-        if (wordType == ShiftingTypesManager.TYPE_TRAILING_COMMENT) {
-            int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
-            int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
-            String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
-            String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
-
-            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
             return;
         }
         if (!isPhpVariable) {

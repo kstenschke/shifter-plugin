@@ -91,6 +91,11 @@ public class ShiftingTypesManager {
      * @return int
      */
     public int getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, String line, String filename) {
+        // Selected code line w/ trailing //-comment: moves the comment into a new line before the code
+        if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
+            return TYPE_TRAILING_COMMENT;
+        }
+
         // PHP variable (must be prefixed w/ "$")
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
         if (this.typePhpVariable.isPhpVariable(word)) {
@@ -132,11 +137,6 @@ public class ShiftingTypesManager {
         // Ternary Expression - swap IF and ELSE
         if (TernaryExpression.isTernaryExpression(word, prefixChar)) {
             return TYPE_TERNARY_EXPRESSION;
-        }
-
-        // Selected code line w/ trailing //-comment: moves the comment into a new line before the code
-        if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
-            return TYPE_TRAILING_COMMENT;
         }
 
         // Quoted (must be wrapped in single or double quotes or backticks)

@@ -89,6 +89,7 @@
         <li>1.5.0
             <ul>
                 <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiter</li>
+                <li>Improved: Type detection hierarchy</li>
                 <li>Added: Detect and optionally remove duplicate items in shifted comma-separated list</li>
                 <li>Added: Natural sort for lines and comma-separated values</li>
             </ul>

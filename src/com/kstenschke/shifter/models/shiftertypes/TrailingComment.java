@@ -26,7 +26,7 @@ public class TrailingComment {
      * @todo maybe later - implement also for multi-line selections(?)
      */
     public static boolean isTrailingComment(String word, String postfixChar, boolean isLastLineInDocument) {
-        if (word == null || !word.contains("//") || (!postfixChar.equals("\n") && !isLastLineInDocument)) {
+        if (word == null || !word.contains("//") || (!isLastLineInDocument && !postfixChar.equals("\n"))) {
             return false;
         }
 
