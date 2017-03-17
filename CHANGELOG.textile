@@ -1,12 +1,12 @@
 h1. Shifter Plugin - Changelog
 
 * 1.5.0
-    ** Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters
-    ** Improved: Type detection hierarchy
     ** Added: Toggle among selected single / multi-line comment types
+    ** Added: Natural sort for lines and comma- or pipe-separated values
     ** Added: Shifting of selected pipe-separated values
     ** Added: Detect and optionally remove duplicate items in shifted comma- or pipe-separated list
-    ** Added: Natural sort for lines and comma-separated values
+    ** Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters
+    ** Improved: Type detection hierarchy
 * 1.4.4
     ** Improved: Shift selection that is a comma-separated tupel always toggles order (instead alphabetical sort, as w/ 3+ items)
 * 1.4.3

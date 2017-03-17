@@ -89,12 +89,12 @@
     <ul>
         <li>1.5.0
             <ul>
-                <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters</li>
-                <li>Improved: Type detection hierarchy</li>
                 <li>Added: Toggle among selected single / multi-line comment types</li>
+                <li>Added: Natural sort for lines and comma- or pipe-separated values</li>
                 <li>Added: Shifting of selected pipe-separated values</li>
                 <li>Added: Detect and optionally remove duplicate items in shifted comma- or pipe-separated list</li>
-                <li>Added: Natural sort for lines and comma-separated values</li>
+                <li>Improved: Shifting a selected tupel now detects and retains variable whitespace around delimiters</li>
+                <li>Improved: Type detection hierarchy</li>
             </ul>
         </li>
         <li>1.4.4 Improved: Shift selection which is a comma-separated tupel always toggles order (instead of alphabetical sort, as w/ 3+ items)</li>
