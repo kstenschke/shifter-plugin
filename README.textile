@@ -88,7 +88,7 @@ Thanks for their input, ideas, help or other contribution
 * Yann Cebron from Jetbrains
 
 
-h2 Third Party Acknowledgment
+h2. Third Party Acknowledgment
 
 Shifter uses the following third party components:
 
