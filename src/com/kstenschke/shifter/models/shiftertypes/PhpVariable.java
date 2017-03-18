@@ -40,14 +40,13 @@ public class PhpVariable {
      */
     public Boolean isPhpVariable(String str) {
         boolean isVariable = false;
-
         if (str.startsWith("$")) {
             String identifier = str.substring(1);
             // Must contain a-z,A-Z or 0-9, _
             isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
         }
 
-        if (! isVariable) {
+        if (!isVariable) {
             // Detect array definition
             this.isArrayDefinition = this.isPhpArrayDefinition(str);
         }
@@ -60,8 +59,8 @@ public class PhpVariable {
      * @return Boolean
      */
     private Boolean isPhpArrayDefinition(String str) {
-        this.isConventionalArray =     str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-        boolean isShorthandArray = ! this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
+        this.isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = !this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
 
         return this.isConventionalArray || isShorthandArray;
     }

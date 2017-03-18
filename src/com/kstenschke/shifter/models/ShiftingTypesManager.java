@@ -110,9 +110,8 @@ public class ShiftingTypesManager {
         }
 
         // DocComment types (must be prefixed w/ "@")
-        this.typeDataTypeInDocComment   = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
-        boolean isDocCommentLineContext = this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line);
-        if (isDocCommentLineContext) {
+        this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentType();
+        if (this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line)) {
             this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftertypes.DocCommentTag();
             if (prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
                 return TYPE_DOC_COMMENT_TAG;

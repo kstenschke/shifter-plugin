@@ -47,15 +47,15 @@ public class NaturalOrderComparator implements Comparator
             {
                 return bias;
             }
-            else if (!Character.isDigit(ca))
+            if (!Character.isDigit(ca))
             {
                 return -1;
             }
-            else if (!Character.isDigit(cb))
+            if (!Character.isDigit(cb))
             {
                 return +1;
             }
-            else if (ca < cb)
+            if (ca < cb)
             {
                 if (bias == 0)
                 {
@@ -143,7 +143,7 @@ public class NaturalOrderComparator implements Comparator
             {
                 return -1;
             }
-            else if (ca > cb)
+            if (ca > cb)
             {
                 return +1;
             }
@@ -159,10 +159,8 @@ public class NaturalOrderComparator implements Comparator
         {
             return 0;
         }
-        else
-        {
-            return s.charAt(i);
-        }
+
+        return s.charAt(i);
     }
 
     public static void main(String[] args)

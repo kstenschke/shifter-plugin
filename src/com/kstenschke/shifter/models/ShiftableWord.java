@@ -155,16 +155,12 @@ public class ShiftableWord {
         Document document       = editor.getDocument();
         CharSequence editorText = document.getCharsSequence();
         String filename         = UtilsEnvironment.getDocumentFilename(document);
+        String fileExtension    = UtilsFile.extractFileExtension(filename, true);
 
-        String word;
         boolean isOperator = false;
-
-        String fileExtension = UtilsFile.extractFileExtension(filename, true);
-        // @todo make hyphen-inclusion configurable in dictionary per file type
-        boolean isCSS = fileExtension != null && fileExtension.endsWith("css");
-
-        word = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
+        String word        = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
         if (word == null) {
+            boolean isCSS = fileExtension != null && fileExtension.endsWith("css");
             word = UtilsTextual.getWordAtOffset(editorText, caretOffset, isCSS);
         } else {
             isOperator = true;
@@ -173,7 +169,6 @@ public class ShiftableWord {
         boolean isWordShifted = false;
         if (word != null && !word.isEmpty()) {
             isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
-
             if (!isWordShifted) {
                 // Shifting failed, try shifting lower-cased string
                 String wordLower = word.toLowerCase();
@@ -207,8 +202,6 @@ public class ShiftableWord {
         CharSequence editorText = document.getCharsSequence();
         int caretOffset         = editor.getCaretModel().getOffset();
 
-        boolean wasWordShifted = false;
-
         if (wordOffset == null) {
             // Extract offset of word at caret
             wordOffset = isOperator
@@ -228,7 +221,6 @@ public class ShiftableWord {
         }
 
         String newWord = shiftableWord.getShifted(shiftUp, editor);
-
         if (newWord != null && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && wordOffset != null) {
             newWord = shiftableWord.postProcess(newWord, postfixChar);
 
@@ -236,9 +228,9 @@ public class ShiftableWord {
                 // Replace word at caret by shifted one (if any)
                 document.replaceString(wordOffset, wordOffset + word.length(), newWord);
             }
-            wasWordShifted = true;
+            return newWord;
         }
 
-        return wasWordShifted ? newWord : word;
+        return word;
     }
 }

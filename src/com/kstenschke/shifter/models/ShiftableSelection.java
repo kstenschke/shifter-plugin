@@ -69,7 +69,6 @@ public class ShiftableSelection {
 
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftingTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
-        boolean isSizzleSelector     = !isPhpVariable && !isJsVarsDeclarations && wordType == ShiftingTypesManager.TYPE_SIZZLE_SELECTOR;
 
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 1 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines alphabetical
@@ -80,7 +79,8 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, JsVariablesDeclarations.getShifted(selectedText));
             return;
         }
-        if (isSizzleSelector) {
+
+        if (!isPhpVariable && wordType == ShiftingTypesManager.TYPE_SIZZLE_SELECTOR) {
             document.replaceString(offsetStart, offsetEnd, SizzleSelector.getShifted(selectedText));
             return;
         }
@@ -125,7 +125,6 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
                 return;
             }
-
             if (UtilsTextual.containsAnyQuotes(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                 return;

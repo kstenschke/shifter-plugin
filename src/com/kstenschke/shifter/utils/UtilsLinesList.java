@@ -33,7 +33,6 @@ public class UtilsLinesList {
             line = line.trim();
 
             boolean isLastLine = index + 1 == amountLines;
-
             if ((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {
                 line = line + delimiter;
             }
