@@ -17,8 +17,10 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftertypes.PhpDocParam;
 import com.kstenschke.shifter.models.shiftertypes.StringHtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
+import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -57,6 +59,14 @@ public class ShiftableLine {
      * @return String       Next upper/lower word
      */
     private String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
+        if (UtilsFile.isPhpFile(this.filename) && PhpDocParam.isPhpDocParamLine(this.line) && !PhpDocParam.containsDataType(this.line) && PhpDocParam.containsVariableName(this.line)) {
+            // Caret-line is a PHP doc @param w/o data type: guess and insert one by the variable name
+            String shiftedLine = PhpDocParam.getShifted(this.line);
+            if (!shiftedLine.equals(line)) {
+                return shiftedLine;
+            }
+        }
+
         String[] words = this.line.trim().split("\\s+");
 
         // Check all words for shiftable types - shiftable if there's not more than one

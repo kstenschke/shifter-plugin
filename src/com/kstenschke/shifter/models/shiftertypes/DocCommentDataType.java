@@ -34,7 +34,7 @@ class DocCommentDataType {
     public DocCommentDataType() {
         typesJavaScript = new String[]{ "array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined" };
         typesJava       = new String[]{ "boolean", "byte", "char", "double", "float", "int", "long", "short", "string" };
-        typesPHP        = new String[]{ "array", "boolean", "float", "integer", "null", "object", "resource", "string" };
+        typesPHP        = new String[]{ "array", "bool", "float", "int", "null", "object", "resource", "string" };
         typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
     }
 

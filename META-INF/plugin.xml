@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.5.0</version>
+    <version>1.5.1</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -48,6 +48,7 @@
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
+        <li>Shifting while caret is inside a PHP doc comment @param line that contains no data type, guesses and inserts a data type by the variable name</li>
         <li>Selection which is a Sizzle-Selector - Converts the selector into a responding JavaScript variable declaration</li>
         <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
         <li>Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code</li>
@@ -87,6 +88,12 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.5.1
+            <ul>
+                <li>Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, guesses and inserts a data type by the variable name</li>
+                <li>Improved: Plugin settings UI</li>
+            </ul>
+        </li>
         <li>1.5.0
             <ul>
                 <li>Added: Toggle among selected single / multi-line comment types</li>
@@ -112,7 +119,6 @@
                 <li>Added: Updated feature list w/ several prior not mentioned shifting types</li>
             </ul>
         </li>
-        <li>1.4.1 Bugfix: Remove duplicates when sorting lines was removing first item</li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

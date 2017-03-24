@@ -54,10 +54,11 @@ public class ShiftingTypesManager {
     private static final int TYPE_DOC_COMMENT_DATATYPE          = 51;
 
     public static final int  TYPE_PHP_VARIABLE                  = 60;
-    public static final int  TYPE_JS_VARIABLES_DECLARATIONS     = 61;
-    public static final int  TYPE_SIZZLE_SELECTOR               = 62;
+    public static final int  TYPE_PHP_DOC_PARAM_LINE            = 61;
+    public static final int  TYPE_JS_VARIABLES_DECLARATIONS     = 62;
+    public static final int  TYPE_SIZZLE_SELECTOR               = 63;
     // @see trailing comment shifting is implemented in ActionsPerformer.shiftSelection()
-    public static final int  TYPE_TRAILING_COMMENT              = 63;
+    public static final int  TYPE_TRAILING_COMMENT              = 64;
 
     private static final int TYPE_TERNARY_EXPRESSION            = 70;
     private static final int TYPE_WORDS_TUPEL                   = 71;
@@ -96,6 +97,11 @@ public class ShiftingTypesManager {
             return TYPE_TRAILING_COMMENT;
         }
 
+        if (PhpDocParam.isPhpDocParamLine(line) && !PhpDocParam.containsDataType(line)) {
+//            return TYPE_PHP_DOC_PARAM_LINE;
+            // PHP doc param line is handled in line-shifting fallback
+            return TYPE_UNKNOWN;
+        }
         // PHP variable (must be prefixed w/ "$")
         this.typePhpVariable = new com.kstenschke.shifter.models.shiftertypes.PhpVariable();
         if (this.typePhpVariable.isPhpVariable(word)) {
