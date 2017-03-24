@@ -55,7 +55,7 @@ public class PhpDocParam {
      * @return String
      */
     private static String extractVariableName(String str) {
-        return trim(str.replace("* @param", ""));
+        return trim(str.replace("* @param", "")).split(" ")[0];
     }
 
     /**
@@ -65,57 +65,28 @@ public class PhpDocParam {
      * @return string
      */
     public static String getShifted(String line) {
-        String variableName = extractVariableName(line).toLowerCase();
+        String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
 
-        if (   variableName.equals("delimiter")
-            || variableName.equals("needle")
-            || variableName.equals("substring")
-            || variableName.equals("glue")) {
-            return insertDataTypeIntoParamLine(line, "string");
-        }
-
-        if (variableName.endsWith("id")) {
-            return insertDataTypeIntoParamLine(line, "int");
-        }
-
-        if (   variableName.startsWith("amount")
-            || variableName.startsWith("index")
-            || variableName.startsWith("offset")
-            || variableName.startsWith("position")) {
-            return insertDataTypeIntoParamLine(line, "int");
-        }
-
-        if (   variableName.startsWith("is")
-            || variableName.startsWith("convert")
-            || variableName.startsWith("make")) {
+        if (variableName.matches("(return\\w*|is\\w+)")) {
             return insertDataTypeIntoParamLine(line, "bool");
         }
-
-        if (   variableName.endsWith("arr")
-            || variableName.endsWith("list")
-            || variableName.endsWith("s")) {
+        if (variableName.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
             return insertDataTypeIntoParamLine(line, "array");
         }
-
-        if (   variableName.startsWith("path")
-            || variableName.startsWith("filename")
-            || variableName.endsWith("message")) {
+        if (variableName.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
             return insertDataTypeIntoParamLine(line, "string");
         }
-
-        if (  variableName.endsWith("obj")
-            || variableName.endsWith("model")
-            || variableName.endsWith("object")) {
+        if (variableName.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*steps|\\w*start|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|max|min|mode|month|multiplier|now|num|offset|op(eration)*|red|time(stamp)*|week|wid(th)*|x|y)\\d*")) {
+            return insertDataTypeIntoParamLine(line, "int");
+        }
+        if (variableName.matches("(\\w*gamma|percent)\\d*")) {
+            return insertDataTypeIntoParamLine(line, "float");
+        }
+        if (variableName.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
             return insertDataTypeIntoParamLine(line, "Object");
         }
-
-        if (   variableName.endsWith("config")
-            || variableName.startsWith("arr")) {
+        if (variableName.matches("(\\w*s)\\d*")) {
             return insertDataTypeIntoParamLine(line, "array");
-        }
-
-        if (variableName.startsWith("key") || variableName.startsWith("key")) {
-            return insertDataTypeIntoParamLine(line, "string");
         }
 
         return insertDataTypeIntoParamLine(line, "unknown");
