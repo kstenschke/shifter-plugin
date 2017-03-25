@@ -67,17 +67,17 @@ public class PhpDocParam {
     public static String getShifted(String line) {
         String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
 
-        if (variableName.matches("(return\\w*|is\\w+)")) {
-            return insertDataTypeIntoParamLine(line, "bool");
+        if (variableName.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
+            return insertDataTypeIntoParamLine(line, "string");
         }
         if (variableName.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
             return insertDataTypeIntoParamLine(line, "array");
         }
-        if (variableName.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
-            return insertDataTypeIntoParamLine(line, "string");
-        }
         if (variableName.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*steps|\\w*start|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|max|min|mode|month|multiplier|now|num|offset|op(eration)*|red|time(stamp)*|week|wid(th)*|x|y)\\d*")) {
             return insertDataTypeIntoParamLine(line, "int");
+        }
+        if (variableName.matches("(return\\w*|is\\w+|has\\w+)")) {
+            return insertDataTypeIntoParamLine(line, "bool");
         }
         if (variableName.matches("(\\w*gamma|percent)\\d*")) {
             return insertDataTypeIntoParamLine(line, "float");
@@ -85,7 +85,7 @@ public class PhpDocParam {
         if (variableName.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
             return insertDataTypeIntoParamLine(line, "Object");
         }
-        if (variableName.matches("(\\w*s)\\d*")) {
+        if (variableName.matches("(\\w*s)\\d*|\\w*data|data\\w*")) {
             return insertDataTypeIntoParamLine(line, "array");
         }
 
