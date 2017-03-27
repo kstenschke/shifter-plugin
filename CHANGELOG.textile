@@ -2,7 +2,7 @@ h1. Shifter Plugin - Changelog
 
 * 1.5.1
     ** Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data type
-    ** Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, guesses and inserts a data type by the variable name
+    ** Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)
     ** Improved: Plugin settings UI
 * 1.5.0
     ** Added: Toggle among selected single / multi-line comment types
