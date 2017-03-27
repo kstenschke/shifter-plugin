@@ -49,6 +49,14 @@ public class ShiftableSelection {
         if (selectedText == null || selectedText.trim().isEmpty()) {
             return;
         }
+        if (PhpDocComment.isPhpDocComment(selectedText) && PhpDocComment.containsAtParam(selectedText)) {
+            String shifted = PhpDocComment.getShifted(selectedText);
+            if (!shifted.equals(selectedText)) {
+                // PHP doc comment block: guess missing data types by resp. variable names
+                document.replaceString(offsetStart, offsetEnd, shifted);
+                return;
+            }
+        }
         if (Comment.isComment(selectedText)) {
             // Must be before multi-line sort to allow multi-line comment shifting
             document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText));
