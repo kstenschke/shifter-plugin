@@ -49,8 +49,6 @@ public class ShifterConfiguration {
      * Constructor
      */
     public ShifterConfiguration() {
-        textAreaDictionaryTerms.setTabSize(2);
-
         refreshFormValues();
         initFormListeners();
     }
