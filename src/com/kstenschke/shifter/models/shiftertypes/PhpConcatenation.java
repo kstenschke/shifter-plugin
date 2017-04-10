@@ -34,9 +34,9 @@ public class PhpConcatenation {
      * Constructor
      */
     public PhpConcatenation(String str) {
-        String strJoined = UtilsTextual.removeLineBreaks( str.trim());
+        String strJoined = UtilsTextual.removeLineBreaks(str.trim());
 
-        if (strJoined.length() > 4) {
+        if (strJoined.length() > 4 && strJoined.contains(".")) {
             this.extractParts(strJoined);
             if (this.partLHS != null && this.partRHS != null) {
                 this.isPhpConcatenation = true;
@@ -65,7 +65,7 @@ public class PhpConcatenation {
      * @param  str
      */
     private void extractParts(String str) {
-        String strTrimmed        = str.trim();
+        String strTrimmed = str.trim();
         Integer strLen    = strTrimmed.length();
 
         if (strLen > 4) {

@@ -107,9 +107,15 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
                 return;
             }
-            if (filename.toLowerCase().endsWith("phtml") && HtmlComment.isHtmlComment(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, HtmlComment.getShifted(selectedText));
-                return;
+            if (filename.toLowerCase().endsWith("phtml")) {
+                if (Comment.isHtmlComment(selectedText)) {
+                    document.replaceString(offsetStart, offsetEnd, Comment.getPhpBlockCommentFromHtmlComment(selectedText));
+                    return;
+                }
+                if (Comment.isPhpBlockComment(selectedText)) {
+                    document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename));
+                    return;
+                }
             }
         }
 

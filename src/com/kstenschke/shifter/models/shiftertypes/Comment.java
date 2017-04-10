@@ -1,4 +1,3 @@
-
 /*
  * Copyright 2011-2017 Kay Stenschke
  *
@@ -16,6 +15,13 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+/**
+ * Included comment types:
+ *
+ * 1. Single-line comment => // ...
+ * 2. Block comment       => /* ... *\/
+ * 3. HTML comment        => <!-- ... -->
+ */
 public class Comment {
 
     /**
@@ -38,6 +44,12 @@ public class Comment {
         str = str.trim();
 
         return str.startsWith("<?php /*") && str.endsWith("*/ ?>");
+    }
+
+    public static  boolean isHtmlComment(String str) {
+        str = str.trim();
+
+        return str.startsWith("<!--") && str.endsWith("-->");
     }
 
     /**
@@ -64,4 +76,12 @@ public class Comment {
         return "//" + str;
     }
 
+
+    /**
+     * @param str
+     * @return
+     */
+    public static String getPhpBlockCommentFromHtmlComment(String str) {
+        return "<?php /* " + str.substring(4, str.length() - 3).trim() + " */ ?>";
+    }
 }

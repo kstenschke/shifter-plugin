@@ -91,7 +91,7 @@
     <ul>
         <li>1.5.1
             <ul>
-                <li>Added: Shifting a selected HTML comment inside a PHTML file, converts it into a PHP block comment</li>
+                <li>Added: Shifting a selected HTML comment inside a PHTML file, converts it into a PHP block comment (and vice versa)</li>
                 <li>Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
                 <li>Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))</li>
                 <li>Improved: Plugin settings UI</li>

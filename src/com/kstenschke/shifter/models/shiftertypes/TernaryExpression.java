@@ -33,6 +33,7 @@ public class TernaryExpression {
         return (expression.startsWith("?") || "?".equals(prefixChar)
                 && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
                 && expression.length() >= 3
+                && expression.indexOf("?") < expression.indexOf(":")
         );
     }
 
