@@ -34,7 +34,8 @@
 	|__dir__|__file__|__namespace__|__class__|__line__|__function__|__method__|__trait__|
 	|foreach|endforeach|
 	|if|else|endif|
-    |self|static|
+	|self|static|
+	|Y|N|
 }
 (|m|) {
 	|int|char|float|double|id|BOOL|long|short|signed|unsigned|
