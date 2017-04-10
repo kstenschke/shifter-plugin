@@ -25,15 +25,32 @@ public class Comment {
     public static boolean isComment(String str) {
         str = str.trim();
 
-        return str.startsWith("//")
-                || (str.startsWith("/*") && str.endsWith("*/"));
+        return str.startsWith("//") || isBlockComment(str);
+    }
+
+    public static boolean isBlockComment(String str) {
+        str = str.trim();
+
+        return str.startsWith("/*") && str.endsWith("*/");
+    }
+
+    public static boolean isPhpBlockComment(String str) {
+        str = str.trim();
+
+        return str.startsWith("<?php /*") && str.endsWith("*/ ?>");
     }
 
     /**
      * @param  str
      * @return String
      */
-    public static String getShifted(String str) {
+    public static String getShifted(String str, String filename) {
+        if (filename != null && filename.toLowerCase().endsWith(".phtml") && isPhpBlockComment(str)) {
+            // PHP Block-comment inside PHTML: convert to HTML comment
+            return "<!-- " + str.substring(8, str.length() - 5).trim() + " -->";
+        }
+
+        // Non-PHTML comment shifting: toggle among single-line and block-comment style
         str = str.trim();
 
         if (str.startsWith("//")) {

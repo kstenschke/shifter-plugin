@@ -74,7 +74,7 @@ public class ShiftableBlockSelection {
      * @param shiftUp
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftBlockSelection(ActionsPerformer actionsPerformer, boolean shiftUp, @Nullable Integer moreCount) {
+    public static void shiftBlockSelectionInDocument(ActionsPerformer actionsPerformer, boolean shiftUp, @Nullable Integer moreCount) {
         Editor editor                 = actionsPerformer.editor;
         Document document             = actionsPerformer.document;
         SelectionModel selectionModel = editor.getSelectionModel();

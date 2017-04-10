@@ -38,6 +38,7 @@ public class ShiftableSelection {
      */
     public static void shiftSelectionInDocument(Editor editor, Integer caretOffset, boolean isUp, @Nullable Integer moreCount) {
         Document document = editor.getDocument();
+        String filename   = UtilsEnvironment.getDocumentFilename(document);
 
         SelectionModel selectionModel = editor.getSelectionModel();
         int offsetStart = selectionModel.getSelectionStart();
@@ -59,7 +60,7 @@ public class ShiftableSelection {
         }
         if (Comment.isComment(selectedText)) {
             // Must be before multi-line sort to allow multi-line comment shifting
-            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText));
+            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename));
             return;
         }
 
@@ -72,7 +73,6 @@ public class ShiftableSelection {
 
         ShiftingTypesManager shiftingTypesManager = new ShiftingTypesManager();
 
-        String filename = UtilsEnvironment.getDocumentFilename(document);
         int wordType    = shiftingTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
 
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
@@ -105,6 +105,10 @@ public class ShiftableSelection {
             PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
             if (phpConcatenation.isPhpConcatenation()) {
                 document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+                return;
+            }
+            if (filename.toLowerCase().endsWith("phtml") && HtmlComment.isHtmlComment(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, HtmlComment.getShifted(selectedText));
                 return;
             }
         }
