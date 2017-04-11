@@ -28,6 +28,8 @@ import com.kstenschke.shifter.utils.UtilsFile;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.apache.commons.lang.StringUtils.trim;
+
 /**
  * Included comment types:
  *
@@ -129,15 +131,13 @@ public class Comment {
                         // Callback when item chosen
                         CommandProcessor.getInstance().executeCommand(project, new Runnable() {
                                     public void run() {
-                                        final int index         = modes.getSelectedIndex();
+                                        final int index = modes.getSelectedIndex();
+                                        String shifted;
 
-                                        String shifted = "";
                                         if (index == 0) {
-                                            // Merge multiple lines
-                                            shifted = "// " + str.replace("\n", " ");
+                                            shifted = shiftMultipleBlockCommentLines(str, true);
                                         } else {
-                                            // Convert to multiple single-line comments
-                                            shifted = "// " + str.replace("\n", "\n// ");
+                                            shifted = shiftMultipleBlockCommentLines(str, false);
                                         }
                                         document.replaceString(offsetStart, offsetEnd, shifted);
                                     }
@@ -147,5 +147,26 @@ public class Comment {
                 });
             }
         }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+    }
+
+    private static String shiftMultipleBlockCommentLines(String str, boolean merge) {
+        String lines[] = str.split("\n");
+        int index = 0;
+
+        String result = "";
+        for (String line : lines) {
+            line = trim(line);
+            if (line.startsWith("* ")) {
+                line = line.substring(2);
+            }
+            if (merge) {
+                result += (index == 0 ? "// " : " ") + line;
+            } else {
+                result += (index == 0 ? "" : "\n") + "// " + line;
+            }
+            index++;
+        }
+
+        return result;
     }
 }
