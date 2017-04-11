@@ -40,6 +40,10 @@ public class UtilsTextual {
         return str.equals( str.toUpperCase());
     }
 
+    public static boolean isMultiLine(String str) {
+        return str.contains("\n");
+    }
+
     /**
      * @param  lines
      * @param  shiftUp

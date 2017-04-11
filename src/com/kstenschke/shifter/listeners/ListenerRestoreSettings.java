@@ -15,7 +15,7 @@
  */
 package com.kstenschke.shifter.listeners;
 
-import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
+import com.kstenschke.shifter.resources.ui.ShifterConfiguration;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

@@ -18,7 +18,7 @@ package com.kstenschke.shifter;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.components.*;
 import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.resources.forms.ShifterConfiguration;
+import com.kstenschke.shifter.resources.ui.ShifterConfiguration;
 import org.jetbrains.annotations.NotNull;
 
 public class ShifterSettings implements ApplicationComponent {

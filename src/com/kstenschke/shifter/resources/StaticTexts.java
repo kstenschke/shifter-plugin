@@ -32,4 +32,11 @@ public class StaticTexts {
     public static final String ACTION_LABEL_SHIFT_DOWN_MORE       = "Shift-Down More";
     @NonNls
     public static final String DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS = "Shift Numeric Block Selection";
+
+    @NonNls
+    public static final String POPUP_TITLE_SHIFT = "Shifting Mode";
+    @NonNls
+    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT       = "Merge lines into one single-line comment";
+    @NonNls
+    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS = "Convert into multiple single-line comments";
 }

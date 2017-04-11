@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.kstenschke.shifter.resources.forms;
+package com.kstenschke.shifter.resources.ui;
 
 import com.kstenschke.shifter.listeners.ListenerRestoreSettings;
 import com.kstenschke.shifter.ShifterPreferences;

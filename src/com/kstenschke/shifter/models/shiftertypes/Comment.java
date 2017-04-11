@@ -15,7 +15,18 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.ui.popup.PopupChooserBuilder;
+import com.intellij.ui.components.JBList;
+import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Included comment types:
@@ -58,7 +69,7 @@ public class Comment {
      * @param  str
      * @return String
      */
-    public static String getShifted(String str, String filename) {
+    public static String getShifted(String str, String filename, Project project) {
         if (filename != null && UtilsFile.isPhpFile(filename) && isPhpBlockComment(str)) {
             // @todo    add popup to select from possible shifting types
 
@@ -75,6 +86,7 @@ public class Comment {
         }
 
         str = str.substring(2, str.length() - 2);
+        // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
         if (str.contains("\n")) {
             // Convert block- to single line comment
             // @todo    if there are multiple lines: add popup to select whether to join multiple lines
@@ -89,5 +101,51 @@ public class Comment {
      */
     public static String getPhpBlockCommentFromHtmlComment(String str) {
         return "<?php /* " + str.substring(4, str.length() - 3).trim() + " */ ?>";
+    }
+
+    /**
+     * Shift multi-lined block comment into single line comment(s)
+     * Show popup and perform selected shifting mode: join lines into 1 or convert into multiple single line comments
+     *
+     * @param str
+     * @param project
+     * @param document
+     * @param offsetStart
+     * @param offsetEnd
+     */
+    public static void shiftMultiLineBlockCommentInDocument(final String str, final Project project, final Document document, final int offsetStart, final int offsetEnd) {
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
+
+        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final JBList modes = new JBList(options);
+
+        PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        // Callback when item chosen
+                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                                    public void run() {
+                                        final int index         = modes.getSelectedIndex();
+
+                                        String shifted = "";
+                                        if (index == 0) {
+                                            // Merge multiple lines
+                                            shifted = "// " + str.replace("\n", " ");
+                                        } else {
+                                            // Convert to multiple single-line comments
+                                            shifted = "// " + str.replace("\n", "\n// ");
+                                        }
+                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                    }
+                                },
+                                null, null);
+                    }
+                });
+            }
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
     }
 }

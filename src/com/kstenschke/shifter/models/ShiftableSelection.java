@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.project.Project;
 import com.kstenschke.shifter.models.shiftertypes.*;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -39,6 +40,7 @@ public class ShiftableSelection {
     public static void shiftSelectionInDocument(Editor editor, Integer caretOffset, boolean isUp, @Nullable Integer moreCount) {
         Document document = editor.getDocument();
         String filename   = UtilsEnvironment.getDocumentFilename(document);
+        Project project   = editor.getProject();
 
         SelectionModel selectionModel = editor.getSelectionModel();
         int offsetStart = selectionModel.getSelectionStart();
@@ -59,8 +61,15 @@ public class ShiftableSelection {
             }
         }
         if (Comment.isComment(selectedText)) {
+            if (UtilsTextual.isMultiLine(selectedText)) {
+                if (Comment.isBlockComment(selectedText)) {
+                    Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
+                    return;
+                }
+            }
+
             // Must be before multi-line sort to allow multi-line comment shifting
-            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename));
+            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename, project));
             return;
         }
 
@@ -110,7 +119,7 @@ public class ShiftableSelection {
                 return;
             }
             if (Comment.isPhpBlockComment(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename));
+                document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename, project));
                 return;
             }
         }
@@ -133,7 +142,6 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, sortedList);
                 return;
             }
-
             if (UtilsTextual.containsAnyQuotes(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                 return;

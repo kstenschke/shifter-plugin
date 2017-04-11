@@ -19,7 +19,7 @@ import com.intellij.openapi.editor.*;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.actions.ActionsPerformer;
 import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.resources.forms.DialogNumericBlockOptions;
+import com.kstenschke.shifter.resources.ui.DialogNumericBlockOptions;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
