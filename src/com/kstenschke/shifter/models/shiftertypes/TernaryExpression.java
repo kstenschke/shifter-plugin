@@ -30,10 +30,11 @@ public class TernaryExpression {
     public static boolean isTernaryExpression(String str, String prefixChar) {
         String expression = str.trim();
 
-        return (expression.startsWith("?") || "?".equals(prefixChar)
-                && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
-                && expression.length() >= 3
-                && expression.indexOf("?") < expression.indexOf(":")
+        return (
+            expression.startsWith("?") || "?".equals(prefixChar)
+            && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
+            && expression.length() >= 3
+            && expression.indexOf("?") < expression.indexOf(":")
         );
     }
 

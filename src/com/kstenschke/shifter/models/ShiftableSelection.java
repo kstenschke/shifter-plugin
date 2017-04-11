@@ -72,8 +72,7 @@ public class ShiftableSelection {
         }
 
         ShiftingTypesManager shiftingTypesManager = new ShiftingTypesManager();
-
-        int wordType    = shiftingTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
+        int wordType = shiftingTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
 
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftingTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
@@ -87,7 +86,6 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, JsVariablesDeclarations.getShifted(selectedText));
             return;
         }
-
         if (!isPhpVariable && wordType == ShiftingTypesManager.TYPE_SIZZLE_SELECTOR) {
             document.replaceString(offsetStart, offsetEnd, SizzleSelector.getShifted(selectedText));
             return;
@@ -107,15 +105,13 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
                 return;
             }
-            if (filename.toLowerCase().endsWith("phtml")) {
-                if (Comment.isHtmlComment(selectedText)) {
-                    document.replaceString(offsetStart, offsetEnd, Comment.getPhpBlockCommentFromHtmlComment(selectedText));
-                    return;
-                }
-                if (Comment.isPhpBlockComment(selectedText)) {
-                    document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename));
-                    return;
-                }
+            if (Comment.isHtmlComment(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, Comment.getPhpBlockCommentFromHtmlComment(selectedText));
+                return;
+            }
+            if (Comment.isPhpBlockComment(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename));
+                return;
             }
         }
 
@@ -138,13 +134,13 @@ public class ShiftableSelection {
                 return;
             }
 
+            if (UtilsTextual.containsAnyQuotes(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                return;
+            }
             Tupel wordsTupel = new Tupel();
             if (wordsTupel.isWordsTupel(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
-                return;
-            }
-            if (UtilsTextual.containsAnyQuotes(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                 return;
             }
             if (UtilsTextual.containsAnySlashes(selectedText)) {

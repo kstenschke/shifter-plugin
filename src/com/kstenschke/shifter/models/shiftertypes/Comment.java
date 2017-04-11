@@ -15,6 +15,8 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+import com.kstenschke.shifter.utils.UtilsFile;
+
 /**
  * Included comment types:
  *
@@ -57,25 +59,29 @@ public class Comment {
      * @return String
      */
     public static String getShifted(String str, String filename) {
-        if (filename != null && filename.toLowerCase().endsWith(".phtml") && isPhpBlockComment(str)) {
-            // PHP Block-comment inside PHTML: convert to HTML comment
+        if (filename != null && UtilsFile.isPhpFile(filename) && isPhpBlockComment(str)) {
+            // @todo    add popup to select from possible shifting types
+
+            // PHP Block-comment inside PHP or PHTML: convert to HTML comment
             return "<!-- " + str.substring(8, str.length() - 5).trim() + " -->";
         }
 
-        // Non-PHTML comment shifting: toggle among single-line and block-comment style
+        // Default comment shifting: toggle among single-line and block-comment style
         str = str.trim();
 
         if (str.startsWith("//")) {
+            // Convert single line comment to block comment
             return "/*" + str.substring(2) + "*/";
         }
 
         str = str.substring(2, str.length() - 2);
         if (str.contains("\n")) {
+            // Convert block- to single line comment
+            // @todo    if there are multiple lines: add popup to select whether to join multiple lines
             str = str.replace("\n", " ");
         }
         return "//" + str;
     }
-
 
     /**
      * @param str

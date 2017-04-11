@@ -49,6 +49,7 @@
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
         <li>Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))</li>
+        <li>Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)</li>
         <li>Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
         <li>Selection which is a Sizzle-Selector - Converts the selector into a responding JavaScript variable declaration</li>
         <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
@@ -91,7 +92,7 @@
     <ul>
         <li>1.5.1
             <ul>
-                <li>Added: Shifting a selected HTML comment inside a PHTML file, converts it into a PHP block comment (and vice versa)</li>
+                <li>Added: Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)</li>
                 <li>Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
                 <li>Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))</li>
                 <li>Improved: Plugin settings UI</li>
