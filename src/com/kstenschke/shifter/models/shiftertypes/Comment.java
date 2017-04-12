@@ -73,8 +73,6 @@ public class Comment {
      */
     public static String getShifted(String str, String filename, Project project) {
         if (filename != null && UtilsFile.isPhpFile(filename) && isPhpBlockComment(str)) {
-            // @todo    add popup to select from possible shifting types
-
             // PHP Block-comment inside PHP or PHTML: convert to HTML comment
             return "<!-- " + str.substring(8, str.length() - 5).trim() + " -->";
         }
@@ -91,7 +89,6 @@ public class Comment {
         // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
         if (str.contains("\n")) {
             // Convert block- to single line comment
-            // @todo    if there are multiple lines: add popup to select whether to join multiple lines
             str = str.replace("\n", " ");
         }
         return "//" + str;
