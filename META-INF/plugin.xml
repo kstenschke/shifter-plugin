@@ -95,7 +95,9 @@
                 <li>Added: Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)</li>
                 <li>Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
                 <li>Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))</li>
+                <li>Improved: Shifting block comments into line comments now allows to merge into a single- or convert to multiple line comments</li>
                 <li>Improved: Plugin settings UI</li>
+                <li>Bugfix: Switching tupel items order was taking precedence over switching single vs. double quotes</li>
             </ul>
         </li>
         <li>1.5.0

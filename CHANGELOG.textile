@@ -4,7 +4,9 @@ h1. Shifter Plugin - Changelog
     ** Added: Shifting a selected HTML comment inside a PHTML file, converts it into a PHP block comment (and vice versa)
     ** Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data type
     ** Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)
+    ** Improved: Shifting block comments into line comments now allows to merge into a single- or convert to multiple line comments
     ** Improved: Plugin settings UI
+    ** Bugfix: Toggeling tupel items order was taking precedence over switching single vs. double quotes
 * 1.5.0
     ** Added: Toggle among selected single / multi-line comment types
     ** Added: Natural sort for lines and comma- or pipe-separated values

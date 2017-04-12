@@ -150,21 +150,38 @@ public class Comment {
     }
 
     private static String shiftMultipleBlockCommentLines(String str, boolean merge) {
+        str = trim(str).substring(2);
+
         String lines[] = str.split("\n");
         int index = 0;
 
-        String result = "";
+        String result = "//";
         for (String line : lines) {
             line = trim(line);
             if (line.startsWith("* ")) {
                 line = line.substring(2);
             }
-            if (merge) {
-                result += (index == 0 ? "// " : " ") + line;
-            } else {
-                result += (index == 0 ? "" : "\n") + "// " + line;
+            line = trim(line);
+            if (!line.isEmpty()) {
+                result += merge
+                    ? " " + line
+                    : (index == 0 ? "" : "\n") + "// " + line;
             }
             index++;
+        }
+
+        // Remove trailing "*/"
+        result = result.substring(0, result.length() - 2);
+
+        if (!merge) {
+            // Remove empty comment lines
+            result = result.replace("\n//\n", "\n");
+            if (result.startsWith("//\n")) {
+                result = result.substring(3);
+            }
+            if (result.endsWith("\n// ")) {
+                result = result.substring(0, result.length() - 4);
+            }
         }
 
         return result;
