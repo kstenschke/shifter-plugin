@@ -126,6 +126,7 @@
 	|top|right|bottom|left|
 	|trace|debug|info|warn|error|
 	|white|lightgray|gray|darkgray|black|red|pink|orange|yellow|green|magenta|cyan|blue|
+	|y|n|
 	|yesterday|today|tomorrow|
 	|zero|one|two|three|four|five|six|seven|eight|nine|ten|
 }
