@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.5.2</version>
+    <version>1.5.3</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -90,6 +90,7 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.5.3 Bugfix: Fixed null pointer exception on Ubuntu during plugin initialization. Thanks to Vojtěch Krasa</li>
         <li>1.5.2
             <ul>
                 <li>Added to multiple selected single-line comment shifting: Convert to block comment</li>
@@ -117,12 +118,6 @@
             </ul>
         </li>
         <li>1.4.4 Improved: Shift selection which is a comma-separated tupel always toggles order (instead of alphabetical sort, as w/ 3+ items)</li>
-        <li>1.4.3
-            <ul>
-                <li>Added: More word-tupel delimiters (" - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ", " && ")</li>
-                <li>Improved: Shifting of selected sizzle selector into a var declaration</li>
-            </ul>
-        </li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
