@@ -48,7 +48,7 @@
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
-        <li>Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))</li>
+        <li>Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)</li>
         <li>Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)</li>
         <li>Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
         <li>Selection which is a Sizzle-Selector - Converts the selector into a responding JavaScript variable declaration</li>
@@ -100,7 +100,7 @@
             <ul>
                 <li>Added: Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)</li>
                 <li>Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
-                <li>Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))</li>
+                <li>Added: Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)</li>
                 <li>Improved: Shifting block comments into line comments now allows to merge into a single- or convert to multiple line comments</li>
                 <li>Improved: Plugin settings UI</li>
                 <li>Bugfix: Switching tupel items order was taking precedence over switching single vs. double quotes</li>
@@ -121,14 +121,6 @@
             <ul>
                 <li>Added: More word-tupel delimiters (" - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ", " && ")</li>
                 <li>Improved: Shifting of selected sizzle selector into a var declaration</li>
-            </ul>
-        </li>
-        <li>1.4.2
-            <ul>
-                <li>Added: Shift numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration</li>
-                <li>Added: Shift Selection > Swap order of terms separated by "|" or " : "</li>
-                <li>Added: Toggle (selected) logical operators: "&&" versus "||"</li>
-                <li>Added: Updated feature list w/ several prior not mentioned shifting types</li>
             </ul>
         </li>
   </ul><br/>

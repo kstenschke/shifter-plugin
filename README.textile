@@ -34,7 +34,7 @@ Supported generic shifting types:
 * Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements
 * PHP variables - Shifts to alphabetically next/previous variable name found in current document ("shift more" shifts until first variable with a different first letter)
 * Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
-* Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type ((guessed from the variable name))
+* Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)
 * Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts
 * Selection which is a Sizzle-Selector - Converts the selector into a responding JavaScript variable declaration
 * Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations
