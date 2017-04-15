@@ -1,5 +1,9 @@
 h1. Shifter Plugin - Changelog
 
+* 1.5.2
+    ** Added to multiple selected single-line comment shifting: Convert to block comment
+    ** Added to multiple selected single-line comment shifting: Merge into one comment
+    ** Added to multiple selected single-line comment shifting: Sort comments ascending/descending
 * 1.5.1
     ** Added: Shifting a selected HTML comment inside a PHTML file, converts it into a PHP block comment (and vice versa)
     ** Added: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data type

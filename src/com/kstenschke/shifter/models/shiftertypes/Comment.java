@@ -24,8 +24,10 @@ import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
+import com.kstenschke.shifter.utils.UtilsTextual;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.apache.commons.lang.StringUtils.trim;
@@ -53,6 +55,20 @@ public class Comment {
         str = str.trim();
 
         return str.startsWith("/*") && str.endsWith("*/");
+    }
+
+    public static boolean isMultipleSingleLineComments(String str) {
+        if (!str.contains("\n")) {
+            return false;
+        }
+        String lines[] = str.split("\n");
+        for (String line : lines) {
+            line = trim(line);
+            if (!line.startsWith("//")) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean isPhpBlockComment(String str) {
@@ -129,12 +145,55 @@ public class Comment {
                         CommandProcessor.getInstance().executeCommand(project, new Runnable() {
                                     public void run() {
                                         final int index = modes.getSelectedIndex();
+                                        String shifted = index == 0
+                                            ? shiftMultipleBlockCommentLines(str, true)
+                                            : shiftMultipleBlockCommentLines(str, false);
+
+                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                    }
+                                },
+                                null, null);
+                    }
+                });
+            }
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+    }
+
+    public static void shiftMultipleSingleLineCommentsInDocument(final String str, final Project project, final Document document, final int offsetStart, final int offsetEnd) {
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_MERGE);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_SORT_ASCENDING);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_SORT_DESCENDING);
+
+        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final JBList modes = new JBList(options);
+
+        PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        // Callback when item chosen
+                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                                    public void run() {
+                                        final int index = modes.getSelectedIndex();
                                         String shifted;
 
-                                        if (index == 0) {
-                                            shifted = shiftMultipleBlockCommentLines(str, true);
-                                        } else {
-                                            shifted = shiftMultipleBlockCommentLines(str, false);
+                                        switch (index) {
+                                        case 0:
+                                            shifted = mergeMultipleLineComments(str);
+                                            break;
+                                        case 1:
+                                            shifted = convertMultipleLineCommentsToBlockComment(str);
+                                            break;
+                                        case 2:
+                                            shifted = sortLineComments(str, true);
+                                            break;
+                                        case 3:
+                                        default:
+                                            shifted = sortLineComments(str, false);
+                                            break;
                                         }
                                         document.replaceString(offsetStart, offsetEnd, shifted);
                                     }
@@ -159,6 +218,9 @@ public class Comment {
                 line = line.substring(2);
             }
             line = trim(line);
+            if (index == 0 && line.startsWith("*")) {
+                line = trim(line.substring(1));
+            }
             if (!line.isEmpty()) {
                 result += merge
                     ? " " + line
@@ -179,6 +241,43 @@ public class Comment {
             if (result.endsWith("\n// ")) {
                 result = result.substring(0, result.length() - 4);
             }
+        }
+
+        return result;
+    }
+
+    private static String convertMultipleLineCommentsToBlockComment(String str) {
+        String lines[] = str.split("\n");
+        String result = "";
+        int index = 0;
+        for (String line : lines) {
+            result += (index == 0 ? "" : "\n") + " * " + trim(trim(line).substring(2));
+            index++;
+        }
+
+        return "/**\n" + result + "\n */";
+    }
+
+    private static String mergeMultipleLineComments(String str) {
+        String lines[] = str.split("\n");
+        String result = "";
+        int index = 0;
+        for (String line : lines) {
+            result += (index == 0 ? "" : " ") + trim(trim(line).substring(2));
+            index++;
+        }
+
+        return "// " + result;
+    }
+
+    private static String sortLineComments(String str, boolean shiftUp) {
+        List<String> lines = Arrays.asList(str.split("\n"));
+        List<String> shiftedList = UtilsTextual.sortLines(lines, shiftUp);
+        String result = "";
+        int index = 0;
+        for(String line : shiftedList) {
+            result += (index == 0 ? "" : "\n") + line;
+            index++;
         }
 
         return result;

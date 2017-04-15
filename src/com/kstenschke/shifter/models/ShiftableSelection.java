@@ -66,6 +66,10 @@ public class ShiftableSelection {
                     Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
                     return;
                 }
+                if (Comment.isMultipleSingleLineComments(selectedText)) {
+                    Comment.shiftMultipleSingleLineCommentsInDocument(selectedText, project, document, offsetStart, offsetEnd);
+                    return;
+                }
             }
 
             // Must be before multi-line sort to allow multi-line comment shifting

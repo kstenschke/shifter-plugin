@@ -36,7 +36,17 @@ public class StaticTexts {
     @NonNls
     public static final String POPUP_TITLE_SHIFT = "Shifting Mode";
     @NonNls
+
     public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT       = "Merge lines into one single-line comment";
     @NonNls
     public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS = "Convert into multiple single-line comments";
+
+    @NonNls
+    public static final String SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT = "Convert to block comment";
+    @NonNls
+    public static final String SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_MERGE = "Merge into one comment";
+    @NonNls
+    public static final String SHIFT_OPTION_MULTIPLE_LINE_SORT_DESCENDING = "Sort comments alphabetically descending";
+    @NonNls
+    public static final String SHIFT_OPTION_MULTIPLE_LINE_SORT_ASCENDING = "Sort comments alphabetically ascending";
 }
