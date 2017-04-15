@@ -39,10 +39,10 @@ public class ShifterConfigurable implements Configurable {
 
     public JComponent createComponent() {
         if (settingsPanel == null) {
-            settingsPanel = ShifterSettings.getInstance().settingsPanel;
+            settingsPanel = new ShifterConfiguration();
         }
 
-        return settingsPanel != null ? settingsPanel.getRootPanel() : null;
+        return settingsPanel.getRootPanel();
     }
 
     public boolean isModified() {

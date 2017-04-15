@@ -3,7 +3,7 @@
   <grid id="27dc6" binding="rootPanel" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
     <margin top="2" left="2" bottom="2" right="2"/>
     <constraints>
-      <xy x="20" y="20" width="796" height="1136"/>
+      <xy x="20" y="20" width="796" height="444"/>
     </constraints>
     <properties>
       <preferredSize width="200" height="177"/>
@@ -25,7 +25,7 @@
             </constraints>
             <properties>
               <editable value="false"/>
-              <font swing-font="OptionPane.messageFont"/>
+              <font style="1"/>
               <foreground color="-9980418"/>
               <text value="Restore Factory Settings"/>
             </properties>
