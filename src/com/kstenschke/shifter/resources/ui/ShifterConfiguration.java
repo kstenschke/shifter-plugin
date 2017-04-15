@@ -67,6 +67,7 @@ public class ShifterConfiguration {
         KeyListener keyListenerSomethingChanged = getKeyListenerSomethingChanged();
         textAreaDictionaryTerms.addKeyListener(keyListenerSomethingChanged);
 
+        restoreSettings.setBackground(null);
         restoreSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         restoreSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder());
         ListenerRestoreSettings listenerRestoreSettings = new ListenerRestoreSettings(this);

@@ -133,10 +133,6 @@
     <depends>com.intellij.modules.lang</depends>
 
     <application-components>
-        <component>
-            <implementation-class>com.kstenschke.shifter.ShifterSettings</implementation-class>
-            <interface-class>com.kstenschke.shifter.ShifterSettings</interface-class>
-        </component>
     </application-components>
 
     <project-components/>
