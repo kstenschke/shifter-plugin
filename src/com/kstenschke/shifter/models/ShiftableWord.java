@@ -170,14 +170,15 @@ public class ShiftableWord {
             isOperator = true;
         }
 
-        boolean isWordShifted = false;
-        if (word != null && !word.isEmpty()) {
-            isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
-            if (!isWordShifted) {
-                // Shifting failed, try shifting lower-cased string
-                String wordLower = word.toLowerCase();
-                isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
-            }
+        if (word == null || word.isEmpty()) {
+            return false;
+        }
+
+        boolean isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
+        if (!isWordShifted) {
+            // Shifting failed, try shifting lower-cased string
+            String wordLower = word.toLowerCase();
+            isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, wordLower, line, null, true, false, moreCount).equals(wordLower);
         }
 
         return isWordShifted;

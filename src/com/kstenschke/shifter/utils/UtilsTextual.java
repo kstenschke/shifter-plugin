@@ -302,9 +302,9 @@ public class UtilsTextual {
     }
 
     /**
-     * @param  str        Full text
-     * @param  offset      Offset from before which to extract one character
-     * @return String      Character BEFORE word at given caret offset
+     * @param  str      Full text
+     * @param  offset   Offset from before which to extract one character
+     * @return String   Character BEFORE word at given caret offset
      */
     public static String getCharBeforeOffset(CharSequence str, int offset) {
         if (str.length() == 0 || offset == 0) {
@@ -312,7 +312,7 @@ public class UtilsTextual {
         }
 
         return offset > 0
-                ? str.subSequence(offset-1, offset).toString()
+                ? str.subSequence(offset - 1, offset).toString()
                 : "";
     }
 

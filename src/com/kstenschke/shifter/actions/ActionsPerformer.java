@@ -49,25 +49,28 @@ public class ActionsPerformer {
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     public void write(boolean shiftUp, @Nullable Integer moreCount) {
-        if (this.editor != null) {
-            if (selectionModel.hasSelection()) {
-                // Shift (regular or block-) selection
-                shiftSelection(shiftUp, moreCount);
-            } else {
-                // Try shift word at caret, fallback: try shifting line
-                int lineNumber      = document.getLineNumber(caretOffset);
-                int offsetLineStart = document.getLineStartOffset(lineNumber);
-                int offsetLineEnd   = document.getLineEndOffset(lineNumber);
+        if (this.editor == null) {
+            return;
+        }
 
-                CharSequence editorText = document.getCharsSequence();
-                String line             = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
+        if (selectionModel.hasSelection()) {
+            // Shift (regular or block-) selection
+            shiftSelection(shiftUp, moreCount);
+            return;
+        }
 
-                boolean isWordShifted = ShiftableWord.shiftWordAtCaret(editor, caretOffset, shiftUp, line, moreCount);
-                if (!isWordShifted) {
-                    // Word at caret wasn't identified/shifted, try shifting the whole line
-                    ShiftableLine.shiftLine(editor, caretOffset, shiftUp, offsetLineStart, line, moreCount);
-                }
-            }
+        // Try shift word at caret, fallback: try shifting line
+        int lineNumber      = document.getLineNumber(caretOffset);
+        int offsetLineStart = document.getLineStartOffset(lineNumber);
+        int offsetLineEnd   = document.getLineEndOffset(lineNumber);
+
+        CharSequence editorText = document.getCharsSequence();
+        String line             = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
+
+        boolean isWordShifted = ShiftableWord.shiftWordAtCaret(editor, caretOffset, shiftUp, line, moreCount);
+        if (!isWordShifted) {
+            // Word at caret wasn't identified/shifted, try shifting the whole line
+            ShiftableLine.shiftLine(editor, caretOffset, shiftUp, offsetLineStart, line, moreCount);
         }
     }
 

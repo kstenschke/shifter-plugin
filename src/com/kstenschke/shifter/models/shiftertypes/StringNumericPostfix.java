@@ -36,19 +36,29 @@ public class StringNumericPostfix {
      * @return String
      */
     public static String getShifted(String word, boolean isUp) {
-        int index;
-        int startIndex = word.length() - 1;
-        for (index = startIndex; index >= 0; index--) {
-            String curChar = word.substring(index, index + 1);
+        int indexFirstNumericChar, indexLastNumericChar;
+
+        for (indexLastNumericChar = word.length() - 1; indexLastNumericChar >= 0; indexLastNumericChar--) {
+            String curChar = word.substring(indexLastNumericChar, indexLastNumericChar + 1);
             if (curChar.matches("\\d")) {
+                // Found last numeric character
+                break;
+            }
+        }
+        indexFirstNumericChar = indexLastNumericChar;
+        for (indexFirstNumericChar = indexLastNumericChar - 1; indexFirstNumericChar >= 0; indexFirstNumericChar--) {
+            String curChar = word.substring(indexFirstNumericChar, indexFirstNumericChar + 1);
+            if (!curChar.matches("\\d")) {
+                // Found non-numeric character
+                indexFirstNumericChar += 1;
                 break;
             }
         }
 
-        String leadPart    = word.substring(0, index);
-        String numericPart = word.substring(index);
+        String leadPart    = word.substring(0, indexFirstNumericChar);
+        String numericPart = word.substring(indexFirstNumericChar, indexLastNumericChar + 1);
 
-        int shiftedNumber = isUp ? Integer.parseInt(numericPart) + 1 : Integer.parseInt(numericPart) - 1;
+        int shiftedNumber = Integer.parseInt(numericPart) + (isUp ? 1 : -1);
 
         return leadPart + shiftedNumber;
     }

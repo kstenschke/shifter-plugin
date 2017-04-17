@@ -92,7 +92,8 @@
     <ul>
         <li>1.5.4
             <ul>
-                <li>Improved tupel detection (both items must be non empty)</li>
+                <li>Improved: Tupel detection (both items must be non empty)</li>
+                <li>Bugfix: Numeric postfix shifting ("a99" was shifted into "a910" instead of "a100")</li>
             </ul>
         </li>
         <li>1.5.3 Bugfix: Fixed null pointer exception on Ubuntu during plugin initialization. Thanks to Vojtěch Krasa</li>
