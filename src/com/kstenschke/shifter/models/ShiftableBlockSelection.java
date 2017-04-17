@@ -85,33 +85,49 @@ public class ShiftableBlockSelection {
         String editorText = document.getText();
 
         if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, editorText)) {
-            // Block selection of numeric values: ask whether to 1. replace by enumeration or 2. in/decrement each
-            Integer firstNumber = Integer.valueOf(editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString());
-            if (null == firstNumber) {
-                firstNumber = 0;
-            }
-            DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
-            UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
-            if (!optionsDialog.wasCancelled()) {
-                if (optionsDialog.isShiftModeEnumerate()) {
-                    insertBlockEnumeration(editor, document, optionsDialog.getFirstNumber());
-                } else {
-                    inOrDecrementNumericBlock(editor, document, editorText, shiftUp);
-                }
-            }
+            shiftNumericalBlockSelectionInDocument(shiftUp, editor, document, Integer.valueOf(editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()), editorText);
         } else if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, editorText)) {
-            String filename = UtilsEnvironment.getDocumentFilename(document);
+            shiftIdenticalBlockItemsInDocument(shiftUp, moreCount, editor, document, blockSelectionStarts, blockSelectionEnds, editorText);
+        }
+    }
 
-            String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
-            String line = UtilsTextual.extractLine(document, document.getLineNumber(blockSelectionStarts[0])).trim();
+    public static void shiftIdenticalBlockItemsInDocument(boolean shiftUp, @Nullable Integer moreCount, Editor editor, Document document, int[] blockSelectionStarts, int[] blockSelectionEnds, String editorText) {
+        String filename = UtilsEnvironment.getDocumentFilename(document);
 
-            Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, blockSelectionStarts[0]);
-            String newWord     = ShiftableWord.getShiftedWordInDocument(editor, shiftUp, filename, word, line, wordOffset, false, false, moreCount);
+        String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
+        String line = UtilsTextual.extractLine(document, document.getLineNumber(blockSelectionStarts[0])).trim();
 
-            if (newWord != null && !newWord.equals(word)) {
-                for (int i = blockSelectionEnds.length - 1; i >= 0; i--) {
-                    document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], newWord);
-                }
+        Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, blockSelectionStarts[0]);
+        String newWord     = ShiftableWord.getShiftedWordInDocument(editor, shiftUp, filename, word, line, wordOffset, false, false, moreCount);
+
+        if (newWord != null && !newWord.equals(word)) {
+            for (int i = blockSelectionEnds.length - 1; i >= 0; i--) {
+                document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], newWord);
+            }
+        }
+    }
+
+    /**
+     * Ask whether to 1. replace by enumeration or 2. in/decrement each
+     *
+     * @param shiftUp
+     * @param editor
+     * @param document
+     * @param integer
+     * @param editorText
+     */
+    public static void shiftNumericalBlockSelectionInDocument(boolean shiftUp, Editor editor, Document document, Integer integer, String editorText) {
+        Integer firstNumber = integer;
+        if (null == firstNumber) {
+            firstNumber = 0;
+        }
+        DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
+        UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
+        if (!optionsDialog.wasCancelled()) {
+            if (optionsDialog.isShiftModeEnumerate()) {
+                insertBlockEnumerationInDocument(editor, document, optionsDialog.getFirstNumber());
+            } else {
+                inOrDecrementNumericBlockInDocument(editor, document, editorText, shiftUp);
             }
         }
     }
@@ -123,7 +139,7 @@ public class ShiftableBlockSelection {
      * @param document
      * @param firstNumber
      */
-    private static void insertBlockEnumeration(Editor editor, Document document, String firstNumber) {
+    private static void insertBlockEnumerationInDocument(Editor editor, Document document, String firstNumber) {
         Integer currentValue = Integer.valueOf(firstNumber);
         if (null == currentValue) {
             currentValue = 0;
@@ -160,7 +176,7 @@ public class ShiftableBlockSelection {
      * @param editorText
      * @param shiftUp
      */
-    private static void inOrDecrementNumericBlock(Editor editor, Document document, String editorText, boolean shiftUp) {
+    private static void inOrDecrementNumericBlockInDocument(Editor editor, Document document, String editorText, boolean shiftUp) {
         int addend = shiftUp ? 1 : -1;
         Integer value;
 
@@ -184,7 +200,7 @@ public class ShiftableBlockSelection {
                 try {
                     value = Integer.valueOf(editorText.subSequence(offsetSelectionStart, offsetSelectionEnd).toString());
                 } catch (NumberFormatException e) {
-                    // silently continue
+                    // Silently continue
                 }
                 if (null == value) {
                     value = 0;
