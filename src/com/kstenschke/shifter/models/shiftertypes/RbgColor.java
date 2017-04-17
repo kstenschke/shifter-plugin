@@ -91,6 +91,7 @@ public class RbgColor {
      * @param rgbStr String representing an RGB color
      * @return Color object
      */
+    @SuppressWarnings("UseJBColor")
     private static Color getColorFromRgbString(String rgbStr) {
         int red   = Integer.parseInt(rgbStr.substring(0, 2), 16);
         int green = Integer.parseInt(rgbStr.substring(2, 4), 16);
@@ -166,6 +167,7 @@ public class RbgColor {
      * @param  amount
      * @return Color
      */
+    @SuppressWarnings("UseJBColor")
     private static Color addToRGB(Color color, int amount) {
         float amountF = (float) amount;
 
