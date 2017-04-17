@@ -122,5 +122,4 @@ public class CssUnit {
 
         return UtilsMap.getSumOfValues(map) == 0 ? "px" : UtilsMap.getKeyOfHighestValue(map);
     }
-
 }

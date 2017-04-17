@@ -87,5 +87,4 @@ class DocCommentDataType {
         // Default, e.g. PHP
         return this.typesPHP;
     }
-
 }

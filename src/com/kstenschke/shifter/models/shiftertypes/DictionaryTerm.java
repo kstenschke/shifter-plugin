@@ -204,5 +204,4 @@ public class DictionaryTerm {
 
         return word;
     }
-
 }

@@ -79,5 +79,4 @@ public class JsVariablesDeclarations {
 
         return "var " + shiftedLines.substring(0, shiftedLines.length()-2) + ";";
     }
-
 }

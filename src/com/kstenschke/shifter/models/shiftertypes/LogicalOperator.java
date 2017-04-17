@@ -33,5 +33,4 @@ public class LogicalOperator {
     public static String getShifted(String word) {
         return word.equals("&&") ? "||" : "&&";
     }
-
 }

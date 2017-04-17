@@ -162,5 +162,4 @@ public class DocCommentTag {
 
         return this.tagsPHP;
     }
-
 }

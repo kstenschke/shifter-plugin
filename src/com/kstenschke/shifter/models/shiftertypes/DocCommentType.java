@@ -59,5 +59,4 @@ public class DocCommentType {
     public String getShifted(String word, boolean isUp, String filename) {
         return new DocCommentDataType().getShifted(word, filename, isUp);
     }
-
 }

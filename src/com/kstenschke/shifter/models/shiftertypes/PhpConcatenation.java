@@ -201,5 +201,4 @@ public class PhpConcatenation {
 
         return concatenation.trim();
     }
-
 }

@@ -122,5 +122,4 @@ public class NumericValue {
         value--;
         return value == -1 ? maxValue - 1 : value;
     }
-
 }
