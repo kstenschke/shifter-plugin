@@ -32,7 +32,7 @@ public class UtilsArray {
      * @param needle   String to be looked for
      * @return int        Found position or -1
      */
-    public static int findPositionInArray(String[] haystack, String needle) {
+    public static int getOffset(String[] haystack, String needle) {
         for (int i = 0; i < haystack.length; i++) {
             if (haystack[i].equals(needle)) {
                 return i;

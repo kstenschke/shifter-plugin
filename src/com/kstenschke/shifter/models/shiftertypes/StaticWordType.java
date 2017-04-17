@@ -30,9 +30,9 @@ public class StaticWordType {
      * Constructor
      */
     public StaticWordType(String[] keywords) {
-        this.keywords        = keywords;
+        this.keywords       = keywords;
         this.amountKeywords = keywords.length;
-        this.regExPattern = UtilsArray.implode(this.keywords, "|");
+        this.regExPattern   = UtilsArray.implode(this.keywords, "|");
     }
 
     /**
@@ -51,27 +51,29 @@ public class StaticWordType {
      * @return String   Shifting result
      */
     public String getShifted(String word, boolean isUp) {
-        int wordPositionOriginal = UtilsArray.findPositionInArray(this.keywords, word);
-
-        if (wordPositionOriginal == -1) {
+        int wordOffset = UtilsArray.getOffset(this.keywords, word);
+        if (wordOffset == -1) {
             return word;
         }
 
-        int wordPositionShifted;
-        if (isUp) {
-            // Shifting up
-            wordPositionShifted = wordPositionOriginal + 1;
-            if (wordPositionShifted >= this.amountKeywords) {
-                wordPositionShifted = 0;
-            }
-        } else {
-            // Shifting down
-            wordPositionShifted = wordPositionOriginal - 1;
-            if (wordPositionShifted < 0) {
-                wordPositionShifted = this.amountKeywords - 1;
-            }
+        return isUp ? getShiftedUp(wordOffset) : getShiftedDown(wordOffset);
+    }
+
+    private String getShiftedUp(int wordOffset) {
+        wordOffset++;
+        if (wordOffset >= this.amountKeywords) {
+            wordOffset = 0;
         }
 
-        return this.keywords[wordPositionShifted];
+        return this.keywords[wordOffset];
+    }
+
+    private String getShiftedDown(int wordOffset) {
+        wordOffset -= 1;
+        if (wordOffset < 0) {
+            wordOffset = this.amountKeywords - 1;
+        }
+
+        return this.keywords[wordOffset];
     }
 }
