@@ -16,16 +16,12 @@
 
 package com.kstenschke.shifter.resources.ui;
 
-import com.kstenschke.shifter.listeners.ListenerRestoreSettings;
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.listeners.ListenerRestoreSettings;
 import com.kstenschke.shifter.utils.UtilsFile;
-import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.InputStream;
 
 public class ShifterConfiguration {
@@ -43,8 +39,6 @@ public class ShifterConfiguration {
     private JTextField restoreSettings;
     private JTextPane thisDictionaryConfiguresShiftableTextPane;
 
-    private Boolean hasSomethingChanged = false;
-
     /**
      * Constructor
      */
@@ -54,19 +48,6 @@ public class ShifterConfiguration {
     }
 
     private void initFormListeners() {
-        ChangeListener somethingChangedListener = new ChangeListener() {
-            @Override
-            public void stateChanged(ChangeEvent e) {
-                hasSomethingChanged = true;
-            }
-        };
-
-        radioButtonShiftInSeconds.addChangeListener(somethingChangedListener);
-        radioButtonShiftInMilliseconds.addChangeListener(somethingChangedListener);
-
-        KeyListener keyListenerSomethingChanged = getKeyListenerSomethingChanged();
-        textAreaDictionaryTerms.addKeyListener(keyListenerSomethingChanged);
-
         restoreSettings.setBackground(null);
         restoreSettings.setCursor(new Cursor(Cursor.HAND_CURSOR));
         restoreSettings.setBorder(javax.swing.BorderFactory.createEmptyBorder());
@@ -74,25 +55,6 @@ public class ShifterConfiguration {
         restoreSettings.addMouseListener(listenerRestoreSettings);
     }
 
-    @NotNull
-    private KeyListener getKeyListenerSomethingChanged() {
-        return new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent keyEvent) {
-                hasSomethingChanged = true;
-            }
-
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-
-            }
-
-            @Override
-            public void keyReleased(KeyEvent keyEvent) {
-
-            }
-        };
-    }
 
     /**
      * Refresh settings and dictionary content from stored preference or factory default
@@ -164,12 +126,12 @@ public class ShifterConfiguration {
      * @return boolean
      */
     public boolean isModified() {
-        return    this.hasSomethingChanged
-               || Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
+        return   
+             Integer.parseInt( this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
                || ! this.textAreaDictionaryTerms.getText().equals( ShifterPreferences.getTermsDictionary())
-               || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected()
+               || ! ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected())
                || ! ShifterPreferences.getShiftingModeOfTimestamps().equals( this.getSelectedShiftingModeOfTimestamps())
-        );
+        ;
     }
 
     /**
@@ -189,8 +151,6 @@ public class ShifterConfiguration {
         if (dictionary != null) {
             ShifterPreferences.saveDictionary(dictionary);
         }
-
-        this.hasSomethingChanged = false;
     }
 
 }
