@@ -75,8 +75,12 @@ public class ShiftableWord {
         this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
 
         // Comprehend negative values of numeric types
-        this.word = ((this.wordType == ShiftingTypesManager.TYPE_CSS_UNIT || this.wordType == ShiftingTypesManager.TYPE_NUMERIC_VALUE)
-                && "-".equals(prefixChar)) ? "-" + word : word;
+        this.word = (
+                (this.wordType == ShiftingTypesManager.TYPE_CSS_UNIT || this.wordType == ShiftingTypesManager.TYPE_NUMERIC_VALUE)
+                && "-".equals(prefixChar)
+        )
+            ? "-" + word
+            : word;
 
         // Can the word be shifted?
         this.isShiftable = this.wordType != ShiftingTypesManager.TYPE_UNKNOWN;

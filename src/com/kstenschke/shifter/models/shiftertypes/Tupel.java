@@ -51,7 +51,8 @@ public class Tupel {
         };
 
         for (String glue : glues) {
-            if (str.split("\\s*" + Pattern.quote(glue) + "\\s*").length == 2) {
+            String parts[] = str.split("\\s*" + Pattern.quote(glue) + "\\s*");
+            if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
                 this.delimiter = glue;
                 return true;
             }

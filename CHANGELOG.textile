@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.5.4
+    ** Improved tupel detection (both items must be non empty)
 * 1.5.3
     ** Bugfix: Fixed null pointer exception on Ubuntu during plugin initialization. Thanks to Vojtěch Krasa
 * 1.5.2
