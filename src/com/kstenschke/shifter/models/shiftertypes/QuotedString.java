@@ -66,5 +66,4 @@ public class QuotedString {
 
         return allMatches.get(curIndex);
     }
-
 }

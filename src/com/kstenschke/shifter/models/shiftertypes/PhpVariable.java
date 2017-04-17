@@ -153,5 +153,4 @@ public class PhpVariable {
             ? UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]")
             : UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
     }
-
 }

@@ -45,7 +45,6 @@ public class StringNumericPostfix {
                 break;
             }
         }
-        indexFirstNumericChar = indexLastNumericChar;
         for (indexFirstNumericChar = indexLastNumericChar - 1; indexFirstNumericChar >= 0; indexFirstNumericChar--) {
             String curChar = word.substring(indexFirstNumericChar, indexFirstNumericChar + 1);
             if (!curChar.matches("\\d")) {

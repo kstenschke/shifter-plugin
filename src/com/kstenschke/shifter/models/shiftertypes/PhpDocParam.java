@@ -76,7 +76,7 @@ public class PhpDocParam {
         if (variableName.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*steps|\\w*start|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|max|min|mode|month|multiplier|now|num|offset|op(eration)*|red|time(stamp)*|week|wid(th)*|x|y)\\d*")) {
             return insertDataTypeIntoParamLine(line, "int");
         }
-        if (variableName.matches("(return\\w*|is\\w+|has\\w+)")) {
+        if (variableName.matches("(has\\w+|is\\w+|return\\w*|should\\w*)")) {
             return insertDataTypeIntoParamLine(line, "bool");
         }
         if (variableName.matches("(\\w*gamma|percent)\\d*")) {
@@ -85,7 +85,7 @@ public class PhpDocParam {
         if (variableName.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
             return insertDataTypeIntoParamLine(line, "Object");
         }
-        if (variableName.matches("(\\w*s)\\d*|\\w*data|data\\w*")) {
+        if (variableName.matches("(\\w*s)\\d*|\\w*arr(ay)*|\\w*items|\\w*data|data\\w*")) {
             return insertDataTypeIntoParamLine(line, "array");
         }
 

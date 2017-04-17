@@ -92,6 +92,7 @@
     <ul>
         <li>1.5.4
             <ul>
+                <li>Improved: PHP DOC comment data type detection</li>
                 <li>Improved: Tupel detection (both items must be non empty)</li>
                 <li>Bugfix: Numeric postfix shifting ("a99" was shifted into "a910" instead of "a100")</li>
             </ul>
