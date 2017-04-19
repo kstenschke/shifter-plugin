@@ -40,6 +40,7 @@ public class ShiftingTypesManager {
     // Generic types
     public static final int  TYPE_QUOTED_STRING                 = 20;
     private static final int TYPE_HTML_ENCODABLE_STRING         = 21;
+    private static final int TYPE_CAMEL_CASE_STRING             = 22;
 
     // <, >, +, -
     private static final int TYPE_OPERATOR_SIGN                 = 30;

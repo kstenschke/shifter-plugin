@@ -163,6 +163,12 @@ public class UtilsTextual {
         return str.isEmpty() ? "" : Character.toLowerCase(str.charAt(0)) + str.substring(1);
     }
 
+    public static boolean isLcFirst(String str) {
+        Character leadChar = str.charAt(0);
+
+        return Character.toLowerCase(leadChar) == leadChar;
+    }
+
     /**
      * Check whether given string is lower case w/ only first char in upper case
      *
@@ -173,8 +179,31 @@ public class UtilsTextual {
         return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
     }
 
-    public static boolean isCamelCase(String str) {
-        return str.matches("/\\b([A-Z][a-z]*){2,}\\b/");
+    public static boolean isUpperCamelCase(String str) {
+        return str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+    }
+
+    public static boolean isLowerCamelCase(String str) {
+        return str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+    }
+
+    /**
+     * @param str   CamelCased string w/ lower or upper lead character
+     * @return String[]
+     */
+    @NotNull
+    public static String[] splitCamelCaseIntoWords(String str) {
+        boolean isUcFirst = isUcFirst(str);
+        if (isUcFirst) {
+            str = UtilsTextual.toLcFirst(str);
+        }
+        String parts[] = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+
+        if (isUcFirst) {
+            parts[0] = toUcFirst(parts[0]);
+        }
+
+        return parts;
     }
 
     /**

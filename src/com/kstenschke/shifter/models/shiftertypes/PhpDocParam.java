@@ -67,6 +67,9 @@ public class PhpDocParam {
     public static String getShifted(String line) {
         String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
 
+        if (variableName.matches("\\w*name|\\w*title|\\w*url")) {
+            return insertDataTypeIntoParamLine(line, "string");
+        }
         if (variableName.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
             return insertDataTypeIntoParamLine(line, "string");
         }

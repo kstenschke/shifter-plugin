@@ -150,6 +150,11 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                 return;
             }
+            if (StringCamelCase.isCamelCase(selectedText) && StringCamelCase.isWordPair(selectedText)) {
+                document.replaceString(offsetStart, offsetEnd, StringCamelCase.flipWordPairOrder(selectedText));
+                return;
+            }
+
             Tupel wordsTupel = new Tupel();
             if (wordsTupel.isWordsTupel(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
@@ -178,7 +183,7 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, shiftedWord.toUpperCase());
             return;
         }
-        if (UtilsTextual.isCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
+        if (UtilsTextual.isUpperCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
             document.replaceString(offsetStart, offsetEnd, UtilsTextual.toUcFirst(shiftedWord));
             return;
         }
