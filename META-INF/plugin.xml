@@ -38,8 +38,9 @@
     Supported generic shifting types:
     <ul>
         <li>Shifting a multi-line selection sorts the lines alphabetically ascending/descending.</li>
+        <li>Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.</li>
         <li>Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.</li>
-        <li>Shifting a single-line selection, that is a tupel, toggles the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")</li>
+        <li>Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")</li>
         <li>Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash</li>
         <li>Numeric values - Increments/decrements numbers by 1</li>
         <li>Numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration</li>

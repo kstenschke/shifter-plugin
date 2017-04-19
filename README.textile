@@ -24,8 +24,9 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 Supported generic shifting types:
 
 * Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
+* Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words
 * Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending. Shifting a selection of two words, separated by a space character, flips the order of those words.
-* Shifting a single-line selection, that is a tupel, toggles the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
+* Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
 * Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash
 * Shifting a selection that contains two terms, separated by " " or "|" or " : ", swaps the order of the terms
 * Numeric values and roman numerals - Increments/decrements numbers by 1
