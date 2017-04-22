@@ -107,6 +107,7 @@
 	|mon|tue|wed|thu|fri|sat|sun|
 	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
 	|negative|positive|
+	|new|old|
 	|no|yes|
 	|north|east|south|west|
 	|off|on|
