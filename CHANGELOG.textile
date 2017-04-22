@@ -1,8 +1,8 @@
 h1. Shifter Plugin - Changelog
 
 * 1.5.5
-    ** Added: popup to select mode when selection is both: sortable list, swappable quote signs
-    ** Added: popup to select mode when selection is both: PHP concatenation (order can be toggled), swappable quote signs
+    ** Added: mode selection popup when selection is both: sortable list, swappable quote signs
+    ** Added: mode selection popup when selection is both: PHP concatenation (order can be toggled), swappable quote signs
 * 1.5.4
     ** Added: Flip order of selected camelCase (w/ lower or upper lead character) string that is a word pair
     ** Improved: PHP DOC comment data type detection
