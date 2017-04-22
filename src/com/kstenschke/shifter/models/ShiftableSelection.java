@@ -119,10 +119,13 @@ public class ShiftableSelection {
             document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
             return;
         }
+
+        boolean containsQuotes = UtilsTextual.containsAnyQuotes(selectedText);
+
         if (!isPhpVariable && UtilsFile.isPhpFile(filename)) {
             PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
             if (phpConcatenation.isPhpConcatenation()) {
-                document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+                shiftPhpConcatenationOrSwapQuotesInDocument(containsQuotes, project, document, offsetStart, offsetEnd, selectedText, phpConcatenation);
                 return;
             }
             if (Comment.isHtmlComment(selectedText)) {
@@ -141,7 +144,6 @@ public class ShiftableSelection {
         }
 
         if (!isPhpVariable) {
-            boolean containsQuotes = UtilsTextual.containsAnyQuotes(selectedText);
             if (SeparatedList.isSeparatedList(selectedText,",")) {
                 // Comma-separated list
                 sortListOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, ",(\\s)*", ", ", isUp);
@@ -198,49 +200,93 @@ public class ShiftableSelection {
         document.replaceString(offsetStart, offsetEnd, shiftedWord);
     }
 
+    public static void shiftPhpConcatenationOrSwapQuotesInDocument(boolean containsQuotes, final Project project, final Document document, final int offsetStart, final int offsetEnd, final String selectedText, final PhpConcatenation phpConcatenation) {
+        if (!containsQuotes) {
+            document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+            return;
+        }
+
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
+
+        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final JBList modes = new JBList(options);
+        PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        // Callback when item chosen
+                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                                    public void run() {
+                                        final int index = modes.getSelectedIndex();
+                                        String shifted;
+
+                                        switch (index) {
+                                            case 0:
+                                                shifted = phpConcatenation.getShifted();
+                                                break;
+                                            case 1:
+                                            default:
+                                                shifted = UtilsTextual.swapQuotes(selectedText);
+                                                break;
+                                        }
+                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                    }
+                                },
+                                null, null);
+                    }
+                });
+            }
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+    }
+
     public static void sortListOrSwapQuotesInDocument(
             boolean containsQuotes,
             final int offsetStart, final int offsetEnd, final String selectedText,
             final Project project, final Document document,
             final String delimiterSplitPattern, final String delimiterGlue,
             final boolean isUp) {
-        boolean swapQuotes = false;
-        if (containsQuotes) {
-
-            List<String> shiftOptions = new ArrayList<String>();
-            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
-            shiftOptions.add(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
-
-            final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
-            final JBList modes = new JBList(options);
-            PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
-            popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
-                public void run() {
-                    ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                        public void run() {
-                            // Callback when item chosen
-                            CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-                                        public void run() {
-                                            final int index = modes.getSelectedIndex();
-                                            String shifted;
-
-                                            switch (index) {
-                                                case 0:
-                                                    shifted = UtilsTextual.swapQuotes(selectedText);
-                                                    break;
-                                                case 1:
-                                                default:
-                                                    shifted = SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp);
-                                            }
-                                            document.replaceString(offsetStart, offsetEnd, shifted);
-                                        }
-                                    },
-                                    null, null);
-                        }
-                    });
-                }
-            }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+        if (!containsQuotes) {
+            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            return;
         }
+
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
+
+        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final JBList modes = new JBList(options);
+        PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        // Callback when item chosen
+                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                                    public void run() {
+                                        final int index = modes.getSelectedIndex();
+                                        String shifted;
+
+                                        switch (index) {
+                                            case 0:
+                                                shifted = SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp);
+                                                break;
+                                            case 1:
+                                            default:
+                                                shifted = UtilsTextual.swapQuotes(selectedText);
+
+                                        }
+                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                    }
+                                },
+                                null, null);
+                    }
+                });
+            }
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
     }
 
     /**

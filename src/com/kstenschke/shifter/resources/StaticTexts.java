@@ -54,4 +54,6 @@ public class StaticTexts {
     public static final String SHIFT_OPTION_LIST_ITEMS_SORT = "Sort list items alphabetical";
     @NonNls
     public static final String SHIFT_OPTION_QUOTES_SWAP = "Swap single and double quotes";
+    @NonNls
+    public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap concatenation items order";
 }

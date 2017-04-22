@@ -94,6 +94,7 @@
         <li>1.5.5
             <ul>
                 <li>Added: mode selector popup when selection is both: sortable list, swappable quote signs</li>
+                <li>Added: popup to select mode when selection is both: PHP concatenation (order can be toggled), swappable quote signs</li>
             </ul>
         <li>1.5.4
             <ul>
