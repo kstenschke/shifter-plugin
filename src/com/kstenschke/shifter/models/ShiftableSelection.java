@@ -15,17 +15,24 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.popup.JBPopupFactory;
+import com.intellij.openapi.ui.popup.PopupChooserBuilder;
+import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.models.shiftertypes.*;
+import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
+import java.util.ArrayList;
 import java.util.List;
 
 // Shiftable (non-block) selection
@@ -134,22 +141,22 @@ public class ShiftableSelection {
         }
 
         if (!isPhpVariable) {
+            boolean containsQuotes = UtilsTextual.containsAnyQuotes(selectedText);
             if (SeparatedList.isSeparatedList(selectedText,",")) {
                 // Comma-separated list
-                String sortedList = SeparatedList.sortSeparatedList(selectedText, ",(\\s)*", ", ", isUp);
-                document.replaceString(offsetStart, offsetEnd, sortedList);
+                sortListOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, ",(\\s)*", ", ", isUp);
                 return;
             }
             if (SeparatedList.isSeparatedList(selectedText,"|")) {
                 // Pipe-separated list
-                String sortedList = SeparatedList.sortSeparatedList(selectedText, "\\|(\\s)*", "|", isUp);
-                document.replaceString(offsetStart, offsetEnd, sortedList);
+                sortListOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, "\\|(\\s)*", "|", isUp);
                 return;
             }
-            if (UtilsTextual.containsAnyQuotes(selectedText)) {
+            if (containsQuotes) {
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
                 return;
             }
+
             if (StringCamelCase.isCamelCase(selectedText) && StringCamelCase.isWordPair(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, StringCamelCase.flipWordPairOrder(selectedText));
                 return;
@@ -189,6 +196,51 @@ public class ShiftableSelection {
         }
 
         document.replaceString(offsetStart, offsetEnd, shiftedWord);
+    }
+
+    public static void sortListOrSwapQuotesInDocument(
+            boolean containsQuotes,
+            final int offsetStart, final int offsetEnd, final String selectedText,
+            final Project project, final Document document,
+            final String delimiterSplitPattern, final String delimiterGlue,
+            final boolean isUp) {
+        boolean swapQuotes = false;
+        if (containsQuotes) {
+
+            List<String> shiftOptions = new ArrayList<String>();
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
+
+            final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+            final JBList modes = new JBList(options);
+            PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+            popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
+                public void run() {
+                    ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                        public void run() {
+                            // Callback when item chosen
+                            CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                                        public void run() {
+                                            final int index = modes.getSelectedIndex();
+                                            String shifted;
+
+                                            switch (index) {
+                                                case 0:
+                                                    shifted = UtilsTextual.swapQuotes(selectedText);
+                                                    break;
+                                                case 1:
+                                                default:
+                                                    shifted = SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp);
+                                            }
+                                            document.replaceString(offsetStart, offsetEnd, shifted);
+                                        }
+                                    },
+                                    null, null);
+                        }
+                    });
+                }
+            }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+        }
     }
 
     /**
