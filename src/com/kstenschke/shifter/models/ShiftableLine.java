@@ -112,7 +112,7 @@ public class ShiftableLine {
      * @param line
      * @param moreCount       Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftLine(Editor editor, Integer caretOffset, boolean shiftUp, int offsetLineStart, String line, @Nullable Integer moreCount) {
+    public static void shiftLineInDocument(Editor editor, Integer caretOffset, boolean shiftUp, int offsetLineStart, String line, @Nullable Integer moreCount) {
         Document document = editor.getDocument();
 
         ShiftableLine shiftableLine = new ShiftableLine(document, line, caretOffset);
