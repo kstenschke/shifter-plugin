@@ -63,8 +63,7 @@ public class Comment {
         }
         String lines[] = str.split("\n");
         for (String line : lines) {
-            line = trim(line);
-            if (!line.startsWith("//")) {
+            if (!trim(line).startsWith("//")) {
                 return false;
             }
         }
@@ -102,12 +101,12 @@ public class Comment {
         }
 
         str = str.substring(2, str.length() - 2);
+
         // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
-        if (str.contains("\n")) {
-            // Convert block- to single line comment
-            str = str.replace("\n", " ");
-        }
-        return "//" + str;
+        return "//" + (str.contains("\n")
+                // Convert block- to single line comment
+                ? str.replace("\n", " ")
+                : str);
     }
 
     /**
@@ -181,19 +180,19 @@ public class Comment {
                                         String shifted;
 
                                         switch (index) {
-                                        case 0:
-                                            shifted = mergeMultipleLineComments(str);
-                                            break;
-                                        case 1:
-                                            shifted = convertMultipleLineCommentsToBlockComment(str);
-                                            break;
-                                        case 2:
-                                            shifted = sortLineComments(str, true);
-                                            break;
-                                        case 3:
-                                        default:
-                                            shifted = sortLineComments(str, false);
-                                            break;
+                                            case 0:
+                                                shifted = mergeMultipleLineComments(str);
+                                                break;
+                                            case 1:
+                                                shifted = convertMultipleLineCommentsToBlockComment(str);
+                                                break;
+                                            case 2:
+                                                shifted = sortLineComments(str, true);
+                                                break;
+                                            case 3:
+                                            default:
+                                                shifted = sortLineComments(str, false);
+                                                break;
                                         }
                                         document.replaceString(offsetStart, offsetEnd, shifted);
                                     }
@@ -248,7 +247,7 @@ public class Comment {
 
     private static String convertMultipleLineCommentsToBlockComment(String str) {
         String lines[] = str.split("\n");
-        String result = "";
+        String result  = "";
         int index = 0;
         for (String line : lines) {
             result += (index == 0 ? "" : "\n") + " * " + trim(trim(line).substring(2));
@@ -260,7 +259,7 @@ public class Comment {
 
     private static String mergeMultipleLineComments(String str) {
         String lines[] = str.split("\n");
-        String result = "";
+        String result  = "";
         int index = 0;
         for (String line : lines) {
             result += (index == 0 ? "" : " ") + trim(trim(line).substring(2));
@@ -271,7 +270,7 @@ public class Comment {
     }
 
     private static String sortLineComments(String str, boolean shiftUp) {
-        List<String> lines = Arrays.asList(str.split("\n"));
+        List<String> lines       = Arrays.asList(str.split("\n"));
         List<String> shiftedList = UtilsTextual.sortLines(lines, shiftUp);
         String result = "";
         int index = 0;
