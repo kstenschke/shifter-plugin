@@ -23,15 +23,20 @@ public class StaticTexts {
     public static final String SETTINGS_COMPONENT_NAME = "Shifter Settings";
 
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_DOWN            = "Shift-Down";
+    public static final String ACTION_LABEL_SHIFT_DOWN      = "Shift-Down";
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_UP              = "Shift-Up";
+    public static final String ACTION_LABEL_SHIFT_UP        = "Shift-Up";
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_UP_MORE         = "Shift-Up More";
+    public static final String ACTION_LABEL_SHIFT_UP_MORE   = "Shift-Up More";
     @NonNls
-    public static final String ACTION_LABEL_SHIFT_DOWN_MORE       = "Shift-Down More";
+    public static final String ACTION_LABEL_SHIFT_DOWN_MORE = "Shift-Down More";
     @NonNls
-    public static final String DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS = "Shift Numeric Block Selection";
+    public static final String TITLE_NUMERIC_BLOCK_OPTIONS  = "Shift Numeric Block Selection";
+
+    @NonNls
+    public static final String TITLE_REDUCE_DUPLICATE_LINES = "Reduce duplicate lines?";
+    @NonNls
+    public static final String MESSAGE_REDUCE_DUPLICATE_LINES = "Duplicated lines detected. Reduce to single occurrences?";
 
     @NonNls
     public static final String POPUP_TITLE_SHIFT = "Shifting Mode";

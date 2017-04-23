@@ -122,7 +122,7 @@ public class ShiftableBlockSelection {
             firstNumber = 0;
         }
         DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
-        UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.DIALOG_TITLE_NUMERIC_BLOCK_OPTIONS);
+        UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
         if (!optionsDialog.wasCancelled()) {
             if (optionsDialog.isShiftModeEnumerate()) {
                 insertBlockEnumerationInDocument(editor, document, optionsDialog.getFirstNumber());

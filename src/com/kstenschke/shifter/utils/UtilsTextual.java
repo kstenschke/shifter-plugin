@@ -58,9 +58,10 @@ public class UtilsTextual {
             Collections.reverse(lines);
         }
 
-        if (delimiterDetector.isFoundDelimiter()) {
-            // Maintain detected lines delimiter
-            lines = UtilsLinesList.addDelimiter(lines, delimiterDetector.getCommonDelimiter(), delimiterDetector.isDelimitedLastLine());
+        boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
+        if (delimiterDetector.isFoundDelimiter() && !isDelimitedLastLine) {
+            // Maintain detected lines delimiter (ex: comma-separated values, w/ last item w/o trailing comma)
+            lines = UtilsLinesList.addDelimiter(lines, delimiterDetector.getCommonDelimiter(), isDelimitedLastLine);
         }
 
         return lines;

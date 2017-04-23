@@ -97,6 +97,7 @@
                 <li>Added: Add missing curly brackets around data type at caret in jsDoc @param line</li>
                 <li>Added: Mode selection popup when selection is both: sortable list, swappable quote signs</li>
                 <li>Added: Mode selection popup when selection is both: PHP concatenation (order can be toggled), swappable quote signs</li>
+                <li>Sorting a selection of lines w/ common delimiter no longer removes leading whitespace</li>
             </ul>
         <li>1.5.4
             <ul>

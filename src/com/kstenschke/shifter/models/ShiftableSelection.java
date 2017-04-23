@@ -297,15 +297,15 @@ public class ShiftableSelection {
      * @param lineNumberSelEnd
      */
     private static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd) {
-        List<String> lines = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
+        List<String> lines       = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
         List<String> linesSorted = UtilsTextual.sortLines(lines, shiftUp);
 
         String linesString = UtilsTextual.joinLines(linesSorted).toString();
 
         if (UtilsTextual.hasDuplicateLines(linesString) && JOptionPane.showConfirmDialog(
                     null,
-                    "Duplicated lines detected. Reduce to single occurrences?",
-                    "Reduce duplicate lines?",
+                    StaticTexts.MESSAGE_REDUCE_DUPLICATE_LINES,
+                StaticTexts.TITLE_REDUCE_DUPLICATE_LINES,
                     JOptionPane.OK_CANCEL_OPTION
             ) == JOptionPane.OK_OPTION)
         {

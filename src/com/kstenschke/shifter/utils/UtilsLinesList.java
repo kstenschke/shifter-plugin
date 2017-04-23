@@ -38,7 +38,7 @@ public class UtilsLinesList {
             }
 
             if (isLastLine && !isDelimitedLastLine && line.endsWith(delimiter)) {
-                // Optional: remove delimiter from last line
+                // Remove delimiter from last line
                 line = line.substring(0, line.length() - 1);
             }
 
