@@ -99,10 +99,12 @@ public class ShiftableWord {
             return this.word;
         }
 
-        // Call actual shifting
-        String shiftedWord = shifterTypesManager.getShiftedWord(this.word, this.wordType, isUp, this.editorText, this.caretOffset, this.moreCount, filename, editor);
+        String shiftedWord = shifterTypesManager.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
 
-        // Keep original word casing
+        return this.word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
+    }
+
+    private String maintainCasingOnShiftedWord(String shiftedWord) {
         if (    this.wordType != ShiftingTypesManager.TYPE_PHP_VARIABLE
              && this.wordType != ShiftingTypesManager.TYPE_QUOTED_STRING
              && ShifterPreferences.getIsActivePreserveCase()
@@ -112,6 +114,9 @@ public class ShiftableWord {
             }
             if (UtilsTextual.isUcFirst(this.word)) {
                 return UtilsTextual.toUcFirst(shiftedWord);
+            }
+            if (UtilsTextual.isLcFirst(this.word)) {
+                return UtilsTextual.toLcFirst(shiftedWord);
             }
         }
 
