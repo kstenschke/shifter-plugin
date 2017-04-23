@@ -358,21 +358,43 @@ public class UtilsTextual {
         return offset > 0 ? str.subSequence(offset+1, offset+2).toString() : "";
     }
 
+    public static int getEndOfWordAtOffset(CharSequence str, int offset) {
+        int strLength = str.length();
+        if (strLength == 0 || offset < 0) {
+            return 0;
+        }
+        if (offset > strLength) {
+            return strLength;
+        }
+        while(offset < strLength) {
+            if (!Character.isJavaIdentifierPart(str.charAt(offset))) {
+                return offset;
+            }
+            offset++;
+        }
+
+        return strLength;
+    }
+
     /**
      * @param  str         Text to be analyzed
      * @param  offset      Character offset in text, intersecting the word dealing w/
      * @return int         Starting position offset of word at given offset in given CharSequence
      */
     public static int getStartOfWordAtOffset(CharSequence str, int offset) {
-        if (str.length() == 0) {
+        int strLength = str.length();
+        if (strLength == 0 || offset < 0) {
             return 0;
+        }
+        if (offset > strLength) {
+            return strLength;
         }
 
         if (offset > 0 && !Character.isJavaIdentifierPart(str.charAt(offset)) && Character.isJavaIdentifierPart(str.charAt(offset - 1))) {
             offset--;
         }
 
-        if (! Character.isJavaIdentifierPart(str.charAt(offset))) {
+        if (!Character.isJavaIdentifierPart(str.charAt(offset))) {
             return 0;
         }
 

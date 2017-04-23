@@ -82,12 +82,12 @@ public class ShiftableBlockSelection {
         int[] blockSelectionStarts = selectionModel.getBlockSelectionStarts();
         int[]blockSelectionEnds   = selectionModel.getBlockSelectionEnds();
 
-        String editorText = document.getText();
+        String documentText = document.getText();
 
-        if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, editorText)) {
-            shiftNumericalBlockSelectionInDocument(shiftUp, editor, document, Integer.valueOf(editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()), editorText);
-        } else if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, editorText)) {
-            shiftIdenticalBlockItemsInDocument(shiftUp, moreCount, editor, document, blockSelectionStarts, blockSelectionEnds, editorText);
+        if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, documentText)) {
+            shiftNumericalBlockSelectionInDocument(shiftUp, editor, document, Integer.valueOf(documentText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()), documentText);
+        } else if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, documentText)) {
+            shiftIdenticalBlockItemsInDocument(shiftUp, moreCount, editor, document, blockSelectionStarts, blockSelectionEnds, documentText);
         }
     }
 

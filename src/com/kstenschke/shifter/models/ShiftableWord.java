@@ -19,6 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
+import com.kstenschke.shifter.models.shiftertypes.JsDocParam;
 import com.kstenschke.shifter.models.shiftertypes.NumericValue;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -172,6 +173,11 @@ public class ShiftableWord {
 
         if (word == null || word.isEmpty()) {
             return false;
+        }
+
+        if (JsDocParam.isJsDocParamLine(line) && !JsDocParam.containsCompounds(line) && JsDocParam.isJsDocParamDataType(word)) {
+            // Add missing curly brackets around data type at caret in jsDoc @param line
+            return JsDocParam.addCompoundsAroundDataTypeAtCaretInDocument(word, document, caretOffset);
         }
 
         boolean isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);

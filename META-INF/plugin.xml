@@ -52,6 +52,7 @@
         <li>Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)</li>
         <li>Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)</li>
         <li>Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
+        <li>Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside a jsDoc @param- adds the missing curly brackets</li>
         <li>Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration</li>
         <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
         <li>Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code</li>
@@ -93,8 +94,9 @@
     <ul>
         <li>1.5.5
             <ul>
-                <li>Added: mode selection popup when selection is both: sortable list, swappable quote signs</li>
-                <li>Added: mode selection popup when selection is both: PHP concatenation (order can be toggled), swappable quote signs</li>
+                <li>Added: Add missing curly brackets around data type at caret in jsDoc @param line</li>
+                <li>Added: Mode selection popup when selection is both: sortable list, swappable quote signs</li>
+                <li>Added: Mode selection popup when selection is both: PHP concatenation (order can be toggled), swappable quote signs</li>
             </ul>
         <li>1.5.4
             <ul>

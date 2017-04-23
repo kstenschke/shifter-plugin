@@ -18,7 +18,7 @@ package com.kstenschke.shifter.models.shiftertypes;
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
- * PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
+ * PHP DOC @param comment
  */
 public class PhpDocParam {
 
