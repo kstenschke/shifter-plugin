@@ -66,7 +66,7 @@
     </ul>
     <h4>Code- and DOC Comments</h4>
     <ul>
-        <li>Selection which is a single or multi-line comment (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.</li>
+        <li>Selection which is a block comment or multiple line-comments (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.</li>
         <li>Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code</li>
         <li>Selected HTML comment inside a PHP / PHTML: converts it into a PHP block comment (and vice versa)</li>
         <li>PHP DOC: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types</li>
