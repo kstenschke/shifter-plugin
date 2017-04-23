@@ -77,8 +77,8 @@
     <ul>
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
-        <li>Selection which is a Sizzle-Selector - Converts the selector into a corresponding variable declaration</li>
-        <li>Selection of multiple var declarations in succession - are joined into multiple comma-separated declarations</li>
+        <li>Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration</li>
+        <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
     </ul>
 
     <h3>Dictionaric keyword shifting<h3>

@@ -58,8 +58,8 @@ h4. Code- and DOC Comments
 h4. PHP and JavaScript
 * PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)
 * Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
-* Selection which is a Sizzle-Selector - Converts the selector into a corresponding variable declaration
-* Selection of multiple var declarations in succession - are joined into multiple comma-separated declarations
+* Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration
+* Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations
 
 
 h3. Dictionaric keyword shifting
