@@ -21,7 +21,7 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 *Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 
 
-h3. Supported generic shifting types
+h3. Shifting Types
 
 h4. Sorting
 * Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
@@ -61,8 +61,7 @@ h4. PHP and JavaScript
 * Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration
 * Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations
 
-
-h3. Dictionaric keyword shifting
+h4. Dictionaric Keyword Shifting
 
 Shifter comes with a customizable, file extension specific and globally usable, dictionary of shiftable keywords.
 Some keyword types from the default dictionary:
