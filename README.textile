@@ -21,36 +21,50 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 *Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 
 
-Supported generic shifting types:
+h3. Supported generic shifting types
 
+h4. Sorting
 * Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
-* Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words
-* Shifting a single-line selection, that is a comma separated list, sorts the items ascending/descending. Shifting a selection of two words, separated by a space character, flips the order of those words.
+* Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.
 * Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
-* Shifting a selection within a single line (that is not CSV), detects and swaps characters: single quote vs. double quote OR slash vs. backslash
-* Shifting a selection that contains two terms, separated by " " or "|" or " : ", swaps the order of the terms
-* Numeric values and roman numerals - Increments/decrements numbers by 1
-* Numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration
-* UNIX (and millisecond based)  timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
+* Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
 * Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements
-* PHP variables - Shifts to alphabetically next/previous variable name found in current document ("shift more" shifts until first variable with a different first letter)
-* Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
-* Shifting while caret is inside a PHP doc comment @param line that contains no data type, inserts a data type (guessed from the variable name)
 * Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts
-* Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration
-* Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations
-* Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code
-* Shifting a selected HTML comment inside a PHP or PHTML file, converts it into a PHP block comment (and vice versa)
-* Shifting multiple selected line comments- lets you chose from: merge into one comment, convert to block comment, sort lines ascending/descending
-* Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
+
+h4. Numeric Shifting
+* Numeric values - Incrementing/decrementing numbers
+* Strings ending with numbers - increments/decrements the postfix
+* Numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration
+* UNIX (and millisecond based) timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm, rem, vw, vh, vmin, vmax)
+* Increment/decrement roman numerals
+
+h4. String Manipulations
+* Shifting a selection within a single line: detects and swaps characters: single quote vs. double quote OR slash vs. backslash
+* Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * Logical operators: toggles between (selected) "&&" and "||"
 * Encoding/decoding of HTML special characters
 * Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
-* Strings ending with numbers - increments/decrements the postfix
 
-Dictionaric keyword shifting: Shifter comes with a customizable, file extension specific and globally usable, dictionary of shiftable keywords.
+h4. Code- and DOC Comments
+* Selection which is a single or multi-line comment (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.
+* Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code
+* Selected HTML comment inside a PHP / PHTML: converts it into a PHP block comment (and vice versa)
+* PHP DOC: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types
+* PHP DOC: Shifting while the caret is inside an @param line that contains no data type, inserts a data type (guessed from the variable name)
+* JsDOC: Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside an @param- adds the missing curly brackets
+
+h4. PHP and JavaScript
+* PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)
+* Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
+* Selection which is a Sizzle-Selector - Converts the selector into a corresponding variable declaration
+* Selection of multiple var declarations in succession - are joined into multiple comma-separated declarations
+
+
+h3. Dictionaric keyword shifting
+
+Shifter comes with a customizable, file extension specific and globally usable, dictionary of shiftable keywords.
 Some keyword types from the default dictionary:
 
 * PHP core magical constants - Shifts PHP's magic constants (__FILE__/__LINE__ etc.)
