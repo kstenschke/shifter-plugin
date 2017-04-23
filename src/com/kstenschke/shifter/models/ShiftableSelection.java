@@ -67,20 +67,8 @@ public class ShiftableSelection {
                 return;
             }
         }
-        if (Comment.isComment(selectedText)) {
-            if (UtilsTextual.isMultiLine(selectedText)) {
-                if (Comment.isBlockComment(selectedText)) {
-                    Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
-                    return;
-                }
-                if (Comment.isMultipleSingleLineComments(selectedText)) {
-                    Comment.shiftMultipleSingleLineCommentsInDocument(selectedText, project, document, offsetStart, offsetEnd);
-                    return;
-                }
-            }
-
-            // Must be before multi-line sort to allow multi-line comment shifting
-            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename, project));
+        // Shift selected comment: Must be before multi-line sort to allow multi-line comment shifting
+        if (Comment.isComment(selectedText) && shiftSelectedCommentInDocument(document, filename, project, offsetStart, offsetEnd, selectedText)) {
             return;
         }
 
@@ -122,22 +110,9 @@ public class ShiftableSelection {
 
         boolean containsQuotes = UtilsTextual.containsAnyQuotes(selectedText);
 
-        if (!isPhpVariable && UtilsFile.isPhpFile(filename)) {
-            PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
-            if (phpConcatenation.isPhpConcatenation()) {
-                shiftPhpConcatenationOrSwapQuotesInDocument(containsQuotes, project, document, offsetStart, offsetEnd, selectedText, phpConcatenation);
-                return;
-            }
-            if (Comment.isHtmlComment(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, Comment.getPhpBlockCommentFromHtmlComment(selectedText));
-                return;
-            }
-            if (Comment.isPhpBlockComment(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename, project));
-                return;
-            }
+        if (!isPhpVariable && UtilsFile.isPhpFile(filename) && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes)) {
+            return;
         }
-
         if (TernaryExpression.isTernaryExpression(selectedText, "")) {
             document.replaceString(offsetStart, offsetEnd, TernaryExpression.getShifted(selectedText));
             return;
@@ -198,6 +173,39 @@ public class ShiftableSelection {
         }
 
         document.replaceString(offsetStart, offsetEnd, shiftedWord);
+    }
+
+    private static boolean shiftSelectionInPhpDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText, boolean containsQuotes) {
+        PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
+        if (phpConcatenation.isPhpConcatenation()) {
+            shiftPhpConcatenationOrSwapQuotesInDocument(containsQuotes, project, document, offsetStart, offsetEnd, selectedText, phpConcatenation);
+            return true;
+        }
+        if (Comment.isHtmlComment(selectedText)) {
+            document.replaceString(offsetStart, offsetEnd, Comment.getPhpBlockCommentFromHtmlComment(selectedText));
+            return true;
+        }
+        if (Comment.isPhpBlockComment(selectedText)) {
+            document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename, project));
+            return true;
+        }
+        return false;
+    }
+
+    private static boolean shiftSelectedCommentInDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
+        if (UtilsTextual.isMultiLine(selectedText)) {
+            if (Comment.isBlockComment(selectedText)) {
+                Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
+                return true;
+            }
+            if (Comment.isMultipleSingleLineComments(selectedText)) {
+                Comment.shiftMultipleSingleLineCommentsInDocument(selectedText, project, document, offsetStart, offsetEnd);
+                return true;
+            }
+        }
+
+        document.replaceString(offsetStart, offsetEnd, Comment.getShifted(selectedText, filename, project));
+        return true;
     }
 
     public static void shiftPhpConcatenationOrSwapQuotesInDocument(boolean containsQuotes, final Project project, final Document document, final int offsetStart, final int offsetEnd, final String selectedText, final PhpConcatenation phpConcatenation) {
