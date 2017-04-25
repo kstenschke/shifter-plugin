@@ -1,6 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.5.6
+    ** Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (event => Object, int(eger) => number)
     ** Added: Shift invalid JsDoc "@return" statement at caret into "@returns"
     ** Improved: Better case maintaining of shifted words
 * 1.5.5

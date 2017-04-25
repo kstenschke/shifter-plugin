@@ -109,6 +109,7 @@
     <ul>
         <li>1.5.6
             <ul>
+                <li>Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (event => Object, int(eger) => number)</li>
                 <li>Added: Shift invalid JsDoc "@return" statement at caret into "@returns"</li>
                 <li>Improved: Better case maintaining of shifted words</li>
             </ul>
