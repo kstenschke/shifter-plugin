@@ -601,4 +601,37 @@ public class UtilsTextual {
         }
         return allMatches;
     }
+
+    /**
+     * @param  str
+     * @return Name of primitive (PHP) data type
+     */
+    public static String guessDataTypeByName(String str) {
+        if (str.matches("\\w*name|\\w*title|\\w*url")) {
+            return "string";
+        }
+        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
+            return "string";
+        }
+        if (str.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
+            return "array";
+        }
+        if (str.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*steps|\\w*start|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|max|min|mode|month|multiplier|now|num|offset|op(eration)*|red|time(stamp)*|week|wid(th)*|x|y)\\d*")) {
+            return "int";
+        }
+        if (str.matches("(has\\w+|is\\w+|return\\w*|should\\w*)")) {
+            return "bool";
+        }
+        if (str.matches("(\\w*gamma|percent)\\d*")) {
+            return "float";
+        }
+        if (str.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
+            return "Object";
+        }
+        if (str.matches("(\\w*s)\\d*|\\w*arr(ay)*|\\w*items|\\w*data|data\\w*")) {
+            return "array";
+        }
+
+        return "unknown";
+    }
 }

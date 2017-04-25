@@ -170,25 +170,36 @@ public class JsDoc {
     }
 
     private static String correctAtParamLine(String line) {
-        if (containsDataType(line, " ", true) && !containsCompounds(line)) {
-            line = addCompoundsToDataType(line, "@param", true);
+        if (!containsCompounds(line)) {
+            if (containsDataType(line, " ", true)) {
+                line = addCompoundsToDataType(line, "@param", true);
+            }
         }
-        return correctInvalidDataTypes(line);
+
+        line = correctInvalidDataTypes(line, "{", "}");
+
+        return containsDataType(line, "{", false)
+            ? line
+            : addDataType(line);
     }
 
     private static String correctAtReturnsLine(String line) {
         if (containsDataType(line, " ", true) && !containsCompounds(line)) {
             line = addCompoundsToDataType(line, "@returns", true);
         }
-        return correctInvalidDataTypes(line);
+        line = correctInvalidDataTypes(line, "{", "}");
+
+        return containsDataType(line, "{", false)
+                ? line
+                : addDataType(line);
     }
 
-    private static String correctInvalidDataTypes(String line) {
+    private static String correctInvalidDataTypes(String line, String lhs, String rhs) {
         return line
-                .replace("{bool}", "{boolean}")
-                .replace("{event}", "{Object}")
-                .replace("{int}", "{number}")
-                .replace("{integer}", "{number}");
+                .replace(lhs + "bool" + rhs,    lhs + "boolean" + rhs)
+                .replace(lhs + "event" + rhs,   lhs + "Object" + rhs)
+                .replace(lhs + "int" + rhs,     lhs + "number" + rhs)
+                .replace(lhs + "integer" + rhs, lhs + "number" + rhs);
     }
 
     private static String reduceDoubleEmptyCommentLines(String block) {
@@ -208,5 +219,19 @@ public class JsDoc {
         }
 
         return blockCleaned;
+    }
+
+    private static String addDataType(String line) {
+        String parameterName = trim(trim(line.replaceAll("\\*", "")).replace("@param", "").replace("@returns", ""));
+
+        return parameterName.isEmpty()
+                ? line
+                : line.replace(parameterName, guessDataType(parameterName) + " " + parameterName);
+    }
+
+    private static String guessDataType(String parameterName) {
+        String dataType = UtilsTextual.guessDataTypeByName(parameterName);
+
+        return "{" + correctInvalidDataTypes(dataType, "", "") + "}";
     }
 }

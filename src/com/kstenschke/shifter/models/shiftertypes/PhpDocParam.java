@@ -15,6 +15,8 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+import com.kstenschke.shifter.utils.UtilsTextual;
+
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
@@ -67,32 +69,7 @@ public class PhpDocParam {
     public static String getShifted(String line) {
         String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
 
-        if (variableName.matches("\\w*name|\\w*title|\\w*url")) {
-            return insertDataTypeIntoParamLine(line, "string");
-        }
-        if (variableName.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
-            return insertDataTypeIntoParamLine(line, "string");
-        }
-        if (variableName.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
-            return insertDataTypeIntoParamLine(line, "array");
-        }
-        if (variableName.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*steps|\\w*start|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|max|min|mode|month|multiplier|now|num|offset|op(eration)*|red|time(stamp)*|week|wid(th)*|x|y)\\d*")) {
-            return insertDataTypeIntoParamLine(line, "int");
-        }
-        if (variableName.matches("(has\\w+|is\\w+|return\\w*|should\\w*)")) {
-            return insertDataTypeIntoParamLine(line, "bool");
-        }
-        if (variableName.matches("(\\w*gamma|percent)\\d*")) {
-            return insertDataTypeIntoParamLine(line, "float");
-        }
-        if (variableName.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
-            return insertDataTypeIntoParamLine(line, "Object");
-        }
-        if (variableName.matches("(\\w*s)\\d*|\\w*arr(ay)*|\\w*items|\\w*data|data\\w*")) {
-            return insertDataTypeIntoParamLine(line, "array");
-        }
-
-        return insertDataTypeIntoParamLine(line, "unknown");
+        return insertDataTypeIntoParamLine(line, UtilsTextual.guessDataTypeByName(variableName));
     }
 
     private static String insertDataTypeIntoParamLine(String line, String dataType) {
