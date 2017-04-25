@@ -109,6 +109,7 @@
     <ul>
         <li>1.5.6
             <ul>
+                <li>Added: Shift invalid JsDoc "@return" statement at caret into "@returns"</li>
                 <li>Improved: Better case maintaining of shifted words</li>
             </ul>
         </li>

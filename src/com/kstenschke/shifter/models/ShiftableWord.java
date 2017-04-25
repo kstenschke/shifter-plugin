@@ -19,7 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftertypes.CssUnit;
-import com.kstenschke.shifter.models.shiftertypes.JsDocParam;
+import com.kstenschke.shifter.models.shiftertypes.JsDoc;
 import com.kstenschke.shifter.models.shiftertypes.NumericValue;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -180,9 +180,8 @@ public class ShiftableWord {
             return false;
         }
 
-        if (JsDocParam.isJsDocParamLine(line) && !JsDocParam.containsCompounds(line) && JsDocParam.isJsDocParamDataType(word)) {
-            // Add missing curly brackets around data type at caret in jsDoc @param line
-            return JsDocParam.addCompoundsAroundDataTypeAtCaretInDocument(word, document, caretOffset);
+        if (fileExtension.endsWith("js") && shiftWordAtCaretInJsDocument(document, caretOffset, line, word)) {
+            return true;
         }
 
         boolean isWordShifted = !getShiftedWordInDocument(editor, shiftUp, filename, word, line, null, true, isOperator, moreCount).equals(word);
@@ -193,6 +192,19 @@ public class ShiftableWord {
         }
 
         return isWordShifted;
+    }
+
+    @Nullable
+    private static Boolean shiftWordAtCaretInJsDocument(Document document, int caretOffset, String line, String word) {
+        if (JsDoc.isJsDocParamLine(line) && !JsDoc.containsCompounds(line) && JsDoc.isJsDocParamDataType(word)) {
+            // Add missing curly brackets around data type at caret in jsDoc @param line
+            return JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(word, document, caretOffset);
+        }
+        if (JsDoc.isInvalidJsDocReturnLine(line)) {
+            return JsDoc.correctInvalidReturnsCommentInDocument(document, caretOffset);
+        }
+
+        return false;
     }
 
     /**

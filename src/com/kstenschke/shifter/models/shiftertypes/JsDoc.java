@@ -16,14 +16,13 @@
 package com.kstenschke.shifter.models.shiftertypes;
 
 import com.intellij.openapi.editor.Document;
-import com.kstenschke.shifter.utils.UtilsTextual;
-
+import com.kstenschke.shifter.utils.UtilsEnvironment;
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
  * JavaScript DOC @param comment
  */
-public class JsDocParam {
+public class JsDoc {
 
     /**
      * Check whether given string represents a JsDoc @param comment
@@ -35,6 +34,12 @@ public class JsDocParam {
         str = trim(str);
 
         return str.startsWith("*") && str.contains("@param");
+    }
+
+    public static Boolean isInvalidJsDocReturnLine(String str) {
+        str = trim(str);
+
+        return str.startsWith("*") && str.contains("@return") && !str.contains("@returns");
     }
 
     public static Boolean isJsDocParamDataType(String str) {
@@ -64,12 +69,10 @@ public class JsDocParam {
      * @return boolean
      */
     public static boolean addCompoundsAroundDataTypeAtCaretInDocument(String word, Document document, int caretOffset) {
-        String documentText = document.getText();
-        int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, caretOffset);
-        int offsetEnd   = UtilsTextual.getEndOfWordAtOffset(documentText, caretOffset);
+        return UtilsEnvironment.replaceWordAtCaretInDocument(document, caretOffset, "{" + word + "}");
+    }
 
-        document.replaceString(offsetStart, offsetEnd, "{" + word + "}");
-
-        return true;
+    public static boolean correctInvalidReturnsCommentInDocument(Document document, int caretOffset) {
+        return UtilsEnvironment.replaceWordAtCaretInDocument(document, caretOffset, "returns");
     }
 }

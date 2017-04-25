@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.utils;
 
+import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -29,6 +30,16 @@ public class UtilsEnvironment {
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
 
         return file == null ? "" : file.getName();
+    }
+
+    public static boolean replaceWordAtCaretInDocument(Document document, int caretOffset, String charSequence) {
+        String documentText = document.getText();
+        int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, caretOffset);
+        int offsetEnd = UtilsTextual.getEndOfWordAtOffset(documentText, caretOffset);
+
+        document.replaceString(offsetStart, offsetEnd, charSequence);
+
+        return true;
     }
 
     /**

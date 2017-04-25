@@ -1,5 +1,8 @@
 h1. Shifter Plugin - Changelog
 
+* 1.5.6
+    ** Added: Shift invalid JsDoc "@return" statement at caret into "@returns"
+    ** Improved: Better case maintaining of shifted words
 * 1.5.5
     ** Added: Add missing curly brackets around data type at caret in jsDoc @param line
     ** Added: Mode selection popup when selection is both: sortable list, swappable quote signs
