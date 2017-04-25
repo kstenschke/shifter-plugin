@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Ternary Expression
+ * Tupel (two items w/ delimiter in between)
  */
 public class Tupel {
 
