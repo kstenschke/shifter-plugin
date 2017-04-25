@@ -22,6 +22,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.awt.RelativePoint;
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
@@ -61,14 +62,14 @@ public class NumericValue {
      * @param isUp  Shifting up or down?
      * @return String      Value shifted up or down by one
      */
-    public String getShifted(String value, boolean isUp, @Nullable Editor editor) {
+    public String getShifted(String value, boolean isUp, @Nullable Editor editor, String filename) {
         int strLen = value.length();
 
         return strLen <= 7
             // Integer
             ? Integer.toString(Integer.parseInt(value) + (isUp ? 1 : -1))
             // Guessing that it is a UNIX or milliseconds timestamp
-            : getShiftedUnixTimestamp(value, isUp, editor);
+            : getShiftedUnixTimestamp(value, isUp, editor, filename);
     }
 
     /**
@@ -77,14 +78,14 @@ public class NumericValue {
      * @param editor Needed to gather position of info balloon (not shown if editor == null)
      * @return String      UNIX timestamp shifted plus/minus one day
      */
-    private String getShiftedUnixTimestamp(String value, boolean isUp, @Nullable Editor editor) {
+    private String getShiftedUnixTimestamp(String value, boolean isUp, @Nullable Editor editor, String filename) {
         int strLenOriginal = value.length();
         long shiftedTimestamp;
 
-        shiftedTimestamp = Long.parseLong(value)
-                + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * (timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000));
+        int multiplier = getTimestampMultiplier(filename);
+        shiftedTimestamp = Long.parseLong(value) + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * multiplier);
 
-            if (editor != null) {
+        if (editor != null) {
             // Create and show balloon w/ human-readable date
             Balloon.Position pos = Balloon.Position.above;
             String balloonText =
@@ -105,6 +106,22 @@ public class NumericValue {
             // String has shrunk in length - maintain original leading zero's
             ? UtilsTextual.formatAmountDigits(valueShifted, strLenOriginal)
             : valueShifted;
+    }
+
+    private int getTimestampMultiplier(String filename) {
+        String fileEnding = UtilsFile.extractFileExtension(filename, true);
+        String fileEndingsSeconds = ("," + ShifterPreferences.getSecondsFileEndings() + ",").toLowerCase();
+
+        if (fileEndingsSeconds.contains("," + fileEnding + ",")) {
+            return 1;
+        }
+
+        String fileEndingsMilliSeconds = ("," + ShifterPreferences.getMillisecondsFileEndings() + ",").toLowerCase();
+        if (fileEndingsMilliSeconds.contains("," + fileEnding + ",")) {
+            return 1000;
+        }
+
+        return timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000;
     }
 
     /**

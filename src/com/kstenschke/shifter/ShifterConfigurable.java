@@ -52,7 +52,7 @@ public class ShifterConfigurable implements Configurable {
     public void apply() throws ConfigurationException {
         if (settingsPanel != null) {
             settingsPanel.apply();
-            settingsPanel.refreshFormValues();
+            settingsPanel.initFormValues();
         }
     }
 
@@ -61,7 +61,7 @@ public class ShifterConfigurable implements Configurable {
      */
     public void reset() {
         if (settingsPanel != null) {
-            settingsPanel.refreshFormValues();
+            settingsPanel.initFormValues();
         }
     }
 

@@ -17,15 +17,15 @@ public class UtilsArrayTest {
     public void testImplode() throws Exception {
         String[] items = new String[]{"Bam", "Bam", "Hey", "What", "A", "Bam"};
 
-        assertEquals( "BamBamHeyWhatABam", UtilsArray.implode(items, "") );
-        assertEquals( "Bam Bam Hey What A Bam", UtilsArray.implode(items, " ") );
+        assertEquals("BamBamHeyWhatABam", UtilsArray.implode(items, ""));
+        assertEquals("Bam Bam Hey What A Bam", UtilsArray.implode(items, " ");
     }
 
     @Test
     public void testMergeStringArrays() throws Exception {
-        assertArrayEquals( new String[]{"a", "b"}, UtilsArray.mergeStringArrays(new String[]{"a"}, new String[]{"b"}) );
-        assertArrayEquals( new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b"}, new String[]{"c", "d"}) );
-        assertArrayEquals( new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b"}, new String[]{"b", "c", "d"}) );
-        assertArrayEquals( new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b", "c"}, new String[]{"b", "c", "d"}) );
+        assertArrayEquals(new String[]{"a", "b"}, UtilsArray.mergeStringArrays(new String[]{"a"}, new String[]{"b"}));
+        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b"}, new String[]{"c", "d"}));
+        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b"}, new String[]{"b", "c", "d"}));
+        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b", "c"}, new String[]{"b", "c", "d"} );
     }
 }

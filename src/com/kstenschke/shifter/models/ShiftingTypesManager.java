@@ -257,7 +257,7 @@ public class ShiftingTypesManager {
                     return this.typeRgbColor.getShifted(word, isUp);
                 case TYPE_NUMERIC_VALUE:
                     // numeric values including UNIX and millisecond timestamps
-                    return this.typeNumericValue.getShifted(word, isUp, editor);
+                    return this.typeNumericValue.getShifted(word, isUp, editor, filename);
                 case TYPE_CSS_UNIT:
                     return this.typePixelValue.getShifted(word, isUp);
                 case TYPE_PHP_VARIABLE:

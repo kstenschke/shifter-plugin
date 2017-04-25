@@ -34,6 +34,14 @@ public class ShifterPreferences {
     private static final String PROPERTY_SIZE_SHIFT_MORE = "PluginShifter.SizeShiftMore";
     @NonNls
     private static final String PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK = "PluginShifter.ModeShiftNumericalBlock";
+    @NonNls
+    private static final String PROPERTY_FILE_ENDINGS_MILLISECONDS = "PluginShifter.FileEndingsMiliseconds";
+    @NonNls
+    private static final String PROPERTY_FILE_ENDINGS_SECONDS = "PluginShifter.FileEndingsMiliseconds";
+
+    // Timestamp units by file endings
+    public static final String DEFAULT_FILE_ENDINGS_MILLISECONDS = "java,js,py";
+    public static final String DEFAULT_FILE_ENDINGS_SECONDS     = "mysql,php,phtml,sql";
 
     // Sorting modes
     public static final Integer SORTING_MODE_CASE_SENSITIVE     = 0;
@@ -105,6 +113,14 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
     }
 
+    public static void saveMilisecondsFileEndings(String endings) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_FILE_ENDINGS_MILLISECONDS, endings);
+    }
+
+    public static void saveSecondsFileEndings(String endings) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_FILE_ENDINGS_MILLISECONDS, endings);
+    }
+
     private static String getDictionary(String dictionaryName) {
         String dictionary = null;
 
@@ -157,6 +173,26 @@ public class ShifterPreferences {
             return modeStr == null ? SHIFTING_MODE_TIMESTAMP_SECONDS : Integer.parseInt(modeStr);
         } catch(NullPointerException e) {
             return SHIFTING_MODE_TIMESTAMP_SECONDS;
+        }
+    }
+
+    public static String getMillisecondsFileEndings() {
+        try {
+            String endings = PropertiesComponent.getInstance().getValue(PROPERTY_FILE_ENDINGS_MILLISECONDS);
+
+            return endings == null ? DEFAULT_FILE_ENDINGS_MILLISECONDS : endings;
+        } catch(NullPointerException e) {
+            return DEFAULT_FILE_ENDINGS_MILLISECONDS;
+        }
+    }
+
+    public static String getSecondsFileEndings() {
+        try {
+            String endings = PropertiesComponent.getInstance().getValue(PROPERTY_FILE_ENDINGS_SECONDS);
+
+            return endings == null ? DEFAULT_FILE_ENDINGS_SECONDS : endings;
+        } catch(NullPointerException e) {
+            return DEFAULT_FILE_ENDINGS_SECONDS;
         }
     }
 

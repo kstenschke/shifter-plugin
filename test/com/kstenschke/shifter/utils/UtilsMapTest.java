@@ -17,9 +17,9 @@ public class UtilsMapTest {
             put("d", 4);
         }};
 
-        assertEquals( 10, UtilsMap.getSumOfValues(map) );
+        assertEquals(10, UtilsMap.getSumOfValues(map));
 
-        assertEquals( 0, UtilsMap.getSumOfValues(new HashMap<String, Integer>()) );
+        assertEquals(0, UtilsMap.getSumOfValues(new HashMap<String, Integer>()));
     }
 
     @Test
@@ -31,6 +31,6 @@ public class UtilsMapTest {
             put("d", 4);
         }};
 
-        assertEquals( "d", UtilsMap.getKeyOfHighestValue(map) );
+        assertEquals("d", UtilsMap.getKeyOfHighestValue(map));
     }
 }

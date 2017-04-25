@@ -37,7 +37,7 @@ public class UtilsTextual {
      * @return boolean     Is the given string fully lower case?
      */
     public static boolean isAllUppercase(String str) {
-        return str.equals( str.toUpperCase());
+        return str.equals(str.toUpperCase());
     }
 
     public static boolean isMultiLine(String str) {

@@ -45,37 +45,37 @@ public class UtilsTextualTest {
         assertTrue( UtilsTextual.containsAnyQuotes("\'This sentence is single-quoted\'") );
         assertTrue( UtilsTextual.containsAnyQuotes("\"This sentence is double-quoted\"") );
 
-        assertFalse( UtilsTextual.containsAnyQuotes("all lowercase sentence"));
-        assertFalse( UtilsTextual.containsAnyQuotes("aCamelCasedWord") );
-        assertFalse( UtilsTextual.containsAnyQuotes("A MIXED case Sentence.") );
+        assertFalse(UtilsTextual.containsAnyQuotes("all lowercase sentence"));
+        assertFalse(UtilsTextual.containsAnyQuotes("aCamelCasedWord"));
+        assertFalse(UtilsTextual.containsAnyQuotes("A MIXED case Sentence."));
     }
 
     @Test
     public void testSwapSlashes() throws Exception {
-        assertEquals( "http://www.domain.com/", UtilsTextual.swapSlashes("http:\\\\www.domain.com\\") );
-        assertEquals( "http:\\\\www.domain.com\\", UtilsTextual.swapSlashes("http://www.domain.com/") );
+        assertEquals("http://www.domain.com/", UtilsTextual.swapSlashes("http:\\\\www.domain.com\\"));
+        assertEquals("http:\\\\www.domain.com\\", UtilsTextual.swapSlashes("http://www.domain.com/"));
     }
 
     @Test
     public void testSwapQuotes() throws Exception {
-        assertEquals( "i say \"bam\"", UtilsTextual.swapQuotes("i say \'bam\'") );
-        assertEquals( "you say \'hey\'", UtilsTextual.swapQuotes("you say \"hey\"") );
-        assertEquals( "\'hey\"BAM!\"\'", UtilsTextual.swapQuotes("\"hey\'BAM!\'\"") );
+        assertEquals("i say \"bam\"", UtilsTextual.swapQuotes("i say \'bam\'"));
+        assertEquals("you say \'hey\'", UtilsTextual.swapQuotes("you say \"hey\""));
+        assertEquals("\'hey\"BAM!\"\'", UtilsTextual.swapQuotes("\"hey\'BAM!\'\""));
     }
 
     @Test
     public void testToUcFirst() throws Exception {
-        assertEquals( "Bam bam hey", UtilsTextual.toUcFirst("bam bam hey") );
-        assertEquals( "Bam bam hey", UtilsTextual.toUcFirst("BAM BAM HEY") );
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("bam bam hey"));
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("BAM BAM HEY"));
     }
 
     @Test
     public void testIsUcFirst() throws Exception {
-        assertTrue( UtilsTextual.isUcFirst("Bam bam hey") );
-        assertTrue( UtilsTextual.isUcFirst("") );
+        assertTrue(UtilsTextual.isUcFirst("Bam bam hey"));
+        assertTrue(UtilsTextual.isUcFirst(""));
 
-        assertFalse( UtilsTextual.isUcFirst("bam bam hey") );
-        assertFalse( UtilsTextual.isUcFirst("BAM BAM HEY") );
+        assertFalse(UtilsTextual.isUcFirst("bam bam hey"));
+        assertFalse(UtilsTextual.isUcFirst("BAM BAM HEY"));
     }
 
     @Test
@@ -112,11 +112,11 @@ public class UtilsTextualTest {
 
     @Test
     public void testGetWordAtOffset() throws Exception {
-        assertEquals( "bam", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 0) );
-        assertEquals( "lam", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 5) );
-        assertEquals( "ding", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 10) );
+        assertEquals("bam", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 0));
+        assertEquals("lam", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 5));
+        assertEquals("ding", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 10));
 
-        assertEquals( null, UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", -1) );
+        assertEquals(null, UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", -1));
     }
 
     @Test
@@ -151,9 +151,9 @@ public class UtilsTextualTest {
 
     @Test
     public void testExtractLineAroundOffset() throws Exception {
-        assertEquals( "bam bam,", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 3) );
-        assertEquals( "ey,", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 10) );
-        assertEquals( "what a bam.", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 15) );
+        assertEquals("bam bam,", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 3));
+        assertEquals("ey,", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 10));
+        assertEquals("what a bam.", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 15));
     }
 
     @Test
@@ -163,30 +163,30 @@ public class UtilsTextualTest {
         lines.add("a");
         lines.add("bam");
 
-        assertEquals( "whatabam", UtilsTextual.joinLines(lines).toString() );
+        assertEquals("whatabam", UtilsTextual.joinLines(lines).toString());
     }
 
     @Test
     public void testRemoveLineBreaks() throws Exception {
-        assertEquals( "bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\ney,\nwhat a bam.") );
-        assertEquals( "bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\rey,\rwhat a bam.") );
-        assertEquals( "bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\ney,\rwhat a bam.") );
-        assertEquals( "bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\n\rey,\n\rwhat a bam.") );
+        assertEquals("bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\ney,\nwhat a bam."));
+        assertEquals("bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\rey,\rwhat a bam."));
+        assertEquals("bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\ney,\rwhat a bam."));
+        assertEquals("bam bam,ey,what a bam.", UtilsTextual.removeLineBreaks("bam bam,\n\rey,\n\rwhat a bam."));
     }
 
     @Test
     public void testReplaceLast() throws Exception {
-        assertEquals( "bam bam, ey, what a bam.", UtilsTextual.replaceLast("bam bam, ey, what a bam bam.", " bam", "") );
-        assertEquals( "bam bam, ey hey", UtilsTextual.replaceLast("bam bam, ey hey", "x", "y") );
+        assertEquals("bam bam, ey, what a bam.", UtilsTextual.replaceLast("bam bam, ey, what a bam bam.", " bam", ""));
+        assertEquals("bam bam, ey hey", UtilsTextual.replaceLast("bam bam, ey hey", "x", "y"));
     }
 
     @Test
     public void testFormatAmountDigits() throws Exception {
-        assertEquals( 5, UtilsTextual.formatAmountDigits("7", 5).length() );
-        assertEquals( 5, UtilsTextual.formatAmountDigits("55", 5).length() );
-        assertEquals( 5, UtilsTextual.formatAmountDigits("321", 5).length() );
+        assertEquals(5, UtilsTextual.formatAmountDigits("7", 5).length());
+        assertEquals(5, UtilsTextual.formatAmountDigits("55", 5).length());
+        assertEquals(5, UtilsTextual.formatAmountDigits("321", 5).length());
 
-        assertEquals( 2, UtilsTextual.formatAmountDigits("55", 1).length() );
-        assertEquals( 3, UtilsTextual.formatAmountDigits("321", 1).length() );
+        assertEquals(2, UtilsTextual.formatAmountDigits("55", 1).length());
+        assertEquals(3, UtilsTextual.formatAmountDigits("321", 1).length());
     }
 }

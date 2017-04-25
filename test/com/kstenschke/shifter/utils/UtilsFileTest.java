@@ -8,14 +8,14 @@ public class UtilsFileTest {
 
     @Test
     public void testExtractFileExtension() throws Exception {
-        assertEquals( "java", UtilsFile.extractFileExtension("test.java") );
-        assertEquals( "JAVA", UtilsFile.extractFileExtension("TEST.JAVA") );
+        assertEquals("java", UtilsFile.extractFileExtension("test.java"));
+        assertEquals("JAVA", UtilsFile.extractFileExtension("TEST.JAVA"));
 
-        assertNull( UtilsFile.extractFileExtension("") );
-        assertNull( UtilsFile.extractFileExtension("file_without_extension") );
-        assertNull( UtilsFile.extractFileExtension("/home/docs/file_without_extension") );
+        assertNull(UtilsFile.extractFileExtension(""));
+        assertNull(UtilsFile.extractFileExtension("file_without_extension"));
+        assertNull(UtilsFile.extractFileExtension("/home/docs/file_without_extension"));
 
-        assertEquals( null, UtilsFile.extractFileExtension("./path/to/file_without_extension") );
+        assertEquals(null, UtilsFile.extractFileExtension("./path/to/file_without_extension"));
     }
 
     @Test
