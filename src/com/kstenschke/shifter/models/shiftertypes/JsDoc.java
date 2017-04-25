@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.shiftertypes;
 
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
@@ -139,7 +140,7 @@ public class JsDoc {
      * @param offsetEnd
      * @return
      */
-    public static boolean correctDocBlockInDocument(Document document, int offsetStart, int offsetEnd) {
+    public static boolean correctDocBlockInDocument(Editor editor, Document document, int offsetStart, int offsetEnd) {
         String documentText = document.getText();
         String docBlock = documentText.substring(offsetStart, offsetEnd);
         String lines[] = docBlock.split("\n");
@@ -163,6 +164,7 @@ public class JsDoc {
 
         if (!docBlockCorrected.equals(docBlock)) {
             document.replaceString(offsetStart, offsetEnd, docBlockCorrected);
+            UtilsEnvironment.reformatSubString(editor, editor.getProject(), offsetStart, offsetEnd);
             return true;
         }
 

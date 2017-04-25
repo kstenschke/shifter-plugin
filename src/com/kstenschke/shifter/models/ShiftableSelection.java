@@ -64,11 +64,12 @@ public class ShiftableSelection {
             if (!shifted.equals(selectedText)) {
                 // PHP doc comment block: guess missing data types by resp. variable names
                 document.replaceString(offsetStart, offsetEnd, shifted);
+                UtilsEnvironment.reformatSubString(editor, editor.getProject(), offsetStart, offsetEnd);
                 return;
             }
         }
         // Shift selected comment: Must be before multi-line sort to allow multi-line comment shifting
-        if (Comment.isComment(selectedText) && shiftSelectedCommentInDocument(document, filename, project, offsetStart, offsetEnd, selectedText)) {
+        if (Comment.isComment(selectedText) && shiftSelectedCommentInDocument(editor, document, filename, project, offsetStart, offsetEnd, selectedText)) {
             return;
         }
 
@@ -192,9 +193,9 @@ public class ShiftableSelection {
         return false;
     }
 
-    private static boolean shiftSelectedCommentInDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
+    private static boolean shiftSelectedCommentInDocument(Editor editor, Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
         if (UtilsTextual.isMultiLine(selectedText)) {
-            if (filename.endsWith("js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(document, offsetStart, offsetEnd)) {
+            if (filename.endsWith("js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd)) {
                 boolean x = true;
                 return true;
             }

@@ -110,7 +110,8 @@
     <ul>
         <li>1.6.0
             <ul>
-                <li>Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (event => Object, int(eger) => number),  guess and insert missing data type into "@param" and "@returns" lines, reduce two successive empty JsDoc lines into a single empty line
+                <li>Shifted DOC block comment in PHP and JavaScript: reformat after DOC block after correction</li>
+                <li>Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (event => Object, int(eger) => number),  guess and insert missing data type into "@param" and "@returns" lines, reduce two successive empty JsDoc lines into a single empty line</li>
                 <li>Added: Shift invalid JsDoc "@return" statement at caret into "@returns"</li>
                 <li>Improved: Better case maintaining of shifted words</li>
                 <li>Changed: Grouped shifting types in features list for easier comprehensibility</li>

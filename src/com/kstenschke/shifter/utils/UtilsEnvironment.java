@@ -18,7 +18,11 @@ package com.kstenschke.shifter.utils;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
+import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import com.intellij.psi.PsiFile;
+import com.intellij.psi.codeStyle.CodeStyleManager;
+import com.intellij.psi.util.PsiUtilBase;
 import com.kstenschke.shifter.ShifterPreferences;
 
 import javax.swing.*;
@@ -40,6 +44,16 @@ public class UtilsEnvironment {
         document.replaceString(offsetStart, offsetEnd, charSequence);
 
         return true;
+    }
+
+    public static boolean reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
+        PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
+        if (psiFile != null) {
+            CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
+            return true;
+        }
+
+        return false;
     }
 
     /**
