@@ -87,7 +87,8 @@ public class JsDoc {
             return true;
         }
 
-        return allowInvalidTypes && (str.contains(lhs + "event" ) || str.contains(lhs + "int"));
+        return allowInvalidTypes
+            && (str.contains(lhs + "bool" ) || str.contains(lhs + "event" ) || str.contains(lhs + "int"));
     }
 
     public static Boolean containsCompounds(String str) {
@@ -113,10 +114,10 @@ public class JsDoc {
      * @return
      */
     private static String addCompoundsToDataType(String line, String docCommentType, boolean wrapInvalidDataTypes) {
-        line = line.replaceAll("(?i)(" + docCommentType + "\\s*)(array|bool|function|null|number|object|string|undefined)", "$1{$2}");
+        line = line.replaceAll("(?i)(" + docCommentType + "\\s*)(array|boolean|function|null|number|object|string|undefined)", "$1{$2}");
 
         if (wrapInvalidDataTypes) {
-            line = line.replaceAll("(?i)(\" + docCommentType + \"\\s*)(event|int|integer)", "$1{$2}");
+            line = line.replaceAll("(?i)(" + docCommentType + "\\s*)(bool|event|int|integer)", "$1{$2}");
         }
 
         return line;
@@ -147,17 +148,19 @@ public class JsDoc {
         int index = 0;
         for (String line : lines) {
             if (isAtParamLine(line)) {
-                line = correctParamLine(line);
+                line = correctAtParamLine(line);
             } else if (isInvalidAtReturnsLine(line)) {
                 line = line.replace("@return ", "@returns ");
             }
             if (isAtReturnsLine(line)) {
-                line = correctReturnLine(line);
+                line = correctAtReturnsLine(line);
             }
 
             docBlockCorrected += (index > 0 ? "\n" : "") + line;
             index++;
         }
+        docBlockCorrected = reduceDoubleEmptyCommentLines(docBlockCorrected);
+
         if (!docBlockCorrected.equals(docBlock)) {
             document.replaceString(offsetStart, offsetEnd, docBlockCorrected);
             return true;
@@ -166,14 +169,14 @@ public class JsDoc {
         return false;
     }
 
-    private static String correctParamLine(String line) {
+    private static String correctAtParamLine(String line) {
         if (containsDataType(line, " ", true) && !containsCompounds(line)) {
             line = addCompoundsToDataType(line, "@param", true);
         }
         return correctInvalidDataTypes(line);
     }
 
-    private static String correctReturnLine(String line) {
+    private static String correctAtReturnsLine(String line) {
         if (containsDataType(line, " ", true) && !containsCompounds(line)) {
             line = addCompoundsToDataType(line, "@returns", true);
         }
@@ -183,8 +186,27 @@ public class JsDoc {
     private static String correctInvalidDataTypes(String line) {
         return line
                 .replace("{bool}", "{boolean}")
+                .replace("{event}", "{Object}")
                 .replace("{int}", "{number}")
-                .replace("{integer}", "{number}")
-                .replace("{event}", "{Object}");
+                .replace("{integer}", "{number}");
+    }
+
+    private static String reduceDoubleEmptyCommentLines(String block) {
+        String lines[] = block.split("\n");
+        String blockCleaned = "";
+
+        boolean wasPreviousEmpty = false;
+        int index = 0;
+        for (String line : lines) {
+            boolean isEmpty = index == 0 || (trim(trim(line).replaceAll("\\*", "")).isEmpty());
+
+            if (index == 0 || !(isEmpty && wasPreviousEmpty)) {
+                blockCleaned += (index > 0 ? "\n" : "") + line;
+            }
+            wasPreviousEmpty = isEmpty;
+            index++;
+        }
+
+        return blockCleaned;
     }
 }

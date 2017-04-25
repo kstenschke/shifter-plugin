@@ -193,11 +193,12 @@ public class ShiftableSelection {
     }
 
     private static boolean shiftSelectedCommentInDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
-        if (filename.endsWith("js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(document, offsetStart, offsetEnd)) {
-            return true;
-        }
-
         if (UtilsTextual.isMultiLine(selectedText)) {
+            if (filename.endsWith("js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(document, offsetStart, offsetEnd)) {
+                boolean x = true;
+                return true;
+            }
+
             if (Comment.isBlockComment(selectedText)) {
                 Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
                 return true;
