@@ -81,7 +81,7 @@
         <li>Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration</li>
         <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
     </ul>
-    <strong>Dictionaric keyword shifting</strong>
+    <strong>Dictionaric Keyword Shifting</strong>
     <br/>
     Shifter comes with a customizable, file extension specific and globally usable dictionary of shiftable keywords.
     Some keyword types from the default dictionary:<br/>
