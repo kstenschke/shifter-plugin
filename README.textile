@@ -11,6 +11,8 @@ If there's only one shiftable word in a line, it can be shifted without the care
 Lowercase/uppercase or lower case with upper first character of shifted words is maintained.
 To shift values instantly multiple times, there are additional "Shift More" actions, the amount of repetitions can be configured in the plugin configurations (default: 10).
 
+h3. Default Keyboard Shortcuts
+
 Shifter adds the following editing tools (you can change the keymap in the IDE preferences):
 
 * Ctrl+Shift+Alt+Comma  - Shift-Down

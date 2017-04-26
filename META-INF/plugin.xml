@@ -25,7 +25,7 @@
     If there's only one shiftable word in a line, it can be shifted without the caret touching it.
     Lowercase/uppercase or lower case with upper first character of shifted words is maintained.<br/>
     <br/>
-    Default keyboard shortcuts:
+    <h4>Default Keyboard Shortcuts</h4>
     <ul>
         <li>Ctrl+Shift+Alt+Comma  - Shift Down</li>
         <li>Ctrl+Shift+Alt+Period - Shift Up</li>
@@ -35,7 +35,7 @@
     <br/>
     Shift more: repeats shifting the selected value multiple times. The amount of repetitions can be configured in the plugin configuration (default: 10).
     <br/><br/>
-    <h3>Shifting Types:</h3>
+    <h3>Shifting Types</h3>
     <br/>
     <h4>Sorting</h4>
     <ul>
