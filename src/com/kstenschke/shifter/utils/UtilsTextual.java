@@ -286,13 +286,13 @@ public class UtilsTextual {
         }
 
         if (offset > 0
-                  && ! isJavaIdentifierPart(str.charAt(offset), allowHyphens)
-                  &&   isJavaIdentifierPart(str.charAt(offset - 1), allowHyphens)
+         && !isJavaIdentifierPart(str.charAt(offset), allowHyphens)
+         && isJavaIdentifierPart(str.charAt(offset - 1), allowHyphens)
         ) {
             offset--;
         }
 
-        if (! isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
+        if (!isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
             return null;
         }
 

@@ -82,9 +82,10 @@ public class ActionsPerformer {
         if (this.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
             ShiftableBlockSelection.shiftBlockSelectionInDocument(this, shiftUp, moreCount);
-        } else {
-            // Shift regular selection: sort CSV or multi-line selection: sort lines alphabetically, etc.
-            ShiftableSelection.shiftSelectionInDocument(editor, caretOffset, shiftUp, moreCount);
+            return;
         }
+
+        // Shift regular selection: sort CSV or multi-line selection: sort lines alphabetically, etc.
+        ShiftableSelection.shiftSelectionInDocument(editor, caretOffset, shiftUp, moreCount);
     }
 }

@@ -68,11 +68,11 @@ public class UtilsEnvironment {
 
         Point location = null;
         String[] position   = ShifterPreferences.getDialogPosition(idDialog).split("x");
-        if( ! (position[0].equals("0") && position[1].equals("0")) ) {
-            location    = new Point( Integer.parseInt(position[0]), Integer.parseInt(position[1]) );
+        if (!(position[0].equals("0") && position[1].equals("0"))) {
+            location = new Point(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
         }
 
-        if( location == null ) {
+        if (location == null) {
             // Center to screen
             dialog.setLocationRelativeTo(null);
         } else {

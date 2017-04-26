@@ -76,7 +76,7 @@ public class JsDoc {
     public static Boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
         str = trim(str.toLowerCase());
 
-        if (str.contains(lhs + "array" )
+        if (str.contains(lhs + "array")
          || str.contains(lhs + "boolean")
          || str.contains(lhs + "function")
          || str.contains(lhs + "null")
@@ -89,7 +89,7 @@ public class JsDoc {
         }
 
         return allowInvalidTypes
-            && (str.contains(lhs + "bool" ) || str.contains(lhs + "event" ) || str.contains(lhs + "int"));
+            && (str.contains(lhs + "bool") || str.contains(lhs + "event") || str.contains(lhs + "int"));
     }
 
     public static Boolean containsCompounds(String str) {

@@ -82,11 +82,11 @@ public class PhpConcatenation {
                 boolean isFoundEndOfLHS = false;
                 boolean isFoundDot = false;
 
-                while (currentOffset < strLen && ! isFoundEndOfLHS) {
+                while (currentOffset < strLen && !isFoundEndOfLHS) {
                     currentChar    = strTrimmed.substring(currentOffset, currentOffset+1);
                     if (currentChar.equals(endChar)) {
                         // ignore escaped end-char
-                        if (currentOffset > 0 && ! "\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
+                        if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                             isFoundEndOfLHS = true;
                             if (".".equals(endChar)) {
                                 isFoundDot = true;
@@ -101,10 +101,10 @@ public class PhpConcatenation {
                     currentOffset++;
                 }
                 // Iterate until dot found, abort search if illegal (=other than dot or white-space) character found
-                while (currentOffset < strLen && ! isFoundDot && ! isFailed) {
+                while (currentOffset < strLen && !isFoundDot && !isFailed) {
                     currentChar = strTrimmed.substring(currentOffset, currentOffset+1);
                     if (".".equals(currentChar)) {
-                        if (currentOffset > 0 && ! "\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
+                        if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                             isFoundDot = true;
                             this.offsetDot = currentOffset;
                             currentOffset++;
@@ -128,11 +128,11 @@ public class PhpConcatenation {
                         currentOffset+=1;
                         boolean isFoundEndOfRHS = false;
 
-                        while (currentOffset < strLen && ! isFoundEndOfRHS) {
+                        while (currentOffset < strLen && !isFoundEndOfRHS) {
                             currentChar    = strTrimmed.substring(currentOffset, currentOffset+1);
                             if (currentChar.equals(endChar) || ("".equals(endChar) && strLen == currentOffset+1)) {
                                 // ignore escaped end-char
-                                if (currentOffset > 0 && ! "\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
+                                if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                                     isFoundEndOfRHS = true;
                                     rightHandSide += currentChar;
                                     currentOffset++;

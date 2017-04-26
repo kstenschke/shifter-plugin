@@ -44,7 +44,7 @@ public class UtilsFile {
     }
 
     public static boolean filenameEndsWithExtension(String filename) {
-        if (filename == null || filename.isEmpty() || ! filename.contains(".")) {
+        if (filename == null || filename.isEmpty() || !filename.contains(".")) {
             return false;
         }
 

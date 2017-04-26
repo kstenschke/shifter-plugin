@@ -86,7 +86,9 @@ public class ShiftableBlockSelection {
 
         if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, documentText)) {
             shiftNumericalBlockSelectionInDocument(shiftUp, editor, document, Integer.valueOf(documentText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()), documentText);
-        } else if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, documentText)) {
+            return;
+        }
+        if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, documentText)) {
             shiftIdenticalBlockItemsInDocument(shiftUp, moreCount, editor, document, blockSelectionStarts, blockSelectionEnds, documentText);
         }
     }
@@ -126,9 +128,9 @@ public class ShiftableBlockSelection {
         if (!optionsDialog.wasCancelled()) {
             if (optionsDialog.isShiftModeEnumerate()) {
                 insertBlockEnumerationInDocument(editor, document, optionsDialog.getFirstNumber());
-            } else {
-                inOrDecrementNumericBlockInDocument(editor, document, editorText, shiftUp);
+                return;
             }
+            inOrDecrementNumericBlockInDocument(editor, document, editorText, shiftUp);
         }
     }
 

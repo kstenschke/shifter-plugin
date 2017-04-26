@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.shiftertypes;
 
 import org.apache.commons.lang.StringUtils;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * JavaScript Variables (multi-lined declarations of multiple vars)
@@ -55,28 +56,28 @@ public class JsVariablesDeclarations {
         String shiftedLine;
         for(String line : lines) {
             line = line.trim();
-
-            if (line.isEmpty() || line.startsWith("//")) {
-                // do not change empty or comment-lines
-                shiftedLine = line;
-            } else {
-                // remove "var " from beginning
-                line = line.substring(4);
-                // replace ";" from ending by ",\n"
-                if (StringUtils.countMatches(line, "//") == 1) {
-                    // handle line ending w/ comment intact
-                    String[] parts = line.split("//");
-                    parts[0] = parts[0].trim();
-                    shiftedLine = parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];
-                } else {
-                    shiftedLine = line.substring(0, line.length() - 1) + ",";
-                }
-            }
-
+            shiftedLine = line.isEmpty() || line.startsWith("//") ? line : shiftNonCommentLine(line);
             shiftedLines += (lineNumber == 0 ? "" : "\t") + shiftedLine + "\n";
             lineNumber++;
         }
 
         return "var " + shiftedLines.substring(0, shiftedLines.length()-2) + ";";
+    }
+
+    @NotNull
+    private static String shiftNonCommentLine(String line) {
+        String shiftedLine;
+        // Remove "var " from beginning
+        line = line.substring(4);
+
+        // Replace ";" from ending by ",\n"
+        if (StringUtils.countMatches(line, "//") == 1) {
+            // Handle line ending w/ comment intact
+            String[] parts = line.split("//");
+            parts[0] = parts[0].trim();
+            return parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];
+        }
+
+        return line.substring(0, line.length() - 1) + ",";
     }
 }

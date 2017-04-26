@@ -11,39 +11,39 @@ public class UtilsTextualTest {
 
     @Test
     public void testIsAllUppercase() throws Exception {
-        assertTrue( UtilsTextual.isAllUppercase("ALL UPPERCASE SENTENCE.") );
+        assertTrue( UtilsTextual.isAllUppercase("ALL UPPERCASE SENTENCE."));
 
-        assertFalse( UtilsTextual.isAllUppercase("all lowercase sentence.") );
-        assertFalse( UtilsTextual.isAllUppercase("aCamelCasedWord") );
-        assertFalse( UtilsTextual.isAllUppercase("A MIXED case Sentence.") );
-        assertFalse( UtilsTextual.isAllUppercase("some,words,separated,by,commas,all,words,are,lower-cased") );
+        assertFalse( UtilsTextual.isAllUppercase("all lowercase sentence."));
+        assertFalse( UtilsTextual.isAllUppercase("aCamelCasedWord"));
+        assertFalse( UtilsTextual.isAllUppercase("A MIXED case Sentence."));
+        assertFalse( UtilsTextual.isAllUppercase("some,words,separated,by,commas,all,words,are,lower-cased"));
     }
 
     @Test
     public void testIsCommaSeparatedList() throws Exception {
-        assertTrue( UtilsTextual.isCommaSeparatedList("some,words,separated,by,commas,all,words,are,lower-cased") );
-        assertTrue( UtilsTextual.isCommaSeparatedList("SOME,WORDS,SEPARATED,BY,COMMAS,ALL,WORDS,ARE,UPPERCASED") );
-        assertTrue( UtilsTextual.isCommaSeparatedList("some,WORDS,separated,BY,commas,THE,words,ARE,mixed,CASED") );
+        assertTrue( UtilsTextual.isCommaSeparatedList("some,words,separated,by,commas,all,words,are,lower-cased"));
+        assertTrue( UtilsTextual.isCommaSeparatedList("SOME,WORDS,SEPARATED,BY,COMMAS,ALL,WORDS,ARE,UPPERCASED"));
+        assertTrue( UtilsTextual.isCommaSeparatedList("some,WORDS,separated,BY,commas,THE,words,ARE,mixed,CASED"));
 
-        assertFalse( UtilsTextual.isCommaSeparatedList("ALL UPPERCASE SENTENCE.") );
-        assertFalse( UtilsTextual.isCommaSeparatedList("all lowercase sentence.") );
-        assertFalse( UtilsTextual.isCommaSeparatedList("aCamelCasedWord") );
+        assertFalse( UtilsTextual.isCommaSeparatedList("ALL UPPERCASE SENTENCE."));
+        assertFalse( UtilsTextual.isCommaSeparatedList("all lowercase sentence."));
+        assertFalse( UtilsTextual.isCommaSeparatedList("aCamelCasedWord"));
     }
 
     @Test
     public void testContainsAnySlashes() throws Exception {
-        assertTrue( UtilsTextual.containsAnySlashes("http://www.xxx.ch/") );
-        assertTrue( UtilsTextual.containsAnySlashes("A single quote is written \\ ' and a backslash \\") );
+        assertTrue( UtilsTextual.containsAnySlashes("http://www.xxx.ch/"));
+        assertTrue( UtilsTextual.containsAnySlashes("A single quote is written \\ ' and a backslash \\"));
 
-        assertFalse( UtilsTextual.containsAnySlashes("some,words,separated,by,commas,all,words,are,lower-cased") );
-        assertFalse( UtilsTextual.containsAnySlashes("all lowercase sentence") );
-        assertFalse( UtilsTextual.containsAnySlashes("ALL UPPERCASE SENTENCE.") );
+        assertFalse( UtilsTextual.containsAnySlashes("some,words,separated,by,commas,all,words,are,lower-cased"));
+        assertFalse( UtilsTextual.containsAnySlashes("all lowercase sentence"));
+        assertFalse( UtilsTextual.containsAnySlashes("ALL UPPERCASE SENTENCE."));
     }
 
     @Test
     public void testContainsAnyQuotes() throws Exception {
-        assertTrue( UtilsTextual.containsAnyQuotes("\'This sentence is single-quoted\'") );
-        assertTrue( UtilsTextual.containsAnyQuotes("\"This sentence is double-quoted\"") );
+        assertTrue( UtilsTextual.containsAnyQuotes("\'This sentence is single-quoted\'"));
+        assertTrue( UtilsTextual.containsAnyQuotes("\"This sentence is double-quoted\""));
 
         assertFalse(UtilsTextual.containsAnyQuotes("all lowercase sentence"));
         assertFalse(UtilsTextual.containsAnyQuotes("aCamelCasedWord"));
@@ -80,21 +80,21 @@ public class UtilsTextualTest {
 
     @Test
     public void testGetOperatorAtOffset() throws Exception {
-        assertEquals("+", UtilsTextual.getOperatorAtOffset("1 + 2", 2) );
-        assertEquals("-", UtilsTextual.getOperatorAtOffset("2 - 1", 2) );
-        assertEquals("*", UtilsTextual.getOperatorAtOffset("2 * 1", 2) );
-        assertEquals("/", UtilsTextual.getOperatorAtOffset("2 / 1", 2) );
-        assertEquals("%", UtilsTextual.getOperatorAtOffset("2 % 1", 2) );
-        assertEquals("<", UtilsTextual.getOperatorAtOffset("2 < 1", 2) );
-        assertEquals(">", UtilsTextual.getOperatorAtOffset("2 > 1", 2) );
+        assertEquals("+", UtilsTextual.getOperatorAtOffset("1 + 2", 2));
+        assertEquals("-", UtilsTextual.getOperatorAtOffset("2 - 1", 2));
+        assertEquals("*", UtilsTextual.getOperatorAtOffset("2 * 1", 2));
+        assertEquals("/", UtilsTextual.getOperatorAtOffset("2 / 1", 2));
+        assertEquals("%", UtilsTextual.getOperatorAtOffset("2 % 1", 2));
+        assertEquals("<", UtilsTextual.getOperatorAtOffset("2 < 1", 2));
+        assertEquals(">", UtilsTextual.getOperatorAtOffset("2 > 1", 2));
 
-        assertNull("+", UtilsTextual.getOperatorAtOffset("1 + 2", 0) );
-        assertNull("-", UtilsTextual.getOperatorAtOffset("2 - 1", 0) );
-        assertNull("*", UtilsTextual.getOperatorAtOffset("2 * 1", 0) );
-        assertNull("/", UtilsTextual.getOperatorAtOffset("2 / 1", 0) );
-        assertNull("%", UtilsTextual.getOperatorAtOffset("2 % 1", 0) );
-        assertNull("<", UtilsTextual.getOperatorAtOffset("2 < 1", 0) );
-        assertNull(">", UtilsTextual.getOperatorAtOffset("2 > 1", 0) );
+        assertNull("+", UtilsTextual.getOperatorAtOffset("1 + 2", 0));
+        assertNull("-", UtilsTextual.getOperatorAtOffset("2 - 1", 0));
+        assertNull("*", UtilsTextual.getOperatorAtOffset("2 * 1", 0));
+        assertNull("/", UtilsTextual.getOperatorAtOffset("2 / 1", 0));
+        assertNull("%", UtilsTextual.getOperatorAtOffset("2 % 1", 0));
+        assertNull("<", UtilsTextual.getOperatorAtOffset("2 < 1", 0));
+        assertNull(">", UtilsTextual.getOperatorAtOffset("2 > 1", 0));
 
         assertNull("+", UtilsTextual.getOperatorAtOffset("1  + 2", 2));
         assertNull("-", UtilsTextual.getOperatorAtOffset("2  - 1", 2));

@@ -95,7 +95,6 @@ public class UtilsLinesList {
 
                 String lastLine = lines.get(amountLines - 1).trim();
                 this.isDelimitedLastLine = lastLine.endsWith(String.valueOf(this.commonDelimiter));
-
             } else {
                 this.findingDelimiterFailed = true;
             }

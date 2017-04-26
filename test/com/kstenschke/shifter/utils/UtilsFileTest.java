@@ -20,31 +20,31 @@ public class UtilsFileTest {
 
     @Test
     public void testFilenameEndsWithExtension() throws Exception {
-        assertTrue( UtilsFile.filenameEndsWithExtension("index.php") );
+        assertTrue( UtilsFile.filenameEndsWithExtension("index.php"));
 
-        assertFalse( UtilsFile.filenameEndsWithExtension(".") );
-        assertFalse( UtilsFile.filenameEndsWithExtension("./") );
-        assertFalse( UtilsFile.filenameEndsWithExtension("/./") );
-        assertFalse( UtilsFile.filenameEndsWithExtension("php") );
+        assertFalse( UtilsFile.filenameEndsWithExtension("."));
+        assertFalse( UtilsFile.filenameEndsWithExtension("./"));
+        assertFalse( UtilsFile.filenameEndsWithExtension("/./"));
+        assertFalse( UtilsFile.filenameEndsWithExtension("php"));
         assertFalse(UtilsFile.filenameEndsWithExtension(""));
     }
 
     @Test
     public void testIsPhpFile() throws Exception {
-        assertTrue( UtilsFile.isPhpFile("index.php") );
+        assertTrue(UtilsFile.isPhpFile("index.php"));
 
-        assertFalse( UtilsFile.isPhpFile("style.css") );
-        assertFalse( UtilsFile.isPhpFile("php") );
-        assertFalse( UtilsFile.isPhpFile(".php") );
+        assertFalse(UtilsFile.isPhpFile("style.css"));
+        assertFalse(UtilsFile.isPhpFile("php"));
+        assertFalse(UtilsFile.isPhpFile(".php"));
     }
 
     @Test
     public void testIsCssFile() throws Exception {
-        assertTrue( UtilsFile.isCssFile("style.css") );
+        assertTrue(UtilsFile.isCssFile("style.css"));
 
-        assertFalse( UtilsFile.isCssFile("index.php") );
-        assertFalse( UtilsFile.isCssFile("css") );
-        assertFalse( UtilsFile.isCssFile(".css") );
+        assertFalse(UtilsFile.isCssFile("index.php"));
+        assertFalse(UtilsFile.isCssFile("css"));
+        assertFalse(UtilsFile.isCssFile(".css"));
     }
 
     @Test

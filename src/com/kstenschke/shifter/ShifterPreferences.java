@@ -82,7 +82,7 @@ public class ShifterPreferences {
      * @param   idDialog
      */
     public static String getDialogPosition(String idDialog) {
-        return getProperty( idDialog + ".Position", "0x0", false );
+        return getProperty(idDialog + ".Position", "0x0", false);
     }
 
     /**
