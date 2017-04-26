@@ -52,7 +52,7 @@ h4. String Manipulations
 h4. Code- and DOC Comments
 * Selection which is a block comment or multiple line-comments (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.
 * Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code
-* Selected HTML comment inside a PHP / PHTML: converts it into a PHP block comment (and vice versa)
+* Selected HTML comment inside a PHP / PHTML file: converts it into a PHP block comment (and vice versa)
 * PHP DOC: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types
 * PHP DOC: Shifting while the caret is inside an @param line that contains no data type, inserts a data type (guessed from the variable name)
 * JsDOC: Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside an @param- adds the missing curly brackets
