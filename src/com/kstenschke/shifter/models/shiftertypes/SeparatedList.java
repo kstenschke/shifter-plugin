@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftertypes;
 
+import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.utils.natorder.NaturalOrderComparator;
@@ -82,8 +83,8 @@ public class SeparatedList {
 
         if (UtilsArray.hasDuplicateItems(items) && JOptionPane.showConfirmDialog(
                 null,
-                "Duplicated items detected. Reduce to single occurrences?",
-                "Reduce duplicate items?",
+                StaticTexts.MESSAGE_REDUCE_DUPLICATED_ITEMS,
+                StaticTexts.TITLE_REDUCE_DUPLICATED_ITEMS,
                 JOptionPane.OK_CANCEL_OPTION
         ) == JOptionPane.OK_OPTION) {
             items = UtilsArray.reduceDuplicateItems(items);

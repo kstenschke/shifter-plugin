@@ -34,9 +34,13 @@ public class StaticTexts {
     public static final String TITLE_NUMERIC_BLOCK_OPTIONS  = "Shift Numeric Block Selection";
 
     @NonNls
-    public static final String TITLE_REDUCE_DUPLICATE_LINES = "Reduce duplicate lines?";
+    public static final String TITLE_REDUCE_DUPLICATE_LINES    = "Reduce duplicate lines?";
     @NonNls
-    public static final String MESSAGE_REDUCE_DUPLICATE_LINES = "Duplicated lines detected. Reduce to single occurrences?";
+    public static final String MESSAGE_REDUCE_DUPLICATE_LINES  = "Duplicated lines detected. Reduce to single occurrences?";
+    @NonNls
+    public static final String TITLE_REDUCE_DUPLICATED_ITEMS   = "Reduce duplicate items?";
+    @NonNls
+    public static final String MESSAGE_REDUCE_DUPLICATED_ITEMS = "Duplicated items detected. Reduce to single occurrences?";
 
     @NonNls
     public static final String POPUP_TITLE_SHIFT = "Shifting Mode";
