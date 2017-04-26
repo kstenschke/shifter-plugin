@@ -130,7 +130,7 @@ public class DocCommentTag {
 
         return allMatches.isEmpty()
                 ? ""
-                : "\t" + allMatches.get(0).replace("function", "").replace(":", "").trim();
+                : "\t" + (allMatches.get(0).replace("function", "").replace(":", "").trim());
     }
 
     /**
