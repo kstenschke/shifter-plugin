@@ -32,7 +32,7 @@ public class JsDoc {
 
         return UtilsTextual.isMultiLine(str)
             && (str.startsWith("/**") && str.endsWith("*/"))
-            && (str.contains("@oaram") || str.contains("@return"));
+            && (str.contains("@param") || str.contains("@return"));
     }
 
     /**

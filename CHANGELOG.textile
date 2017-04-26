@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.6.1
+    ** Improved: Better JsDoc comment block detection
 * 1.6.0
     ** Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (bool => boolean, event => Object, int(eger) => number),  guess and insert missing data type into "@param" and "@returns" lines, reduce empty JsDoc lines
     ** Added: Shift invalid JsDoc "@return" statement at caret into "@returns"
