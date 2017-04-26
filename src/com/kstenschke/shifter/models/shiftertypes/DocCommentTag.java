@@ -115,28 +115,22 @@ public class DocCommentTag {
      * Find first JavaScript function's name out of given code
      *
      * @param  jsCode JavaScript source code to be analyzed
-     * @return String   JavaScript method name
+     * @return String JavaScript method name
      */
     private String parseNextMethod(String jsCode) {
         List<String> allMatches = new ArrayList<String>();
 
         String regExPattern = "[a-zA-Z_$][0-9a-zA-Z_$]*\\s*:\\s*function";
-
-        Matcher m = Pattern.compile(regExPattern).matcher(jsCode);
+        Matcher m           = Pattern.compile(regExPattern).matcher(jsCode);
         while (m.find()) {
             if (!allMatches.contains(m.group())) {
                 allMatches.add(m.group());
             }
         }
 
-        String methodName = "";
-
-        if (!allMatches.isEmpty()) {
-            methodName = allMatches.get(0).replace("function", "").replace(":", "").trim();
-            methodName = "\t" + methodName;
-        }
-
-        return methodName;
+        return allMatches.isEmpty()
+                ? ""
+                : "\t" + allMatches.get(0).replace("function", "").replace(":", "").trim();
     }
 
     /**
