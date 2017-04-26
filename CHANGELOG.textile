@@ -3,7 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.6.0
     ** Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (bool => boolean, event => Object, int(eger) => number),  guess and insert missing data type into "@param" and "@returns" lines, reduce empty JsDoc lines
     ** Added: Shift invalid JsDoc "@return" statement at caret into "@returns"
-    ** Added: Shifted DOC block comment in PHP and JavaScript: reformat after DOC block after correction
+    ** Added: Shifted DOC block comment in PHP and JavaScript: reformat DOC block after correction
     ** Added: Timestamp shifting unit (seconds or milliseconds) can be specified per file type in plugin settings
     ** Improved: Better case maintaining of shifted words
     ** Changed: Grouped shifting types in features list for easier comprehensibility
