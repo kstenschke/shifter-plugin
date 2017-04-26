@@ -19,12 +19,12 @@ public class UtilsLinesListTest {
         List<String> lines;
         UtilsLinesList.DelimiterDetector delimiterDetector;
 
-        // lines are not initialized
+        // Lines are not initialized
         lines = new ArrayList<String>();
         delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
         assertEquals(null, delimiterDetector.getCommonDelimiter());
 
-        // all delimiters are ";"
+        // All delimiters are ";"
         lines = new ArrayList<String>();
         lines.add("a = 0;");
         lines.add("b = 1;");
@@ -33,7 +33,7 @@ public class UtilsLinesListTest {
         delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
         assertEquals(";", delimiterDetector.getCommonDelimiter());
 
-        // all delimiters are ";", there is a line w/o content
+        // All delimiters are ";", there is a line w/o content
         lines = new ArrayList<String>();
         lines.add("a = 0;");
         lines.add("");
@@ -42,10 +42,8 @@ public class UtilsLinesListTest {
         delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
         assertEquals(";", delimiterDetector.getCommonDelimiter());
 
-        // no line has content
-        lines = new ArrayList<String>();
-        lines.add("");
-        lines.add("");
+        // No line has content
+        lines = new ArrayList<String>().add("").add("");
 
         delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
         assertEquals(null, delimiterDetector.getCommonDelimiter());

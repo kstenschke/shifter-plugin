@@ -67,10 +67,10 @@ public class CssUnit {
             // Shift up/down by 1
             numericValue = numericValue + (isUp ? 1 : -1);
 
-            // prepend w/ unit again
+            // Prepend w/ unit again
             return Integer.toString(numericValue).concat(unit);
         } catch(NumberFormatException e) {
-            // silence
+            // Silence
         }
 
         return value;

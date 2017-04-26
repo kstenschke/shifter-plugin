@@ -256,7 +256,7 @@ public class ShiftingTypesManager {
                 case TYPE_RGB_COLOR:
                     return this.typeRgbColor.getShifted(word, isUp);
                 case TYPE_NUMERIC_VALUE:
-                    // numeric values including UNIX and millisecond timestamps
+                    // Numeric values including UNIX and millisecond timestamps
                     return this.typeNumericValue.getShifted(word, isUp, editor, filename);
                 case TYPE_CSS_UNIT:
                     return this.typePixelValue.getShifted(word, isUp);

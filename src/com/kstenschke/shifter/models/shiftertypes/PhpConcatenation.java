@@ -85,7 +85,7 @@ public class PhpConcatenation {
                 while (currentOffset < strLen && !isFoundEndOfLHS) {
                     currentChar    = strTrimmed.substring(currentOffset, currentOffset+1);
                     if (currentChar.equals(endChar)) {
-                        // ignore escaped end-char
+                        // Ignore escaped end-char
                         if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                             isFoundEndOfLHS = true;
                             if (".".equals(endChar)) {
@@ -131,15 +131,14 @@ public class PhpConcatenation {
                         while (currentOffset < strLen && !isFoundEndOfRHS) {
                             currentChar    = strTrimmed.substring(currentOffset, currentOffset+1);
                             if (currentChar.equals(endChar) || ("".equals(endChar) && strLen == currentOffset+1)) {
-                                // ignore escaped end-char
+                                // Ignore escaped end-char
                                 if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                                     isFoundEndOfRHS = true;
                                     rightHandSide += currentChar;
                                     currentOffset++;
 
-                                    // If concatenation ends at current offset,
                                     if (strLen > currentOffset && strTrimmed.substring(currentOffset).trim().length() == 0) {
-                                        // the string should as well
+                                        // If concatenation ends at current offset, the string should as well
                                         isFailed = true;
                                     }
 

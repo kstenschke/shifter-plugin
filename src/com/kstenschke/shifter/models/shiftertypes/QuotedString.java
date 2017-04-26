@@ -38,9 +38,13 @@ public class QuotedString {
         this.quoteChar = prefixChar;
 
         // Must begin be wrapped in single-, double quotes, or backticks
-        return ("'".equals(prefixChar) && "'".equals(postfixChar))     // word is wrapped in single quotes
-                || ("\"".equals(prefixChar) && "\"".equals(postfixChar))    // word is wrapped in double quotes
-                || ("`".equals(prefixChar) && "`".equals(postfixChar));    // word is wrapped in backticks
+
+        return  // Word is wrapped in single quotes
+                ("'".equals(prefixChar) && "'".equals(postfixChar))
+                // Word is wrapped in double quotes
+                || ("\"".equals(prefixChar) && "\"".equals(postfixChar))
+                // Word is wrapped in backticks
+                || ("`".equals(prefixChar) && "`".equals(postfixChar));
     }
 
     /**

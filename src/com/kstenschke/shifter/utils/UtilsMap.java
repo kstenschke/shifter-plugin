@@ -49,7 +49,7 @@ public class UtilsMap {
                 max = value;
                 key = pairs.getKey().toString();
             }
-            // avoid ConcurrentModificationException
+            // Avoid ConcurrentModificationException
             it.remove();
         }
 
