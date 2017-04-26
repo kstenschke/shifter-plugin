@@ -151,7 +151,7 @@
                           <text value="mysql,php,phtml,sql"/>
                         </properties>
                       </component>
-                      <component id="9e8c3" class="javax.swing.JTextField" binding="inputMilisecondsEndings">
+                      <component id="9e8c3" class="javax.swing.JTextField" binding="inputMillisecondsEndings">
                         <constraints>
                           <grid row="2" column="1" row-span="1" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                             <preferred-size width="150" height="-1"/>

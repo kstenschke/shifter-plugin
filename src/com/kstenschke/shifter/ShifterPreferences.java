@@ -35,9 +35,9 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK = "PluginShifter.ModeShiftNumericalBlock";
     @NonNls
-    private static final String PROPERTY_FILE_ENDINGS_MILLISECONDS = "PluginShifter.FileEndingsMiliseconds";
+    private static final String PROPERTY_FILE_ENDINGS_MILLISECONDS = "PluginShifter.FileEndingsMilliseconds";
     @NonNls
-    private static final String PROPERTY_FILE_ENDINGS_SECONDS = "PluginShifter.FileEndingsMiliseconds";
+    private static final String PROPERTY_FILE_ENDINGS_SECONDS = "PluginShifter.FileEndingsMilliseconds";
 
     // Timestamp units by file endings
     public static final String DEFAULT_FILE_ENDINGS_MILLISECONDS = "java,js,py";
@@ -113,7 +113,7 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
     }
 
-    public static void saveMilisecondsFileEndings(String endings) {
+    public static void saveMillisecondsFileEndings(String endings) {
         PropertiesComponent.getInstance().setValue(PROPERTY_FILE_ENDINGS_MILLISECONDS, endings);
     }
 

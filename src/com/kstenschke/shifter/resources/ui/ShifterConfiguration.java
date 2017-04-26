@@ -39,7 +39,7 @@ public class ShifterConfiguration {
     private JTextField restoreSettings;
     private JTextPane thisDictionaryConfiguresShiftableTextPane;
     private JTextField inputSecondsEndings;
-    private JTextField inputMilisecondsEndings;
+    private JTextField inputMillisecondsEndings;
 
     /**
      * Constructor
@@ -62,7 +62,7 @@ public class ShifterConfiguration {
             this.radioButtonShiftInMilliseconds.setSelected(true);
         }
 
-        this.inputMilisecondsEndings.setText(ShifterPreferences.getMillisecondsFileEndings());
+        this.inputMillisecondsEndings.setText(ShifterPreferences.getMillisecondsFileEndings());
         this.inputSecondsEndings.setText(ShifterPreferences.getSecondsFileEndings());
 
         boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
@@ -96,7 +96,7 @@ public class ShifterConfiguration {
     public void reset() {
         spinnerShiftMore.setValue(10);
         radioButtonShiftInSeconds.setSelected(true);
-        inputMilisecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_MILLISECONDS);
+        inputMillisecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_MILLISECONDS);
         inputSecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_SECONDS);
         this.textAreaDictionaryTerms.setText(getDefaultTerms());
     }
@@ -136,7 +136,7 @@ public class ShifterConfiguration {
           || !this.textAreaDictionaryTerms.getText().equals(ShifterPreferences.getTermsDictionary())
           || !ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected())
           || !ShifterPreferences.getShiftingModeOfTimestamps().equals(this.getSelectedShiftingModeOfTimestamps())
-          || !ShifterPreferences.getMillisecondsFileEndings().equals(this.inputMilisecondsEndings.getText())
+          || !ShifterPreferences.getMillisecondsFileEndings().equals(this.inputMillisecondsEndings.getText())
           || !ShifterPreferences.getSecondsFileEndings().equals(this.inputSecondsEndings.getText())
         ;
     }
@@ -153,7 +153,7 @@ public class ShifterConfiguration {
         ShifterPreferences.saveShiftMoreSize(this.getShiftMoreSize());
         ShifterPreferences.saveIsActivePreserveCase(this.getIsActivePreserveCase());
         ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
-        ShifterPreferences.saveMilisecondsFileEndings(this.inputMilisecondsEndings.getToolTipText());
+        ShifterPreferences.saveMillisecondsFileEndings(this.inputMillisecondsEndings.getToolTipText());
         ShifterPreferences.saveSecondsFileEndings(this.inputSecondsEndings.getToolTipText());
 
         // Store dictionary
