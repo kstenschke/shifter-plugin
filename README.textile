@@ -56,7 +56,7 @@ h4. Code- and DOC Comments
 * PHP DOC: Shifting a selected PHP doc comment block that contains @param comments w/ variable name but no data type, guesses and inserts data types
 * PHP DOC: Shifting while the caret is inside an @param line that contains no data type, inserts a data type (guessed from the variable name)
 * JsDOC: Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside an @param- adds the missing curly brackets
-* Selected JsDoc block: Convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (bool => boolean, event => Object, int(eger) => number), reduce two successive empty JsDoc lines into a single empty line
+* Selected JsDoc block: Convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (bool => boolean, event => Object, int(eger) => number), reduce empty JsDoc lines
 
 h4. PHP and JavaScript
 * PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)
