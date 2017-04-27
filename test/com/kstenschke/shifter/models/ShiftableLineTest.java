@@ -30,7 +30,7 @@ public class ShiftableLineTest {
         int caretOffset = 0;
         String filename = "test.txt";
 
-        ShiftableLine shiftableLine  = new ShiftableLine(line1, editorText, caretOffset, filename);
+//        ShiftableLine shiftableLine  = new ShiftableLine(document, line1, caretOffset);
 //        String result = shiftableLine.getShifted(true, null, null);
     }
 }

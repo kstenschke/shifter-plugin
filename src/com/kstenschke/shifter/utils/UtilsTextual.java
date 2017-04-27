@@ -93,10 +93,6 @@ public class UtilsTextual {
         return str.isEmpty();
     }
 
-    /**
-     * @param  str
-     * @return boolean  Is the given string wrapped into single- or double quotes?
-     */
     public static boolean isWrappedIntoQuotes(String str) {
         return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
     }
@@ -106,8 +102,15 @@ public class UtilsTextual {
      * @param  wrap
      * @return boolean Is the given string wrapped into the wrapper string?
      */
+    private static boolean isWrappedWith(String str, String wrap, boolean needsToBeTwoSided, boolean needsContent) {
+        int stringLength = str.length();
+
+        return !((needsContent && stringLength < 3) || (needsToBeTwoSided && stringLength < 2))
+            && str.startsWith(wrap) && str.endsWith(wrap);
+    }
+
     private static boolean isWrappedWith(String str, String wrap) {
-        return str.startsWith(wrap) && str.endsWith(wrap);
+        return isWrappedWith(str, wrap, false, false);
     }
 
     /**
@@ -229,9 +232,8 @@ public class UtilsTextual {
         }
 
         String operatorToTheRight =
-                offset < textLength - 2
-                && offset > 0 && Character.isWhitespace(str.charAt(offset-1))
-
+            offset < textLength - 2
+            && offset > 0 && Character.isWhitespace(str.charAt(offset-1))
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
@@ -441,11 +443,7 @@ public class UtilsTextual {
         // If last line has no \n, add it one
         // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
         // w/ \n... This is fixed after.
-        if (lineSeparatorLength == 0) {
-            line += "\n";
-        }
-
-        return line;
+        return line + (lineSeparatorLength == 0 ? "\n" : "");
     }
 
     /**

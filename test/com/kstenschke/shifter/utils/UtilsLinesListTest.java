@@ -43,7 +43,9 @@ public class UtilsLinesListTest {
         assertEquals(";", delimiterDetector.getCommonDelimiter());
 
         // No line has content
-        lines = new ArrayList<String>().add("").add("");
+        lines = new ArrayList<String>();
+        lines.add("");
+        lines.add("");
 
         delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
         assertEquals(null, delimiterDetector.getCommonDelimiter());

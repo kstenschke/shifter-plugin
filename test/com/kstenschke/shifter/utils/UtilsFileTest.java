@@ -20,12 +20,12 @@ public class UtilsFileTest {
 
     @Test
     public void testFilenameEndsWithExtension() throws Exception {
-        assertTrue( UtilsFile.filenameEndsWithExtension("index.php"));
+        assertTrue(UtilsFile.filenameEndsWithExtension("index.php"));
 
-        assertFalse( UtilsFile.filenameEndsWithExtension("."));
-        assertFalse( UtilsFile.filenameEndsWithExtension("./"));
-        assertFalse( UtilsFile.filenameEndsWithExtension("/./"));
-        assertFalse( UtilsFile.filenameEndsWithExtension("php"));
+        assertFalse(UtilsFile.filenameEndsWithExtension("."));
+        assertFalse(UtilsFile.filenameEndsWithExtension("./"));
+        assertFalse(UtilsFile.filenameEndsWithExtension("/./"));
+        assertFalse(UtilsFile.filenameEndsWithExtension("php"));
         assertFalse(UtilsFile.filenameEndsWithExtension(""));
     }
 
