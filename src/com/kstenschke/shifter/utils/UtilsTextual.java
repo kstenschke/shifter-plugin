@@ -207,7 +207,11 @@ public class UtilsTextual {
      * @return String[]
      */
     @NotNull
-    public static String[] splitCamelCaseIntoWords(String str) {
+    public static String[] splitCamelCaseIntoWords(@Nullable String str) {
+        if (null == str) {
+            return new String[0];
+        }
+
         boolean isUcFirst = isUcFirst(str);
         if (isUcFirst) {
             str = UtilsTextual.toLcFirst(str);

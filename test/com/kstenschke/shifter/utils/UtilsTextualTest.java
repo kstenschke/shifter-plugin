@@ -1,5 +1,6 @@
 package com.kstenschke.shifter.utils;
 
+import org.apache.commons.lang.StringUtils;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -220,14 +221,13 @@ public class UtilsTextualTest {
     }
 
     @Test
-    public void testIsCommaSeparatedList() throws Exception {
-//        assertTrue(UtilsTextual.isCommaSeparatedList("some,words,separated,by,commas,all,words,are,lower-cased"));
-//        assertTrue(UtilsTextual.isCommaSeparatedList("SOME,WORDS,SEPARATED,BY,COMMAS,ALL,WORDS,ARE,UPPERCASED"));
-//        assertTrue(UtilsTextual.isCommaSeparatedList("some,WORDS,separated,BY,commas,THE,words,ARE,mixed,CASED"));
-//
-//        assertFalse(UtilsTextual.isCommaSeparatedList("ALL UPPERCASE SENTENCE."));
-//        assertFalse(UtilsTextual.isCommaSeparatedList("all lowercase sentence."));
-//        assertFalse(UtilsTextual.isCommaSeparatedList("aCamelCasedWord"));
+    public void testSplitCamelCaseIntoWords() throws Exception {
+        assertEquals("hello-World", StringUtils.join(UtilsTextual.splitCamelCaseIntoWords("helloWorld"), "-"));
+        assertEquals("Hello-World", StringUtils.join(UtilsTextual.splitCamelCaseIntoWords("HelloWorld"), "-"));
+
+        assertEquals("", StringUtils.join(UtilsTextual.splitCamelCaseIntoWords(""), "-"));
+        assertEquals(" ", StringUtils.join(UtilsTextual.splitCamelCaseIntoWords(" "), "-"));
+        assertEquals("", StringUtils.join(UtilsTextual.splitCamelCaseIntoWords(null), "-"));
     }
 
     @Test
