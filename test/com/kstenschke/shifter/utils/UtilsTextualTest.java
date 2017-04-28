@@ -21,12 +21,14 @@ public class UtilsTextualTest {
 
     @Test
     public void testIsMultiLine() throws Exception {
+        assertTrue(UtilsTextual.isMultiLine("line one\nline two"));
+        assertTrue(UtilsTextual.isMultiLine("\n"));
+
         assertFalse(UtilsTextual.isMultiLine(""));
         assertFalse(UtilsTextual.isMultiLine("A"));
         assertFalse(UtilsTextual.isMultiLine("A single line."));
 
-        assertTrue(UtilsTextual.isMultiLine("line one\nline two"));
-        assertTrue(UtilsTextual.isMultiLine("\n"));
+        assertFalse(UtilsTextual.isMultiLine(null));
     }
 
     @Test
@@ -43,6 +45,8 @@ public class UtilsTextualTest {
         assertFalse(UtilsTextual.containsCaseInSensitive("hello world", "x"));
         assertFalse(UtilsTextual.containsCaseInSensitive("hello world", "X"));
         assertFalse(UtilsTextual.containsCaseInSensitive("", "X"));
+
+        assertFalse(UtilsTextual.containsCaseInSensitive(null, "X"));
     }
 
     @Test
@@ -55,6 +59,8 @@ public class UtilsTextualTest {
 
         assertFalse(UtilsTextual.containsOnly("abc", new String[]{"a"}));
         assertFalse(UtilsTextual.containsOnly("abc", new String[]{"a", "b"}));
+
+        assertFalse(UtilsTextual.containsOnly(null, new String[]{"a", "b"}));
     }
 
     @Test
@@ -67,12 +73,150 @@ public class UtilsTextualTest {
 
         assertTrue(UtilsTextual.isWrappedIntoQuotes("\"'\""));
 
+        assertTrue(UtilsTextual.isWrappedIntoQuotes("'"));
+        assertTrue(UtilsTextual.isWrappedIntoQuotes("\""));
+
         assertFalse(UtilsTextual.isWrappedIntoQuotes("x"));
         assertFalse(UtilsTextual.isWrappedIntoQuotes(" \"x\""));
         assertFalse(UtilsTextual.isWrappedIntoQuotes("\t\"x\""));
 
-        assertTrue(UtilsTextual.isWrappedIntoQuotes("'"));
-        assertTrue(UtilsTextual.isWrappedIntoQuotes("\""));
+        assertFalse(UtilsTextual.isWrappedIntoQuotes(null));
+    }
+
+    @Test
+    public void testIsWrappedWith() throws Exception {
+        assertTrue(UtilsTextual.isWrappedWith("'", "'", false, false));
+        assertTrue(UtilsTextual.isWrappedWith("''", "'", true, false));
+        assertTrue(UtilsTextual.isWrappedWith("'hello world'", "'", true, true));
+
+        assertFalse(UtilsTextual.isWrappedWith("'", "'", true, false));
+        assertFalse(UtilsTextual.isWrappedWith("'", "'", true, true));
+        assertFalse(UtilsTextual.isWrappedWith("'", "'", false, true));
+
+        assertFalse(UtilsTextual.isWrappedWith("''", "'", true, true));
+        assertFalse(UtilsTextual.isWrappedWith("''", "'", false, true));
+
+        assertFalse(UtilsTextual.isWrappedWith(null, "'", false, false));
+        assertFalse(UtilsTextual.isWrappedWith(null, "'", true, false));
+        assertFalse(UtilsTextual.isWrappedWith(null, "'", true, true));
+        assertFalse(UtilsTextual.isWrappedWith(null, "'", false, true));
+    }
+
+    @Test
+    public void testContainsSlashes() throws Exception {
+        assertTrue(UtilsTextual.containsSlashes("http://www.xxx.ch/"));
+        assertTrue(UtilsTextual.containsSlashes("A single quote is written \\ ' and a backslash \\"));
+
+        assertFalse(UtilsTextual.containsSlashes("some,words,separated,by,commas,all,words,are,lower-cased"));
+        assertFalse(UtilsTextual.containsSlashes("all lowercase sentence"));
+        assertFalse(UtilsTextual.containsSlashes("ALL UPPERCASE SENTENCE."));
+
+        assertFalse(UtilsTextual.containsSlashes(""));
+        assertFalse(UtilsTextual.containsSlashes(null));
+    }
+
+    @Test
+    public void testContainsQuotes() throws Exception {
+        assertTrue(UtilsTextual.containsQuotes("'"));
+        assertTrue(UtilsTextual.containsQuotes("'This sentence is single-quoted'"));
+        assertTrue(UtilsTextual.containsQuotes("\"This sentence is double-quoted\""));
+
+        assertFalse(UtilsTextual.containsQuotes("all lowercase sentence"));
+        assertFalse(UtilsTextual.containsQuotes("aCamelCasedWord"));
+        assertFalse(UtilsTextual.containsQuotes("A MIXED case Sentence."));
+
+        assertFalse(UtilsTextual.containsQuotes(""));
+        assertFalse(UtilsTextual.containsQuotes(null));
+    }
+
+    @Test
+    public void testSwapSlashes() throws Exception {
+        assertEquals(null, UtilsTextual.swapSlashes(null));
+
+        assertEquals("", UtilsTextual.swapSlashes(""));
+        assertEquals("x", UtilsTextual.swapSlashes("x"));
+
+        assertEquals("\\/", UtilsTextual.swapSlashes("/\\"));
+
+        assertEquals("http://www.domain.com/", UtilsTextual.swapSlashes("http:\\\\www.domain.com\\"));
+        assertEquals("http:\\\\www.domain.com\\", UtilsTextual.swapSlashes("http://www.domain.com/"));
+
+        assertEquals(null, UtilsTextual.swapSlashes(null));
+    }
+
+    @Test
+    public void testSwapQuotes() throws Exception {
+        assertEquals("", UtilsTextual.swapQuotes(""));
+        assertEquals("\"", UtilsTextual.swapQuotes("'"));
+        assertEquals("'", UtilsTextual.swapQuotes("\""));
+
+        assertEquals("i say \"bam\"", UtilsTextual.swapQuotes("i say \'bam\'"));
+        assertEquals("you say \'hey\'", UtilsTextual.swapQuotes("you say \"hey\""));
+        assertEquals("\'hey\"BAM!\"\'", UtilsTextual.swapQuotes("\"hey\'BAM!\'\""));
+
+        assertEquals(null, UtilsTextual.swapQuotes(null));
+    }
+
+    @Test
+    public void testToUcFirst() throws Exception {
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("bam bam hey"));
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("BAM BAM HEY"));
+
+        assertEquals("", UtilsTextual.toUcFirst(""));
+        assertEquals(null, UtilsTextual.toUcFirst(null));
+    }
+
+    @Test
+    public void testToLcFirst() throws Exception {
+        assertEquals("bam bam hey", UtilsTextual.toLcFirst("Bam bam hey"));
+        assertEquals("bam bam hey", UtilsTextual.toLcFirst("bam bam hey"));
+
+        assertEquals("", UtilsTextual.toLcFirst(""));
+        assertEquals(null, UtilsTextual.toUcFirst(null));
+    }
+
+    @Test
+    public void testIsLcFirst() throws Exception {
+        assertTrue(UtilsTextual.isLcFirst("bam bam hey"));
+
+        assertFalse(UtilsTextual.isLcFirst("Bam bam hey"));
+        assertFalse(UtilsTextual.isLcFirst("BAM BAM HEY"));
+    }
+
+    @Test
+    public void testIsUcFirst() throws Exception {
+        assertTrue(UtilsTextual.isUcFirst("Bam bam hey"));
+        assertTrue(UtilsTextual.isUcFirst(""));
+
+        assertFalse(UtilsTextual.isUcFirst("bam bam hey"));
+        assertFalse(UtilsTextual.isUcFirst("BAM BAM HEY"));
+    }
+
+    @Test
+    public void testIsUpperCamelCase() throws Exception {
+        assertTrue(UtilsTextual.isUpperCamelCase("BamHey"));
+
+        assertFalse(UtilsTextual.isUpperCamelCase("Bamhey"));
+        assertFalse(UtilsTextual.isUpperCamelCase("BH"));
+
+        assertFalse(UtilsTextual.isUpperCamelCase(""));
+        assertFalse(UtilsTextual.isUpperCamelCase(null));
+    }
+
+    @Test
+    public void testIsLowerCamelCase() throws Exception {
+        assertTrue(UtilsTextual.isLowerCamelCase("bamHey"));
+
+        assertFalse(UtilsTextual.isLowerCamelCase("bamhey"));
+        assertFalse(UtilsTextual.isLowerCamelCase("Bh"));
+        assertFalse(UtilsTextual.isLowerCamelCase("bh"));
+
+        assertFalse(UtilsTextual.isLowerCamelCase("BamHey"));
+        assertFalse(UtilsTextual.isLowerCamelCase("Bamhey"));
+        assertFalse(UtilsTextual.isLowerCamelCase("BH"));
+
+        assertFalse(UtilsTextual.isLowerCamelCase(""));
+        assertFalse(UtilsTextual.isLowerCamelCase(null));
     }
 
     @Test
@@ -84,54 +228,6 @@ public class UtilsTextualTest {
 //        assertFalse(UtilsTextual.isCommaSeparatedList("ALL UPPERCASE SENTENCE."));
 //        assertFalse(UtilsTextual.isCommaSeparatedList("all lowercase sentence."));
 //        assertFalse(UtilsTextual.isCommaSeparatedList("aCamelCasedWord"));
-    }
-
-    @Test
-    public void testContainsAnySlashes() throws Exception {
-        assertTrue(UtilsTextual.containsAnySlashes("http://www.xxx.ch/"));
-        assertTrue(UtilsTextual.containsAnySlashes("A single quote is written \\ ' and a backslash \\"));
-
-        assertFalse(UtilsTextual.containsAnySlashes("some,words,separated,by,commas,all,words,are,lower-cased"));
-        assertFalse(UtilsTextual.containsAnySlashes("all lowercase sentence"));
-        assertFalse(UtilsTextual.containsAnySlashes("ALL UPPERCASE SENTENCE."));
-    }
-
-    @Test
-    public void testContainsAnyQuotes() throws Exception {
-        assertTrue(UtilsTextual.containsAnyQuotes("\'This sentence is single-quoted\'"));
-        assertTrue(UtilsTextual.containsAnyQuotes("\"This sentence is double-quoted\""));
-
-        assertFalse(UtilsTextual.containsAnyQuotes("all lowercase sentence"));
-        assertFalse(UtilsTextual.containsAnyQuotes("aCamelCasedWord"));
-        assertFalse(UtilsTextual.containsAnyQuotes("A MIXED case Sentence."));
-    }
-
-    @Test
-    public void testSwapSlashes() throws Exception {
-        assertEquals("http://www.domain.com/", UtilsTextual.swapSlashes("http:\\\\www.domain.com\\"));
-        assertEquals("http:\\\\www.domain.com\\", UtilsTextual.swapSlashes("http://www.domain.com/"));
-    }
-
-    @Test
-    public void testSwapQuotes() throws Exception {
-        assertEquals("i say \"bam\"", UtilsTextual.swapQuotes("i say \'bam\'"));
-        assertEquals("you say \'hey\'", UtilsTextual.swapQuotes("you say \"hey\""));
-        assertEquals("\'hey\"BAM!\"\'", UtilsTextual.swapQuotes("\"hey\'BAM!\'\""));
-    }
-
-    @Test
-    public void testToUcFirst() throws Exception {
-        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("bam bam hey"));
-        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("BAM BAM HEY"));
-    }
-
-    @Test
-    public void testIsUcFirst() throws Exception {
-        assertTrue(UtilsTextual.isUcFirst("Bam bam hey"));
-        assertTrue(UtilsTextual.isUcFirst(""));
-
-        assertFalse(UtilsTextual.isUcFirst("bam bam hey"));
-        assertFalse(UtilsTextual.isUcFirst("BAM BAM HEY"));
     }
 
     @Test

@@ -20,6 +20,7 @@ import com.kstenschke.shifter.models.shiftertypes.OperatorSign;
 import com.kstenschke.shifter.utils.natorder.NaturalOrderComparator;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,8 +41,8 @@ public class UtilsTextual {
         return str.equals(str.toUpperCase());
     }
 
-    public static boolean isMultiLine(String str) {
-        return str.contains("\n");
+    public static boolean isMultiLine(@Nullable String str) {
+        return null != str && str.contains("\n");
     }
 
     /**
@@ -72,8 +73,8 @@ public class UtilsTextual {
      * @param  needle
      * @return boolean
      */
-    public static boolean containsCaseInSensitive(String haystack, String needle) {
-        return Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
+    public static boolean containsCaseInSensitive(@Nullable String haystack, String needle) {
+        return null != haystack && Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
     }
 
     /**
@@ -81,8 +82,8 @@ public class UtilsTextual {
      * @param  characters
      * @return boolean
      */
-    public static boolean containsOnly(String str, String[] characters) {
-        if (str == null || str.isEmpty()) {
+    public static boolean containsOnly(@Nullable String str, String[] characters) {
+        if (null == str || str.isEmpty()) {
             return false;
         }
 
@@ -93,7 +94,7 @@ public class UtilsTextual {
         return str.isEmpty();
     }
 
-    public static boolean isWrappedIntoQuotes(String str) {
+    public static boolean isWrappedIntoQuotes(@Nullable String str) {
         return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
     }
 
@@ -102,14 +103,17 @@ public class UtilsTextual {
      * @param  wrap
      * @return boolean Is the given string wrapped into the wrapper string?
      */
-    private static boolean isWrappedWith(String str, String wrap, boolean needsToBeTwoSided, boolean needsContent) {
+    public static boolean isWrappedWith(@Nullable String str, String wrap, boolean needsToBeTwoSided, boolean needsContent) {
+        if (null == str) {
+            return false;
+        }
         int stringLength = str.length();
 
         return !((needsContent && stringLength < 3) || (needsToBeTwoSided && stringLength < 2))
             && str.startsWith(wrap) && str.endsWith(wrap);
     }
 
-    private static boolean isWrappedWith(String str, String wrap) {
+    private static boolean isWrappedWith(@Nullable String str, String wrap) {
         return isWrappedWith(str, wrap, false, false);
     }
 
@@ -117,24 +121,26 @@ public class UtilsTextual {
      * @param  str         String to be checked
      * @return boolean     Does the given string contain any slash or backslash?
      */
-    public static boolean containsAnySlashes(String str) {
-        return str.contains("\\") || str.contains("/");
+    public static boolean containsSlashes(String str) {
+        return null != str && (str.contains("\\") || str.contains("/"));
     }
 
     /**
      * @param  str         String to be checked
      * @return boolean     Does the given string contain single or double quotes?
      */
-    public static boolean containsAnyQuotes(String str) {
-        return str.contains("\"") || str.contains("'");
+    public static boolean containsQuotes(String str) {
+        return null != str && (str.contains("\"") || str.contains("'"));
     }
 
     /**
      * @param  str         String to be checked
      * @return String      Given string w/ contained slashes swapped against backslashes and vise versa
      */
-    public static String swapSlashes(String str) {
-        return str.
+    public static String swapSlashes(@Nullable String str) {
+        return null == str
+                ? null
+                : str.
             replace("\\", "###SHIFTERSLASH###").
             replace("/", "\\").
             replace("###SHIFTERSLASH###", "/");
@@ -145,17 +151,22 @@ public class UtilsTextual {
      * @return String      Given string w/ contained single quotes swapped against double quotes and vise versa
      */
     public static String swapQuotes(String str) {
-        return str.
-            replace("\"", "###SHIFTERSINGLEQUOTE###").
-            replace("'", "\"").
-            replace("###SHIFTERSINGLEQUOTE###", "'");
+        return null == str
+                ? null
+                : str
+                    .replace("\"", "###SHIFTERSINGLEQUOTE###")
+                    .replace("'", "\"")
+                    .replace("###SHIFTERSINGLEQUOTE###", "'");
     }
 
     /**
      * @param  str      String to be converted
      * @return String   Given string converted to lower case w/ only first char in upper case
      */
-    public static String toUcFirst(String str) {
+    public static String toUcFirst(@Nullable String str) {
+        if (null == str) {
+            return null;
+        }
         return str.isEmpty() ? "" : Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
     }
 
@@ -183,12 +194,12 @@ public class UtilsTextual {
         return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
     }
 
-    public static boolean isUpperCamelCase(String str) {
-        return str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+    public static boolean isUpperCamelCase(@Nullable String str) {
+        return null != str && str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
-    public static boolean isLowerCamelCase(String str) {
-        return str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+    public static boolean isLowerCamelCase(@Nullable String str) {
+        return null != str && str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
     /**

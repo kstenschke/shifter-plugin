@@ -109,7 +109,7 @@ public class ShiftableSelection {
             return;
         }
 
-        boolean containsQuotes = UtilsTextual.containsAnyQuotes(selectedText);
+        boolean containsQuotes = UtilsTextual.containsQuotes(selectedText);
 
         if (!isPhpVariable && UtilsFile.isPhpFile(filename) && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes)) {
             return;
@@ -145,7 +145,7 @@ public class ShiftableSelection {
                 document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
                 return;
             }
-            if (UtilsTextual.containsAnySlashes(selectedText)) {
+            if (UtilsTextual.containsSlashes(selectedText)) {
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
                 return;
             }
