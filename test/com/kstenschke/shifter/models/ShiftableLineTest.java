@@ -3,8 +3,6 @@ package com.kstenschke.shifter.models;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
-
 public class ShiftableLineTest {
 
     @Before

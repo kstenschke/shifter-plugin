@@ -62,7 +62,7 @@ public class UtilsTextual {
         boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
         if (delimiterDetector.isFoundDelimiter() && !isDelimitedLastLine) {
             // Maintain detected lines delimiter (ex: comma-separated values, w/ last item w/o trailing comma)
-            lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter(), isDelimitedLastLine);
+            lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter(), false);
         }
 
         return lines;

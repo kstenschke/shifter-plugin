@@ -8,6 +8,7 @@ import static org.junit.Assert.*;
 
 public class UtilsMapTest {
 
+    @SuppressWarnings("Duplicates")
     @Test
     public void testGetSumOfValues() throws Exception {
         HashMap<String, Integer> map = new HashMap<String, Integer>() {{
@@ -22,6 +23,7 @@ public class UtilsMapTest {
         assertEquals(0, UtilsMap.getSumOfValues(new HashMap<String, Integer>()));
     }
 
+    @SuppressWarnings("Duplicates")
     @Test
     public void testGetKeyOfHighestValue() throws Exception {
         HashMap<String, Integer> map = new HashMap<String, Integer>() {{

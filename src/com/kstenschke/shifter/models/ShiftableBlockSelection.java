@@ -76,8 +76,11 @@ public class ShiftableBlockSelection {
      */
     public static void shiftBlockSelectionInDocument(ActionsPerformer actionsPerformer, boolean shiftUp, @Nullable Integer moreCount) {
         Editor editor                 = actionsPerformer.editor;
-        Document document             = actionsPerformer.document;
+        if (null == editor) {
+            return;
+        }
         SelectionModel selectionModel = editor.getSelectionModel();
+        Document document             = actionsPerformer.document;
 
         int[] blockSelectionStarts = selectionModel.getBlockSelectionStarts();
         int[]blockSelectionEnds   = selectionModel.getBlockSelectionEnds();
