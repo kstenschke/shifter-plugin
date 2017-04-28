@@ -15,6 +15,8 @@
  */
 package com.kstenschke.shifter.utils;
 
+import org.jetbrains.annotations.Nullable;
+
 public class UtilsFile {
 
     /**
@@ -22,16 +24,13 @@ public class UtilsFile {
      * @param  toLowerCase
      * @return The extension    Everything after the last "." in the full filename
      */
-    public static String extractFileExtension(String filename, boolean toLowerCase) {
+    public static String extractFileExtension(@Nullable String filename, boolean toLowerCase) {
         if (filename == null || filename.isEmpty() || filename.length() < 3 || !filename.contains(".")) {
             return null;
         }
-
-        if (filename.contains("/")) {
-            filename = filename.substring(filename.lastIndexOf("/") + 1);
-        }
-        if (filename.contains("\\")) {
-            filename = filename.substring(filename.lastIndexOf("\\") + 1);
+        filename = getBasename(filename);
+        if (null == filename) {
+            return null;
         }
 
         return toLowerCase
@@ -39,11 +38,24 @@ public class UtilsFile {
                 : filename.substring(filename.lastIndexOf('.') + 1);
     }
 
-    public static String extractFileExtension(String filename) {
+    private static String getBasename(@Nullable String filename) {
+        if (null == filename) {
+            return null;
+        }
+        if (filename.contains("/")) {
+            filename = filename.substring(filename.lastIndexOf("/") + 1);
+        }
+        if (filename.contains("\\")) {
+            filename = filename.substring(filename.lastIndexOf("\\") + 1);
+        }
+        return filename;
+    }
+
+    public static String extractFileExtension(@Nullable String filename) {
         return extractFileExtension(filename, false);
     }
 
-    public static boolean filenameEndsWithExtension(String filename) {
+    public static boolean filenameEndsWithExtension(@Nullable String filename) {
         if (filename == null || filename.isEmpty() || !filename.contains(".")) {
             return false;
         }
@@ -53,11 +65,11 @@ public class UtilsFile {
         return parts.length > 1 && parts[0].length() > 0 && parts[1].length() > 2;
     }
 
-    public static boolean isPhpFile(String filename) {
+    public static boolean isPhpFile(@Nullable String filename) {
         return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(php|phtml)");
     }
 
-    public static boolean isCssFile(String filename) {
+    public static boolean isCssFile(@Nullable String filename) {
         return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(css|scss|sass|less|styl)");
     }
 

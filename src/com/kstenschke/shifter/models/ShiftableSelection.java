@@ -102,10 +102,10 @@ public class ShiftableSelection {
         if (wordType == ShiftingTypesManager.TYPE_TRAILING_COMMENT) {
             int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
             int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
-            String leadingWhitespace = UtilsTextual.getLeadingWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+            String leadWhitespace    = UtilsTextual.getLeadWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
             String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
-            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadingWhitespace));
+            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadWhitespace));
             return;
         }
 

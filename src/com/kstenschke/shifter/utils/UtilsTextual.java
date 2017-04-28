@@ -602,7 +602,10 @@ public class UtilsTextual {
         return StringUtils.join(resultLines, "\n");
     }
 
-    public static String getLeadingWhitespace(String str) {
+    public static String getLeadWhitespace(@Nullable String str) {
+        if (null == str) {
+            return null;
+        }
         String whitespace = "";
         int offset = 0;
         int length = str.length();
@@ -634,7 +637,10 @@ public class UtilsTextual {
     }
 
     @NotNull
-    public static List<String> getPregMatches(String str, String pattern) {
+    public static List<String> getPregMatches(@Nullable String str, String pattern) {
+        if (null == str) {
+            return new ArrayList<String>();
+        }
         Matcher m = Pattern.compile(pattern).matcher(str);
 
         List<String> allMatches = new ArrayList<String>();
