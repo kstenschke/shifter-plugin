@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.6.2
+    ** Improved: Better case maintaining during dictionaric word shifting
 * 1.6.1
     ** Improved: Better JsDoc comment block detection
 * 1.6.0

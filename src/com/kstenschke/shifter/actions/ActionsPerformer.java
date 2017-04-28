@@ -67,7 +67,7 @@ public class ActionsPerformer {
         CharSequence editorText = document.getCharsSequence();
         String line             = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
 
-        boolean isWordShifted = ShiftableWord.shiftWordAtCaret(editor, caretOffset, shiftUp, line, moreCount);
+        boolean isWordShifted = ShiftableWord.shiftWordAtCaretInDocument(editor, caretOffset, shiftUp, line, moreCount);
         if (!isWordShifted) {
             // Word at caret wasn't identified/shifted, try shifting the whole line
             ShiftableLine.shiftLineInDocument(editor, caretOffset, shiftUp, offsetLineStart, line, moreCount);

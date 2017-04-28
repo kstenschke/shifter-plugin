@@ -303,9 +303,9 @@ public class UtilsTextualTest {
 
     @Test
     public void testExtractLineAroundOffset() throws Exception {
-        assertEquals("bam bam,", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 3));
-        assertEquals("ey,", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 10));
-        assertEquals("what a bam.", UtilsTextual.extractLineAroundOffset("bam bam,\ney,\nwhat a bam.", 15));
+        assertEquals("bam bam,", UtilsTextual.getLineAtOffset("bam bam,\ney,\nwhat a bam.", 3));
+        assertEquals("ey,", UtilsTextual.getLineAtOffset("bam bam,\ney,\nwhat a bam.", 10));
+        assertEquals("what a bam.", UtilsTextual.getLineAtOffset("bam bam,\ney,\nwhat a bam.", 15));
     }
 
     @Test

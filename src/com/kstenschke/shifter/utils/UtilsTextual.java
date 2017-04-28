@@ -163,11 +163,20 @@ public class UtilsTextual {
      * @param  str      String to be converted
      * @return String   Given string converted to lower case w/ only first char in upper case
      */
-    public static String toUcFirst(@Nullable String str) {
+    public static String toUcFirst(@Nullable String str, boolean makeRestLower) {
         if (null == str) {
             return null;
         }
-        return str.isEmpty() ? "" : Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
+        if (str.isEmpty()) {
+            return "";
+        }
+        return Character.toUpperCase(str.charAt(0)) + (makeRestLower
+                ? str.substring(1).toLowerCase()
+                : str.substring(1));
+    }
+
+    public static String toUcFirst(@Nullable String str) {
+        return toUcFirst(str, false);
     }
 
     /**
@@ -193,6 +202,9 @@ public class UtilsTextual {
     public static boolean isUcFirst(String str) {
         return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
     }
+    public static boolean isUcFirst(char c) {
+        return isUcFirst("" + c);
+    }
 
     public static boolean isUpperCamelCase(@Nullable String str) {
         return null != str && str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
@@ -200,6 +212,10 @@ public class UtilsTextual {
 
     public static boolean isLowerCamelCase(@Nullable String str) {
         return null != str && str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+    }
+
+    public static boolean isCamelCase(@Nullable String str) {
+        return null != str && str.length() > 2 && (isLowerCamelCase(str) || isUpperCamelCase(str));
     }
 
     /**
@@ -302,24 +318,25 @@ public class UtilsTextual {
             return null;
         }
 
+        // Initialize offset
         if (offset > 0
          && !isJavaIdentifierPart(str.charAt(offset), allowHyphens)
          && isJavaIdentifierPart(str.charAt(offset - 1), allowHyphens)
         ) {
             offset--;
         }
-
         if (!isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
             return null;
         }
 
+        // Decrement offset until start of word or CharSequence
         int start = offset;
         int end   = offset;
-
         while (start > 0 && isJavaIdentifierPart(str.charAt(start - 1), allowHyphens)) {
             start--;
         }
 
+        // Increment offset until end of word or CharSequence
         while (end < textLength && isJavaIdentifierPart(str.charAt(end), allowHyphens)) {
             end++;
         }
@@ -336,6 +353,20 @@ public class UtilsTextual {
         return allowHyphens
                 ? Character.isJavaIdentifierPart(c) || c == '-'
                 : Character.isJavaIdentifierPart(c);
+    }
+
+    public static boolean isLetter(char c) {
+        return Character.toString(c).matches("[a-zA-Z]+");
+    }
+
+    public static boolean isCamelIdentifierPart(char c) {
+        return isCamelIdentifierPart(c, true);
+    }
+
+    public static boolean isCamelIdentifierPart(char c, boolean allowNumbers) {
+        return allowNumbers
+                ? Character.toString(c).matches("[a-zA-Z0-9]+")
+                : Character.toString(c).matches("[a-zA-Z]+");
     }
 
     /**
@@ -434,7 +465,7 @@ public class UtilsTextual {
         List<String> lines = new ArrayList<String>(endLine - startLine);
 
         for (int i = startLine; i <= endLine; i++) {
-            String line = UtilsTextual.extractLine(doc, i);
+            String line = UtilsTextual.getLine(doc, i);
 
             lines.add(line);
         }
@@ -447,7 +478,7 @@ public class UtilsTextual {
      * @param  lineNumber    Number of line to be extracted
      * @return String        The extracted line
      */
-    public static String extractLine(Document doc, int lineNumber) {
+    public static String getLine(Document doc, int lineNumber) {
         int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
 
         int startOffset = doc.getLineStartOffset(lineNumber);
@@ -466,7 +497,7 @@ public class UtilsTextual {
      * @param  offset
      * @return String
      */
-    public static String extractLineAroundOffset(String str, int offset) {
+    public static String getLineAtOffset(String str, int offset) {
         int lenText      = str.length();
 
         int offsetStart = offset;

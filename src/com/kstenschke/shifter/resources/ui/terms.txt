@@ -27,6 +27,7 @@
 	|extends|implements|
 }
 (|java|) {
+    |CharSequence|String|
 	|boolean|byte|char|double|float|int|long|short|string|
 	|equals|contains|
 }

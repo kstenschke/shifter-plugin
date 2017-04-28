@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
  */
 public class ShiftableWord {
 
-    private final ShiftingTypesManager shifterTypesManager;
+    private final ShiftingTypesManager shiftingTypesManager;
     private final String word;
     private final String filename;
 
@@ -65,7 +65,7 @@ public class ShiftableWord {
             String filename,
             @Nullable Integer moreCount
     ) {
-        this.shifterTypesManager = new ShiftingTypesManager();
+        this.shiftingTypesManager = new ShiftingTypesManager();
 
         this.editorText = editorText;
         this.caretOffset = caretOffset;
@@ -73,7 +73,7 @@ public class ShiftableWord {
         this.moreCount = moreCount;
 
         // Detect word type
-        this.wordType = shifterTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
+        this.wordType = shiftingTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
 
         // Comprehend negative values of numeric types
         this.word = (
@@ -99,7 +99,7 @@ public class ShiftableWord {
             return this.word;
         }
 
-        String shiftedWord = shifterTypesManager.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
+        String shiftedWord = shiftingTypesManager.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
 
         return this.word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }
@@ -113,7 +113,7 @@ public class ShiftableWord {
                 return shiftedWord.toUpperCase();
             }
             if (UtilsTextual.isUcFirst(this.word)) {
-                return UtilsTextual.toUcFirst(shiftedWord);
+                return UtilsTextual.toUcFirst(shiftedWord, false);
             }
             if (UtilsTextual.isLcFirst(this.word)) {
                 return UtilsTextual.toLcFirst(shiftedWord);
@@ -161,7 +161,7 @@ public class ShiftableWord {
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      * @return boolean
      */
-    public static boolean shiftWordAtCaret(Editor editor, Integer caretOffset, boolean shiftUp, String line, @Nullable Integer moreCount) {
+    public static boolean shiftWordAtCaretInDocument(Editor editor, Integer caretOffset, boolean shiftUp, String line, @Nullable Integer moreCount) {
         Document document       = editor.getDocument();
         CharSequence editorText = document.getCharsSequence();
         String filename         = UtilsEnvironment.getDocumentFilename(document);

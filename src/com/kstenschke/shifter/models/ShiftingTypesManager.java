@@ -202,7 +202,7 @@ public class ShiftingTypesManager {
     }
 
     public int getWordType(String word, CharSequence editorText, int caretOffset, String filename) {
-        String line = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
+        String line = UtilsTextual.getLineAtOffset(editorText.toString(), caretOffset);
 
         int editorTextLength = editorText.length();
         int offsetPostfixChar = caretOffset + word.length();
@@ -301,7 +301,7 @@ public class ShiftingTypesManager {
      * @return String
      */
     public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
-        String line    = UtilsTextual.extractLineAroundOffset(editorText.toString(), caretOffset);
+        String line    = UtilsTextual.getLineAtOffset(editorText.toString(), caretOffset);
         int idWordType = this.getWordType(word, "", "", false, line, filename);
 
         return this.getShiftedWord(word, idWordType, isUp, editorText, caretOffset, moreCount, filename, editor);

@@ -97,7 +97,7 @@ public class ShiftableBlockSelection {
         String filename = UtilsEnvironment.getDocumentFilename(document);
 
         String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
-        String line = UtilsTextual.extractLine(document, document.getLineNumber(blockSelectionStarts[0])).trim();
+        String line = UtilsTextual.getLine(document, document.getLineNumber(blockSelectionStarts[0])).trim();
 
         Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, blockSelectionStarts[0]);
         String newWord     = ShiftableWord.getShiftedWordInDocument(editor, shiftUp, filename, word, line, wordOffset, false, false, moreCount);

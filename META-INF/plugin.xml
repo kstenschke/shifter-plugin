@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -109,11 +109,12 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.6.1
+        <li>1.6.2
             <ul>
-                <li>Improved: Better JsDoc comment block detection</li>
+                <li>Improved: Better case maintaining during dictionaric word shifting</li>
             </ul>
         </li>
+        <li>1.6.1 Improved: Better JsDoc comment block detection</li>
         <li>1.6.0
             <ul>
                 <li>Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (bool => boolean, event => Object, int(eger) => number),  guess and insert missing data type into "@param" and "@returns" lines, reduce empty JsDoc lines</li>
