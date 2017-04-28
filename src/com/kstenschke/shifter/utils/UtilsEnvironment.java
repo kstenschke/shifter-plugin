@@ -39,7 +39,7 @@ public class UtilsEnvironment {
     public static boolean replaceWordAtCaretInDocument(Document document, int caretOffset, String charSequence) {
         String documentText = document.getText();
         int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, caretOffset);
-        int offsetEnd = UtilsTextual.getEndOfWordAtOffset(documentText, caretOffset);
+        int offsetEnd   = UtilsTextual.getEndOfWordAtOffset(documentText, caretOffset);
 
         document.replaceString(offsetStart, offsetEnd, charSequence);
 
@@ -48,12 +48,12 @@ public class UtilsEnvironment {
 
     public static boolean reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
-        if (psiFile != null) {
-            CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
-            return true;
+        if (psiFile == null) {
+            return false;
         }
 
-        return false;
+        CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
+        return true;
     }
 
     /**

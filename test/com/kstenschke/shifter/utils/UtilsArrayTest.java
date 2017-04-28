@@ -22,10 +22,10 @@ public class UtilsArrayTest {
     }
 
     @Test
-    public void testMergeStringArrays() throws Exception {
-        assertArrayEquals(new String[]{"a", "b"}, UtilsArray.mergeStringArrays(new String[]{"a"}, new String[]{"b"}));
-        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b"}, new String[]{"c", "d"}));
-        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b"}, new String[]{"b", "c", "d"}));
-        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeStringArrays(new String[]{"a", "b", "c"}, new String[]{"b", "c", "d"}));
+    public void testMergeArrays() throws Exception {
+        assertArrayEquals(new String[]{"a", "b"}, UtilsArray.mergeArrays(new String[]{"a"}, new String[]{"b"}));
+        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeArrays(new String[]{"a", "b"}, new String[]{"c", "d"}));
+        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeArrays(new String[]{"a", "b"}, new String[]{"b", "c", "d"}));
+        assertArrayEquals(new String[]{"a", "b", "c", "d"}, UtilsArray.mergeArrays(new String[]{"a", "b", "c"}, new String[]{"b", "c", "d"}));
     }
 }

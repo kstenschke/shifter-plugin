@@ -47,7 +47,7 @@ public class DocCommentTag {
      * @return Array    String array w/ all recognized doc comment tags
      */
     private String[] getAllTags() {
-        return UtilsArray.mergeStringArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
+        return UtilsArray.mergeArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
     }
 
     /**

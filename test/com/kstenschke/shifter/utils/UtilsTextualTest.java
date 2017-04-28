@@ -161,7 +161,7 @@ public class UtilsTextualTest {
     @Test
     public void testToUcFirst() throws Exception {
         assertEquals("Bam bam hey", UtilsTextual.toUcFirst("bam bam hey"));
-        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("BAM BAM HEY"));
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("Bam bam hey"));
 
         assertEquals("", UtilsTextual.toUcFirst(""));
         assertEquals(null, UtilsTextual.toUcFirst(null));
@@ -190,7 +190,7 @@ public class UtilsTextualTest {
         assertTrue(UtilsTextual.isUcFirst(""));
 
         assertFalse(UtilsTextual.isUcFirst("bam bam hey"));
-        assertFalse(UtilsTextual.isUcFirst("BAM BAM HEY"));
+        assertFalse(UtilsTextual.isUcFirst("bAM BAM HEY"));
     }
 
     @Test
@@ -218,6 +218,11 @@ public class UtilsTextualTest {
 
         assertFalse(UtilsTextual.isLowerCamelCase(""));
         assertFalse(UtilsTextual.isLowerCamelCase(null));
+    }
+
+    @Test
+    public void testIsCamelCase() throws Exception {
+
     }
 
     @Test
@@ -269,6 +274,11 @@ public class UtilsTextualTest {
 //        assertEquals("ding", UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", 10));
 //
 //        assertEquals(null, UtilsTextual.getWordAtOffset("bam lam, ding, dong, what a bam.", -1));
+    }
+
+    @Test
+    public void testIsJavaIdentifierPart() throws Exception {
+
     }
 
     @Test
@@ -340,5 +350,65 @@ public class UtilsTextualTest {
 
         assertEquals(2, UtilsTextual.formatAmountDigits("55", 1).length());
         assertEquals(3, UtilsTextual.formatAmountDigits("321", 1).length());
+    }
+
+    @Test
+    public void testIsLetter() throws Exception {
+
+    }
+
+    @Test
+    public void testIsCamelIdentifierPart() throws Exception {
+
+    }
+
+    @Test
+    public void testGetEndOfWordAtOffset() throws Exception {
+
+    }
+
+    @Test
+    public void testGetLine() throws Exception {
+
+    }
+
+    @Test
+    public void testGetLineAtOffset() throws Exception {
+
+    }
+
+    @Test
+    public void testHasDuplicateLines() throws Exception {
+
+    }
+
+    @Test
+    public void testReduceDuplicateLines() throws Exception {
+
+    }
+
+    @Test
+    public void testGetLeadingWhitespace() throws Exception {
+
+    }
+
+    @Test
+    public void testExtractPhpVariables() throws Exception {
+
+    }
+
+    @Test
+    public void testExtractQuotedStrings() throws Exception {
+
+    }
+
+    @Test
+    public void testGetPregMatches() throws Exception {
+
+    }
+
+    @Test
+    public void testGuessDataTypeByName() throws Exception {
+
     }
 }

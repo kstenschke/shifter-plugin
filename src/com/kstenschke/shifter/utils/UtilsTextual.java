@@ -51,7 +51,7 @@ public class UtilsTextual {
      * @return Given lines sorted alphabetically ascending / descending
      */
     public static List<String> sortLines(List<String> lines, boolean shiftUp) {
-        UtilsLinesList.DelimiterDetector delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+        DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
 
         Collections.sort(lines, new NaturalOrderComparator());
 
@@ -62,7 +62,7 @@ public class UtilsTextual {
         boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
         if (delimiterDetector.isFoundDelimiter() && !isDelimitedLastLine) {
             // Maintain detected lines delimiter (ex: comma-separated values, w/ last item w/o trailing comma)
-            lines = UtilsLinesList.addDelimiter(lines, delimiterDetector.getCommonDelimiter(), isDelimitedLastLine);
+            lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter(), isDelimitedLastLine);
         }
 
         return lines;
@@ -677,5 +677,35 @@ public class UtilsTextual {
         }
 
         return "unknown";
+    }
+
+    /**
+     * @param lines
+     * @param delimiter
+     * @param isDelimitedLastLine
+     * @return Given lines ending w/ given delimiter, optionally also the last line
+     */
+    public static List<String> addDelimiter(List<String> lines, String delimiter, boolean isDelimitedLastLine) {
+        int amountLines = lines.size();
+        int index = 0;
+
+        for (String line : lines) {
+            line = line.trim();
+
+            boolean isLastLine = index + 1 == amountLines;
+            if ((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {
+                line = line + delimiter;
+            }
+
+            if (isLastLine && !isDelimitedLastLine && line.endsWith(delimiter)) {
+                // Remove delimiter from last line
+                line = line.substring(0, line.length() - 1);
+            }
+
+            lines.set(index, line + "\n");
+            index++;
+        }
+
+        return lines;
     }
 }

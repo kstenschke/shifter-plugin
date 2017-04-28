@@ -7,21 +7,16 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class UtilsLinesListTest {
-
-    @Test
-    public void testAddDelimiter() throws Exception {
-
-    }
+public class DelimiterDetectorTest {
 
     @Test
     public void testGetCommonDelimiter() throws Exception {
         List<String> lines;
-        UtilsLinesList.DelimiterDetector delimiterDetector;
+        DelimiterDetector delimiterDetector;
 
         // Lines are not initialized
         lines = new ArrayList<String>();
-        delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+        delimiterDetector = new DelimiterDetector(lines);
         assertEquals(null, delimiterDetector.getCommonDelimiter());
 
         // All delimiters are ";"
@@ -30,7 +25,7 @@ public class UtilsLinesListTest {
         lines.add("b = 1;");
         lines.add("c = 2;");
 
-        delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+        delimiterDetector = new DelimiterDetector(lines);
         assertEquals(";", delimiterDetector.getCommonDelimiter());
 
         // All delimiters are ";", there is a line w/o content
@@ -39,7 +34,7 @@ public class UtilsLinesListTest {
         lines.add("");
         lines.add("c = 2;");
 
-        delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+        delimiterDetector = new DelimiterDetector(lines);
         assertEquals(";", delimiterDetector.getCommonDelimiter());
 
         // No line has content
@@ -47,8 +42,18 @@ public class UtilsLinesListTest {
         lines.add("");
         lines.add("");
 
-        delimiterDetector = new UtilsLinesList.DelimiterDetector(lines);
+        delimiterDetector = new DelimiterDetector(lines);
         assertEquals(null, delimiterDetector.getCommonDelimiter());
+    }
+
+    @Test
+    public void testIsFoundDelimiter() throws Exception {
+
+    }
+
+    @Test
+    public void testIsDelimitedLastLine() throws Exception {
+
     }
 
 }
