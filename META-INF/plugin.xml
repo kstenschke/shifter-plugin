@@ -111,6 +111,7 @@
     <ul>
         <li>1.6.2
             <ul>
+                <li>Improved: More JsDoc data types (also invalid) are supported</li>
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>
             </ul>
         </li>

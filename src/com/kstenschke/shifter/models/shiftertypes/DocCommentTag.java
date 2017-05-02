@@ -38,9 +38,9 @@ public class DocCommentTag {
      * Constructor
      */
     public DocCommentTag() {
-        tagsJavaScript = new String[]{"author", "class", "constructor", "deprecated", "exception", "method", "module", "namespace", "param", "private", "property", "return", "see", "this", "throws", "type", "version"};
-        tagsJava = new String[]{"author", "version", "param", "return", "exception", "throws", "see", "since", "serial", "deprecated"};
-        tagsPHP = new String[]{"abstract", "access", "author", "constant", "deprecated", "final", "global", "magic", "module", "param", "package", "return", "see", "static", "subpackage", "throws", "todo", "var", "version"};
+        tagsJavaScript = new String[]{"author", "class", "constructor", "deprecated", "exception", "method", "module", "namespace", "param", "private", "property", "returns", "see", "this", "throws", "type", "version"};
+        tagsJava       = new String[]{"author", "version", "param", "return", "exception", "throws", "see", "since", "serial", "deprecated"};
+        tagsPHP        = new String[]{"abstract", "access", "author", "constant", "deprecated", "final", "global", "magic", "module", "param", "package", "return", "see", "static", "subpackage", "throws", "todo", "var", "version"};
     }
 
     /**

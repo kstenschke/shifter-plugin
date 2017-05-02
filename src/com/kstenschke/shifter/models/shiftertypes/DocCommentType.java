@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 public class DocCommentType {
 
     /**
-     * Check whether given String looks like a doc comment line
+     * Check whether given String looks like a DOC comment line
      *
      * @param line Line the caret is at
      * @return boolean.

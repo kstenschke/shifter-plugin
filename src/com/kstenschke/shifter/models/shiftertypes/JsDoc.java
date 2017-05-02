@@ -60,17 +60,36 @@ public class JsDoc {
     }
 
     public static Boolean isDataType(String str) {
+        return isDataType(str, true);
+    }
+
+    public static Boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
-        return str.equals("array")
+        if (str.equals("array")
                 || str.equals("boolean")
+                || str.equals("date")
                 || str.equals("function")
                 || str.equals("null")
                 || str.equals("number")
                 || str.equals("object")
                 || str.equals("string")
                 || str.equals("symbol")
-                || str.equals("undefined");
+                || str.equals("undefined")
+                || str.equals("*")
+        ) {
+            return true;
+        }
+
+        return includeInvalidTypes && (
+                str.equals("bool")
+             || str.equals("event")
+             || str.equals("float")
+             || str.equals("int")
+             || str.equals("integer")
+             || str.equals("null")
+             || str.equals("void")
+        );
     }
 
     public static Boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
@@ -88,8 +107,13 @@ public class JsDoc {
             return true;
         }
 
-        return allowInvalidTypes
-            && (str.contains(lhs + "bool") || str.contains(lhs + "event") || str.contains(lhs + "int"));
+        return allowInvalidTypes && (
+                str.contains(lhs + "bool")
+             || str.contains(lhs + "event")
+             || str.contains(lhs + "float")
+             || str.contains(lhs + "int")
+             || str.contains(lhs + "void")
+        );
     }
 
     public static Boolean containsCompounds(String str) {
@@ -117,11 +141,9 @@ public class JsDoc {
     private static String addCompoundsToDataType(String line, String docCommentType, boolean wrapInvalidDataTypes) {
         line = line.replaceAll("(?i)(" + docCommentType + "\\s*)(array|boolean|function|null|number|object|string|undefined)", "$1{$2}");
 
-        if (wrapInvalidDataTypes) {
-            line = line.replaceAll("(?i)(" + docCommentType + "\\s*)(bool|event|int|integer)", "$1{$2}");
-        }
-
-        return line;
+        return wrapInvalidDataTypes
+            ? line.replaceAll("(?i)(" + docCommentType + "\\s*)(bool|event|float|int|integer|void)", "$1{$2}")
+            : line;
     }
 
     public static boolean correctInvalidReturnsCommentInDocument(Document document, int caretOffset) {
@@ -200,8 +222,10 @@ public class JsDoc {
         return line
                 .replace(lhs + "bool" + rhs,    lhs + "boolean" + rhs)
                 .replace(lhs + "event" + rhs,   lhs + "Object" + rhs)
+                .replace(lhs + "float" + rhs,   lhs + "number" + rhs)
                 .replace(lhs + "int" + rhs,     lhs + "number" + rhs)
-                .replace(lhs + "integer" + rhs, lhs + "number" + rhs);
+                .replace(lhs + "integer" + rhs, lhs + "number" + rhs)
+                .replace(lhs + "void" + rhs, lhs + "undefined" + rhs);
     }
 
     private static String reduceDoubleEmptyCommentLines(String block) {
