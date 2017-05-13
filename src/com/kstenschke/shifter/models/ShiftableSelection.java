@@ -85,10 +85,11 @@ public class ShiftableSelection {
 
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftingTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
+        boolean containsQuotes       = UtilsTextual.containsQuotes(selectedText);
 
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {
-            // Selection is multi-lined: sort lines alphabetical
-            ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
+            // Selection is multi-lined: sort lines or swap quotes
+            sortLinesOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, lineNumberSelStart, lineNumberSelEnd, isUp);
             return;
         }
         if (isJsVarsDeclarations) {
@@ -108,8 +109,6 @@ public class ShiftableSelection {
             document.replaceString(offsetStartCaretLine, offsetEndCaretLine, TrailingComment.getShifted(caretLine, leadWhitespace));
             return;
         }
-
-        boolean containsQuotes = UtilsTextual.containsQuotes(selectedText);
 
         if (!isPhpVariable && UtilsFile.isPhpFile(filename) && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes)) {
             return;
@@ -288,6 +287,53 @@ public class ShiftableSelection {
                                             case 0:
                                                 shifted = SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp);
                                                 break;
+                                            case 1:
+                                            default:
+                                                shifted = UtilsTextual.swapQuotes(selectedText);
+
+                                        }
+                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                    }
+                                },
+                                null, null);
+                    }
+                });
+            }
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+    }
+
+    public static void sortLinesOrSwapQuotesInDocument(
+            boolean containsQuotes,
+            final int offsetStart, final int offsetEnd, final String selectedText,
+            final Project project, final Document document,
+            final int lineNumberSelStart, final int lineNumberSelEnd,
+            final boolean isUp) {
+        if (!containsQuotes) {
+            ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
+            return;
+        }
+
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_LINES_SORT);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
+
+        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final JBList modes = new JBList(options);
+        PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
+            public void run() {
+                ApplicationManager.getApplication().runWriteAction(new Runnable() {
+                    public void run() {
+                        // Callback when item chosen
+                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                                    public void run() {
+                                        final int index = modes.getSelectedIndex();
+                                        String shifted;
+
+                                        switch (index) {
+                                            case 0:
+                                                ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
+                                                return;
                                             case 1:
                                             default:
                                                 shifted = UtilsTextual.swapQuotes(selectedText);

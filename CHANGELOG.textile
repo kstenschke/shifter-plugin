@@ -1,6 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.6.2
+    ** Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes
     ** Improved: More JsDoc data types (also invalid) are supported
     ** Improved: Better case maintaining during dictionaric word shifting
     ** Improved: Sorting selected lines was possible only from 3+ lines
