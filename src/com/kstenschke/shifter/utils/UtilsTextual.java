@@ -33,6 +33,17 @@ import java.util.regex.Pattern;
  */
 public class UtilsTextual {
 
+    private final static Pattern LTRIM = Pattern.compile("^\\s+");
+    private final static Pattern RTRIM = Pattern.compile("\\s+$");
+
+    public static String ltrim(String s) {
+        return LTRIM.matcher(s).replaceAll("");
+    }
+
+    public static String rtrim(String s) {
+        return RTRIM.matcher(s).replaceAll("");
+    }
+
     /**
      * @param  str         String to be checked
      * @return boolean     Is the given string fully lower case?
@@ -518,10 +529,14 @@ public class UtilsTextual {
      * @return StringBuilder
      */
     public static StringBuilder joinLines(List<String> lines) {
+        return joinLines(lines, "");
+    }
+
+    public static StringBuilder joinLines(List<String> lines, String appendStr) {
         StringBuilder builder = new StringBuilder();
 
         for (String line : lines) {
-            builder.append(line);
+            builder.append(line + appendStr);
         }
 
         return builder;

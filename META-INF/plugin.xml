@@ -111,6 +111,7 @@
     <ul>
         <li>1.6.2
             <ul>
+                <li>Added: Sort all attributes of all selectors in a CSS (or LESS or SASS) stylesheet selection alphabetically</li>
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>
                 <li>Improved: More JsDoc data types (also invalid) are supported</li>
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>

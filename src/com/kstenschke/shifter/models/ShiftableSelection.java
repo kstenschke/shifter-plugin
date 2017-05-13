@@ -19,6 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
+import com.kstenschke.shifter.models.shiftableTypes.Css;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -79,6 +80,16 @@ public class ShiftableSelection {
         boolean isPhpVariable        = wordType == ShiftableTypesManager.TYPE_PHP_VARIABLE;
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftableTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
         boolean containsQuotes       = UtilsTextual.containsQuotes(selectedText);
+        boolean isMultiLine          = UtilsTextual.isMultiLine(selectedText);
+
+        if (UtilsFile.isCssFile(filename) && isMultiLine) {
+            // Sort attributes per selector alphabetically
+            String shifted = Css.getShifted(selectedText);
+            if (null != shifted) {
+                document.replaceString(offsetStart, offsetEnd, shifted);
+                return;
+            }
+        }
 
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines or swap quotes
