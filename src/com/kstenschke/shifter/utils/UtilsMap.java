@@ -17,7 +17,6 @@ package com.kstenschke.shifter.utils;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 
 public class UtilsMap {
 
@@ -43,7 +42,7 @@ public class UtilsMap {
 
         Iterator it = map.entrySet().iterator();
         while (it.hasNext()) {
-            Map.Entry pairs = (Map.Entry) it.next();
+            java.util.Map.Entry pairs = (java.util.Map.Entry) it.next();
             int value = Integer.parseInt( pairs.getValue().toString());
             if (value > max) {
                 max = value;

@@ -1,0 +1,73 @@
+/*
+ * Copyright 2011-2017 Kay Stenschke
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.kstenschke.shifter.models.shiftable.types;
+
+import com.kstenschke.shifter.utils.UtilsTextual;
+
+import java.util.Collections;
+import java.util.List;
+
+/**
+ * Quoted String.
+ */
+public class QuotedString {
+
+    private String quoteChar;
+
+    /**
+     * Check whether shifted word is wrapped in quote characters
+     *
+     * @param  prefixChar  Character preceding the string
+     * @param  postfixChar Character after the string
+     * @return boolean
+     */
+    public boolean isQuotedString(String prefixChar, String postfixChar) {
+        this.quoteChar = prefixChar;
+
+        // Must begin be wrapped in single-, double quotes, or backticks
+
+        return  // Word is wrapped in single quotes
+                ("'".equals(prefixChar) && "'".equals(postfixChar))
+                // Word is wrapped in double quotes
+                || ("\"".equals(prefixChar) && "\"".equals(postfixChar))
+                // Word is wrapped in backticks
+                || ("`".equals(prefixChar) && "`".equals(postfixChar));
+    }
+
+    /**
+     * Shift to prev/next quoted string
+     *
+     * @param  word       Quoted word to be shifted
+     * @param  editorText Full text of editor
+     * @param  isUp       Shifting up or down?
+     * @return String
+     */
+    public String getShifted(String word, CharSequence editorText, boolean isUp) {
+        // Get array of all strings wrapped in current quoting sign
+        String text = editorText.toString();
+        List<String> allMatches = UtilsTextual.extractQuotedStrings(text, this.quoteChar);
+
+        // Sort var names alphabetically
+        Collections.sort(allMatches);
+        int amountVars = allMatches.size();
+
+        // Find position of given variable, return next/previous variable name
+        int curIndex = allMatches.indexOf(word);
+        curIndex     = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
+
+        return allMatches.get(curIndex);
+    }
+}
