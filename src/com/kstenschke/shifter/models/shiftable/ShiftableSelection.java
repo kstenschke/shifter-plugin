@@ -83,7 +83,7 @@ public class ShiftableSelection {
 
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines or swap quotes
-            ShiftableSelectionPopup.sortLinesOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, lineNumberSelStart, lineNumberSelEnd, isUp);
+            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortLinesOrSwapQuotesInDocument(isUp);
             return;
         }
         if (isJsVarsDeclarations) {
@@ -115,12 +115,12 @@ public class ShiftableSelection {
         if (!isPhpVariable) {
             if (SeparatedList.isSeparatedList(selectedText,",")) {
                 // Comma-separated list
-                ShiftableSelectionPopup.sortListOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, ",(\\s)*", ", ", isUp);
+                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", isUp);
                 return;
             }
             if (SeparatedList.isSeparatedList(selectedText,"|")) {
                 // Pipe-separated list
-                ShiftableSelectionPopup.sortListOrSwapQuotesInDocument(containsQuotes, offsetStart, offsetEnd, selectedText, project, document, "\\|(\\s)*", "|", isUp);
+                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortListOrSwapQuotesInDocument("\\|(\\s)*", "|", isUp);
                 return;
             }
             if (containsQuotes) {
@@ -172,7 +172,7 @@ public class ShiftableSelection {
     private static boolean shiftSelectionInPhpDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText, boolean containsQuotes) {
         PhpConcatenation phpConcatenation = new PhpConcatenation(selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
-            ShiftableSelectionPopup.shiftPhpConcatenationOrSwapQuotesInDocument(containsQuotes, project, document, offsetStart, offsetEnd, selectedText, phpConcatenation);
+            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation);
             return true;
         }
         if (Comment.isHtmlComment(selectedText)) {
@@ -191,7 +191,6 @@ public class ShiftableSelection {
             if (filename.endsWith("js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd)) {
                 return true;
             }
-
             if (Comment.isBlockComment(selectedText)) {
                 Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
                 return true;
