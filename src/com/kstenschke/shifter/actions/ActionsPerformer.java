@@ -18,10 +18,10 @@ package com.kstenschke.shifter.actions;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.editor.*;
-import com.kstenschke.shifter.models.shiftable.ShiftableBlockSelection;
-import com.kstenschke.shifter.models.shiftable.ShiftableLine;
-import com.kstenschke.shifter.models.shiftable.ShiftableSelection;
-import com.kstenschke.shifter.models.shiftable.ShiftableWord;
+import com.kstenschke.shifter.models.ShiftableBlockSelection;
+import com.kstenschke.shifter.models.ShiftableLine;
+import com.kstenschke.shifter.models.ShiftableSelection;
+import com.kstenschke.shifter.models.ShiftableWord;
 import org.jetbrains.annotations.Nullable;
 
 public class ActionsPerformer {
