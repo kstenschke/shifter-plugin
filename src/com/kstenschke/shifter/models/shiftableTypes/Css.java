@@ -28,14 +28,6 @@ import static org.apache.commons.lang.StringUtils.trim;
 public class Css {
 
     /**
-     * @param  str      String to be checked
-     * @return boolean  Does the given string represent CSS
-     */
-    public static boolean isCss(String str) {
-        return false;
-    }
-
-    /**
      * @param  value
      * @return String
      */
