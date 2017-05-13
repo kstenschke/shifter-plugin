@@ -32,6 +32,7 @@ h4. Sorting
 * Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
 * Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements
 * Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts
+* Shifting a selection from a CSS, LESS or SASS file, sorts all attributes in all selectors alphabetically
 
 h4. Numeric Shifting
 * Numeric values - Incrementing/decrementing numbers
