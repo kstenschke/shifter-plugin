@@ -3,6 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.6.2
     ** Improved: More JsDoc data types (also invalid) are supported
     ** Improved: Better case maintaining during dictionaric word shifting
+    ** Improved: Sorting selected lines was possible only from 3+ lines
 * 1.6.1
     ** Improved: Better JsDoc comment block detection
 * 1.6.0

@@ -657,6 +657,8 @@ public class UtilsTextual {
      * @return Name of primitive (PHP) data type
      */
     public static String guessDataTypeByName(String str) {
+        str = str.toLowerCase();
+
         if (str.matches("\\w*name|\\w*title|\\w*url")) {
             return "string";
         }
@@ -680,6 +682,11 @@ public class UtilsTextual {
         }
         if (str.matches("(\\w*s)\\d*|\\w*arr(ay)*|\\w*items|\\w*data|data\\w*")) {
             return "array";
+        }
+
+        // @todo make JS only
+        if (str.matches("(\\w*s)\\*")) {
+            return "*";
         }
 
         return "unknown";

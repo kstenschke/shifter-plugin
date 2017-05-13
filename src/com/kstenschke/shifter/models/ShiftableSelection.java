@@ -86,7 +86,7 @@ public class ShiftableSelection {
         boolean isPhpVariable        = wordType == ShiftingTypesManager.TYPE_PHP_VARIABLE;
         boolean isJsVarsDeclarations = !isPhpVariable && wordType == ShiftingTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
 
-        if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 1 && !isPhpVariable)) {
+        if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {
             // Selection is multi-lined: sort lines alphabetical
             ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
             return;
