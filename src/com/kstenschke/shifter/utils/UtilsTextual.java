@@ -656,13 +656,13 @@ public class UtilsTextual {
      * @param  str
      * @return Name of primitive (PHP) data type
      */
-    public static String guessDataTypeByName(String str) {
+    public static String guessPhpDataTypeByName(String str) {
         str = str.toLowerCase();
 
         if (str.matches("\\w*name|\\w*title|\\w*url")) {
             return "string";
         }
-        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
+        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
             return "string";
         }
         if (str.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
@@ -682,11 +682,6 @@ public class UtilsTextual {
         }
         if (str.matches("(\\w*s)\\d*|\\w*arr(ay)*|\\w*items|\\w*data|data\\w*")) {
             return "array";
-        }
-
-        // @todo make JS only
-        if (str.matches("(\\w*s)\\*")) {
-            return "*";
         }
 
         return "unknown";

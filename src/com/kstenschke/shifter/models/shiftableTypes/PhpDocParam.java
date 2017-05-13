@@ -69,7 +69,7 @@ public class PhpDocParam {
     public static String getShifted(String line) {
         String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
 
-        return insertDataTypeIntoParamLine(line, UtilsTextual.guessDataTypeByName(variableName));
+        return insertDataTypeIntoParamLine(line, UtilsTextual.guessPhpDataTypeByName(variableName));
     }
 
     private static String insertDataTypeIntoParamLine(String line, String dataType) {
