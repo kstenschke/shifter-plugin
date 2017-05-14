@@ -45,7 +45,7 @@
         <li>Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.</li>
         <li>Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements</li>
         <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
-        <li>Shifting a selection from a CSS, LESS or SASS file, sorts all attributes in all selectors alphabetically</li>
+        <li>Shifting a selection from a CSS (or LESS or SASS) file, sorts all attributes in all selectors alphabetically, vendor-attributes at the end</li>
     </ul>
     <strong>Numeric Shifting</strong>
     <ul>
@@ -112,7 +112,7 @@
     <ul>
         <li>1.7.0
             <ul>
-                <li>Added: Sort all attributes of all selectors in a CSS (or LESS or SASS) stylesheet selection alphabetically</li>
+                <li>Added: Sort all attributes of all selectors in a CSS (or LESS or SASS) stylesheet selection alphabetically, vendor-attributes at the end</li>
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>
                 <li>Improved: Sorting selected lines was possible only from 3+ lines</li>

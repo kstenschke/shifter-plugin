@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.utils.UtilsTextual;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -43,8 +44,10 @@ public class Css {
         for (String attributeGroup : attributeGroups) {
             if (indexMatch > 0) {
                 List<String> lines = splitAttributesIntoLines(attributeGroup);
-                lines = prepareAttributeLineForConcat(lines);
+                lines              = prepareAttributeLineForConcat(lines);
+
                 List<String> linesSorted = UtilsTextual.sortLines(lines, true);
+                linesSorted              = moveVendorAttributeLinesToEnd(linesSorted);
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
 
                 value = value.replaceFirst(attributeGroup, "###SHIFTERMARKER" + indexMatch + "###");
@@ -54,7 +57,7 @@ public class Css {
         for (int indexMarker = 1; indexMarker < indexMatch; indexMarker++) {
             value = value.replaceFirst(
                     "###SHIFTERMARKER" + indexMarker + "###",
-                    attributeGroupsSorted[indexMarker]);
+                    (indexMarker == 1 ? "\n" : "") + attributeGroupsSorted[indexMarker]);
         }
 
         return value;
@@ -65,7 +68,7 @@ public class Css {
     }
 
     /**
-     * Ensure that all lines end w/ ";\n"
+     * Ensure that all attribute lines end w/ ";\n"
      *
      * @param  lines
      * @return List<String>
@@ -73,7 +76,8 @@ public class Css {
     private static List<String> prepareAttributeLineForConcat(List<String> lines) {
         int index = 0;
         for (String line : lines) {
-            if (!trim(line).isEmpty()) {
+            String trimmed = trim(line);
+            if (!trimmed.isEmpty() && !trimmed.equals("}")) {
                 line = UtilsTextual.rtrim(line);
 
                 if (!line.endsWith(";")) {
@@ -87,5 +91,32 @@ public class Css {
         }
 
         return lines;
+    }
+
+    private static List<String> moveVendorAttributeLinesToEnd(List<String> lines) {
+        List<String> linesSorted = new ArrayList<String>(lines.size());
+        String lastLine = "";
+
+        // Add non-vendor attributes into sorted list
+        for (String line : lines) {
+            String trimmed = trim(line);
+            if (!trimmed.startsWith("-")) {
+                if (trimmed.equals("}")) {
+                    lastLine = line;
+                } else {
+                    linesSorted.add(line);
+                }
+            }
+        }
+        // Add vendor-attributes at end
+        for (String line : lines) {
+            if (trim(line).startsWith("-")) {
+                linesSorted.add(line);
+            }
+        }
+
+        linesSorted.add(lastLine);
+
+        return linesSorted;
     }
 }

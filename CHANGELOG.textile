@@ -1,7 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.7.0
-    ** Added: Sort all attributes of all selectors in a CSS (or LESS or SASS) stylesheet selection alphabetically
+    ** Added: Sort all attributes of all selectors in a CSS (or LESS or SASS) stylesheet selection alphabetically, vendor-attributes at the end
     ** Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes
     ** Improved: Better case maintaining during dictionaric word shifting
     ** Improved: Sorting selected lines was possible only from 3+ lines
