@@ -27,96 +27,100 @@ package com.kstenschke.shifter.utils.natorder;
 import java.util.*;
 
 public class NaturalOrderComparator implements Comparator {
-    int compareRight(String a, String b) {
-        int bias = 0, offsetA = 0, offsetB = 0;
+
+    /**
+     * @param  str1 The first string
+     * @param  str2 The second string
+     * @return -1, 0 or 1
+     */
+    int compareRight(String str1, String str2) {
+        int bias = 0, offset1 = 0, offset2 = 0;
 
         // The longest run of digits wins. That aside, the greatest
         // value wins, but we can't know that it will until we've scanned
         // both numbers to know that they have the same magnitude, so we
         // remember it in BIAS.
-        for (; ; offsetA++, offsetB++) {
-            char characterA = charAt(a, offsetA);
-            char characterB = charAt(b, offsetB);
+        for (; ; offset1++, offset2++) {
+            char character1 = charAt(str1, offset1);
+            char character2 = charAt(str2, offset2);
 
-            if (!Character.isDigit(characterA) && !Character.isDigit(characterB)) {
+            if (!Character.isDigit(character1) && !Character.isDigit(character2)) {
                 return bias;
             }
-            if (!Character.isDigit(characterA)) {
+            if (!Character.isDigit(character1)) {
                 return -1;
             }
-            if (!Character.isDigit(characterB)) {
-                return +1;
+            if (!Character.isDigit(character2)) {
+                return 1;
             }
-            if (characterA == 0 && characterB == 0) {
+            if (character1 == 0 && character2 == 0) {
                 return bias;
             }
 
-            if (characterA < characterB) {
+            if (character1 < character2) {
                 if (bias == 0) {
                     bias = -1;
                 }
-            } else if (characterA > characterB) {
-                if (bias == 0)
-                    bias = +1;
+            } else if (character1 > character2 && bias == 0) {
+                bias = 1;
             }
         }
     }
 
     public int compare(Object object1, Object object2) {
-        String stringA = object1.toString();
-        String stringB = object2.toString();
+        String str1 = object1.toString();
+        String str2 = object2.toString();
 
-        int nza, nzb, result;
-        int offsetA = 0, offsetB = 0;
-        char characterA, characterB;
+        int amountLeadingZeroesInStr1, amountLeadingZeroesInStr2, result;
+        int offset1 = 0, offset2 = 0;
+        char character1, character2;
 
         while (true) {
             // Only count the number of zeroes leading the last number compared
-            nza = nzb = 0;
+            amountLeadingZeroesInStr1 = amountLeadingZeroesInStr2 = 0;
 
-            characterA = charAt(stringA, offsetA);
-            characterB = charAt(stringB, offsetB);
+            character1 = charAt(str1, offset1);
+            character2 = charAt(str2, offset2);
 
             // Skip over leading spaces or zeros
-            while (Character.isSpaceChar(characterA) || characterA == '0') {
-                nza = characterA == '0'
-                        ? nza + 1
+            while (Character.isSpaceChar(character1) || character1 == '0') {
+                amountLeadingZeroesInStr1 = character1 == '0'
+                        ? amountLeadingZeroesInStr1 + 1
                         // Only count consecutive zeroes
                         : 0;
 
-                characterA = charAt(stringA, ++offsetA);
+                character1 = charAt(str1, ++offset1);
             }
 
-            while (Character.isSpaceChar(characterB) || characterB == '0') {
-                nzb = characterB == '0'
-                        ? nzb + 1
+            while (Character.isSpaceChar(character2) || character2 == '0') {
+                amountLeadingZeroesInStr2 = character2 == '0'
+                        ? amountLeadingZeroesInStr2 + 1
                         // Only count consecutive zeroes
                         : 0;
 
-                characterB = charAt(stringB, ++offsetB);
+                character2 = charAt(str2, ++offset2);
             }
 
             // Process run of digits
-            if (Character.isDigit(characterA) && Character.isDigit(characterB)) {
-                if ((result = compareRight(stringA.substring(offsetA), stringB.substring(offsetB))) != 0) {
+            if (Character.isDigit(character1) && Character.isDigit(character2)) {
+                if ((result = compareRight(str1.substring(offset1), str2.substring(offset2))) != 0) {
                     return result;
                 }
             }
 
-            if (characterA == 0 && characterB == 0) {
+            if (character1 == 0 && character2 == 0) {
                 // The strings compare the same. Perhaps the caller will want to call strcmp to break the tie.
-                return nza - nzb;
+                return amountLeadingZeroesInStr1 - amountLeadingZeroesInStr2;
             }
-
-            if (characterA < characterB) {
+            if (character1 < character2) {
                 return -1;
             }
-            if (characterA > characterB) {
-                return +1;
+            if (character1 > character2) {
+                return 1;
             }
 
-            ++offsetA;
-            ++offsetB;
+            ++offset1;
+            ++offset2;
         }
     }
 
