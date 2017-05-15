@@ -45,7 +45,6 @@ public class Css {
                 lines              = prepareAttributeLineForConcat(lines);
 
                 List<String> linesSorted = sortAttributes(lines);
-                linesSorted              = moveVendorAttributeLinesToEnd(linesSorted);
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
 
                 try {
@@ -102,28 +101,40 @@ public class Css {
      * @return List<String>
      */
     private static List<String> sortAttributes(List<String> list) {
-        //java.util.Collections.sort(list);
-        Collections.sort(list, new Comparator() {
+        Collections.sort(list, new Comparator<String>() {
             /**
-             * @param  o1
-             * @param  o2
+             * @param  str1
+             * @param  str2
              * @return -1 if o1 is greater, 0 is o1 and o2 are equal, 1 if o2 is greater
              */
             @Override
-            public int compare(Object o1, Object o2) {
-                String str1 = o1.toString();
-                String str2 = o2.toString();
-
+            public int compare(String str1, String str2) {
                 if (str1.equals(str2)) {
                     return 0;
+                }
+
+                // Ensure closing of selector is last item
+                if (trim(str2).equals("}")) {
+                    return -1;
+                } else if (trim(str1).equals("}")) {
+                    return 1;
                 }
 
                 String attribute1 = trim(str1.split(":")[0]);
                 String attribute2 = trim(str2.split(":")[0]);
 
+                // Move vendor-attributes (prefixed w/ "-") behind
+                boolean attribute1IsVendor = attribute1.startsWith("-");
+                boolean attribute2IsVendor = attribute2.startsWith("-");
+                if (attribute1IsVendor && !attribute2IsVendor) {
+                    return 1;
+                } else if (attribute2IsVendor && !attribute1IsVendor) {
+                    return -1;
+                }
+
+                // Move shorter of otherwise identically beginning attributes ahead
                 int attribute1Length = attribute1.length();
                 int attribute2Length = attribute2.length();
-
                 if (attribute1Length > attribute2Length) {
                     if (attribute1.startsWith(attribute2)) {
                         return 1;
@@ -132,36 +143,11 @@ public class Css {
                     return -1;
                 }
 
+                // Regular compare
                 return str1.compareTo(str2);
             }
         });
 
         return list;
-    }
-    private static List<String> moveVendorAttributeLinesToEnd(List<String> lines) {
-        List<String> linesSorted = new ArrayList<String>(lines.size());
-        String lastLine = "";
-
-        // Add non-vendor attributes into sorted list
-        for (String line : lines) {
-            String trimmed = trim(line);
-            if (!trimmed.startsWith("-")) {
-                if (trimmed.equals("}")) {
-                    lastLine = line;
-                } else {
-                    linesSorted.add(line);
-                }
-            }
-        }
-        // Add vendor-attributes at end
-        for (String line : lines) {
-            if (trim(line).startsWith("-")) {
-                linesSorted.add(line);
-            }
-        }
-
-        linesSorted.add(lastLine);
-
-        return linesSorted;
     }
 }
