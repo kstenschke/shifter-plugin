@@ -58,7 +58,7 @@ public class Css {
         for (int indexMarker = 1; indexMarker < indexMatch; indexMarker++) {
             value = value.replaceFirst(
                     "###SHIFTERMARKER" + indexMarker + "###",
-                    (indexMarker == 1 ? "\n" : "") + attributeGroupsSorted[indexMarker]);
+                    attributeGroupsSorted[indexMarker]);
         }
 
         return value;
@@ -95,7 +95,7 @@ public class Css {
     }
 
     /**
-     * Sort CSS attribute-lines alphabetical, w/ shorter one of otherwise identically beginning attributes to front
+     * Sort CSS attribute-lines
      *
      * @param  list
      * @return List<String>
@@ -113,10 +113,20 @@ public class Css {
                     return 0;
                 }
 
-                // Ensure closing of selector is last item
-                if (trim(str2).equals("}")) {
+                String str1Trimmed = trim(str1);
+                String str2Trimmed = trim(str2);
+
+                // Move empty line to the very end
+                if (str2Trimmed.isEmpty()) {
                     return -1;
-                } else if (trim(str1).equals("}")) {
+                } else if (str1Trimmed.isEmpty()) {
+                    return 1;
+                }
+
+                // Ensure closing of selector is at the end
+                if (str2Trimmed.equals("}")) {
+                    return -1;
+                } else if (str1Trimmed.equals("}")) {
                     return 1;
                 }
 

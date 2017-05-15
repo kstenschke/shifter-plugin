@@ -58,7 +58,7 @@ public class ShiftableSelection {
             if (!shifted.equals(selectedText)) {
                 // PHP doc comment block: guess missing data shiftableTypes by resp. variable names
                 document.replaceString(offsetStart, offsetEnd, shifted);
-                UtilsEnvironment.reformatSubString(editor, editor.getProject(), offsetStart, offsetEnd);
+                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetEnd);
                 return;
             }
         }
@@ -87,6 +87,7 @@ public class ShiftableSelection {
             String shifted = Css.getShifted(selectedText);
             if (null != shifted) {
                 document.replaceString(offsetStart, offsetEnd, shifted);
+                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetStart + shifted.length());
                 return;
             }
         }
