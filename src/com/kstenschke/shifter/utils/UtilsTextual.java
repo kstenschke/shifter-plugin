@@ -61,7 +61,7 @@ public class UtilsTextual {
      * @param  shiftUp
      * @return Given lines sorted alphabetically ascending / descending
      */
-    public static List<String> sortLines(List<String> lines, boolean shiftUp) {
+    public static List<String> sortLinesNatural(List<String> lines, boolean shiftUp) {
         DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
 
         Collections.sort(lines, new NaturalOrderComparator());

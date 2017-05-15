@@ -224,7 +224,7 @@ public class ShiftableSelection {
      */
     protected static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd) {
         List<String> lines       = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-        List<String> linesSorted = UtilsTextual.sortLines(lines, shiftUp);
+        List<String> linesSorted = UtilsTextual.sortLinesNatural(lines, shiftUp);
 
         String linesString = UtilsTextual.joinLines(linesSorted).toString();
 

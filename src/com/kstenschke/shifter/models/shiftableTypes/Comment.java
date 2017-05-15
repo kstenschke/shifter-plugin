@@ -271,7 +271,7 @@ public class Comment {
 
     private static String sortLineComments(String str, boolean shiftUp) {
         List<String> lines       = Arrays.asList(str.split("\n"));
-        List<String> shiftedList = UtilsTextual.sortLines(lines, shiftUp);
+        List<String> shiftedList = UtilsTextual.sortLinesNatural(lines, shiftUp);
         String result = "";
         int index = 0;
         for(String line : shiftedList) {
