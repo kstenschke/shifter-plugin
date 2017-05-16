@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -47,11 +48,7 @@ public class Css {
                 List<String> linesSorted = sortAttributes(lines);
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
 
-                try {
-                    value = value.replaceFirst(attributeGroup, "###SHIFTERMARKER" + indexMatch + "###");
-                } catch (java.util.regex.PatternSyntaxException e) {
-                    // @todo handle exception, occurs e.g. when line contains escaped char, e.g: "content: "\E028";"
-                }
+                value = value.replaceFirst(Pattern.quote(attributeGroup), "###SHIFTERMARKER" + indexMatch + "###");
             }
             indexMatch++;
         }
