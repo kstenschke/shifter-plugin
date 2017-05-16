@@ -36,16 +36,16 @@ public class Css {
             return null;
         }
 
-        // Split CSS into groups of attribute-rules per selector, sort the attributes
+        // Split CSS into groups of attribute-style lines per selector
         String attributeGroups[]       = value.split("([^\r\n,{}]+)(,(?=[^}]*\\{)|\\s*\\{)");
         String attributeGroupsSorted[] = new String[attributeGroups.length];
 
-        // 1. Collect attribute-rule groups per selector
+        // 1. Collect groups of attribute-style lines per selector
         int indexMatch = 0;
         for (String attributeGroup : attributeGroups) {
             if (indexMatch > 0) {
                 List<String> lines = splitAttributesIntoLines(attributeGroup);
-                lines              = prepareAttributeLineForConcat(lines);
+                lines              = prepareAttributeStyleLinesForConcat(lines);
 
                 List<String> linesSorted = sortAttributeStyles(lines);
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
@@ -66,32 +66,6 @@ public class Css {
 
     private static List<String> splitAttributesIntoLines(String str) {
         return Arrays.asList(str.split("\\n"));
-    }
-
-    /**
-     * Ensure that all attribute lines end w/ ";\n"
-     *
-     * @param  lines
-     * @return List<String>
-     */
-    private static List<String> prepareAttributeLineForConcat(List<String> lines) {
-        int index = 0;
-        for (String line : lines) {
-            String trimmed = trim(line);
-            if (!trimmed.isEmpty() && !trimmed.equals("}")) {
-                line = UtilsTextual.rtrim(line);
-
-                if (!line.endsWith(";")) {
-                    line = line + ";";
-                }
-                line = line + "\n";
-            }
-
-            lines.set(index, line);
-            index++;
-        }
-
-        return lines;
     }
 
     /**
@@ -176,5 +150,31 @@ public class Css {
         });
 
         return list;
+    }
+
+    /**
+     * Ensure that all attribute lines end w/ ";\n"
+     *
+     * @param  lines
+     * @return List<String>
+     */
+    private static List<String> prepareAttributeStyleLinesForConcat(List<String> lines) {
+        int index = 0;
+        for (String line : lines) {
+            String trimmed = trim(line);
+            if (!trimmed.isEmpty() && !trimmed.equals("}")) {
+                line = UtilsTextual.rtrim(line);
+
+                if (!line.endsWith(";")) {
+                    line = line + ";";
+                }
+                line = line + "\n";
+            }
+
+            lines.set(index, line);
+            index++;
+        }
+
+        return lines;
     }
 }
