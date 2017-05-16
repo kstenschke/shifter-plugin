@@ -47,7 +47,7 @@ public class Css {
                 List<String> lines = splitAttributesIntoLines(attributeGroup);
                 lines              = prepareAttributeLineForConcat(lines);
 
-                List<String> linesSorted = sortAttributes(lines);
+                List<String> linesSorted = sortAttributeStyles(lines);
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
 
                 value = value.replaceFirst(Pattern.quote(attributeGroup), "###SHIFTERMARKER" + indexMatch + "###");
@@ -95,12 +95,12 @@ public class Css {
     }
 
     /**
-     * Sort CSS attribute-lines
+     * Sort CSS lines containing "<attribute>:<style>"
      *
      * @param  list
      * @return List<String>
      */
-    private static List<String> sortAttributes(List<String> list) {
+    private static List<String> sortAttributeStyles(List<String> list) {
         Collections.sort(list, new Comparator<String>() {
             /**
              * @param  str1
@@ -139,7 +139,7 @@ public class Css {
                 String style2     = trim(parts2[1]);
 
 
-                // Move vendor-attributes (prefixed w/ "-") behind
+                // Move vendor-attributes (prefixed w/ "-", ex: "-moz-transition: opacity .3s;") behind
                 boolean attribute1IsVendor = attribute1.startsWith("-");
                 boolean attribute2IsVendor = attribute2.startsWith("-");
                 if (attribute1IsVendor && !attribute2IsVendor) {
@@ -159,7 +159,7 @@ public class Css {
                     return -1;
                 }
 
-                // Move vendor-styles behind
+                // Move vendor-styles (prefixed w/ "-", ex: "width: -moz-calc(19.75rem - 1px);") behind
                 if (attribute1.equals(attribute2)) {
                     boolean style1IsVendor = style1.matches("^(\\-[a-z])$");
                     boolean style2IsVendor = style2.matches("^(\\-[a-z])$");
