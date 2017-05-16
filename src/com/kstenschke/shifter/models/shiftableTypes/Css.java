@@ -36,9 +36,11 @@ public class Css {
             return null;
         }
 
+        // Split CSS into groups of attribute-rules per selector, sort the attributes
         String attributeGroups[]       = value.split("([^\r\n,{}]+)(,(?=[^}]*\\{)|\\s*\\{)");
         String attributeGroupsSorted[] = new String[attributeGroups.length];
 
+        // 1. Collect attribute-rule groups per selector
         int indexMatch = 0;
         for (String attributeGroup : attributeGroups) {
             if (indexMatch > 0) {
@@ -52,6 +54,7 @@ public class Css {
             }
             indexMatch++;
         }
+        // 2. Replace attribute-rule groups by their sorted variant
         for (int indexMarker = 1; indexMarker < indexMatch; indexMarker++) {
             value = value.replaceFirst(
                     "###SHIFTERMARKER" + indexMarker + "###",
@@ -127,8 +130,14 @@ public class Css {
                     return 1;
                 }
 
-                String attribute1 = trim(str1.split(":")[0]);
-                String attribute2 = trim(str2.split(":")[0]);
+                String parts1[] = str1.split(":");
+                String attribute1 = trim(parts1[0]);
+                String style1     = trim(parts1[1]);
+
+                String parts2[] = str2.split(":");
+                String attribute2 = trim(parts2[0]);
+                String style2     = trim(parts2[1]);
+
 
                 // Move vendor-attributes (prefixed w/ "-") behind
                 boolean attribute1IsVendor = attribute1.startsWith("-");
@@ -148,6 +157,17 @@ public class Css {
                     }
                 } else if (attribute1Length < attribute2Length && attribute2.startsWith(attribute1)) {
                     return -1;
+                }
+
+                // Move vendor-styles behind
+                if (attribute1.equals(attribute2)) {
+                    boolean style1IsVendor = style1.matches("^(\\-[a-z])$");
+                    boolean style2IsVendor = style2.matches("^(\\-[a-z])$");
+                    if (style1IsVendor && !style2IsVendor) {
+                        return 1;
+                    } else if (style2IsVendor && !style1IsVendor) {
+                        return -1;
+                    }
                 }
 
                 // Regular compare
