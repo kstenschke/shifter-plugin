@@ -112,7 +112,6 @@ public class Css {
                 String attribute2 = trim(parts2[0]);
                 String style2     = trim(parts2[1]);
 
-
                 // Move vendor-attributes (prefixed w/ "-", ex: "-moz-transition: opacity .3s;") behind
                 boolean attribute1IsVendor = attribute1.startsWith("-");
                 boolean attribute2IsVendor = attribute2.startsWith("-");
@@ -135,8 +134,8 @@ public class Css {
 
                 // Move vendor-styles (prefixed w/ "-", ex: "width: -moz-calc(19.75rem - 1px);") behind
                 if (attribute1.equals(attribute2)) {
-                    boolean style1IsVendor = style1.matches("^(\\-[a-z])$");
-                    boolean style2IsVendor = style2.matches("^(\\-[a-z])$");
+                    boolean style1IsVendor = style1.matches("^-[a-z].*$");
+                    boolean style2IsVendor = style2.matches("^-[a-z].*$");
                     if (style1IsVendor && !style2IsVendor) {
                         return 1;
                     } else if (style2IsVendor && !style1IsVendor) {
