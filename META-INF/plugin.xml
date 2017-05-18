@@ -43,9 +43,10 @@
         <li>Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.</li>
         <li>Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")</li>
         <li>Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.</li>
-        <li>Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements</li>
-        <li>Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts</li>
-        <li>Shifting a selection from a CSS (or LESS or SASS) file, sorts all attributes in all selectors alphabetically, vendor-attributes at the end</li>
+        <li>Shifting a selected (from questionmark on) ternary expression, swaps "than" and "else" statements</li>
+        <li>Shifting a selected PHP concatenation from two strings / variables, toggles the concatenated items' order</li>
+        <li>Shifting a selection from a CSS (or LESS or SASS) file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>
+        <li>Shifting selected attribute-style lines inside a CSS (or LESS or SASS) file, sorts them (alphabetically, vendor-attributes and vendor-styles at the end)</li>
     </ul>
     <strong>Numeric Shifting</strong>
     <ul>
@@ -112,7 +113,8 @@
     <ul>
         <li>1.7.0
             <ul>
-                <li>Added: Sort all attributes of all selectors in a CSS (or LESS or SASS) stylesheet selection alphabetically, vendor-attributes at the end</li>
+                <li>Added: Sort all attributes of selected selectors in a CSS (or LESS or SASS) stylesheet selection (alphabetically, vendor-attributes and vendor-styles at the end)</li>
+                <li>Added: Sort selected attribute-style lines in a CSS (or LESS or SASS) stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)</li>
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>
                 <li>Improved: Sorting selected lines was possible only from 3+ lines</li>
@@ -146,7 +148,6 @@
                 <li>Bugfix: Numeric postfix shifting ("a99" was shifted into "a910" instead of "a100")</li>
             </ul>
         </li>
-        <li>1.5.3 Bugfix: Fixed null pointer exception on Ubuntu during plugin initialization. Thanks to Vojtěch Krása</li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

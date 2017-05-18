@@ -1,7 +1,7 @@
 h1. Shifter Plugin
 
 Source code of the intellij IDEA "Shifter plugin":http://plugins.jetbrains.com/plugin/6149
-This is a plugin for the various Jetbrains IDEs, working in IntelliJ IDEA, PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion, Gogland, DataGrip, Rider and Android Studio
+This is a plugin for the various Jetbrains IDEs, working in IntelliJ IDEA, PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion,  Gogland, DataGrip, Rider and Android Studio
 
 
 h2. Description
@@ -30,9 +30,10 @@ h4. Sorting
 * Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.
 * Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
 * Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
-* Selected (from questionmark on) ternary expressions - Swaps "than" and "else" statements
-* Selection of PHP concatenation from two strings / variables - Toggles order of the concatenated parts
-* Shifting a selection from a CSS (or LESS or SASS) file, sorts all attributes in all selectors alphabetically, vendor-attributes at the end
+* Shifting a selected (from questionmark on) ternary expression, swaps "than" and "else" statements
+* Shifting a selected PHP concatenation from two strings / variables, toggles the concatenated items' order
+* Shifting a selection from a CSS (or LESS or SASS) file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>
+* Shifting selected attribute-style lines inside a CSS (or LESS or SASS) file, sorts them (alphabetically, vendor-attributes and vendor-styles at the end)</li>
 
 h4. Numeric Shifting
 * Numeric values - Incrementing/decrementing numbers

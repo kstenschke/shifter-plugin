@@ -32,10 +32,13 @@ public class Css {
      * @return String
      */
     public static String getShifted(String value) {
-        if (!value.contains("{") && !value.contains("}")) {
-            return null;
-        }
 
+        return value.contains("{") && !value.contains("}")
+            ? sortAttributeStyleLinesInsideSelectors(value)
+            : sortAttributeStyleLines(value);
+    }
+
+    private static String sortAttributeStyleLinesInsideSelectors(String value) {
         // Split CSS into groups of attribute-style lines per selector
         String attributeGroups[]       = value.split("([^\r\n,{}]+)(,(?=[^}]*\\{)|\\s*\\{)");
         String attributeGroupsSorted[] = new String[attributeGroups.length];
@@ -45,9 +48,10 @@ public class Css {
         for (String attributeGroup : attributeGroups) {
             if (indexMatch > 0) {
                 List<String> lines = splitAttributesIntoLines(attributeGroup);
-                lines              = prepareAttributeStyleLinesForConcat(lines);
 
+                lines              = prepareAttributeStyleLinesForConcat(lines);
                 List<String> linesSorted = sortAttributeStyles(lines);
+
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
 
                 value = value.replaceFirst(Pattern.quote(attributeGroup), "###SHIFTERMARKER" + indexMatch + "###");
@@ -62,6 +66,18 @@ public class Css {
         }
 
         return value;
+    }
+
+    /**
+     * Sort given lines (containing each "<attribute>:<style>")
+     *
+     * @param  value
+     * @return String
+     */
+    private static String sortAttributeStyleLines(String value) {
+        List<String> lines = splitAttributesIntoLines(value);
+        List<String> linesSorted = sortAttributeStyles(lines);
+        return UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
     }
 
     private static List<String> splitAttributesIntoLines(String str) {
