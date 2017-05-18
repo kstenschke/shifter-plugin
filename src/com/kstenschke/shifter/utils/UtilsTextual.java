@@ -17,7 +17,7 @@ package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
 import com.kstenschke.shifter.models.shiftableTypes.OperatorSign;
-import com.kstenschke.shifter.utils.natorder.NaturalOrderComparator;
+import com.kstenschke.shifter.models.comparators.natorder.NaturalOrderComparator;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

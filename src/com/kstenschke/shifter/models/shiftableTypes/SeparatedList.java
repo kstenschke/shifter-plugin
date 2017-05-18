@@ -18,7 +18,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import com.kstenschke.shifter.utils.natorder.NaturalOrderComparator;
+import com.kstenschke.shifter.models.comparators.natorder.NaturalOrderComparator;
 import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;

@@ -1,4 +1,4 @@
-package com.kstenschke.shifter.utils.natorder;
+package com.kstenschke.shifter.models.comparators.natorder;
 
 /*
  NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.

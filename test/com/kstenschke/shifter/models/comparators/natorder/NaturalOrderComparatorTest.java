@@ -1,11 +1,6 @@
-package com.kstenschke.shifter.utils.natorder;
+package com.kstenschke.shifter.models.comparators.natorder;
 
 import org.junit.Test;
-
-import java.util.Arrays;
-import java.util.List;
-
-import static org.junit.Assert.*;
 
 public class NaturalOrderComparatorTest {
     @Test
