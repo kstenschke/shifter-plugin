@@ -20,6 +20,7 @@ import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.shifter.models.shiftableTypes.Css;
+import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
 import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
@@ -141,6 +142,10 @@ public class ShiftableSelection {
             }
             if (StringCamelCase.isCamelCase(selectedText) && StringCamelCase.isWordPair(selectedText)) {
                 new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftCamelCaseOrSwapWords();
+                return;
+            }
+            if (MinusSeparatedPath.isMinusSeparatedPath(selectedText) && MinusSeparatedPath.isWordPair(selectedText)) {
+                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftMinusSeparatedPathOrSwapWords();
                 return;
             }
 

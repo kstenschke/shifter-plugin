@@ -28,11 +28,19 @@ public class MinusSeparatedPath {
             && UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase());
     }
 
+    public static boolean isWordPair(String str) {
+        return str.split("-").length == 2;
+    }
+
+    public static String flipWordsOrder(String str) {
+        String words[] = str.split("-");
+
+        return words[1] + "-" + words[0];
+    }
+
     /**
-     * Convert into camelCase
-     *
      * @param  word
-     * @return String
+     * @return String   Given string converted to camelCase
      */
     public static String getShifted(String word) {
         String parts[] = word.split("-");

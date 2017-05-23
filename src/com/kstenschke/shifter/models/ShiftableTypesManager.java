@@ -27,7 +27,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableTypesManager {
 
-
     public static final int TYPE_UNKNOWN                        = 0;
 
     // Dictionary (list of strings) based shiftableTypes

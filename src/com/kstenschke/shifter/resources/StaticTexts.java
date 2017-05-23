@@ -70,5 +70,9 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";
     @NonNls
+    public static final String SHIFT_OPTION_PATH_PAIR_SWAP_ORDER = "Swap path items order";
+    @NonNls
     public static final String SHIFT_OPTION_CAMEL_CASE_TO_PATH = "Convert to minus-separated path";
+    @NonNls
+    public static final String SHIFT_OPTION_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
 }

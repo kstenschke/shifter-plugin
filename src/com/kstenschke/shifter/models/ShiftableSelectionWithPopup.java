@@ -22,6 +22,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
+import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
 import com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation;
 import com.kstenschke.shifter.models.shiftableTypes.SeparatedList;
 import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
@@ -129,6 +130,14 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
+    public void shiftMinusSeparatedPathOrSwapWords() {
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER);
+
+        shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
+    }
+
     /**
      * @param shiftOptions
      * @param isUp
@@ -186,15 +195,24 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER)) {
+            document.replaceString(offsetStart, offsetEnd, MinusSeparatedPath.flipWordsOrder(selectedText));
+            return;
+        }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LINES_SORT)) {
             ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SWAP)) {
             document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+            return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH)) {
             document.replaceString(offsetStart, offsetEnd, StringCamelCase.getShifted(selectedText));
+            return;
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE)) {
+            document.replaceString(offsetStart, offsetEnd, MinusSeparatedPath.getShifted(selectedText));
         }
     }
 }
