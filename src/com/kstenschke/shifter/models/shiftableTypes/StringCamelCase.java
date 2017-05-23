@@ -31,7 +31,7 @@ public class StringCamelCase {
     }
 
     public static boolean isWordPair(String str) {
-        return UtilsTextual.splitCamelCaseIntoWords(str).length == 2;
+        return getAmountWords(str) == 2;
     }
 
     /**
@@ -46,6 +46,10 @@ public class StringCamelCase {
         return isLcFirst
                 ? UtilsTextual.toLcFirst(words[1]) + UtilsTextual.toUcFirst(words[0])
                 : words[1] + words[0];
+    }
+
+    public static int getAmountWords(String word) {
+        return UtilsTextual.splitCamelCaseIntoWords(word, true).length;
     }
 
     /**

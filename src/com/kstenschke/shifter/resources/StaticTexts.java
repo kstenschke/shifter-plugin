@@ -66,5 +66,9 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_QUOTES_SWAP = "Swap single and double quotes";
     @NonNls
-    public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap concatenation items order";
+    public static final String SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
+    @NonNls
+    public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";
+    @NonNls
+    public static final String SHIFT_OPTION_CAMEL_CASE_TO_PATH = "Convert to minus-separated path";
 }

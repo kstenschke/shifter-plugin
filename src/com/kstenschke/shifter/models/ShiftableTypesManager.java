@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
 import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -26,8 +27,6 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableTypesManager {
 
-
-    // ShiftableSomethingBla
 
     public static final int TYPE_UNKNOWN                        = 0;
 
@@ -43,7 +42,8 @@ public class ShiftableTypesManager {
     // Generic shiftableTypes
     public static final int  TYPE_QUOTED_STRING                 = 20;
     private static final int TYPE_HTML_ENCODABLE_STRING         = 21;
-    public static final int TYPE_CAMEL_CASE_STRING             = 22;
+    public static final int TYPE_CAMEL_CASE_STRING              = 22;
+    public static final int TYPE_MINUS_SEPARATED_PATH           = 23;
 
     // <, >, +, -
     private static final int TYPE_OPERATOR_SIGN                 = 30;
@@ -197,6 +197,9 @@ public class ShiftableTypesManager {
         if (wordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
         }
+        if (MinusSeparatedPath.isMinusSeparatedPath(word)) {
+            return TYPE_MINUS_SEPARATED_PATH;
+        }
         if (StringCamelCase.isCamelCase(word)) {
             return TYPE_CAMEL_CASE_STRING;
         }
@@ -285,6 +288,8 @@ public class ShiftableTypesManager {
                 return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
             case TYPE_DOC_COMMENT_DATATYPE:
                 return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
+            case TYPE_MINUS_SEPARATED_PATH:
+                return MinusSeparatedPath.getShifted(word);
             case TYPE_CAMEL_CASE_STRING:
                 return StringCamelCase.getShifted(word);
             case TYPE_HTML_ENCODABLE_STRING:

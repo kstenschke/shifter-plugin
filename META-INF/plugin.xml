@@ -115,6 +115,7 @@
         <li>1.7.0
             <ul>
                 <li>Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)</li>
+                <li>Added: Shifting a camel-cased string, consisting from only 2 words, shows an intention popup to either swap the words' order or convert to a minus-separated path</li>
                 <li>Added: Sort all attributes of selected selectors in a CSS (or LESS or SASS) stylesheet selection (alphabetically, vendor-attributes and vendor-styles at the end)</li>
                 <li>Added: Sort selected attribute-style lines in a CSS (or LESS or SASS) stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)</li>
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>

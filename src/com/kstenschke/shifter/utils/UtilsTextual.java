@@ -105,6 +105,14 @@ public class UtilsTextual {
         return str.isEmpty();
     }
 
+    public static boolean isAlphaNumericAndMinus(@Nullable String str) {
+        return !(null == str || str.isEmpty()) && str.matches("[a-zA-z0-9\\-]+");
+    }
+
+    public static boolean startsAlphabetic(@Nullable String str) {
+        return !(null == str || str.isEmpty()) && StringUtils.isAlpha(String.valueOf(str.charAt(0)));
+    }
+
     public static boolean startsNumeric(@Nullable String str) {
         return !(null == str || str.isEmpty()) && Character.isDigit(str.charAt(0));
     }
