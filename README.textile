@@ -46,6 +46,7 @@ h4. Numeric Shifting
 
 h4. String Manipulations
 * Shifting a selection within a single line: detects and swaps characters: single quote vs. double quote OR slash vs. backslash
+* Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * Logical operators: toggles between (selected) "&&" and "||"
 * Encoding/decoding of HTML special characters

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -24,6 +25,9 @@ import org.jetbrains.annotations.Nullable;
  * Manager of "shiftable" word shiftableTypes - detects word type to evoke resp. shifting
  */
 public class ShiftableTypesManager {
+
+
+    // ShiftableSomethingBla
 
     public static final int TYPE_UNKNOWN                        = 0;
 
@@ -39,7 +43,7 @@ public class ShiftableTypesManager {
     // Generic shiftableTypes
     public static final int  TYPE_QUOTED_STRING                 = 20;
     private static final int TYPE_HTML_ENCODABLE_STRING         = 21;
-    private static final int TYPE_CAMEL_CASE_STRING             = 22;
+    public static final int TYPE_CAMEL_CASE_STRING             = 22;
 
     // <, >, +, -
     private static final int TYPE_OPERATOR_SIGN                 = 30;
@@ -193,6 +197,9 @@ public class ShiftableTypesManager {
         if (wordsTupel.isWordsTupel(word)) {
             return TYPE_WORDS_TUPEL;
         }
+        if (StringCamelCase.isCamelCase(word)) {
+            return TYPE_CAMEL_CASE_STRING;
+        }
         if (com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable.isHtmlEncodable(word)) {
             return TYPE_HTML_ENCODABLE_STRING;
         }
@@ -239,54 +246,56 @@ public class ShiftableTypesManager {
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return              The shifted word
      */
-        public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
-            switch (idWordType) {
-                // String based word shiftableTypes
-                case TYPE_ACCESSIBILITY:
-                    return this.wordTypeAccessibilities.getShifted(word, isUp);
-                case TYPE_DICTIONARY_WORD_GLOBAL:
-                case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
-                    // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                    return this.typeDictionaryTerm.getShifted(word, isUp);
+    public String getShiftedWord(String word, int idWordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
+        switch (idWordType) {
+            // String based word shiftableTypes
+            case TYPE_ACCESSIBILITY:
+                return this.wordTypeAccessibilities.getShifted(word, isUp);
+            case TYPE_DICTIONARY_WORD_GLOBAL:
+            case TYPE_DICTIONARY_WORD_EXT_SPECIFIC:
+                // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
+                return this.typeDictionaryTerm.getShifted(word, isUp);
 
-                // Generic shiftableTypes (shifting is calculated)
-                case TYPE_SIZZLE_SELECTOR:
-                    return com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(word);
-                case TYPE_RGB_COLOR:
-                    return this.typeRgbColor.getShifted(word, isUp);
-                case TYPE_NUMERIC_VALUE:
-                    // Numeric values including UNIX and millisecond timestamps
-                    return this.typeNumericValue.getShifted(word, isUp, editor, filename);
-                case TYPE_CSS_UNIT:
-                    return this.typePixelValue.getShifted(word, isUp);
-                case TYPE_PHP_VARIABLE:
-                    return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
-                case TYPE_TERNARY_EXPRESSION:
-                    return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);
-                case TYPE_QUOTED_STRING:
-                    return this.typeQuotedString.getShifted(word, editorText, isUp);
-                case TYPE_OPERATOR_SIGN:
-                    return this.typeOperatorSign.getShifted(word);
-                case TYPE_ROMAN_NUMERAL:
-                    return this.typeRomanNumber.getShifted(word, isUp);
-                case TYPE_LOGICAL_OPERATOR:
-                    return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
-                case TYPE_MONO_CHARACTER_STRING:
-                    return this.typeMonoCharacterString.getShifted(word, isUp);
-                case TYPE_DOC_COMMENT_TAG:
-                    String textAfterCaret   = editorText.toString().substring(caretOffset);
-                    return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
-                case TYPE_DOC_COMMENT_DATATYPE:
-                    return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
-                case TYPE_HTML_ENCODABLE_STRING:
-                    return com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable.getShifted(word);
-                case TYPE_NUMERIC_POSTFIXED_STRING:
-                    return com.kstenschke.shifter.models.shiftableTypes.StringNumericPostfix.getShifted(word, isUp);
-                case TYPE_WORDS_TUPEL:
-                    return wordsTupel.getShifted(word);
-                default:
-                    return word;
-            }
+            // Generic shiftableTypes (shifting is calculated)
+            case TYPE_SIZZLE_SELECTOR:
+                return com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(word);
+            case TYPE_RGB_COLOR:
+                return this.typeRgbColor.getShifted(word, isUp);
+            case TYPE_NUMERIC_VALUE:
+                // Numeric values including UNIX and millisecond timestamps
+                return this.typeNumericValue.getShifted(word, isUp, editor, filename);
+            case TYPE_CSS_UNIT:
+                return this.typePixelValue.getShifted(word, isUp);
+            case TYPE_PHP_VARIABLE:
+                return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
+            case TYPE_TERNARY_EXPRESSION:
+                return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);
+            case TYPE_QUOTED_STRING:
+                return this.typeQuotedString.getShifted(word, editorText, isUp);
+            case TYPE_OPERATOR_SIGN:
+                return this.typeOperatorSign.getShifted(word);
+            case TYPE_ROMAN_NUMERAL:
+                return this.typeRomanNumber.getShifted(word, isUp);
+            case TYPE_LOGICAL_OPERATOR:
+                return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
+            case TYPE_MONO_CHARACTER_STRING:
+                return this.typeMonoCharacterString.getShifted(word, isUp);
+            case TYPE_DOC_COMMENT_TAG:
+                String textAfterCaret   = editorText.toString().substring(caretOffset);
+                return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
+            case TYPE_DOC_COMMENT_DATATYPE:
+                return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
+            case TYPE_CAMEL_CASE_STRING:
+                return StringCamelCase.getShifted(word);
+            case TYPE_HTML_ENCODABLE_STRING:
+                return com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable.getShifted(word);
+            case TYPE_NUMERIC_POSTFIXED_STRING:
+                return com.kstenschke.shifter.models.shiftableTypes.StringNumericPostfix.getShifted(word, isUp);
+            case TYPE_WORDS_TUPEL:
+                return wordsTupel.getShifted(word);
+            default:
+                return word;
+        }
     }
 
     /**

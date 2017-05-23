@@ -1,6 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.7.0
+    ** Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)
     ** Added: Sort all attributes of selected selectors in a CSS (or LESS or SASS) stylesheet selection (alphabetically, vendor-attributes and vendor-styles at the end)
     ** Added: Sort selected attribute-style lines in a CSS (or LESS or SASS) stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)
     ** Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes

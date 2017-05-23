@@ -105,6 +105,10 @@ public class UtilsTextual {
         return str.isEmpty();
     }
 
+    public static boolean startsNumeric(@Nullable String str) {
+        return !(null == str || str.isEmpty()) && Character.isDigit(str.charAt(0));
+    }
+
     public static boolean isWrappedIntoQuotes(@Nullable String str) {
         return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
     }
@@ -235,6 +239,9 @@ public class UtilsTextual {
      */
     @NotNull
     public static String[] splitCamelCaseIntoWords(@Nullable String str) {
+        return splitCamelCaseIntoWords(str, false);
+    }
+    public static String[] splitCamelCaseIntoWords(@Nullable String str, boolean toLower) {
         if (null == str) {
             return new String[0];
         }
@@ -245,11 +252,23 @@ public class UtilsTextual {
         }
         String parts[] = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
-        if (isUcFirst) {
+        if (toLower) {
+            toLower(parts);
+        } else if (isUcFirst) {
             parts[0] = toUcFirst(parts[0]);
         }
 
         return parts;
+    }
+
+    public static String[] toLower(String[] strings) {
+        int index = 0;
+        for (String part : strings) {
+            strings[index] = part.toLowerCase();
+            index++;
+        }
+
+        return strings;
     }
 
     /**

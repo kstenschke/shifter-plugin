@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.apache.commons.lang.StringUtils;
 
 /**
  * "camelCase" and "TitleCase" strings
@@ -26,7 +27,7 @@ public class StringCamelCase {
      * @return boolean
      */
     public static boolean isCamelCase(String str) {
-        return str.length() > 2 && (UtilsTextual.isUpperCamelCase(str) || UtilsTextual.isLowerCamelCase(str));
+        return !UtilsTextual.startsNumeric(str) && UtilsTextual.isCamelCase(str);
     }
 
     public static boolean isWordPair(String str) {
@@ -48,9 +49,14 @@ public class StringCamelCase {
     }
 
     /**
+     * Convert into minus-separated path
+     *
+     * @param  word
      * @return String
      */
     public static String getShifted(String word) {
-        return word;
+        String parts[] = UtilsTextual.splitCamelCaseIntoWords(word, true);
+
+        return StringUtils.join(parts, "-");
     }
 }
