@@ -2,6 +2,9 @@ package com.kstenschke.shifter.models.comparators.natorder;
 
 /*
  NaturalOrderComparator.java -- Perform 'natural order' comparisons of strings in Java.
+
+ Copyright (C) 2017 by Kay Stenschke (added case-insensitive sorting)
+
  Copyright (C) 2003 by Pierre-Luc Paour <natorder@paour.com>
 
  Based on the C version by Martin Pool, of which this is more or less a straight conversion.
@@ -27,6 +30,15 @@ package com.kstenschke.shifter.models.comparators.natorder;
 import java.util.*;
 
 public class NaturalOrderComparator implements Comparator {
+
+    private boolean caseSensitive;
+
+    /**
+     * Constructor
+     */
+    public NaturalOrderComparator(boolean caseSensitive) {
+        this.caseSensitive = caseSensitive;
+    }
 
     /**
      * @param  str1 The first string
@@ -112,11 +124,23 @@ public class NaturalOrderComparator implements Comparator {
                 // The strings compare the same. Perhaps the caller will want to call strcmp to break the tie.
                 return amountLeadingZeroesInStr1 - amountLeadingZeroesInStr2;
             }
-            if (character1 < character2) {
-                return -1;
-            }
-            if (character1 > character2) {
-                return 1;
+
+            if (this.caseSensitive) {
+                if (character1 < character2) {
+                    return -1;
+                }
+                if (character1 > character2) {
+                    return 1;
+                }
+            } else {
+                char character1Lower = Character.toLowerCase(character1);
+                char character2Lower = Character.toLowerCase(character2);
+                if (character1Lower < character2Lower) {
+                    return -1;
+                }
+                if (character1Lower > character2Lower) {
+                    return 1;
+                }
             }
 
             ++offset1;
@@ -143,7 +167,7 @@ public class NaturalOrderComparator implements Comparator {
 
         System.out.println("Scrambled: " + scrambled);
 
-        Collections.sort(scrambled, new NaturalOrderComparator());
+        Collections.sort(scrambled, new NaturalOrderComparator(false));
 
         System.out.println("Sorted: " + scrambled);
     }

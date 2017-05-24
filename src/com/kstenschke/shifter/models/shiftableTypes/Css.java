@@ -34,7 +34,7 @@ public class Css {
      */
     public static String getShifted(String value) {
 
-        return value.contains("{") && !value.contains("}")
+        return value.contains("{") && value.contains("}")
             ? sortAttributeStyleLinesInsideSelectors(value)
             : sortAttributeStyleLines(value);
     }

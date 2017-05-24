@@ -121,7 +121,7 @@
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>
                 <li>Improved: Sorting selected lines was possible only from 3+ lines</li>
-                <li>Improved: More omitted JsDoc data types (also invalid) are detected from argument names</li>
+                <li>Improved: More PHP DOC and JsDoc data type detections from argument names</li>
             </ul>
         </li>
         <li>1.6.1 Improved: Better JsDoc comment block detection</li>

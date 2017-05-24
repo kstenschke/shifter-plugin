@@ -74,7 +74,7 @@ public class SeparatedList {
         }
 
         List itemsList = Arrays.asList(items);
-        Collections.sort(itemsList, new NaturalOrderComparator());
+        Collections.sort(itemsList, new NaturalOrderComparator(false));
         items = (String[])itemsList.toArray();
 
         if (!shiftUp) {

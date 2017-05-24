@@ -62,9 +62,12 @@ public class UtilsTextual {
      * @return Given lines sorted alphabetically ascending / descending
      */
     public static List<String> sortLinesNatural(List<String> lines, boolean shiftUp) {
+        return sortLinesNatural(lines, shiftUp, false);
+    }
+    public static List<String> sortLinesNatural(List<String> lines, boolean shiftUp, boolean caseSensitive) {
         DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
 
-        Collections.sort(lines, new NaturalOrderComparator());
+        Collections.sort(lines, new NaturalOrderComparator(caseSensitive));
 
         if (!shiftUp) {
             Collections.reverse(lines);
@@ -710,11 +713,8 @@ public class UtilsTextual {
         if (str.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
             return "array";
         }
-        if (str.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*steps|\\w*start|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|max|min|mode|month|multiplier|now|num|offset|op(eration)*|red|time(stamp)*|week|wid(th)*|x|y)\\d*")) {
+        if (str.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*start|\\w*steps|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|\\w*max|\\w*min|\\w*mode|month|\\w*multiplier|now|num|offset|\\w*op(eration)*|red|\\w*time(stamp)*|week|\\w*wid(th)*|x|y)\\d*")) {
             return "int";
-        }
-        if (str.matches("(has\\w+|is\\w+|return\\w*|should\\w*)")) {
-            return "bool";
         }
         if (str.matches("(\\w*gamma|percent)\\d*")) {
             return "float";
@@ -724,6 +724,9 @@ public class UtilsTextual {
         }
         if (str.matches("(\\w*s)\\d*|\\w*arr(ay)*|\\w*items|\\w*data|data\\w*")) {
             return "array";
+        }
+        if (str.matches("(do\\w*|has\\w+|is\\w+|return\\w*|should\\w*)")) {
+            return "bool";
         }
 
         return "unknown";

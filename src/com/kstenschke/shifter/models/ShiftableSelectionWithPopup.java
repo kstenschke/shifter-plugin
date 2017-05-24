@@ -91,9 +91,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      * @param delimiterGlue
      * @param isUp
      */
-    public void sortListOrSwapQuotesInDocument(
-            final String delimiterSplitPattern, final String delimiterGlue,
-            final boolean isUp) {
+    public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsQuotes) {
             document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
