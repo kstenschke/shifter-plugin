@@ -65,7 +65,7 @@
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
         <li>Logical operators: toggles between (selected) "&&" and "||"</li>
         <li>HTML en/decoding of selected special characters</li>
-        <li>Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value</li>
+        <li>Single characters and string consisting from any amount of the same character can be shifted to the previous/next ASCII value</li>
     </ul>
     <strong>Code- and DOC Comments</strong>
     <ul>

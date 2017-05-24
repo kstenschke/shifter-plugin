@@ -48,7 +48,7 @@ public class QuotedString {
     }
 
     /**
-     * Shift to prev/next quoted string
+     * Shift to previous/next quoted string
      *
      * @param  word       Quoted word to be shifted
      * @param  editorText Full text of editor

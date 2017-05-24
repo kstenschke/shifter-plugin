@@ -50,7 +50,7 @@ h4. String Manipulations
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
 * Logical operators: toggles between (selected) "&&" and "||"
 * HTML en/decoding of selected special characters
-* Single characters and string consisting from any amount of the same character can be shifted to the prev/next ASCII value
+* Single characters and string consisting from any amount of the same character can be shifted to the previous/next ASCII value
 
 h4. Code- and DOC Comments
 * Selection which is a block comment or multiple line-comments (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.
