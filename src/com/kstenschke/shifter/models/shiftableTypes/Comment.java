@@ -103,10 +103,15 @@ public class Comment {
         str = str.substring(2, str.length() - 2);
 
         // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
-        return "//" + (str.contains("\n")
-                // Convert block- to single line comment
-                ? str.replace("\n", " ")
-                : str);
+        // Convert block- to single line comment
+        if (str.contains("\n")) {
+            return "//" + str.replace("\n", " ");
+        }
+
+        return "//" + (str.startsWith("* ")
+            // Convert a single-lined block-comment in DOC format to "// ..." and not "//* ..."
+            ? str.substring(1)
+            : str);
     }
 
     /**
