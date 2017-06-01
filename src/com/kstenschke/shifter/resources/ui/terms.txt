@@ -67,6 +67,7 @@
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 	|child|parent|
 	|clicked|entered|exited|pressed|released|
+	|dark|light|
 	|decade|century|millenium|
 	|deci|centi|mili|micro|nano|pico|femto|atto|zepto|yocto|
 	|deka|hekto|kilo|mega|giga|tera|peta|exa|zetta|yotta|
