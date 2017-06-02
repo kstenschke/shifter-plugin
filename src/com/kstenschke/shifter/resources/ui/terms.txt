@@ -107,6 +107,8 @@
 	|milliard|billion|billiard|trillion|trilliard|quadrillion|
 	|maximum|minimum|
 	|max|min|
+	|model|view|controller|
+	|module|action|
 	|mon|tue|wed|thu|fri|sat|sun|
 	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
 	|negative|positive|
