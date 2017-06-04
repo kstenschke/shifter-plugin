@@ -16,7 +16,6 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.utils.UtilsTextual;
-import org.apache.commons.lang.StringUtils;
 
 public class MinusSeparatedPath {
 
