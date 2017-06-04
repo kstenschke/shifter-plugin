@@ -32,8 +32,8 @@ h4. Sorting
 * Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
 * Shifting a selected (from questionmark on) ternary expression, swaps "than" and "else" statements
 * Shifting a selected PHP concatenation from two strings / variables, toggles the concatenated items' order
-* Shifting a selection from a CSS (or LESS or SASS) file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>
-* Shifting selected attribute-style lines inside a CSS (or LESS or SASS) file, sorts them (alphabetically, vendor-attributes and vendor-styles at the end)</li>
+* Shifting a selection from a CSS file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>
+* Shifting selected attribute-style lines inside a CSS file, sorts them (alphabetically, vendor-attributes and vendor-styles at the end)</li>
 
 h4. Numeric Shifting
 * Numeric values - Incrementing/decrementing numbers

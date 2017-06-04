@@ -70,15 +70,36 @@ public class Css {
     }
 
     /**
-     * Sort given lines (containing each "<attribute>:<style>")
+     * Sort given lines (each being an attribute-style definition tupel, like: "<attribute>:<style>")
      *
      * @param  value
      * @return String
      */
     private static String sortAttributeStyleLines(String value) {
         List<String> lines = splitAttributesIntoLines(value);
+        if (doAllButLastLineEndWithSemikolon(lines)) {
+            lines.set(lines.size() - 1, UtilsTextual.rtrim(lines.get(lines.size() - 1)) + ";");
+        }
+
         List<String> linesSorted = sortAttributeStyles(lines);
         return UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
+    }
+
+    private static boolean doAllButLastLineEndWithSemikolon(List<String> lines) {
+        int amountLines = lines.size();
+        int index = 0;
+        for (String line : lines) {
+            if (index < amountLines - 1) {
+                if (!trim(line).endsWith(";")) {
+                    return false;
+                }
+            } else {
+                return !trim(line).endsWith(";");
+            }
+            index++;
+        }
+
+        return true;
     }
 
     private static List<String> splitAttributesIntoLines(String str) {

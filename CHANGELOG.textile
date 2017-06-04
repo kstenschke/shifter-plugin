@@ -3,8 +3,9 @@ h1. Shifter Plugin - Changelog
 * 1.7.0
     ** Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)
     ** Added: Shifting a camel-cased string, consisting from only 2 words, shows an intention popup to either swap the words' order or convert to a minus-separated path
-    ** Added: Sort all attributes-style lines inside selected selectors in a CSS (or LESS or SASS) stylesheet selection (alphabetically, vendor-attributes and vendor-styles at the end)
+    ** Added: Sort all attributes-style lines inside selected selectors in a CSS stylesheet selection (alphabetically, vendor-attributes and vendor-styles at the end)
     ** Added: Sort selected attribute-style lines in a CSS stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)
+    ** Added: Sorting CSS attribute-style lines detects and adds a missing semicolon on the last line, before sorting
     ** Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes
     ** Improved: Better shifting of single-lined PHP DOC block comments
     ** Improved: Better case maintaining during dictionaric word shifting
