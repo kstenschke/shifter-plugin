@@ -12,6 +12,7 @@ h1. Shifter Plugin - Changelog
     ** Improved: Better case maintaining during dictionaric word shifting
     ** Improved: Sorting selected lines was possible only from 3+ lines
     ** Improved: More PHP DOC and JsDoc data types detection from argument names
+    ** Improved: Natural sort
 * 1.6.1
     ** Improved: Better JsDoc comment block detection
 * 1.6.0

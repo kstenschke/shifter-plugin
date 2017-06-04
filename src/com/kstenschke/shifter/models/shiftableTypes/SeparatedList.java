@@ -15,10 +15,10 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.models.comparators.AlphanumComparator;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import com.kstenschke.shifter.models.comparators.natorder.NaturalOrderComparator;
 import org.apache.commons.lang.StringUtils;
 
 import javax.swing.*;
@@ -62,10 +62,10 @@ public class SeparatedList {
      * @param  selectedText
      * @param  delimiterSplitPattern
      * @param  delimiterGlue
-     * @param  shiftUp
+     * @param  reverse
      * @return Given delimiter separated list, sorted (natural) alphabetically ascending / descending
      */
-    public static String sortSeparatedList(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean shiftUp) {
+    public static String sortSeparatedList(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean reverse) {
         String[] items = selectedText.split(delimiterSplitPattern);
 
         if (items.length == 2) {
@@ -74,10 +74,10 @@ public class SeparatedList {
         }
 
         List itemsList = Arrays.asList(items);
-        Collections.sort(itemsList, new NaturalOrderComparator(false));
-        items = (String[])itemsList.toArray();
+        // @note sorting itemsList, does also update items
+        Collections.sort(itemsList, new AlphanumComparator());
 
-        if (!shiftUp) {
+        if (reverse) {
             Collections.reverse(Arrays.asList(items));
         }
 
@@ -101,6 +101,6 @@ public class SeparatedList {
      * @return
      */
     public static String getShifted(String word, String delimiterSplitPattern, String delimiterGlue, boolean shiftUp) {
-        return sortSeparatedList(word, delimiterSplitPattern, delimiterGlue, shiftUp);
+        return sortSeparatedList(word, delimiterSplitPattern, delimiterGlue, !shiftUp);
     }
 }

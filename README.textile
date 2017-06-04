@@ -111,13 +111,6 @@ Thanks for their input, ideas, help or other contribution
 * Yann Cebron from Jetbrains
 
 
-h2. Third Party Acknowledgment
-
-Shifter uses the following third party components:
-
-* "NaturalOrderComparator":https://github.com/paour/natorder/ by Pierre-Luc Paour
-
-
 h2. License
 
 Copyright 2011-2017 Kay Stenschke

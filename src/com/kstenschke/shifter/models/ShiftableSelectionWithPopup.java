@@ -93,7 +93,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      */
     public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsQuotes) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, !isUp));
             return;
         }
 
@@ -109,7 +109,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      */
     public void sortLinesOrSwapQuotesInDocument(final boolean isUp) {
         if (!containsQuotes) {
-            ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
+            ShiftableSelection.sortLinesInDocument(document, !isUp, lineNumberSelStart, lineNumberSelEnd);
             return;
         }
 
@@ -190,7 +190,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT)) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, !isUp));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER)) {
@@ -198,7 +198,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LINES_SORT)) {
-            ShiftableSelection.sortLinesInDocument(document, isUp, lineNumberSelStart, lineNumberSelEnd);
+            ShiftableSelection.sortLinesInDocument(document, !isUp, lineNumberSelStart, lineNumberSelEnd);
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SWAP)) {

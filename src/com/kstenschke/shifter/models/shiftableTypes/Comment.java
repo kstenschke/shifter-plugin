@@ -195,11 +195,11 @@ public class Comment {
                                                 shifted = convertMultipleLineCommentsToBlockComment(str);
                                                 break;
                                             case 2:
-                                                shifted = sortLineComments(str, true);
+                                                shifted = sortLineComments(str, false);
                                                 break;
                                             case 3:
                                             default:
-                                                shifted = sortLineComments(str, false);
+                                                shifted = sortLineComments(str, true);
                                                 break;
                                         }
                                         document.replaceString(offsetStart, offsetEnd, shifted);
@@ -277,9 +277,9 @@ public class Comment {
         return "// " + result;
     }
 
-    private static String sortLineComments(String str, boolean shiftUp) {
+    private static String sortLineComments(String str, boolean reverse) {
         List<String> lines       = Arrays.asList(str.split("\n"));
-        List<String> shiftedList = UtilsTextual.sortLinesNatural(lines, shiftUp);
+        List<String> shiftedList = UtilsTextual.sortLinesNatural(lines, reverse);
         String result = "";
         int index = 0;
         for(String line : shiftedList) {

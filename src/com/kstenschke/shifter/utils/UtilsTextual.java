@@ -16,8 +16,8 @@
 package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
+import com.kstenschke.shifter.models.comparators.AlphanumComparator;
 import com.kstenschke.shifter.models.shiftableTypes.OperatorSign;
-import com.kstenschke.shifter.models.comparators.natorder.NaturalOrderComparator;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -58,22 +58,19 @@ public class UtilsTextual {
 
     /**
      * @param  lines
-     * @param  shiftUp
+     * @param  reverse
      * @return Given lines sorted alphabetically ascending / descending
      */
-    public static List<String> sortLinesNatural(List<String> lines, boolean shiftUp) {
-        return sortLinesNatural(lines, shiftUp, false);
-    }
-    public static List<String> sortLinesNatural(List<String> lines, boolean shiftUp, boolean caseSensitive) {
+    public static List<String> sortLinesNatural(List<String> lines, boolean reverse) {
+        Collections.sort(lines, new AlphanumComparator());
+
         DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
+        boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
 
-        Collections.sort(lines, new NaturalOrderComparator(caseSensitive));
-
-        if (!shiftUp) {
+        if (reverse) {
             Collections.reverse(lines);
         }
 
-        boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
         if (delimiterDetector.isFoundDelimiter() && !isDelimitedLastLine) {
             // Maintain detected lines delimiter (ex: comma-separated values, w/ last item w/o trailing comma)
             lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter(), false);
@@ -743,7 +740,7 @@ public class UtilsTextual {
         int index = 0;
 
         for (String line : lines) {
-            line = line.trim();
+            line = UtilsTextual.rtrim(line);
 
             boolean isLastLine = index + 1 == amountLines;
             if ((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {

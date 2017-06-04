@@ -85,7 +85,7 @@ public class ShiftableSelection {
         boolean isMultiLine          = UtilsTextual.isMultiLine(selectedText);
 
         if (UtilsFile.isCssFile(filename) && isMultiLine) {
-            // Sort attributes per selector alphabetically
+            // CSS: Sort attributes per selector alphabetically
             String shifted = Css.getShifted(selectedText);
             if (null != shifted) {
                 document.replaceString(offsetStart, offsetEnd, shifted);
@@ -95,7 +95,7 @@ public class ShiftableSelection {
         }
 
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {
-            // Selection is multi-lined: sort lines or swap quotes
+            // Multi-line selection: sort lines or swap quotes
             new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortLinesOrSwapQuotesInDocument(isUp);
             return;
         }
@@ -127,7 +127,7 @@ public class ShiftableSelection {
 
         if (!isPhpVariable) {
             if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(selectedText,",")) {
-                // Comma-separated list
+                // Comma-separated list: sort / ask whether to sort or toggle quotes
                 new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", isUp);
                 return;
             }
@@ -224,13 +224,13 @@ public class ShiftableSelection {
     /**
      * Sort lines in document alphabetically ascending / descending
      *
-     * @param shiftUp
+     * @param reverse
      * @param lineNumberSelStart
      * @param lineNumberSelEnd
      */
-    protected static void sortLinesInDocument(Document document, boolean shiftUp, int lineNumberSelStart, int lineNumberSelEnd) {
+    protected static void sortLinesInDocument(Document document, boolean reverse, int lineNumberSelStart, int lineNumberSelEnd) {
         List<String> lines       = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
-        List<String> linesSorted = UtilsTextual.sortLinesNatural(lines, shiftUp);
+        List<String> linesSorted = UtilsTextual.sortLinesNatural(lines, !reverse);
 
         String linesString = UtilsTextual.joinLines(linesSorted).toString();
 
