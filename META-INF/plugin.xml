@@ -120,7 +120,8 @@
                 <li>Added: Sort selected attribute-style lines in a CSS (or LESS or SASS) stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)</li>
                 <li>Added: Sorting CSS attribute-style lines detects and adds a missing semicolon on the last line, before sorting</li>
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>
-                <li>Improved: Better shifting of single-lined PHP DOC block comments</li>
+                <li>Improved: Shifting of single-lined PHP DOC block comments</li>
+                <li>Improved: Shifting of c-style line comments</li>
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>
                 <li>Improved: Sorting selected lines was possible only from 3+ lines</li>
                 <li>Improved: More PHP DOC and JsDoc data type detections from argument names</li>

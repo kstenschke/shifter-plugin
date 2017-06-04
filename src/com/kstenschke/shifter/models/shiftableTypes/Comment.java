@@ -96,6 +96,9 @@ public class Comment {
         str = str.trim();
 
         if (str.startsWith("//")) {
+            if (!str.endsWith(" ")) {
+                str += " ";
+            }
             // Convert single line comment to block comment
             return "/*" + str.substring(2) + "*/";
         }
