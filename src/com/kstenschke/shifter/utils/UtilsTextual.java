@@ -562,7 +562,7 @@ public class UtilsTextual {
         StringBuilder builder = new StringBuilder();
 
         for (String line : lines) {
-            builder.append(line + appendStr);
+            builder.append(line).append(appendStr);
         }
 
         return builder;
