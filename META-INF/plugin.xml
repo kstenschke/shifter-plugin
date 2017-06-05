@@ -117,7 +117,7 @@
                 <li>Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)</li>
                 <li>Added: Shifting a camel-cased string, consisting from only 2 words, shows an intention popup to either swap the words' order or convert to a minus-separated path</li>
                 <li>Added: Sort all attributes of selected selectors in a CSS stylesheet selection (alphabetically, vendor-attributes and vendor-styles at the end)</li>
-                <li>Added: Sort selected attribute-style lines in a CSS (or LESS or SASS) stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)</li>
+                <li>Added: Sort selected attribute-style lines in a CSS stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)</li>
                 <li>Added: Sorting CSS attribute-style lines detects and adds a missing semicolon on the last line, before sorting</li>
                 <li>Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes</li>
                 <li>Improved: Shifting of single-lined PHP DOC block comments</li>
