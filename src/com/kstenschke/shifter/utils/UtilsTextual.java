@@ -444,7 +444,7 @@ public class UtilsTextual {
         return offset > 0 ? str.subSequence(offset+1, offset+2).toString() : "";
     }
 
-    public static int getEndOfWordAtOffset(CharSequence str, int offset) {
+    public static int getOffsetEndOfWordAtOffset(CharSequence str, int offset) {
         int strLength = str.length();
         if (strLength == 0 || offset < 0) {
             return 0;

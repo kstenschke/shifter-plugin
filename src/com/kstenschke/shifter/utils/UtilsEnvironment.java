@@ -39,7 +39,7 @@ public class UtilsEnvironment {
     public static boolean replaceWordAtCaretInDocument(Document document, int caretOffset, String charSequence) {
         String documentText = document.getText();
         int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, caretOffset);
-        int offsetEnd   = UtilsTextual.getEndOfWordAtOffset(documentText, caretOffset);
+        int offsetEnd   = UtilsTextual.getOffsetEndOfWordAtOffset(documentText, caretOffset);
 
         document.replaceString(offsetStart, offsetEnd, charSequence);
 
