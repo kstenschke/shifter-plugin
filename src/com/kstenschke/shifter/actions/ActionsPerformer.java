@@ -81,7 +81,7 @@ public class ActionsPerformer {
      * @param shiftUp
      * @param moreCount
      */
-    public void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
+    private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
         if (this.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
             ShiftableBlockSelection.shiftBlockSelectionInDocument(this, shiftUp, moreCount);

@@ -35,18 +35,18 @@ import java.util.List;
 
 class ShiftableSelectionWithPopup extends ShiftableSelection {
 
-    private Project project;
-    private Document document;
+    private final Project project;
+    private final Document document;
 
-    private int offsetStart;
-    private int offsetEnd;
+    private final int offsetStart;
+    private final int offsetEnd;
 
-    private int lineNumberSelStart;
-    private int lineNumberSelEnd;
+    private final int lineNumberSelStart;
+    private final int lineNumberSelEnd;
 
-    private String selectedText;
+    private final String selectedText;
 
-    private boolean containsQuotes;
+    private final boolean containsQuotes;
 
     /**
      * Constructor

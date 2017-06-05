@@ -22,7 +22,6 @@ import java.util.List;
  */
 public class DelimiterDetector {
 
-    private final List<String> lines;
     private boolean findingDelimiterFailed = true;
     private char commonDelimiter = ' ';
     private boolean isDelimitedLastLine;
@@ -33,10 +32,9 @@ public class DelimiterDetector {
      * @param lines
      */
     public DelimiterDetector(List<String> lines) {
-        this.lines = lines;
         this.commonDelimiter = ' ';
 
-        int amountLines = this.lines.size();
+        int amountLines = lines.size();
         if (amountLines <= 2) {
             this.findingDelimiterFailed = true;
             return;
@@ -46,7 +44,7 @@ public class DelimiterDetector {
 
         this.findingDelimiterFailed = false;
         int lineNumber = 0;
-        for (String line : this.lines) {
+        for (String line : lines) {
             line = line.trim();
             lenLine = line.length();
 

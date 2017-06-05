@@ -53,7 +53,7 @@ public class JsDoc {
         return str.startsWith("*") && str.contains("@return") && !str.contains("@returns");
     }
 
-    public static Boolean isAtReturnsLine(String str) {
+    private static Boolean isAtReturnsLine(String str) {
         str = trim(str);
 
         return str.startsWith("*") && str.contains("@returns ");
@@ -63,7 +63,7 @@ public class JsDoc {
         return isDataType(str, true);
     }
 
-    public static Boolean isDataType(String str, boolean includeInvalidTypes) {
+    private static Boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
         if (str.equals("array")
@@ -92,7 +92,7 @@ public class JsDoc {
         );
     }
 
-    public static Boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
+    private static Boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
         str = trim(str.toLowerCase());
 
         if (str.contains(lhs + "array")
