@@ -77,7 +77,7 @@ public class Css {
      */
     private static String sortAttributeStyleLines(String value) {
         List<String> lines = splitAttributesIntoLines(value);
-        if (doAllButLastLineEndWithSemikolon(lines)) {
+        if (doAllButLastLineEndWithSemicolon(lines)) {
             lines.set(lines.size() - 1, UtilsTextual.rtrim(lines.get(lines.size() - 1)) + ";");
         }
 
@@ -85,7 +85,7 @@ public class Css {
         return UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
     }
 
-    private static boolean doAllButLastLineEndWithSemikolon(List<String> lines) {
+    private static boolean doAllButLastLineEndWithSemicolon(List<String> lines) {
         int amountLines = lines.size();
         int index = 0;
         for (String line : lines) {
