@@ -125,7 +125,7 @@
                 <li>Improved: Better case maintaining during dictionaric word shifting</li>
                 <li>Improved: Sorting selected lines was possible only from 3+ lines</li>
                 <li>Improved: More PHP DOC and JsDoc data type detections from argument names</li>
-                <li>Improved: Natural sort</li>
+                <li>Improved: Natural sort (added case insensitivity)</li>
             </ul>
         </li>
         <li>1.6.1 Improved: Better JsDoc comment block detection</li>
