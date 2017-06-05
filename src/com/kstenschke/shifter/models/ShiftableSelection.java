@@ -117,7 +117,7 @@ public class ShiftableSelection {
             return;
         }
 
-        if (!isPhpVariable && UtilsFile.isPhpFile(filename) && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes)) {
+        if (!isPhpVariable && UtilsFile.isPhpFile(filename) && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes, isUp)) {
             return;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(selectedText, "")) {
@@ -185,10 +185,10 @@ public class ShiftableSelection {
         document.replaceString(offsetStart, offsetEnd, shiftedWord);
     }
 
-    private static boolean shiftSelectionInPhpDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText, boolean containsQuotes) {
+    private static boolean shiftSelectionInPhpDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText, boolean containsQuotes, boolean isUp) {
         com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation(selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
-            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation);
+            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation, isUp);
             return true;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.Comment.isHtmlComment(selectedText)) {

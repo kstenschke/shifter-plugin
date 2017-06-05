@@ -62,10 +62,10 @@ public class SeparatedList {
      * @param  selectedText
      * @param  delimiterSplitPattern
      * @param  delimiterGlue
-     * @param  reverse
+     * @param  sortAscending
      * @return Given delimiter separated list, sorted (natural) alphabetically ascending / descending
      */
-    public static String sortSeparatedList(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean reverse) {
+    public static String sortSeparatedList(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean sortAscending) {
         String[] items = selectedText.split(delimiterSplitPattern);
 
         if (items.length == 2) {
@@ -77,10 +77,6 @@ public class SeparatedList {
         // @note sorting itemsList, does also update items
         Collections.sort(itemsList, new AlphanumComparator());
 
-        if (reverse) {
-            Collections.reverse(Arrays.asList(items));
-        }
-
         if (UtilsArray.hasDuplicateItems(items) && JOptionPane.showConfirmDialog(
                 null,
                 StaticTexts.MESSAGE_REDUCE_DUPLICATED_ITEMS,
@@ -88,6 +84,10 @@ public class SeparatedList {
                 JOptionPane.OK_CANCEL_OPTION
         ) == JOptionPane.OK_OPTION) {
             items = UtilsArray.reduceDuplicateItems(items);
+        }
+
+        if (!sortAscending) {
+            Collections.reverse(Arrays.asList(items));
         }
 
         return UtilsArray.implode(items, delimiterGlue);
@@ -101,6 +101,6 @@ public class SeparatedList {
      * @return
      */
     public static String getShifted(String word, String delimiterSplitPattern, String delimiterGlue, boolean shiftUp) {
-        return sortSeparatedList(word, delimiterSplitPattern, delimiterGlue, !shiftUp);
+        return sortSeparatedList(word, delimiterSplitPattern, delimiterGlue, shiftUp);
     }
 }

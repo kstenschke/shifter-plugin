@@ -73,7 +73,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
     /**
      * @param phpConcatenation
      */
-    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
+    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation, boolean isUp) {
         if (!containsQuotes) {
             document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
             return;
@@ -83,7 +83,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
 
-        shiftSelectionByPopupInDocument(shiftOptions, false, phpConcatenation, null, null);
+        shiftSelectionByPopupInDocument(shiftOptions, isUp, phpConcatenation, null, null);
     }
 
     /**
@@ -93,7 +93,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      */
     public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsQuotes) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, !isUp));
+            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
 
@@ -101,7 +101,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
 
-        shiftSelectionByPopupInDocument(shiftOptions, false,null, delimiterSplitPattern, delimiterGlue);
+        shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
     }
 
     /**
@@ -159,7 +159,10 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
                         // Callback when item chosen
                         CommandProcessor.getInstance().executeCommand(project, new Runnable() {
                                     public void run() {
-                                        shiftSelectionByModeInDocument(modes.getSelectedValue().toString(), isUp, phpConcatenation, delimiterSplitPattern, delimiterGlue);
+                                        shiftSelectionByModeInDocument(
+                                                modes.getSelectedValue().toString(),
+                                                isUp,
+                                                phpConcatenation, delimiterSplitPattern, delimiterGlue);
                                     }
                                 },
                                 null, null);
@@ -190,7 +193,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT)) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, !isUp));
+            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER)) {
