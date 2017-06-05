@@ -62,11 +62,10 @@ public class UtilsTextual {
      * @return Given lines sorted alphabetically ascending / descending
      */
     public static List<String> sortLinesNatural(List<String> lines, boolean reverse) {
-        Collections.sort(lines, new AlphanumComparator());
-
         DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
         boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
 
+        Collections.sort(lines, new AlphanumComparator());
         if (reverse) {
             Collections.reverse(lines);
         }

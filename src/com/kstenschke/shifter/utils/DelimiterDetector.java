@@ -25,7 +25,7 @@ public class DelimiterDetector {
     private final List<String> lines;
     private boolean findingDelimiterFailed = true;
     private char commonDelimiter = ' ';
-    private boolean isDelimitedLastLine = false;
+    private boolean isDelimitedLastLine;
 
     /**
      * Constructor
@@ -37,35 +37,35 @@ public class DelimiterDetector {
         this.commonDelimiter = ' ';
 
         int amountLines = this.lines.size();
+        if (amountLines <= 2) {
+            this.findingDelimiterFailed = true;
+            return;
+        }
+
         int lenLine;
 
-        if (amountLines > 2) {
-            this.findingDelimiterFailed = false;
-            int lineNumber = 0;
-            for (String line : this.lines) {
-                line = line.trim();
-                lenLine = line.length();
+        this.findingDelimiterFailed = false;
+        int lineNumber = 0;
+        for (String line : this.lines) {
+            line = line.trim();
+            lenLine = line.length();
 
-                if (lenLine > 0) {
-                    char currentDelimiter = line.charAt(lenLine - 1);
-
-                    if (lineNumber == 0) {
-                        this.commonDelimiter = currentDelimiter;
-                    } else {
-                        boolean isLastLine = lineNumber == amountLines - 1;
-                        if (!isLastLine && currentDelimiter != this.commonDelimiter) {
-                            this.findingDelimiterFailed = true;
-                        }
+            if (lenLine > 0) {
+                char currentDelimiter = line.charAt(lenLine - 1);
+                if (lineNumber == 0) {
+                    this.commonDelimiter = currentDelimiter;
+                } else {
+                    boolean isLastLine = lineNumber == amountLines - 1;
+                    if (!isLastLine && currentDelimiter != this.commonDelimiter) {
+                        this.findingDelimiterFailed = true;
                     }
                 }
-                lineNumber++;
             }
-
-            String lastLine = lines.get(amountLines - 1).trim();
-            this.isDelimitedLastLine = lastLine.endsWith(String.valueOf(this.commonDelimiter));
-        } else {
-            this.findingDelimiterFailed = true;
+            lineNumber++;
         }
+
+        String lastLine = lines.get(amountLines - 1).trim();
+        this.isDelimitedLastLine = lastLine.endsWith(String.valueOf(this.commonDelimiter));
     }
 
     /**
