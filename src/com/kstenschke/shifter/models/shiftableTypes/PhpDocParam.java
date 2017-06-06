@@ -15,6 +15,10 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.project.Project;
+import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import static org.apache.commons.lang.StringUtils.trim;
@@ -56,7 +60,7 @@ public class PhpDocParam {
      * @param  str
      * @return String
      */
-    public static String extractVariableName(String str) {
+    private static String extractVariableName(String str) {
         return trim(str.replace("* @param", "")).split(" ")[0];
     }
 
@@ -72,7 +76,32 @@ public class PhpDocParam {
         return insertDataTypeIntoParamLine(line, UtilsTextual.guessPhpDataTypeByName(variableName));
     }
 
-    public static String insertDataTypeIntoParamLine(String line, String dataType) {
+    private static String insertDataTypeIntoParamLine(String line, String dataType) {
         return line.replace("@param", "@param " + dataType);
+    }
+
+    public static boolean shiftSelectedPhpDocInDocument(Editor editor, Document document, Project project, int offsetStart, int offsetEnd, String selectedText) {
+        if (PhpDocComment.isPhpDocComment(selectedText) && PhpDocComment.containsAtParam(selectedText)) {
+            String shifted = PhpDocComment.getShifted(selectedText);
+            if (!shifted.equals(selectedText)) {
+                // PHP DOC comment block: guess missing data shiftableTypes by resp. variable names
+                document.replaceString(offsetStart, offsetEnd, shifted);
+                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetEnd);
+                return true;
+            }
+        }
+        if (!selectedText.contains("\n")
+          && DocCommentType.isDocCommentTypeLineContext(selectedText)
+          && isPhpDocParamLine(selectedText)
+          && !containsDataType(selectedText)) {
+            String variableName = trim(extractVariableName(selectedText).toLowerCase().replace("$", ""));
+            String dataType     = UtilsTextual.guessPhpDataTypeByName(variableName);
+            if (!dataType.equals("unknown")) {
+                // PHP DOC @param line w/o data type, e.g. "* @param $name"
+                document.replaceString(offsetStart, offsetEnd, insertDataTypeIntoParamLine(selectedText, dataType));
+                return true;
+            }
+        }
+        return false;
     }
 }
