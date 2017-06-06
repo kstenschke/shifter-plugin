@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftableTypes.DocCommentType;
 import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
 import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -100,7 +101,8 @@ public class ShiftableTypesManager {
             return TYPE_TRAILING_COMMENT;
         }
 
-        if (com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.isPhpDocParamLine(line) && !com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.containsDataType(line)) {
+        if (com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.isPhpDocParamLine(line)
+         && !com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.containsDataType(line)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
             // PHP doc param line is handled in line-shifting fallback
             return TYPE_UNKNOWN;
@@ -120,7 +122,7 @@ public class ShiftableTypesManager {
 
         // DocComment shiftableTypes (must be prefixed w/ "@")
         this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentType();
-        if (this.typeDataTypeInDocComment.isDocCommentTypeLineContext(line)) {
+        if (DocCommentType.isDocCommentTypeLineContext(line)) {
             this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentTag();
             if (prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
                 return TYPE_DOC_COMMENT_TAG;

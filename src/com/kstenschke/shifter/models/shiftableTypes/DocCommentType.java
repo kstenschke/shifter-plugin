@@ -29,9 +29,9 @@ public class DocCommentType {
      * @param line Line the caret is at
      * @return boolean.
      */
-    public boolean isDocCommentTypeLineContext(String line) {
+    public static boolean isDocCommentTypeLineContext(String line) {
         String allTags = new DocCommentTag().getAllTagsPiped();
-        String regExPatternLine = "\\s+\\*\\s+@(" + allTags + ")\\s";
+        String regExPatternLine = "\\s*\\*\\s+@(" + allTags + ")\\s*";
 
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 
@@ -46,7 +46,7 @@ public class DocCommentType {
      * @return boolean
      */
     public boolean isDocCommentType(String prefixChar, String line) {
-        return !("#".equals(prefixChar) || "@".equals(prefixChar)) && this.isDocCommentTypeLineContext(line);
+        return !("#".equals(prefixChar) || "@".equals(prefixChar)) && isDocCommentTypeLineContext(line);
 
     }
 

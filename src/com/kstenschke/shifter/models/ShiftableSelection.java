@@ -19,9 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.kstenschke.shifter.models.shiftableTypes.Css;
-import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
-import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
+import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -30,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.util.List;
+
+import static org.apache.commons.lang.StringUtils.trim;
 
 // Shiftable (non-block) selection
 public class ShiftableSelection {
@@ -55,15 +55,10 @@ public class ShiftableSelection {
         if (selectedText == null || selectedText.trim().isEmpty()) {
             return;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.PhpDocComment.isPhpDocComment(selectedText) && com.kstenschke.shifter.models.shiftableTypes.PhpDocComment.containsAtParam(selectedText)) {
-            String shifted = com.kstenschke.shifter.models.shiftableTypes.PhpDocComment.getShifted(selectedText);
-            if (!shifted.equals(selectedText)) {
-                // PHP doc comment block: guess missing data shiftableTypes by resp. variable names
-                document.replaceString(offsetStart, offsetEnd, shifted);
-                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetEnd);
-                return;
-            }
+        if (shiftPhpDocInDocument(editor, document, project, offsetStart, offsetEnd, selectedText)) {
+            return;
         }
+
         // Shift selected comment: Must be before multi-line sort to allow multi-line comment shifting
         if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(selectedText) && shiftSelectedCommentInDocument(editor, document, filename, project, offsetStart, offsetEnd, selectedText)) {
             return;
@@ -183,6 +178,31 @@ public class ShiftableSelection {
         }
 
         document.replaceString(offsetStart, offsetEnd, shiftedWord);
+    }
+
+    private static boolean shiftPhpDocInDocument(Editor editor, Document document, Project project, int offsetStart, int offsetEnd, String selectedText) {
+        if (PhpDocComment.isPhpDocComment(selectedText) && PhpDocComment.containsAtParam(selectedText)) {
+            String shifted = PhpDocComment.getShifted(selectedText);
+            if (!shifted.equals(selectedText)) {
+                // PHP doc comment block: guess missing data shiftableTypes by resp. variable names
+                document.replaceString(offsetStart, offsetEnd, shifted);
+                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetEnd);
+                return true;
+            }
+        }
+        if (!selectedText.contains("\n")
+            && DocCommentType.isDocCommentTypeLineContext(selectedText)
+            && PhpDocParam.isPhpDocParamLine(selectedText)
+            && !PhpDocParam.containsDataType(selectedText)
+        ) {
+            String variableName = trim(PhpDocParam.extractVariableName(selectedText).toLowerCase().replace("$", ""));
+            String dataType     = UtilsTextual.guessPhpDataTypeByName(variableName);
+            if (!dataType.equals("unknown")) {
+                document.replaceString(offsetStart, offsetEnd, PhpDocParam.insertDataTypeIntoParamLine(selectedText, dataType));
+                return true;
+            }
+        }
+        return false;
     }
 
     private static boolean shiftSelectionInPhpDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText, boolean containsQuotes, boolean isUp) {

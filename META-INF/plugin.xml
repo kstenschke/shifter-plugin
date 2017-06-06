@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -112,7 +112,11 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.7.0
+        <li>1.7.1
+            <ul>
+                <li>Improved: PHP DOC @param data type insertion - can now also be invoked from selected line out of DOC comment block</li>
+            </ul>
+        </li><li>1.7.0
             <ul>
                 <li>Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)</li>
                 <li>Added: Shifting a camel-cased string, consisting from only 2 words, shows an intention popup to either swap the words' order or convert to a minus-separated path</li>
@@ -145,14 +149,6 @@
                 <li>Added: Mode selection popup when selection is both: sortable list, swappable quote signs</li>
                 <li>Added: Mode selection popup when selection is both: PHP concatenation (order can be toggled), swappable quote signs</li>
                 <li>Improved: Sorting a selection of lines w/ common delimiter no longer removes leading whitespace</li>
-            </ul>
-        </li>
-        <li>1.5.4
-            <ul>
-                <li>Added: Flip order of selected camelCase (w/ lower or upper lead character) string that is a word pair</li>
-                <li>Improved: PHP DOC comment data type detection</li>
-                <li>Improved: Tupel detection (both items must be non empty)</li>
-                <li>Bugfix: Numeric postfix shifting ("a99" was shifted into "a910" instead of "a100")</li>
             </ul>
         </li>
   </ul><br/>

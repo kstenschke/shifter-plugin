@@ -56,7 +56,7 @@ public class PhpDocParam {
      * @param  str
      * @return String
      */
-    private static String extractVariableName(String str) {
+    public static String extractVariableName(String str) {
         return trim(str.replace("* @param", "")).split(" ")[0];
     }
 
@@ -72,7 +72,7 @@ public class PhpDocParam {
         return insertDataTypeIntoParamLine(line, UtilsTextual.guessPhpDataTypeByName(variableName));
     }
 
-    private static String insertDataTypeIntoParamLine(String line, String dataType) {
+    public static String insertDataTypeIntoParamLine(String line, String dataType) {
         return line.replace("@param", "@param " + dataType);
     }
 }
