@@ -67,6 +67,7 @@ public class ShiftableLine {
                 return shiftedLine;
             }
         }
+
         if (this.filename.endsWith(".js") && JsDoc.isAtParamLine(line)
             && !JsDoc.containsCompounds(line) && !JsDoc.containsDataType(line, "", true)) {
             String shiftedLine = JsDoc.correctAtParamLine(line);

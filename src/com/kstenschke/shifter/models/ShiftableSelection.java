@@ -53,8 +53,13 @@ public class ShiftableSelection {
         if (selectedText == null || selectedText.trim().isEmpty()) {
             return;
         }
-        if (PhpDocParam.shiftSelectedPhpDocInDocument(editor, document, project, offsetStart, offsetEnd, selectedText)) {
+
+        boolean isPhpFile = UtilsFile.isPhpFile(filename);
+        if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(editor, document, project, offsetStart, offsetEnd, selectedText)) {
             // Detect and shift whole PHP DOC block or single line out of it, that contains @param line(s) w/o data type
+            return;
+        }
+        if (filename.endsWith(".js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetStart)) {
             return;
         }
 
@@ -111,7 +116,7 @@ public class ShiftableSelection {
             return;
         }
 
-        if (!isPhpVariable && UtilsFile.isPhpFile(filename) && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes, isUp)) {
+        if (!isPhpVariable && isPhpFile && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsQuotes, isUp)) {
             return;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(selectedText, "")) {
