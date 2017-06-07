@@ -41,29 +41,29 @@ public class JsDoc {
      * @param  str     String to be checked
      * @return boolean
      */
-    public static Boolean isAtParamLine(String str) {
+    public static boolean isAtParamLine(String str) {
         str = trim(str);
 
-        return str.startsWith("*") && str.contains("@param");
+        return str.startsWith("* ") && str.contains("@param");
     }
 
-    public static Boolean isInvalidAtReturnsLine(String str) {
+    public static boolean isInvalidAtReturnsLine(String str) {
         str = trim(str);
 
         return str.startsWith("*") && str.contains("@return") && !str.contains("@returns");
     }
 
-    private static Boolean isAtReturnsLine(String str) {
+    private static boolean isAtReturnsLine(String str) {
         str = trim(str);
 
         return str.startsWith("*") && str.contains("@returns ");
     }
 
-    public static Boolean isDataType(String str) {
+    public static boolean isDataType(String str) {
         return isDataType(str, true);
     }
 
-    private static Boolean isDataType(String str, boolean includeInvalidTypes) {
+    private static boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
         if (str.equals("array")
@@ -92,18 +92,21 @@ public class JsDoc {
         );
     }
 
-    private static Boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
+    public static boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
         str = trim(str.toLowerCase());
 
-        if (str.contains(lhs + "array")
-         || str.contains(lhs + "boolean")
-         || str.contains(lhs + "function")
-         || str.contains(lhs + "null")
-         || str.contains(lhs + "number")
-         || str.contains(lhs + "object")
-         || str.contains(lhs + "string")
-         || str.contains(lhs + "symbol")
-         || str.contains(lhs + "undefined")) {
+        if (
+           // javaScript primitive data types
+              str.contains(lhs + "array")
+           || str.contains(lhs + "boolean")
+           || str.contains(lhs + "function")
+           || str.contains(lhs + "null")
+           || str.contains(lhs + "number")
+           || str.contains(lhs + "object")
+           || str.contains(lhs + "string")
+           || str.contains(lhs + "symbol")
+           || str.contains(lhs + "undefined")
+        ) {
             return true;
         }
 
@@ -116,7 +119,7 @@ public class JsDoc {
         );
     }
 
-    public static Boolean containsCompounds(String str) {
+    public static boolean containsCompounds(String str) {
         return str.contains("{") && str.contains("}");
     }
 
@@ -193,11 +196,9 @@ public class JsDoc {
         return false;
     }
 
-    private static String correctAtParamLine(String line) {
-        if (!containsCompounds(line)) {
-            if (containsDataType(line, " ", true)) {
-                line = addCompoundsToDataType(line, "@param", true);
-            }
+    public static String correctAtParamLine(String line) {
+        if (!containsCompounds(line) && containsDataType(line, " ", true)) {
+            line = addCompoundsToDataType(line, "@param", true);
         }
 
         line = correctInvalidDataTypes(line, "{", "}");
@@ -265,7 +266,7 @@ public class JsDoc {
                 dataType = "Date";
             } else if (parameterName.matches("(\\w*obj\\w*)")) {
                 dataType = "Object";
-            } else if (parameterName.matches("(\\w*s)\\*")) {
+            } else if (parameterName.matches("(\\w*s)\\$")) {
                 dataType = "*";
             }
         }

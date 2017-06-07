@@ -114,6 +114,8 @@
     <ul>
         <li>1.7.1
             <ul>
+                <li>Improved: JsDoc @param line w/o data type can now be shifted (to insert the missing data type) without having to be selected</li>
+                <li>Improved: Extended type detection of JsDoc data type completion</li>
                 <li>Improved: PHP DOC @param data type insertion - can now also be invoked from selected line out of DOC comment block</li>
                 <li>Improved: When there are only 2 sortable items, the related intention option now says "swap items order" instead of "sort items"</li>
             </ul>

@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.shiftableTypes.JsDoc;
 import com.kstenschke.shifter.models.shiftableTypes.PhpDocParam;
 import com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
@@ -59,9 +60,16 @@ public class ShiftableLine {
      * @return String       Next upper/lower word
      */
     private String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
-        if (UtilsFile.isPhpFile(this.filename) && PhpDocParam.isPhpDocParamLine(this.line) && !PhpDocParam.containsDataType(this.line) && PhpDocParam.containsVariableName(this.line)) {
+        if (UtilsFile.isPhpFile(filename) && PhpDocParam.isPhpDocParamLine(line) && !PhpDocParam.containsDataType(this.line) && PhpDocParam.containsVariableName(this.line)) {
             // Caret-line is a PHP doc @param w/o data type: guess and insert one by the variable name
-            String shiftedLine = PhpDocParam.getShifted(this.line);
+            String shiftedLine = PhpDocParam.getShifted(line);
+            if (!shiftedLine.equals(line)) {
+                return shiftedLine;
+            }
+        }
+        if (this.filename.endsWith(".js") && JsDoc.isAtParamLine(line)
+            && !JsDoc.containsCompounds(line) && !JsDoc.containsDataType(line, "", true)) {
+            String shiftedLine = JsDoc.correctAtParamLine(line);
             if (!shiftedLine.equals(line)) {
                 return shiftedLine;
             }
