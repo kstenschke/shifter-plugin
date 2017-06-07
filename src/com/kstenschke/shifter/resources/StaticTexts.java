@@ -62,7 +62,9 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_LINES_SORT = "Sort lines alphabetical";
     @NonNls
-    public static final String SHIFT_OPTION_LIST_ITEMS_SORT = "Sort list items alphabetical";
+    public static final String SHIFT_OPTION_LIST_ITEMS_SORT = "Sort items alphabetical";
+    @NonNls
+    public static final String SHIFT_OPTION_LIST_ITEMS_SWAP = "Swap list items";
     @NonNls
     public static final String SHIFT_OPTION_QUOTES_SWAP = "Swap single and double quotes";
     @NonNls

@@ -98,7 +98,9 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
 
         List<String> shiftOptions = new ArrayList<String>();
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
+
+        String items[] = selectedText.split(delimiterSplitPattern);
+        shiftOptions.add(items.length == 2 ? StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP : StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
 
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
@@ -192,7 +194,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, StringCamelCase.flipWordPairOrder(selectedText));
             return;
         }
-        if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT)) {
+        if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP)) {
             document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }

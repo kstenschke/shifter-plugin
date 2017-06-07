@@ -2,6 +2,7 @@ h1. Shifter Plugin - Changelog
 
 * 1.7.1
     ** Improved: PHP DOC @param data type insertion - can now also be invoked on selected line of DOC comment block
+    ** Improved: When there are only 2 sortable items, the related intention option now says "swap items order" instead of "sort items"
 * 1.7.0
     ** Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)
     ** Added: Shifting a camel-cased string, consisting from only 2 words, shows an intention popup to either swap the words' order or convert to a minus-separated path
