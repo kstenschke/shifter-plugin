@@ -22,6 +22,10 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 
 *Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 
+h4. Tip: Using Mouse Wheel
+
+To setup the mouse wheel to invoke shifiting, open the IDE preferences and go to: "Keymap". Search for "Shift", than right-click the shifter action items and use the option "Add mouse shortcut". 
+Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" can be assigned to "Shift-Up", "Shift + Wheel Down" to "Shift-Down".
 
 h3. Shifting Types
 
