@@ -257,18 +257,17 @@ public class JsDoc {
     }
 
     private static String guessDataType(String parameterName) {
-        String dataType = UtilsTextual.guessPhpDataTypeByName(parameterName);
+        String dataType = null;
+        if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*element)")) {
+            dataType = "*";
+        } else if (parameterName.matches("(?i)(\\w*date\\w*)")) {
+            dataType = "Date";
+        } else if (parameterName.matches("(?i)(\\w*obj\\w*)")) {
+            dataType = "Object";
+        }
 
-        if (dataType.equals("unknown")) {
-            if (parameterName.matches("(\\w*element)")) {
-                dataType = "*";
-            } else if (parameterName.matches("(\\w*date\\w*)")) {
-                dataType = "Date";
-            } else if (parameterName.matches("(\\w*obj\\w*)")) {
-                dataType = "Object";
-            } else if (parameterName.matches("(\\w*s)\\$")) {
-                dataType = "*";
-            }
+        if (null == dataType) {
+            dataType = UtilsTextual.guessPhpDataTypeByName(parameterName);
         }
 
         return "{" + correctInvalidDataTypes(dataType, "", "") + "}";
