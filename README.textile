@@ -11,6 +11,7 @@ If there's only one shiftable word in a line, it can be shifted without the care
 Lowercase/uppercase or lower case with upper first character of shifted words is maintained.
 To shift values instantly multiple times, there are additional "Shift More" actions, the amount of repetitions can be configured in the plugin configurations (default: 10).
 
+
 h3. Default Keyboard Shortcuts
 
 Shifter adds the following editing tools (you can change the keymap in the IDE preferences):
@@ -24,8 +25,11 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 
 h4. Tip: Using Mouse Wheel
 
-To setup the mouse wheel to invoke shifiting, open the IDE preferences and go to: "Keymap". Search for "Shift", than right-click the shifter action items and use the option "Add mouse shortcut". 
-Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" can be assigned to "Shift-Up", "Shift + Wheel Down" to "Shift-Down".
+To setup the mouse wheel to invoke shifting, open the IDE preferences and go to: "Keymap". Search for "Shift",
+than right-click the shifter action items and use the option "Add mouse shortcut".
+Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" can be assigned to "Shift-Up",
+"Shift + Wheel Down" to "Shift-Down".
+
 
 h3. Shifting Types
 

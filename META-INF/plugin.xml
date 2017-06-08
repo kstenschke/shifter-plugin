@@ -32,8 +32,17 @@
         <li>Ctrl+Shift+Alt+K - Shift Up More*</li>
         <li>Ctrl+Shift+Alt+J - Shift Down More*</li>
     </ul>
+    Shift more: repeats shifting a value multiple times. The amount of repetitions can be configured in the plugin configuration (default: 10).
+    <br/><br/>
+    <strong>Mac Users:</strong>
+    On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
+    <br/><br/>
+    <strong>Tip: Using Mouse Wheel</strong>
     <br/>
-    Shift more: repeats shifting the selected value multiple times. The amount of repetitions can be configured in the plugin configuration (default: 10).
+    To setup the mouse wheel to invoke shifting, open the IDE preferences and go to: “Keymap”.
+    Search for “Shift”, than right-click the shifter action items and use the option “Add mouse shortcut”.
+    Mouse shortcuts can include hotkeys, this way for instance “Shift + Wheel Up” can be assigned to “Shift-Up”,
+    “Shift + Wheel Down” to “Shift-Down”.
     <br/><br/>
     <strong>SHIFTING TYPES</strong>
     <br/>
