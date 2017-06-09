@@ -48,7 +48,7 @@ public class StringCamelCase {
                 : words[1] + words[0];
     }
 
-    public static int getAmountWords(String word) {
+    private static int getAmountWords(String word) {
         return UtilsTextual.splitCamelCaseIntoWords(word, true).length;
     }
 

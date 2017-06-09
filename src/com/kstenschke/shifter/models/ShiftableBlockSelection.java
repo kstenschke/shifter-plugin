@@ -96,7 +96,7 @@ public class ShiftableBlockSelection {
         }
     }
 
-    public static void shiftIdenticalBlockItemsInDocument(boolean shiftUp, @Nullable Integer moreCount, Editor editor, Document document, int[] blockSelectionStarts, int[] blockSelectionEnds, String editorText) {
+    private static void shiftIdenticalBlockItemsInDocument(boolean shiftUp, @Nullable Integer moreCount, Editor editor, Document document, int[] blockSelectionStarts, int[] blockSelectionEnds, String editorText) {
         String filename = UtilsEnvironment.getDocumentFilename(document);
 
         String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
@@ -121,7 +121,7 @@ public class ShiftableBlockSelection {
      * @param integer
      * @param editorText
      */
-    public static void shiftNumericalBlockSelectionInDocument(boolean shiftUp, Editor editor, Document document, Integer integer, String editorText) {
+    private static void shiftNumericalBlockSelectionInDocument(boolean shiftUp, Editor editor, Document document, Integer integer, String editorText) {
         Integer firstNumber = integer;
         if (null == firstNumber) {
             firstNumber = 0;
