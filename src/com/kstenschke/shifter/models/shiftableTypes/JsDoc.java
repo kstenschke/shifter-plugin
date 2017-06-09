@@ -63,6 +63,19 @@ public class JsDoc {
         return isDataType(str, true);
     }
 
+    public static boolean isWordRightOfAtParamOrAtReturn(String word, String line) {
+        if (line.contains("@param")) {
+            line = trim(line.split("@param")[1]);
+            return line.startsWith(word);
+        }
+        if (line.contains("@return")) {
+            line = trim(line.split("@return")[1]);
+            return line.startsWith(word);
+        }
+
+        return false;
+    }
+
     private static boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
