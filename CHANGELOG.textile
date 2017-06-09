@@ -3,7 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.7.1
     ** Improved: JsDoc @param line w/o data type can now be shifted (to insert the missing data type) without having to be selected
     ** Improved: Shifting selected JsDoc block comment (add missing data type annotations)
-    ** Improved: Extended type detection of JsDoc data type completion
+    ** Improved: Extended type detection of PHP Doc and JsDoc data type completion
     ** Improved: PHP DOC @param data type insertion - can now also be invoked on selected line of DOC comment block
     ** Improved: When there are only 2 sortable items, the related intention option now says "swap items order" instead of "sort items"
 * 1.7.0
