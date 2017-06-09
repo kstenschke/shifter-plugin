@@ -277,6 +277,9 @@ public class JsDoc {
             dataType = "Date";
         } else if (parameterName.matches("(?i)(\\w*obj\\w*)")) {
             dataType = "Object";
+        } else if (parameterName.length() == 1) {
+            // e.g. x, y, i, etc.
+            dataType = "number";
         }
 
         if (null == dataType) {
