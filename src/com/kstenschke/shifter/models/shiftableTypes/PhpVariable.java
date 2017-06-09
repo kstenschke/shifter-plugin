@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import java.util.ArrayList;
@@ -81,7 +82,7 @@ public class PhpVariable {
 
         // Extract array of all PHP var names
         String text = editorText.toString();
-        List<String> phpVariables = UtilsTextual.extractPhpVariables(text);
+        List<String> phpVariables = UtilsPhp.extractPhpVariables(text);
 
         // Sort var names alphabetically
         Collections.sort(phpVariables);

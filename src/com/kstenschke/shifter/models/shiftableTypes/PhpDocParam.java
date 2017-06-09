@@ -19,8 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
-import com.kstenschke.shifter.utils.UtilsTextual;
-
+import com.kstenschke.shifter.utils.UtilsPhp;
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
@@ -73,7 +72,7 @@ public class PhpDocParam {
     public static String getShifted(String line) {
         String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
 
-        return insertDataTypeIntoParamLine(line, UtilsTextual.guessPhpDataTypeByName(variableName));
+        return insertDataTypeIntoParamLine(line, UtilsPhp.guessPhpDataTypeByName(variableName));
     }
 
     private static String insertDataTypeIntoParamLine(String line, String dataType) {
@@ -95,7 +94,7 @@ public class PhpDocParam {
           && isPhpDocParamLine(selectedText)
           && !containsDataType(selectedText)) {
             String variableName = trim(extractVariableName(selectedText).toLowerCase().replace("$", ""));
-            String dataType     = UtilsTextual.guessPhpDataTypeByName(variableName);
+            String dataType     = UtilsPhp.guessPhpDataTypeByName(variableName);
             if (!dataType.equals("unknown")) {
                 // PHP DOC @param line w/o data type, e.g. "* @param $name"
                 document.replaceString(offsetStart, offsetEnd, insertDataTypeIntoParamLine(selectedText, dataType));

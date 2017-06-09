@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
+import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import static org.apache.commons.lang.StringUtils.trim;
@@ -79,17 +80,17 @@ public class JsDoc {
     private static boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
-        if (str.equals("array")
-                || str.equals("boolean")
-                || str.equals("date")
-                || str.equals("function")
-                || str.equals("null")
-                || str.equals("number")
-                || str.equals("object")
-                || str.equals("string")
-                || str.equals("symbol")
-                || str.equals("undefined")
-                || str.equals("*")
+        if (   str.equals("array")
+            || str.equals("boolean")
+            || str.equals("date")
+            || str.equals("function")
+            || str.equals("null")
+            || str.equals("number")
+            || str.equals("object")
+            || str.equals("string")
+            || str.equals("symbol")
+            || str.equals("undefined")
+            || str.equals("*")
         ) {
             return true;
         }
@@ -283,7 +284,7 @@ public class JsDoc {
         }
 
         if (null == dataType) {
-            dataType = UtilsTextual.guessPhpDataTypeByName(parameterName);
+            dataType = UtilsPhp.guessPhpDataTypeByName(parameterName);
         }
 
         return "{" + correctInvalidDataTypes(dataType, "", "") + "}";
