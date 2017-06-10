@@ -44,6 +44,7 @@ public class PhpDocParam {
 
         return     str.contains("array")
                 || str.contains("bool")
+                || str.contains("float")
                 || str.contains("int")
                 || str.contains("resource")
                 || str.contains("string")

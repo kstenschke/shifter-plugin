@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.7.2
+    ** Improved: DOC param shifting and data type detection
 * 1.7.1
     ** Improved: JsDoc @param line w/o data type can now be shifted (to insert the missing data type) without having to be selected
     ** Improved: Shifting selected JsDoc block comment (add missing data type annotations)
