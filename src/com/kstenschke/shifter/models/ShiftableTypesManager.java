@@ -56,7 +56,7 @@ public class ShiftableTypesManager {
     private static final int TYPE_DOC_COMMENT_TAG               = 50;
     private static final int TYPE_DOC_COMMENT_DATATYPE          = 51;
 
-    public static final int  TYPE_PHP_VARIABLE                  = 60;
+    public static final int TYPE_PHP_VARIABLE_OR_ARRAY          = 60;
     public static final int  TYPE_PHP_DOC_PARAM_LINE            = 61;
     public static final int  TYPE_JS_VARIABLES_DECLARATIONS     = 62;
     public static final int  TYPE_SIZZLE_SELECTOR               = 63;
@@ -109,7 +109,7 @@ public class ShiftableTypesManager {
         // PHP variable (must be prefixed w/ "$")
         this.typePhpVariableOrArray = new PhpVariableOrArray();
         if (this.typePhpVariableOrArray.isPhpVariableOrArray(word)) {
-            return TYPE_PHP_VARIABLE;
+            return TYPE_PHP_VARIABLE_OR_ARRAY;
         }
         if (Parenthesis.isWrappedInParenthesis(word)) {
             return TYPE_PARENTHESIS;
@@ -272,7 +272,7 @@ public class ShiftableTypesManager {
                 return this.typeNumericValue.getShifted(word, isUp, editor, filename);
             case TYPE_CSS_UNIT:
                 return this.typePixelValue.getShifted(word, isUp);
-            case TYPE_PHP_VARIABLE:
+            case TYPE_PHP_VARIABLE_OR_ARRAY:
                 return this.typePhpVariableOrArray.getShifted(word, editorText, isUp, moreCount);
             case TYPE_TERNARY_EXPRESSION:
                 return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);

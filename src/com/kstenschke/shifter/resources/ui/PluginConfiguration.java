@@ -107,8 +107,8 @@ public class PluginConfiguration {
      */
     public void reset() {
         checkboxPreserveCase.setSelected(true);
-        checkboxConvertSingleQuotes.setSelected(true);
         checkboxConvertDoubleQuotes.setSelected(true);
+        checkboxConvertSingleQuotes.setSelected(false);
         checkboxPhpArrayLongToShort.setSelected(true);
         checkboxPhpArrayShortToLong.setSelected(false);
 

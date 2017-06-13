@@ -105,7 +105,7 @@ public class ShiftableWord {
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
-        if (    this.wordType != ShiftableTypesManager.TYPE_PHP_VARIABLE
+        if (    this.wordType != ShiftableTypesManager.TYPE_PHP_VARIABLE_OR_ARRAY
              && this.wordType != ShiftableTypesManager.TYPE_QUOTED_STRING
              && this.wordType != ShiftableTypesManager.TYPE_CAMEL_CASE_STRING
              && ShifterPreferences.getIsActivePreserveCase()

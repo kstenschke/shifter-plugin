@@ -68,17 +68,25 @@ public class ShiftableSelection {
             return;
         }
 
-        if (Parenthesis.isWrappedInParenthesis(selectedText)) {
-            // Toggle surrounding "(" and ")" versus "[" and "]"
-            document.replaceString(offsetStart, offsetEnd, Parenthesis.getShifted(selectedText));
-            return;
-        }
+        boolean isWrappedInParenthesis = Parenthesis.isWrappedInParenthesis(selectedText);
 
         ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
         int wordType = shiftingShiftableTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
+        boolean isPhpVariableOrArray = wordType == ShiftableTypesManager.TYPE_PHP_VARIABLE_OR_ARRAY;
 
-        boolean isPhpVariable           = wordType == ShiftableTypesManager.TYPE_PHP_VARIABLE;
-        boolean isJsVarsDeclarations    = !isPhpVariable && wordType == ShiftableTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
+        if (isWrappedInParenthesis) {
+            boolean isShiftablePhpArray = isPhpVariableOrArray && PhpVariableOrArray.isStaticShiftablePhpArray(selectedText);
+            if (!isPhpVariableOrArray || !isShiftablePhpArray) {
+                // Swap surrounding "(" and ")" versus "[" and "]"
+                document.replaceString(offsetStart, offsetEnd, Parenthesis.getShifted(selectedText));
+                return;
+            }
+            // Swap parenthesis or convert PHP array
+            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).swapParenthesisOrConvertPphpArray();
+            return;
+        }
+
+        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && wordType == ShiftableTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
         boolean isMultiLine             = UtilsTextual.isMultiLine(selectedText);
 
@@ -99,7 +107,7 @@ public class ShiftableSelection {
             lineNumberSelEnd--;
         }
 
-        if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {
+        if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
             // Multi-line selection: sort lines or swap quotes
             new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortLinesOrSwapQuotesInDocument(isUp);
             return;
@@ -108,7 +116,7 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(selectedText));
             return;
         }
-        if (!isPhpVariable && wordType == ShiftableTypesManager.TYPE_SIZZLE_SELECTOR) {
+        if (!isPhpVariableOrArray && wordType == ShiftableTypesManager.TYPE_SIZZLE_SELECTOR) {
             document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(selectedText));
             return;
         }
@@ -122,7 +130,7 @@ public class ShiftableSelection {
             return;
         }
 
-        if (!isPhpVariable && isPhpFile && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsShiftableQuotes, isUp)) {
+        if (!isPhpVariableOrArray && isPhpFile && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsShiftableQuotes, isUp)) {
             return;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(selectedText, "")) {
@@ -130,7 +138,7 @@ public class ShiftableSelection {
             return;
         }
 
-        if (!isPhpVariable) {
+        if (!isPhpVariableOrArray) {
             if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(selectedText,",")) {
                 // Comma-separated list: sort / ask whether to sort or toggle quotes
                 new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", isUp);
@@ -174,7 +182,7 @@ public class ShiftableSelection {
         }
 
         String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
-        if (isPhpVariable) {
+        if (isPhpVariableOrArray) {
             document.replaceString(offsetStart, offsetEnd, shiftedWord);
             return;
         }

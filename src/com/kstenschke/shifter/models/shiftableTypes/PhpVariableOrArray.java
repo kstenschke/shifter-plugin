@@ -34,13 +34,17 @@ public class PhpVariableOrArray {
     // Shorthand (since PHP5.4) or long syntax array?
     private boolean isConventionalArray = false;
 
+    public void init(String str) {
+        isPhpVariableOrArray(str);
+    }
+
     /**
      * Check whether given string represents a PHP variable
      *
      * @param  str     String to be checked
      * @return boolean
      */
-    public Boolean isPhpVariableOrArray(String str) {
+    public boolean isPhpVariableOrArray(String str) {
         boolean isVariable = false;
         if (str.startsWith("$")) {
             String identifier = str.substring(1);
@@ -58,9 +62,9 @@ public class PhpVariableOrArray {
 
     /**
      * @param  str
-     * @return Boolean
+     * @return boolean
      */
-    private Boolean isShiftablePhpArray(String str) {
+    public boolean isShiftablePhpArray(String str) {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
 
@@ -72,6 +76,20 @@ public class PhpVariableOrArray {
         boolean isShorthandArray = !this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
 
         return (isActiveConvertLongToShort && this.isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
+    }
+
+    public static boolean isStaticShiftablePhpArray(String str) {
+        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
+        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
+
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
+            return false;
+        }
+
+        boolean isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
+
+        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
     }
 
     /**
@@ -157,7 +175,7 @@ public class PhpVariableOrArray {
      * @param  variable
      * @return String   converted array(...) <=> [...]
      */
-    private String getShiftedArray(String variable) {
+    public String getShiftedArray(String variable) {
         return this.isConventionalArray
             ? UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]")
             : UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");

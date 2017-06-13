@@ -33,7 +33,7 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES = "PluginShifter.IsActiveConvertDoubleQuotes";
     @NonNls
-    private static final String PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG = "PluginShifter.IsActivePhpArrayLongToShortIsActivePhpArrayShortToLogn";
+    private static final String PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG = "PluginShifter.IsActivePhpArrayShortToLong";
     @NonNls
     private static final String PROPERTY_IS_ACTIVE_PHP_ARRAY_LONG_TO_SHORT = "PluginShifter.IsActivePhpArrayLongToShort";
     @NonNls
@@ -222,7 +222,7 @@ public class ShifterPreferences {
     }
 
     public static Boolean getIsActiveConvertSingleQuotes() {
-        return getBooleanPropertyWithDefaultTrue(PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES);
+        return getBooleanPropertyWithDefaultFalse(PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES);
     }
 
     public static Boolean getIsActiveConvertDoubleQuotes() {

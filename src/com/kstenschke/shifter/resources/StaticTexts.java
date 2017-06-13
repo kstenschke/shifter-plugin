@@ -77,4 +77,8 @@ public class StaticTexts {
     public static final String SHIFT_OPTION_CAMEL_CASE_TO_PATH = "Convert to minus-separated path";
     @NonNls
     public static final String SHIFT_OPTION_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
+    @NonNls
+    public static final String SHIFT_OPTION_SWAP_PARENTHESIS = "Toggle (...) and [...]";
+    @NonNls
+    public static final String SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX = "Convert to PHP array long syntax";
 }

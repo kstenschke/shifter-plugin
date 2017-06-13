@@ -103,6 +103,14 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
     }
 
+    public void swapParenthesisOrConvertPphpArray() {
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_SWAP_PARENTHESIS);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX);
+
+        shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
+    }
+
     /**
      * @param isUp
      */
@@ -213,6 +221,15 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE)) {
             document.replaceString(offsetStart, offsetEnd, MinusSeparatedPath.getShifted(selectedText));
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX)) {
+            PhpVariableOrArray phpVariableOrArray = new PhpVariableOrArray();
+            phpVariableOrArray.init(selectedText);
+            document.replaceString(offsetStart, offsetEnd, phpVariableOrArray.getShiftedArray(selectedText));
+            return;
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_SWAP_PARENTHESIS)) {
+            document.replaceString(offsetStart, offsetEnd, Parenthesis.getShifted(selectedText));
         }
     }
 }
