@@ -16,11 +16,7 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 /**
- * Included comment shiftableTypes:
- *
- * 1. Single-line comment => // ...
- * 2. Block comment       => /* ... *\/
- * 3. HTML comment        => <!-- ... -->
+ * Detect and toggle surrounding "(" and ")" versus "[" and "]"
  */
 public class Parenthesis {
 
