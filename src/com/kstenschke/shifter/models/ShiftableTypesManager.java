@@ -39,9 +39,10 @@ public class ShiftableTypesManager {
 
     // Generic shiftableTypes
     public static final int  TYPE_QUOTED_STRING                 = 20;
-    private static final int TYPE_HTML_ENCODABLE_STRING         = 21;
-    public static final int TYPE_CAMEL_CASE_STRING              = 22;
-    public static final int TYPE_MINUS_SEPARATED_PATH           = 23;
+    public static final int  TYPE_PARENTHESIS                   = 21;
+    private static final int TYPE_HTML_ENCODABLE_STRING         = 22;
+    public static final int TYPE_CAMEL_CASE_STRING              = 23;
+    public static final int TYPE_MINUS_SEPARATED_PATH           = 24;
 
     // <, >, +, -
     private static final int TYPE_OPERATOR_SIGN                 = 30;
@@ -75,7 +76,7 @@ public class ShiftableTypesManager {
     private com.kstenschke.shifter.models.shiftableTypes.DocCommentType typeDataTypeInDocComment;
     private com.kstenschke.shifter.models.shiftableTypes.NumericValue typeNumericValue;
     private com.kstenschke.shifter.models.shiftableTypes.OperatorSign typeOperatorSign;
-    private com.kstenschke.shifter.models.shiftableTypes.PhpVariable typePhpVariable;
+    private PhpVariableOrArray typePhpVariableOrArray;
     private com.kstenschke.shifter.models.shiftableTypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftableTypes.RomanNumber typeRomanNumber;
     private MonoCharacter typeMonoCharacterString;
@@ -106,9 +107,12 @@ public class ShiftableTypesManager {
             return TYPE_UNKNOWN;
         }
         // PHP variable (must be prefixed w/ "$")
-        this.typePhpVariable = new com.kstenschke.shifter.models.shiftableTypes.PhpVariable();
-        if (this.typePhpVariable.isPhpVariable(word)) {
+        this.typePhpVariableOrArray = new PhpVariableOrArray();
+        if (this.typePhpVariableOrArray.isPhpVariableOrArray(word)) {
             return TYPE_PHP_VARIABLE;
+        }
+        if (Parenthesis.isWrappedInParenthesis(word)) {
+            return TYPE_PARENTHESIS;
         }
 
         if (com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.isJsVariables(word)) {
@@ -269,11 +273,13 @@ public class ShiftableTypesManager {
             case TYPE_CSS_UNIT:
                 return this.typePixelValue.getShifted(word, isUp);
             case TYPE_PHP_VARIABLE:
-                return this.typePhpVariable.getShifted(word, editorText, isUp, moreCount);
+                return this.typePhpVariableOrArray.getShifted(word, editorText, isUp, moreCount);
             case TYPE_TERNARY_EXPRESSION:
                 return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);
             case TYPE_QUOTED_STRING:
                 return this.typeQuotedString.getShifted(word, editorText, isUp);
+            case TYPE_PARENTHESIS:
+                return Parenthesis.getShifted(word);
             case TYPE_OPERATOR_SIGN:
                 return this.typeOperatorSign.getShifted(word);
             case TYPE_ROMAN_NUMERAL:

@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
@@ -25,10 +26,10 @@ import java.util.List;
 /**
  * PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
  */
-public class PhpVariable {
+public class PhpVariableOrArray {
 
     // Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
-    private boolean isArrayDefinition = false;
+    private boolean isShiftableArray = false;
 
     // Shorthand (since PHP5.4) or long syntax array?
     private boolean isConventionalArray = false;
@@ -39,7 +40,7 @@ public class PhpVariable {
      * @param  str     String to be checked
      * @return boolean
      */
-    public Boolean isPhpVariable(String str) {
+    public Boolean isPhpVariableOrArray(String str) {
         boolean isVariable = false;
         if (str.startsWith("$")) {
             String identifier = str.substring(1);
@@ -49,21 +50,28 @@ public class PhpVariable {
 
         if (!isVariable) {
             // Detect array definition
-            this.isArrayDefinition = this.isPhpArrayDefinition(str);
+            this.isShiftableArray = this.isShiftablePhpArray(str);
         }
 
-        return isVariable || this.isArrayDefinition;
+        return isVariable || this.isShiftableArray;
     }
 
     /**
      * @param  str
      * @return Boolean
      */
-    private Boolean isPhpArrayDefinition(String str) {
+    private Boolean isShiftablePhpArray(String str) {
+        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
+        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
+
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
+            return false;
+        }
+
         this.isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
         boolean isShorthandArray = !this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
 
-        return this.isConventionalArray || isShorthandArray;
+        return (isActiveConvertLongToShort && this.isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
     }
 
     /**
@@ -76,7 +84,7 @@ public class PhpVariable {
      * @return String
      */
     public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
-        if (this.isArrayDefinition) {
+        if (this.isShiftableArray) {
             return getShiftedArray(variable);
         }
 

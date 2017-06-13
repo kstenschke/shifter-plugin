@@ -33,6 +33,10 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES = "PluginShifter.IsActiveConvertDoubleQuotes";
     @NonNls
+    private static final String PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG = "PluginShifter.IsActivePhpArrayLongToShortIsActivePhpArrayShortToLogn";
+    @NonNls
+    private static final String PROPERTY_IS_ACTIVE_PHP_ARRAY_LONG_TO_SHORT = "PluginShifter.IsActivePhpArrayLongToShort";
+    @NonNls
     private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
     @NonNls
     private static final String PROPERTY_SIZE_SHIFT_MORE = "PluginShifter.SizeShiftMore";
@@ -130,6 +134,11 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES, isActiveConvertDoubleQuotes ? "1":"0");
     }
 
+    public static void saveConvertPhpArrayActiveModes(boolean isActiveLongToShort, boolean isActiveShortToLong) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_LONG_TO_SHORT, isActiveLongToShort ? "1":"0");
+        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG, isActiveShortToLong ? "1":"0");
+    }
+
     private static String getDictionary(String dictionaryName) {
         String dictionary = null;
 
@@ -220,6 +229,14 @@ public class ShifterPreferences {
         return getBooleanPropertyWithDefaultTrue(PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES);
     }
 
+    public static Boolean getIsActiveConvertPhpArrayLongToShort() {
+        return getBooleanPropertyWithDefaultTrue(PROPERTY_IS_ACTIVE_PHP_ARRAY_LONG_TO_SHORT);
+    }
+
+    public static Boolean getIsActiveConvertPhpArrayShortToLong() {
+        return getBooleanPropertyWithDefaultFalse(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG);
+    }
+
     public static Boolean getBooleanPropertyWithDefaultTrue(String property) {
         try {
             String value = PropertiesComponent.getInstance().getValue(property);
@@ -227,6 +244,16 @@ public class ShifterPreferences {
             return value == null || "1".equals(value);
         } catch (NullPointerException e) {
             return true;
+        }
+    }
+
+    public static Boolean getBooleanPropertyWithDefaultFalse(String property) {
+        try {
+            String value = PropertiesComponent.getInstance().getValue(property);
+
+            return value != null && "1".equals(value);
+        } catch (NullPointerException e) {
+            return false;
         }
     }
 }

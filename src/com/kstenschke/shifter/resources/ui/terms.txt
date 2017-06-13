@@ -55,6 +55,7 @@
 	|ascending|descending|
 	|ascend|descend|
 	|asc|desc|
+	|big|large|medium|small|
 	|back|forward|
 	|backend|frontend|
 	|background|foreground|
@@ -98,6 +99,7 @@
 	|hide|show|
 	|horizontal|vertical|
 	|increment|decrement|
+	|long|short|
 	|lower|upper|
 	|january|february|march|april|mai|june|july|august|september|october|november|december|
 	|jan|feb|mar|apr|mai|jun|jul|aug|sep|oct|nov|dec|
@@ -128,7 +130,6 @@
 	|request|response|
 	|second|minute|hour|day|week|month|year|
 	|seconds|minutes|hours|days|weeks|months|years|
-	|small|medium|large|
 	|sum|difference|product|quotient|remainder|opposite|
 	|top|right|bottom|left|
 	|trace|debug|info|warn|error|

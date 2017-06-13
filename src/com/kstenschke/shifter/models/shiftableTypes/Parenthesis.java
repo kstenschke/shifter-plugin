@@ -27,7 +27,7 @@ public class Parenthesis {
     public static boolean isWrappedInParenthesis(String str) {
         str = str.trim();
 
-        return isWrappedInRoundBrackets(str) || isWrappedInRoundBrackets(str);
+        return isWrappedInRoundBrackets(str) || isWrappedInSquareBrackets(str);
     }
 
     private static boolean isWrappedInRoundBrackets(String str) {
