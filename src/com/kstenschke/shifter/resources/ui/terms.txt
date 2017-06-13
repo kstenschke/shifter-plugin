@@ -1,10 +1,10 @@
-(|htm|html|js|) {
+(|htm|html|js|phtml) {
 	|array|boolean|element|event|function|number|null|object|string|undefined|
 	|alert|prompt|
 	|abort|error|load|resize|scroll|unload|
 	|input|button|submit|
 	|blur|change|focus|reset|select|submit|
-	|class|id|name|type|value|
+	|class|id|name|style|type|value|
 	|click|dblclick|mousedown|mousemove|mouseover|mouseout|mouseup|
 	|h1|h2|h3|h4|h5|
 	|indexof|lastindexof|
