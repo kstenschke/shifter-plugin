@@ -19,7 +19,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftableTypes.JsDoc;
 import com.kstenschke.shifter.models.shiftableTypes.PhpDocParam;
-import com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable;
+import com.kstenschke.shifter.models.shiftableTypes.HtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
@@ -108,9 +108,9 @@ public class ShiftableLine {
             return this.line.replace(wordUnshifted, wordShifted);
         }
 
-        return StringHtmlEncodable.isHtmlEncodable(this.line)
+        return HtmlEncodable.isHtmlEncodable(this.line)
             // Encode or decode contained HTML special chars
-            ? StringHtmlEncodable.getShifted(this.line)
+            ? HtmlEncodable.getShifted(this.line)
             // No shift-ability detected, return original line
             : this.line;
     }

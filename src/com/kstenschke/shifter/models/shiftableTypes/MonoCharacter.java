@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * Mono-Character String = String that contains only one character (no matter how often)
  */
-public class StringMonoCharacter {
+public class MonoCharacter {
 
     /**
      * @param  word     String to be shifted currently

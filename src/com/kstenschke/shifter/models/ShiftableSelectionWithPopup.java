@@ -22,10 +22,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
-import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
-import com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation;
-import com.kstenschke.shifter.models.shiftableTypes.SeparatedList;
-import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
+import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -46,7 +43,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
 
     private final String selectedText;
 
-    private final boolean containsQuotes;
+    private final boolean containsShiftableQuotes;
 
     /**
      * Constructor
@@ -66,15 +63,15 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         this.lineNumberSelStart = document.getLineNumber(offsetStart);
         this.lineNumberSelEnd   = document.getLineNumber(offsetEnd);
 
-        this.selectedText   = UtilsTextual.getSubString(document.getText(), offsetStart, offsetEnd);
-        this.containsQuotes = UtilsTextual.containsQuotes(selectedText);
+        this.selectedText            = UtilsTextual.getSubString(document.getText(), offsetStart, offsetEnd);
+        this.containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
     }
 
     /**
      * @param phpConcatenation
      */
     public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation, boolean isUp) {
-        if (!containsQuotes) {
+        if (!containsShiftableQuotes) {
             document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
             return;
         }
@@ -92,7 +89,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      * @param isUp
      */
     public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
-        if (!containsQuotes) {
+        if (!containsShiftableQuotes) {
             document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
@@ -110,7 +107,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      * @param isUp
      */
     public void sortLinesOrSwapQuotesInDocument(final boolean isUp) {
-        if (!containsQuotes) {
+        if (!containsShiftableQuotes) {
             ShiftableSelection.sortLinesInDocument(document, !isUp, lineNumberSelStart, lineNumberSelEnd);
             return;
         }
@@ -191,7 +188,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER)) {
-            document.replaceString(offsetStart, offsetEnd, StringCamelCase.flipWordPairOrder(selectedText));
+            document.replaceString(offsetStart, offsetEnd, CamelCaseString.flipWordPairOrder(selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP)) {
@@ -211,7 +208,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH)) {
-            document.replaceString(offsetStart, offsetEnd, StringCamelCase.getShifted(selectedText));
+            document.replaceString(offsetStart, offsetEnd, CamelCaseString.getShifted(selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE)) {

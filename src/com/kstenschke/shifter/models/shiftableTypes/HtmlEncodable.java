@@ -20,7 +20,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 /**
  * HTML encoded/encode-able (=containing char(s) that be be encoded) String.
  */
-public class StringHtmlEncodable {
+public class HtmlEncodable {
 
     /**
      * Check whether given character can be encoded to an HTML special char / or is already HTML encoded

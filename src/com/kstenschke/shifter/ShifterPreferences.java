@@ -29,6 +29,10 @@ public class ShifterPreferences {
     @NonNls
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
     @NonNls
+    private static final String PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES = "PluginShifter.IsActiveConvertSingleQuotes";
+    @NonNls
+    private static final String PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES = "PluginShifter.IsActiveConvertDoubleQuotes";
+    @NonNls
     private static final String PROPERTY_IS_ACTIVE_PRESERVE_CASE = "PluginShifter.IsActivePreserveCase";
     @NonNls
     private static final String PROPERTY_SIZE_SHIFT_MORE = "PluginShifter.SizeShiftMore";
@@ -121,6 +125,11 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_FILE_ENDINGS_MILLISECONDS, endings);
     }
 
+    public static void saveConvertQuoteActiveModes(boolean isActiveConvertSingleQuotes, boolean isActiveConvertDoubleQuotes) {
+        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES, isActiveConvertSingleQuotes ? "1":"0");
+        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES, isActiveConvertDoubleQuotes ? "1":"0");
+    }
+
     private static String getDictionary(String dictionaryName) {
         String dictionary = null;
 
@@ -200,8 +209,20 @@ public class ShifterPreferences {
      * @return Boolean  Note: Object and not primitive boolean is required here
      */
     public static Boolean getIsActivePreserveCase() {
+        return getBooleanPropertyWithDefaultTrue(PROPERTY_IS_ACTIVE_PRESERVE_CASE);
+    }
+
+    public static Boolean getIsActiveConvertSingleQuotes() {
+        return getBooleanPropertyWithDefaultTrue(PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES);
+    }
+
+    public static Boolean getIsActiveConvertDoubleQuotes() {
+        return getBooleanPropertyWithDefaultTrue(PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES);
+    }
+
+    public static Boolean getBooleanPropertyWithDefaultTrue(String property) {
         try {
-            String value = PropertiesComponent.getInstance().getValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE);
+            String value = PropertiesComponent.getInstance().getValue(property);
 
             return value == null || "1".equals(value);
         } catch (NullPointerException e) {

@@ -27,7 +27,7 @@ public class PluginConfiguration {
 
     private JPanel rootPanel;
     private JTextArea textAreaDictionaryTerms;
-    private JCheckBox checkBoxPreserveCase;
+    private JCheckBox checkboxPreserveCase;
 
     private JRadioButton radioButtonShiftInSeconds;
     private JRadioButton radioButtonShiftInMilliseconds;
@@ -39,6 +39,8 @@ public class PluginConfiguration {
     private JTextPane thisDictionaryConfiguresShiftableTextPane;
     private JTextField inputSecondsEndings;
     private JTextField inputMillisecondsEndings;
+    private JCheckBox checkboxConvertSingleQuotes;
+    private JCheckBox checkboxConvertDoubleQuotes;
 
     /**
      * Constructor
@@ -64,8 +66,9 @@ public class PluginConfiguration {
         this.inputMillisecondsEndings.setText(ShifterPreferences.getMillisecondsFileEndings());
         this.inputSecondsEndings.setText(ShifterPreferences.getSecondsFileEndings());
 
-        boolean isActivePreserveCase  = ShifterPreferences.getIsActivePreserveCase();
-        this.checkBoxPreserveCase.setSelected(isActivePreserveCase);
+        this.checkboxPreserveCase.setSelected(ShifterPreferences.getIsActivePreserveCase());
+        this.checkboxConvertSingleQuotes.setSelected(ShifterPreferences.getIsActiveConvertSingleQuotes());
+        this.checkboxConvertDoubleQuotes.setSelected(ShifterPreferences.getIsActiveConvertDoubleQuotes());
 
         String termsDictionary   = ShifterPreferences.getTermsDictionary();
         if (termsDictionary == null || termsDictionary.isEmpty())  {
@@ -93,10 +96,17 @@ public class PluginConfiguration {
      * Reset default settings
      */
     public void reset() {
-        spinnerShiftMore.setValue(10);
+        checkboxPreserveCase.setSelected(true);
+        checkboxConvertSingleQuotes.setSelected(true);
+        checkboxConvertDoubleQuotes.setSelected(true);
+
         radioButtonShiftInSeconds.setSelected(true);
+
+        spinnerShiftMore.setValue(10);
+
         inputMillisecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_MILLISECONDS);
         inputSecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_SECONDS);
+
         this.textAreaDictionaryTerms.setText(getDefaultTerms());
     }
 
@@ -121,7 +131,7 @@ public class PluginConfiguration {
      * @return  boolean
      */
     private boolean getIsActivePreserveCase() {
-        return checkBoxPreserveCase.isSelected();
+        return checkboxPreserveCase.isSelected();
     }
 
     /**
@@ -133,7 +143,9 @@ public class PluginConfiguration {
         return   
              Integer.parseInt(this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
           || !this.textAreaDictionaryTerms.getText().equals(ShifterPreferences.getTermsDictionary())
-          || !ShifterPreferences.getIsActivePreserveCase().equals(this.checkBoxPreserveCase.isSelected())
+          || !ShifterPreferences.getIsActivePreserveCase().equals(this.checkboxPreserveCase.isSelected())
+          || !ShifterPreferences.getIsActiveConvertSingleQuotes().equals(this.checkboxConvertSingleQuotes.isSelected())
+          || !ShifterPreferences.getIsActiveConvertDoubleQuotes().equals(this.checkboxConvertDoubleQuotes.isSelected())
           || !ShifterPreferences.getShiftingModeOfTimestamps().equals(this.getSelectedShiftingModeOfTimestamps())
           || !ShifterPreferences.getMillisecondsFileEndings().equals(this.inputMillisecondsEndings.getText())
           || !ShifterPreferences.getSecondsFileEndings().equals(this.inputSecondsEndings.getText())
@@ -154,6 +166,7 @@ public class PluginConfiguration {
         ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
         ShifterPreferences.saveMillisecondsFileEndings(this.inputMillisecondsEndings.getToolTipText());
         ShifterPreferences.saveSecondsFileEndings(this.inputSecondsEndings.getToolTipText());
+        ShifterPreferences.saveConvertQuoteActiveModes(this.checkboxConvertSingleQuotes.isSelected(), this.checkboxConvertDoubleQuotes.isSelected());
 
         // Store dictionary
         String dictionary = this.getDictionary();

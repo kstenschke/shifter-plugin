@@ -21,7 +21,7 @@ import org.apache.commons.lang.StringUtils;
 /**
  * "camelCase" and "TitleCase" strings
  */
-public class StringCamelCase {
+public class CamelCaseString {
 
     /**
      * @return boolean

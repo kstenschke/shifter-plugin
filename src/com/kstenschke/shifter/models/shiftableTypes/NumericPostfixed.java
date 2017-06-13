@@ -18,13 +18,13 @@ package com.kstenschke.shifter.models.shiftableTypes;
 /**
  * String w/ numeric postfix
  */
-public class StringNumericPostfix {
+public class NumericPostfixed {
 
     /**
      * @param  word     String to be analyzed
      * @return boolean
      */
-    public static boolean isNumericPostfix(String word) {
+    public static boolean hasNumericPostfix(String word) {
         return word.matches("^.+?\\d$");
     }
 

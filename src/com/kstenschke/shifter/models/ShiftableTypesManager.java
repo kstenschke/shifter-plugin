@@ -16,9 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Editor;
-import com.kstenschke.shifter.models.shiftableTypes.DocCommentType;
-import com.kstenschke.shifter.models.shiftableTypes.MinusSeparatedPath;
-import com.kstenschke.shifter.models.shiftableTypes.StringCamelCase;
+import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -80,7 +78,7 @@ public class ShiftableTypesManager {
     private com.kstenschke.shifter.models.shiftableTypes.PhpVariable typePhpVariable;
     private com.kstenschke.shifter.models.shiftableTypes.RbgColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftableTypes.RomanNumber typeRomanNumber;
-    private com.kstenschke.shifter.models.shiftableTypes.StringMonoCharacter typeMonoCharacterString;
+    private MonoCharacter typeMonoCharacterString;
     private com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel;
     private com.kstenschke.shifter.models.shiftableTypes.QuotedString typeQuotedString;
 
@@ -183,15 +181,15 @@ public class ShiftableTypesManager {
             return TYPE_LOGICAL_OPERATOR;
         }
         // MonoCharString (= consisting from any amount of the same character)
-        if (com.kstenschke.shifter.models.shiftableTypes.StringMonoCharacter.isMonoCharacterString(word)) {
-            this.typeMonoCharacterString    = new com.kstenschke.shifter.models.shiftableTypes.StringMonoCharacter();
+        if (MonoCharacter.isMonoCharacterString(word)) {
+            this.typeMonoCharacterString    = new MonoCharacter();
             return TYPE_MONO_CHARACTER_STRING;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if (this.typeDictionaryTerm.isTermInDictionary(word, false)) {
             return TYPE_DICTIONARY_WORD_GLOBAL;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.StringNumericPostfix.isNumericPostfix(word)) {
+        if (NumericPostfixed.hasNumericPostfix(word)) {
             return TYPE_NUMERIC_POSTFIXED_STRING;
         }
         wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel();
@@ -201,10 +199,10 @@ public class ShiftableTypesManager {
         if (MinusSeparatedPath.isMinusSeparatedPath(word)) {
             return TYPE_MINUS_SEPARATED_PATH;
         }
-        if (StringCamelCase.isCamelCase(word)) {
+        if (CamelCaseString.isCamelCase(word)) {
             return TYPE_CAMEL_CASE_STRING;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable.isHtmlEncodable(word)) {
+        if (HtmlEncodable.isHtmlEncodable(word)) {
             return TYPE_HTML_ENCODABLE_STRING;
         }
 
@@ -292,11 +290,11 @@ public class ShiftableTypesManager {
             case TYPE_MINUS_SEPARATED_PATH:
                 return MinusSeparatedPath.getShifted(word);
             case TYPE_CAMEL_CASE_STRING:
-                return StringCamelCase.getShifted(word);
+                return CamelCaseString.getShifted(word);
             case TYPE_HTML_ENCODABLE_STRING:
-                return com.kstenschke.shifter.models.shiftableTypes.StringHtmlEncodable.getShifted(word);
+                return HtmlEncodable.getShifted(word);
             case TYPE_NUMERIC_POSTFIXED_STRING:
-                return com.kstenschke.shifter.models.shiftableTypes.StringNumericPostfix.getShifted(word, isUp);
+                return NumericPostfixed.getShifted(word, isUp);
             case TYPE_WORDS_TUPEL:
                 return wordsTupel.getShifted(word);
             default:

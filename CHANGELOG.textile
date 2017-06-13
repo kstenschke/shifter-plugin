@@ -2,6 +2,7 @@ h1. Shifter Plugin - Changelog
 
 * 1.7.2
     ** Added: Selection that is wrapped in parenthesis: toggle surrounding round vs. square brackets
+    ** Added: Plugin setting to enable/disable quote conversions (1. single quotes to double, 2. double quotes to single)
     ** Improved: DOC param shifting and data type detection
 * 1.7.1
     ** Improved: JsDoc @param line w/o data type can now be shifted (to insert the missing data type) without having to be selected

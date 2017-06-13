@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import java.util.Collections;
@@ -26,6 +27,11 @@ import java.util.List;
 public class QuotedString {
 
     private String quoteChar;
+
+    public static boolean containsShiftableQuotes(String str) {
+        return (ShifterPreferences.getIsActiveConvertSingleQuotes() && str.contains("'"))
+            || (ShifterPreferences.getIsActiveConvertDoubleQuotes() && str.contains("\""));
+    }
 
     /**
      * Check whether shifted word is wrapped in quote characters
