@@ -68,11 +68,10 @@ public class ShiftableSelection {
             return;
         }
 
-        int lineNumberSelStart = document.getLineNumber(offsetStart);
-        int lineNumberSelEnd = document.getLineNumber(offsetEnd);
-
-        if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
-            lineNumberSelEnd--;
+        if (Parenthesis.isWrappedInParenthesis(selectedText)) {
+            // Toggle surrounding "(" and ")" versus "[" and "]"
+            document.replaceString(offsetStart, offsetEnd, Parenthesis.getShifted(selectedText));
+            return;
         }
 
         ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
@@ -91,6 +90,13 @@ public class ShiftableSelection {
                 UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetStart + shifted.length());
                 return;
             }
+        }
+
+        int lineNumberSelStart = document.getLineNumber(offsetStart);
+        int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+
+        if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+            lineNumberSelEnd--;
         }
 
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariable)) {

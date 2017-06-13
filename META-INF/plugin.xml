@@ -123,6 +123,7 @@
     <ul>
         <li>1.7.2
             <ul>
+                <li>Added: Selection that is wrapped in parenthesis: toggle surrounding round vs. square brackets</li>
                 <li>Improved: DOC param shifting and data type detection</li>
             </ul>
         </li>
