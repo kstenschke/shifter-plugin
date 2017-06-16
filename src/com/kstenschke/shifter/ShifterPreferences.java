@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NonNls;
 public class ShifterPreferences {
 
     @NonNls
-    private static final String PROPERTY_DICTIONARY_TERMS = "PluginShifter.Dictionary.Terms";
+    private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary.Terms";
     @NonNls
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
     @NonNls
@@ -99,7 +99,7 @@ public class ShifterPreferences {
      * @param dictionary    Contents to be stored in dictionary preference
      */
     public static void saveDictionary(String dictionary) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY_TERMS, dictionary);
+        PropertiesComponent.getInstance().setValue(PROPERTY_DICTIONARY, dictionary);
     }
 
     public static void saveShiftMoreSize(String size) {
@@ -157,8 +157,8 @@ public class ShifterPreferences {
     /**
      * @return String  Dictionary
      */
-    public static String getTermsDictionary() {
-        return getDictionary(PROPERTY_DICTIONARY_TERMS);
+    public static String getDictionary() {
+        return getDictionary(PROPERTY_DICTIONARY);
     }
 
     /**

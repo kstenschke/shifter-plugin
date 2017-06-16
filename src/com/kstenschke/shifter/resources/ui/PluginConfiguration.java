@@ -17,6 +17,7 @@
 package com.kstenschke.shifter.resources.ui;
 
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.resources.ShifterIcons;
 import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.swing.*;
@@ -50,11 +51,14 @@ public class PluginConfiguration {
     private JCheckBox checkboxConvertDoubleQuotes;
     private JCheckBox checkboxPhpArrayLongToShort;
     private JCheckBox checkboxPhpArrayShortToLong;
+    private JTabbedPane tabDictionary;
 
     /**
      * Constructor
      */
     public PluginConfiguration() {
+        tabDictionary.setIconAt(1, ShifterIcons.ICON_DICTIONARY);
+
         initFormValues();
         initFormListeners();
     }
@@ -80,9 +84,9 @@ public class PluginConfiguration {
         this.checkboxPhpArrayShortToLong.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayShortToLong());
         this.checkboxPhpArrayLongToShort.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayLongToShort());
 
-        String termsDictionary   = ShifterPreferences.getTermsDictionary();
+        String termsDictionary   = ShifterPreferences.getDictionary();
         if (termsDictionary == null || termsDictionary.isEmpty())  {
-            termsDictionary = getDefaultTerms();
+            termsDictionary = getDefaultDictionary();
         }
         textAreaDictionaryTerms.setText(termsDictionary);
     }
@@ -95,9 +99,9 @@ public class PluginConfiguration {
         restoreSettings.addMouseListener(listenerRestoreSettings);
     }
 
-    public String getDefaultTerms() {
+    public String getDefaultDictionary() {
         //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
-        InputStream dictionaryStream= this.getClass().getResourceAsStream("terms.txt");
+        InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
 
         return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
     }
@@ -119,7 +123,7 @@ public class PluginConfiguration {
         inputMillisecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_MILLISECONDS);
         inputSecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_SECONDS);
 
-        this.textAreaDictionaryTerms.setText(getDefaultTerms());
+        this.textAreaDictionaryTerms.setText(getDefaultDictionary());
     }
 
     /**
@@ -154,7 +158,7 @@ public class PluginConfiguration {
     public boolean isModified() {
         return   
              Integer.parseInt(this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
-          || !this.textAreaDictionaryTerms.getText().equals(ShifterPreferences.getTermsDictionary())
+          || !this.textAreaDictionaryTerms.getText().equals(ShifterPreferences.getDictionary())
           || !ShifterPreferences.getIsActivePreserveCase().equals(this.checkboxPreserveCase.isSelected())
           || !ShifterPreferences.getIsActiveConvertSingleQuotes().equals(this.checkboxConvertSingleQuotes.isSelected())
           || !ShifterPreferences.getIsActiveConvertDoubleQuotes().equals(this.checkboxConvertDoubleQuotes.isSelected())

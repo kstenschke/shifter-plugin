@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.7.3
+    ** Improved: Plugin settings UI
 * 1.7.2
     ** Added: Selection that is wrapped in parenthesis: toggle surrounding round vs. square brackets
     ** Added: Plugin setting to enable quote conversions (1. single quotes to double, 2. double quotes to single)

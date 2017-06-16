@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.7.2</version>
+    <version>1.7.3</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -122,7 +122,11 @@
 
     <change-notes><![CDATA[
     <ul>
-        <li>1.7.2
+        <li>1.7.3
+            <ul>
+                <li>Improved: Plugin settings UI</li>
+            </ul>
+        </li><li>1.7.2
             <ul>
                 <li>Added: Plugin setting to enable quote conversions (1. single quotes to double, 2. double quotes to single)</li>
                 <li>Added: Plugin setting to enable PHP array syntax conversions (1. long to short, 2. short to long)</li>
@@ -156,16 +160,6 @@
             </ul>
         </li>
         <li>1.6.1 Improved: Better JsDoc comment block detection</li>
-        <li>1.6.0
-            <ul>
-                <li>Added: Correct selected invalid JsDoc block comment - convert "@return" into "@returns", add curly brackets around data types in "@param" and "@returns" lines, correct invalid data types into existing primitive data types (bool => boolean, event => Object, int(eger) => number),  guess and insert missing data type into "@param" and "@returns" lines, reduce empty JsDoc lines</li>
-                <li>Added: Shift invalid JsDoc "@return" statement at caret into "@returns"</li>
-                <li>Shifted DOC block comment in PHP and JavaScript: reformat DOC block after correction</li>
-                <li>Added: Timestamp shifting unit (seconds or milliseconds) can be specified per file type in plugin settings</li>
-                <li>Improved: Better case maintaining of shifted words</li>
-                <li>Changed: Grouped shifting types in features list for easier comprehensibility</li>
-            </ul>
-        </li>
   </ul><br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>

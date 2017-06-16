@@ -40,9 +40,9 @@ public class DictionaryTerm {
      * Constructor
      */
     public DictionaryTerm() {
-        String contents = ShifterPreferences.getTermsDictionary();
+        String contents = ShifterPreferences.getDictionary();
         if (contents.isEmpty()) {
-            contents = new PluginConfiguration().getDefaultTerms();
+            contents = new PluginConfiguration().getDefaultDictionary();
         }
 
         this.dictionaryContents = contents;
