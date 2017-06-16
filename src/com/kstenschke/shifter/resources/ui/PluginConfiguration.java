@@ -114,6 +114,7 @@ public class PluginConfiguration {
         checkboxConvertDoubleQuotes.setSelected(true);
         checkboxConvertSingleQuotes.setSelected(false);
         checkboxPhpArrayLongToShort.setSelected(true);
+
         checkboxPhpArrayShortToLong.setSelected(false);
 
         radioButtonShiftInSeconds.setSelected(true);

@@ -104,6 +104,11 @@ h2. Changelog
 Read full changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
 
 
+h2. Third Party Acknowledgement
+
+Shifter uses icons from Font Awesome by Dave Gandy - "http://fontawesome.io":http://fontawesome.io
+
+
 h2. Contributors
 
 Thanks for their input, ideas, help or other contribution
