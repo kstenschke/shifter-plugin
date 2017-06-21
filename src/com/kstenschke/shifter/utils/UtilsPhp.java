@@ -44,7 +44,7 @@ public class UtilsPhp {
         if (str.matches("\\w*name|\\w*title|\\w*url")) {
             return "string";
         }
-        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
+        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|filename\\w*|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
             return "string";
         }
         if (str.matches("(arr(ay)|\\w*pieces|\\w*list|\\w*items|\\w*ids)\\d*")) {
