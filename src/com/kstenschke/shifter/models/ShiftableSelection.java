@@ -29,6 +29,8 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.util.List;
 
+import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+
 // Shiftable (non-block) selection
 public class ShiftableSelection {
 
@@ -71,8 +73,8 @@ public class ShiftableSelection {
         boolean isWrappedInParenthesis = Parenthesis.isWrappedInParenthesis(selectedText);
 
         ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
-        int wordType = shiftingShiftableTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
-        boolean isPhpVariableOrArray = wordType == ShiftableTypesManager.TYPE_PHP_VARIABLE_OR_ARRAY;
+        ShiftableTypes.Type wordType = shiftingShiftableTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
+        boolean isPhpVariableOrArray = wordType == PHP_VARIABLE_OR_ARRAY;
 
         if (isWrappedInParenthesis) {
             boolean isShiftablePhpArray = isPhpVariableOrArray && PhpVariableOrArray.isStaticShiftablePhpArray(selectedText);
@@ -86,7 +88,7 @@ public class ShiftableSelection {
             return;
         }
 
-        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && wordType == ShiftableTypesManager.TYPE_JS_VARIABLES_DECLARATIONS;
+        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && wordType == JS_VARIABLES_DECLARATIONS;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
         boolean isMultiLine             = UtilsTextual.isMultiLine(selectedText);
 
@@ -116,11 +118,11 @@ public class ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(selectedText));
             return;
         }
-        if (!isPhpVariableOrArray && wordType == ShiftableTypesManager.TYPE_SIZZLE_SELECTOR) {
+        if (!isPhpVariableOrArray && wordType == SIZZLE_SELECTOR) {
             document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(selectedText));
             return;
         }
-        if (wordType == ShiftableTypesManager.TYPE_TRAILING_COMMENT) {
+        if (wordType == TRAILING_COMMENT) {
             int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
             int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
             String leadWhitespace    = UtilsTextual.getLeadWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());

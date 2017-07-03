@@ -28,6 +28,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
 
+import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+
 /**
  * Shiftable word
  */
@@ -40,7 +42,7 @@ public class ShiftableWord {
     // "more" count, starting w/ 1. If non-more shift: null
     private final Integer moreCount;
 
-    private final int wordType;
+    private final ShiftableTypes.Type wordType;
     private final boolean isShiftable;
     private final CharSequence editorText;
 
@@ -77,14 +79,14 @@ public class ShiftableWord {
 
         // Comprehend negative values of numeric shiftableTypes
         this.word = (
-                (this.wordType == ShiftableTypesManager.TYPE_CSS_UNIT || this.wordType == ShiftableTypesManager.TYPE_NUMERIC_VALUE)
+                (this.wordType == CSS_UNIT || this.wordType == NUMERIC_VALUE)
                 && "-".equals(prefixChar)
         )
             ? "-" + word
             : word;
 
         // Can the word be shifted?
-        this.isShiftable = this.wordType != ShiftableTypesManager.TYPE_UNKNOWN;
+        this.isShiftable = this.wordType != UNKNOWN;
     }
 
     /**
@@ -105,9 +107,9 @@ public class ShiftableWord {
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
-        if (    this.wordType != ShiftableTypesManager.TYPE_PHP_VARIABLE_OR_ARRAY
-             && this.wordType != ShiftableTypesManager.TYPE_QUOTED_STRING
-             && this.wordType != ShiftableTypesManager.TYPE_CAMEL_CASE_STRING
+        if (    this.wordType != PHP_VARIABLE_OR_ARRAY
+             && this.wordType != QUOTED_STRING
+             && this.wordType != CAMEL_CASE_STRING
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
             if (UtilsTextual.isAllUppercase(this.word)) {
@@ -135,12 +137,12 @@ public class ShiftableWord {
         if (UtilsFile.isCssFile(this.filename)) {
             switch (this.wordType) {
                 // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
-                case ShiftableTypesManager.TYPE_NUMERIC_VALUE:
+                case NUMERIC_VALUE:
                     if (!CssUnit.isCssUnit(postfix)) {
                         return word + CssUnit.determineMostProminentUnit(this.editorText.toString());
                     }
                     break;
-                case ShiftableTypesManager.TYPE_CSS_UNIT:
+                case CSS_UNIT:
                     // Correct "0px" (or other unit) to "0"
                     if (word.startsWith("0")) {
                         return "0";
