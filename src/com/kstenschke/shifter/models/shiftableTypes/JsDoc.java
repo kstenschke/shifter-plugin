@@ -54,7 +54,7 @@ public class JsDoc {
         return str.startsWith("*") && str.contains("@return") && !str.contains("@returns");
     }
 
-    public static boolean isAtReturnsLine(String str) {
+    private static boolean isAtReturnsLine(String str) {
         str = trim(str);
 
         return str.startsWith("*") && str.contains("@returns ");
@@ -233,7 +233,7 @@ public class JsDoc {
                 : addDataType(line);
     }
 
-    public static String correctInvalidAtReturnsStatement(String line) {
+    private static String correctInvalidAtReturnsStatement(String line) {
         return line.replace(" @return ", " @returns ");
     }
 
