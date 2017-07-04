@@ -44,11 +44,7 @@ public class RbgColor {
         if (isUp && !isWhite(rgbStrSixFold)) {
             return lightenRgbString(rgbStrSixFold);
         }
-        if (!isBlack(rgbStrSixFold)) {
-            return darkenRgbString(rgbStr);
-        }
-
-        return rgbStrSixFold;
+        return isBlack(rgbStrSixFold) ? rgbStrSixFold : darkenRgbString(rgbStr);
     }
 
     /**

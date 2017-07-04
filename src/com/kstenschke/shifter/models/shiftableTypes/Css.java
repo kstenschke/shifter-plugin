@@ -89,12 +89,11 @@ public class Css {
         int amountLines = lines.size();
         int index = 0;
         for (String line : lines) {
-            if (index < amountLines - 1) {
-                if (!trim(line).endsWith(";")) {
-                    return false;
-                }
-            } else {
+            if (index >= amountLines - 1) {
                 return !trim(line).endsWith(";");
+            }
+            if (!trim(line).endsWith(";")) {
+                return false;
             }
             index++;
         }
