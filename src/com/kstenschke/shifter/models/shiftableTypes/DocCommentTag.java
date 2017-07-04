@@ -67,11 +67,12 @@ public class DocCommentTag {
      */
     private boolean isDocCommentLineContext(String line) {
         String allTagsPiped = this.getAllTagsPiped();
-        String regExPatternLine = "\\s+\\*\\s+@(" + allTagsPiped + ")";
+        String regExPatternLine = "\\s*\\*\\s+@(" + allTagsPiped + ")";
 
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 
-        return m.find();
+        boolean res = m.find();
+        return res;
     }
 
     /**
