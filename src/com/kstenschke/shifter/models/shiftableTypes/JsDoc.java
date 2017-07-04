@@ -20,6 +20,7 @@ import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -110,7 +111,7 @@ public class JsDoc {
         str = trim(str.toLowerCase());
 
         if (
-           // javaScript primitive data types
+           // JavaScript primitive data types
               str.contains(lhs + "array")
            || str.contains(lhs + "boolean")
            || str.contains(lhs + "function")
@@ -280,32 +281,46 @@ public class JsDoc {
                 : line.replace(parameterName, guessDataType(parameterName) + " " + parameterName);
     }
 
+    /**
+     * Guess JavaScript data type by given parameter name. 1. JavaScript specific, 2. Fallback: PHP-specific w/ subsequent conversion to related JavaScript types
+     *
+     * @param  parameterName
+     * @return String
+     */
     private static String guessDataType(String parameterName) {
-        String dataType = null;
+        String parameterNameLower = parameterName.toLowerCase();
+
+        if ("useragent".equals(parameterNameLower)) {
+            return getWrappedDataType("string");
+        }
+
+        String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
+        String lastWord = camelWords[camelWords.length - 1];
+
+        if (   "params".equals(parameterName)
+            || "func".equals(lastWord) || "function".equals(lastWord) || "callback".equals(lastWord)
+        ) {
+            return getWrappedDataType("Object");
+        }
         if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*element)")) {
-            dataType = "*";
-        } else if (parameterName.matches("(?i)(\\w*date\\w*)")) {
-            dataType = "Date";
-        } else if (parameterName.matches("(?i)(\\w*obj\\w*)")) {
-            dataType = "Object";
-        } else if (parameterName.length() == 1) {
+            return getWrappedDataType("*");
+        }
+        if (parameterName.matches("(?i)(\\w*date\\w*)")) {
+            return getWrappedDataType("Date");
+        }
+        if (parameterName.matches("(?i)(\\w*obj\\w*)")) {
+            return getWrappedDataType("Object");
+        }
+        if (parameterName.length() == 1) {
             // e.g. x, y, i, etc.
-            dataType = "number";
+            return getWrappedDataType("number");
         }
 
-        if (null == dataType) {
-            dataType = UtilsPhp.guessPhpDataTypeByName(parameterName);
-        }
-        if ("unknown".equals(dataType)) {
-            String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
-            String lastWord = camelWords[camelWords.length - 1];
+        return getWrappedDataType(correctInvalidDataTypes(UtilsPhp.guessPhpDataTypeByName(parameterName), "", ""));
+    }
 
-            if ("func".equals(lastWord) || "function".equals(lastWord) || "callback".equals(lastWord)
-            ) {
-                dataType = "Object";
-            }
-        }
-
-        return "{" + correctInvalidDataTypes(dataType, "", "") + "}";
+    @NotNull
+    private static String getWrappedDataType(String dataType) {
+        return "{" + dataType + "}";
     }
 }
