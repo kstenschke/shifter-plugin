@@ -149,14 +149,14 @@ public class ShiftableTypesManager {
         // MonoCharString (= consisting from any amount of the same character)
         if (MonoCharacter.isMonoCharacterString(word)) {
             this.typeMonoCharacterString    = new MonoCharacter();
-            return MONO_CHARACTER_STRING;
+            return MONO_CHARACTER;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if (this.typeDictionaryTerm.isTermInDictionary(word, false)) {
             return DICTIONARY_WORD_GLOBAL;
         }
         if (NumericPostfixed.hasNumericPostfix(word)) {
-            return NUMERIC_POSTFIXED_STRING;
+            return NUMERIC_POSTFIXED;
         }
         wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel();
         if (wordsTupel.isWordsTupel(word)) {
@@ -166,10 +166,10 @@ public class ShiftableTypesManager {
             return MINUS_SEPARATED_PATH;
         }
         if (CamelCaseString.isCamelCase(word)) {
-            return CAMEL_CASE_STRING;
+            return CAMEL_CASED;
         }
         if (HtmlEncodable.isHtmlEncodable(word)) {
-            return HTML_ENCODABLE_STRING;
+            return HTML_ENCODABLE;
         }
 
         return UNKNOWN;
@@ -248,7 +248,7 @@ public class ShiftableTypesManager {
                 return this.typeRomanNumber.getShifted(word, isUp);
             case LOGICAL_OPERATOR:
                 return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
-            case MONO_CHARACTER_STRING:
+            case MONO_CHARACTER:
                 return this.typeMonoCharacterString.getShifted(word, isUp);
             case DOC_COMMENT_TAG:
                 String textAfterCaret   = editorText.toString().substring(caretOffset);
@@ -257,11 +257,11 @@ public class ShiftableTypesManager {
                 return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
             case MINUS_SEPARATED_PATH:
                 return MinusSeparatedPath.getShifted(word);
-            case CAMEL_CASE_STRING:
+            case CAMEL_CASED:
                 return CamelCaseString.getShifted(word);
-            case HTML_ENCODABLE_STRING:
+            case HTML_ENCODABLE:
                 return HtmlEncodable.getShifted(word);
-            case NUMERIC_POSTFIXED_STRING:
+            case NUMERIC_POSTFIXED:
                 return NumericPostfixed.getShifted(word, isUp);
             case WORDS_TUPEL:
                 return wordsTupel.getShifted(word);

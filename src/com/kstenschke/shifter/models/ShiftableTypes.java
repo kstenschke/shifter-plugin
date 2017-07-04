@@ -20,17 +20,19 @@ public class ShiftableTypes {
     public enum Type {
         UNKNOWN,
 
-        // Dictionary (list of strings) based shiftableTypes
+        // Dictionaric types
         ACCESSIBILITY, DICTIONARY_WORD_EXT_SPECIFIC, DICTIONARY_WORD_GLOBAL,
 
         // Numeric types
-        NUMERIC_VALUE, NUMERIC_POSTFIXED_STRING, ROMAN_NUMERAL,
+        NUMERIC_VALUE, NUMERIC_POSTFIXED, ROMAN_NUMERAL,
 
-        // Generic shiftableTypes
-        QUOTED_STRING, PARENTHESIS, HTML_ENCODABLE_STRING, CAMEL_CASE_STRING, MINUS_SEPARATED_PATH,
+        // Generic shiftable types
+        QUOTED_STRING, PARENTHESIS, HTML_ENCODABLE, CAMEL_CASED, MINUS_SEPARATED_PATH,
+        WORDS_TUPEL,
 
-        // <, >, +, -
-        OPERATOR_SIGN, LOGICAL_OPERATOR, MONO_CHARACTER_STRING,
+        // Operators (<, >, +, -, etc.) and expressions
+        OPERATOR_SIGN, LOGICAL_OPERATOR, MONO_CHARACTER,
+        TERNARY_EXPRESSION,
 
         RGB_COLOR,
 
@@ -46,9 +48,6 @@ public class ShiftableTypes {
         // JavaScript specific
         JS_VARIABLES_DECLARATIONS, SIZZLE_SELECTOR,
 
-        TRAILING_COMMENT,
-
-        TERNARY_EXPRESSION,
-        WORDS_TUPEL
+        TRAILING_COMMENT
     }
 }
