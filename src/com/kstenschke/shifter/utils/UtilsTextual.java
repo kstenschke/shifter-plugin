@@ -17,6 +17,7 @@ package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
+import com.kstenschke.shifter.models.shiftableTypes.DocCommentTag;
 import com.kstenschke.shifter.models.shiftableTypes.OperatorSign;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -288,6 +289,12 @@ public class UtilsTextual {
     public static String getOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
         if (textLength == 0 || offset >= textLength || str.toString().trim().isEmpty()) {
+            return null;
+        }
+
+        String lineAroundOffset = getLineAtOffset(str.toString(), offset);
+        if (DocCommentTag.isDocCommentLine(lineAroundOffset)) {
+            // Prevent mistaking the beginning of a DOC comment line (e.g. " * @param ") for an asterisk operator
             return null;
         }
 

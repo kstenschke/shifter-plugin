@@ -125,6 +125,7 @@
         <li>1.7.4
             <ul>
                 <li>Improved: DOC data type detection</li>
+                <li>Improved: Shiftable type detection</li>
             </ul>
         </li><li>1.7.3
             <ul>

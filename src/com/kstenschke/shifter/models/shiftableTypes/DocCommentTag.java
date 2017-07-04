@@ -83,6 +83,11 @@ public class DocCommentTag {
         return "@".equals(prefixChar) && this.isDocCommentLineContext(line);
     }
 
+    public static boolean isDocCommentLine(String line) {
+        DocCommentTag docCommentTag = new DocCommentTag();
+        return docCommentTag.isDocCommentLineContext(line);
+    }
+
     /**
      * @param  word             String to be shifted
      * @param  isUp             Shift up or down?

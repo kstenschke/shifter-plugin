@@ -2,6 +2,7 @@ h1. Shifter Plugin - Changelog
 
 * 1.7.4
     ** Improved: DOC data type detection
+    ** Improved: Shiftable type detection
 * 1.7.3
     ** Improved: Plugin settings UI
 * 1.7.2
