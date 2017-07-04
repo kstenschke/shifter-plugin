@@ -20,7 +20,6 @@ import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import org.jetbrains.annotations.NotNull;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -278,16 +277,14 @@ public class JsDoc {
 
         return parameterName.isEmpty()
                 ? line
-                : line.replace(parameterName, "{" + guessDataType(parameterName) + "} " + parameterName);
+                : line.replace(parameterName, "{" + guessDataTypeByParameterName(parameterName) + "} " + parameterName);
     }
 
     /**
-     * Guess JavaScript data type by given parameter name. 1. JavaScript specific, 2. Fallback: PHP-specific w/ subsequent conversion to related JavaScript types
-     *
      * @param  parameterName
      * @return String
      */
-    private static String guessDataType(String parameterName) {
+    private static String guessDataTypeByParameterName(String parameterName) {
         String parameterNameLower = parameterName.toLowerCase();
 
         if ("useragent".equals(parameterNameLower)) {
@@ -316,6 +313,6 @@ public class JsDoc {
             return "number";
         }
 
-        return correctInvalidDataTypes(UtilsPhp.guessPhpDataTypeByName(parameterName), "", "");
+        return correctInvalidDataTypes(UtilsPhp.guessDataTypeByParameterName(parameterName), "", "");
     }
 }

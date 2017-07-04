@@ -38,7 +38,7 @@ public class UtilsPhp {
      * @param  str
      * @return Name of primitive (PHP) data type
      */
-    public static String guessPhpDataTypeByName(String str) {
+    public static String guessDataTypeByParameterName(String str) {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
         String lastWord = camelWords[camelWords.length - 1];
 
@@ -55,8 +55,21 @@ public class UtilsPhp {
         ) {
             return "array";
         }
+        if ("int".equals(lastWord)) {
+            return "int";
+        }
+        if ("float".equals(lastWord)) {
+            return "float";
+        }
+        if ("object".equals(lastWord) || "obj".equals(lastWord)) {
+            return "object";
+        }
+        if ("string".equals(lastWord)) {
+            return "string";
+        }
 
-        if (   "contains".equals(camelWords[0])
+        if (   "bool".equals(lastWord)
+            || "contains".equals(camelWords[0])
             || "do".equals(camelWords[0])
             || "get".equals(camelWords[0])
             || "has".equals(camelWords[0])
