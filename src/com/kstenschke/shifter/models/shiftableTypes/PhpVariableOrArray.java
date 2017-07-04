@@ -64,7 +64,7 @@ public class PhpVariableOrArray {
      * @param  str
      * @return boolean
      */
-    public boolean isShiftablePhpArray(String str) {
+    private boolean isShiftablePhpArray(String str) {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
 

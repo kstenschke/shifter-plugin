@@ -237,7 +237,7 @@ public class ShifterPreferences {
         return getBooleanPropertyWithDefaultFalse(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG);
     }
 
-    public static Boolean getBooleanPropertyWithDefaultTrue(String property) {
+    private static Boolean getBooleanPropertyWithDefaultTrue(String property) {
         try {
             String value = PropertiesComponent.getInstance().getValue(property);
 
@@ -247,7 +247,7 @@ public class ShifterPreferences {
         }
     }
 
-    public static Boolean getBooleanPropertyWithDefaultFalse(String property) {
+    private static Boolean getBooleanPropertyWithDefaultFalse(String property) {
         try {
             String value = PropertiesComponent.getInstance().getValue(property);
 

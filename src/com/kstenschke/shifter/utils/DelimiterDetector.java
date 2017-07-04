@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * Utility Class: Detect common delimiter of list of lines
  */
-public class DelimiterDetector {
+class DelimiterDetector {
 
     private boolean findingDelimiterFailed = true;
     private char commonDelimiter = ' ';

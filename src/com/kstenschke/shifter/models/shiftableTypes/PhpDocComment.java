@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
-public class PhpDocComment {
+class PhpDocComment {
 
     /**
      * Check whether given String is a PHP doc comment block

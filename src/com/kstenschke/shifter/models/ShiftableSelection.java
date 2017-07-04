@@ -243,7 +243,7 @@ public class ShiftableSelection {
      * @param lineNumberSelStart
      * @param lineNumberSelEnd
      */
-    protected static void sortLinesInDocument(Document document, boolean reverse, int lineNumberSelStart, int lineNumberSelEnd) {
+    static void sortLinesInDocument(Document document, boolean reverse, int lineNumberSelStart, int lineNumberSelEnd) {
         List<String> lines       = UtilsTextual.extractLines(document, lineNumberSelStart, lineNumberSelEnd);
         List<String> linesSorted = UtilsTextual.sortLinesNatural(lines, reverse);
 

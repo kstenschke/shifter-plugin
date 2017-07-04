@@ -26,7 +26,7 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 /**
  * Manager of "shiftable" word shiftableTypes - detects word type to evoke resp. shifting
  */
-public class ShiftableTypesManager {
+class ShiftableTypesManager {
 
     // Word type objects
     private com.kstenschke.shifter.models.shiftableTypes.StaticWordType wordTypeAccessibilities;

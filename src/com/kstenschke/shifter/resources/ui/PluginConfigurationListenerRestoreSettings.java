@@ -21,7 +21,7 @@ import java.awt.event.MouseListener;
 import java.awt.font.TextAttribute;
 import java.util.Map;
 
-public class PluginConfigurationListenerRestoreSettings implements MouseListener {
+class PluginConfigurationListenerRestoreSettings implements MouseListener {
 
     private PluginConfiguration pluginConfiguration;
 
