@@ -278,7 +278,7 @@ public class JsDoc {
 
         return parameterName.isEmpty()
                 ? line
-                : line.replace(parameterName, guessDataType(parameterName) + " " + parameterName);
+                : line.replace(parameterName, "{" + guessDataType(parameterName) + "} " + parameterName);
     }
 
     /**
@@ -291,7 +291,7 @@ public class JsDoc {
         String parameterNameLower = parameterName.toLowerCase();
 
         if ("useragent".equals(parameterNameLower)) {
-            return getWrappedDataType("string");
+            return "string";
         }
 
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
@@ -300,27 +300,22 @@ public class JsDoc {
         if (   "params".equals(parameterName)
             || "func".equals(lastWord) || "function".equals(lastWord) || "callback".equals(lastWord)
         ) {
-            return getWrappedDataType("Object");
+            return "Object";
         }
         if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*element)")) {
-            return getWrappedDataType("*");
+            return "*";
         }
         if (parameterName.matches("(?i)(\\w*date\\w*)")) {
-            return getWrappedDataType("Date");
+            return "Date";
         }
         if (parameterName.matches("(?i)(\\w*obj\\w*)")) {
-            return getWrappedDataType("Object");
+            return "Object";
         }
         if (parameterName.length() == 1) {
             // e.g. x, y, i, etc.
-            return getWrappedDataType("number");
+            return "number";
         }
 
-        return getWrappedDataType(correctInvalidDataTypes(UtilsPhp.guessPhpDataTypeByName(parameterName), "", ""));
-    }
-
-    @NotNull
-    private static String getWrappedDataType(String dataType) {
-        return "{" + dataType + "}";
+        return correctInvalidDataTypes(UtilsPhp.guessPhpDataTypeByName(parameterName), "", "");
     }
 }

@@ -56,10 +56,12 @@ public class UtilsPhp {
             return "array";
         }
 
-        if (   "do".equals(camelWords[0])
+        if (   "contains".equals(camelWords[0])
+            || "do".equals(camelWords[0])
             || "get".equals(camelWords[0])
             || "has".equals(camelWords[0])
             || "is".equals(camelWords[0])
+            || "needs".equals(camelWords[0])
             || "return".equals(camelWords[0])
             || "should".equals(camelWords[0])
             || "with".equals(camelWords[0]) || "without".equals(camelWords[0])
