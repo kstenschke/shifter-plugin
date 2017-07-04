@@ -54,7 +54,7 @@ public class JsDoc {
         return str.startsWith("*") && str.contains("@return") && !str.contains("@returns");
     }
 
-    private static boolean isAtReturnsLine(String str) {
+    public static boolean isAtReturnsLine(String str) {
         str = trim(str);
 
         return str.startsWith("*") && str.contains("@returns ");
@@ -189,10 +189,7 @@ public class JsDoc {
         for (String line : lines) {
             if (isAtParamLine(line)) {
                 line = correctAtParamLine(line);
-            } else if (isInvalidAtReturnsLine(line)) {
-                line = line.replace("@return ", "@returns ");
-            }
-            if (isAtReturnsLine(line)) {
+            } else if (isAtReturnsLine(line)) {
                 line = correctAtReturnsLine(line);
             }
 
@@ -222,25 +219,38 @@ public class JsDoc {
             : addDataType(line);
     }
 
-    private static String correctAtReturnsLine(String line) {
+    public static String correctAtReturnsLine(String line) {
+        line = correctInvalidAtReturnsStatement(line);
+
         if (containsDataType(line, " ", true) && !containsCompounds(line)) {
             line = addCompoundsToDataType(line, "@returns", true);
         }
-        line = correctInvalidDataTypes(line, "{", "}");
+        line = correctInvalidDataTypes(line, "{", "", true);
+        line = correctInvalidDataTypes(line, "|", "", true);
 
-        return containsDataType(line, "{", false)
+        return containsDataType(line, "{", true)
                 ? line
                 : addDataType(line);
     }
 
+    public static String correctInvalidAtReturnsStatement(String line) {
+        return line.replace(" @return ", " @returns ");
+    }
+
     private static String correctInvalidDataTypes(String line, String lhs, String rhs) {
+        return correctInvalidDataTypes(line, lhs, rhs, false);
+    }
+    private static String correctInvalidDataTypes(String line, String lhs, String rhs, boolean allowVoid) {
+        if (!allowVoid) {
+            line = line.replace(lhs + "void" + rhs,    lhs + "undefined" + rhs);
+        }
         return line
                 .replace(lhs + "bool" + rhs,    lhs + "boolean" + rhs)
                 .replace(lhs + "event" + rhs,   lhs + "Object" + rhs)
                 .replace(lhs + "float" + rhs,   lhs + "number" + rhs)
                 .replace(lhs + "int" + rhs,     lhs + "number" + rhs)
                 .replace(lhs + "integer" + rhs, lhs + "number" + rhs)
-                .replace(lhs + "void" + rhs, lhs + "undefined" + rhs);
+                .replace(lhs + "object" + rhs,  lhs + "Object" + rhs);
     }
 
     private static String reduceDoubleEmptyCommentLines(String block) {

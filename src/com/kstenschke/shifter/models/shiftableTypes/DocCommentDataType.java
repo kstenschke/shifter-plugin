@@ -57,6 +57,10 @@ class DocCommentDataType {
         int curIndex               = dataTypesList.indexOf(wordLower);
         curIndex                   = NumericValue.moduloShiftInteger(curIndex, amountTypes, isUp);
 
+        if (curIndex < 0) {
+            curIndex = 0;
+        }
+
         return dataTypesList.get(curIndex);
     }
 
