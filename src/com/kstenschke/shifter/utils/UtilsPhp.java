@@ -87,6 +87,9 @@ public class UtilsPhp {
         if (str.matches("(\\w*s)\\d*")) {
             return "array";
         }
+        if (str.matches("action|controller")) {
+            return "string";
+        }
 
         return "unknown";
     }

@@ -286,6 +286,15 @@ public class JsDoc {
         if (null == dataType) {
             dataType = UtilsPhp.guessPhpDataTypeByName(parameterName);
         }
+        if ("unknown".equals(dataType)) {
+            String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
+            String lastWord = camelWords[camelWords.length - 1];
+
+            if ("func".equals(lastWord) || "function".equals(lastWord) || "callback".equals(lastWord)
+            ) {
+                dataType = "Object";
+            }
+        }
 
         return "{" + correctInvalidDataTypes(dataType, "", "") + "}";
     }
