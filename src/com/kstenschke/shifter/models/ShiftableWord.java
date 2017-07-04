@@ -173,7 +173,7 @@ public class ShiftableWord {
         boolean isOperator = false;
         String word        = UtilsTextual.getOperatorAtOffset(editorText, caretOffset);
         if (word == null) {
-            boolean isCSS = fileExtension != null && fileExtension.endsWith("css");
+            boolean isCSS = fileExtension.endsWith("css");
             word = UtilsTextual.getWordAtOffset(editorText, caretOffset, isCSS);
         } else {
             isOperator = true;

@@ -21,16 +21,16 @@ public class UtilsFile {
 
     /**
      * @param  filename         Filename from which to extract the extension
-     * @param  toLowerCase
+     * @param  toLowerCase      Convert extension to lower case?
      * @return The extension    Everything after the last "." in the full filename
      */
     public static String extractFileExtension(@Nullable String filename, boolean toLowerCase) {
         if (filename == null || filename.isEmpty() || filename.length() < 3 || !filename.contains(".")) {
-            return null;
+            return "";
         }
         filename = getBasename(filename);
-        if (null == filename) {
-            return null;
+        if ("".equals(filename)) {
+            return filename;
         }
 
         return toLowerCase
@@ -40,7 +40,7 @@ public class UtilsFile {
 
     private static String getBasename(@Nullable String filename) {
         if (null == filename) {
-            return null;
+            return "";
         }
         if (filename.contains("/")) {
             filename = filename.substring(filename.lastIndexOf("/") + 1);

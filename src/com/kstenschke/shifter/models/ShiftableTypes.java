@@ -15,9 +15,6 @@
  */
 package com.kstenschke.shifter.models;
 
-/**
- * Manager of "shiftable" word shiftableTypes - detects word type to evoke resp. shifting
- */
 public class ShiftableTypes {
 
     public enum Type {
@@ -41,7 +38,7 @@ public class ShiftableTypes {
         CSS_UNIT,
 
         // DOC comment related
-        DOC_COMMENT_TAG, DOC_COMMENT_DATATYPE,
+        DOC_COMMENT_TAG, DOC_COMMENT_DATA_TYPE,
 
         // PHP specific
         PHP_VARIABLE_OR_ARRAY, PHP_DOC_PARAM_LINE,

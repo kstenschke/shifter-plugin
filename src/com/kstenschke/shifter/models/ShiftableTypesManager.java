@@ -92,7 +92,7 @@ public class ShiftableTypesManager {
                 return DOC_COMMENT_TAG;
             }
             if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) {
-                return DOC_COMMENT_DATATYPE;
+                return DOC_COMMENT_DATA_TYPE;
             }
         }
 
@@ -253,7 +253,7 @@ public class ShiftableTypesManager {
             case DOC_COMMENT_TAG:
                 String textAfterCaret   = editorText.toString().substring(caretOffset);
                 return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
-            case DOC_COMMENT_DATATYPE:
+            case DOC_COMMENT_DATA_TYPE:
                 return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
             case MINUS_SEPARATED_PATH:
                 return MinusSeparatedPath.getShifted(word);
