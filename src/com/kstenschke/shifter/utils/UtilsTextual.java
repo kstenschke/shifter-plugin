@@ -57,6 +57,19 @@ public class UtilsTextual {
         return null != str && str.contains("\n");
     }
 
+    public static boolean allLinesContainAnyOf(String lines[], String needles[]) {
+        for (String line : lines) {
+            boolean contains = false;
+            for (String needle : needles) {
+                contains = contains || line.contains(needle);
+            }
+            if (!contains) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * @param  lines
      * @param  reverse

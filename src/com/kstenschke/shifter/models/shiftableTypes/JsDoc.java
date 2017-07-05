@@ -111,6 +111,12 @@ public class JsDoc {
         );
     }
 
+    public static boolean containsDataType(String str, boolean allowInvalidTypes) {
+        return containsDataType(str, " ", allowInvalidTypes)
+            || containsDataType(str, "{", allowInvalidTypes)
+            || containsDataType(str, "|", allowInvalidTypes);
+    }
+
     public static boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
         str = trim(str.toLowerCase());
 
@@ -253,12 +259,13 @@ public class JsDoc {
             line = line.replace(lhs + "void" + rhs,    lhs + "undefined" + rhs);
         }
         return line
-                .replace(lhs + "bool" + rhs,    lhs + "boolean" + rhs)
-                .replace(lhs + "event" + rhs,   lhs + "Object" + rhs)
-                .replace(lhs + "float" + rhs,   lhs + "number" + rhs)
-                .replace(lhs + "int" + rhs,     lhs + "number" + rhs)
-                .replace(lhs + "integer" + rhs, lhs + "number" + rhs)
-                .replace(lhs + "object" + rhs,  lhs + "Object" + rhs);
+                .replace(lhs + "bool" + rhs,       lhs + "boolean" + rhs)
+                .replace(lhs + "booleanean" + rhs, lhs + "boolean" + rhs)
+                .replace(lhs + "event" + rhs,      lhs + "Object" + rhs)
+                .replace(lhs + "float" + rhs,      lhs + "number" + rhs)
+                .replace(lhs + "int" + rhs,        lhs + "number" + rhs)
+                .replace(lhs + "integer" + rhs,    lhs + "number" + rhs)
+                .replace(lhs + "object" + rhs,     lhs + "Object" + rhs);
     }
 
     private static String reduceDoubleEmptyCommentLines(String block) {
@@ -281,7 +288,10 @@ public class JsDoc {
     }
 
     private static String addDataType(String line) {
-        String parameterName = trim(trim(line.replaceAll("\\*", "")).replace("@param", "").replace("@returns", ""));
+        String parameterName =
+                trim(trim(line.replaceAll("\\*", ""))
+                .replace("@param", "")
+                .replace("@returns", ""));
 
         return parameterName.isEmpty()
                 ? line

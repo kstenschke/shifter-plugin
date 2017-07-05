@@ -75,7 +75,7 @@ public class ShiftableLine {
                     if (line.contains("{object") || line.contains("|object")) {
                         return line.replace("{object", "{Object").replace("|object", "|Object");
                     }
-                } else if (!JsDoc.containsDataType(line, "", true)) {
+                } else if (!JsDoc.containsDataType(line, true)) {
                     // No compounds, no data type: guess and insert
                     String shiftedLine = JsDoc.correctAtKeywordLine(line);
                     if (!shiftedLine.equals(line)) {
