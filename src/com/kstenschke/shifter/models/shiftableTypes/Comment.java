@@ -52,9 +52,19 @@ public class Comment {
     }
 
     public static boolean isBlockComment(String str) {
+        return isBlockComment(str, false, false);
+    }
+
+    public static boolean isBlockComment(String str, boolean allowDocBlockComment, boolean commentSignsNeedSpaces) {
         str = str.trim();
 
-        return str.startsWith("/*") && str.endsWith("*/");
+        String innerWrap  = commentSignsNeedSpaces ? " " : "";
+
+        boolean isBlockComment = str.startsWith("/*" + innerWrap) && str.endsWith(innerWrap + "*/");
+
+        return allowDocBlockComment
+                ? isBlockComment || (str.startsWith("/**" + innerWrap) && str.endsWith(innerWrap + "*/"))
+                : isBlockComment;
     }
 
     public static boolean isMultipleSingleLineComments(String str) {

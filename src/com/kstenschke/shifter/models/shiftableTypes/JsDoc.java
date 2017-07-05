@@ -31,9 +31,9 @@ public class JsDoc {
     public static boolean isJsDocBlock(String str) {
         str = trim(str);
 
-        return UtilsTextual.isMultiLine(str)
-            && (str.startsWith("/**") && str.endsWith("*/"))
-            && (str.contains("@param") || str.contains("@return"));
+        return str.startsWith("/**") && str.endsWith("*/")
+            && (   (UtilsTextual.isMultiLine(str) && (str.contains("@param") || str.contains("@return")))
+                || str.contains("@type"));
     }
 
     /**
@@ -51,7 +51,8 @@ public class JsDoc {
     public static boolean isAtTypeLine(String str) {
         str = trim(str);
 
-        return str.startsWith("* ") && str.contains("@type");
+        return str.contains("@type")
+            && (str.startsWith("* ") || Comment.isBlockComment(str, true, true));
     }
 
     public static boolean isInvalidAtReturnsLine(String str) {
@@ -60,10 +61,11 @@ public class JsDoc {
         return str.startsWith("*") && str.contains("@return") && !str.contains("@returns");
     }
 
-    private static boolean isAtReturnsLine(String str) {
+    public static boolean isAtReturnsLine(String str, boolean allowInvalidReturnsKeyword) {
         str = trim(str);
 
-        return str.startsWith("*") && str.contains("@returns ");
+        return str.startsWith("*")
+            && (str.contains("@returns ") || (allowInvalidReturnsKeyword && str.contains("@return ")));
     }
 
     public static boolean isDataType(String str) {
@@ -85,30 +87,8 @@ public class JsDoc {
     private static boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
-        if (   str.equals("array")
-            || str.equals("boolean")
-            || str.equals("date")
-            || str.equals("function")
-            || str.equals("null")
-            || str.equals("number")
-            || str.equals("object")
-            || str.equals("string")
-            || str.equals("symbol")
-            || str.equals("undefined")
-            || str.equals("*")
-        ) {
-            return true;
-        }
-
-        return includeInvalidTypes && (
-                str.equals("bool")
-             || str.equals("event")
-             || str.equals("float")
-             || str.equals("int")
-             || str.equals("integer")
-             || str.equals("null")
-             || str.equals("void")
-        );
+        return str.matches("(array|boolean|date|function|null|number|object|string|symbol|undefined|\\*)")
+            || includeInvalidTypes && str.matches("(bool|event|float|int|integer|null|void)");
     }
 
     public static boolean containsDataType(String str, boolean allowInvalidTypes) {
@@ -198,12 +178,8 @@ public class JsDoc {
         String docBlockCorrected = "";
         int index = 0;
         for (String line : lines) {
-            if (isAtParamLine(line)) {
-                line = correctAtKeywordLine(line, "@param");
-            } else if (isAtReturnsLine(line)) {
-                line = correctAtKeywordLine(line, "@returns");
-            } else if (isAtTypeLine(line)) {
-                line = correctAtKeywordLine(line, "@type");
+            if (isAtParamLine(line) || isAtReturnsLine(line, true) || isAtTypeLine(line)) {
+                line = correctAtKeywordLine(line);
             }
 
             docBlockCorrected += (index > 0 ? "\n" : "") + line;
@@ -312,9 +288,7 @@ public class JsDoc {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if (   "params".equals(parameterName)
-            || "func".equals(lastWord) || "function".equals(lastWord) || "callback".equals(lastWord)
-        ) {
+        if ("params".equals(parameterName) || lastWord.matches("func|function|callback")) {
             return "Object";
         }
         if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*element)")) {

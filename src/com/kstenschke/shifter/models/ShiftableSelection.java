@@ -61,7 +61,7 @@ public class ShiftableSelection {
             // Detect and shift whole PHP DOC block or single line out of it, that contains @param line(s) w/o data type
             return;
         }
-        if (filename.endsWith(".js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetStart)) {
+        if (filename.endsWith(".js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd)) {
             return;
         }
 

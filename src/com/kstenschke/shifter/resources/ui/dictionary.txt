@@ -27,16 +27,20 @@
 	|extends|implements|
 }
 (|java|) {
-    |CharSequence|String|
+	|CharSequence|String|
 	|boolean|byte|char|double|float|int|long|short|string|
 	|equals|contains|
+	|endsWith|startsWith|
+	|toLowerCase|toUpperCase|
+	|toCharArray|toString|
+	|toDegrees|toRadians|
 }
 (|php|phtml|twig|) {
 	|array|boolean|float|integer|null|object|resource|string|
 	|__dir__|__file__|__namespace__|__class__|__line__|__function__|__method__|__trait__|
 	|foreach|endforeach|
 	|if|else|endif|
-    |self|static|
+	|self|static|
 }
 (|m|) {
 	|int|char|float|double|id|BOOL|long|short|signed|unsigned|
@@ -47,6 +51,7 @@
 }
 (|*|) {
 	|absolute|relative|
+	|acos|asin|atan|cos|sin|tan|
 	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
 	|after|before|
 	|aif|au|mpeg|mpg|mp3|ra|ram|wav|
@@ -79,6 +84,7 @@
 	|en|de|fr|it|
 	|enabled|disabled|
 	|enable|disable|
+	|encode|decode|
 	|end|start|
 	|ends|starts|
 	|eon|era|period|epoch|

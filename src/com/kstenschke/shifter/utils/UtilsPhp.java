@@ -42,17 +42,7 @@ public class UtilsPhp {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if (   "args".equals(lastWord)
-            || "array".equals(lastWord)
-            || "data".equals(lastWord)
-            || "ids".equals(lastWord)
-            || "items".equals(lastWord)
-            || "list".equals(lastWord)
-            || "pieces".equals(lastWord)
-            || "params".equals(lastWord)
-            || "parameters".equals(lastWord)
-            || "values".equals(lastWord)
-        ) {
+        if (lastWord.matches("args|array|data|ids|items|list|pieces|params|parameters|values")) {
             return "array";
         }
         if ("int".equals(lastWord)) {
@@ -61,33 +51,19 @@ public class UtilsPhp {
         if ("float".equals(lastWord)) {
             return "float";
         }
-        if ("object".equals(lastWord) || "obj".equals(lastWord)) {
+        if (lastWord.matches("object|obj")) {
             return "object";
         }
         if ("string".equals(lastWord)) {
             return "string";
         }
-
-        if (   "bool".equals(lastWord)
-            || "contains".equals(camelWords[0])
-            || "do".equals(camelWords[0])
-            || "get".equals(camelWords[0])
-            || "has".equals(camelWords[0])
-            || "is".equals(camelWords[0])
-            || "needs".equals(camelWords[0])
-            || "return".equals(camelWords[0])
-            || "should".equals(camelWords[0])
-            || "with".equals(camelWords[0]) || "without".equals(camelWords[0])
-        ) {
+        if ("bool".equals(lastWord) || camelWords[0].matches("contains|do|get|has|is|needs|return|should|with|without")) {
             return "bool";
         }
 
         str = str.toLowerCase();
 
-        if (str.matches("\\w*name|\\w*title|\\w*url")) {
-            return "string";
-        }
-        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|filename\\w*|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|replace(ment)*|salt|separator|str(ing)*|url)\\d*")) {
+        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|filename\\w*|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|replace(ment)*|salt|separator|str(ing)*|\\w*title|\\w*url)\\d*")) {
             return "string";
         }
         if (str.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*start|\\w*step(s)*|tick|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|\\w*max|\\w*min|\\w*mode|month|\\w*multiplier|now|num|offset|\\w*op(eration)*|\\w*pos(ition)*|red|\\w*time(stamp)*|week|\\w*wid(th)*|x|y)\\d*")) {

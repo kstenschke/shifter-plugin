@@ -68,22 +68,12 @@ public class ShiftableLine {
             }
         }
 
-        if (this.filename.endsWith(".js")) {
-            if (JsDoc.isAtParamLine(line) || JsDoc.isAtTypeLine(line)) {
-                if (JsDoc.containsCompounds(line)) {
-                    // Check for invalid data type to correct
-                    if (line.contains("{object") || line.contains("|object")) {
-                        return line.replace("{object", "{Object").replace("|object", "|Object");
-                    }
-                } else if (!JsDoc.containsDataType(line, true)) {
-                    // No compounds, no data type: guess and insert
-                    String shiftedLine = JsDoc.correctAtKeywordLine(line);
-                    if (!shiftedLine.equals(line)) {
-                        return shiftedLine;
-                    }
-                }
-            } else if (JsDoc.isInvalidAtReturnsLine(line)) {
-                return JsDoc.correctAtKeywordLine(line, "@returns");
+        if (   this.filename.endsWith(".js")
+            && (JsDoc.isAtParamLine(line) || JsDoc.isAtTypeLine(line) || JsDoc.isAtReturnsLine(line, true))
+        ) {
+            String shiftedLine = JsDoc.correctAtKeywordLine(line);
+            if (!shiftedLine.equals(line)) {
+                return shiftedLine;
             }
         }
 
