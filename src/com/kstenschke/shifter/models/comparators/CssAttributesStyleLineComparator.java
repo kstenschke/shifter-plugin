@@ -34,17 +34,11 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
         String str1Trimmed = trim(str1);
         String str2Trimmed = trim(str2);
 
-        // Move empty line to the very end
-        if (str2Trimmed.isEmpty()) {
+        // Move empty line to the very end. Ensure closing of selector is at the end
+        if (str2Trimmed.isEmpty() || str2Trimmed.equals("}")) {
             return -1;
-        } else if (str1Trimmed.isEmpty()) {
-            return 1;
         }
-
-        // Ensure closing of selector is at the end
-        if (str2Trimmed.equals("}")) {
-            return -1;
-        } else if (str1Trimmed.equals("}")) {
+        if (str1Trimmed.isEmpty() || str1Trimmed.equals("}")) {
             return 1;
         }
 
@@ -61,7 +55,8 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
         boolean attribute2IsVendor = attribute2.startsWith("-");
         if (attribute1IsVendor && !attribute2IsVendor) {
             return 1;
-        } else if (attribute2IsVendor && !attribute1IsVendor) {
+        }
+        if (attribute2IsVendor && !attribute1IsVendor) {
             return -1;
         }
 
@@ -82,7 +77,8 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
             boolean style2IsVendor = style2.matches("^-[a-z].*$");
             if (style1IsVendor && !style2IsVendor) {
                 return 1;
-            } else if (style2IsVendor && !style1IsVendor) {
+            }
+            if (style2IsVendor && !style1IsVendor) {
                 return -1;
             }
         }

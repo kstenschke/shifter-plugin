@@ -97,8 +97,7 @@ public class AlphanumComparator implements Comparator<String>
                 if (result == 0) {
                     for (int i = 0; i < thisChunkLength; i++) {
                         result = thisChunk.charAt(i) - thatChunk.charAt(i);
-                        if (result != 0)
-                        {
+                        if (result != 0) {
                             return result;
                         }
                     }

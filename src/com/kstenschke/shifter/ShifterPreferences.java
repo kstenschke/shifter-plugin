@@ -78,11 +78,9 @@ public class ShifterPreferences {
         if (value == null) {
             value = defaultValue;
         }
-        if (value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")) {
-            value = defaultValue;
-        }
-
-        return value;
+        return value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")
+                ? defaultValue
+                : value;
     }
 
 
@@ -188,7 +186,9 @@ public class ShifterPreferences {
         try {
             String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SHIFTING_MODE_TIMESTAMP);
 
-            return modeStr == null ? SHIFTING_MODE_TIMESTAMP_SECONDS : Integer.parseInt(modeStr);
+            return modeStr == null
+                    ? SHIFTING_MODE_TIMESTAMP_SECONDS
+                    : Integer.parseInt(modeStr);
         } catch(NullPointerException e) {
             return SHIFTING_MODE_TIMESTAMP_SECONDS;
         }

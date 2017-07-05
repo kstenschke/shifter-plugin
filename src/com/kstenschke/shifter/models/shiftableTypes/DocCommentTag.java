@@ -71,8 +71,7 @@ public class DocCommentTag {
 
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 
-        boolean res = m.find();
-        return res;
+        return m.find();
     }
 
     /**

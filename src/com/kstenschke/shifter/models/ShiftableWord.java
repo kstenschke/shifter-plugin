@@ -97,13 +97,13 @@ public class ShiftableWord {
      * @return String   Next upper/lower word
      */
     public String getShifted(boolean isUp, @Nullable Editor editor) {
-        if (!this.isShiftable) {
-            return this.word;
+        if (this.isShiftable) {
+            String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
+
+            return this.word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
         }
 
-        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
-
-        return this.word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
+        return this.word;
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
