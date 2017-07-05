@@ -2,7 +2,8 @@ h1. Shifter Plugin - Changelog
 
 * 1.7.4
     ** Improved: Shiftable type detection
-    ** Improved: DOC part detections and shifting reliability
+    ** Improved: DOC part detections and shifting
+    ** Added: JsDoc @type shifting
 * 1.7.3
     ** Improved: Plugin settings UI
 * 1.7.2

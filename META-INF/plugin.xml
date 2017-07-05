@@ -125,7 +125,8 @@
         <li>1.7.4
             <ul>
                 <li>Improved: Shiftable type detection</li>
-                <li>Improved: DOC part detections and shifting reliability</li>
+                <li>Improved: DOC part detections and shifting</li>
+                <li>Added: JsDoc @type shifting</li>
             </ul>
         </li><li>1.7.3
             <ul>

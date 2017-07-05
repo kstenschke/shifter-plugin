@@ -69,7 +69,7 @@ public class ShiftableLine {
         }
 
         if (this.filename.endsWith(".js")) {
-            if (JsDoc.isAtParamLine(line)) {
+            if (JsDoc.isAtParamLine(line) || JsDoc.isAtTypeLine(line)) {
                 if (JsDoc.containsCompounds(line)) {
                     // Check for invalid data type to correct
                     if (line.contains("{object") || line.contains("|object")) {
@@ -77,13 +77,13 @@ public class ShiftableLine {
                     }
                 } else if (!JsDoc.containsDataType(line, "", true)) {
                     // No compounds, no data type: guess and insert
-                    String shiftedLine = JsDoc.correctAtParamLine(line);
+                    String shiftedLine = JsDoc.correctAtKeywordLine(line);
                     if (!shiftedLine.equals(line)) {
                         return shiftedLine;
                     }
                 }
             } else if (JsDoc.isInvalidAtReturnsLine(line)) {
-                return JsDoc.correctAtReturnsLine(line);
+                return JsDoc.correctAtKeywordLine(line, "@returns");
             }
         }
 

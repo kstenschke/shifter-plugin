@@ -48,6 +48,12 @@ public class JsDoc {
         return str.startsWith("* ") && str.contains("@param");
     }
 
+    public static boolean isAtTypeLine(String str) {
+        str = trim(str);
+
+        return str.startsWith("* ") && str.contains("@type");
+    }
+
     public static boolean isInvalidAtReturnsLine(String str) {
         str = trim(str);
 
@@ -64,14 +70,13 @@ public class JsDoc {
         return isDataType(str, true);
     }
 
-    public static boolean isWordRightOfAtParamOrAtReturn(String word, String line) {
-        if (line.contains("@param")) {
-            line = trim(line.split("@param")[1]);
-            return line.startsWith(word);
-        }
-        if (line.contains("@return")) {
-            line = trim(line.split("@return")[1]);
-            return line.startsWith(word);
+    public static boolean isWordRightOfAtKeyword(String word, String line) {
+        String keywords[] = new String[]{"@param", "@return", "@type"};
+        for (String keyword : keywords) {
+            if (line.contains(keyword)) {
+                line = trim(line.split(keyword)[1]);
+                return line.startsWith(word);
+            }
         }
 
         return false;
@@ -188,9 +193,11 @@ public class JsDoc {
         int index = 0;
         for (String line : lines) {
             if (isAtParamLine(line)) {
-                line = correctAtParamLine(line);
+                line = correctAtKeywordLine(line, "@param");
             } else if (isAtReturnsLine(line)) {
-                line = correctAtReturnsLine(line);
+                line = correctAtKeywordLine(line, "@returns");
+            } else if (isAtTypeLine(line)) {
+                line = correctAtKeywordLine(line, "@type");
             }
 
             docBlockCorrected += (index > 0 ? "\n" : "") + line;
@@ -207,30 +214,31 @@ public class JsDoc {
         return false;
     }
 
-    public static String correctAtParamLine(String line) {
-        if (!containsCompounds(line) && containsDataType(line, " ", true)) {
-            line = addCompoundsToDataType(line, "@param", true);
-        }
-
-        line = correctInvalidDataTypes(line, "{", "}");
-
-        return containsDataType(line, "{", false)
-            ? line
-            : addDataType(line);
-    }
-
-    public static String correctAtReturnsLine(String line) {
+    /**
+     * Correct JsDoc line
+     *
+     * @param line
+     * @param keyword   "@param" / "@returns" / "@type"
+     * @return
+     */
+    public static String correctAtKeywordLine(String line, String keyword) {
         line = correctInvalidAtReturnsStatement(line);
 
-        if (containsDataType(line, " ", true) && !containsCompounds(line)) {
-            line = addCompoundsToDataType(line, "@returns", true);
+        if (!containsCompounds(line) && containsDataType(line, " ", true)) {
+            line = addCompoundsToDataType(line, keyword, true);
         }
         line = correctInvalidDataTypes(line, "{", "", true);
         line = correctInvalidDataTypes(line, "|", "", true);
 
-        return containsDataType(line, "{", true)
-                ? line
-                : addDataType(line);
+        return containsDataType(line, "{", true) ? line : addDataType(line);
+    }
+
+    public static String correctAtKeywordLine(String line) {
+        String keywords[] = new String[]{"@param", "@returns", "@type"};
+        for (String keyword : keywords) {
+            line = correctAtKeywordLine(line, keyword);
+        }
+        return line;
     }
 
     private static String correctInvalidAtReturnsStatement(String line) {
