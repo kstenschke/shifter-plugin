@@ -20,6 +20,7 @@ import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NonNls;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -28,6 +29,15 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class JsDoc {
 
+    @NonNls
+    private static final String REGEX_DATATYPES_NATIVE = "(array|boolean|date|event|function|null|number|object|string|undefined|\\*)";
+    @NonNls
+    private static final String REGEX_DATATYPES_ALIEN  = "(bool|float|int|integer|void)";
+
+    /**
+     * @param  str
+     * @return boolean
+     */
     public static boolean isJsDocBlock(String str) {
         str = trim(str);
 
@@ -87,8 +97,8 @@ public class JsDoc {
     private static boolean isDataType(String str, boolean includeInvalidTypes) {
         str = trim(str.toLowerCase());
 
-        return str.matches("(array|boolean|date|function|null|number|object|string|symbol|undefined|\\*)")
-            || includeInvalidTypes && str.matches("(bool|event|float|int|integer|null|void)");
+        return str.matches(REGEX_DATATYPES_NATIVE)
+            || includeInvalidTypes && str.matches(REGEX_DATATYPES_ALIEN);
     }
 
     public static boolean containsDataType(String str, boolean allowInvalidTypes) {
@@ -104,20 +114,23 @@ public class JsDoc {
            // JavaScript primitive data types
               str.contains(lhs + "array")
            || str.contains(lhs + "boolean")
-           || str.contains(lhs + "function")
            || str.contains(lhs + "null")
            || str.contains(lhs + "number")
            || str.contains(lhs + "object")
            || str.contains(lhs + "string")
            || str.contains(lhs + "symbol")
            || str.contains(lhs + "undefined")
+           // Complex JavaScript (object) data types
+           || str.contains(lhs + "date")
+           || str.contains(lhs + "event")
+           || str.contains(lhs + "function")
         ) {
             return true;
         }
 
+        // Non-JavaScript types known to other languages
         return allowInvalidTypes && (
                 str.contains(lhs + "bool")
-             || str.contains(lhs + "event")
              || str.contains(lhs + "float")
              || str.contains(lhs + "int")
              || str.contains(lhs + "void")
@@ -142,15 +155,15 @@ public class JsDoc {
 
     /**
      * @param line
-     * @param docCommentType        "@param" or "@returns"
+     * @param docCommentType        "@param" / "@returns" / "@type"
      * @param wrapInvalidDataTypes
      * @return
      */
     private static String addCompoundsToDataType(String line, String docCommentType, boolean wrapInvalidDataTypes) {
-        line = line.replaceAll("(?i)(" + docCommentType + "\\s*)(array|boolean|function|null|number|object|string|undefined)", "$1{$2}");
+        line = line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_NATIVE, "$1{$2}");
 
         return wrapInvalidDataTypes
-            ? line.replaceAll("(?i)(" + docCommentType + "\\s*)(bool|event|float|int|integer|void)", "$1{$2}")
+            ? line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_ALIEN, "$1{$2}")
             : line;
     }
 
@@ -235,9 +248,11 @@ public class JsDoc {
             line = line.replace(lhs + "void" + rhs,    lhs + "undefined" + rhs);
         }
         return line
+                .replace(lhs + "array" + rhs,      lhs + "Array" + rhs)
                 .replace(lhs + "bool" + rhs,       lhs + "boolean" + rhs)
                 .replace(lhs + "booleanean" + rhs, lhs + "boolean" + rhs)
-                .replace(lhs + "event" + rhs,      lhs + "Object" + rhs)
+                .replace(lhs + "date" + rhs,       lhs + "Date" + rhs)
+                .replace(lhs + "event" + rhs,      lhs + "Event" + rhs)
                 .replace(lhs + "float" + rhs,      lhs + "number" + rhs)
                 .replace(lhs + "int" + rhs,        lhs + "number" + rhs)
                 .replace(lhs + "integer" + rhs,    lhs + "number" + rhs)
