@@ -126,7 +126,7 @@
             <ul>
                 <li>Improved: Shiftable type detection</li>
                 <li>Improved: DOC part detections and shifting</li>
-                <li>Added: JsDoc @type shifting</li>
+                <li>Improved: JsDoc shifting - added @type completion + correction, improved detect / complete / correct annotations</li>
             </ul>
         </li><li>1.7.3
             <ul>
