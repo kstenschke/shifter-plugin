@@ -280,11 +280,16 @@ public class JsDoc {
         if (parameterName.isEmpty()) {
             return line;
         }
-        String jsDocParameterName = "{" + guessDataTypeByParameterName(parameterName) + "} ";
+        String jsDocParameterName = "{" + guessDataTypeByParameterName(parameterName) + "}";
 
-        return line.contains(jsDocParameterName)
-            ? line
-            : line.replace(parameterName, jsDocParameterName + parameterName);
+        if (line.contains(jsDocParameterName)) {
+            return line;
+        }
+        return line.replace(
+                parameterName,
+                jsDocParameterName + (isAtReturnsLine(line, false)
+                        ? ""
+                        : " " + parameterName));
     }
 
     /**
@@ -317,6 +322,10 @@ public class JsDoc {
         }
         if ("useragent".equals(parameterNameLower)) {
             return "string";
+        }
+        if (parameterName.equals("void")) {
+            // Intercept "id"-ending before it is mistaken for a numeric "ID" parameter
+            return "void";
         }
 
         return correctInvalidDataTypes(UtilsPhp.guessDataTypeByParameterName(parameterName), "", "");
