@@ -101,13 +101,7 @@ public class JsDoc {
             || includeInvalidTypes && str.matches(REGEX_DATATYPES_ALIEN);
     }
 
-    public static boolean containsDataType(String str, boolean allowInvalidTypes) {
-        return containsDataType(str, " ", allowInvalidTypes)
-            || containsDataType(str, "{", allowInvalidTypes)
-            || containsDataType(str, "|", allowInvalidTypes);
-    }
-
-    private static boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
+    private static boolean containsDataType(String str, String lhs) {
         str = trim(str.toLowerCase());
 
         if (
@@ -118,7 +112,6 @@ public class JsDoc {
            || str.contains(lhs + "number")
            || str.contains(lhs + "object")
            || str.contains(lhs + "string")
-           || str.contains(lhs + "symbol")
            || str.contains(lhs + "undefined")
            // Complex JavaScript (object) data types
            || str.contains(lhs + "date")
@@ -129,12 +122,10 @@ public class JsDoc {
         }
 
         // Non-JavaScript types known to other languages
-        return allowInvalidTypes && (
-                str.contains(lhs + "bool")
-             || str.contains(lhs + "float")
-             || str.contains(lhs + "int")
-             || str.contains(lhs + "void")
-        );
+        return str.contains(lhs + "bool")
+            || str.contains(lhs + "float")
+            || str.contains(lhs + "int")
+            || str.contains(lhs + "void");
     }
 
     public static boolean containsCompounds(String str) {
@@ -156,15 +147,12 @@ public class JsDoc {
     /**
      * @param line
      * @param docCommentType        "@param" / "@returns" / "@type"
-     * @param wrapInvalidDataTypes
      * @return
      */
-    private static String addCompoundsToDataType(String line, String docCommentType, boolean wrapInvalidDataTypes) {
+    private static String addCompoundsToDataType(String line, String docCommentType) {
         line = line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_NATIVE, "$1{$2}");
 
-        return wrapInvalidDataTypes
-            ? line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_ALIEN, "$1{$2}")
-            : line;
+        return line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_ALIEN, "$1{$2}");
     }
 
     public static boolean correctInvalidReturnsCommentInDocument(Document document, int caretOffset) {
@@ -219,13 +207,13 @@ public class JsDoc {
     private static String correctAtKeywordLine(String line, String keyword) {
         line = correctInvalidAtReturnsStatement(line);
 
-        if (!containsCompounds(line) && containsDataType(line, " ", true)) {
-            line = addCompoundsToDataType(line, keyword, true);
+        if (!containsCompounds(line) && containsDataType(line, " ")) {
+            line = addCompoundsToDataType(line, keyword);
         }
         line = correctInvalidDataTypes(line, "{", "", true);
         line = correctInvalidDataTypes(line, "|", "", true);
 
-        return containsDataType(line, "{", true) ? line : addDataType(line);
+        return containsDataType(line, "{") ? line : addDataType(line);
     }
 
     public static String correctAtKeywordLine(String line) {
@@ -282,11 +270,21 @@ public class JsDoc {
         String parameterName =
                 trim(trim(line.replaceAll("\\*", ""))
                 .replace("@param", "")
-                .replace("@returns", ""));
+                .replace("@returns", "")
+                .replace("@type", ""));
 
-        return parameterName.isEmpty()
-                ? line
-                : line.replace(parameterName, "{" + guessDataTypeByParameterName(parameterName) + "} " + parameterName);
+        if (parameterName.contains(" ")) {
+            parameterName = parameterName.split("\\s")[0];
+        }
+
+        if (parameterName.isEmpty()) {
+            return line;
+        }
+        String jsDocParameterName = "{" + guessDataTypeByParameterName(parameterName) + "} ";
+
+        return line.contains(jsDocParameterName)
+            ? line
+            : line.replace(parameterName, jsDocParameterName + parameterName);
     }
 
     /**
@@ -298,11 +296,14 @@ public class JsDoc {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*element)")) {
+        if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*elem)")) {
             return "*";
         }
         if (parameterName.matches("(?i)(\\w*date\\w*)")) {
             return "Date";
+        }
+        if (parameterName.equals("e")) {
+            return "Event";
         }
         if (lastWord.matches("func|function|callback")) {
             return "Function";
