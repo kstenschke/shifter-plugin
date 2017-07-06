@@ -23,7 +23,7 @@ import java.util.Map;
 
 class PluginConfigurationListenerRestoreSettings implements MouseListener {
 
-    private PluginConfiguration pluginConfiguration;
+    private final PluginConfiguration pluginConfiguration;
 
     private Font original;
 

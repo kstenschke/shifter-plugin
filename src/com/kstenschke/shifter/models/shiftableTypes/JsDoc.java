@@ -107,7 +107,7 @@ public class JsDoc {
             || containsDataType(str, "|", allowInvalidTypes);
     }
 
-    public static boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
+    private static boolean containsDataType(String str, String lhs, boolean allowInvalidTypes) {
         str = trim(str.toLowerCase());
 
         if (
@@ -216,7 +216,7 @@ public class JsDoc {
      * @param keyword   "@param" / "@returns" / "@type"
      * @return
      */
-    public static String correctAtKeywordLine(String line, String keyword) {
+    private static String correctAtKeywordLine(String line, String keyword) {
         line = correctInvalidAtReturnsStatement(line);
 
         if (!containsCompounds(line) && containsDataType(line, " ", true)) {
@@ -295,29 +295,27 @@ public class JsDoc {
      */
     private static String guessDataTypeByParameterName(String parameterName) {
         String parameterNameLower = parameterName.toLowerCase();
-
-        if ("useragent".equals(parameterNameLower)) {
-            return "string";
-        }
-
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if ("params".equals(parameterName) || lastWord.matches("func|function|callback")) {
-            return "Object";
-        }
         if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*element)")) {
             return "*";
         }
         if (parameterName.matches("(?i)(\\w*date\\w*)")) {
             return "Date";
         }
-        if (parameterName.matches("(?i)(\\w*obj\\w*)")) {
-            return "Object";
+        if (lastWord.matches("func|function|callback")) {
+            return "Function";
         }
         if (parameterName.length() == 1) {
             // e.g. x, y, i, etc.
             return "number";
+        }
+        if ("params".equals(parameterName) || parameterName.matches("(?i)(\\w*obj\\w*)")) {
+            return "Object";
+        }
+        if ("useragent".equals(parameterNameLower)) {
+            return "string";
         }
 
         return correctInvalidDataTypes(UtilsPhp.guessDataTypeByParameterName(parameterName), "", "");
