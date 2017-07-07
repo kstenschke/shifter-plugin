@@ -42,7 +42,7 @@ public class UtilsPhp {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if (lastWord.matches("args|array|data|ids|items|list|pieces|params|parameters|values|vars")) {
+        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"args", "array", "data", "ids", "items", "list", "pieces", "params", "parameters", "values", "vars"})) {
             return "array";
         }
         if ("int".equals(lastWord)) {
@@ -51,13 +51,14 @@ public class UtilsPhp {
         if ("float".equals(lastWord)) {
             return "float";
         }
-        if (lastWord.matches("object|obj")) {
+        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"object", "obj"})) {
             return "object";
         }
         if ("string".equals(lastWord)) {
             return "string";
         }
-        if ("bool".equals(lastWord) || camelWords[0].matches("as|contains|do|get|has|is|needs|return|should|with|without")) {
+        if ("bool".equals(lastWord)
+         || UtilsTextual.equalsAnyOf(camelWords[0], new String[]{"as", "contains", "do", "get", "has", "is", "needs", "return", "should", "with", "without"})) {
             return "bool";
         }
 
@@ -75,10 +76,10 @@ public class UtilsPhp {
         if (str.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
             return "Object";
         }
-        if (str.matches("(\\w*s)\\d*")) {
+        if (str.matches("((\\w*s)\\d*|\\w*arr(ay)*|\\w*param(eter)*s|\\w*val(ue)*s)")) {
             return "array";
         }
-        if (str.matches("action|controller")) {
+        if (UtilsTextual.equalsAnyOf(str, new String[]{"action|controller"})) {
             return "string";
         }
 

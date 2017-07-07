@@ -92,6 +92,15 @@ public class UtilsTextual {
         return lines;
     }
 
+    static boolean equalsAnyOf(String str, String words[]) {
+        for (String word : words) {
+            if (str.equals(word)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     /**
      * @param  haystack
      * @param  needle

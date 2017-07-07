@@ -71,7 +71,7 @@ public class PhpDocParam {
      * @return string
      */
     public static String getShifted(String line) {
-        String variableName = trim(extractVariableName(line).toLowerCase().replace("$", ""));
+        String variableName = trim(extractVariableName(line).replace("$", ""));
 
         return insertDataTypeIntoParamLine(line, UtilsPhp.guessDataTypeByParameterName(variableName));
     }
@@ -94,7 +94,7 @@ public class PhpDocParam {
           && DocCommentType.isDocCommentTypeLineContext(selectedText)
           && isPhpDocParamLine(selectedText)
           && !containsDataType(selectedText)) {
-            String variableName = trim(extractVariableName(selectedText).toLowerCase().replace("$", ""));
+            String variableName = trim(extractVariableName(selectedText).replace("$", ""));
             String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
             if (!dataType.equals("unknown")) {
                 // PHP DOC @param line w/o data type, e.g. "* @param $name"
