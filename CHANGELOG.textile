@@ -2,6 +2,7 @@ h1. Shifter Plugin - Changelog
 
 * 1.7.5
     ** Improved: Quotes conversion: extended intention popup options
+    ** Improved: DOC data type detection
 * 1.7.4
     ** Improved: Shiftable type detection
     ** Improved: DOC part detections and shifting

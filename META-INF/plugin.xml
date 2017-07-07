@@ -125,6 +125,7 @@
         <li>1.7.5
             <ul>
                 <li>Improved: Quotes conversion: extended intention popup options</li>
+                <li>Improved: DOC data type detection</li>
             </ul>
         </li>
         <li>1.7.4

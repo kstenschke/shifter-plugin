@@ -42,7 +42,7 @@ public class UtilsPhp {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if (lastWord.matches("args|array|data|ids|items|list|pieces|params|parameters|values")) {
+        if (lastWord.matches("args|array|data|ids|items|list|pieces|params|parameters|values|vars")) {
             return "array";
         }
         if ("int".equals(lastWord)) {
@@ -57,7 +57,7 @@ public class UtilsPhp {
         if ("string".equals(lastWord)) {
             return "string";
         }
-        if ("bool".equals(lastWord) || camelWords[0].matches("contains|do|get|has|is|needs|return|should|with|without")) {
+        if ("bool".equals(lastWord) || camelWords[0].matches("as|contains|do|get|has|is|needs|return|should|with|without")) {
             return "bool";
         }
 
