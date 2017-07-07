@@ -68,6 +68,10 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_QUOTES_SWAP = "Swap single and double quotes";
     @NonNls
+    public static final String SHIFT_OPTION_QUOTES_DOUBLE_TO_SINGLE = "Convert double to single quoutes";
+    @NonNls
+    public static final String SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE = "Convert single to double quoutes";
+    @NonNls
     public static final String SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
     @NonNls
     public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";

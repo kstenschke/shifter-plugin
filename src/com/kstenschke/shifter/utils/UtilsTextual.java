@@ -182,17 +182,27 @@ public class UtilsTextual {
             replace("###SHIFTERSLASH###", "/");
     }
 
+    public static String swapQuotes(String str, boolean singleToDouble, boolean doubleToSingle) {
+        if (null == str) {
+            return null;
+        }
+
+        if (doubleToSingle) {
+            str = str.replace("\"", "###SHIFTERSINGLEQUOTE###");
+        }
+        if (singleToDouble) {
+            str = str.replace("'", "\"");
+        }
+
+        return str.replace("###SHIFTERSINGLEQUOTE###", "'");
+    }
+
     /**
      * @param  str         String to be checked
      * @return String      Given string w/ contained single quotes swapped against double quotes and vise versa
      */
     public static String swapQuotes(String str) {
-        return null == str
-                ? null
-                : str
-                    .replace("\"", "###SHIFTERSINGLEQUOTE###")
-                    .replace("'", "\"")
-                    .replace("###SHIFTERSINGLEQUOTE###", "'");
+        return swapQuotes(str, true, true);
     }
 
     /**
