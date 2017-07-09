@@ -37,7 +37,7 @@ public class TernaryExpression {
             expression.startsWith("?") || "?".equals(prefixChar)
             && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
             && expression.length() >= 3
-            && expression.indexOf("?") < expression.indexOf(":")
+            && ("?".equals(prefixChar) || expression.indexOf("?") < expression.indexOf(":"))
         );
     }
 
@@ -49,36 +49,37 @@ public class TernaryExpression {
      */
     public static String getShifted(String str) {
         Integer offsetElse = str.indexOf(":");
+        if (offsetElse == -1) {
+            return str;
+        }
 
-        if (offsetElse > -1) {
-            boolean endsWithSemicolon    = str.endsWith(";");
-            boolean isQuestionMarkInline = str.startsWith("?");
+        boolean endsWithSemicolon    = str.endsWith(";");
+        boolean isQuestionMarkInline = str.startsWith("?");
 
-            if (isQuestionMarkInline) {
-                str = str.substring(1);
-            }
+        if (isQuestionMarkInline) {
+            str = str.substring(1);
+        }
 
-            Pattern pattern = Pattern.compile("\n[ |\t]*:");
-            Matcher matcher = pattern.matcher(str);
-            boolean isElseOnNewLine = matcher.find();
+        Pattern pattern = Pattern.compile("\n[ |\t]*:");
+        Matcher matcher = pattern.matcher(str);
+        boolean isElseOnNewLine = matcher.find();
 
-            String partThan = str.substring(0, offsetElse - 1);
-            String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length() - 1) : str.substring(offsetElse);
+        String partThan = str.substring(0, offsetElse - 1);
+        String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length() - 1) : str.substring(offsetElse);
 
-            // Detect and maintain "glue" w/ (single) whitespace
-            boolean wrapWithSpace = partThan.endsWith(" ") || partElse.startsWith(" ");
-            boolean wrapWithTab = partThan.endsWith("\t") || partElse.startsWith("\t");
+        // Detect and maintain "glue" w/ (single) whitespace
+        boolean wrapWithSpace = partThan.endsWith(" ") || partElse.startsWith(" ");
+        boolean wrapWithTab = partThan.endsWith("\t") || partElse.startsWith("\t");
 
-            String glue = wrapWithSpace ? " " : (wrapWithTab ? "\t" : "");
+        String glue = wrapWithSpace ? " " : (wrapWithTab ? "\t" : "");
 
-            str = partElse.trim() + (isElseOnNewLine ? "\n" : "") + glue + ":" + glue + partThan.trim();
+        str = partElse.trim() + (isElseOnNewLine ? "\n" : "") + glue + ":" + glue + partThan.trim();
 
-            if (isQuestionMarkInline) {
-                str = "?" + glue + str;
-            }
-            if (endsWithSemicolon) {
-                str += ";";
-            }
+        if (isQuestionMarkInline) {
+            str = "?" + glue + str;
+        }
+        if (endsWithSemicolon) {
+            str += ";";
         }
 
         return str;
