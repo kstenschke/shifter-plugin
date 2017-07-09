@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * Ternary Expression
  */
@@ -50,9 +53,14 @@ public class TernaryExpression {
         if (offsetElse > -1) {
             boolean endsWithSemicolon    = str.endsWith(";");
             boolean isQuestionMarkInline = str.startsWith("?");
+
             if (isQuestionMarkInline) {
                 str = str.substring(1);
             }
+
+            Pattern pattern = Pattern.compile("\n[ |\t]*:");
+            Matcher matcher = pattern.matcher(str);
+            boolean isElseOnNewLine = matcher.find();
 
             String partThan = str.substring(0, offsetElse - 1);
             String partElse = endsWithSemicolon ? str.substring(offsetElse, str.length() - 1) : str.substring(offsetElse);
@@ -63,7 +71,7 @@ public class TernaryExpression {
 
             String glue = wrapWithSpace ? " " : (wrapWithTab ? "\t" : "");
 
-            str = partElse.trim() + glue + ":" + glue + partThan.trim();
+            str = partElse.trim() + (isElseOnNewLine ? "\n" : "") + glue + ":" + glue + partThan.trim();
 
             if (isQuestionMarkInline) {
                 str = "?" + glue + str;

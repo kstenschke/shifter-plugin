@@ -109,6 +109,11 @@ public class ShiftableSelection {
             lineNumberSelEnd--;
         }
 
+        if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(selectedText, "")) {
+            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(selectedText));
+            UtilsEnvironment.reformatSelection(editor, project);
+            return;
+        }
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
             // Multi-line selection: sort lines or swap quotes
             new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortLinesOrSwapQuotesInDocument(isUp);
@@ -133,10 +138,6 @@ public class ShiftableSelection {
         }
 
         if (!isPhpVariableOrArray && isPhpFile && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsShiftableQuotes, isUp)) {
-            return;
-        }
-        if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(selectedText, "")) {
-            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(selectedText));
             return;
         }
 

@@ -124,6 +124,7 @@
     <ul>
         <li>1.7.5
             <ul>
+                <li>Improved: Ternary shifting: maintain multi-line formatting, reformat selection after shifting</li>
                 <li>Improved: Quotes conversion: extended intention popup options</li>
                 <li>Improved: DOC data type detection</li>
             </ul>

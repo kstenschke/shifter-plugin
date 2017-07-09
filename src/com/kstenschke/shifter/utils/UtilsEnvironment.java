@@ -17,6 +17,7 @@ package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
@@ -49,6 +50,22 @@ public class UtilsEnvironment {
     public static boolean reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
         if (psiFile == null) {
+            return false;
+        }
+
+        CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
+        return true;
+    }
+
+    public static boolean reformatSelection(Editor editor, Project project) {
+        PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
+        if (psiFile == null) {
+            return false;
+        }
+        SelectionModel selectionModel = editor.getSelectionModel();
+        int offsetStart = selectionModel.getSelectionStart();
+        int offsetEnd   = selectionModel.getSelectionEnd();
+        if (offsetStart == offsetEnd) {
             return false;
         }
 
