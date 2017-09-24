@@ -78,8 +78,14 @@ public class JsDoc {
             && (str.contains("@returns ") || (allowInvalidReturnsKeyword && str.contains("@return ")));
     }
 
+    /**
+     * @param   str
+     * @return  Is native or "alien" (valid e.g. in JavaScript, Java, etc.) data type
+     */
     public static boolean isDataType(String str) {
-        return isDataType(str, true);
+        str = trim(str.toLowerCase());
+
+        return str.matches(REGEX_DATATYPES_NATIVE) || str.matches(REGEX_DATATYPES_ALIEN);
     }
 
     public static boolean isWordRightOfAtKeyword(String word, String line) {
@@ -92,13 +98,6 @@ public class JsDoc {
         }
 
         return false;
-    }
-
-    private static boolean isDataType(String str, boolean includeInvalidTypes) {
-        str = trim(str.toLowerCase());
-
-        return str.matches(REGEX_DATATYPES_NATIVE)
-            || includeInvalidTypes && str.matches(REGEX_DATATYPES_ALIEN);
     }
 
     private static boolean containsDataType(String str, String lhs) {
@@ -210,8 +209,8 @@ public class JsDoc {
         if (!containsCompounds(line) && containsDataType(line, " ")) {
             line = addCompoundsToDataType(line, keyword);
         }
-        line = correctInvalidDataTypes(line, "{", "", true);
-        line = correctInvalidDataTypes(line, "|", "", true);
+        line = correctInvalidDataTypes(line, "{", true);
+        line = correctInvalidDataTypes(line, "|", true);
 
         return containsDataType(line, "{") ? line : addDataType(line);
     }
@@ -229,22 +228,22 @@ public class JsDoc {
     }
 
     private static String correctInvalidDataTypes(String line) {
-        return correctInvalidDataTypes(line, "", "", false);
+        return correctInvalidDataTypes(line, "", false);
     }
-    private static String correctInvalidDataTypes(String line, String lhs, String rhs, boolean allowVoid) {
+    private static String correctInvalidDataTypes(String line, String lhs, boolean allowVoid) {
         if (!allowVoid) {
-            line = line.replace(lhs + "void" + rhs,    lhs + "undefined" + rhs);
+            line = line.replace(lhs + "void",    lhs + "undefined");
         }
         return line
-                .replace(lhs + "array" + rhs,      lhs + "Array" + rhs)
-                .replace(lhs + "bool" + rhs,       lhs + "boolean" + rhs)
-                .replace(lhs + "booleanean" + rhs, lhs + "boolean" + rhs)
-                .replace(lhs + "date" + rhs,       lhs + "Date" + rhs)
-                .replace(lhs + "event" + rhs,      lhs + "Event" + rhs)
-                .replace(lhs + "float" + rhs,      lhs + "number" + rhs)
-                .replace(lhs + "int" + rhs,        lhs + "number" + rhs)
-                .replace(lhs + "integer" + rhs,    lhs + "number" + rhs)
-                .replace(lhs + "object" + rhs,     lhs + "Object" + rhs);
+                .replace(lhs + "array",      lhs + "Array")
+                .replace(lhs + "bool",       lhs + "boolean")
+                .replace(lhs + "booleanean", lhs + "boolean")
+                .replace(lhs + "date",       lhs + "Date")
+                .replace(lhs + "event",      lhs + "Event")
+                .replace(lhs + "float",      lhs + "number")
+                .replace(lhs + "int",        lhs + "number")
+                .replace(lhs + "integer",    lhs + "number")
+                .replace(lhs + "object",     lhs + "Object");
     }
 
     private static String reduceDoubleEmptyCommentLines(String block) {

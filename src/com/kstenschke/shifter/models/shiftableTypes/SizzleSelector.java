@@ -46,7 +46,7 @@ public class SizzleSelector {
         varName = "";
         int index = 0;
         for (String word : words) {
-            varName += index > 0 ? UtilsTextual.toUcFirst(word) : word;
+            varName += index > 0 ? UtilsTextual.toUcFirstRestLower(word) : word;
             index++;
         }
 

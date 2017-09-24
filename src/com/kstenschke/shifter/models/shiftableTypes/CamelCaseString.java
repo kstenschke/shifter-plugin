@@ -44,7 +44,7 @@ public class CamelCaseString {
         String words[] = UtilsTextual.splitCamelCaseIntoWords(str);
 
         return isLcFirst
-                ? UtilsTextual.toLcFirst(words[1]) + UtilsTextual.toUcFirst(words[0])
+                ? UtilsTextual.toLcFirst(words[1]) + UtilsTextual.toUcFirstRestLower(words[0])
                 : words[1] + words[0];
     }
 

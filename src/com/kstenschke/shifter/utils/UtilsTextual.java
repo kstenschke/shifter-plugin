@@ -216,22 +216,16 @@ public class UtilsTextual {
 
     /**
      * @param  str      String to be converted
-     * @return String   Given string converted to lower case w/ only first char in upper case
+     * @return String   Given string converted to lower case w/ only first char in upper case (rest lower)
      */
-    public static String toUcFirst(@Nullable String str, boolean makeRestLower) {
+    public static String toUcFirstRestLower(@Nullable String str) {
         if (null == str) {
             return null;
         }
         if (str.isEmpty()) {
             return "";
         }
-        return Character.toUpperCase(str.charAt(0)) + (makeRestLower
-                ? str.substring(1).toLowerCase()
-                : str.substring(1));
-    }
-
-    public static String toUcFirst(@Nullable String str) {
-        return toUcFirst(str, false);
+        return Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
     }
 
     /**
@@ -255,7 +249,7 @@ public class UtilsTextual {
      * @return boolean  If the string is lower case w/ only first char in upper case.
      */
     public static boolean isUcFirst(String str) {
-        return str.isEmpty() || str.equals(UtilsTextual.toUcFirst(str));
+        return str.isEmpty() || str.equals(UtilsTextual.toUcFirstRestLower(str));
     }
     public static boolean isUcFirst(char c) {
         return isUcFirst("" + c);
@@ -295,7 +289,7 @@ public class UtilsTextual {
         if (toLower) {
             toLower(parts);
         } else if (isUcFirst) {
-            parts[0] = toUcFirst(parts[0]);
+            parts[0] = toUcFirstRestLower(parts[0]);
         }
 
         return parts;

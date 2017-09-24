@@ -46,7 +46,7 @@ public class MinusSeparatedPath {
         String shifted = "";
         int index = 0;
         for (String part : parts) {
-            shifted += index == 0 ? part : UtilsTextual.toUcFirst(part);
+            shifted += index == 0 ? part : UtilsTextual.toUcFirstRestLower(part);
             index++;
         }
 

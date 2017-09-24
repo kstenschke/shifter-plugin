@@ -194,7 +194,7 @@ public class ShiftableSelection {
             return;
         }
         if (UtilsTextual.isUpperCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
-            document.replaceString(offsetStart, offsetEnd, UtilsTextual.toUcFirst(shiftedWord));
+            document.replaceString(offsetStart, offsetEnd, UtilsTextual.toUcFirstRestLower(shiftedWord));
             return;
         }
 

@@ -160,11 +160,11 @@ public class UtilsTextualTest {
 
     @Test
     public void testToUcFirst() throws Exception {
-        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("bam bam hey"));
-        assertEquals("Bam bam hey", UtilsTextual.toUcFirst("Bam bam hey"));
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirstRestLower("bam bam hey"));
+        assertEquals("Bam bam hey", UtilsTextual.toUcFirstRestLower("Bam bam hey"));
 
-        assertEquals("", UtilsTextual.toUcFirst(""));
-        assertEquals(null, UtilsTextual.toUcFirst(null));
+        assertEquals("", UtilsTextual.toUcFirstRestLower(""));
+        assertEquals(null, UtilsTextual.toUcFirstRestLower(null));
     }
 
     @Test
@@ -173,7 +173,7 @@ public class UtilsTextualTest {
         assertEquals("bam bam hey", UtilsTextual.toLcFirst("bam bam hey"));
 
         assertEquals("", UtilsTextual.toLcFirst(""));
-        assertEquals(null, UtilsTextual.toUcFirst(null));
+        assertEquals(null, UtilsTextual.toUcFirstRestLower(null));
     }
 
     @Test
