@@ -124,6 +124,7 @@
     <ul>
         <li>1.7.6
             <ul>
+                <li>Added: Option to unescape escaped quotes in selection</li>
                 <li>Improved: DOC data type detection</li>
             </ul>
         </li>

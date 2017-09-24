@@ -45,6 +45,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
     private final String selectedText;
 
     private final boolean containsShiftableQuotes;
+    private final boolean containsEscapedQuotes;
 
     /**
      * Constructor
@@ -66,6 +67,25 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
 
         this.selectedText            = UtilsTextual.getSubString(document.getText(), offsetStart, offsetEnd);
         this.containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
+        this.containsEscapedQuotes   = QuotedString.containsEscapedQuotes(selectedText);
+    }
+
+    private void addQuoteShiftingOptions(List<String> shiftOptions) {
+        String selectedText = document.getText().substring(offsetStart, offsetEnd);
+        boolean containsSingleQuotes = selectedText.contains("'");
+        boolean containsDoubleQuotes = selectedText.contains("\"");
+        if (containsSingleQuotes && containsDoubleQuotes) {
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
+        }
+        if (containsDoubleQuotes && ShifterPreferences.getIsActiveConvertDoubleQuotes()) {
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_DOUBLE_TO_SINGLE);
+        }
+        if (containsSingleQuotes && ShifterPreferences.getIsActiveConvertSingleQuotes()) {
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE);
+        }
+        if (containsEscapedQuotes) {
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_UNESCAPE_QUOTES);
+        }
     }
 
     /**
@@ -82,21 +102,6 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         addQuoteShiftingOptions(shiftOptions);
 
         shiftSelectionByPopupInDocument(shiftOptions, isUp, phpConcatenation, null, null);
-    }
-
-    private void addQuoteShiftingOptions(List<String> shiftOptions) {
-        String selectedText = document.getText().substring(offsetStart, offsetEnd);
-        boolean containsSingleQuotes = selectedText.contains("'");
-        boolean containsDoubleQuotes = selectedText.contains("\"");
-        if (containsSingleQuotes && containsDoubleQuotes) {
-            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
-        }
-        if (containsDoubleQuotes && ShifterPreferences.getIsActiveConvertDoubleQuotes()) {
-            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_DOUBLE_TO_SINGLE);
-        }
-        if (containsSingleQuotes && ShifterPreferences.getIsActiveConvertSingleQuotes()) {
-            shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE);
-        }
     }
 
     /**
@@ -127,11 +132,26 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
+    public void shiftQuotesInDocument() {
+        List<String> shiftOptions = new ArrayList<String>();
+        addQuoteShiftingOptions(shiftOptions);
+
+        shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
+    }
+
+    public void swapSlashesOrUnescapeQuotes() {
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_SLASHES_SWAP);
+        addQuoteShiftingOptions(shiftOptions);
+
+        shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
+    }
+
     /**
      * @param isUp
      */
     public void sortLinesOrSwapQuotesInDocument(final boolean isUp) {
-        if (!containsShiftableQuotes) {
+        if (!containsShiftableQuotes && !containsEscapedQuotes) {
             ShiftableSelection.sortLinesInDocument(document, !isUp, lineNumberSelStart, lineNumberSelEnd);
             return;
         }
@@ -212,6 +232,11 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
             return;
         }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_UNESCAPE_QUOTES)) {
+            String text = selectedText.replace("\\\'", "'").replace("\\\"", "\"");
+            document.replaceString(offsetStart, offsetEnd, text);
+            return;
+        }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER)) {
             document.replaceString(offsetStart, offsetEnd, CamelCaseString.flipWordPairOrder(selectedText));
             return;
@@ -230,6 +255,10 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SWAP)) {
             document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+            return;
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_SLASHES_SWAP)) {
+            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE)) {

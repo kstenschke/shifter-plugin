@@ -1,6 +1,7 @@
 h1. Shifter Plugin - Changelog
 
 * 1.7.6
+    ** Added: Option to unescape escaped quotes in selection
     ** Improved: DOC data type detection
 * 1.7.5
     ** Improved: Ternary shifting: maintain multi-line formatting, reformat selection after shifting

@@ -72,6 +72,8 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE = "Convert single to double quoutes";
     @NonNls
+    public static final String SHIFT_OPTION_UNESCAPE_QUOTES = "Unescape escaped quoutes";
+    @NonNls
     public static final String SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
     @NonNls
     public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";
@@ -83,6 +85,8 @@ public class StaticTexts {
     public static final String SHIFT_OPTION_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
     @NonNls
     public static final String SHIFT_OPTION_SWAP_PARENTHESIS = "Toggle (...) and [...]";
+    @NonNls
+    public static final String SHIFT_OPTION_SLASHES_SWAP = "Toggle \\ and /";
     @NonNls
     public static final String SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX = "Convert to PHP array long syntax";
 }

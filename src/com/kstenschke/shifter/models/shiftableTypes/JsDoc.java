@@ -30,9 +30,9 @@ import static org.apache.commons.lang.StringUtils.trim;
 public class JsDoc {
 
     @NonNls
-    private static final String REGEX_DATATYPES_NATIVE = "(array|boolean|date|event|function|null|number|object|string|undefined|\\*)";
+    private static final String REGEX_DATA_TYPES_NATIVE = "(array|boolean|date|event|function|null|number|object|string|undefined|\\*)";
     @NonNls
-    private static final String REGEX_DATATYPES_ALIEN  = "(bool|float|int|integer|void)";
+    private static final String REGEX_DATA_TYPES_ALIEN = "(bool|float|int|integer|void)";
 
     /**
      * @param  str
@@ -85,7 +85,7 @@ public class JsDoc {
     public static boolean isDataType(String str) {
         str = trim(str.toLowerCase());
 
-        return str.matches(REGEX_DATATYPES_NATIVE) || str.matches(REGEX_DATATYPES_ALIEN);
+        return str.matches(REGEX_DATA_TYPES_NATIVE) || str.matches(REGEX_DATA_TYPES_ALIEN);
     }
 
     public static boolean isWordRightOfAtKeyword(String word, String line) {
@@ -149,9 +149,9 @@ public class JsDoc {
      * @return
      */
     private static String addCompoundsToDataType(String line, String docCommentType) {
-        line = line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_NATIVE, "$1{$2}");
+        line = line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATA_TYPES_NATIVE, "$1{$2}");
 
-        return line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATATYPES_ALIEN, "$1{$2}");
+        return line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATA_TYPES_ALIEN, "$1{$2}");
     }
 
     public static boolean correctInvalidReturnsCommentInDocument(Document document, int caretOffset) {

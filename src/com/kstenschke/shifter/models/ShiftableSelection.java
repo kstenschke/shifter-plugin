@@ -24,6 +24,7 @@ import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -154,7 +155,11 @@ public class ShiftableSelection {
                 return;
             }
             if (containsShiftableQuotes) {
-                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                if (!QuotedString.containsEscapedQuotes(selectedText)) {
+                    document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                    return;
+                }
+                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftQuotesInDocument();
                 return;
             }
             if (CamelCaseString.isCamelCase(selectedText) && CamelCaseString.isWordPair(selectedText)) {
@@ -172,6 +177,10 @@ public class ShiftableSelection {
                 return;
             }
             if (UtilsTextual.containsSlashes(selectedText)) {
+                if (QuotedString.containsEscapedQuotes(selectedText)) {
+                    new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).swapSlashesOrUnescapeQuotes();
+                    return;
+                }
                 document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
                 return;
             }

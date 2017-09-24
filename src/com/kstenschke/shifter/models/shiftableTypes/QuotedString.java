@@ -33,6 +33,10 @@ public class QuotedString {
             || (ShifterPreferences.getIsActiveConvertDoubleQuotes() && str.contains("\""));
     }
 
+    public static boolean containsEscapedQuotes(String str) {
+        return str.contains("\\\"") || str.contains("\\\'");
+    }
+
     /**
      * Check whether shifted word is wrapped in quote characters
      *
