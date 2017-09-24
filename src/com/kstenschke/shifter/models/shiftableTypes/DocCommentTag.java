@@ -152,7 +152,6 @@ public class DocCommentTag {
                 // JavaScript comment shiftableTypes
                 return this.tagsJavaScript;
             }
-
             if (filenameLower.endsWith(".java")) {
                 // Java comment tags in the recommended order
                 return this.tagsJava;

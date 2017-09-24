@@ -19,7 +19,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * DocCommentType class
+ * DOC comment type class
  */
 public class DocCommentType {
 

@@ -86,7 +86,7 @@ public class PhpDocParam {
             if (!shifted.equals(selectedText)) {
                 // PHP DOC comment block: guess missing data shiftableTypes by resp. variable names
                 document.replaceString(offsetStart, offsetEnd, shifted);
-                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetEnd);
+                UtilsEnvironment.reformatSelection(editor, project);
                 return true;
             }
         }
