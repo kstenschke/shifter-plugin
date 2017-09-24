@@ -60,6 +60,7 @@ h4. String Manipulations
 * Logical operators: toggles between (selected) "&&" and "||"
 * HTML en/decoding of selected special characters
 * Single characters and string consisting from any amount of the same character can be shifted to the previous/next ASCII value
+* Escaped single or double quotes can be unescaped when shifting a selection
 
 h4. Code- and DOC Comments
 * Selection which is a block comment or multiple line-comments (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.
