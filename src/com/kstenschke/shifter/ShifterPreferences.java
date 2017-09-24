@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NonNls;
 public class ShifterPreferences {
 
     @NonNls
-    public static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary.Terms";
+    private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary.Terms";
     @NonNls
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
     @NonNls

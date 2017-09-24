@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -122,10 +123,7 @@ public class PhpVariableOrArray {
         int amountVars = phpVariables.size();
 
         // Find position of given variable
-        Integer curIndex = (moreCount== null || moreCount > 1)
-            ? phpVariables.indexOf(variable)
-            : allLeadChars.indexOf(variable.substring(1, 2));
-
+        Integer curIndex = getVariableIndex(variable, moreCount, phpVariables, allLeadChars);
         if (curIndex == -1 || amountVars == 0) {
             return variable;
         }
@@ -136,6 +134,24 @@ public class PhpVariableOrArray {
         }
 
         return phpVariables.get(curIndex);
+    }
+
+    /**
+     * @param  variable     string
+     * @param  moreCount    int
+     * @param  phpVariables List<String>
+     * @param  allLeadChars List<String>
+     * @return Integer
+     */
+    @NotNull
+    private Integer getVariableIndex(String variable, Integer moreCount, List<String> phpVariables, List<String> allLeadChars) {
+        if (moreCount == null || moreCount > 1) {
+            return phpVariables.indexOf(variable);
+        }
+
+        return allLeadChars == null
+            ? -1
+            : allLeadChars.indexOf(variable.substring(1, 2));
     }
 
     /**

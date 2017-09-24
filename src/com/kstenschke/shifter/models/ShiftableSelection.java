@@ -66,7 +66,8 @@ public class ShiftableSelection {
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-line comment shifting
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(selectedText) && shiftSelectedCommentInDocument(editor, document, filename, project, offsetStart, offsetEnd, selectedText)) {
+        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(selectedText)) {
+            shiftSelectedCommentInDocument(editor, document, filename, project, offsetStart, offsetEnd, selectedText);
             return;
         }
 
@@ -218,23 +219,23 @@ public class ShiftableSelection {
         return false;
     }
 
-    private static boolean shiftSelectedCommentInDocument(Editor editor, Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
+    private static void shiftSelectedCommentInDocument(Editor editor, Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
         if (UtilsTextual.isMultiLine(selectedText)) {
-            if (filename.endsWith("js") && com.kstenschke.shifter.models.shiftableTypes.JsDoc.isJsDocBlock(selectedText) && com.kstenschke.shifter.models.shiftableTypes.JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd)) {
-                return true;
+            if (filename.endsWith("js") && com.kstenschke.shifter.models.shiftableTypes.JsDoc.isJsDocBlock(selectedText)) {
+                com.kstenschke.shifter.models.shiftableTypes.JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd);
+                return;
             }
             if (com.kstenschke.shifter.models.shiftableTypes.Comment.isBlockComment(selectedText)) {
                 com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
-                return true;
+                return;
             }
             if (com.kstenschke.shifter.models.shiftableTypes.Comment.isMultipleSingleLineComments(selectedText)) {
                 com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultipleSingleLineCommentsInDocument(selectedText, project, document, offsetStart, offsetEnd);
-                return true;
+                return;
             }
         }
 
         document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(selectedText, filename, project));
-        return true;
     }
 
     /**

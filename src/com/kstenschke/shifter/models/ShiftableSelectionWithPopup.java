@@ -208,6 +208,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             @Nullable String delimiterSplitPattern, @Nullable String delimiterGlue
     ) {
         if (mode.equals(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER)) {
+            assert phpConcatenation != null;
             document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
             return;
         }

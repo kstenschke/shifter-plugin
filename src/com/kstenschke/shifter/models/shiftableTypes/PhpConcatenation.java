@@ -188,15 +188,17 @@ public class PhpConcatenation {
     }
 
     /**
-     * @return  String
+     * @return  String  Concatenation w/ left- and right-hand-side parts interchanged
      */
     public String getShifted() {
+        String dotWrapChar = this.dotWrapChar == null ? "" : this.dotWrapChar;
+
         String concatenation =
-              this.partRHS
-            + (this.isDotWhitespaceWrapped ? this.dotWrapChar : "")
+              (this.partRHS == null ? "" : this.partRHS)
+            + (this.isDotWhitespaceWrapped ? dotWrapChar : "")
             + "."
-            + (this.isDotWhitespaceWrapped ? this.dotWrapChar : "")
-            + this.partLHS;
+            + (this.isDotWhitespaceWrapped ? dotWrapChar : "")
+            + (this.partLHS == null ? "" : this.partLHS);
 
         return concatenation.trim();
     }

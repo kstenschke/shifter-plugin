@@ -47,30 +47,28 @@ public class UtilsEnvironment {
         return true;
     }
 
-    public static boolean reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
+    public static void reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
         if (psiFile == null) {
-            return false;
+            return;
         }
 
         CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
-        return true;
     }
 
-    public static boolean reformatSelection(Editor editor, Project project) {
+    public static void reformatSelection(Editor editor, Project project) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
         if (psiFile == null) {
-            return false;
+            return;
         }
         SelectionModel selectionModel = editor.getSelectionModel();
         int offsetStart = selectionModel.getSelectionStart();
         int offsetEnd   = selectionModel.getSelectionEnd();
         if (offsetStart == offsetEnd) {
-            return false;
+            return;
         }
 
         CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
-        return true;
     }
 
     /**

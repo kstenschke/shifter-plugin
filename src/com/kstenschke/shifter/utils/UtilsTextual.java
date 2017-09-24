@@ -86,7 +86,7 @@ public class UtilsTextual {
 
         if (delimiterDetector.isFoundDelimiter() && !isDelimitedLastLine) {
             // Maintain detected lines delimiter (ex: comma-separated values, w/ last item w/o trailing comma)
-            lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter(), false);
+            lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter());
         }
 
         return lines;
@@ -287,7 +287,7 @@ public class UtilsTextual {
         String parts[] = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
         if (toLower) {
-            toLower(parts);
+            parts = toLower(parts);
         } else if (isUcFirst) {
             parts[0] = toUcFirstRestLower(parts[0]);
         }
@@ -588,14 +588,10 @@ public class UtilsTextual {
      * @return StringBuilder
      */
     public static StringBuilder joinLines(List<String> lines) {
-        return joinLines(lines, "");
-    }
-
-    public static StringBuilder joinLines(List<String> lines, String appendStr) {
         StringBuilder builder = new StringBuilder();
 
         for (String line : lines) {
-            builder.append(line).append(appendStr);
+            builder.append(line);
         }
 
         return builder;
@@ -718,10 +714,9 @@ public class UtilsTextual {
     /**
      * @param lines
      * @param delimiter
-     * @param isDelimitedLastLine
-     * @return Given lines ending w/ given delimiter, optionally also the last line
+     * @return Given lines ending w/ given delimiter (last line is not being delimited)
      */
-    public static List<String> addDelimiter(List<String> lines, String delimiter, boolean isDelimitedLastLine) {
+    public static List<String> addDelimiter(List<String> lines, String delimiter) {
         int amountLines = lines.size();
         int index = 0;
 
@@ -729,11 +724,10 @@ public class UtilsTextual {
             line = UtilsTextual.rtrim(line);
 
             boolean isLastLine = index + 1 == amountLines;
-            if ((!isLastLine || isDelimitedLastLine) && !line.endsWith(delimiter)) {
+            if (!isLastLine && !line.endsWith(delimiter)) {
                 line = line + delimiter;
             }
-
-            if (isLastLine && !isDelimitedLastLine && line.endsWith(delimiter)) {
+            if (isLastLine && line.endsWith(delimiter)) {
                 // Remove delimiter from last line
                 line = line.substring(0, line.length() - 1);
             }
