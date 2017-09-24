@@ -40,12 +40,17 @@ public class UtilsPhp {
      */
     public static String guessDataTypeByParameterName(String str) {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
+        String firstWord = camelWords[0];
         String lastWord = camelWords[camelWords.length - 1];
+
+        if (UtilsTextual.equalsAnyOf(firstWord, new String[]{"is", "has", "needs"})) {
+            return "bool";
+        }
 
         if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"args", "array", "data", "ids", "items", "list", "pieces", "params", "parameters", "values", "vars"})) {
             return "array";
         }
-        if ("int".equals(lastWord)) {
+        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"int", "amount"})) {
             return "int";
         }
         if ("float".equals(lastWord)) {

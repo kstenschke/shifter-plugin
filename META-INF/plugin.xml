@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.7.5</version>
+    <version>1.7.6</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -122,6 +122,11 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.7.6
+            <ul>
+                <li>Improved: DOC data type detection</li>
+            </ul>
+        </li>
         <li>1.7.5
             <ul>
                 <li>Improved: Ternary shifting: maintain multi-line formatting, reformat selection after shifting</li>
@@ -147,15 +152,6 @@
                 <li>Added: Selection that is wrapped in parenthesis: toggle surrounding round vs. square brackets</li>
                 <li>Added: Intention popup when selection is both: shiftable PHP array (short syntax) and surrounded by parenthesis</li>
                 <li>Improved: DOC param shifting and data type detection</li>
-            </ul>
-        </li>
-        <li>1.7.1
-            <ul>
-                <li>Improved: JsDoc @param line w/o data type can now be shifted (to insert the missing data type) without having to be selected</li>
-                <li>Improved: Shifting selected JsDoc block comment (add missing data type annotations)</li>
-                <li>Improved: Extended type detection of PHP Doc and JsDoc data type completion</li>
-                <li>Improved: PHP DOC @param data type insertion - can now also be invoked from selected line out of DOC comment block</li>
-                <li>Improved: When there are only 2 sortable items, the related intention option now says "swap items order" instead of "sort items"</li>
             </ul>
         </li>
   </ul><br/>

@@ -228,8 +228,8 @@ public class JsDoc {
         return line.replace(" @return ", " @returns ");
     }
 
-    private static String correctInvalidDataTypes(String line, String lhs, String rhs) {
-        return correctInvalidDataTypes(line, lhs, rhs, false);
+    private static String correctInvalidDataTypes(String line) {
+        return correctInvalidDataTypes(line, "", "", false);
     }
     private static String correctInvalidDataTypes(String line, String lhs, String rhs, boolean allowVoid) {
         if (!allowVoid) {
@@ -328,6 +328,6 @@ public class JsDoc {
             return "void";
         }
 
-        return correctInvalidDataTypes(UtilsPhp.guessDataTypeByParameterName(parameterName), "", "");
+        return correctInvalidDataTypes(UtilsPhp.guessDataTypeByParameterName(parameterName));
     }
 }

@@ -152,7 +152,7 @@ class ShiftableTypesManager {
             return MONO_CHARACTER;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (this.typeDictionaryTerm.isTermInDictionary(word, false)) {
+        if (this.typeDictionaryTerm.isTermInDictionary(word)) {
             return DICTIONARY_WORD_GLOBAL;
         }
         if (NumericPostfixed.hasNumericPostfix(word)) {

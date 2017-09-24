@@ -25,7 +25,7 @@ import org.jetbrains.annotations.NonNls;
 public class ShifterPreferences {
 
     @NonNls
-    private static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary.Terms";
+    public static final String PROPERTY_DICTIONARY = "PluginShifter.Dictionary.Terms";
     @NonNls
     private static final String PROPERTY_SHIFTING_MODE_TIMESTAMP = "PluginShifter.ShiftingModeTimestamps";
     @NonNls
@@ -69,18 +69,13 @@ public class ShifterPreferences {
 
     /**
      * @param   propertyName        Name of the preference property
-     * @param   defaultValue        Default value to be set if null
-     * @param   setDefaultIfEmpty   Set default also if empty?
      * @return  String
      */
-    private static String getProperty(String propertyName, String defaultValue, boolean setDefaultIfEmpty) {
-        String value = PropertiesComponent.getInstance().getValue(propertyName);
-        if (value == null) {
-            value = defaultValue;
-        }
-        return value.equals("") && setDefaultIfEmpty && !defaultValue.equals("")
-                ? defaultValue
-                : value;
+    private static String getProperty(String propertyName) {
+        String value        = PropertiesComponent.getInstance().getValue(propertyName);
+        String defaultValue = "0x0";
+
+        return value == null ? defaultValue : value;
     }
 
 
@@ -88,7 +83,7 @@ public class ShifterPreferences {
      * @param   idDialog
      */
     public static String getDialogPosition(String idDialog) {
-        return getProperty(idDialog + ".Position", "0x0", false);
+        return getProperty(idDialog + ".Position");
     }
 
     /**
@@ -137,26 +132,22 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG, isActiveShortToLong ? "1":"0");
     }
 
-    private static String getDictionary(String dictionaryName) {
+    /**
+     * @return String  Dictionary
+     */
+    public static String getDictionary() {
         String dictionary = null;
 
         try {
             PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
             if (propertiesComponent != null) {
-                dictionary = propertiesComponent.getValue(dictionaryName);
+                dictionary = propertiesComponent.getValue(PROPERTY_DICTIONARY);
             }
         } catch(NullPointerException e) {
             return "";
         }
 
         return dictionary == null ? "" : dictionary;
-    }
-
-    /**
-     * @return String  Dictionary
-     */
-    public static String getDictionary() {
-        return getDictionary(PROPERTY_DICTIONARY);
     }
 
     /**

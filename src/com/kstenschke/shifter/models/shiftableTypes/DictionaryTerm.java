@@ -52,11 +52,12 @@ public class DictionaryTerm {
      * Check whether the given term exists in any section of shift-lists of the dictionary
      * + Stores matching line containing the term for use in shifting later
      *
+     * @note   this is a global dictionary check, and NOT file extension specific
      * @param  term        String to be looked for in shifter dictionary
      * @return boolean
      */
-    public boolean isTermInDictionary(String term, boolean isFileExtensionRelevant) {
-        if (!isFileExtensionRelevant || this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
+    public boolean isTermInDictionary(String term) {
+        if (this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
             // Merge all terms-blocks
             String dictionaryTerms = this.dictionaryContents;
             Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
