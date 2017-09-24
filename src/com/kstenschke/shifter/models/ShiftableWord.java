@@ -200,7 +200,7 @@ public class ShiftableWord {
     @Nullable
     private static Boolean shiftWordAtCaretInJsDocument(Document document, int caretOffset, String line, String word) {
         if (   (JsDoc.isAtParamLine(line) || JsDoc.isAtTypeLine(line))
-            && !JsDoc.containsCompounds(line) && JsDoc.isWordRightOfAtKeyword(word, line) && JsDoc.isDataType(word)) {
+            && JsDoc.containsNoCompounds(line) && JsDoc.isWordRightOfAtKeyword(word, line) && JsDoc.isDataType(word)) {
             // Add missing curly brackets around data type at caret in jsDoc @param line
             return JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(word, document, caretOffset);
         }

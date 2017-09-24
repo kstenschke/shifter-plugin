@@ -55,7 +55,9 @@ class PluginConfigurationListenerRestoreSettings implements MouseListener {
     public void mouseEntered(MouseEvent mouseEvent) {
         original = mouseEvent.getComponent().getFont();
         Map attributes = original.getAttributes();
+        //noinspection unchecked
         attributes.put(TextAttribute.UNDERLINE, TextAttribute.UNDERLINE_ON);
+        //noinspection unchecked
         mouseEvent.getComponent().setFont(original.deriveFont(attributes));
     }
 

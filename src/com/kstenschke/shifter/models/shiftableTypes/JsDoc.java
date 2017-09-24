@@ -127,8 +127,8 @@ public class JsDoc {
             || str.contains(lhs + "void");
     }
 
-    public static boolean containsCompounds(String str) {
-        return str.contains("{") && str.contains("}");
+    public static boolean containsNoCompounds(String str) {
+        return !(str.contains("{") && str.contains("}"));
     }
 
     /**
@@ -206,7 +206,7 @@ public class JsDoc {
     private static String correctAtKeywordLine(String line, String keyword) {
         line = correctInvalidAtReturnsStatement(line);
 
-        if (!containsCompounds(line) && containsDataType(line, " ")) {
+        if (containsNoCompounds(line) && containsDataType(line, " ")) {
             line = addCompoundsToDataType(line, keyword);
         }
         line = correctInvalidDataTypes(line, "{", true);
