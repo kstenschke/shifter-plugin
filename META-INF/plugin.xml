@@ -125,12 +125,12 @@
     <ul>
         <li>1.7.7
             <ul>
-                <li>** Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)</li>
+                <li>Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)</li>
             </ul>
         </li>
         <li>1.7.6
             <ul>
-                <li>Added: Option to unescape escaped quotes in selection</li>
+                <li>Added: Option to un-escape escaped quotes in selection</li>
                 <li>Improved: DOC data type detection</li>
             </ul>
         </li>
