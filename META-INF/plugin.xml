@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.7.6</version>
+    <version>1.7.7</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
 
     <description><![CDATA[
@@ -70,7 +70,7 @@
     <strong>String Manipulations</strong>
     <ul>
         <li>Shifting a selection within a single line: detects and swaps characters: single quote vs. double quote OR slash vs. backslash</li>
-        <li>Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)</li>
+        <li>Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus- or underscore-separated path (and vice versa)</li>
         <li>Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document</li>
         <li>Strings surrounded by round or square brackets: toggles surrounding "(" and ")" versus "[" and "]"</li>
         <li>Logical operators: toggles between (selected) "&&" and "||"</li>
@@ -123,6 +123,11 @@
 
     <change-notes><![CDATA[
     <ul>
+        <li>1.7.7
+            <ul>
+                <li>** Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)</li>
+            </ul>
+        </li>
         <li>1.7.6
             <ul>
                 <li>Added: Option to unescape escaped quotes in selection</li>
@@ -147,16 +152,9 @@
             <ul>
                 <li>Improved: Plugin settings UI</li>
             </ul>
-        </li><li>1.7.2
-            <ul>
-                <li>Added: Plugin setting to enable quote conversions (1. single quotes to double, 2. double quotes to single)</li>
-                <li>Added: Plugin setting to enable PHP array syntax conversions (1. long to short, 2. short to long)</li>
-                <li>Added: Selection that is wrapped in parenthesis: toggle surrounding round vs. square brackets</li>
-                <li>Added: Intention popup when selection is both: shiftable PHP array (short syntax) and surrounded by parenthesis</li>
-                <li>Improved: DOC param shifting and data type detection</li>
-            </ul>
         </li>
-  </ul><br/>
+  </ul>
+  <br/>
    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
 

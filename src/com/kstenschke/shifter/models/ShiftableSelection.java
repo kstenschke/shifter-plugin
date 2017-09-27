@@ -24,7 +24,6 @@ import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import com.sun.org.apache.xpath.internal.operations.Quo;
 import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
@@ -162,8 +161,9 @@ public class ShiftableSelection {
                 new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftQuotesInDocument();
                 return;
             }
-            if (CamelCaseString.isCamelCase(selectedText) && CamelCaseString.isWordPair(selectedText)) {
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftCamelCaseOrSwapWords();
+            if (CamelCaseString.isCamelCase(selectedText)) {
+                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftCamelCase(
+                        CamelCaseString.isWordPair(selectedText));
                 return;
             }
             if (MinusSeparatedPath.isMinusSeparatedPath(selectedText) && MinusSeparatedPath.isWordPair(selectedText)) {

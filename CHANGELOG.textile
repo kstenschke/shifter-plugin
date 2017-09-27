@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.7.7
+    ** Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)
 * 1.7.6
     ** Added: Option to unescape escaped quotes in selection
     ** Improved: DOC shifting: data type detection, formatting after shifting

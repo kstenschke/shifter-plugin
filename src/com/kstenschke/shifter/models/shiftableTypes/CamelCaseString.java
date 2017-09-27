@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
 
@@ -22,6 +23,11 @@ import org.apache.commons.lang.StringUtils;
  * "camelCase" and "TitleCase" strings
  */
 public class CamelCaseString {
+
+    public enum ShiftMode {
+        CAMEL_WORDS_TO_MINUS_SEPARATED,
+        CAMEL_WORDS_TO_UNDERSCORE_SEPARATED,
+    }
 
     /**
      * @return boolean
@@ -59,8 +65,18 @@ public class CamelCaseString {
      * @return String
      */
     public static String getShifted(String word) {
+        return getShifted(word, ShiftMode.CAMEL_WORDS_TO_MINUS_SEPARATED);
+    }
+
+    public static String getShifted(String word, ShiftMode mode) {
         String parts[] = UtilsTextual.splitCamelCaseIntoWords(word, true);
 
-        return StringUtils.join(parts, "-");
+        switch (mode) {
+            case CAMEL_WORDS_TO_UNDERSCORE_SEPARATED:_SEPARATED:
+                return StringUtils.join(parts, "_");
+            case CAMEL_WORDS_TO_MINUS_SEPARATED:
+            default:
+                return StringUtils.join(parts, "-");
+        }
     }
 }

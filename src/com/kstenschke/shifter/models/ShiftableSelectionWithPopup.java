@@ -18,6 +18,9 @@ package com.kstenschke.shifter.models;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
+import com.intellij.openapi.editor.Editor;
+import com.intellij.openapi.editor.SelectionModel;
+import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
@@ -25,13 +28,14 @@ import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
+import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
 
-class ShiftableSelectionWithPopup extends ShiftableSelection {
+public class ShiftableSelectionWithPopup extends ShiftableSelection {
 
     private final Project project;
     private final Document document;
@@ -163,10 +167,14 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, null, null);
     }
 
-    public void shiftCamelCaseOrSwapWords() {
+    public void shiftCamelCase(boolean isTwoWords) {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH);
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED);
+
+        if (isTwoWords) {
+            shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER);
+        }
 
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
@@ -271,6 +279,10 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH)) {
             document.replaceString(offsetStart, offsetEnd, CamelCaseString.getShifted(selectedText));
+            return;
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED)) {
+            document.replaceString(offsetStart, offsetEnd, CamelCaseString.getShifted(selectedText, CamelCaseString.ShiftMode.CAMEL_WORDS_TO_UNDERSCORE_SEPARATED));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE)) {

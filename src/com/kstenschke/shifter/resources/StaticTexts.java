@@ -82,6 +82,8 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_CAMEL_CASE_TO_PATH = "Convert to minus-separated path";
     @NonNls
+    public static final String SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED = "Convert to underscore-separated";
+    @NonNls
     public static final String SHIFT_OPTION_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
     @NonNls
     public static final String SHIFT_OPTION_SWAP_PARENTHESIS = "Toggle (...) and [...]";
