@@ -24,7 +24,7 @@ public class SeparatedPath {
         return isSeparatedPath(str, "-") || isSeparatedPath(str, "_");
     }
 
-    public static boolean isSeparatedPath(String str, CharSequence glue) {
+    private static boolean isSeparatedPath(String str, CharSequence glue) {
         return str.length() > 3 && UtilsTextual.startsAlphabetic(str) && str.contains(glue)
             && UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase());
     }

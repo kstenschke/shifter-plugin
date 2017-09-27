@@ -15,7 +15,6 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
-import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
 
@@ -72,7 +71,7 @@ public class CamelCaseString {
         String parts[] = UtilsTextual.splitCamelCaseIntoWords(word, true);
 
         switch (mode) {
-            case CAMEL_WORDS_TO_UNDERSCORE_SEPARATED:_SEPARATED:
+            case CAMEL_WORDS_TO_UNDERSCORE_SEPARATED:
                 return StringUtils.join(parts, "_");
             case CAMEL_WORDS_TO_MINUS_SEPARATED:
             default:

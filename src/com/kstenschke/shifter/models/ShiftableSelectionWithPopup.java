@@ -31,7 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ShiftableSelectionWithPopup extends ShiftableSelection {
+class ShiftableSelectionWithPopup extends ShiftableSelection {
 
     private final Project project;
     private final Document document;
