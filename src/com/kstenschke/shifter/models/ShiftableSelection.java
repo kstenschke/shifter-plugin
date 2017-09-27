@@ -166,8 +166,8 @@ public class ShiftableSelection {
                         CamelCaseString.isWordPair(selectedText));
                 return;
             }
-            if (MinusSeparatedPath.isMinusSeparatedPath(selectedText) && MinusSeparatedPath.isWordPair(selectedText)) {
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftMinusSeparatedPathOrSwapWords();
+            if (SeparatedPath.isSeparatedPath(selectedText) && SeparatedPath.isWordPair(selectedText)) {
+                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftSeparatedPathOrSwapWords();
                 return;
             }
 

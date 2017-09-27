@@ -162,8 +162,8 @@ class ShiftableTypesManager {
         if (wordsTupel.isWordsTupel(word)) {
             return WORDS_TUPEL;
         }
-        if (MinusSeparatedPath.isMinusSeparatedPath(word)) {
-            return MINUS_SEPARATED_PATH;
+        if (SeparatedPath.isSeparatedPath(word)) {
+            return SEPARATED_PATH;
         }
         if (CamelCaseString.isCamelCase(word)) {
             return CAMEL_CASED;
@@ -255,8 +255,8 @@ class ShiftableTypesManager {
                 return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
             case DOC_COMMENT_DATA_TYPE:
                 return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
-            case MINUS_SEPARATED_PATH:
-                return MinusSeparatedPath.getShifted(word);
+            case SEPARATED_PATH:
+                return SeparatedPath.getShifted(word);
             case CAMEL_CASED:
                 return CamelCaseString.getShifted(word);
             case HTML_ENCODABLE:

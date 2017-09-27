@@ -27,7 +27,7 @@ public class ShiftableTypes {
         NUMERIC_VALUE, NUMERIC_POSTFIXED, ROMAN_NUMERAL,
 
         // Generic shiftable types
-        QUOTED_STRING, PARENTHESIS, HTML_ENCODABLE, CAMEL_CASED, MINUS_SEPARATED_PATH,
+        QUOTED_STRING, PARENTHESIS, HTML_ENCODABLE, CAMEL_CASED, SEPARATED_PATH,
         WORDS_TUPEL,
 
         // Operators (<, >, +, -, etc.) and expressions

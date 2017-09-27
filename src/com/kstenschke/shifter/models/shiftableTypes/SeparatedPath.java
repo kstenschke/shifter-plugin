@@ -16,14 +16,16 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 
-public class MinusSeparatedPath {
+public class SeparatedPath {
 
-    /**
-     * @return boolean
-     */
-    public static boolean isMinusSeparatedPath(String str) {
-        return str.length() > 3 && UtilsTextual.startsAlphabetic(str) && str.contains("-")
+    public static boolean isSeparatedPath(String str) {
+        return isSeparatedPath(str, "-") || isSeparatedPath(str, "_");
+    }
+
+    public static boolean isSeparatedPath(String str, CharSequence glue) {
+        return str.length() > 3 && UtilsTextual.startsAlphabetic(str) && str.contains(glue)
             && UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase());
     }
 
@@ -32,7 +34,7 @@ public class MinusSeparatedPath {
     }
 
     public static String flipWordsOrder(String str) {
-        String words[] = str.split("-");
+        String words[] = str.split(getWordsGlue(str));
 
         return words[1] + "-" + words[0];
     }
@@ -42,7 +44,7 @@ public class MinusSeparatedPath {
      * @return String   Given string converted to camelCase
      */
     public static String getShifted(String word) {
-        String parts[] = word.split("-");
+        String parts[] = word.split(getWordsGlue(word));
         String shifted = "";
         int index = 0;
         for (String part : parts) {
@@ -51,5 +53,10 @@ public class MinusSeparatedPath {
         }
 
         return shifted;
+    }
+
+    @NotNull
+    private static String getWordsGlue(String word) {
+        return isSeparatedPath(word, "-") ? "-" : "_";
     }
 }

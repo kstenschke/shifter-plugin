@@ -18,9 +18,6 @@ package com.kstenschke.shifter.models;
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
@@ -28,7 +25,6 @@ import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
@@ -179,7 +175,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    public void shiftMinusSeparatedPathOrSwapWords() {
+    public void shiftSeparatedPathOrSwapWords() {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER);
@@ -254,7 +250,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER)) {
-            document.replaceString(offsetStart, offsetEnd, MinusSeparatedPath.flipWordsOrder(selectedText));
+            document.replaceString(offsetStart, offsetEnd, SeparatedPath.flipWordsOrder(selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LINES_SORT)) {
@@ -286,7 +282,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE)) {
-            document.replaceString(offsetStart, offsetEnd, MinusSeparatedPath.getShifted(selectedText));
+            document.replaceString(offsetStart, offsetEnd, SeparatedPath.getShifted(selectedText));
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX)) {
             PhpVariableOrArray phpVariableOrArray = new PhpVariableOrArray();
