@@ -67,22 +67,22 @@ public class PluginConfiguration {
      * Refresh settings and dictionary content from stored preference or factory default
      */
     public void initFormValues() {
-        this.spinnerShiftMore.setModel( new SpinnerNumberModel(ShifterPreferences.getShiftMoreSize(), 2, 999, 1));
+        spinnerShiftMore.setModel( new SpinnerNumberModel(ShifterPreferences.getShiftMoreSize(), 2, 999, 1));
 
         if (ShifterPreferences.getShiftingModeOfTimestamps().equals(ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS)) {
-            this.radioButtonShiftInSeconds.setSelected(true);
+            radioButtonShiftInSeconds.setSelected(true);
         } else {
-            this.radioButtonShiftInMilliseconds.setSelected(true);
+            radioButtonShiftInMilliseconds.setSelected(true);
         }
 
-        this.inputMillisecondsEndings.setText(ShifterPreferences.getMillisecondsFileEndings());
-        this.inputSecondsEndings.setText(ShifterPreferences.getSecondsFileEndings());
+        inputMillisecondsEndings.setText(ShifterPreferences.getMillisecondsFileEndings());
+        inputSecondsEndings.setText(ShifterPreferences.getSecondsFileEndings());
 
-        this.checkboxPreserveCase.setSelected(ShifterPreferences.getIsActivePreserveCase());
-        this.checkboxConvertSingleQuotes.setSelected(ShifterPreferences.getIsActiveConvertSingleQuotes());
-        this.checkboxConvertDoubleQuotes.setSelected(ShifterPreferences.getIsActiveConvertDoubleQuotes());
-        this.checkboxPhpArrayShortToLong.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayShortToLong());
-        this.checkboxPhpArrayLongToShort.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayLongToShort());
+        checkboxPreserveCase.setSelected(ShifterPreferences.getIsActivePreserveCase());
+        checkboxConvertSingleQuotes.setSelected(ShifterPreferences.getIsActiveConvertSingleQuotes());
+        checkboxConvertDoubleQuotes.setSelected(ShifterPreferences.getIsActiveConvertDoubleQuotes());
+        checkboxPhpArrayShortToLong.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayShortToLong());
+        checkboxPhpArrayLongToShort.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayLongToShort());
 
         String termsDictionary   = ShifterPreferences.getDictionary();
         if (termsDictionary == null || termsDictionary.isEmpty())  {
@@ -101,7 +101,7 @@ public class PluginConfiguration {
 
     public String getDefaultDictionary() {
         //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
-        InputStream dictionaryStream= this.getClass().getResourceAsStream("dictionary.txt");
+        InputStream dictionaryStream= getClass().getResourceAsStream("dictionary.txt");
 
         return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
     }
@@ -124,7 +124,7 @@ public class PluginConfiguration {
         inputMillisecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_MILLISECONDS);
         inputSecondsEndings.setText(ShifterPreferences.DEFAULT_FILE_ENDINGS_SECONDS);
 
-        this.textAreaDictionaryTerms.setText(getDefaultDictionary());
+        textAreaDictionaryTerms.setText(getDefaultDictionary());
     }
 
     /**
@@ -158,16 +158,16 @@ public class PluginConfiguration {
      */
     public boolean isModified() {
         return   
-             Integer.parseInt(this.spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
-          || !this.textAreaDictionaryTerms.getText().equals(ShifterPreferences.getDictionary())
-          || !ShifterPreferences.getIsActivePreserveCase().equals(this.checkboxPreserveCase.isSelected())
-          || !ShifterPreferences.getIsActiveConvertSingleQuotes().equals(this.checkboxConvertSingleQuotes.isSelected())
-          || !ShifterPreferences.getIsActiveConvertDoubleQuotes().equals(this.checkboxConvertDoubleQuotes.isSelected())
-          || !ShifterPreferences.getIsActiveConvertPhpArrayLongToShort().equals(this.checkboxPhpArrayLongToShort.isSelected())
-          || !ShifterPreferences.getIsActiveConvertPhpArrayShortToLong().equals(this.checkboxPhpArrayShortToLong.isSelected())
-          || !ShifterPreferences.getShiftingModeOfTimestamps().equals(this.getSelectedShiftingModeOfTimestamps())
-          || !ShifterPreferences.getMillisecondsFileEndings().equals(this.inputMillisecondsEndings.getText())
-          || !ShifterPreferences.getSecondsFileEndings().equals(this.inputSecondsEndings.getText())
+             Integer.parseInt(spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
+          || !textAreaDictionaryTerms.getText().equals(ShifterPreferences.getDictionary())
+          || !ShifterPreferences.getIsActivePreserveCase().equals(checkboxPreserveCase.isSelected())
+          || !ShifterPreferences.getIsActiveConvertSingleQuotes().equals(checkboxConvertSingleQuotes.isSelected())
+          || !ShifterPreferences.getIsActiveConvertDoubleQuotes().equals(checkboxConvertDoubleQuotes.isSelected())
+          || !ShifterPreferences.getIsActiveConvertPhpArrayLongToShort().equals(checkboxPhpArrayLongToShort.isSelected())
+          || !ShifterPreferences.getIsActiveConvertPhpArrayShortToLong().equals(checkboxPhpArrayShortToLong.isSelected())
+          || !ShifterPreferences.getShiftingModeOfTimestamps().equals(getSelectedShiftingModeOfTimestamps())
+          || !ShifterPreferences.getMillisecondsFileEndings().equals(inputMillisecondsEndings.getText())
+          || !ShifterPreferences.getSecondsFileEndings().equals(inputSecondsEndings.getText())
         ;
     }
 
@@ -175,21 +175,21 @@ public class PluginConfiguration {
      * @return  String
      */
     private String getDictionary() {
-        return this.textAreaDictionaryTerms.getText();
+        return textAreaDictionaryTerms.getText();
     }
 
     public void apply() {
         // Store configuration
-        ShifterPreferences.saveShiftMoreSize(this.getShiftMoreSize());
-        ShifterPreferences.saveIsActivePreserveCase(this.getIsActivePreserveCase());
-        ShifterPreferences.saveShiftingModeTimestamps(this.getSelectedShiftingModeOfTimestamps());
-        ShifterPreferences.saveMillisecondsFileEndings(this.inputMillisecondsEndings.getToolTipText());
-        ShifterPreferences.saveSecondsFileEndings(this.inputSecondsEndings.getToolTipText());
-        ShifterPreferences.saveConvertQuoteActiveModes(this.checkboxConvertSingleQuotes.isSelected(), this.checkboxConvertDoubleQuotes.isSelected());
-        ShifterPreferences.saveConvertPhpArrayActiveModes(this.checkboxPhpArrayLongToShort.isSelected(), this.checkboxPhpArrayShortToLong.isSelected());
+        ShifterPreferences.saveShiftMoreSize(getShiftMoreSize());
+        ShifterPreferences.saveIsActivePreserveCase(getIsActivePreserveCase());
+        ShifterPreferences.saveShiftingModeTimestamps(getSelectedShiftingModeOfTimestamps());
+        ShifterPreferences.saveMillisecondsFileEndings(inputMillisecondsEndings.getToolTipText());
+        ShifterPreferences.saveSecondsFileEndings(inputSecondsEndings.getToolTipText());
+        ShifterPreferences.saveConvertQuoteActiveModes(checkboxConvertSingleQuotes.isSelected(), checkboxConvertDoubleQuotes.isSelected());
+        ShifterPreferences.saveConvertPhpArrayActiveModes(checkboxPhpArrayLongToShort.isSelected(), checkboxPhpArrayShortToLong.isSelected());
 
         // Store dictionary
-        String dictionary = this.getDictionary();
+        String dictionary = getDictionary();
         if (dictionary != null) {
             ShifterPreferences.saveDictionary(dictionary);
         }

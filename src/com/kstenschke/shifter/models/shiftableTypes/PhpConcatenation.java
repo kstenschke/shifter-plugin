@@ -37,15 +37,15 @@ public class PhpConcatenation {
         String strJoined = UtilsTextual.removeLineBreaks(str.trim());
 
         if (strJoined.length() > 4 && strJoined.contains(".")) {
-            this.extractParts(strJoined);
-            if (this.partLHS != null && this.partRHS != null) {
-                this.isPhpConcatenation = true;
-                if (this.offsetDot != null) {
-                    char charBeforeDot = strJoined.charAt(this.offsetDot - 1);
-                    char charAfterDot = strJoined.charAt(this.offsetDot + 1);
+            extractParts(strJoined);
+            if (partLHS != null && partRHS != null) {
+                isPhpConcatenation = true;
+                if (offsetDot != null) {
+                    char charBeforeDot = strJoined.charAt(offsetDot - 1);
+                    char charAfterDot = strJoined.charAt(offsetDot + 1);
                     if ((charBeforeDot == ' ' && charAfterDot == ' ') || (charBeforeDot == '\t' && charAfterDot == '\t')) {
-                        this.isDotWhitespaceWrapped = true;
-                        this.dotWrapChar = String.valueOf(charAfterDot);
+                        isDotWhitespaceWrapped = true;
+                        dotWrapChar = String.valueOf(charAfterDot);
                     }
                 }
             }
@@ -90,7 +90,7 @@ public class PhpConcatenation {
                             isFoundEndOfLHS = true;
                             if (".".equals(endChar)) {
                                 isFoundDot = true;
-                                this.offsetDot    = currentOffset;
+                                offsetDot    = currentOffset;
                             } else {
                                 leftHandSide += currentChar;
                             }
@@ -106,7 +106,7 @@ public class PhpConcatenation {
                     if (".".equals(currentChar)) {
                         if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                             isFoundDot = true;
-                            this.offsetDot = currentOffset;
+                            offsetDot = currentOffset;
                             currentOffset++;
                         }
                     } else if (" ".equals(currentChar) || "\t".equals(currentChar)) {
@@ -143,8 +143,8 @@ public class PhpConcatenation {
                                     }
 
                                     if (!isFailed) {
-                                        this.partLHS    = leftHandSide;
-                                        this.partRHS    = rightHandSide;
+                                        partLHS    = leftHandSide;
+                                        partRHS    = rightHandSide;
                                     }
                                 }
                             } else {
@@ -184,7 +184,7 @@ public class PhpConcatenation {
      * @return  boolean
      */
     public boolean isPhpConcatenation() {
-        return this.isPhpConcatenation;
+        return isPhpConcatenation;
     }
 
     /**
@@ -194,11 +194,11 @@ public class PhpConcatenation {
         String dotWrapChar = this.dotWrapChar == null ? "" : this.dotWrapChar;
 
         String concatenation =
-              (this.partRHS == null ? "" : this.partRHS)
-            + (this.isDotWhitespaceWrapped ? dotWrapChar : "")
+              (partRHS == null ? "" : partRHS)
+            + (isDotWhitespaceWrapped ? dotWrapChar : "")
             + "."
-            + (this.isDotWhitespaceWrapped ? dotWrapChar : "")
-            + (this.partLHS == null ? "" : this.partLHS);
+            + (isDotWhitespaceWrapped ? dotWrapChar : "")
+            + (partLHS == null ? "" : partLHS);
 
         return concatenation.trim();
     }

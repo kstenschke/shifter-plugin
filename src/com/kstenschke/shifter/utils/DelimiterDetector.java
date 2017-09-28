@@ -32,17 +32,17 @@ class DelimiterDetector {
      * @param lines
      */
     public DelimiterDetector(List<String> lines) {
-        this.commonDelimiter = ' ';
+        commonDelimiter = ' ';
 
         int amountLines = lines.size();
         if (amountLines <= 2) {
-            this.findingDelimiterFailed = true;
+            findingDelimiterFailed = true;
             return;
         }
 
         int lenLine;
 
-        this.findingDelimiterFailed = false;
+        findingDelimiterFailed = false;
         int lineNumber = 0;
         for (String line : lines) {
             line = line.trim();
@@ -51,11 +51,11 @@ class DelimiterDetector {
             if (lenLine > 0) {
                 char currentDelimiter = line.charAt(lenLine - 1);
                 if (lineNumber == 0) {
-                    this.commonDelimiter = currentDelimiter;
+                    commonDelimiter = currentDelimiter;
                 } else {
                     boolean isLastLine = lineNumber == amountLines - 1;
-                    if (!isLastLine && currentDelimiter != this.commonDelimiter) {
-                        this.findingDelimiterFailed = true;
+                    if (!isLastLine && currentDelimiter != commonDelimiter) {
+                        findingDelimiterFailed = true;
                     }
                 }
             }
@@ -63,21 +63,21 @@ class DelimiterDetector {
         }
 
         String lastLine = lines.get(amountLines - 1).trim();
-        this.isDelimitedLastLine = lastLine.endsWith(String.valueOf(this.commonDelimiter));
+        isDelimitedLastLine = lastLine.endsWith(String.valueOf(commonDelimiter));
     }
 
     /**
      * @return String|null  Common delimiter if found, or null
      */
     public String getCommonDelimiter() {
-        return this.findingDelimiterFailed ? null : String.valueOf(this.commonDelimiter);
+        return findingDelimiterFailed ? null : String.valueOf(commonDelimiter);
     }
 
     public boolean isFoundDelimiter() {
-        return !this.findingDelimiterFailed;
+        return !findingDelimiterFailed;
     }
 
     public boolean isDelimitedLastLine() {
-        return !this.findingDelimiterFailed && this.isDelimitedLastLine;
+        return !findingDelimiterFailed && isDelimitedLastLine;
     }
 }

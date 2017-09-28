@@ -47,14 +47,14 @@ public class DocCommentTag {
      * @return Array    String array w/ all recognized doc comment tags
      */
     private String[] getAllTags() {
-        return UtilsArray.mergeArrays(this.tagsJavaScript, this.tagsJava, this.tagsPHP);
+        return UtilsArray.mergeArrays(tagsJavaScript, tagsJava, tagsPHP);
     }
 
     /**
      * @return String   Pipe-separated list (as string) w/ all recognized doc comment tags
      */
     public String getAllTagsPiped() {
-        String[] allTags = this.getAllTags();
+        String[] allTags = getAllTags();
 
         return UtilsArray.implode(allTags, "|");
     }
@@ -66,7 +66,7 @@ public class DocCommentTag {
      * @return boolean
      */
     private boolean isDocCommentLineContext(String line) {
-        String allTagsPiped = this.getAllTagsPiped();
+        String allTagsPiped     = getAllTagsPiped();
         String regExPatternLine = "\\s*\\*\\s+@(" + allTagsPiped + ")";
 
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
@@ -80,7 +80,7 @@ public class DocCommentTag {
      * @return boolean    Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
      */
     public boolean isDocCommentTag(String prefixChar, String line) {
-        return "@".equals(prefixChar) && this.isDocCommentLineContext(line);
+        return "@".equals(prefixChar) && isDocCommentLineContext(line);
     }
 
     public static boolean isDocCommentLine(String line) {
@@ -96,7 +96,7 @@ public class DocCommentTag {
      * @return Shifting result
      */
     public String getShifted(String word, boolean isUp, String filename, String textAfterCaret) {
-        String[] commentTags = this.getTagsByFilename(filename);
+        String[] commentTags = getTagsByFilename(filename);
         int amountTags = commentTags.length;
         if (amountTags > 0) {
             String wordLower = word.toLowerCase();
@@ -150,14 +150,14 @@ public class DocCommentTag {
 
             if (filenameLower.endsWith(".js")) {
                 // JavaScript comment shiftableTypes
-                return this.tagsJavaScript;
+                return tagsJavaScript;
             }
             if (filenameLower.endsWith(".java")) {
                 // Java comment tags in the recommended order
-                return this.tagsJava;
+                return tagsJava;
             }
         }
 
-        return this.tagsPHP;
+        return tagsPHP;
     }
 }

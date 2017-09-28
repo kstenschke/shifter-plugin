@@ -67,7 +67,7 @@ public class ShiftableWord {
             String filename,
             @Nullable Integer moreCount
     ) {
-        this.shiftingShiftableTypesManager = new ShiftableTypesManager();
+        shiftingShiftableTypesManager = new ShiftableTypesManager();
 
         this.editorText  = editorText;
         this.caretOffset = caretOffset;
@@ -75,18 +75,18 @@ public class ShiftableWord {
         this.moreCount   = moreCount;
 
         // Detect word type
-        this.wordType = shiftingShiftableTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
+        wordType = shiftingShiftableTypesManager.getWordType(word, prefixChar, postfixChar, false, line, filename);
 
         // Comprehend negative values of numeric shiftableTypes
         this.word = (
-                (this.wordType == CSS_UNIT || this.wordType == NUMERIC_VALUE)
+                (wordType == CSS_UNIT || wordType == NUMERIC_VALUE)
                 && "-".equals(prefixChar)
         )
             ? "-" + word
             : word;
 
         // Can the word be shifted?
-        this.isShiftable = this.wordType != UNKNOWN;
+        isShiftable = wordType != UNKNOWN;
     }
 
     /**
@@ -97,28 +97,28 @@ public class ShiftableWord {
      * @return String   Next upper/lower word
      */
     public String getShifted(boolean isUp, @Nullable Editor editor) {
-        if (this.isShiftable) {
+        if (isShiftable) {
             String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
 
-            return this.word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
+            return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
         }
 
-        return this.word;
+        return word;
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
-        if (    this.wordType != PHP_VARIABLE_OR_ARRAY
-             && this.wordType != QUOTED_STRING
-             && this.wordType != CAMEL_CASED
+        if (    wordType != PHP_VARIABLE_OR_ARRAY
+             && wordType != QUOTED_STRING
+             && wordType != CAMEL_CASED
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
-            if (UtilsTextual.isAllUppercase(this.word)) {
+            if (UtilsTextual.isAllUppercase(word)) {
                 return shiftedWord.toUpperCase();
             }
-            if (UtilsTextual.isUcFirst(this.word)) {
+            if (UtilsTextual.isUcFirst(word)) {
                 return UtilsTextual.toUcFirstRestLower(shiftedWord);
             }
-            if (UtilsTextual.isLcFirst(this.word)) {
+            if (UtilsTextual.isLcFirst(word)) {
                 return UtilsTextual.toLcFirst(shiftedWord);
             }
         }
@@ -134,12 +134,12 @@ public class ShiftableWord {
      * @return String   Post-processed word
      */
     private String postProcess(String word, String postfix) {
-        if (UtilsFile.isCssFile(this.filename)) {
-            switch (this.wordType) {
+        if (UtilsFile.isCssFile(filename)) {
+            switch (wordType) {
                 // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
                 case NUMERIC_VALUE:
                     if (!CssUnit.isCssUnit(postfix)) {
-                        return word + CssUnit.determineMostProminentUnit(this.editorText.toString());
+                        return word + CssUnit.determineMostProminentUnit(editorText.toString());
                     }
                     break;
                 case CSS_UNIT:

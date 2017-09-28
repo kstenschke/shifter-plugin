@@ -45,7 +45,7 @@ public class QuotedString {
      * @return boolean
      */
     public boolean isQuotedString(String prefixChar, String postfixChar) {
-        this.quoteChar = prefixChar;
+        quoteChar = prefixChar;
 
         // Must begin be wrapped in single-, double quotes, or backticks
 
@@ -68,7 +68,7 @@ public class QuotedString {
     public String getShifted(String word, CharSequence editorText, boolean isUp) {
         // Get array of all strings wrapped in current quoting sign
         String text = editorText.toString();
-        List<String> allMatches = UtilsTextual.extractQuotedStrings(text, this.quoteChar);
+        List<String> allMatches = UtilsTextual.extractQuotedStrings(text, quoteChar);
 
         // Sort var names alphabetically
         Collections.sort(allMatches);

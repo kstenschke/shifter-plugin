@@ -46,9 +46,9 @@ public class ShiftableLine {
      */
     public ShiftableLine(Document document, String line, int caretOffset) {
         this.line        = line;
-        this.editorText  = document.getCharsSequence();
+        editorText       = document.getCharsSequence();
         this.caretOffset = caretOffset;
-        this.filename    = UtilsEnvironment.getDocumentFilename(document);
+        filename         = UtilsEnvironment.getDocumentFilename(document);
     }
 
     /**
@@ -60,7 +60,7 @@ public class ShiftableLine {
      * @return String       Next upper/lower word
      */
     private String getShifted(boolean isUp, Editor editor, @Nullable final Integer moreCount) {
-        if (UtilsFile.isPhpFile(filename) && PhpDocParam.isPhpDocParamLine(line) && !PhpDocParam.containsDataType(this.line) && PhpDocParam.containsVariableName(this.line)) {
+        if (UtilsFile.isPhpFile(filename) && PhpDocParam.isPhpDocParamLine(line) && !PhpDocParam.containsDataType(line) && PhpDocParam.containsVariableName(line)) {
             // Caret-line is a PHP doc @param w/o data type: guess and insert one by the variable name
             String shiftedLine = PhpDocParam.getShifted(line);
             if (!shiftedLine.equals(line)) {
@@ -68,7 +68,7 @@ public class ShiftableLine {
             }
         }
 
-        if (   this.filename.endsWith(".js")
+        if (   filename.endsWith(".js")
             && (JsDoc.isAtParamLine(line) || JsDoc.isAtTypeLine(line) || JsDoc.isAtReturnsLine(line, true))
         ) {
             String shiftedLine = JsDoc.correctAtKeywordLine(line);
@@ -77,7 +77,7 @@ public class ShiftableLine {
             }
         }
 
-        String[] words = this.line.trim().split("\\s+");
+        String[] words = line.trim().split("\\s+");
 
         // Check all words for shiftable shiftableTypes - shiftable if there's not more than one
         int amountShiftableWordsInSentence = 0;
@@ -95,7 +95,7 @@ public class ShiftableLine {
                     word = word.substring(1);
                 }
 
-                wordShiftedTest = new ShiftableWord(word, prefixChar, postfixChar, this.line, this.editorText, this.caretOffset, this.filename, moreCount).getShifted(isUp, editor);
+                wordShiftedTest = new ShiftableWord(word, prefixChar, postfixChar, line, editorText, caretOffset, filename, moreCount).getShifted(isUp, editor);
                 if (wordShiftedTest != null && !wordShiftedTest.equals(word)) {
                     amountShiftableWordsInSentence++;
                     wordUnshifted = word;
@@ -106,14 +106,14 @@ public class ShiftableLine {
 
         if (amountShiftableWordsInSentence == 1) {
             // Shift detected word in line
-            return this.line.replace(wordUnshifted, wordShifted);
+            return line.replace(wordUnshifted, wordShifted);
         }
 
-        return HtmlEncodable.isHtmlEncodable(this.line)
+        return HtmlEncodable.isHtmlEncodable(line)
             // Encode or decode contained HTML special chars
-            ? HtmlEncodable.getShifted(this.line)
+            ? HtmlEncodable.getShifted(line)
             // No shift-ability detected, return original line
-            : this.line;
+            : line;
     }
 
     /**

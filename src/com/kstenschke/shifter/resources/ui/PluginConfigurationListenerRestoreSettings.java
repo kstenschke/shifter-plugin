@@ -38,7 +38,7 @@ class PluginConfigurationListenerRestoreSettings implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent mouseEvent) {
-        this.pluginConfiguration.reset();
+        pluginConfiguration.reset();
     }
 
     @Override

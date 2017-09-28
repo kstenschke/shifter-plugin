@@ -45,7 +45,7 @@ class DocCommentDataType {
      * @return String      Shifting result
      */
     public String getShifted(String word, String filename, boolean isUp) {
-        String[] dataTypes   = this.getDataTypesByFilename(filename);
+        String[] dataTypes   = getDataTypesByFilename(filename);
         int amountTypes      = dataTypes.length;
         String wordLower     = word.toLowerCase();
 
@@ -76,19 +76,18 @@ class DocCommentDataType {
 
             if (filenameLower.endsWith(".js")) {
                 // JavaScript data shiftableTypes
-                return this.typesJavaScript;
+                return typesJavaScript;
             }
             if (filenameLower.endsWith(".java")) {
                 // Java primitive data shiftableTypes
-                return this.typesJava;
+                return typesJava;
             }
             if (filenameLower.endsWith(".m")) {
                 // Objective-C "method" file
-                return this.typesObjectiveC;
+                return typesObjectiveC;
             }
         }
 
-        // Default, e.g. PHP
-        return this.typesPHP;
+        return typesPHP;
     }
 }

@@ -62,12 +62,12 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         this.offsetStart = offsetStart;
         this.offsetEnd   = offsetEnd;
 
-        this.lineNumberSelStart = document.getLineNumber(offsetStart);
-        this.lineNumberSelEnd   = document.getLineNumber(offsetEnd);
+        lineNumberSelStart = document.getLineNumber(offsetStart);
+        lineNumberSelEnd   = document.getLineNumber(offsetEnd);
 
-        this.selectedText            = UtilsTextual.getSubString(document.getText(), offsetStart, offsetEnd);
-        this.containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
-        this.containsEscapedQuotes   = QuotedString.containsEscapedQuotes(selectedText);
+        selectedText            = UtilsTextual.getSubString(document.getText(), offsetStart, offsetEnd);
+        containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
+        containsEscapedQuotes   = QuotedString.containsEscapedQuotes(selectedText);
     }
 
     private void addQuoteShiftingOptions(List<String> shiftOptions) {

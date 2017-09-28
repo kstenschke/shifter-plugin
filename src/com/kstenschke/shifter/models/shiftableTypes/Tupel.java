@@ -53,7 +53,7 @@ public class Tupel {
         for (String glue : glues) {
             String parts[] = str.split("\\s*" + Pattern.quote(glue) + "\\s*");
             if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
-                this.delimiter = glue;
+                delimiter = glue;
                 return true;
             }
         }
@@ -69,7 +69,7 @@ public class Tupel {
      */
     public String getShifted(String str) {
         // Split into tupel
-        String splitPattern = "\\s*" + Pattern.quote(this.delimiter) + "\\s*";
+        String splitPattern = "\\s*" + Pattern.quote(delimiter) + "\\s*";
         String[] parts      = str.split(splitPattern);
 
         // Retain variable whitespace around delimiters

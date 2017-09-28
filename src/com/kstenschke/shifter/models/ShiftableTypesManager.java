@@ -69,8 +69,8 @@ class ShiftableTypesManager {
             return UNKNOWN;
         }
         // PHP variable (must be prefixed w/ "$")
-        this.typePhpVariableOrArray = new PhpVariableOrArray();
-        if (this.typePhpVariableOrArray.isPhpVariableOrArray(word)) {
+        typePhpVariableOrArray = new PhpVariableOrArray();
+        if (typePhpVariableOrArray.isPhpVariableOrArray(word)) {
             return PHP_VARIABLE_OR_ARRAY;
         }
         if (Parenthesis.isWrappedInParenthesis(word)) {
@@ -85,26 +85,26 @@ class ShiftableTypesManager {
         }
 
         // DocComment shiftableTypes (must be prefixed w/ "@")
-        this.typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentType();
+        typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentType();
         if (DocCommentType.isDocCommentTypeLineContext(line)) {
-            this.typeTagInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentTag();
-            if (prefixChar.matches("@") && this.typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
+            typeTagInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentTag();
+            if (prefixChar.matches("@") && typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
                 return DOC_COMMENT_TAG;
             }
-            if (this.typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) {
+            if (typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) {
                 return DOC_COMMENT_DATA_TYPE;
             }
         }
 
         // Object visibility
-        if (!"@".equals(prefixChar) && this.isKeywordAccessType(word)) {
+        if (!"@".equals(prefixChar) && isKeywordAccessType(word)) {
             return ACCESSIBILITY;
         }
 
         // File extension specific term in dictionary
-        this.typeDictionaryTerm = new com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm();
+        typeDictionaryTerm = new com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm();
         String fileExtension    = UtilsFile.extractFileExtension(filename);
-        if (fileExtension != null && this.typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
+        if (fileExtension != null && typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
             return DICTIONARY_WORD_EXT_SPECIFIC;
         }
 
@@ -114,32 +114,32 @@ class ShiftableTypesManager {
         }
 
         // Quoted (must be wrapped in single or double quotes or backticks)
-        this.typeQuotedString = new com.kstenschke.shifter.models.shiftableTypes.QuotedString();
-        if (this.typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
+        typeQuotedString = new com.kstenschke.shifter.models.shiftableTypes.QuotedString();
+        if (typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
             return QUOTED_STRING;
         }
         // RGB (must be prefixed w/ "#")
         if (com.kstenschke.shifter.models.shiftableTypes.RbgColor.isRgbColorString(word, prefixChar)) {
-            this.typeRgbColor = new com.kstenschke.shifter.models.shiftableTypes.RbgColor();
+            typeRgbColor = new com.kstenschke.shifter.models.shiftableTypes.RbgColor();
             return RGB_COLOR;
         }
         // Pixel value (must consist of numeric value followed by "px")
         if (com.kstenschke.shifter.models.shiftableTypes.CssUnit.isCssUnitValue(word)) {
-            this.typePixelValue = new com.kstenschke.shifter.models.shiftableTypes.CssUnit();
+            typePixelValue = new com.kstenschke.shifter.models.shiftableTypes.CssUnit();
             return CSS_UNIT;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.NumericValue.isNumericValue(word)) {
-            this.typeNumericValue = new com.kstenschke.shifter.models.shiftableTypes.NumericValue();
+            typeNumericValue = new com.kstenschke.shifter.models.shiftableTypes.NumericValue();
             return NUMERIC_VALUE;
         }
         // Operator sign (<, >, +, -)
         if (com.kstenschke.shifter.models.shiftableTypes.OperatorSign.isOperatorSign(word)) {
-            this.typeOperatorSign    = new com.kstenschke.shifter.models.shiftableTypes.OperatorSign();
+            typeOperatorSign = new com.kstenschke.shifter.models.shiftableTypes.OperatorSign();
             return OPERATOR_SIGN;
         }
         // Roman Numeral
         if (com.kstenschke.shifter.models.shiftableTypes.RomanNumber.isRomanNumber(word)) {
-            this.typeRomanNumber    = new com.kstenschke.shifter.models.shiftableTypes.RomanNumber();
+            typeRomanNumber = new com.kstenschke.shifter.models.shiftableTypes.RomanNumber();
             return ROMAN_NUMERAL;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(word)) {
@@ -148,11 +148,11 @@ class ShiftableTypesManager {
         }
         // MonoCharString (= consisting from any amount of the same character)
         if (MonoCharacter.isMonoCharacterString(word)) {
-            this.typeMonoCharacterString    = new MonoCharacter();
+            typeMonoCharacterString = new MonoCharacter();
             return MONO_CHARACTER;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (this.typeDictionaryTerm.isTermInDictionary(word)) {
+        if (typeDictionaryTerm.isTermInDictionary(word)) {
             return DICTIONARY_WORD_GLOBAL;
         }
         if (NumericPostfixed.hasNumericPostfix(word)) {
@@ -185,7 +185,7 @@ class ShiftableTypesManager {
                 : "";
         boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
 
-        return this.getWordType(word, "", postfixChar, isLastLineInDocument, line, filename);
+        return getWordType(word, "", postfixChar, isLastLineInDocument, line, filename);
     }
 
     /**
@@ -194,9 +194,9 @@ class ShiftableTypesManager {
      */
     private boolean isKeywordAccessType(String word) {
         String[] keywordsAccessType = {"public", "private", "protected"};
-        this.wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftableTypes.StaticWordType(keywordsAccessType);
+        wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftableTypes.StaticWordType(keywordsAccessType);
 
-        return this.wordTypeAccessibilities.hasWord(word);
+        return wordTypeAccessibilities.hasWord(word);
     }
 
     /**
@@ -218,43 +218,43 @@ class ShiftableTypesManager {
         switch (wordType) {
             // String based word shiftableTypes
             case ACCESSIBILITY:
-                return this.wordTypeAccessibilities.getShifted(word, isUp);
+                return wordTypeAccessibilities.getShifted(word, isUp);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                return this.typeDictionaryTerm.getShifted(word, isUp);
+                return typeDictionaryTerm.getShifted(word, isUp);
 
             // Generic shiftableTypes (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(word);
             case RGB_COLOR:
-                return this.typeRgbColor.getShifted(word, isUp);
+                return typeRgbColor.getShifted(word, isUp);
             case NUMERIC_VALUE:
                 // Numeric values including UNIX and millisecond timestamps
-                return this.typeNumericValue.getShifted(word, isUp, editor, filename);
+                return typeNumericValue.getShifted(word, isUp, editor, filename);
             case CSS_UNIT:
-                return this.typePixelValue.getShifted(word, isUp);
+                return typePixelValue.getShifted(word, isUp);
             case PHP_VARIABLE_OR_ARRAY:
-                return this.typePhpVariableOrArray.getShifted(word, editorText, isUp, moreCount);
+                return typePhpVariableOrArray.getShifted(word, editorText, isUp, moreCount);
             case TERNARY_EXPRESSION:
                 return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);
             case QUOTED_STRING:
-                return this.typeQuotedString.getShifted(word, editorText, isUp);
+                return typeQuotedString.getShifted(word, editorText, isUp);
             case PARENTHESIS:
                 return Parenthesis.getShifted(word);
             case OPERATOR_SIGN:
-                return this.typeOperatorSign.getShifted(word);
+                return typeOperatorSign.getShifted(word);
             case ROMAN_NUMERAL:
-                return this.typeRomanNumber.getShifted(word, isUp);
+                return typeRomanNumber.getShifted(word, isUp);
             case LOGICAL_OPERATOR:
                 return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
             case MONO_CHARACTER:
-                return this.typeMonoCharacterString.getShifted(word, isUp);
+                return typeMonoCharacterString.getShifted(word, isUp);
             case DOC_COMMENT_TAG:
                 String textAfterCaret   = editorText.toString().substring(caretOffset);
-                return this.typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
+                return typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
             case DOC_COMMENT_DATA_TYPE:
-                return this.typeDataTypeInDocComment.getShifted(word, isUp, filename);
+                return typeDataTypeInDocComment.getShifted(word, isUp, filename);
             case SEPARATED_PATH:
                 return SeparatedPath.getShifted(word);
             case CAMEL_CASED:
@@ -282,8 +282,8 @@ class ShiftableTypesManager {
      */
     public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
         String line    = UtilsTextual.getLineAtOffset(editorText.toString(), caretOffset);
-        ShiftableTypes.Type wordType = this.getWordType(word, "", "", false, line, filename);
+        ShiftableTypes.Type wordType = getWordType(word, "", "", false, line, filename);
 
-        return this.getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
+        return getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
     }
 }

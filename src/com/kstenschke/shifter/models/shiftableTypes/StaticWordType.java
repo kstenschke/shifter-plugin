@@ -30,9 +30,9 @@ public class StaticWordType {
      * Constructor
      */
     public StaticWordType(String[] keywords) {
-        this.keywords       = keywords;
-        this.amountKeywords = keywords.length;
-        this.regExPattern   = UtilsArray.implode(this.keywords, "|");
+        this.keywords  = keywords;
+        amountKeywords = keywords.length;
+        regExPattern   = UtilsArray.implode(keywords, "|");
     }
 
     /**
@@ -42,7 +42,7 @@ public class StaticWordType {
      * @return boolean
      */
     public boolean hasWord(String word) {
-        return (word).matches(this.regExPattern);
+        return (word).matches(regExPattern);
     }
 
     /**
@@ -51,7 +51,7 @@ public class StaticWordType {
      * @return String   Shifting result
      */
     public String getShifted(String word, boolean isUp) {
-        int wordOffset = UtilsArray.getOffset(this.keywords, word);
+        int wordOffset = UtilsArray.getOffset(keywords, word);
         if (wordOffset == -1) {
             return word;
         }
@@ -61,19 +61,19 @@ public class StaticWordType {
 
     private String getShiftedUp(int wordOffset) {
         wordOffset++;
-        if (wordOffset >= this.amountKeywords) {
+        if (wordOffset >= amountKeywords) {
             wordOffset = 0;
         }
 
-        return this.keywords[wordOffset];
+        return keywords[wordOffset];
     }
 
     private String getShiftedDown(int wordOffset) {
         wordOffset -= 1;
         if (wordOffset < 0) {
-            wordOffset = this.amountKeywords - 1;
+            wordOffset = amountKeywords - 1;
         }
 
-        return this.keywords[wordOffset];
+        return keywords[wordOffset];
     }
 }

@@ -55,10 +55,10 @@ public class PhpVariableOrArray {
 
         if (!isVariable) {
             // Detect array definition
-            this.isShiftableArray = this.isShiftablePhpArray(str);
+            isShiftableArray = isShiftablePhpArray(str);
         }
 
-        return isVariable || this.isShiftableArray;
+        return isVariable || isShiftableArray;
     }
 
     /**
@@ -73,10 +73,10 @@ public class PhpVariableOrArray {
             return false;
         }
 
-        this.isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-        boolean isShorthandArray = !this.isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
+        isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
 
-        return (isActiveConvertLongToShort && this.isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
+        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
     }
 
     public static boolean isStaticShiftablePhpArray(String str) {
@@ -103,7 +103,7 @@ public class PhpVariableOrArray {
      * @return String
      */
     public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
-        if (this.isShiftableArray) {
+        if (isShiftableArray) {
             return getShiftedArray(variable);
         }
 
@@ -116,8 +116,8 @@ public class PhpVariableOrArray {
         List<String> allLeadChars = null;
         if (moreCount != null && moreCount == 1) {
             // During "shift more": iterate over variables reduced to first per every lead-character
-            phpVariables = this.reducePhpVarsToFirstPerLeadChar(phpVariables);
-            allLeadChars = this.getLeadChars(phpVariables);
+            phpVariables = reducePhpVarsToFirstPerLeadChar(phpVariables);
+            allLeadChars = getLeadChars(phpVariables);
         }
 
         int amountVars = phpVariables.size();
@@ -192,7 +192,7 @@ public class PhpVariableOrArray {
      * @return String   converted array(...) <=> [...]
      */
     public String getShiftedArray(String variable) {
-        return this.isConventionalArray
+        return isConventionalArray
             ? UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]")
             : UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
     }

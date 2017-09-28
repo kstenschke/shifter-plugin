@@ -45,7 +45,7 @@ public class DictionaryTerm {
             contents = new PluginConfiguration().getDefaultDictionary();
         }
 
-        this.dictionaryContents = contents;
+        dictionaryContents = contents;
     }
 
     /**
@@ -57,10 +57,10 @@ public class DictionaryTerm {
      * @return boolean
      */
     public boolean isTermInDictionary(String term) {
-        if (this.dictionaryContents.contains("|" + this.fileExtension + "|")) {
+        if (dictionaryContents.contains("|" + fileExtension + "|")) {
             // Merge all terms-blocks
-            String dictionaryTerms = this.dictionaryContents;
-            Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
+            String dictionaryTerms = dictionaryContents;
+            Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
 
             for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
                 String currentExtensionsList = dictionaryExtensionsBlock.toString();
@@ -69,14 +69,14 @@ public class DictionaryTerm {
 
             // Term is contained? store list of shifting neighbours
             if (dictionaryTerms.contains("|" + term + "|")) {
-                this.relevantTermsList = extractFirstMatchingTermsLine(dictionaryTerms, term);
+                relevantTermsList = extractFirstMatchingTermsLine(dictionaryTerms, term);
                 return true;
             }
             // Not found case-sensitive, try insensitive
             String dictionaryTermsLower = dictionaryTerms.toLowerCase();
             String termLower = term.toLowerCase();
             if (dictionaryTermsLower.contains("|" + termLower + "|")) {
-                this.relevantTermsList = extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
+                relevantTermsList = extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
                 return true;
             }
         }
@@ -94,7 +94,7 @@ public class DictionaryTerm {
      * @return boolean
      */
     public boolean isTermInDictionary(String term, String fileExtension) {
-        if (fileExtension != null && this.dictionaryContents.contains("|" + fileExtension + "|")) {
+        if (fileExtension != null && dictionaryContents.contains("|" + fileExtension + "|")) {
             this.fileExtension = fileExtension;
 
             // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
@@ -103,11 +103,11 @@ public class DictionaryTerm {
             // Go over all blocks of lists of shift-terms, fetch first one containing the term
             for (Object aBlocksOfExtension : blocksOfExtension) {
                 String curExtensionsList = aBlocksOfExtension.toString();
-                String curShiftTermsBlock = StringUtils.substringBetween(this.dictionaryContents, curExtensionsList, "}");
+                String curShiftTermsBlock = StringUtils.substringBetween(dictionaryContents, curExtensionsList, "}");
 
                 // Term is contained? store list of shifting neighbours
                 if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
-                    this.relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
+                    relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
                     return true;
                 }
             }
@@ -152,7 +152,7 @@ public class DictionaryTerm {
         List<String> allMatches = new ArrayList<String>();
 
         String pattern = "\\(\\|([a-z|*]+\\|)*\\)(\\s)*\\{";
-        Matcher m = Pattern.compile(pattern).matcher(this.dictionaryContents);
+        Matcher m = Pattern.compile(pattern).matcher(dictionaryContents);
         while (m.find()) {
             allMatches.add(m.group());
         }
@@ -168,7 +168,7 @@ public class DictionaryTerm {
      */
     private Object[] getAllFileExtensionsBlockStarts(String fileExtension) {
         List<String> allMatches = new ArrayList<String>();
-        Object[] dictionaryExtensionsBlocks = this.getAllFileExtensionsBlockStarts();
+        Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
 
         for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
             String curBlock = dictionaryExtensionsBlock.toString();
@@ -188,8 +188,8 @@ public class DictionaryTerm {
      * @return String   The shifted word
      */
     public String getShifted(String word, boolean isUp) {
-        if (this.relevantTermsList != null) {
-            String shiftTerms = this.relevantTermsList.replaceFirst("\\|", "");
+        if (relevantTermsList != null) {
+            String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
             shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
             String[] termsList = shiftTerms.split("\\|");

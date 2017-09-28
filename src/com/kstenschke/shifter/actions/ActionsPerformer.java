@@ -36,12 +36,12 @@ public class ActionsPerformer {
      * Constructor
      */
     ActionsPerformer(final AnActionEvent event) {
-        this.editor = event.getData(PlatformDataKeys.EDITOR);
+        editor = event.getData(PlatformDataKeys.EDITOR);
 
-        if (this.editor != null) {
-            this.document       = this.editor.getDocument();
-            this.caretOffset    = this.editor.getCaretModel().getOffset();
-            this.selectionModel = this.editor.getSelectionModel();
+        if (editor != null) {
+            document       = editor.getDocument();
+            caretOffset    = editor.getCaretModel().getOffset();
+            selectionModel = editor.getSelectionModel();
         }
     }
 
@@ -52,7 +52,7 @@ public class ActionsPerformer {
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     public void write(boolean shiftUp, @Nullable Integer moreCount) {
-        if (this.editor == null) {
+        if (editor == null) {
             return;
         }
 
@@ -81,7 +81,7 @@ public class ActionsPerformer {
      * @param moreCount
      */
     private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
-        if (this.selectionModel.getBlockSelectionStarts().length > 1) {
+        if (selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
             ShiftableBlockSelection.shiftBlockSelectionInDocument(this, shiftUp, moreCount);
             return;
