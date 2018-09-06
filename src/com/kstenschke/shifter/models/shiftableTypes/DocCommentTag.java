@@ -103,7 +103,7 @@ public class DocCommentTag {
             List<String> commentTagsList = Arrays.asList(commentTags);
             int curIndex = commentTagsList.indexOf(wordLower);
             if (curIndex > -1) {
-                curIndex           = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.shiftUp);
+                curIndex           = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.isShiftUp);
                 String shiftedWord = commentTagsList.get(curIndex);
                 if ("method".equals(shiftedWord)) {
                     shiftedWord = shiftedWord + parseNextMethod(textAfterCaret);

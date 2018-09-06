@@ -108,13 +108,20 @@ public class ShiftableLine {
      * @param actionContainer
      * @param moreCount       Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftLineInDocument(ActionContainer actionContainer, @Nullable Integer moreCount) {
+    public static void shiftLineInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
         ShiftableLine shiftableShiftableLine = new ShiftableLine(actionContainer);
 
         // Replace caretLine by shifted one
-        CharSequence shiftedLine = shiftableShiftableLine.getShifted(moreCount);
+        final CharSequence shiftedLine = shiftableShiftableLine.getShifted(moreCount);
         if (null != shiftedLine) {
-            actionContainer.document.replaceString(actionContainer.offsetCaretLineStart, actionContainer.offsetCaretLineStart + actionContainer.caretLine.length(), shiftedLine);
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            actionContainer.document.replaceString(actionContainer.offsetCaretLineStart, actionContainer.offsetCaretLineStart + actionContainer.caretLine.length(), shiftedLine);
+                        }
+                    },
+                    "Shift line");
         }
     }
 }

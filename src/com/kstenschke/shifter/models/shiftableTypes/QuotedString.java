@@ -19,7 +19,6 @@ import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
-import javax.swing.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -77,7 +76,7 @@ public class QuotedString {
 
         // Find position of given variable, return next/previous variable name
         int curIndex = allMatches.indexOf(word);
-        curIndex     = NumericValue.moduloShiftInteger(curIndex, amountVars, actionContainer.shiftUp);
+        curIndex     = NumericValue.moduloShiftInteger(curIndex, amountVars, actionContainer.isShiftUp);
 
         return allMatches.get(curIndex);
     }

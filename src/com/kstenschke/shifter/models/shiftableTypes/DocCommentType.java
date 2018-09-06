@@ -58,6 +58,6 @@ public class DocCommentType {
      * @return Shifting result
      */
     public String getShifted(String word, ActionContainer actionContainer) {
-        return new DocCommentDataType().getShifted(word, actionContainer.filename, actionContainer.shiftUp);
+        return new DocCommentDataType().getShifted(word, actionContainer.filename, actionContainer.isShiftUp);
     }
 }

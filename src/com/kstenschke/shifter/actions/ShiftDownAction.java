@@ -42,18 +42,6 @@ class ShiftDownAction extends AnAction {
      * @param event ActionSystem event
      */
     public void actionPerformed(final AnActionEvent event) {
-        Project currentProject = event.getData(PlatformDataKeys.PROJECT);
-
-        CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-            @Override
-            public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        new ActionAdapter(event, false).delegate(false, null);
-                    }
-                });
-            }
-        }, StaticTexts.ACTION_LABEL_SHIFT_DOWN, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+        new ActionAdapter(event, false, false).delegate(null);
     }
 }

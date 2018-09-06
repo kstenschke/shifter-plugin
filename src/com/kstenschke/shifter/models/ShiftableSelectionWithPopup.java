@@ -78,7 +78,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER);
         addQuoteShiftingOptions(shiftOptions);
 
-        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.shiftUp, phpConcatenation, null, null);
+        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, phpConcatenation, null, null);
     }
 
     /**
@@ -88,7 +88,15 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      */
     public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsShiftableQuotes) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+                        }
+                    },
+                    ACTION_TEXT_SHIFT_SELECTION);
+
             return;
         }
 
@@ -126,7 +134,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
 
     public void sortLinesOrSwapQuotesInDocument() {
         if (!containsShiftableQuotes && !containsEscapedQuotes) {
-            ShiftableSelection.sortLinesInDocument(actionContainer.document, !actionContainer.shiftUp, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
+            ShiftableSelection.sortLinesInDocument(actionContainer, !actionContainer.isShiftUp);
             return;
         }
 
@@ -134,7 +142,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_LINES_SORT);
         addQuoteShiftingOptions(shiftOptions);
 
-        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.shiftUp,null, null, null);
+        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp,null, null, null);
     }
 
     public void shiftCamelCase(boolean isTwoWords) {
@@ -201,9 +209,11 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      * @param delimiterGlue
      */
     private void shiftSelectionByModeInDocument(
-            String mode, boolean isUp,
+            String mode,
+            boolean isUp,
             @Nullable PhpConcatenation phpConcatenation,
-            @Nullable String delimiterSplitPattern, @Nullable String delimiterGlue
+            @Nullable String delimiterSplitPattern,
+            @Nullable String delimiterGlue
     ) {
         if (mode.equals(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER)) {
             assert null != phpConcatenation;
@@ -228,7 +238,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LINES_SORT)) {
-            ShiftableSelection.sortLinesInDocument(actionContainer.document, !isUp, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
+            ShiftableSelection.sortLinesInDocument(actionContainer, !isUp);
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SWAP)) {

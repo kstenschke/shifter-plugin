@@ -78,13 +78,21 @@ public class PhpDocParam {
         return line.replace("@param", "@param " + dataType);
     }
 
-    public static boolean shiftSelectedPhpDocInDocument(ActionContainer actionContainer) {
+    public static boolean shiftSelectedPhpDocInDocument(final ActionContainer actionContainer) {
         if (PhpDocComment.isPhpDocComment(actionContainer.selectedText) && PhpDocComment.containsAtParam(actionContainer.selectedText)) {
-            String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
+            final String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
             if (!shifted.equals(actionContainer.selectedText)) {
                 // PHP DOC comment block: guess missing data shiftableTypes by resp. variable names
-                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
-                UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
+                actionContainer.writeUndoable(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
+                                UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
+                            }
+                        },
+                        "Shift Php DOC comment");
+
                 return true;
             }
         }
@@ -93,10 +101,18 @@ public class PhpDocParam {
           && isPhpDocParamLine(actionContainer.selectedText)
           && !containsDataType(actionContainer.selectedText)) {
             String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
-            String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
+            final String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
             if (!dataType.equals("unknown")) {
                 // PHP DOC @param caretLine w/o data type, e.g. "* @param $name"
-                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, insertDataTypeIntoParamLine(actionContainer.selectedText, dataType));
+                actionContainer.writeUndoable(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, insertDataTypeIntoParamLine(actionContainer.selectedText, dataType));
+                            }
+                        },
+                        "Shift Php DOC param");
+
                 return true;
             }
         }

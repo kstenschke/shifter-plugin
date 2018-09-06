@@ -70,28 +70,30 @@ public class ShiftableBlockSelection {
 
     /**
      * @param actionContainer
-     * @param shiftUp
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftBlockSelectionInDocument(ActionContainer actionContainer, boolean shiftUp, @Nullable Integer moreCount) {
-        Editor editor = actionContainer.editor;
-        if (null == editor) {
+    public static void shiftBlockSelectionInDocument(final ActionContainer actionContainer, final @Nullable Integer moreCount) {
+        if (null == actionContainer.editor) {
             return;
         }
-        SelectionModel selectionModel = editor.getSelectionModel();
-        Document document             = actionContainer.document;
 
-        int[] blockSelectionStarts = selectionModel.getBlockSelectionStarts();
-        int[]blockSelectionEnds   = selectionModel.getBlockSelectionEnds();
+        final int[] blockSelectionStarts = actionContainer.selectionModel.getBlockSelectionStarts();
+        final int[]blockSelectionEnds   = actionContainer.selectionModel.getBlockSelectionEnds();
 
-        String documentText = document.getText();
-
-        if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, documentText)) {
-            shiftNumericalBlockSelectionInDocument(shiftUp, editor, document, Integer.valueOf(documentText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()), documentText);
+        if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, actionContainer.documentText)) {
+            shiftNumericalBlockSelectionInDocument(actionContainer, Integer.valueOf(actionContainer.documentText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()));
             return;
         }
-        if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, documentText)) {
-            shiftIdenticalBlockItemsInDocument(actionContainer, moreCount, blockSelectionStarts, blockSelectionEnds);
+        if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, actionContainer.documentText)) {
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            shiftIdenticalBlockItemsInDocument(actionContainer, moreCount, blockSelectionStarts, blockSelectionEnds);
+                        }
+                    },
+                    "Shift block selection"
+            );
         }
     }
 
@@ -113,39 +115,53 @@ public class ShiftableBlockSelection {
     /**
      * Ask whether to 1. replace by enumeration or 2. in/decrement each
      *
-     * @param shiftUp
-     * @param editor
-     * @param document
+     * @param actionContainer
      * @param integer
-     * @param editorText
      */
-    private static void shiftNumericalBlockSelectionInDocument(boolean shiftUp, Editor editor, Document document, Integer integer, String editorText) {
+    private static void shiftNumericalBlockSelectionInDocument(final ActionContainer actionContainer, Integer integer) {
         Integer firstNumber = integer;
         if (null == firstNumber) {
             firstNumber = 0;
         }
-        DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
-        UtilsEnvironment.setDialogVisible(editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
+        final DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
+        UtilsEnvironment.setDialogVisible(actionContainer.editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
         if (!optionsDialog.wasCancelled()) {
             if (optionsDialog.isShiftModeEnumerate()) {
-                insertBlockEnumerationInDocument(editor, document, optionsDialog.getFirstNumber());
+                actionContainer.writeUndoable(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                insertBlockEnumerationInDocument(actionContainer, optionsDialog.getFirstNumber());
+                            }
+                        },
+                        "Shift block selection"
+                );
+
                 return;
             }
-            inOrDecrementNumericBlockInDocument(editor, document, editorText, shiftUp);
+
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            inOrDecrementNumericBlockInDocument(actionContainer);
+                        }
+                    },
+                    "Shift block selection"
+            );
         }
     }
 
     /**
      * Replace given block selection w/ enumeration starting w/ given value
      *
-     * @param editor
-     * @param document
+     * @param actionContainer
      * @param firstNumber
      */
-    private static void insertBlockEnumerationInDocument(Editor editor, Document document, String firstNumber) {
+    private static void insertBlockEnumerationInDocument(ActionContainer actionContainer, String firstNumber) {
         Integer currentValue = Integer.valueOf(firstNumber);
 
-        List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+        List<CaretState> caretsAndSelections = actionContainer.editor.getCaretModel().getCaretsAndSelections();
         CaretState caretsAndSelection;
         LogicalPosition selectionStart;
         LogicalPosition selectionEnd;
@@ -158,10 +174,10 @@ public class ShiftableBlockSelection {
             selectionStart = caretsAndSelection.getSelectionStart();
             selectionEnd = caretsAndSelection.getSelectionEnd();
             if (null != selectionStart && null != selectionEnd) {
-                offsetSelectionStart = editor.logicalPositionToOffset(selectionStart);
-                offsetSelectionEnd = editor.logicalPositionToOffset(selectionEnd);
+                offsetSelectionStart = actionContainer.editor.logicalPositionToOffset(selectionStart);
+                offsetSelectionEnd = actionContainer.editor.logicalPositionToOffset(selectionEnd);
 
-                document.replaceString(offsetSelectionStart, offsetSelectionEnd, currentValue.toString());
+                actionContainer.document.replaceString(offsetSelectionStart, offsetSelectionEnd, currentValue.toString());
 
                 currentValue++;
             }
@@ -171,16 +187,13 @@ public class ShiftableBlockSelection {
     /**
      * Increment or decrement each item in given numeric block selection
      *
-     * @param editor
-     * @param document
-     * @param editorText
-     * @param shiftUp
+     * @param actionContainer
      */
-    private static void inOrDecrementNumericBlockInDocument(Editor editor, Document document, String editorText, boolean shiftUp) {
-        int addend = shiftUp ? 1 : -1;
+    private static void inOrDecrementNumericBlockInDocument(ActionContainer actionContainer) {
+        int addend = actionContainer.isShiftUp ? 1 : -1;
         Integer value;
 
-        List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
+        List<CaretState> caretsAndSelections = actionContainer.editor.getCaretModel().getCaretsAndSelections();
         CaretState caretsAndSelection;
         LogicalPosition selectionStart;
         LogicalPosition selectionEnd;
@@ -194,11 +207,11 @@ public class ShiftableBlockSelection {
             selectionStart = caretsAndSelection.getSelectionStart();
             selectionEnd = caretsAndSelection.getSelectionEnd();
             if (null != selectionStart && null != selectionEnd) {
-                offsetSelectionStart = editor.logicalPositionToOffset(selectionStart);
-                offsetSelectionEnd = editor.logicalPositionToOffset(selectionEnd);
+                offsetSelectionStart = actionContainer.editor.logicalPositionToOffset(selectionStart);
+                offsetSelectionEnd = actionContainer.editor.logicalPositionToOffset(selectionEnd);
 
                 try {
-                    value = Integer.valueOf(editorText.subSequence(offsetSelectionStart, offsetSelectionEnd).toString());
+                    value = Integer.valueOf(actionContainer.editorText.subSequence(offsetSelectionStart, offsetSelectionEnd).toString());
                 } catch (NumberFormatException e) {
                     // Silently continue
                 }
@@ -206,7 +219,7 @@ public class ShiftableBlockSelection {
                     value = 0;
                 }
 
-                document.replaceString(offsetSelectionStart, offsetSelectionEnd, String.valueOf(value + addend));
+                actionContainer.document.replaceString(offsetSelectionStart, offsetSelectionEnd, String.valueOf(value + addend));
             }
         }
     }

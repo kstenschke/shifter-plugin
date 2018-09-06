@@ -137,8 +137,8 @@ public class JsDoc {
      * @param  word
      * @return boolean
      */
-    public static boolean addCompoundsAroundDataTypeAtCaretInDocument(ActionContainer actionContainer, String word) {
-        return UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "{" + word + "}");
+    public static void addCompoundsAroundDataTypeAtCaretInDocument(ActionContainer actionContainer, String word) {
+        UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "{" + word + "}");
     }
 
     /**
@@ -152,8 +152,8 @@ public class JsDoc {
         return line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATA_TYPES_ALIEN, "$1{$2}");
     }
 
-    public static boolean correctInvalidReturnsCommentInDocument(ActionContainer actionContainer) {
-        return UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "returns");
+    public static void correctInvalidReturnsCommentInDocument(ActionContainer actionContainer) {
+        UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "returns");
     }
 
     /**
@@ -166,7 +166,7 @@ public class JsDoc {
      * @param actionContainer
      * @return
      */
-    public static boolean correctDocBlockInDocument(ActionContainer actionContainer) {
+    public static boolean correctDocBlockInDocument(final ActionContainer actionContainer) {
         String documentText = actionContainer.document.getText();
         String docBlock = documentText.substring(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
         String lines[] = docBlock.split("\n");
@@ -184,8 +184,16 @@ public class JsDoc {
         docBlockCorrected = reduceDoubleEmptyCommentLines(docBlockCorrected);
 
         if (!docBlockCorrected.equals(docBlock)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, docBlockCorrected);
-            UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
+            final String docBlockCorrectedFin = docBlockCorrected;
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, docBlockCorrectedFin);
+                            UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
+                        }
+                    },
+                    "Shift JsDoc");
             return true;
         }
 

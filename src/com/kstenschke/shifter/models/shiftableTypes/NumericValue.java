@@ -68,9 +68,9 @@ public class NumericValue {
 
         return strLen <= 7
             // Integer
-            ? Integer.toString(Integer.parseInt(value) + (actionContainer.shiftUp ? 1 : -1))
+            ? Integer.toString(Integer.parseInt(value) + (actionContainer.isShiftUp ? 1 : -1))
             // Guessing that it is a UNIX or milliseconds timestamp
-            : getShiftedUnixTimestamp(value, actionContainer.shiftUp, actionContainer.editor, actionContainer.filename);
+            : getShiftedUnixTimestamp(value, actionContainer.isShiftUp, actionContainer.editor, actionContainer.filename);
     }
 
     /**

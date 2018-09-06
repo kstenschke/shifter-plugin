@@ -190,21 +190,39 @@ public class ShiftableWord {
     }
 
     @Nullable
-    private static Boolean shiftWordAtCaretInJsDocument(ActionContainer actionContainer, String word) {
+    private static Boolean shiftWordAtCaretInJsDocument(final ActionContainer actionContainer, final String word) {
         if (   (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine))
             && JsDoc.containsNoCompounds(actionContainer.caretLine) && JsDoc.isWordRightOfAtKeyword(word, actionContainer.caretLine) && JsDoc.isDataType(word)) {
             // Add missing curly brackets around data type at caret in jsDoc @param caretLine
-            return JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(actionContainer, word);
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                @Override
+                public void run() {
+                    JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(actionContainer, word);
+                }
+            },
+                    "Shift JsDoc data type");
+
+            return true;
         }
         if (JsDoc.isInvalidAtReturnsLine(actionContainer.caretLine)) {
-            return JsDoc.correctInvalidReturnsCommentInDocument(actionContainer);
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            JsDoc.correctInvalidReturnsCommentInDocument(actionContainer);
+                        }
+                    },
+                    "Shift JsDoc");
+
+            return true;
         }
 
         return false;
     }
 
     /**
-     * @param shiftUp           shiftUp   ...or down?
+     * @param shiftUp           isShiftUp   ...or down?
      * @param filename
      * @param word
      * @param line
@@ -215,7 +233,7 @@ public class ShiftableWord {
      * @return String           resulting shifted or original word if no shift-ability was found
      */
     public static String getShiftedWordInDocument(
-            ActionContainer actionContainer,
+            final ActionContainer actionContainer,
             String word,
             @Nullable Integer wordOffset,
             Boolean replaceInDocument,
@@ -243,10 +261,20 @@ public class ShiftableWord {
         String newWord = shiftableShiftableWord.getShifted();
         if (null != newWord && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && wordOffset != null) {
             newWord = shiftableShiftableWord.postProcess(newWord, postfixChar);
+            final int wordOffsetFin = wordOffset;
+            final int wordOffsetEndFin = wordOffset + word.length();
+            final String newWordFin = newWord;
 
             if (replaceInDocument) {
                 // Replace word at caret by shifted one (if any)
-                actionContainer.document.replaceString(wordOffset, wordOffset + word.length(), newWord);
+                actionContainer.writeUndoable(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
+                            }
+                        });
+
             }
             return newWord;
         }

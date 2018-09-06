@@ -130,7 +130,7 @@ public class PhpVariableOrArray {
 
         // Find next/previous variable name (only once during iterations of "shift more")
         if (null == moreCount || 1 == moreCount) {
-            curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, actionContainer.shiftUp);
+            curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, actionContainer.isShiftUp);
         }
 
         return phpVariables.get(curIndex);

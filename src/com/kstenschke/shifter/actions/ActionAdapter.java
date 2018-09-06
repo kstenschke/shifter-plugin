@@ -29,23 +29,22 @@ public class ActionAdapter {
     /**
      * Constructor
      */
-    ActionAdapter(final AnActionEvent event, boolean shiftUp) {
-        actionContainer = new ActionContainer(event, shiftUp);
+    ActionAdapter(final AnActionEvent event, boolean isShiftUp, boolean isShiftMore) {
+        actionContainer = new ActionContainer(event, isShiftUp, isShiftMore);
     }
 
     /**
      * Find shiftable string (selection block/lines/regular, word at caret, caretLine at caret) and replace it by its shifted value
      *
-     * @param shiftUp   Shift up or down?
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    void delegate(boolean shiftUp, @Nullable Integer moreCount) {
+    void delegate(final @Nullable Integer moreCount) {
         if (null == actionContainer.editor) {
             return;
         }
         if (actionContainer.selectionModel.hasSelection()) {
             // Shift (regular or block-) selection
-            shiftSelection(shiftUp, moreCount);
+            shiftSelection(moreCount);
             return;
         }
 
@@ -57,13 +56,12 @@ public class ActionAdapter {
     }
 
     /**
-     * @param shiftUp
      * @param moreCount
      */
-    private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
+    private void shiftSelection(@Nullable Integer moreCount) {
         if (actionContainer.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
-            ShiftableBlockSelection.shiftBlockSelectionInDocument(this.actionContainer, shiftUp, moreCount);
+            ShiftableBlockSelection.shiftBlockSelectionInDocument(this.actionContainer, moreCount);
             return;
         }
 

@@ -212,22 +212,22 @@ class ShiftableTypesManager {
         switch (wordType) {
             // String based word shiftableTypes
             case ACCESSIBILITY:
-                return wordTypeAccessibilities.getShifted(word, actionContainer.shiftUp);
+                return wordTypeAccessibilities.getShifted(word, actionContainer.isShiftUp);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-caretLine, we don't need to differ global/ext-specific anymore
-                return typeDictionaryTerm.getShifted(word, actionContainer.shiftUp);
+                return typeDictionaryTerm.getShifted(word, actionContainer.isShiftUp);
 
             // Generic shiftableTypes (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(word);
             case RGB_COLOR:
-                return typeRgbColor.getShifted(word, actionContainer.shiftUp);
+                return typeRgbColor.getShifted(word, actionContainer.isShiftUp);
             case NUMERIC_VALUE:
                 // Numeric values including UNIX and millisecond timestamps
                 return typeNumericValue.getShifted(word, actionContainer);
             case CSS_UNIT:
-                return typePixelValue.getShifted(word, actionContainer.shiftUp);
+                return typePixelValue.getShifted(word, actionContainer.isShiftUp);
             case PHP_VARIABLE_OR_ARRAY:
                 return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:
@@ -239,11 +239,11 @@ class ShiftableTypesManager {
             case OPERATOR_SIGN:
                 return typeOperatorSign.getShifted(word);
             case ROMAN_NUMERAL:
-                return typeRomanNumber.getShifted(word, actionContainer.shiftUp);
+                return typeRomanNumber.getShifted(word, actionContainer.isShiftUp);
             case LOGICAL_OPERATOR:
                 return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
             case MONO_CHARACTER:
-                return typeMonoCharacterString.getShifted(word, actionContainer.shiftUp);
+                return typeMonoCharacterString.getShifted(word, actionContainer.isShiftUp);
             case DOC_COMMENT_TAG:
                 String textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
                 return typeTagInDocComment.getShifted(word, actionContainer, textAfterCaret);
@@ -256,7 +256,7 @@ class ShiftableTypesManager {
             case HTML_ENCODABLE:
                 return HtmlEncodable.getShifted(word);
             case NUMERIC_POSTFIXED:
-                return NumericPostfixed.getShifted(word, actionContainer.shiftUp);
+                return NumericPostfixed.getShifted(word, actionContainer.isShiftUp);
             case WORDS_TUPEL:
                 return wordsTupel.getShifted(word);
             default:

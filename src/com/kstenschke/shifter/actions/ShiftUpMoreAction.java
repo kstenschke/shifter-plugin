@@ -40,23 +40,9 @@ class ShiftUpMoreAction extends AnAction {
      * @param event ActionSystem event
      */
     public void actionPerformed(final AnActionEvent event) {
-        Project currentProject = event.getData(PlatformDataKeys.PROJECT);
-
         int times = ShifterPreferences.getShiftMoreSize();
         for (int i = 1; i <= times; i++) {
-            final int moreCount = i;
-
-            CommandProcessor.getInstance().executeCommand(currentProject, new Runnable() {
-                @Override
-                public void run() {
-                    ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                        @Override
-                        public void run() {
-                            new ActionAdapter(event, true).delegate(true, moreCount);
-                        }
-                    });
-                }
-            }, StaticTexts.ACTION_LABEL_SHIFT_UP_MORE, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+            new ActionAdapter(event, true, true).delegate(i);
         }
     }
 }

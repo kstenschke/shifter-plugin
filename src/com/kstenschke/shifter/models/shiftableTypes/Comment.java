@@ -24,6 +24,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import sun.plugin2.jvm.CircularByteBuffer;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +40,8 @@ import static org.apache.commons.lang.StringUtils.trim;
  * 3. HTML comment        => <!-- ... -->
  */
 public class Comment {
+
+    public static final String ACTION_TEXT_SHIFT_COMMENT = "Shift comment";
 
     /**
      * @param  str     String to be shifted currently
@@ -157,11 +160,18 @@ public class Comment {
                         CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
                                     public void run() {
                                         final int index = modes.getSelectedIndex();
-                                        String shifted = 0 == index
+                                        final String shiftedBlockCommentLines = 0 == index
                                             ? shiftMultipleBlockCommentLines(actionContainer.selectedText, true)
                                             : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
 
-                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
+                                        actionContainer.writeUndoable(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedBlockCommentLines);
+                                                    }
+                                                },
+                                                ACTION_TEXT_SHIFT_COMMENT);
                                     }
                                 },
                                 null, null);
@@ -207,7 +217,15 @@ public class Comment {
                                                 shifted = sortLineComments(actionContainer.selectedText, true);
                                                 break;
                                         }
-                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
+                                        final String shiftedFin = shifted;
+                                        actionContainer.writeUndoable(
+                                                new Runnable() {
+                                                    @Override
+                                                    public void run() {
+                                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedFin);
+                                                    }
+                                                },
+                                                ACTION_TEXT_SHIFT_COMMENT);
                                     }
                                 },
                                 null, null);

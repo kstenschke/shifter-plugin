@@ -47,14 +47,12 @@ public class UtilsEnvironment {
         return null == file ? "" : file.getName();
     }
 
-    public static boolean replaceWordAtCaretInDocument(ActionContainer actionContainer, String charSequence) {
+    public static void replaceWordAtCaretInDocument(ActionContainer actionContainer, String charSequence) {
         String documentText = actionContainer.document.getText();
         int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, actionContainer.caretOffset);
         int offsetEnd   = UtilsTextual.getOffsetEndOfWordAtOffset(documentText, actionContainer.caretOffset);
 
         actionContainer.document.replaceString(offsetStart, offsetEnd, charSequence);
-
-        return true;
     }
 
     public static void reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
