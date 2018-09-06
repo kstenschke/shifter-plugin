@@ -53,7 +53,7 @@ public class DocCommentTag {
     /**
      * @return String   Pipe-separated list (as string) w/ all recognized doc comment tags
      */
-    public String getAllTagsPiped() {
+    String getAllTagsPiped() {
         String[] allTags = getAllTags();
 
         return UtilsArray.implode(allTags, "|");
@@ -145,7 +145,7 @@ public class DocCommentTag {
      * @return String[]
      */
     private String[] getTagsByFilename(String filename) {
-        if (filename != null) {
+        if (null != filename) {
             String filenameLower = filename.toLowerCase();
 
             if (filenameLower.endsWith(".js")) {

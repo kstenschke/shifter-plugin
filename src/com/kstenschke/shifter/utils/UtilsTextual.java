@@ -314,7 +314,7 @@ public class UtilsTextual {
      */
     public static String getOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
-        if (textLength == 0 || offset >= textLength || str.toString().trim().isEmpty()) {
+        if (0 == textLength || offset >= textLength || str.toString().trim().isEmpty()) {
             return null;
         }
 
@@ -328,7 +328,7 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if (operatorOnLHS != null && OperatorSign.isWhitespaceWrappedOperator(operatorOnLHS)) {
+        if (null != operatorOnLHS && OperatorSign.isWhitespaceWrappedOperator(operatorOnLHS)) {
              return operatorOnLHS.trim();
         }
 
@@ -338,7 +338,7 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
-        return (operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
+        return (null != operatorToTheRight && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
                 ? operatorToTheRight.trim()
                 // No operator found
                 : null;
@@ -351,7 +351,7 @@ public class UtilsTextual {
      */
     public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
-        if (textLength == 0 || offset >= textLength) {
+        if (0 == textLength || offset >= textLength) {
             return null;
         }
 
@@ -359,7 +359,7 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if (operatorToTheLeft != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft)) {
+        if (null != operatorToTheLeft && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft)) {
             return offset - 1;
         }
 
@@ -368,7 +368,7 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
-        return (operatorToTheRight != null && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
+        return (null != operatorToTheRight && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
                 ? offset
                 : null;
     }
@@ -384,7 +384,7 @@ public class UtilsTextual {
     public static String getWordAtOffset(CharSequence str, int offset, boolean allowHyphens) {
         int textLength = str.length();
 
-        if (textLength == 0 || offset < 0 || offset >= textLength) {
+        if (0 == textLength || offset < 0 || offset >= textLength) {
             return null;
         }
 
@@ -421,7 +421,7 @@ public class UtilsTextual {
      */
     public static boolean isJavaIdentifierPart(char c, boolean allowHyphens) {
         return allowHyphens
-                ? Character.isJavaIdentifierPart(c) || c == '-'
+                ? Character.isJavaIdentifierPart(c) || '-' == c
                 : Character.isJavaIdentifierPart(c);
     }
 
@@ -470,7 +470,7 @@ public class UtilsTextual {
      * @return String      Character AFTER word at caret offset
      */
     public static String getCharAfterOffset(CharSequence str, int offset) {
-        if (str.length() < offset+2 || offset == 0) {
+        if (str.length() < offset + 2 || 0 == offset) {
             return "";
         }
 
@@ -479,7 +479,7 @@ public class UtilsTextual {
 
     public static int getOffsetEndOfWordAtOffset(CharSequence str, int offset) {
         int strLength = str.length();
-        if (strLength == 0 || offset < 0) {
+        if (0 == strLength || offset < 0) {
             return 0;
         }
         if (offset > strLength) {
@@ -502,7 +502,7 @@ public class UtilsTextual {
      */
     public static int getStartOfWordAtOffset(CharSequence str, int offset) {
         int strLength = str.length();
-        if (strLength == 0 || offset < 0) {
+        if (0 == strLength || offset < 0) {
             return 0;
         }
         if (offset > strLength) {
@@ -559,7 +559,7 @@ public class UtilsTextual {
         // If last line has no \n, add it one
         // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
         // w/ \n... This is fixed after.
-        return line + (lineSeparatorLength == 0 ? "\n" : "");
+        return line + (0 == lineSeparatorLength ? "\n" : "");
     }
 
     /**
@@ -610,7 +610,7 @@ public class UtilsTextual {
     public static String replaceLast(String string, String toReplace, String replacement) {
         int pos = string.lastIndexOf(toReplace);
 
-        return pos == -1
+        return -1 == pos
             ? string
             :   string.substring(0, pos)
               + replacement
@@ -661,7 +661,7 @@ public class UtilsTextual {
         String previousLine = "";
 
         for(String currentLine : linesArray) {
-            if (index == 0 || !currentLine.equals(previousLine)) {
+            if (0 == index || !currentLine.equals(previousLine)) {
                 resultLines[resultIndex] = currentLine;
                 resultIndex++;
             }

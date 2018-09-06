@@ -49,7 +49,7 @@ public class TernaryExpression {
      */
     public static String getShifted(String str) {
         Integer offsetElse = str.indexOf(":");
-        if (offsetElse == -1) {
+        if (-1 == offsetElse) {
             return str;
         }
 

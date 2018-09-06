@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.*;
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.actions.ActionsPerformer;
+import com.kstenschke.shifter.actions.ActionAdapter;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.resources.ui.DialogNumericBlockOptions;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
@@ -70,17 +70,17 @@ public class ShiftableBlockSelection {
     }
 
     /**
-     * @param actionsPerformer
+     * @param actionAdapter
      * @param shiftUp
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftBlockSelectionInDocument(ActionsPerformer actionsPerformer, boolean shiftUp, @Nullable Integer moreCount) {
-        Editor editor                 = actionsPerformer.editor;
+    public static void shiftBlockSelectionInDocument(ActionAdapter actionAdapter, boolean shiftUp, @Nullable Integer moreCount) {
+        Editor editor = actionAdapter.editor;
         if (null == editor) {
             return;
         }
         SelectionModel selectionModel = editor.getSelectionModel();
-        Document document             = actionsPerformer.document;
+        Document document             = actionAdapter.document;
 
         int[] blockSelectionStarts = selectionModel.getBlockSelectionStarts();
         int[]blockSelectionEnds   = selectionModel.getBlockSelectionEnds();
@@ -105,7 +105,7 @@ public class ShiftableBlockSelection {
         Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, blockSelectionStarts[0]);
         String newWord     = ShiftableWord.getShiftedWordInDocument(editor, shiftUp, filename, word, line, wordOffset, false, false, moreCount);
 
-        if (newWord != null && !newWord.equals(word)) {
+        if (null != newWord && !newWord.equals(word)) {
             for (int i = blockSelectionEnds.length - 1; i >= 0; i--) {
                 document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], newWord);
             }
@@ -146,9 +146,6 @@ public class ShiftableBlockSelection {
      */
     private static void insertBlockEnumerationInDocument(Editor editor, Document document, String firstNumber) {
         Integer currentValue = Integer.valueOf(firstNumber);
-        if (null == currentValue) {
-            currentValue = 0;
-        }
 
         List<CaretState> caretsAndSelections = editor.getCaretModel().getCaretsAndSelections();
         CaretState caretsAndSelection;
@@ -162,7 +159,7 @@ public class ShiftableBlockSelection {
             caretsAndSelection = caretsAndSelectionCurrent;
             selectionStart = caretsAndSelection.getSelectionStart();
             selectionEnd = caretsAndSelection.getSelectionEnd();
-            if (selectionStart != null && selectionEnd != null) {
+            if (null != selectionStart && null != selectionEnd) {
                 offsetSelectionStart = editor.logicalPositionToOffset(selectionStart);
                 offsetSelectionEnd = editor.logicalPositionToOffset(selectionEnd);
 
@@ -198,7 +195,7 @@ public class ShiftableBlockSelection {
             caretsAndSelection = caretsAndSelectionCurrent;
             selectionStart = caretsAndSelection.getSelectionStart();
             selectionEnd = caretsAndSelection.getSelectionEnd();
-            if (selectionStart != null && selectionEnd != null) {
+            if (null != selectionStart && null != selectionEnd) {
                 offsetSelectionStart = editor.logicalPositionToOffset(selectionStart);
                 offsetSelectionEnd = editor.logicalPositionToOffset(selectionEnd);
 

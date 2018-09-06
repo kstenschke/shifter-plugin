@@ -25,7 +25,7 @@ public class UtilsFile {
      * @return The extension    Everything after the last "." in the full filename
      */
     public static String extractFileExtension(@Nullable String filename, boolean toLowerCase) {
-        if (filename == null || filename.isEmpty() || filename.length() < 3 || !filename.contains(".")) {
+        if (null == filename || filename.isEmpty() || filename.length() < 3 || !filename.contains(".")) {
             return "";
         }
         filename = getBasename(filename);
@@ -56,7 +56,7 @@ public class UtilsFile {
     }
 
     public static boolean filenameEndsWithExtension(@Nullable String filename) {
-        if (filename == null || filename.isEmpty() || !filename.contains(".")) {
+        if (null == filename || filename.isEmpty() || !filename.contains(".")) {
             return false;
         }
 

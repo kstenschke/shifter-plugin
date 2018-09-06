@@ -46,7 +46,6 @@ public class UtilsPhp {
         if (UtilsTextual.equalsAnyOf(firstWord, new String[]{"is", "has", "needs"})) {
             return "bool";
         }
-
         if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"args", "array", "data", "ids", "items", "list", "pieces", "params", "parameters", "values", "vars"})) {
             return "array";
         }

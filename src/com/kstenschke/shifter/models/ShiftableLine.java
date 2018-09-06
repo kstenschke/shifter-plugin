@@ -96,7 +96,7 @@ public class ShiftableLine {
                 }
 
                 wordShiftedTest = new ShiftableWord(word, prefixChar, postfixChar, line, editorText, caretOffset, filename, moreCount).getShifted(isUp, editor);
-                if (wordShiftedTest != null && !wordShiftedTest.equals(word)) {
+                if (null != wordShiftedTest && !wordShiftedTest.equals(word)) {
                     amountShiftableWordsInSentence++;
                     wordUnshifted = word;
                     wordShifted = wordShiftedTest;
@@ -129,7 +129,7 @@ public class ShiftableLine {
 
         // Replace line by shifted one
         CharSequence shiftedLine = shiftableShiftableLine.getShifted(shiftUp, editor, moreCount);
-        if (shiftedLine != null) {
+        if (null != shiftedLine) {
             document.replaceString(offsetLineStart, offsetLineStart + line.length(), shiftedLine);
         }
     }

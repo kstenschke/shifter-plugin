@@ -94,10 +94,10 @@ public class AlphanumComparator implements Comparator<String>
                 int thisChunkLength = thisChunk.length();
                 result = thisChunkLength - thatChunk.length();
                 // If equal, the first different number counts
-                if (result == 0) {
+                if (0 == result) {
                     for (int i = 0; i < thisChunkLength; i++) {
                         result = thisChunk.charAt(i) - thatChunk.charAt(i);
-                        if (result != 0) {
+                        if (0 != result) {
                             return result;
                         }
                     }
@@ -107,7 +107,7 @@ public class AlphanumComparator implements Comparator<String>
                 result = comparator.compare(thisChunk, thatChunk);
             }
 
-            if (result != 0) {
+            if (0 != result) {
                 return result;
             }
         }

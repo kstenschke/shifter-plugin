@@ -190,7 +190,7 @@ public class PluginConfiguration {
 
         // Store dictionary
         String dictionary = getDictionary();
-        if (dictionary != null) {
+        if (null != dictionary) {
             ShifterPreferences.saveDictionary(dictionary);
         }
     }

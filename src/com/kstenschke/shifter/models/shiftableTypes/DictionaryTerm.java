@@ -94,7 +94,7 @@ public class DictionaryTerm {
      * @return boolean
      */
     public boolean isTermInDictionary(String term, String fileExtension) {
-        if (fileExtension != null && dictionaryContents.contains("|" + fileExtension + "|")) {
+        if (null != fileExtension && dictionaryContents.contains("|" + fileExtension + "|")) {
             this.fileExtension = fileExtension;
 
             // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
@@ -188,19 +188,21 @@ public class DictionaryTerm {
      * @return String   The shifted word
      */
     public String getShifted(String word, boolean isUp) {
-        if (relevantTermsList != null) {
-            String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
-            shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
+        if (null == relevantTermsList) {
+            return word;
+        }
 
-            String[] termsList = shiftTerms.split("\\|");
-            if (termsList.length > 0) {
-                StaticWordType wordType = new StaticWordType(termsList);
-                String shiftedWord = wordType.getShifted(word, isUp);
+        String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
+        shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
-                return shiftedWord.equals(word)
-                        ? wordType.getShifted(word.toLowerCase(), isUp)
-                        : shiftedWord;
-            }
+        String[] termsList = shiftTerms.split("\\|");
+        if (termsList.length > 0) {
+            StaticWordType wordType = new StaticWordType(termsList);
+            String shiftedWord = wordType.getShifted(word, isUp);
+
+            return shiftedWord.equals(word)
+                    ? wordType.getShifted(word.toLowerCase(), isUp)
+                    : shiftedWord;
         }
 
         return word;

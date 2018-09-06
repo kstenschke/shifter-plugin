@@ -53,7 +53,7 @@ public class UtilsArray {
         String out = "";
 
         for (int i = 0; i < stringsArr.length; i++) {
-            out += (i != 0 ? glue : "") + stringsArr[i];
+            out += (0 == i ? "" : glue) + stringsArr[i];
         }
 
         return out;
@@ -72,10 +72,10 @@ public class UtilsArray {
      * @return array    Merged array containing each of the elements of array1 and array2
      */
     public static String[] mergeArrays(String[] array1, String[] array2) {
-        if (array1 == null || array1.length == 0) {
+        if (null == array1 || array1.length == 0) {
             return array2;
         }
-        if (array2 == null || array2.length == 0) {
+        if (null == array2 || array2.length == 0) {
             return array1;
         }
 

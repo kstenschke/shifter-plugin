@@ -44,7 +44,7 @@ public class UtilsEnvironment {
     public static String getDocumentFilename(com.intellij.openapi.editor.Document document) {
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
 
-        return file == null ? "" : file.getName();
+        return null == file ? "" : file.getName();
     }
 
     public static boolean replaceWordAtCaretInDocument(Document document, int caretOffset, String charSequence) {
@@ -59,7 +59,7 @@ public class UtilsEnvironment {
 
     public static void reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
-        if (psiFile == null) {
+        if (null == psiFile) {
             return;
         }
 
@@ -68,7 +68,7 @@ public class UtilsEnvironment {
 
     public static void reformatSelection(Editor editor, Project project) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
-        if (psiFile == null) {
+        if (null == psiFile) {
             return;
         }
         SelectionModel selectionModel = editor.getSelectionModel();
@@ -88,16 +88,16 @@ public class UtilsEnvironment {
      * @param   title
      */
     public static void setDialogVisible(Editor editor, String idDialog, JDialog dialog, String title) {
-        Point caretLocation  = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
+        Point caretLocation = editor.visualPositionToXY(editor.getCaretModel().getVisualPosition());
         SwingUtilities.convertPointToScreen(caretLocation, editor.getComponent());
 
         Point location = null;
-        String[] position   = ShifterPreferences.getDialogPosition(idDialog).split("x");
+        String[] position = ShifterPreferences.getDialogPosition(idDialog).split("x");
         if (!(position[0].equals("0") && position[1].equals("0"))) {
             location = new Point(Integer.parseInt(position[0]), Integer.parseInt(position[1]));
         }
 
-        if (location == null) {
+        if (null == location) {
             // Center to screen
             dialog.setLocationRelativeTo(null);
         } else {

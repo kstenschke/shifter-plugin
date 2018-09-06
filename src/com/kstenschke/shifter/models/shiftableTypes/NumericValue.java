@@ -85,7 +85,7 @@ public class NumericValue {
         int multiplier = getTimestampMultiplier(filename);
         shiftedTimestamp = Long.parseLong(value) + ((isUp ? SECONDS_PER_DAY : -SECONDS_PER_DAY) * multiplier);
 
-        if (editor != null) {
+        if (null != editor) {
             // Create and show balloon w/ human-readable date
             Balloon.Position pos = Balloon.Position.above;
             String balloonText =
@@ -121,7 +121,7 @@ public class NumericValue {
             return 1000;
         }
 
-        return timestampShiftMode == ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS ? 1 : 1000;
+        return ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS == timestampShiftMode ? 1 : 1000;
     }
 
     /**
@@ -137,6 +137,6 @@ public class NumericValue {
         }
 
         value--;
-        return value == -1 ? maxValue - 1 : value;
+        return -1 == value ? maxValue - 1 : value;
     }
 }

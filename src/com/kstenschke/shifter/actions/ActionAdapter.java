@@ -24,7 +24,10 @@ import com.kstenschke.shifter.models.ShiftableSelection;
 import com.kstenschke.shifter.models.ShiftableWord;
 import org.jetbrains.annotations.Nullable;
 
-public class ActionsPerformer {
+/**
+ * Adapter to bundle setup and delegation of different kinds of shift actions
+ */
+public class ActionAdapter {
 
     public final Editor editor;
     public Document document;
@@ -32,13 +35,16 @@ public class ActionsPerformer {
     private SelectionModel selectionModel;
     private int caretOffset;
 
+    private AnActionEvent event;
+
     /**
      * Constructor
      */
-    ActionsPerformer(final AnActionEvent event) {
+    ActionAdapter(final AnActionEvent event) {
+        this.event = event;
         editor = event.getData(PlatformDataKeys.EDITOR);
 
-        if (editor != null) {
+        if (null != editor) {
             document       = editor.getDocument();
             caretOffset    = editor.getCaretModel().getOffset();
             selectionModel = editor.getSelectionModel();
@@ -51,8 +57,8 @@ public class ActionsPerformer {
      * @param shiftUp   Shift up or down?
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public void write(boolean shiftUp, @Nullable Integer moreCount) {
-        if (editor == null) {
+    void delegate(boolean shiftUp, @Nullable Integer moreCount) {
+        if (null == editor) {
             return;
         }
 

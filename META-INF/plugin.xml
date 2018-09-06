@@ -17,9 +17,8 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.7.7</version>
+    <version>1.8.0</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
-
     <description><![CDATA[
     Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
     If there's only one shiftable word in a line, it can be shifted without the caret touching it.
@@ -120,9 +119,13 @@
     </ul>
     <br/>Please note: This plugin is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ]]></description>
-
     <change-notes><![CDATA[
     <ul>
+        <li>1.8.0
+            <ul>
+                <li>Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46</li>
+            </ul>
+        </li>
         <li>1.7.7
             <ul>
                 <li>Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)</li>
@@ -134,48 +137,22 @@
                 <li>Improved: DOC data type detection</li>
             </ul>
         </li>
-        <li>1.7.5
-            <ul>
-                <li>Improved: Ternary shifting: maintain multi-line formatting, reformat selection after shifting</li>
-                <li>Improved: Quotes conversion: extended intention popup options</li>
-                <li>Improved: DOC data type detection</li>
-            </ul>
-        </li>
-        <li>1.7.4
-            <ul>
-                <li>Improved: Shiftable type detection</li>
-                <li>Improved: DOC part detections and shifting</li>
-                <li>Improved: JsDoc shifting - added @type completion + correction, improved detect / complete / correct annotations</li>
-            </ul>
-        </li>
-        <li>1.7.3
-            <ul>
-                <li>Improved: Plugin settings UI</li>
-            </ul>
-        </li>
-  </ul>
-  <br/>
-   <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
+    </ul>
+    <br/>
+    <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
-
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
     <idea-version since-build="8000"/>
-
     <depends>com.intellij.modules.lang</depends>
-
     <application-components>
     </application-components>
-
     <project-components/>
-
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable id="Shifter" displayName="Shifter" instance="com.kstenschke.shifter.ShifterConfigurable"/>
     </extensions>
-
     <actions>
         <group id="ShifterActionGroup" text="Shift Word at Caret / Line / Selection" popup="false">
             <separator/>
-
             <action id="ShiftUpAction" class="com.kstenschke.shifter.actions.ShiftUpAction" text="Shift-Up"
                     description="Shift-Up Word at Caret / Line / Selection">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt PERIOD"/>
@@ -184,7 +161,6 @@
                     description="Shift-Down Word at Caret / Line / Selection">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt COMMA"/>
             </action>
-
             <action id="ShiftUpMoreAction" class="com.kstenschke.shifter.actions.ShiftUpMoreAction" text="Shift-Up more"
                     description="Shift-Up word at care / Line / selection multiple times">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt K"/>
@@ -193,9 +169,7 @@
                     description="Shift-Down word at care / Line / selection multiple times">
                 <keyboard-shortcut keymap="$default" first-keystroke="ctrl shift alt J"/>
             </action>
-
             <add-to-group group-id="EditMenu" anchor="last"/>
         </group>
     </actions>
-
 </idea-plugin>

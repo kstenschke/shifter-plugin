@@ -97,7 +97,7 @@ public class Comment {
      * @return String
      */
     public static String getShifted(String str, String filename, Project project) {
-        if (filename != null && UtilsFile.isPhpFile(filename) && isPhpBlockComment(str)) {
+        if (null != filename && UtilsFile.isPhpFile(filename) && isPhpBlockComment(str)) {
             // PHP Block-comment inside PHP or PHTML: convert to HTML comment
             return "<!-- " + str.substring(8, str.length() - 5).trim() + " -->";
         }
@@ -162,7 +162,7 @@ public class Comment {
                         CommandProcessor.getInstance().executeCommand(project, new Runnable() {
                                     public void run() {
                                         final int index = modes.getSelectedIndex();
-                                        String shifted = index == 0
+                                        String shifted = 0 == index
                                             ? shiftMultipleBlockCommentLines(str, true)
                                             : shiftMultipleBlockCommentLines(str, false);
 
@@ -235,13 +235,13 @@ public class Comment {
                 line = line.substring(2);
             }
             line = trim(line);
-            if (index == 0 && line.startsWith("*")) {
+            if (0 == index && line.startsWith("*")) {
                 line = trim(line.substring(1));
             }
             if (!line.isEmpty()) {
                 result += merge
                     ? " " + line
-                    : (index == 0 ? "" : "\n") + "// " + line;
+                    : (0 == index ? "" : "\n") + "// " + line;
             }
             index++;
         }
@@ -268,7 +268,7 @@ public class Comment {
         String result  = "";
         int index = 0;
         for (String line : lines) {
-            result += (index == 0 ? "" : "\n") + " * " + trim(trim(line).substring(2));
+            result += (0 == index ? "" : "\n") + " * " + trim(trim(line).substring(2));
             index++;
         }
 
@@ -280,7 +280,7 @@ public class Comment {
         String result  = "";
         int index = 0;
         for (String line : lines) {
-            result += (index == 0 ? "" : " ") + trim(trim(line).substring(2));
+            result += (0 == index ? "" : " ") + trim(trim(line).substring(2));
             index++;
         }
 
@@ -293,7 +293,7 @@ public class Comment {
         String result = "";
         int index = 0;
         for(String line : shiftedList) {
-            result += (index == 0 ? "" : "\n") + line;
+            result += (0 == index ? "" : "\n") + line;
             index++;
         }
 

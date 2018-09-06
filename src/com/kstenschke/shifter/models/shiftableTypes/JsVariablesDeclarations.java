@@ -57,7 +57,7 @@ public class JsVariablesDeclarations {
         for(String line : lines) {
             line = line.trim();
             shiftedLine = line.isEmpty() || line.startsWith("//") ? line : shiftNonCommentLine(line);
-            shiftedLines += (lineNumber == 0 ? "" : "\t") + shiftedLine + "\n";
+            shiftedLines += (0 == lineNumber ? "" : "\t") + shiftedLine + "\n";
             lineNumber++;
         }
 

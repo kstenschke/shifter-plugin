@@ -114,7 +114,7 @@ public class PhpVariableOrArray {
         // Sort var names alphabetically
         Collections.sort(phpVariables);
         List<String> allLeadChars = null;
-        if (moreCount != null && moreCount == 1) {
+        if (null != moreCount && 1 == moreCount) {
             // During "shift more": iterate over variables reduced to first per every lead-character
             phpVariables = reducePhpVarsToFirstPerLeadChar(phpVariables);
             allLeadChars = getLeadChars(phpVariables);
@@ -124,12 +124,12 @@ public class PhpVariableOrArray {
 
         // Find position of given variable
         Integer curIndex = getVariableIndex(variable, moreCount, phpVariables, allLeadChars);
-        if (curIndex == -1 || amountVars == 0) {
+        if (-1 == curIndex || 0 == amountVars) {
             return variable;
         }
 
         // Find next/previous variable name (only once during iterations of "shift more")
-        if (moreCount == null || moreCount == 1) {
+        if (null == moreCount || 1 == moreCount) {
             curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
         }
 
@@ -145,11 +145,11 @@ public class PhpVariableOrArray {
      */
     @NotNull
     private Integer getVariableIndex(String variable, Integer moreCount, List<String> phpVariables, List<String> allLeadChars) {
-        if (moreCount == null || moreCount > 1) {
+        if (null == moreCount || moreCount > 1) {
             return phpVariables.indexOf(variable);
         }
 
-        return allLeadChars == null
+        return null == allLeadChars
             ? -1
             : allLeadChars.indexOf(variable.substring(1, 2));
     }

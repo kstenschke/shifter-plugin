@@ -253,9 +253,9 @@ public class JsDoc {
         boolean wasPreviousEmpty = false;
         int index = 0;
         for (String line : lines) {
-            boolean isEmpty = index == 0 || (trim(trim(line).replaceAll("\\*", "")).isEmpty());
+            boolean isEmpty = 0 == index || (trim(trim(line).replaceAll("\\*", "")).isEmpty());
 
-            if (index == 0 || !(isEmpty && wasPreviousEmpty)) {
+            if (0 == index || !(isEmpty && wasPreviousEmpty)) {
                 blockCleaned += (index > 0 ? "\n" : "") + line;
             }
             wasPreviousEmpty = isEmpty;

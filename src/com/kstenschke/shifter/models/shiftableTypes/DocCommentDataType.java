@@ -31,7 +31,7 @@ class DocCommentDataType {
     /**
      * Constructor
      */
-    public DocCommentDataType() {
+    DocCommentDataType() {
         typesJavaScript = new String[]{ "array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined" };
         typesJava       = new String[]{ "boolean", "byte", "char", "double", "float", "int", "long", "short", "string" };
         typesPHP        = new String[]{ "array", "bool", "float", "int", "null", "object", "resource", "string" };
@@ -49,7 +49,7 @@ class DocCommentDataType {
         int amountTypes      = dataTypes.length;
         String wordLower     = word.toLowerCase();
 
-        if (amountTypes == 0) {
+        if (0 == amountTypes) {
             return wordLower;
         }
 
@@ -71,7 +71,7 @@ class DocCommentDataType {
      * @return String[]
      */
     private String[] getDataTypesByFilename(String filename) {
-        if (filename != null) {
+        if (null != filename) {
             String filenameLower = filename.toLowerCase();
 
             if (filenameLower.endsWith(".js")) {

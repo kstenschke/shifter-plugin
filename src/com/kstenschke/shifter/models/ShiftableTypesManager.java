@@ -104,7 +104,7 @@ class ShiftableTypesManager {
         // File extension specific term in dictionary
         typeDictionaryTerm = new com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm();
         String fileExtension    = UtilsFile.extractFileExtension(filename);
-        if (fileExtension != null && typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
+        if (null != fileExtension && typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
             return DICTIONARY_WORD_EXT_SPECIFIC;
         }
 

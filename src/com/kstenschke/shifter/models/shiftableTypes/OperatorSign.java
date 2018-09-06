@@ -23,7 +23,7 @@ public class OperatorSign {
      * @return boolean
      */
     public static boolean isOperatorSign(String word) {
-        return word != null && word.length() == 1 && "+-<>*/%".contains(word);
+        return null != word && word.length() == 1 && "+-<>*/%".contains(word);
     }
 
     public static boolean isWhitespaceWrappedOperator(String str) {

@@ -86,7 +86,7 @@ public class ShiftableWord {
             : word;
 
         // Can the word be shifted?
-        isShiftable = wordType != UNKNOWN;
+        isShiftable = UNKNOWN != wordType;
     }
 
     /**
@@ -107,9 +107,9 @@ public class ShiftableWord {
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
-        if (    wordType != PHP_VARIABLE_OR_ARRAY
-             && wordType != QUOTED_STRING
-             && wordType != CAMEL_CASED
+        if (    PHP_VARIABLE_OR_ARRAY != wordType
+             && QUOTED_STRING != wordType
+             && CAMEL_CASED != wordType
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
             if (UtilsTextual.isAllUppercase(word)) {
@@ -253,7 +253,7 @@ public class ShiftableWord {
         }
 
         String newWord = shiftableShiftableWord.getShifted(shiftUp, editor);
-        if (newWord != null && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && wordOffset != null) {
+        if (null != newWord && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && wordOffset != null) {
             newWord = shiftableShiftableWord.postProcess(newWord, postfixChar);
 
             if (replaceInDocument) {

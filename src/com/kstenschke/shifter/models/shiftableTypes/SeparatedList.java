@@ -50,9 +50,7 @@ public class SeparatedList {
             int amountQuotes     = StringUtils.countMatches(str, quoteChar);
             int amountDelimiters = StringUtils.countMatches(str, delimiter);
 
-            if (amountQuotes != (amountDelimiters + 1) * 2) {
-                return false;
-            }
+            return (amountDelimiters + 1) * 2 == amountQuotes;
         }
 
         return true;

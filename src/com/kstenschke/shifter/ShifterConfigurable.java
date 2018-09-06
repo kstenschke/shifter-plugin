@@ -46,11 +46,11 @@ public class ShifterConfigurable implements Configurable {
     }
 
     public boolean isModified() {
-        return settingsPanel != null && settingsPanel.isModified();
+        return null != settingsPanel && settingsPanel.isModified();
     }
 
     public void apply() throws ConfigurationException {
-        if (settingsPanel != null) {
+        if (null != settingsPanel) {
             settingsPanel.apply();
             settingsPanel.initFormValues();
         }
@@ -60,7 +60,7 @@ public class ShifterConfigurable implements Configurable {
      * Reset unsaved changes
      */
     public void reset() {
-        if (settingsPanel != null) {
+        if (null != settingsPanel) {
             settingsPanel.initFormValues();
         }
     }

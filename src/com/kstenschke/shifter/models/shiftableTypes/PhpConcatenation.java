@@ -38,12 +38,12 @@ public class PhpConcatenation {
 
         if (strJoined.length() > 4 && strJoined.contains(".")) {
             extractParts(strJoined);
-            if (partLHS != null && partRHS != null) {
+            if (null != partLHS && null != partRHS) {
                 isPhpConcatenation = true;
-                if (offsetDot != null) {
+                if (null != offsetDot) {
                     char charBeforeDot = strJoined.charAt(offsetDot - 1);
                     char charAfterDot = strJoined.charAt(offsetDot + 1);
-                    if ((charBeforeDot == ' ' && charAfterDot == ' ') || (charBeforeDot == '\t' && charAfterDot == '\t')) {
+                    if ((' ' == charBeforeDot && ' ' == charAfterDot) || (charBeforeDot == '\t' && charAfterDot == '\t')) {
                         isDotWhitespaceWrapped = true;
                         dotWrapChar = String.valueOf(charAfterDot);
                     }
@@ -73,7 +73,7 @@ public class PhpConcatenation {
             String leftHandSide = strTrimmed.substring(0, 1);
             String endChar = detectConcatenationTypeAndGetEndingChar(leftHandSide, false);
 
-            if (endChar != null) {
+            if (null != endChar) {
                 Integer currentOffset = 1;
                 String currentChar;
                 boolean isFailed = false;
@@ -124,13 +124,13 @@ public class PhpConcatenation {
                     String rightHandSide = strTrimmed.substring(currentOffset, currentOffset+1);
 
                     endChar    = detectConcatenationTypeAndGetEndingChar(rightHandSide, true);
-                    if (endChar != null) {
+                    if (null != endChar) {
                         currentOffset+=1;
                         boolean isFoundEndOfRHS = false;
 
                         while (currentOffset < strLen && !isFoundEndOfRHS) {
                             currentChar    = strTrimmed.substring(currentOffset, currentOffset+1);
-                            if (currentChar.equals(endChar) || ("".equals(endChar) && strLen == currentOffset+1)) {
+                            if (currentChar.equals(endChar) || ("".equals(endChar) && currentOffset + 1 == strLen)) {
                                 // Ignore escaped end-char
                                 if (currentOffset > 0 && !"\\".equals(strTrimmed.substring(currentOffset-1, currentOffset))) {
                                     isFoundEndOfRHS = true;
@@ -191,14 +191,14 @@ public class PhpConcatenation {
      * @return  String  Concatenation w/ left- and right-hand-side parts interchanged
      */
     public String getShifted() {
-        String dotWrapChar = this.dotWrapChar == null ? "" : this.dotWrapChar;
+        String dotWrapChar = null == this.dotWrapChar ? "" : this.dotWrapChar;
 
         String concatenation =
-              (partRHS == null ? "" : partRHS)
+              (null == partRHS ? "" : partRHS)
             + (isDotWhitespaceWrapped ? dotWrapChar : "")
             + "."
             + (isDotWhitespaceWrapped ? dotWrapChar : "")
-            + (partLHS == null ? "" : partLHS);
+            + (null == partLHS ? "" : partLHS);
 
         return concatenation.trim();
     }

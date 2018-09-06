@@ -52,7 +52,7 @@ public class StaticWordType {
      */
     public String getShifted(String word, boolean isUp) {
         int wordOffset = UtilsArray.getOffset(keywords, word);
-        if (wordOffset == -1) {
+        if (-1 == wordOffset) {
             return word;
         }
 
