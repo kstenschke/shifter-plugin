@@ -3,6 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.8.0
     ** Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46
     ** Improved: Made action entries in undo-history more speaking
+    ** Improved: "More shifting" on block selection now uses value of configured "Shift more size" instead of shifting repeatedly
 * 1.7.7
     ** Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)
 * 1.7.6

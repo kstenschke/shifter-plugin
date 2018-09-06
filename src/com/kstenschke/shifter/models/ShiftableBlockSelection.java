@@ -72,24 +72,30 @@ public class ShiftableBlockSelection {
      * @param actionContainer
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftBlockSelectionInDocument(final ActionContainer actionContainer, final @Nullable Integer moreCount) {
+    public static void shiftBlockSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
         if (null == actionContainer.editor) {
             return;
         }
+
+        final int stepSize = null == moreCount ? 1 : moreCount;
 
         final int[] blockSelectionStarts = actionContainer.selectionModel.getBlockSelectionStarts();
         final int[]blockSelectionEnds   = actionContainer.selectionModel.getBlockSelectionEnds();
 
         if (ShiftableBlockSelection.areNumericValues(blockSelectionStarts, blockSelectionEnds, actionContainer.documentText)) {
-            shiftNumericalBlockSelectionInDocument(actionContainer, Integer.valueOf(actionContainer.documentText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()));
+            shiftNumericalBlockSelectionInDocument(
+                    actionContainer,
+                    Integer.valueOf(actionContainer.documentText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString()),
+                    stepSize);
             return;
         }
         if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, actionContainer.documentText)) {
+            final int moreCountFin = moreCount;
             actionContainer.writeUndoable(
                     new Runnable() {
                         @Override
                         public void run() {
-                            shiftIdenticalBlockItemsInDocument(actionContainer, moreCount, blockSelectionStarts, blockSelectionEnds);
+                            shiftIdenticalBlockItemsInDocument(actionContainer, stepSize, blockSelectionStarts, blockSelectionEnds);
                         }
                     },
                     "Shift block selection"
@@ -116,10 +122,11 @@ public class ShiftableBlockSelection {
      * Ask whether to 1. replace by enumeration or 2. in/decrement each
      *
      * @param actionContainer
-     * @param integer
+     * @param startWith
+     * @param stepSize
      */
-    private static void shiftNumericalBlockSelectionInDocument(final ActionContainer actionContainer, Integer integer) {
-        Integer firstNumber = integer;
+    private static void shiftNumericalBlockSelectionInDocument(final ActionContainer actionContainer, Integer startWith, final int stepSize) {
+        Integer firstNumber = startWith;
         if (null == firstNumber) {
             firstNumber = 0;
         }
@@ -144,7 +151,7 @@ public class ShiftableBlockSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            inOrDecrementNumericBlockInDocument(actionContainer);
+                            inOrDecrementNumericBlockInDocument(actionContainer, stepSize);
                         }
                     },
                     "Shift block selection"
@@ -188,9 +195,10 @@ public class ShiftableBlockSelection {
      * Increment or decrement each item in given numeric block selection
      *
      * @param actionContainer
+     * @param stepSize
      */
-    private static void inOrDecrementNumericBlockInDocument(ActionContainer actionContainer) {
-        int addend = actionContainer.isShiftUp ? 1 : -1;
+    private static void inOrDecrementNumericBlockInDocument(ActionContainer actionContainer, int stepSize) {
+        int addend = actionContainer.isShiftUp ? stepSize : -stepSize;
         Integer value;
 
         List<CaretState> caretsAndSelections = actionContainer.editor.getCaretModel().getCaretsAndSelections();

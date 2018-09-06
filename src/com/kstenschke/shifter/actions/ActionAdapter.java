@@ -24,7 +24,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ActionAdapter {
 
-    private ActionContainer actionContainer;
+    public ActionContainer actionContainer;
 
     /**
      * Constructor

@@ -21,6 +21,7 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.command.UndoConfirmationPolicy;
 import com.intellij.openapi.project.Project;
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.resources.StaticTexts;
 
 class ShiftUpMoreAction extends AnAction {
@@ -40,9 +41,17 @@ class ShiftUpMoreAction extends AnAction {
      * @param event ActionSystem event
      */
     public void actionPerformed(final AnActionEvent event) {
-        int times = ShifterPreferences.getShiftMoreSize();
-        for (int i = 1; i <= times; i++) {
-            new ActionAdapter(event, true, true).delegate(i);
+        ActionAdapter actionAdapter = new ActionAdapter(event, true, true);
+        int moreSize = ShifterPreferences.getShiftMoreSize();
+
+        if (actionAdapter.actionContainer.selectionModel.getBlockSelectionStarts().length > 1) {
+            // Shift of block selection: is not iterated, but run w/ higher value
+            actionAdapter.delegate(moreSize);
+            return;
+        }
+
+        for (int i = 1; i <= moreSize; i++) {
+            actionAdapter.delegate(i);
         }
     }
 }
