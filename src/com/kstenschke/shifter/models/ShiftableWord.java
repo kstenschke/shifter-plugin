@@ -15,13 +15,10 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.shiftableTypes.CssUnit;
 import com.kstenschke.shifter.models.shiftableTypes.JsDoc;
 import com.kstenschke.shifter.models.shiftableTypes.NumericValue;
-import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;

@@ -24,7 +24,6 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import sun.plugin2.jvm.CircularByteBuffer;
 
 import java.util.ArrayList;
 import java.util.Arrays;

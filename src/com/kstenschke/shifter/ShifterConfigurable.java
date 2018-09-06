@@ -16,7 +16,6 @@
 package com.kstenschke.shifter;
 
 import com.intellij.openapi.options.Configurable;
-import com.intellij.openapi.options.ConfigurationException;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;

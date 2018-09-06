@@ -15,7 +15,6 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.openapi.editor.Document;
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
