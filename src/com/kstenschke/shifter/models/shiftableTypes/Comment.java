@@ -17,11 +17,10 @@ package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -93,30 +92,30 @@ public class Comment {
     }
 
     /**
-     * @param  str
+     * @param  actionContainer
      * @return String
      */
-    public static String getShifted(String str, String filename, Project project) {
-        if (null != filename && UtilsFile.isPhpFile(filename) && isPhpBlockComment(str)) {
+    public static String getShifted(ActionContainer actionContainer) {
+        if (null != actionContainer.filename && UtilsFile.isPhpFile(actionContainer.filename) && isPhpBlockComment(actionContainer.selectedText)) {
             // PHP Block-comment inside PHP or PHTML: convert to HTML comment
-            return "<!-- " + str.substring(8, str.length() - 5).trim() + " -->";
+            return "<!-- " + actionContainer.selectedText.substring(8, actionContainer.selectedText.length() - 5).trim() + " -->";
         }
 
-        // Default comment shifting: toggle among single-line and block-comment style
-        str = str.trim();
+        // Default comment shifting: toggle among single-caretLine and block-comment style
+        String str = actionContainer.selectedText.trim();
 
         if (str.startsWith("//")) {
             if (!str.endsWith(" ")) {
                 str += " ";
             }
-            // Convert single line comment to block comment
+            // Convert single caretLine comment to block comment
             return "/*" + str.substring(2) + "*/";
         }
 
         str = str.substring(2, str.length() - 2);
 
         // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
-        // Convert block- to single line comment
+        // Convert block- to single caretLine comment
         if (str.contains("\n")) {
             return "//" + str.replace("\n", " ");
         }
@@ -136,16 +135,12 @@ public class Comment {
     }
 
     /**
-     * Shift multi-lined block comment into single line comment(s)
-     * Show popup and perform selected shifting mode: join lines into 1 or convert into multiple single line comments
+     * Shift multi-lined block comment into single caretLine comment(s)
+     * Show popup and perform selected shifting mode: join lines into 1 or convert into multiple single caretLine comments
      *
-     * @param str
-     * @param project
-     * @param document
-     * @param offsetStart
-     * @param offsetEnd
+     * @param actionContainer
      */
-    public static void shiftMultiLineBlockCommentInDocument(final String str, final Project project, final Document document, final int offsetStart, final int offsetEnd) {
+    public static void shiftMultiLineBlockCommentInDocument(final ActionContainer actionContainer) {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
@@ -159,24 +154,24 @@ public class Comment {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
                         // Callback when item chosen
-                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                        CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
                                     public void run() {
                                         final int index = modes.getSelectedIndex();
                                         String shifted = 0 == index
-                                            ? shiftMultipleBlockCommentLines(str, true)
-                                            : shiftMultipleBlockCommentLines(str, false);
+                                            ? shiftMultipleBlockCommentLines(actionContainer.selectedText, true)
+                                            : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
 
-                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
                                     }
                                 },
                                 null, null);
                     }
                 });
             }
-        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
-    public static void shiftMultipleSingleLineCommentsInDocument(final String str, final Project project, final Document document, final int offsetStart, final int offsetEnd) {
+    public static void shiftMultipleSingleLineCommentsInDocument(final ActionContainer actionContainer) {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_MERGE);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT);
@@ -192,34 +187,34 @@ public class Comment {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
                         // Callback when item chosen
-                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                        CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
                                     public void run() {
                                         final int index = modes.getSelectedIndex();
                                         String shifted;
 
                                         switch (index) {
                                             case 0:
-                                                shifted = mergeMultipleLineComments(str);
+                                                shifted = mergeMultipleLineComments(actionContainer.selectedText);
                                                 break;
                                             case 1:
-                                                shifted = convertMultipleLineCommentsToBlockComment(str);
+                                                shifted = convertMultipleLineCommentsToBlockComment(actionContainer.selectedText);
                                                 break;
                                             case 2:
-                                                shifted = sortLineComments(str, false);
+                                                shifted = sortLineComments(actionContainer.selectedText, false);
                                                 break;
                                             case 3:
                                             default:
-                                                shifted = sortLineComments(str, true);
+                                                shifted = sortLineComments(actionContainer.selectedText, true);
                                                 break;
                                         }
-                                        document.replaceString(offsetStart, offsetEnd, shifted);
+                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
                                     }
                                 },
                                 null, null);
                     }
                 });
             }
-        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
     private static String shiftMultipleBlockCommentLines(String str, boolean merge) {

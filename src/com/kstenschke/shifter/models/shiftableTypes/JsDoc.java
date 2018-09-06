@@ -15,8 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -134,13 +133,12 @@ public class JsDoc {
     /**
      * Actual shifting method
      *
+     * @param  actionContainer
      * @param  word
-     * @param  document
-     * @param  caretOffset
      * @return boolean
      */
-    public static boolean addCompoundsAroundDataTypeAtCaretInDocument(String word, Document document, int caretOffset) {
-        return UtilsEnvironment.replaceWordAtCaretInDocument(document, caretOffset, "{" + word + "}");
+    public static boolean addCompoundsAroundDataTypeAtCaretInDocument(ActionContainer actionContainer, String word) {
+        return UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "{" + word + "}");
     }
 
     /**
@@ -154,8 +152,8 @@ public class JsDoc {
         return line.replaceAll("(?i)(" + docCommentType + "\\s*)" + REGEX_DATA_TYPES_ALIEN, "$1{$2}");
     }
 
-    public static boolean correctInvalidReturnsCommentInDocument(Document document, int caretOffset) {
-        return UtilsEnvironment.replaceWordAtCaretInDocument(document, caretOffset, "returns");
+    public static boolean correctInvalidReturnsCommentInDocument(ActionContainer actionContainer) {
+        return UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "returns");
     }
 
     /**
@@ -165,14 +163,12 @@ public class JsDoc {
      * Add curly brackets around data shiftableTypes in "@param" and "@returns" lines
      * Correct invalid data shiftableTypes into existing primitive data shiftableTypes (event => Object, int(eger) => number)
      *
-     * @param document
-     * @param offsetStart
-     * @param offsetEnd
+     * @param actionContainer
      * @return
      */
-    public static boolean correctDocBlockInDocument(Editor editor, Document document, int offsetStart, int offsetEnd) {
-        String documentText = document.getText();
-        String docBlock = documentText.substring(offsetStart, offsetEnd);
+    public static boolean correctDocBlockInDocument(ActionContainer actionContainer) {
+        String documentText = actionContainer.document.getText();
+        String docBlock = documentText.substring(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
         String lines[] = docBlock.split("\n");
 
         String docBlockCorrected = "";
@@ -188,8 +184,8 @@ public class JsDoc {
         docBlockCorrected = reduceDoubleEmptyCommentLines(docBlockCorrected);
 
         if (!docBlockCorrected.equals(docBlock)) {
-            document.replaceString(offsetStart, offsetEnd, docBlockCorrected);
-            UtilsEnvironment.reformatSubString(editor, editor.getProject(), offsetStart, offsetEnd);
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, docBlockCorrected);
+            UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
             return true;
         }
 
@@ -197,7 +193,7 @@ public class JsDoc {
     }
 
     /**
-     * Correct JsDoc line
+     * Correct JsDoc caretLine
      *
      * @param line
      * @param keyword   "@param" / "@returns" / "@type"

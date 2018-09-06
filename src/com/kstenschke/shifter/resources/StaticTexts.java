@@ -46,9 +46,9 @@ public class StaticTexts {
     public static final String POPUP_TITLE_SHIFT = "Shifting Mode";
     @NonNls
 
-    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT       = "Merge lines into one single-line comment";
+    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT       = "Merge lines into one single-caretLine comment";
     @NonNls
-    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS = "Convert into multiple single-line comments";
+    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS = "Convert into multiple single-caretLine comments";
 
     @NonNls
     public static final String SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT = "Convert to block comment";

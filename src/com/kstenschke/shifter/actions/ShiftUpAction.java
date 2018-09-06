@@ -52,7 +52,7 @@ class ShiftUpAction extends AnAction {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     @Override
                     public void run() {
-                        new ActionAdapter(event).delegate(true, null);
+                        new ActionAdapter(event, true).delegate(true, null);
                     }
                 });
             }

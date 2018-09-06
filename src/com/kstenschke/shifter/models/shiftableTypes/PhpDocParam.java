@@ -15,9 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.project.Project;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import static org.apache.commons.lang.StringUtils.trim;
@@ -80,25 +78,25 @@ public class PhpDocParam {
         return line.replace("@param", "@param " + dataType);
     }
 
-    public static boolean shiftSelectedPhpDocInDocument(Editor editor, Document document, Project project, int offsetStart, int offsetEnd, String selectedText) {
-        if (PhpDocComment.isPhpDocComment(selectedText) && PhpDocComment.containsAtParam(selectedText)) {
-            String shifted = PhpDocComment.getShifted(selectedText);
-            if (!shifted.equals(selectedText)) {
+    public static boolean shiftSelectedPhpDocInDocument(ActionContainer actionContainer) {
+        if (PhpDocComment.isPhpDocComment(actionContainer.selectedText) && PhpDocComment.containsAtParam(actionContainer.selectedText)) {
+            String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
+            if (!shifted.equals(actionContainer.selectedText)) {
                 // PHP DOC comment block: guess missing data shiftableTypes by resp. variable names
-                document.replaceString(offsetStart, offsetEnd, shifted);
-                UtilsEnvironment.reformatSelection(editor, project);
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
+                UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
                 return true;
             }
         }
-        if (!selectedText.contains("\n")
-          && DocCommentType.isDocCommentTypeLineContext(selectedText)
-          && isPhpDocParamLine(selectedText)
-          && !containsDataType(selectedText)) {
-            String variableName = trim(extractVariableName(selectedText).replace("$", ""));
+        if (!actionContainer.selectedText.contains("\n")
+          && DocCommentType.isDocCommentTypeLineContext(actionContainer.selectedText)
+          && isPhpDocParamLine(actionContainer.selectedText)
+          && !containsDataType(actionContainer.selectedText)) {
+            String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
             String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
             if (!dataType.equals("unknown")) {
-                // PHP DOC @param line w/o data type, e.g. "* @param $name"
-                document.replaceString(offsetStart, offsetEnd, insertDataTypeIntoParamLine(selectedText, dataType));
+                // PHP DOC @param caretLine w/o data type, e.g. "* @param $name"
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, insertDataTypeIntoParamLine(actionContainer.selectedText, dataType));
                 return true;
             }
         }

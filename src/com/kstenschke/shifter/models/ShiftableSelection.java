@@ -16,9 +16,6 @@
 package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.SelectionModel;
-import com.intellij.openapi.project.Project;
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
@@ -35,216 +32,203 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 public class ShiftableSelection {
 
     /**
-     * @param editor
-     * @param caretOffset
-     * @param isUp          Are we shifting up or down?
+     * @param actionContainer
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftSelectionInDocument(Editor editor, Integer caretOffset, boolean isUp, @Nullable Integer moreCount) {
-        Document document = editor.getDocument();
-        String filename   = UtilsEnvironment.getDocumentFilename(document);
-        Project project   = editor.getProject();
-
-        SelectionModel selectionModel = editor.getSelectionModel();
-        int offsetStart = selectionModel.getSelectionStart();
-        int offsetEnd   = selectionModel.getSelectionEnd();
-
-        CharSequence editorText = document.getCharsSequence();
-        String selectedText = UtilsTextual.getSubString(editorText, offsetStart, offsetEnd);
-
-        if (selectedText == null || selectedText.trim().isEmpty()) {
+    public static void shiftSelectionInDocument(ActionContainer actionContainer, @Nullable Integer moreCount) {
+        if (actionContainer.selectedText == null || actionContainer.selectedText.trim().isEmpty()) {
             return;
         }
 
-        boolean isPhpFile = UtilsFile.isPhpFile(filename);
-        if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(editor, document, project, offsetStart, offsetEnd, selectedText)) {
-            // Detect and shift whole PHP DOC block or single line out of it, that contains @param line(s) w/o data type
+        boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
+        if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(actionContainer)) {
+            // Detect and shift whole PHP DOC block or single caretLine out of it, that contains @param caretLine(s) w/o data type
             return;
         }
-        if (filename.endsWith(".js") && JsDoc.isJsDocBlock(selectedText) && JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd)) {
-            return;
-        }
-
-        // Shift selected comment: Must be before multi-line sort to allow multi-line comment shifting
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(selectedText)) {
-            shiftSelectedCommentInDocument(editor, document, filename, project, offsetStart, offsetEnd, selectedText);
+        if (actionContainer.filename.endsWith(".js") && JsDoc.isJsDocBlock(actionContainer.selectedText) && JsDoc.correctDocBlockInDocument(actionContainer)) {
             return;
         }
 
-        boolean isWrappedInParenthesis = Parenthesis.isWrappedInParenthesis(selectedText);
+        // Shift selected comment: Must be before multi-caretLine sort to allow multi-caretLine comment shifting
+        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(actionContainer.selectedText)) {
+            shiftSelectedCommentInDocument(actionContainer);
+            return;
+        }
+
+        boolean isWrappedInParenthesis = Parenthesis.isWrappedInParenthesis(actionContainer.selectedText);
 
         ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
-        ShiftableTypes.Type wordType = shiftingShiftableTypesManager.getWordType(selectedText, editorText, offsetStart, filename);
+        ShiftableTypes.Type wordType = shiftingShiftableTypesManager.getWordType(actionContainer);
         boolean isPhpVariableOrArray = wordType == PHP_VARIABLE_OR_ARRAY;
 
         if (isWrappedInParenthesis) {
-            boolean isShiftablePhpArray = isPhpVariableOrArray && PhpVariableOrArray.isStaticShiftablePhpArray(selectedText);
+            boolean isShiftablePhpArray = isPhpVariableOrArray && PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
             if (!isPhpVariableOrArray || !isShiftablePhpArray) {
                 // Swap surrounding "(" and ")" versus "[" and "]"
-                document.replaceString(offsetStart, offsetEnd, Parenthesis.getShifted(selectedText));
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, Parenthesis.getShifted(actionContainer.selectedText));
                 return;
             }
             // Swap parenthesis or convert PHP array
-            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).swapParenthesisOrConvertPphpArray();
+            new ShiftableSelectionWithPopup(actionContainer).swapParenthesisOrConvertPphpArray();
             return;
         }
 
         boolean isJsVarsDeclarations    = !isPhpVariableOrArray && wordType == JS_VARIABLES_DECLARATIONS;
-        boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
-        boolean isMultiLine             = UtilsTextual.isMultiLine(selectedText);
+        boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
+        boolean isMultiLine             = UtilsTextual.isMultiLine(actionContainer.selectedText);
 
-        if (UtilsFile.isCssFile(filename) && isMultiLine) {
+        if (UtilsFile.isCssFile(actionContainer.filename) && isMultiLine) {
             // CSS: Sort attributes per selector alphabetically
-            String shifted = Css.getShifted(selectedText);
+            String shifted = Css.getShifted(actionContainer.selectedText);
             if (null != shifted) {
-                document.replaceString(offsetStart, offsetEnd, shifted);
-                UtilsEnvironment.reformatSubString(editor, project, offsetStart, offsetStart + shifted.length());
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
+                UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionStart + shifted.length());
                 return;
             }
         }
 
-        int lineNumberSelStart = document.getLineNumber(offsetStart);
-        int lineNumberSelEnd = document.getLineNumber(offsetEnd);
+        int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
+        int lineNumberSelEnd   = actionContainer.document.getLineNumber(actionContainer.offsetSelectionEnd);
 
-        if (document.getLineStartOffset(lineNumberSelEnd) == offsetEnd) {
+        if (actionContainer.document.getLineStartOffset(lineNumberSelEnd) == actionContainer.offsetSelectionEnd) {
             lineNumberSelEnd--;
         }
 
-        if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(selectedText, "")) {
-            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(selectedText));
-            UtilsEnvironment.reformatSelection(editor, project);
+        if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(actionContainer.selectedText, "")) {
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText));
+            UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
             return;
         }
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
-            // Multi-line selection: sort lines or swap quotes
-            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortLinesOrSwapQuotesInDocument(isUp);
+            // Multi-caretLine selection: sort lines or swap quotes
+            new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
             return;
         }
         if (isJsVarsDeclarations) {
-            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(actionContainer.selectedText));
             return;
         }
         if (!isPhpVariableOrArray && wordType == SIZZLE_SELECTOR) {
-            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(actionContainer.selectedText));
             return;
         }
         if (wordType == TRAILING_COMMENT) {
-            int offsetStartCaretLine = document.getLineStartOffset(lineNumberSelStart);
-            int offsetEndCaretLine   = document.getLineEndOffset(lineNumberSelStart);
-            String leadWhitespace    = UtilsTextual.getLeadWhitespace(editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
-            String caretLine         = editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
+            int offsetStartCaretLine = actionContainer.document.getLineStartOffset(lineNumberSelStart);
+            int offsetEndCaretLine   = actionContainer.document.getLineEndOffset(lineNumberSelStart);
+            String leadWhitespace    = UtilsTextual.getLeadWhitespace(actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+            String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
-            document.replaceString(offsetStartCaretLine, offsetEndCaretLine, com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace));
+            actionContainer.document.replaceString(offsetStartCaretLine, offsetEndCaretLine, com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace));
             return;
         }
 
-        if (!isPhpVariableOrArray && isPhpFile && shiftSelectionInPhpDocument(document, filename, project, offsetStart, offsetEnd, selectedText, containsShiftableQuotes, isUp)) {
+        if (!isPhpVariableOrArray && isPhpFile && shiftSelectionInPhpDocument(actionContainer, containsShiftableQuotes)) {
             return;
         }
 
         if (!isPhpVariableOrArray) {
-            if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(selectedText,",")) {
+            if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
                 // Comma-separated list: sort / ask whether to sort or toggle quotes
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", isUp);
+                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", actionContainer.shiftUp);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(selectedText,"|")) {
+            if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(actionContainer.selectedText,"|")) {
                 // Pipe-separated list
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).sortListOrSwapQuotesInDocument("\\|(\\s)*", "|", isUp);
+                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument("\\|(\\s)*", "|", actionContainer.shiftUp);
                 return;
             }
             if (containsShiftableQuotes) {
-                if (!QuotedString.containsEscapedQuotes(selectedText)) {
-                    document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+                if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
+                    actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapQuotes(actionContainer.selectedText));
                     return;
                 }
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftQuotesInDocument();
+                new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
                 return;
             }
-            if (CamelCaseString.isCamelCase(selectedText)) {
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftCamelCase(
-                        CamelCaseString.isWordPair(selectedText));
+            if (CamelCaseString.isCamelCase(actionContainer.selectedText)) {
+                new ShiftableSelectionWithPopup(actionContainer).shiftCamelCase(
+                        CamelCaseString.isWordPair(actionContainer.selectedText));
                 return;
             }
-            if (SeparatedPath.isSeparatedPath(selectedText) && SeparatedPath.isWordPair(selectedText)) {
-                new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftSeparatedPathOrSwapWords();
+            if (SeparatedPath.isSeparatedPath(actionContainer.selectedText) && SeparatedPath.isWordPair(actionContainer.selectedText)) {
+                new ShiftableSelectionWithPopup(actionContainer).shiftSeparatedPathOrSwapWords();
                 return;
             }
 
             com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel();
-            if (wordsTupel.isWordsTupel(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, wordsTupel.getShifted(selectedText));
+            if (wordsTupel.isWordsTupel(actionContainer.selectedText)) {
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, wordsTupel.getShifted(actionContainer.selectedText));
                 return;
             }
-            if (UtilsTextual.containsSlashes(selectedText)) {
-                if (QuotedString.containsEscapedQuotes(selectedText)) {
-                    new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).swapSlashesOrUnescapeQuotes();
+            if (UtilsTextual.containsSlashes(actionContainer.selectedText)) {
+                if (QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
+                    new ShiftableSelectionWithPopup(actionContainer).swapSlashesOrUnescapeQuotes();
                     return;
                 }
-                document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapSlashes(actionContainer.selectedText));
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(selectedText));
+            if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(actionContainer.selectedText)) {
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(actionContainer.selectedText));
                 return;
             }
-            if (HtmlEncodable.isHtmlEncodable(selectedText)) {
-                document.replaceString(offsetStart, offsetEnd, HtmlEncodable.getShifted(selectedText));
+            if (HtmlEncodable.isHtmlEncodable(actionContainer.selectedText)) {
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, HtmlEncodable.getShifted(actionContainer.selectedText));
                 return;
             }
         }
 
-        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(selectedText, isUp, editorText, caretOffset, moreCount, filename, editor);
+        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (isPhpVariableOrArray) {
-            document.replaceString(offsetStart, offsetEnd, shiftedWord);
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord);
             return;
         }
-        if (UtilsTextual.isAllUppercase(selectedText)) {
-            document.replaceString(offsetStart, offsetEnd, shiftedWord.toUpperCase());
+        if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord.toUpperCase());
             return;
         }
-        if (UtilsTextual.isUpperCamelCase(selectedText) || UtilsTextual.isUcFirst(selectedText)) {
-            document.replaceString(offsetStart, offsetEnd, UtilsTextual.toUcFirstRestLower(shiftedWord));
+        if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) || UtilsTextual.isUcFirst(actionContainer.selectedText)) {
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.toUcFirstRestLower(shiftedWord));
             return;
         }
 
-        document.replaceString(offsetStart, offsetEnd, shiftedWord);
+        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord);
     }
 
-    private static boolean shiftSelectionInPhpDocument(Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText, boolean containsQuotes, boolean isUp) {
-        com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation(selectedText);
+    private static boolean shiftSelectionInPhpDocument(ActionContainer actionContainer, boolean containsQuotes) {
+        com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation(actionContainer.selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
-            new ShiftableSelectionWithPopup(project, document, offsetStart, offsetEnd).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation, isUp);
+            new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation);
             return true;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isHtmlComment(selectedText)) {
-            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getPhpBlockCommentFromHtmlComment(selectedText));
+        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isHtmlComment(actionContainer.selectedText)) {
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getPhpBlockCommentFromHtmlComment(actionContainer.selectedText));
             return true;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isPhpBlockComment(selectedText)) {
-            document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(selectedText, filename, project));
+        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isPhpBlockComment(actionContainer.selectedText)) {
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(actionContainer));
             return true;
         }
         return false;
     }
 
-    private static void shiftSelectedCommentInDocument(Editor editor, Document document, String filename, Project project, int offsetStart, int offsetEnd, String selectedText) {
-        if (UtilsTextual.isMultiLine(selectedText)) {
-            if (filename.endsWith("js") && com.kstenschke.shifter.models.shiftableTypes.JsDoc.isJsDocBlock(selectedText)) {
-                com.kstenschke.shifter.models.shiftableTypes.JsDoc.correctDocBlockInDocument(editor, document, offsetStart, offsetEnd);
+    private static void shiftSelectedCommentInDocument(ActionContainer actionContainer) {
+        if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
+            if (actionContainer.filename.endsWith("js") && com.kstenschke.shifter.models.shiftableTypes.JsDoc.isJsDocBlock(actionContainer.selectedText)) {
+                com.kstenschke.shifter.models.shiftableTypes.JsDoc.correctDocBlockInDocument(actionContainer);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.Comment.isBlockComment(selectedText)) {
-                com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultiLineBlockCommentInDocument(selectedText, project, document, offsetStart, offsetEnd);
+            if (com.kstenschke.shifter.models.shiftableTypes.Comment.isBlockComment(actionContainer.selectedText)) {
+                com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultiLineBlockCommentInDocument(actionContainer);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.Comment.isMultipleSingleLineComments(selectedText)) {
-                com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultipleSingleLineCommentsInDocument(selectedText, project, document, offsetStart, offsetEnd);
+            if (com.kstenschke.shifter.models.shiftableTypes.Comment.isMultipleSingleLineComments(actionContainer.selectedText)) {
+                com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultipleSingleLineCommentsInDocument(actionContainer);
                 return;
             }
         }
 
-        document.replaceString(offsetStart, offsetEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(selectedText, filename, project));
+        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(actionContainer));
     }
 
     /**

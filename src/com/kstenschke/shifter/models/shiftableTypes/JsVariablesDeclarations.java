@@ -26,8 +26,8 @@ public class JsVariablesDeclarations {
     /**
      * Check whether given string represents a declaration of (multiple) JS variables:
      * -selection has multiple lines
-     * -each trimmed line starts w/ "var" (at least 2 occurrences)
-     * -each trimmed line ends w/ ";"
+     * -each trimmed caretLine starts w/ "var" (at least 2 occurrences)
+     * -each trimmed caretLine ends w/ ";"
      * -there can be empty lines
      * -there can commented lines, beginning w/ "//"
      *
@@ -66,13 +66,12 @@ public class JsVariablesDeclarations {
 
     @NotNull
     private static String shiftNonCommentLine(String line) {
-        String shiftedLine;
         // Remove "var " from beginning
         line = line.substring(4);
 
         // Replace ";" from ending by ",\n"
         if (StringUtils.countMatches(line, "//") == 1) {
-            // Handle line ending w/ comment intact
+            // Handle caretLine ending w/ comment intact
             String[] parts = line.split("//");
             parts[0] = parts[0].trim();
             return parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];

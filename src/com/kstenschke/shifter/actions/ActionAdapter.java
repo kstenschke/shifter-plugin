@@ -16,12 +16,7 @@
 package com.kstenschke.shifter.actions;
 
 import com.intellij.openapi.actionSystem.AnActionEvent;
-import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.intellij.openapi.editor.*;
-import com.kstenschke.shifter.models.ShiftableBlockSelection;
-import com.kstenschke.shifter.models.ShiftableLine;
-import com.kstenschke.shifter.models.ShiftableSelection;
-import com.kstenschke.shifter.models.ShiftableWord;
+import com.kstenschke.shifter.models.*;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -29,56 +24,35 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ActionAdapter {
 
-    public final Editor editor;
-    public Document document;
-
-    private SelectionModel selectionModel;
-    private int caretOffset;
-
-    private AnActionEvent event;
+    private ActionContainer actionContainer;
 
     /**
      * Constructor
      */
-    ActionAdapter(final AnActionEvent event) {
-        this.event = event;
-        editor = event.getData(PlatformDataKeys.EDITOR);
-
-        if (null != editor) {
-            document       = editor.getDocument();
-            caretOffset    = editor.getCaretModel().getOffset();
-            selectionModel = editor.getSelectionModel();
-        }
+    ActionAdapter(final AnActionEvent event, boolean shiftUp) {
+        actionContainer = new ActionContainer(event, shiftUp);
     }
 
     /**
-     * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
+     * Find shiftable string (selection block/lines/regular, word at caret, caretLine at caret) and replace it by its shifted value
      *
      * @param shiftUp   Shift up or down?
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     void delegate(boolean shiftUp, @Nullable Integer moreCount) {
-        if (null == editor) {
+        if (null == actionContainer.editor) {
             return;
         }
-
-        if (selectionModel.hasSelection()) {
+        if (actionContainer.selectionModel.hasSelection()) {
             // Shift (regular or block-) selection
             shiftSelection(shiftUp, moreCount);
             return;
         }
 
-        // Try shift word at caret, fallback: try shifting line
-        int lineNumber      = document.getLineNumber(caretOffset);
-        int offsetLineStart = document.getLineStartOffset(lineNumber);
-        int offsetLineEnd   = document.getLineEndOffset(lineNumber);
-
-        CharSequence editorText = document.getCharsSequence();
-        String line             = editorText.subSequence(offsetLineStart, offsetLineEnd).toString();
-
-        if (!ShiftableWord.shiftWordAtCaretInDocument(editor, caretOffset, shiftUp, line, moreCount)) {
-            // Word at caret wasn't identified/shifted, try shifting the whole line
-            ShiftableLine.shiftLineInDocument(editor, caretOffset, shiftUp, offsetLineStart, line, moreCount);
+        // Try shift word at caret, fallback: try shifting caretLine
+        if (!ShiftableWord.shiftWordAtCaretInDocument(actionContainer, moreCount)) {
+            // Word at caret wasn't identified/shifted, try shifting the whole caretLine
+            ShiftableLine.shiftLineInDocument(actionContainer, moreCount);
         }
     }
 
@@ -87,13 +61,13 @@ public class ActionAdapter {
      * @param moreCount
      */
     private void shiftSelection(boolean shiftUp, @Nullable Integer moreCount) {
-        if (selectionModel.getBlockSelectionStarts().length > 1) {
+        if (actionContainer.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
-            ShiftableBlockSelection.shiftBlockSelectionInDocument(this, shiftUp, moreCount);
+            ShiftableBlockSelection.shiftBlockSelectionInDocument(this.actionContainer, shiftUp, moreCount);
             return;
         }
 
-        // Shift regular selection: sort CSV or multi-line selection: sort lines alphabetically, etc.
-        ShiftableSelection.shiftSelectionInDocument(editor, caretOffset, shiftUp, moreCount);
+        // Shift regular selection: sort CSV or multi-caretLine selection: sort lines alphabetically, etc.
+        ShiftableSelection.shiftSelectionInDocument(actionContainer, moreCount);
     }
 }

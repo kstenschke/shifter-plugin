@@ -16,8 +16,10 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
+import javax.swing.*;
 import java.util.Collections;
 import java.util.List;
 
@@ -61,13 +63,12 @@ public class QuotedString {
      * Shift to previous/next quoted string
      *
      * @param  word       Quoted word to be shifted
-     * @param  editorText Full text of editor
-     * @param  isUp       Shifting up or down?
+     * @param  actionContainer
      * @return String
      */
-    public String getShifted(String word, CharSequence editorText, boolean isUp) {
+    public String getShifted(String word, ActionContainer actionContainer) {
         // Get array of all strings wrapped in current quoting sign
-        String text = editorText.toString();
+        String text = actionContainer.editorText.toString();
         List<String> allMatches = UtilsTextual.extractQuotedStrings(text, quoteChar);
 
         // Sort var names alphabetically
@@ -76,7 +77,7 @@ public class QuotedString {
 
         // Find position of given variable, return next/previous variable name
         int curIndex = allMatches.indexOf(word);
-        curIndex     = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
+        curIndex     = NumericValue.moduloShiftInteger(curIndex, amountVars, actionContainer.shiftUp);
 
         return allMatches.get(curIndex);
     }

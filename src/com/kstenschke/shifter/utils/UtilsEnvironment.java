@@ -15,7 +15,6 @@
  */
 package com.kstenschke.shifter.utils;
 
-import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -26,6 +25,7 @@ import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleManager;
 import com.intellij.psi.util.PsiUtilBase;
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,12 +47,12 @@ public class UtilsEnvironment {
         return null == file ? "" : file.getName();
     }
 
-    public static boolean replaceWordAtCaretInDocument(Document document, int caretOffset, String charSequence) {
-        String documentText = document.getText();
-        int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, caretOffset);
-        int offsetEnd   = UtilsTextual.getOffsetEndOfWordAtOffset(documentText, caretOffset);
+    public static boolean replaceWordAtCaretInDocument(ActionContainer actionContainer, String charSequence) {
+        String documentText = actionContainer.document.getText();
+        int offsetStart = UtilsTextual.getStartOfWordAtOffset(documentText, actionContainer.caretOffset);
+        int offsetEnd   = UtilsTextual.getOffsetEndOfWordAtOffset(documentText, actionContainer.caretOffset);
 
-        document.replaceString(offsetStart, offsetEnd, charSequence);
+        actionContainer.document.replaceString(offsetStart, offsetEnd, charSequence);
 
         return true;
     }

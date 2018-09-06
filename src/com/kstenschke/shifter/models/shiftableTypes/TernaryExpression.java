@@ -48,7 +48,7 @@ public class TernaryExpression {
      * @return String   The shifted string
      */
     public static String getShifted(String str) {
-        Integer offsetElse = str.indexOf(":");
+        int offsetElse = str.indexOf(":");
         if (-1 == offsetElse) {
             return str;
         }

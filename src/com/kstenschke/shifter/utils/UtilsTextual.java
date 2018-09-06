@@ -34,15 +34,15 @@ import java.util.regex.Pattern;
  */
 public class UtilsTextual {
 
-    private final static Pattern LTRIM = Pattern.compile("^\\s+");
-    private final static Pattern RTRIM = Pattern.compile("\\s+$");
+    private final static Pattern TRIM_LEFT = Pattern.compile("^\\s+");
+    private final static Pattern TRIM_RIGHT = Pattern.compile("\\s+$");
 
     public static String ltrim(String s) {
-        return LTRIM.matcher(s).replaceAll("");
+        return TRIM_LEFT.matcher(s).replaceAll("");
     }
 
     public static String rtrim(String s) {
-        return RTRIM.matcher(s).replaceAll("");
+        return TRIM_RIGHT.matcher(s).replaceAll("");
     }
 
     /**
@@ -237,7 +237,7 @@ public class UtilsTextual {
     }
 
     public static boolean isLcFirst(String str) {
-        Character leadChar = str.charAt(0);
+        char leadChar = str.charAt(0);
 
         return Character.toLowerCase(leadChar) == leadChar;
     }
@@ -320,7 +320,7 @@ public class UtilsTextual {
 
         String lineAroundOffset = getLineAtOffset(str.toString(), offset);
         if (DocCommentTag.isDocCommentLine(lineAroundOffset)) {
-            // Prevent mistaking the beginning of a DOC comment line (e.g. " * @param ") for an asterisk operator
+            // Prevent mistaking the beginning of a DOC comment caretLine (e.g. " * @param ") for an asterisk operator
             return null;
         }
 
@@ -527,8 +527,8 @@ public class UtilsTextual {
 
     /**
      * @param  doc          Document
-     * @param  startLine    Number of first line to be extracted
-     * @param  endLine      Number of last line of extract
+     * @param  startLine    Number of first caretLine to be extracted
+     * @param  endLine      Number of last caretLine of extract
      * @return List<String> Extracted list of lines
      */
     public static List<String> extractLines(Document doc, int startLine, int endLine) {
@@ -544,9 +544,9 @@ public class UtilsTextual {
     }
 
     /**
-     * @param  doc           Document to extract the line from
-     * @param  lineNumber    Number of line to be extracted
-     * @return String        The extracted line
+     * @param  doc           Document to extract the caretLine from
+     * @param  lineNumber    Number of caretLine to be extracted
+     * @return String        The extracted caretLine
      */
     public static String getLine(Document doc, int lineNumber) {
         int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
@@ -556,7 +556,7 @@ public class UtilsTextual {
 
         String line = doc.getCharsSequence().subSequence(startOffset, endOffset).toString();
 
-        // If last line has no \n, add it one
+        // If last caretLine has no \n, add it one
         // This causes adding a \n at the end of file when sort is applied on whole file and the file does not end
         // w/ \n... This is fixed after.
         return line + (0 == lineSeparatorLength ? "\n" : "");
@@ -631,7 +631,7 @@ public class UtilsTextual {
     }
 
     /**
-     * Check given (alphabetically sorted) lines for any line(s) being duplicated
+     * Check given (alphabetically sorted) lines for any caretLine(s) being duplicated
      *
      * @param  lines
      * @return boolean
@@ -714,7 +714,7 @@ public class UtilsTextual {
     /**
      * @param lines
      * @param delimiter
-     * @return Given lines ending w/ given delimiter (last line is not being delimited)
+     * @return Given lines ending w/ given delimiter (last caretLine is not being delimited)
      */
     public static List<String> addDelimiter(List<String> lines, String delimiter) {
         int amountLines = lines.size();
@@ -728,7 +728,7 @@ public class UtilsTextual {
                 line = line + delimiter;
             }
             if (isLastLine && line.endsWith(delimiter)) {
-                // Remove delimiter from last line
+                // Remove delimiter from last caretLine
                 line = line.substring(0, line.length() - 1);
             }
 

@@ -16,14 +16,14 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 /**
- * Trailing (to line of code) comment - shifting = move comment to new empty line above
+ * Trailing (to caretLine of code) comment - shifting = move comment to new empty caretLine above
  */
 public class TrailingComment {
 
     /**
      * @param  word     String to be shifted currently
      * @return boolean
-     * @todo maybe later - implement also for multi-line selections(?)
+     * @todo maybe later - implement also for multi-caretLine selections(?)
      */
     public static boolean isTrailingComment(String word, String postfixChar, boolean isLastLineInDocument) {
         if (null == word || !word.contains("//") || (!isLastLineInDocument && !postfixChar.equals("\n"))) {

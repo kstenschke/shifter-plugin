@@ -50,7 +50,7 @@ class ShiftDownAction extends AnAction {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     @Override
                     public void run() {
-                        new ActionAdapter(event).delegate(false, null);
+                        new ActionAdapter(event, false).delegate(false, null);
                     }
                 });
             }

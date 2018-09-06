@@ -22,6 +22,7 @@ import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.ui.JBColor;
 import com.intellij.ui.awt.RelativePoint;
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -59,17 +60,17 @@ public class NumericValue {
 
     /**
      * @param value String representing a numeric value
-     * @param isUp  Shifting up or down?
+     * @param actionContainer
      * @return String      Value shifted up or down by one
      */
-    public String getShifted(String value, boolean isUp, @Nullable Editor editor, String filename) {
+    public String getShifted(String value, ActionContainer actionContainer) {
         int strLen = value.length();
 
         return strLen <= 7
             // Integer
-            ? Integer.toString(Integer.parseInt(value) + (isUp ? 1 : -1))
+            ? Integer.toString(Integer.parseInt(value) + (actionContainer.shiftUp ? 1 : -1))
             // Guessing that it is a UNIX or milliseconds timestamp
-            : getShiftedUnixTimestamp(value, isUp, editor, filename);
+            : getShiftedUnixTimestamp(value, actionContainer.shiftUp, actionContainer.editor, actionContainer.filename);
     }
 
     /**

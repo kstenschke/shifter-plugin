@@ -15,7 +15,6 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.openapi.editor.Editor;
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -52,20 +51,19 @@ class ShiftableTypesManager {
      * @param  prefixChar               Prefix character
      * @param  postfixChar              Postfix character
      * @param  isLastLineInDocument
-     * @param  line                     Whole line the caret is in
-     * @param  filename                 Name of edited file
+     * @param  actionContainer
      * @return int
      */
-    public ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, String line, String filename) {
-        // Selected code line w/ trailing //-comment: moves the comment into a new line before the code
+    public ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, ActionContainer actionContainer) {
+        // Selected code caretLine w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (com.kstenschke.shifter.models.shiftableTypes.TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
             return TRAILING_COMMENT;
         }
 
-        if (com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.isPhpDocParamLine(line)
-         && !com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.containsDataType(line)) {
+        if (com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.isPhpDocParamLine(actionContainer.caretLine)
+         && !com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
-            // PHP doc param line is handled in line-shifting fallback
+            // PHP doc param caretLine is handled in caretLine-shifting fallback
             return UNKNOWN;
         }
         // PHP variable (must be prefixed w/ "$")
@@ -86,12 +84,12 @@ class ShiftableTypesManager {
 
         // DocComment shiftableTypes (must be prefixed w/ "@")
         typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentType();
-        if (DocCommentType.isDocCommentTypeLineContext(line)) {
+        if (DocCommentType.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentTag();
-            if (prefixChar.matches("@") && typeTagInDocComment.isDocCommentTag(prefixChar, line)) {
+            if (prefixChar.matches("@") && typeTagInDocComment.isDocCommentTag(prefixChar, actionContainer.caretLine)) {
                 return DOC_COMMENT_TAG;
             }
-            if (typeDataTypeInDocComment.isDocCommentType(prefixChar, line)) {
+            if (typeDataTypeInDocComment.isDocCommentType(prefixChar, actionContainer.caretLine)) {
                 return DOC_COMMENT_DATA_TYPE;
             }
         }
@@ -103,7 +101,7 @@ class ShiftableTypesManager {
 
         // File extension specific term in dictionary
         typeDictionaryTerm = new com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm();
-        String fileExtension    = UtilsFile.extractFileExtension(filename);
+        String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension && typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
             return DICTIONARY_WORD_EXT_SPECIFIC;
         }
@@ -175,17 +173,17 @@ class ShiftableTypesManager {
         return UNKNOWN;
     }
 
-    public ShiftableTypes.Type getWordType(String word, CharSequence editorText, int caretOffset, String filename) {
-        String line = UtilsTextual.getLineAtOffset(editorText.toString(), caretOffset);
+    public ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
+        String line = UtilsTextual.getLineAtOffset(actionContainer.editorText.toString(), actionContainer.caretOffset);
 
-        int editorTextLength = editorText.length();
-        int offsetPostfixChar = caretOffset + word.length();
+        int editorTextLength = actionContainer.editorText.length();
+        int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
         String postfixChar = editorTextLength > offsetPostfixChar
-                ? String.valueOf(editorText.charAt(offsetPostfixChar))
+                ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
                 : "";
         boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
 
-        return getWordType(word, "", postfixChar, isLastLineInDocument, line, filename);
+        return getWordType(actionContainer.selectedText, "", postfixChar, isLastLineInDocument, actionContainer);
     }
 
     /**
@@ -204,57 +202,53 @@ class ShiftableTypesManager {
      * ShifterTypesManager: get next/previous keyword of given word group
      * Generic: calculate shifted value
      *
+     * @param  actionContainer
      * @param  word         Word to be shifted
      * @param  wordType     Shiftable word type
-     * @param  isUp         Shift up or down?
-     * @param  editorText   Full text of currently edited document
-     * @param  caretOffset  Caret offset in document
-     * @param  filename     Filename of currently edited file
-     * @param  editor       Editor instance
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return              The shifted word
      */
-    public String getShiftedWord(String word, ShiftableTypes.Type wordType, boolean isUp, CharSequence editorText, int caretOffset, Integer moreCount, String filename, @Nullable Editor editor) {
+    public String getShiftedWord(ActionContainer actionContainer, String word, ShiftableTypes.Type wordType, Integer moreCount) {
         switch (wordType) {
             // String based word shiftableTypes
             case ACCESSIBILITY:
-                return wordTypeAccessibilities.getShifted(word, isUp);
+                return wordTypeAccessibilities.getShifted(word, actionContainer.shiftUp);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
-                // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                return typeDictionaryTerm.getShifted(word, isUp);
+                // The dictionary stored the matching terms-caretLine, we don't need to differ global/ext-specific anymore
+                return typeDictionaryTerm.getShifted(word, actionContainer.shiftUp);
 
             // Generic shiftableTypes (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(word);
             case RGB_COLOR:
-                return typeRgbColor.getShifted(word, isUp);
+                return typeRgbColor.getShifted(word, actionContainer.shiftUp);
             case NUMERIC_VALUE:
                 // Numeric values including UNIX and millisecond timestamps
-                return typeNumericValue.getShifted(word, isUp, editor, filename);
+                return typeNumericValue.getShifted(word, actionContainer);
             case CSS_UNIT:
-                return typePixelValue.getShifted(word, isUp);
+                return typePixelValue.getShifted(word, actionContainer.shiftUp);
             case PHP_VARIABLE_OR_ARRAY:
-                return typePhpVariableOrArray.getShifted(word, editorText, isUp, moreCount);
+                return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:
                 return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);
             case QUOTED_STRING:
-                return typeQuotedString.getShifted(word, editorText, isUp);
+                return typeQuotedString.getShifted(word, actionContainer);
             case PARENTHESIS:
                 return Parenthesis.getShifted(word);
             case OPERATOR_SIGN:
                 return typeOperatorSign.getShifted(word);
             case ROMAN_NUMERAL:
-                return typeRomanNumber.getShifted(word, isUp);
+                return typeRomanNumber.getShifted(word, actionContainer.shiftUp);
             case LOGICAL_OPERATOR:
                 return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
             case MONO_CHARACTER:
-                return typeMonoCharacterString.getShifted(word, isUp);
+                return typeMonoCharacterString.getShifted(word, actionContainer.shiftUp);
             case DOC_COMMENT_TAG:
-                String textAfterCaret   = editorText.toString().substring(caretOffset);
-                return typeTagInDocComment.getShifted(word, isUp, filename, textAfterCaret);
+                String textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
+                return typeTagInDocComment.getShifted(word, actionContainer, textAfterCaret);
             case DOC_COMMENT_DATA_TYPE:
-                return typeDataTypeInDocComment.getShifted(word, isUp, filename);
+                return typeDataTypeInDocComment.getShifted(word, actionContainer);
             case SEPARATED_PATH:
                 return SeparatedPath.getShifted(word);
             case CAMEL_CASED:
@@ -262,7 +256,7 @@ class ShiftableTypesManager {
             case HTML_ENCODABLE:
                 return HtmlEncodable.getShifted(word);
             case NUMERIC_POSTFIXED:
-                return NumericPostfixed.getShifted(word, isUp);
+                return NumericPostfixed.getShifted(word, actionContainer.shiftUp);
             case WORDS_TUPEL:
                 return wordsTupel.getShifted(word);
             default:
@@ -271,19 +265,14 @@ class ShiftableTypesManager {
     }
 
     /**
-     * @param  word
-     * @param  isUp
-     * @param  editorText
-     * @param  caretOffset
+     * @param  actionContainer
      * @param  moreCount
-     * @param  filename
-     * @param  editor
      * @return String
      */
-    public String getShiftedWord(String word, boolean isUp, CharSequence editorText, int caretOffset, @Nullable Integer moreCount, String filename, Editor editor) {
-        String line    = UtilsTextual.getLineAtOffset(editorText.toString(), caretOffset);
-        ShiftableTypes.Type wordType = getWordType(word, "", "", false, line, filename);
+    public String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
+        String line                  = UtilsTextual.getLineAtOffset(actionContainer.editorText.toString(), actionContainer.caretOffset);
+        ShiftableTypes.Type wordType = getWordType(actionContainer.selectedText, "", "", false, actionContainer);
 
-        return getShiftedWord(word, wordType, isUp, editorText, caretOffset, moreCount, filename, editor);
+        return getShiftedWord(actionContainer, actionContainer.selectedText, wordType, moreCount);
     }
 }

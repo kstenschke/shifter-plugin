@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsArray;
 
 import java.util.ArrayList;
@@ -60,7 +61,7 @@ public class DocCommentTag {
     }
 
     /**
-     * Check whether given String looks like a doc comment line
+     * Check whether given String looks like a doc comment caretLine
      *
      * @param  line     Line the caret is at
      * @return boolean
@@ -76,7 +77,7 @@ public class DocCommentTag {
 
     /**
      * @param  prefixChar Prefix character
-     * @param  line       Whole line containing the word
+     * @param  line       Whole caretLine containing the word
      * @return boolean    Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
      */
     public boolean isDocCommentTag(String prefixChar, String line) {
@@ -90,20 +91,19 @@ public class DocCommentTag {
 
     /**
      * @param  word             String to be shifted
-     * @param  isUp             Shift up or down?
-     * @param  filename         Filename of the edited file
+     * @param  actionContainer
      * @param  textAfterCaret   Document text after the caret
      * @return Shifting result
      */
-    public String getShifted(String word, boolean isUp, String filename, String textAfterCaret) {
-        String[] commentTags = getTagsByFilename(filename);
+    public String getShifted(String word, ActionContainer actionContainer, String textAfterCaret) {
+        String[] commentTags = getTagsByFilename(actionContainer.filename);
         int amountTags = commentTags.length;
         if (amountTags > 0) {
             String wordLower = word.toLowerCase();
             List<String> commentTagsList = Arrays.asList(commentTags);
             int curIndex = commentTagsList.indexOf(wordLower);
             if (curIndex > -1) {
-                curIndex           = NumericValue.moduloShiftInteger(curIndex, amountTags, isUp);
+                curIndex           = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.shiftUp);
                 String shiftedWord = commentTagsList.get(curIndex);
                 if ("method".equals(shiftedWord)) {
                     shiftedWord = shiftedWord + parseNextMethod(textAfterCaret);

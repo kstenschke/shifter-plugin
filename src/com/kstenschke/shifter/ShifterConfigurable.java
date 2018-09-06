@@ -49,7 +49,7 @@ public class ShifterConfigurable implements Configurable {
         return null != settingsPanel && settingsPanel.isModified();
     }
 
-    public void apply() throws ConfigurationException {
+    public void apply() {
         if (null != settingsPanel) {
             settingsPanel.apply();
             settingsPanel.initFormValues();

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
@@ -97,18 +98,17 @@ public class PhpVariableOrArray {
      * Shift PX value up/down by 16px
      *
      * @param  variable     Variable name string
-     * @param  editorText   Text of edited document
-     * @param  isUp         Shift up or down?
+     * @param  actionContainer
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return String
      */
-    public String getShifted(String variable, CharSequence editorText, Boolean isUp, Integer moreCount) {
+    public String getShifted(String variable, ActionContainer actionContainer, Integer moreCount) {
         if (isShiftableArray) {
             return getShiftedArray(variable);
         }
 
         // Extract array of all PHP var names
-        String text = editorText.toString();
+        String text = actionContainer.editorText.toString();
         List<String> phpVariables = UtilsPhp.extractPhpVariables(text);
 
         // Sort var names alphabetically
@@ -123,14 +123,14 @@ public class PhpVariableOrArray {
         int amountVars = phpVariables.size();
 
         // Find position of given variable
-        Integer curIndex = getVariableIndex(variable, moreCount, phpVariables, allLeadChars);
+        int curIndex = getVariableIndex(variable, moreCount, phpVariables, allLeadChars);
         if (-1 == curIndex || 0 == amountVars) {
             return variable;
         }
 
         // Find next/previous variable name (only once during iterations of "shift more")
         if (null == moreCount || 1 == moreCount) {
-            curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, isUp);
+            curIndex = NumericValue.moduloShiftInteger(curIndex, amountVars, actionContainer.shiftUp);
         }
 
         return phpVariables.get(curIndex);

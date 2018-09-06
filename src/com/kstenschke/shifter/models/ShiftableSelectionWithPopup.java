@@ -17,8 +17,6 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.editor.Document;
-import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
@@ -33,16 +31,7 @@ import java.util.List;
 
 class ShiftableSelectionWithPopup extends ShiftableSelection {
 
-    private final Project project;
-    private final Document document;
-
-    private final int offsetStart;
-    private final int offsetEnd;
-
-    private final int lineNumberSelStart;
-    private final int lineNumberSelEnd;
-
-    private final String selectedText;
+    private final ActionContainer actionContainer;
 
     private final boolean containsShiftableQuotes;
     private final boolean containsEscapedQuotes;
@@ -50,30 +39,18 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
     /**
      * Constructor
      *
-     * @param project
-     * @param document
-     * @param offsetStart
-     * @param offsetEnd
+     * @param actionContainer
      */
-    public ShiftableSelectionWithPopup(Project project, Document document, int offsetStart, int offsetEnd) {
-        this.project  = project;
-        this.document = document;
+    public ShiftableSelectionWithPopup(ActionContainer actionContainer) {
+        this.actionContainer = actionContainer;
 
-        this.offsetStart = offsetStart;
-        this.offsetEnd   = offsetEnd;
-
-        lineNumberSelStart = document.getLineNumber(offsetStart);
-        lineNumberSelEnd   = document.getLineNumber(offsetEnd);
-
-        selectedText            = UtilsTextual.getSubString(document.getText(), offsetStart, offsetEnd);
-        containsShiftableQuotes = QuotedString.containsShiftableQuotes(selectedText);
-        containsEscapedQuotes   = QuotedString.containsEscapedQuotes(selectedText);
+        containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
+        containsEscapedQuotes   = QuotedString.containsEscapedQuotes(actionContainer.selectedText);
     }
 
     private void addQuoteShiftingOptions(List<String> shiftOptions) {
-        String selectedText = document.getText().substring(offsetStart, offsetEnd);
-        boolean containsSingleQuotes = selectedText.contains("'");
-        boolean containsDoubleQuotes = selectedText.contains("\"");
+        boolean containsSingleQuotes = actionContainer.selectedText.contains("'");
+        boolean containsDoubleQuotes = actionContainer.selectedText.contains("\"");
         if (containsSingleQuotes && containsDoubleQuotes) {
             shiftOptions.add(StaticTexts.SHIFT_OPTION_QUOTES_SWAP);
         }
@@ -91,9 +68,9 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
     /**
      * @param phpConcatenation
      */
-    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation, boolean isUp) {
+    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
         if (!containsShiftableQuotes) {
-            document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpConcatenation.getShifted());
             return;
         }
 
@@ -101,7 +78,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER);
         addQuoteShiftingOptions(shiftOptions);
 
-        shiftSelectionByPopupInDocument(shiftOptions, isUp, phpConcatenation, null, null);
+        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.shiftUp, phpConcatenation, null, null);
     }
 
     /**
@@ -111,13 +88,13 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      */
     public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsShiftableQuotes) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
 
         List<String> shiftOptions = new ArrayList<String>();
 
-        String items[] = selectedText.split(delimiterSplitPattern);
+        String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(items.length == 2 ? StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP : StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
         addQuoteShiftingOptions(shiftOptions);
 
@@ -147,12 +124,9 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    /**
-     * @param isUp
-     */
-    public void sortLinesOrSwapQuotesInDocument(final boolean isUp) {
+    public void sortLinesOrSwapQuotesInDocument() {
         if (!containsShiftableQuotes && !containsEscapedQuotes) {
-            ShiftableSelection.sortLinesInDocument(document, !isUp, lineNumberSelStart, lineNumberSelEnd);
+            ShiftableSelection.sortLinesInDocument(actionContainer.document, !actionContainer.shiftUp, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
             return;
         }
 
@@ -160,7 +134,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_LINES_SORT);
         addQuoteShiftingOptions(shiftOptions);
 
-        shiftSelectionByPopupInDocument(shiftOptions, isUp,null, null, null);
+        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.shiftUp,null, null, null);
     }
 
     public void shiftCamelCase(boolean isTwoWords) {
@@ -204,7 +178,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
                     public void run() {
                         // Callback when item chosen
-                        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
+                        CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
                                     public void run() {
                                         shiftSelectionByModeInDocument(
                                                 modes.getSelectedValue().toString(),
@@ -216,7 +190,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
                     }
                 });
             }
-        }).setMovable(true).createPopup().showCenteredInCurrentWindow(project);
+        }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
     /**
@@ -233,65 +207,65 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
     ) {
         if (mode.equals(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER)) {
             assert null != phpConcatenation;
-            document.replaceString(offsetStart, offsetEnd, phpConcatenation.getShifted());
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpConcatenation.getShifted());
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_UNESCAPE_QUOTES)) {
-            String text = selectedText.replace("\\\'", "'").replace("\\\"", "\"");
-            document.replaceString(offsetStart, offsetEnd, text);
+            String text = actionContainer.selectedText.replace("\\\'", "'").replace("\\\"", "\"");
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, text);
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER)) {
-            document.replaceString(offsetStart, offsetEnd, CamelCaseString.flipWordPairOrder(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, CamelCaseString.flipWordPairOrder(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP)) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedList.sortSeparatedList(selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER)) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedPath.flipWordsOrder(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedPath.flipWordsOrder(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LINES_SORT)) {
-            ShiftableSelection.sortLinesInDocument(document, !isUp, lineNumberSelStart, lineNumberSelEnd);
+            ShiftableSelection.sortLinesInDocument(actionContainer.document, !isUp, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SWAP)) {
-            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapQuotes(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_SLASHES_SWAP)) {
-            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapSlashes(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapSlashes(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE)) {
-            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText, true , false));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapQuotes(actionContainer.selectedText, true , false));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_QUOTES_DOUBLE_TO_SINGLE)) {
-            document.replaceString(offsetStart, offsetEnd, UtilsTextual.swapQuotes(selectedText, false, true));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapQuotes(actionContainer.selectedText, false, true));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH)) {
-            document.replaceString(offsetStart, offsetEnd, CamelCaseString.getShifted(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, CamelCaseString.getShifted(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED)) {
-            document.replaceString(offsetStart, offsetEnd, CamelCaseString.getShifted(selectedText, CamelCaseString.ShiftMode.CAMEL_WORDS_TO_UNDERSCORE_SEPARATED));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, CamelCaseString.getShifted(actionContainer.selectedText, CamelCaseString.ShiftMode.CAMEL_WORDS_TO_UNDERSCORE_SEPARATED));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE)) {
-            document.replaceString(offsetStart, offsetEnd, SeparatedPath.getShifted(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedPath.getShifted(actionContainer.selectedText));
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX)) {
             PhpVariableOrArray phpVariableOrArray = new PhpVariableOrArray();
-            phpVariableOrArray.init(selectedText);
-            document.replaceString(offsetStart, offsetEnd, phpVariableOrArray.getShiftedArray(selectedText));
+            phpVariableOrArray.init(actionContainer.selectedText);
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpVariableOrArray.getShiftedArray(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_SWAP_PARENTHESIS)) {
-            document.replaceString(offsetStart, offsetEnd, Parenthesis.getShifted(selectedText));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, Parenthesis.getShifted(actionContainer.selectedText));
         }
     }
 }

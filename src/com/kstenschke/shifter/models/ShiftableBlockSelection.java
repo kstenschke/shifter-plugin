@@ -17,7 +17,6 @@ package com.kstenschke.shifter.models;
 
 import com.intellij.openapi.editor.*;
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.actions.ActionAdapter;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.resources.ui.DialogNumericBlockOptions;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
@@ -70,17 +69,17 @@ public class ShiftableBlockSelection {
     }
 
     /**
-     * @param actionAdapter
+     * @param actionContainer
      * @param shiftUp
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
-    public static void shiftBlockSelectionInDocument(ActionAdapter actionAdapter, boolean shiftUp, @Nullable Integer moreCount) {
-        Editor editor = actionAdapter.editor;
+    public static void shiftBlockSelectionInDocument(ActionContainer actionContainer, boolean shiftUp, @Nullable Integer moreCount) {
+        Editor editor = actionContainer.editor;
         if (null == editor) {
             return;
         }
         SelectionModel selectionModel = editor.getSelectionModel();
-        Document document             = actionAdapter.document;
+        Document document             = actionContainer.document;
 
         int[] blockSelectionStarts = selectionModel.getBlockSelectionStarts();
         int[]blockSelectionEnds   = selectionModel.getBlockSelectionEnds();
@@ -92,22 +91,21 @@ public class ShiftableBlockSelection {
             return;
         }
         if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, documentText)) {
-            shiftIdenticalBlockItemsInDocument(shiftUp, moreCount, editor, document, blockSelectionStarts, blockSelectionEnds, documentText);
+            shiftIdenticalBlockItemsInDocument(actionContainer, moreCount, blockSelectionStarts, blockSelectionEnds);
         }
     }
 
-    private static void shiftIdenticalBlockItemsInDocument(boolean shiftUp, @Nullable Integer moreCount, Editor editor, Document document, int[] blockSelectionStarts, int[] blockSelectionEnds, String editorText) {
-        String filename = UtilsEnvironment.getDocumentFilename(document);
+    private static void shiftIdenticalBlockItemsInDocument(ActionContainer actionContainer, @Nullable Integer moreCount, int[] blockSelectionStarts, int[] blockSelectionEnds) {
+        String word = actionContainer.editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
+        // @todo ensure line of block selection is not needed
+        String line = UtilsTextual.getLine(actionContainer.document, actionContainer.document.getLineNumber(blockSelectionStarts[0])).trim();
 
-        String word = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
-        String line = UtilsTextual.getLine(document, document.getLineNumber(blockSelectionStarts[0])).trim();
-
-        Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(editorText, blockSelectionStarts[0]);
-        String newWord     = ShiftableWord.getShiftedWordInDocument(editor, shiftUp, filename, word, line, wordOffset, false, false, moreCount);
+        Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(actionContainer.editorText, blockSelectionStarts[0]);
+        String newWord     = ShiftableWord.getShiftedWordInDocument(actionContainer, word, wordOffset, false, false, moreCount);
 
         if (null != newWord && !newWord.equals(word)) {
             for (int i = blockSelectionEnds.length - 1; i >= 0; i--) {
-                document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], newWord);
+                actionContainer.document.replaceString(blockSelectionStarts[i], blockSelectionEnds[i], newWord);
             }
         }
     }
