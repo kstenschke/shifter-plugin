@@ -37,6 +37,7 @@ public class UtilsPhp {
     /**
      * @param  str
      * @return Name of primitive (PHP) data type
+     * @note   this method is also the basis for guessing JavaScript data types, is converted to the rel. JS type than
      */
     public static String guessDataTypeByParameterName(String str) {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
@@ -55,7 +56,7 @@ public class UtilsPhp {
         if ("float".equals(lastWord)) {
             return "float";
         }
-        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"object", "obj"})) {
+        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"app", "object", "obj"})) {
             return "object";
         }
         if ("string".equals(lastWord)) {
@@ -85,6 +86,11 @@ public class UtilsPhp {
         }
         if (UtilsTextual.equalsAnyOf(str, new String[]{"action|controller"})) {
             return "string";
+        }
+
+        if (lastWord.endsWith("ed") || lastWord.endsWith("n")) {
+            // E.g. states like "enabled", "disabled", "hidden", "shown", etc.
+            return "bool";
         }
 
         return "unknown";
