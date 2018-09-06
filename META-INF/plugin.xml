@@ -145,7 +145,7 @@
     <a href="https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile" style="color:#6cb1f5" target="_blank">...Read full changelog on github</a>
   ]]></change-notes>
     <!-- see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html -->
-    <idea-version since-build="8000"/>
+    <idea-version since-build="13.17"/>
     <depends>com.intellij.modules.lang</depends>
     <application-components>
     </application-components>
