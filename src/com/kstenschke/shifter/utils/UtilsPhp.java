@@ -69,7 +69,7 @@ public class UtilsPhp {
 
         str = str.toLowerCase();
 
-        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|filename\\w*|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|replace(ment)*|salt|separator|str(ing)*|\\w*title|\\w*url)\\d*")) {
+        if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|description|filename\\w*|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|platform|replace(ment)*|salt|separator|str(ing)*|\\w*title|\\w*url)\\d*")) {
             return "string";
         }
         if (str.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*start|\\w*step(s)*|tick|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|\\w*max|\\w*min|\\w*mode|month|\\w*multiplier|now|num|offset|\\w*op(eration)*|\\w*pos(ition)*|red|\\w*time(stamp)*|week|\\w*wid(th)*|x|y)\\d*")) {
@@ -81,16 +81,16 @@ public class UtilsPhp {
         if (str.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
             return "Object";
         }
-        if (str.matches("((\\w*s)\\d*|\\w*arr(ay)*|\\w*param(eter)*s|\\w*val(ue)*s)")) {
-            return "array";
-        }
-        if (UtilsTextual.equalsAnyOf(str, new String[]{"action|controller"})) {
+        if (UtilsTextual.equalsAnyOf(str, new String[]{"action|cmd|content|controller|html|out"})) {
             return "string";
         }
-
-        if (lastWord.endsWith("ed") || lastWord.endsWith("n")) {
+        if (UtilsTextual.equalsAnyOf(firstWord, new String[]{"allow|enable|disable|hide|show"})
+            ||lastWord.endsWith("ed") || lastWord.endsWith("n")) {
             // E.g. states like "enabled", "disabled", "hidden", "shown", etc.
             return "bool";
+        }
+        if (str.matches("((\\w*s)\\d*|\\w*arr(ay)*|\\w*param(eter)*s|\\w*val(ue)*s)")) {
+            return "array";
         }
 
         return "unknown";
