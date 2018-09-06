@@ -41,7 +41,7 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class Comment {
 
-    public static final String ACTION_TEXT_SHIFT_COMMENT = "Shift comment";
+    public static final String ACTION_TEXT_SHIFT_COMMENT = "Shift Comment";
 
     /**
      * @param  str     String to be shifted currently

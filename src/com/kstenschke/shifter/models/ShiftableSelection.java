@@ -31,7 +31,7 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 // Shiftable (non-block) selection
 public class ShiftableSelection {
 
-    public static final String ACTION_TEXT_SHIFT_SELECTION = "Shift selection";
+    public static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
 
     /**
      * @param actionContainer

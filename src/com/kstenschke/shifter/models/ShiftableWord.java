@@ -201,7 +201,7 @@ public class ShiftableWord {
                     JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(actionContainer, word);
                 }
             },
-                    "Shift JsDoc data type");
+                    "Shift JsDoc Data Type");
 
             return true;
         }

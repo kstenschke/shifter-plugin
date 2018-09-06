@@ -29,6 +29,8 @@ import java.util.List;
 // Shiftable block selection
 public class ShiftableBlockSelection {
 
+    public static final String ACTION_TEXT_SHIFT_COLUMN_SELECTION = "Shift Column Selection";
+
     /**
      * @param  blockSelectionStarts
      * @param  blockSelectionEnds
@@ -98,7 +100,7 @@ public class ShiftableBlockSelection {
                             shiftIdenticalBlockItemsInDocument(actionContainer, stepSize, blockSelectionStarts, blockSelectionEnds);
                         }
                     },
-                    "Shift block selection"
+                    ACTION_TEXT_SHIFT_COLUMN_SELECTION
             );
         }
     }
@@ -141,7 +143,7 @@ public class ShiftableBlockSelection {
                                 insertBlockEnumerationInDocument(actionContainer, optionsDialog.getFirstNumber());
                             }
                         },
-                        "Shift block selection"
+                        ACTION_TEXT_SHIFT_COLUMN_SELECTION
                 );
 
                 return;
@@ -154,7 +156,7 @@ public class ShiftableBlockSelection {
                             inOrDecrementNumericBlockInDocument(actionContainer, stepSize);
                         }
                     },
-                    "Shift block selection"
+                    ACTION_TEXT_SHIFT_COLUMN_SELECTION
             );
         }
     }

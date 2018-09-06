@@ -91,7 +91,7 @@ public class PhpDocParam {
                                 UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
                             }
                         },
-                        "Shift Php DOC comment");
+                        "Shift PHPDoc comment");
 
                 return true;
             }
@@ -111,7 +111,7 @@ public class PhpDocParam {
                                 actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, insertDataTypeIntoParamLine(actionContainer.selectedText, dataType));
                             }
                         },
-                        "Shift Php DOC param");
+                        "Shift PHPDoc param");
 
                 return true;
             }

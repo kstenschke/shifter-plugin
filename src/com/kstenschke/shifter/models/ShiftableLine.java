@@ -121,7 +121,7 @@ public class ShiftableLine {
                             actionContainer.document.replaceString(actionContainer.offsetCaretLineStart, actionContainer.offsetCaretLineStart + actionContainer.caretLine.length(), shiftedLine);
                         }
                     },
-                    "Shift line");
+                    "Shift Line");
         }
     }
 }
