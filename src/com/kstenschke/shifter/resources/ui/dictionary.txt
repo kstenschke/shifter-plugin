@@ -59,10 +59,11 @@
 	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
 	|after|before|
 	|aif|au|mpeg|mpg|mp3|ra|ram|wav|
-	|and|or|xor|not|
 	|all|none|
+	|and|or|xor|not|
 	|ascending|descending|
 	|ascend|descend|
+	|atoms|molecules|organisms|templates|pages|
 	|asc|desc|
 	|big|large|medium|small|
 	|back|forward|
