@@ -23,7 +23,7 @@ public class TrailingComment {
     /**
      * @param  word     String to be shifted currently
      * @return boolean
-     * @todo maybe later - implement also for multi-caretLine selections(?)
+     * TODO    maybe later - implement also for multi-caretLine selections(?)
      */
     public static boolean isTrailingComment(String word, String postfixChar, boolean isLastLineInDocument) {
         if (null == word || !word.contains("//") || (!isLastLineInDocument && !postfixChar.equals("\n"))) {

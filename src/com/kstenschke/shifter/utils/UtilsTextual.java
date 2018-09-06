@@ -614,7 +614,7 @@ public class UtilsTextual {
             ? string
             :   string.substring(0, pos)
               + replacement
-              + string.substring(pos + toReplace.length(), string.length());
+              + string.substring(pos + toReplace.length());
     }
 
     /**

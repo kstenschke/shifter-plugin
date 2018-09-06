@@ -92,7 +92,6 @@ public class ShiftableBlockSelection {
             return;
         }
         if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, actionContainer.documentText)) {
-            final int moreCountFin = moreCount;
             actionContainer.writeUndoable(
                     new Runnable() {
                         @Override

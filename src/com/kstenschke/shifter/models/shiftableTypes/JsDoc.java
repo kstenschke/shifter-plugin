@@ -135,7 +135,6 @@ public class JsDoc {
      *
      * @param  actionContainer
      * @param  word
-     * @return boolean
      */
     public static void addCompoundsAroundDataTypeAtCaretInDocument(ActionContainer actionContainer, String word) {
         UtilsEnvironment.replaceWordAtCaretInDocument(actionContainer, "{" + word + "}");

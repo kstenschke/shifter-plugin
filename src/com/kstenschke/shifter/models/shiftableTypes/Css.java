@@ -50,7 +50,7 @@ public class Css {
             if (indexMatch > 0) {
                 List<String> lines = splitAttributesIntoLines(attributeGroup);
 
-                lines              = prepareAttributeStyleLinesForConcat(lines);
+                lines = prepareAttributeStyleLinesForConcat(lines);
                 List<String> linesSorted = sortAttributeStyles(lines);
 
                 attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());

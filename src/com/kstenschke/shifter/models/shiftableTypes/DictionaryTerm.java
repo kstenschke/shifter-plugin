@@ -51,8 +51,8 @@ public class DictionaryTerm {
     /**
      * Check whether the given term exists in any section of shift-lists of the dictionary
      * + Stores matching caretLine containing the term for use in shifting later
+     * Note: this is a global dictionary check, and NOT file extension specific
      *
-     * @note   this is a global dictionary check, and NOT file extension specific
      * @param  term        String to be looked for in shifter dictionary
      * @return boolean
      */

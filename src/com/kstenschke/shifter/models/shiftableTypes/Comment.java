@@ -17,8 +17,10 @@ package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.ui.popup.IPopupChooserBuilder;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
+import com.intellij.psi.NavigatablePsiElement;
 import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.resources.StaticTexts;
@@ -148,9 +150,11 @@ public class Comment {
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
 
         final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
-        final JBList modes = new JBList(options);
 
+        final JBList modes = new JBList(options);
         PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        //final IPopupChooserBuilder<String> popup = JBPopupFactory.getInstance().createPopupChooserBuilder(shiftOptions);
+
         popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
             public void run() {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
