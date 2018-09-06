@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.8.1
+    ** Improved: Shifting of parenthesis now also shifts curly brackets
 * 1.8.0
     ** Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46
     ** Improved: Made action entries in undo-history more speaking

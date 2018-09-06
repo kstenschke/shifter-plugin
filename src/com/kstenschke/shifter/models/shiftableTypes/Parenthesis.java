@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 /**
- * Detect and toggle surrounding "(" and ")" versus "[" and "]"
+ * Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
  */
 public class Parenthesis {
 
@@ -27,7 +27,7 @@ public class Parenthesis {
     public static boolean isWrappedInParenthesis(String str) {
         str = str.trim();
 
-        return isWrappedInRoundBrackets(str) || isWrappedInSquareBrackets(str);
+        return isWrappedInRoundBrackets(str) || isWrappedInSquareBrackets(str) || isWrappedInCurlyBrackets(str);
     }
 
     private static boolean isWrappedInRoundBrackets(String str) {
@@ -38,13 +38,22 @@ public class Parenthesis {
         return str.startsWith("[") && str.endsWith("]");
     }
 
+    private static boolean isWrappedInCurlyBrackets(String str) {
+        return str.startsWith("{") && str.endsWith("}");
+    }
+
     /**
      * @param  str
      * @return String
      */
     public static String getShifted(String str) {
-        return isWrappedInRoundBrackets(str)
-            ? "[" + str.substring(1, str.length() - 1) + "]"
-            : "(" + str.substring(1, str.length() - 1) + ")";
+        if (isWrappedInRoundBrackets(str)) {
+            return "[" + str.substring(1, str.length() - 1) + "]";
+        }
+        if (isWrappedInSquareBrackets(str)) {
+            return "{" + str.substring(1, str.length() - 1) + "}";
+        }
+        // Is wrapped in curly brackets
+        return "(" + str.substring(1, str.length() - 1) + ")";
     }
 }

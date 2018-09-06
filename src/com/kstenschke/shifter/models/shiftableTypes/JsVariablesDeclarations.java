@@ -29,14 +29,15 @@ public class JsVariablesDeclarations {
      * -each trimmed caretLine starts w/ "var" (at least 2 occurrences)
      * -each trimmed caretLine ends w/ ";"
      * -there can be empty lines
-     * -there can commented lines, beginning w/ "//"
+     * -there can be commented lines, beginning w/ "//"
      *
      * @param  str     String to be checked
      * @return boolean
      */
     public static Boolean isJsVariables(String str) {
         str = str.trim();
-        return !(!str.startsWith("var")
+        return !(
+                 !str.startsWith("var")
               || !str.endsWith(";")
               || !str.contains("\n")
               || StringUtils.countMatches(str, "var") < 2
