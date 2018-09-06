@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableLine {
 
-    private ActionContainer actionContainer;
+    private final ActionContainer actionContainer;
 
     /**
      * Constructor

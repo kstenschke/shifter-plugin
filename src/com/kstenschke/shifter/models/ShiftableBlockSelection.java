@@ -29,7 +29,7 @@ import java.util.List;
 // Shiftable block selection
 public class ShiftableBlockSelection {
 
-    public static final String ACTION_TEXT_SHIFT_COLUMN_SELECTION = "Shift Column Selection";
+    private static final String ACTION_TEXT_SHIFT_COLUMN_SELECTION = "Shift Column Selection";
 
     /**
      * @param  blockSelectionStarts

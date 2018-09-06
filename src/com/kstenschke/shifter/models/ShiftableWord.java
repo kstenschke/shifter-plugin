@@ -41,7 +41,7 @@ public class ShiftableWord {
     private final ShiftableTypes.Type wordType;
     private final boolean isShiftable;
 
-    private ActionContainer actionContainer;
+    final private ActionContainer actionContainer;
 
     /**
      * Constructor

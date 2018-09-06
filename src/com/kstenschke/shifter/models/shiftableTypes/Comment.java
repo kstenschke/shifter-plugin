@@ -17,10 +17,8 @@ package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.intellij.openapi.application.ApplicationManager;
 import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.ui.popup.IPopupChooserBuilder;
 import com.intellij.openapi.ui.popup.JBPopupFactory;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
-import com.intellij.psi.NavigatablePsiElement;
 import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.resources.StaticTexts;
@@ -42,7 +40,7 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class Comment {
 
-    public static final String ACTION_TEXT_SHIFT_COMMENT = "Shift Comment";
+    private static final String ACTION_TEXT_SHIFT_COMMENT = "Shift Comment";
 
     /**
      * @param  str     String to be shifted currently

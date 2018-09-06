@@ -20,10 +20,8 @@ import javax.annotation.Nullable;
  * Container for event and deducible IDE environment attributes (project, editor, etc.)
  */
 public class ActionContainer {
-    public AnActionEvent event;
-
-    public boolean isShiftUp;
-    public boolean isShiftMore;
+    public final boolean isShiftUp;
+    public final boolean isShiftMore;
 
     public Project project;
     public Editor editor;
@@ -55,8 +53,6 @@ public class ActionContainer {
      * Constructor
      */
     public ActionContainer(final AnActionEvent event, boolean isShiftUp, boolean isShiftMore) {
-        this.event = event;
-
         this.isShiftUp = isShiftUp;
         this.isShiftMore = isShiftMore;
 
