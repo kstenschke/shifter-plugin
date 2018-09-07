@@ -46,7 +46,7 @@ public class ShiftableSelection {
             // Detect and shift whole PHPDoc block or single caretLine out of it, that contains @param caretLine(s) w/o data type
             return;
         }
-        if (actionContainer.filename.endsWith(".js") && JsDoc.isJsDocBlock(actionContainer.selectedText) && JsDoc.correctDocBlockInDocument(actionContainer)) {
+        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) && JsDoc.isJsDocBlock(actionContainer.selectedText) && JsDoc.correctDocBlockInDocument(actionContainer)) {
             return;
         }
 

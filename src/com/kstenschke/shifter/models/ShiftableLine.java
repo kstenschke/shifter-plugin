@@ -55,7 +55,7 @@ public class ShiftableLine {
             }
         }
 
-        if (   actionContainer.filename.endsWith(".js")
+        if (   UtilsFile.isJavaScriptFile(actionContainer.filename, true)
             && (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine) || JsDoc.isAtReturnsLine(actionContainer.caretLine, true))
         ) {
             String shiftedLine = JsDoc.correctAtKeywordLine(actionContainer.caretLine);

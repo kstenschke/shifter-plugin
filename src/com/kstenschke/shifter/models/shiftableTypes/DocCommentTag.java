@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsArray;
+import com.kstenschke.shifter.utils.UtilsFile;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -148,7 +149,7 @@ public class DocCommentTag {
         if (null != filename) {
             String filenameLower = filename.toLowerCase();
 
-            if (filenameLower.endsWith(".js")) {
+            if (UtilsFile.isJavaScriptFile(filenameLower, true)) {
                 // JavaScript comment shiftableTypes
                 return tagsJavaScript;
             }

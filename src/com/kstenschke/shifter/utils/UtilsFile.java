@@ -73,6 +73,14 @@ public class UtilsFile {
         return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(css|scss|sass|less|styl)");
     }
 
+    public static boolean isJavaScriptFile(@Nullable String filename, boolean allowTypeScript) {
+        if (!filenameEndsWithExtension(filename)) {
+            return false;
+        }
+
+        return extractFileExtension(filename).matches(allowTypeScript ? "(js|ts)" : "(js)");
+    }
+
     /**
      * @param  is       Input stream
      * @return String   Full contents of given stream as string

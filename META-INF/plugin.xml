@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.8.1</version>
+    <version>1.8.2</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
@@ -121,6 +121,11 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.8.2
+            <ul>
+                <li>Improved: Made all JavaScript (.js) shifting also available to TypeScript (.ts)</li>
+            </ul>
+        </li>
         <li>1.8.1
             <ul>
                 <li>Improved: Dictionary can now also handle multi-words terms (separated by space)</li>
@@ -134,11 +139,6 @@
                 <li>Improved: Made action entries in undo-history more speaking</li>
                 <li>Improved: "More shifting" on block selection now uses value of configured "Shift more size" instead of shifting repeatedly</li>
                 <li>Extended guessing "AI" of DOC data types by argument name</li>
-            </ul>
-        </li>
-        <li>1.7.7
-            <ul>
-                <li>Added: Option to shift camel-case selection into minus- or underscore-separated path (and vice versa)</li>
             </ul>
         </li>
     </ul>

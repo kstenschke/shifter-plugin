@@ -15,6 +15,8 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.utils.UtilsFile;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -74,7 +76,7 @@ class DocCommentDataType {
         if (null != filename) {
             String filenameLower = filename.toLowerCase();
 
-            if (filenameLower.endsWith(".js")) {
+            if (UtilsFile.isJavaScriptFile(filenameLower, true)) {
                 // JavaScript data shiftableTypes
                 return typesJavaScript;
             }

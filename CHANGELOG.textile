@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.8.2
+    ** Improved: Made all JavaScript (.js) shifting also available to TypeScript (.ts)
 * 1.8.1
     ** Improved: Dictionary can now also handle multi-word terms (separated by space)
     ** Improved: Shifting of parenthesis now also shifts curly brackets
