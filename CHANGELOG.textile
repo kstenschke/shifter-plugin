@@ -1,7 +1,9 @@
 h1. Shifter Plugin - Changelog
 
 * 1.8.1
+    ** Improved: Dictionary can now also handle multi-word terms (separated by space)
     ** Improved: Shifting of parenthesis now also shifts curly brackets
+    ** Improved: Extended default dictionary
 * 1.8.0
     ** Updated to JDK 1.8 / IntelliJ Idea IU-182.4323.46
     ** Improved: Made action entries in undo-history more speaking
@@ -32,7 +34,7 @@ h1. Shifter Plugin - Changelog
     ** Improved: JsDoc @param line w/o data type can now be shifted (to insert the missing data type) without having to be selected
     ** Improved: Shifting selected JsDoc block comment (add missing data type annotations)
     ** Improved: Extended type detection of PHP Doc and JsDoc data type completion
-    ** Improved: PHP DOC @param data type insertion - can now also be invoked on selected line of DOC comment block
+    ** Improved: PHPDoc @param data type insertion - can now also be invoked on selected line of DOC comment block
     ** Improved: When there are only 2 sortable items, the related intention option now says "swap items order" instead of "sort items"
 * 1.7.0
     ** Added: Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus-separated path (and vice versa)
@@ -41,11 +43,11 @@ h1. Shifter Plugin - Changelog
     ** Added: Sort selected attribute-style lines in a CSS stylesheet (alphabetically, vendor-attributes and vendor-styles at the end)
     ** Added: Sorting CSS attribute-style lines detects and adds a missing semicolon on the last line, before sorting
     ** Added: Intention popup when selection is both: sortable multi-line, containing swappable quotes
-    ** Improved: Shifting of single-lined PHP DOC block comments
+    ** Improved: Shifting of single-lined PHPDoc block comments
     ** Improved: Shifting of c-style line comments
     ** Improved: Better case maintaining during dictionaric word shifting
     ** Improved: Sorting selected lines was possible only from 3+ lines
-    ** Improved: More PHP DOC and JsDoc data types detection from argument names
+    ** Improved: More PHPDoc and JsDoc data types detection from argument names
     ** Improved: Natural sort (added case insensitivity)
 * 1.6.1
     ** Improved: Better JsDoc comment block detection
@@ -63,7 +65,7 @@ h1. Shifter Plugin - Changelog
     ** Improved: Sorting a selection of lines w/ common delimiter no longer removes leading whitespace
 * 1.5.4
     ** Added: Flip order of selected camelCase (w/ lower or upper lead character) string that is a word pair
-    ** Improved: PHP DOC comment data type detection
+    ** Improved: PHPDoc comment data type detection
     ** Improved: Tupel detection (both items must be non empty)
     ** Bugfix: Numeric postfix shifting ("a99" was shifted into "a910" instead of "a100")
 * 1.5.3

@@ -37,7 +37,7 @@ public class ShifterConfigurable implements Configurable {
     }
 
     public JComponent createComponent() {
-        if (settingsPanel == null) {
+        if (null == settingsPanel) {
             settingsPanel = new PluginConfiguration();
         }
 

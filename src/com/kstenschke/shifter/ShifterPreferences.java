@@ -75,7 +75,7 @@ public class ShifterPreferences {
         String value        = PropertiesComponent.getInstance().getValue(propertyName);
         String defaultValue = "0x0";
 
-        return value == null ? defaultValue : value;
+        return null == value ? defaultValue : value;
     }
 
 
@@ -147,7 +147,7 @@ public class ShifterPreferences {
             return "";
         }
 
-        return dictionary == null ? "" : dictionary;
+        return null == dictionary ? "" : dictionary;
     }
 
     /**
@@ -157,7 +157,7 @@ public class ShifterPreferences {
         try {
             String size = PropertiesComponent.getInstance().getValue(PROPERTY_SIZE_SHIFT_MORE);
 
-            return size == null ? 10 : Integer.parseInt(size);
+            return null == size ? 10 : Integer.parseInt(size);
         } catch(NullPointerException e) {
             return 10;
         }
@@ -167,7 +167,7 @@ public class ShifterPreferences {
         try {
             String mode = PropertiesComponent.getInstance().getValue(PROPERTY_MODE_SHIFT_NUMERICAL_BLOCK);
 
-            return mode == null ? SORTING_MODE_NUMERICAL_BLOCK_ENUM : Integer.parseInt(mode);
+            return null == mode ? SORTING_MODE_NUMERICAL_BLOCK_ENUM : Integer.parseInt(mode);
         } catch(NullPointerException e) {
             return SORTING_MODE_NUMERICAL_BLOCK_ENUM;
         }
@@ -177,7 +177,7 @@ public class ShifterPreferences {
         try {
             String modeStr = PropertiesComponent.getInstance().getValue(PROPERTY_SHIFTING_MODE_TIMESTAMP);
 
-            return modeStr == null
+            return null == modeStr
                     ? SHIFTING_MODE_TIMESTAMP_SECONDS
                     : Integer.parseInt(modeStr);
         } catch(NullPointerException e) {
@@ -189,7 +189,7 @@ public class ShifterPreferences {
         try {
             String endings = PropertiesComponent.getInstance().getValue(PROPERTY_FILE_ENDINGS_MILLISECONDS);
 
-            return endings == null ? DEFAULT_FILE_ENDINGS_MILLISECONDS : endings;
+            return null == endings ? DEFAULT_FILE_ENDINGS_MILLISECONDS : endings;
         } catch(NullPointerException e) {
             return DEFAULT_FILE_ENDINGS_MILLISECONDS;
         }
@@ -199,7 +199,7 @@ public class ShifterPreferences {
         try {
             String endings = PropertiesComponent.getInstance().getValue(PROPERTY_FILE_ENDINGS_SECONDS);
 
-            return endings == null ? DEFAULT_FILE_ENDINGS_SECONDS : endings;
+            return null == endings ? DEFAULT_FILE_ENDINGS_SECONDS : endings;
         } catch(NullPointerException e) {
             return DEFAULT_FILE_ENDINGS_SECONDS;
         }
@@ -232,7 +232,7 @@ public class ShifterPreferences {
         try {
             String value = PropertiesComponent.getInstance().getValue(property);
 
-            return value == null || "1".equals(value);
+            return null == value || "1".equals(value);
         } catch (NullPointerException e) {
             return true;
         }

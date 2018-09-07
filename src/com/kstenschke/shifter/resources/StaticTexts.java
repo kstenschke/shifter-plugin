@@ -76,6 +76,8 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
     @NonNls
+    public static final String SHIFT_OPTION_SWAP_TUPEL_WORDS_ORDER = "Swap order of words pair";
+    @NonNls
     public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";
     @NonNls
     public static final String SHIFT_OPTION_PATH_PAIR_SWAP_ORDER = "Swap path items order";
@@ -85,6 +87,8 @@ public class StaticTexts {
     public static final String SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED = "Convert to underscore-separated";
     @NonNls
     public static final String SHIFT_OPTION_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
+    @NonNls
+    public static final String SHIFT_OPTION_SHIFT_DICTIONARY_TERM = "Shift dictionary term";
     @NonNls
     public static final String SHIFT_OPTION_SWAP_PARENTHESIS = "Toggle (...) and [...]";
     @NonNls

@@ -29,7 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-class ShiftableSelectionWithPopup extends ShiftableSelection {
+public class ShiftableSelectionWithPopup extends ShiftableSelection {
 
     private final ActionContainer actionContainer;
 
@@ -68,7 +68,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
     /**
      * @param phpConcatenation
      */
-    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
+    void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
         if (!containsShiftableQuotes) {
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpConcatenation.getShifted());
             return;
@@ -86,7 +86,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
      * @param delimiterGlue
      * @param isUp
      */
-    public void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
+    void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsShiftableQuotes) {
             actionContainer.writeUndoable(
                     new Runnable() {
@@ -109,7 +109,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
     }
 
-    public void swapParenthesisOrConvertPphpArray() {
+    void swapParenthesisOrConvertPphpArray() {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_SWAP_PARENTHESIS);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX);
@@ -117,14 +117,14 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    public void shiftQuotesInDocument() {
+    void shiftQuotesInDocument() {
         List<String> shiftOptions = new ArrayList<String>();
         addQuoteShiftingOptions(shiftOptions);
 
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    public void swapSlashesOrUnescapeQuotes() {
+    void swapSlashesOrUnescapeQuotes() {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_SLASHES_SWAP);
         addQuoteShiftingOptions(shiftOptions);
@@ -132,7 +132,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    public void sortLinesOrSwapQuotesInDocument() {
+    void sortLinesOrSwapQuotesInDocument() {
         if (!containsShiftableQuotes && !containsEscapedQuotes) {
             ShiftableSelection.sortLinesInDocument(actionContainer, !actionContainer.isShiftUp);
             return;
@@ -145,7 +145,7 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp,null, null, null);
     }
 
-    public void shiftCamelCase(boolean isTwoWords) {
+    void shiftCamelCase(boolean isTwoWords) {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED);
@@ -157,7 +157,15 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    public void shiftSeparatedPathOrSwapWords() {
+    public void shiftDictionaryTermOrToggleTupelOrder() {
+        List<String> shiftOptions = new ArrayList<String>();
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_SHIFT_DICTIONARY_TERM);
+        shiftOptions.add(StaticTexts.SHIFT_OPTION_SWAP_TUPEL_WORDS_ORDER);
+
+        shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
+    }
+
+    void shiftSeparatedPathOrSwapWords() {
         List<String> shiftOptions = new ArrayList<String>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER);
@@ -228,6 +236,19 @@ class ShiftableSelectionWithPopup extends ShiftableSelection {
         if (mode.equals(StaticTexts.SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER)) {
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, CamelCaseString.flipWordPairOrder(actionContainer.selectedText));
             return;
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_SWAP_TUPEL_WORDS_ORDER)) {
+            Tupel tupel = new Tupel(actionContainer);
+            tupel.isWordsTupel(actionContainer.selectedText);
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, tupel.getShifted(actionContainer.selectedText, true));
+            return;
+        }
+        if (mode.equals(StaticTexts.SHIFT_OPTION_SHIFT_DICTIONARY_TERM)) {
+            DictionaryTerm dictionaryTerm = new DictionaryTerm();
+            if (dictionaryTerm.isTermInDictionary(actionContainer.selectedText)) {
+                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, dictionaryTerm.getShifted(actionContainer.selectedText, actionContainer.isShiftUp));
+                return;
+            }
         }
         if (mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP)) {
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));

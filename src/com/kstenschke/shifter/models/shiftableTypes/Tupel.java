@@ -15,6 +15,10 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,7 +27,19 @@ import java.util.regex.Pattern;
  */
 public class Tupel {
 
+    private final ActionContainer actionContainer;
+
+    // Defined during detection of being a tupel
     private String delimiter;
+
+    /**
+     * Constructor
+     *
+     * @param actionContainer
+     */
+    public Tupel(ActionContainer actionContainer) {
+        this.actionContainer = actionContainer;
+    }
 
     /**
      * Check whether shifted string is a ternary expression
@@ -65,9 +81,29 @@ public class Tupel {
      * Shift: swap tupel parts
      *
      * @param  str      string to be shifted
+     * @param  disableIntentionPopup
      * @return String   The shifted string
      */
-    public String getShifted(String str) {
+    public String getShifted(String str, boolean disableIntentionPopup) {
+        if (!disableIntentionPopup
+            && " ".equals(delimiter) && !actionContainer.selectedText.isEmpty()
+            && UtilsTextual.subStringCount(str, " ") == 1
+        ) {
+            DictionaryTerm dictionaryTerm = new DictionaryTerm();
+            if (dictionaryTerm.isTermInDictionary(str)) {
+                // Shifted string is a selected tupel, and a two-words term from the dictionary
+                new com.kstenschke.shifter.models.ShiftableSelectionWithPopup(actionContainer)
+                        .shiftDictionaryTermOrToggleTupelOrder();
+
+                return "";
+            }
+        }
+
+        return getShiftedTupelReplacement(str);
+    }
+
+    @NotNull
+    private String getShiftedTupelReplacement(String str) {
         // Split into tupel
         String splitPattern = "\\s*" + Pattern.quote(delimiter) + "\\s*";
         String[] parts      = str.split(splitPattern);

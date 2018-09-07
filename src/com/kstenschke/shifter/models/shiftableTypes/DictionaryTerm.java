@@ -124,14 +124,13 @@ public class DictionaryTerm {
     private static String extractFirstMatchingTermsLine(String termsLines, String term) {
         String sword = "|" + term + "|";
         String[] allLines = termsLines.split("\n");
-        int numLines = allLines.length;
+        int amountLines = allLines.length;
 
         String curLine;
         int i = 0;
-
-        while (i < numLines) {
+        while (i < amountLines) {
             curLine = allLines[i];
-            curLine = curLine.replaceAll("\\s*", "").replaceAll("\\{*", "").replaceAll("}*", "").trim();
+            curLine = curLine.replaceAll("\\{*", "").replaceAll("}*", "").trim();
 
             if (!curLine.isEmpty() && curLine.contains(sword)) {
                 return curLine;
@@ -196,15 +195,15 @@ public class DictionaryTerm {
         shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
         String[] termsList = shiftTerms.split("\\|");
-        if (termsList.length > 0) {
-            StaticWordType wordType = new StaticWordType(termsList);
-            String shiftedWord = wordType.getShifted(word, isUp);
-
-            return shiftedWord.equals(word)
-                    ? wordType.getShifted(word.toLowerCase(), isUp)
-                    : shiftedWord;
+        if (termsList.length == 0) {
+            return word;
         }
 
-        return word;
+        StaticWordType wordType = new StaticWordType(termsList);
+        String shiftedWord = wordType.getShifted(word, isUp);
+
+        return shiftedWord.equals(word)
+                ? wordType.getShifted(word.toLowerCase(), isUp)
+                : shiftedWord;
     }
 }

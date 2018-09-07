@@ -156,7 +156,7 @@ class ShiftableTypesManager {
         if (NumericPostfixed.hasNumericPostfix(word)) {
             return NUMERIC_POSTFIXED;
         }
-        wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel();
+        wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel(actionContainer);
         if (wordsTupel.isWordsTupel(word)) {
             return WORDS_TUPEL;
         }
@@ -208,7 +208,7 @@ class ShiftableTypesManager {
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return              The shifted word
      */
-    public String getShiftedWord(ActionContainer actionContainer, String word, ShiftableTypes.Type wordType, Integer moreCount) {
+    String getShiftedWord(ActionContainer actionContainer, String word, ShiftableTypes.Type wordType, Integer moreCount) {
         switch (wordType) {
             // String based word shiftableTypes
             case ACCESSIBILITY:
@@ -258,7 +258,7 @@ class ShiftableTypesManager {
             case NUMERIC_POSTFIXED:
                 return NumericPostfixed.getShifted(word, actionContainer.isShiftUp);
             case WORDS_TUPEL:
-                return wordsTupel.getShifted(word);
+                return wordsTupel.getShifted(word, true);
             default:
                 return word;
         }

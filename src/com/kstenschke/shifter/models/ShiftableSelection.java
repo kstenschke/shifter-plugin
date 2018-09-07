@@ -37,13 +37,13 @@ public class ShiftableSelection {
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
      */
     public static void shiftSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
-        if (actionContainer.selectedText == null || actionContainer.selectedText.trim().isEmpty()) {
+        if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) {
             return;
         }
 
         boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
         if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(actionContainer)) {
-            // Detect and shift whole PHP DOC block or single caretLine out of it, that contains @param caretLine(s) w/o data type
+            // Detect and shift whole PHPDoc block or single caretLine out of it, that contains @param caretLine(s) w/o data type
             return;
         }
         if (actionContainer.filename.endsWith(".js") && JsDoc.isJsDocBlock(actionContainer.selectedText) && JsDoc.correctDocBlockInDocument(actionContainer)) {
@@ -211,16 +211,23 @@ public class ShiftableSelection {
                 return;
             }
 
-            final com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel();
+            final com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel(actionContainer);
             if (wordsTupel.isWordsTupel(actionContainer.selectedText)) {
-                actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, wordsTupel.getShifted(actionContainer.selectedText));
-                            }
-                        },
-                        ACTION_TEXT_SHIFT_SELECTION);
+                final String replacement = wordsTupel.getShifted(actionContainer.selectedText, false);
+                if (!replacement.isEmpty()) {
+                    /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
+                     * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
+                     * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
+                     */
+                    actionContainer.writeUndoable(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, replacement);
+                                }
+                            },
+                            "Swap Words Order");
+                }
 
                 return;
             }

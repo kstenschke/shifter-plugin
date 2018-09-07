@@ -161,14 +161,14 @@ public class ShiftableWord {
     public static boolean shiftWordAtCaretInDocument(ActionContainer actionContainer, @Nullable Integer moreCount) {
         boolean isOperator = false;
         String word        = UtilsTextual.getOperatorAtOffset(actionContainer.editorText, actionContainer.caretOffset);
-        if (word == null) {
+        if (null == word) {
             boolean isCSS = actionContainer.fileExtension.endsWith("css");
             word = UtilsTextual.getWordAtOffset(actionContainer.editorText, actionContainer.caretOffset, isCSS);
         } else {
             isOperator = true;
         }
 
-        if (word == null || word.isEmpty()) {
+        if (null == word || word.isEmpty()) {
             return false;
         }
 
@@ -237,7 +237,7 @@ public class ShiftableWord {
             boolean isOperator,
             @Nullable Integer moreCount
     ) {
-        if (wordOffset == null) {
+        if (null == wordOffset) {
             // Extract offset of word at caret
             wordOffset = isOperator
                     ? UtilsTextual.getStartOfOperatorAtOffset(actionContainer.editorText, actionContainer.caretOffset)
@@ -256,7 +256,7 @@ public class ShiftableWord {
         }
 
         String newWord = shiftableShiftableWord.getShifted();
-        if (null != newWord && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && wordOffset != null) {
+        if (null != newWord && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && null != wordOffset) {
             newWord = shiftableShiftableWord.postProcess(newWord, postfixChar);
             final int wordOffsetFin = wordOffset;
             final int wordOffsetEndFin = wordOffset + word.length();
@@ -269,6 +269,10 @@ public class ShiftableWord {
                             @Override
                             public void run() {
                                 actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
+                                if (actionContainer.selectedText.isEmpty() && newWordFin.contains(" ")) {
+                                    // There's no selection and shifted word newly contains a space: select it
+                                    actionContainer.selectionModel.setSelection(wordOffsetFin, wordOffsetFin + newWordFin.length());
+                                }
                             }
                         });
 

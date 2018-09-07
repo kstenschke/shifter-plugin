@@ -85,7 +85,7 @@ public class PluginConfiguration {
         checkboxPhpArrayLongToShort.setSelected(ShifterPreferences.getIsActiveConvertPhpArrayLongToShort());
 
         String termsDictionary   = ShifterPreferences.getDictionary();
-        if (termsDictionary == null || termsDictionary.isEmpty())  {
+        if (null == termsDictionary || termsDictionary.isEmpty())  {
             termsDictionary = getDefaultDictionary();
         }
         textAreaDictionaryTerms.setText(termsDictionary);
@@ -103,7 +103,7 @@ public class PluginConfiguration {
         //@note for the .txt resource to be included in the jar, it must be set in compiler resource settings
         InputStream dictionaryStream= getClass().getResourceAsStream("dictionary.txt");
 
-        return dictionaryStream == null ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
+        return null == dictionaryStream ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
     }
 
     /**

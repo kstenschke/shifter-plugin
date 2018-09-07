@@ -21,7 +21,7 @@ import com.kstenschke.shifter.utils.UtilsPhp;
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
- * PHP DOC @param comment
+ * PHPDoc @param comment
  */
 public class PhpDocParam {
 
@@ -82,7 +82,7 @@ public class PhpDocParam {
         if (PhpDocComment.isPhpDocComment(actionContainer.selectedText) && PhpDocComment.containsAtParam(actionContainer.selectedText)) {
             final String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
             if (!shifted.equals(actionContainer.selectedText)) {
-                // PHP DOC comment block: guess missing data shiftableTypes by resp. variable names
+                // PHPDoc comment block: guess missing data shiftableTypes by resp. variable names
                 actionContainer.writeUndoable(
                         new Runnable() {
                             @Override
@@ -103,7 +103,7 @@ public class PhpDocParam {
             String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
             final String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
             if (!dataType.equals("unknown")) {
-                // PHP DOC @param caretLine w/o data type, e.g. "* @param $name"
+                // PHPDoc @param caretLine w/o data type, e.g. "* @param $name"
                 actionContainer.writeUndoable(
                         new Runnable() {
                             @Override

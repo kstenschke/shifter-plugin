@@ -27,7 +27,7 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Quoted String.
+ * Separated list (delimiters e.g: ",", "|")
  */
 public class SeparatedList {
 
@@ -39,21 +39,20 @@ public class SeparatedList {
         if (!str.contains(delimiter)) {
             return false;
         }
+        if (!UtilsTextual.isWrappedIntoQuotes(str)) {
+            return true;
+        }
 
         // If the string is quoted: detect whether items are quoted each
         // => there must be (amountCommas+1)*2 quotes altogether
         // Ex:  "a","b"         => 1 comma, 4 quotes
         //      "a","b","c","d" => 3 commas, 8 quotes
         // Otherwise it should be treated as a quoted string and not as a list.
-        if (UtilsTextual.isWrappedIntoQuotes(str)) {
-            String quoteChar     = str.substring(0, 1);
-            int amountQuotes     = StringUtils.countMatches(str, quoteChar);
-            int amountDelimiters = StringUtils.countMatches(str, delimiter);
+        String quoteChar     = str.substring(0, 1);
+        int amountQuotes     = StringUtils.countMatches(str, quoteChar);
+        int amountDelimiters = StringUtils.countMatches(str, delimiter);
 
-            return (amountDelimiters + 1) * 2 == amountQuotes;
-        }
-
-        return true;
+        return (amountDelimiters + 1) * 2 == amountQuotes;
     }
 
     /**

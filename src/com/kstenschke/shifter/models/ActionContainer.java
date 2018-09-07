@@ -24,7 +24,7 @@ public class ActionContainer {
     public final boolean isShiftMore;
 
     public Project project;
-    public Editor editor;
+    public final Editor editor;
     public Document document;
 
     public CharSequence editorText;

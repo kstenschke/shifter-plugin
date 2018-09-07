@@ -449,6 +449,15 @@ public class UtilsTextual {
         return str.length() == 0 ? null : str.subSequence(offsetStart, offsetEnd).toString();
     }
 
+    public static int subStringCount(String str, String subStr) {
+        int count = 0;
+        for (int pos = str.indexOf(subStr); pos >= 0; pos = str.indexOf(subStr, pos + 1)) {
+            count++;
+        }
+
+        return count;
+    }
+
     /**
      * @param  str      Full text
      * @param  offset   Offset from before which to extract one character
