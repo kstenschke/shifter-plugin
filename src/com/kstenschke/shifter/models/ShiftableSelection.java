@@ -30,7 +30,7 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 // Shiftable (non-block) selection
 public class ShiftableSelection {
 
-    protected static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
+    static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
 
     /**
      * @param actionContainer
@@ -53,6 +53,21 @@ public class ShiftableSelection {
         // Shift selected comment: Must be before multi-caretLine sort to allow multi-caretLine comment shifting
         if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(actionContainer.selectedText)) {
             shiftSelectedCommentInDocument(actionContainer);
+            return;
+        }
+
+        final XmlAttributes xmlAttributes = new XmlAttributes(actionContainer);
+        if (xmlAttributes.isXmlAttributes(actionContainer.selectedText)) {
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            String shifted = xmlAttributes.getShifted(actionContainer.selectedText, true);
+                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
+                        }
+                    },
+                    XmlAttributes.ACTION_TEXT_SHIFT_XML_ATTRIBUTES);
+
             return;
         }
 

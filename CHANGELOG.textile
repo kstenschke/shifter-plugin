@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.8.3
+    ** Added: Alphabetical sorting of single-lined selection of XML attribute-value pairs
 * 1.8.2
     ** Improved: Made all JavaScript (.js) shifting also available to TypeScript (.ts)
 * 1.8.1

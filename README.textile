@@ -36,6 +36,7 @@ h3. Shifting Types
 h4. Sorting
 * Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
 * Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.
+* Shifting a single-line selection, that is XML attribute-value pairs, sorts them alphabetically.
 * Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
 * Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
 * Shifting a selected (from questionmark on) ternary expression, swaps "than" and "else" statements
