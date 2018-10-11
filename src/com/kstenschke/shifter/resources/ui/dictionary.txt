@@ -95,6 +95,8 @@
 	|cancel|ok|
 	|close|open|
 	|copy|cut|paste|
+	|column|row|
+	|columns|rows|
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 	|child|parent|
 	|clicked|entered|exited|pressed|released|
