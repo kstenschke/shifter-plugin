@@ -79,6 +79,7 @@
 	|all|none|
 	|and|or|xor|not|
 	|antarctica|australia|south america|north america|europe|africa|asia|
+	|apple|apricots|avocado|banana|blueberry|cherry|coconut|cranberry|fig|grapefruit|grapes|kiwi|lemon|mango|olives|peach|pear|plum|rhubarb|strawberry|tangerine|watermelon|
 	|ascending|descending|
 	|ascend|descend|
 	|atoms|molecules|organisms|templates|pages|
@@ -93,13 +94,14 @@
 	|branches|tags|trunk|
 	|break|continue|
 	|cancel|ok|
+	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
+    |child|parent|
+    |clicked|entered|exited|pressed|released|
 	|close|open|
 	|copy|cut|paste|
 	|column|row|
 	|columns|rows|
-	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
-	|child|parent|
-	|clicked|entered|exited|pressed|released|
+	|cpp|cs|java|js|php|py|rb|sh|swift|
 	|dark|light|
 	|decade|century|millenium|
 	|deci|centi|mili|micro|nano|pico|femto|atto|zepto|yocto|
@@ -149,6 +151,7 @@
 	|module|action|
 	|mon|tue|wed|thu|fri|sat|sun|
 	|monday|tuesday|wednesday|thursday|friday|saturday|sunday|
+	|montag|dienstag|mittwoch|donnerstag|freitag|samstag|sonntag|
 	|negative|positive|
 	|new|old|
 	|no|yes|
