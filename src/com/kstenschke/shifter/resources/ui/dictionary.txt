@@ -71,6 +71,7 @@
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
 }
 (|*|) {
+	|1st|2nd|3rd|4th|5th|6th|7th|8th|9th|10th|
 	|absolute|relative|
 	|acos|asin|atan|cos|sin|tan|
 	|addition|subtraction|multiplication|division|modulus|negation|concatenation|
