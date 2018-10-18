@@ -109,7 +109,7 @@ public class PluginConfiguration {
     /**
      * Reset default settings
      */
-    public void reset() {
+    void reset() {
         checkboxPreserveCase.setSelected(true);
         checkboxConvertDoubleQuotes.setSelected(true);
         checkboxConvertSingleQuotes.setSelected(false);
@@ -194,5 +194,4 @@ public class PluginConfiguration {
             ShifterPreferences.saveDictionary(dictionary);
         }
     }
-
 }

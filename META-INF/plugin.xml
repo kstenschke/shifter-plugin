@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.8.3</version>
+    <version>1.8.4</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
@@ -122,6 +122,12 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.8.4
+            <ul>
+                <li>Improved: Adapted UI more to recent IDE UI</li>
+                <li>Improved: Extended default dictionary</li>
+            </ul>
+        </li>
         <li>1.8.3
             <ul>
                 <li>Added: Alphabetical sorting of single-lined selection of XML attribute-value pairs</li>
@@ -130,13 +136,6 @@
         <li>1.8.2
             <ul>
                 <li>Improved: Made all JavaScript (.js) shifting also available to TypeScript (.ts)</li>
-            </ul>
-        </li>
-        <li>1.8.1
-            <ul>
-                <li>Improved: Dictionary can now also handle multi-words terms (separated by space)</li>
-                <li>Improved: Shifting of parenthesis now also shifts curly brackets</li>
-                <li>Improved: Extended default dictionary</li>
             </ul>
         </li>
     </ul>
