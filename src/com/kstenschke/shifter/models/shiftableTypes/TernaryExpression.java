@@ -78,10 +78,7 @@ public class TernaryExpression {
         if (isQuestionMarkInline) {
             str = "?" + glue + str;
         }
-        if (endsWithSemicolon) {
-            str += ";";
-        }
 
-        return str;
+        return endsWithSemicolon ? str + ";" : str;
     }
 }

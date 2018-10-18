@@ -177,22 +177,21 @@ public class JsDoc {
             index++;
         }
         docBlockCorrected = reduceDoubleEmptyCommentLines(docBlockCorrected);
-
-        if (!docBlockCorrected.equals(docBlock)) {
-            final String docBlockCorrectedFin = docBlockCorrected;
-            actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, docBlockCorrectedFin);
-                            UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
-                        }
-                    },
-                    "Shift JsDoc");
-            return true;
+        if (docBlockCorrected.equals(docBlock)) {
+            return false;
         }
 
-        return false;
+        final String docBlockCorrectedFin = docBlockCorrected;
+        actionContainer.writeUndoable(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, docBlockCorrectedFin);
+                        UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
+                    }
+                },
+                "Shift JsDoc");
+        return true;
     }
 
     /**

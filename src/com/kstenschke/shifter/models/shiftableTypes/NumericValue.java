@@ -138,6 +138,7 @@ public class NumericValue {
         }
 
         value--;
+
         return -1 == value ? maxValue - 1 : value;
     }
 }

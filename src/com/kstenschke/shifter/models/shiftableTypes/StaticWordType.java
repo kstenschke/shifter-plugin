@@ -61,19 +61,13 @@ public class StaticWordType {
 
     private String getShiftedUp(int wordOffset) {
         wordOffset++;
-        if (wordOffset >= amountKeywords) {
-            wordOffset = 0;
-        }
 
-        return keywords[wordOffset];
+        return wordOffset >= amountKeywords ? keywords[0] : keywords[wordOffset];
     }
 
     private String getShiftedDown(int wordOffset) {
         wordOffset -= 1;
-        if (wordOffset < 0) {
-            wordOffset = amountKeywords - 1;
-        }
 
-        return keywords[wordOffset];
+        return wordOffset < 0 ? keywords[amountKeywords - 1] : keywords[wordOffset];
     }
 }

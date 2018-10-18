@@ -30,6 +30,7 @@ public class SizzleSelector {
      */
     public static Boolean isSelector(String str) {
         str = str.trim();
+
         return !(!str.startsWith("$(") || !str.endsWith(")"));
     }
 
