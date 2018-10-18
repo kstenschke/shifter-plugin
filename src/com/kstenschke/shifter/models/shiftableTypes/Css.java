@@ -28,10 +28,6 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class Css {
 
-    /**
-     * @param  value
-     * @return String
-     */
     public static String getShifted(String value) {
 
         return value.contains("{") && value.contains("}")

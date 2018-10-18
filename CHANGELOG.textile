@@ -3,6 +3,7 @@ h1. Shifter Plugin - Changelog
 * 1.8.4
     ** Improved: Adapted UI more to recent IDE UI
     ** Improved: Extended default dictionary
+    ** Improved: Terms can be shifted also when surrounding whitespace is included in selection
 * 1.8.3
     ** Added: Alphabetical sorting of single-lined selection of XML attribute-value pairs
 * 1.8.2

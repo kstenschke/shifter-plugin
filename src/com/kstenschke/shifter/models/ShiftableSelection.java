@@ -155,7 +155,7 @@ public class ShiftableSelection {
 
             return;
         }
-        if (!isPhpVariableOrArray && wordType == SIZZLE_SELECTOR) {
+        if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
             actionContainer.writeUndoable(
                     new Runnable() {
                         @Override
@@ -167,7 +167,7 @@ public class ShiftableSelection {
 
             return;
         }
-        if (wordType == TRAILING_COMMENT) {
+        if (TRAILING_COMMENT == wordType) {
             final int offsetStartCaretLine = actionContainer.document.getLineStartOffset(lineNumberSelStart);
             final int offsetEndCaretLine   = actionContainer.document.getLineEndOffset(lineNumberSelStart);
             final String leadWhitespace    = UtilsTextual.getLeadWhitespace(actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
@@ -288,13 +288,14 @@ public class ShiftableSelection {
             }
         }
 
+        actionContainer.rTrimSelectedText();
         final String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (isPhpVariableOrArray) {
             actionContainer.writeUndoable(
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord);
+                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord + actionContainer.whiteSpaceRHSinSelectedText);
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -306,7 +307,7 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord.toUpperCase());
+                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelectedText);
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -318,7 +319,7 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.toUcFirstRestLower(shiftedWord));
+                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelectedText);
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -330,7 +331,7 @@ public class ShiftableSelection {
                 new Runnable() {
                     @Override
                     public void run() {
-                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord);
+                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord + actionContainer.whiteSpaceRHSinSelectedText);
                     }
                 },
                 ACTION_TEXT_SHIFT_SELECTION);

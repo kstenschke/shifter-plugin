@@ -55,9 +55,6 @@ public class ActionAdapter {
         }
     }
 
-    /**
-     * @param moreCount
-     */
     private void shiftSelection(@Nullable Integer moreCount) {
         if (actionContainer.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical

@@ -126,6 +126,7 @@
             <ul>
                 <li>Improved: Adapted UI more to recent IDE UI</li>
                 <li>Improved: Extended default dictionary</li>
+                <li>Improved: Terms can be shifted also when surrounding whitespace is included in selection</li>
             </ul>
         </li>
         <li>1.8.3

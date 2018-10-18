@@ -20,10 +20,6 @@ import java.util.Iterator;
 
 public class UtilsMap {
 
-    /**
-     * @param  map
-     * @return int
-     */
     public static int getSumOfValues(HashMap<String, Integer> map) {
         int sum = 0;
         for(int value : map.values()){
@@ -32,10 +28,6 @@ public class UtilsMap {
         return sum;
     }
 
-    /**
-     * @param  map
-     * @return String
-     */
     public static String getKeyOfHighestValue(HashMap<String, Integer> map) {
         int max    = 0;
         String key = "";

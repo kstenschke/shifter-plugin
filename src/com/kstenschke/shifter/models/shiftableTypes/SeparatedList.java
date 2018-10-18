@@ -90,13 +90,6 @@ public class SeparatedList {
         return UtilsArray.implode(items, delimiterGlue);
     }
 
-    /**
-     * @param word
-     * @param delimiterSplitPattern
-     * @param delimiterGlue
-     * @param shiftUp
-     * @return
-     */
     public static String getShifted(String word, String delimiterSplitPattern, String delimiterGlue, boolean shiftUp) {
         return sortSeparatedList(word, delimiterSplitPattern, delimiterGlue, shiftUp);
     }

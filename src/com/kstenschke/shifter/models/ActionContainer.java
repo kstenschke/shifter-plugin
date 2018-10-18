@@ -40,6 +40,7 @@ public class ActionContainer {
     public int offsetSelectionLineStart;
     public int offsetSelectionLineEnd;
     public String selectedText;
+    public String whiteSpaceRHSinSelectedText;
 
     public int caretLineNumber;
     public int offsetCaretLineStart;
@@ -84,7 +85,13 @@ public class ActionContainer {
         }
     }
 
-    public void writeUndoable(final Runnable runnable) {
+    void rTrimSelectedText() {
+        String selectedTextRTrimmed = UtilsTextual.rtrim(selectedText);
+        whiteSpaceRHSinSelectedText = selectedText.replace(selectedTextRTrimmed, "");
+        selectedText = selectedTextRTrimmed;
+    }
+
+    void writeUndoable(final Runnable runnable) {
         writeUndoable(runnable, null);
     }
 

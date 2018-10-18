@@ -31,12 +31,6 @@ public class ShiftableBlockSelection {
 
     private static final String ACTION_TEXT_SHIFT_COLUMN_SELECTION = "Shift Column Selection";
 
-    /**
-     * @param  blockSelectionStarts
-     * @param  blockSelectionEnds
-     * @param  editorText
-     * @return boolean
-     */
     private static boolean areNumericValues(int[] blockSelectionStarts, int[] blockSelectionEnds, CharSequence editorText) {
         String currentItem;
 
@@ -50,12 +44,6 @@ public class ShiftableBlockSelection {
         return true;
     }
 
-    /**
-     * @param  blockSelectionStarts
-     * @param  blockSelectionEnds
-     * @param  editorText
-     * @return boolean
-     */
     private static boolean areBlockItemsIdentical(int[] blockSelectionStarts, int[] blockSelectionEnds, CharSequence editorText) {
         String firstItem = editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
         String currentItem;

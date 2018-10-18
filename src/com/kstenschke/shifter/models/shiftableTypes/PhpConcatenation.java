@@ -180,9 +180,6 @@ public class PhpConcatenation {
         return null;
     }
 
-    /**
-     * @return  boolean
-     */
     public boolean isPhpConcatenation() {
         return isPhpConcatenation;
     }

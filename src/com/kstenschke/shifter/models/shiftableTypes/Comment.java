@@ -93,10 +93,6 @@ public class Comment {
         return str.startsWith("<!--") && str.endsWith("-->");
     }
 
-    /**
-     * @param  actionContainer
-     * @return String
-     */
     public static String getShifted(ActionContainer actionContainer) {
         if (null != actionContainer.filename && UtilsFile.isPhpFile(actionContainer.filename) && isPhpBlockComment(actionContainer.selectedText)) {
             // PHP Block-comment inside PHP or PHTML: convert to HTML comment
@@ -128,10 +124,6 @@ public class Comment {
             : str);
     }
 
-    /**
-     * @param str
-     * @return
-     */
     public static String getPhpBlockCommentFromHtmlComment(String str) {
         return "<?php /* " + str.substring(4, str.length() - 3).trim() + " */ ?>";
     }

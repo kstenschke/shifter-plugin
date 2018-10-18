@@ -186,10 +186,6 @@ class ShiftableTypesManager {
         return getWordType(actionContainer.selectedText, "", postfixChar, isLastLineInDocument, actionContainer);
     }
 
-    /**
-     * @param  word
-     * @return boolean
-     */
     private boolean isKeywordAccessType(String word) {
         String[] keywordsAccessType = {"public", "private", "protected"};
         wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftableTypes.StaticWordType(keywordsAccessType);
@@ -264,13 +260,8 @@ class ShiftableTypesManager {
         }
     }
 
-    /**
-     * @param  actionContainer
-     * @param  moreCount
-     * @return String
-     */
     public String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
-        String line                  = UtilsTextual.getLineAtOffset(actionContainer.editorText.toString(), actionContainer.caretOffset);
+        //String line                  = UtilsTextual.getLineAtOffset(actionContainer.editorText.toString(), actionContainer.caretOffset);
         ShiftableTypes.Type wordType = getWordType(actionContainer.selectedText, "", "", false, actionContainer);
 
         return getShiftedWord(actionContainer, actionContainer.selectedText, wordType, moreCount);

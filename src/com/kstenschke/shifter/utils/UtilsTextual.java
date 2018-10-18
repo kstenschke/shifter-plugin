@@ -101,20 +101,10 @@ public class UtilsTextual {
         return false;
     }
 
-    /**
-     * @param  haystack
-     * @param  needle
-     * @return boolean
-     */
     public static boolean containsCaseInSensitive(@Nullable String haystack, String needle) {
         return null != haystack && Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
     }
 
-    /**
-     * @param  str
-     * @param  characters
-     * @return boolean
-     */
     public static boolean containsOnly(@Nullable String str, String[] characters) {
         if (null == str || str.isEmpty()) {
             return false;
@@ -344,11 +334,6 @@ public class UtilsTextual {
                 : null;
     }
 
-    /**
-     * @param  str
-     * @param  offset
-     * @return Integer
-     */
     public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
         if (0 == textLength || offset >= textLength) {
@@ -414,11 +399,6 @@ public class UtilsTextual {
         return str.subSequence(start, end).toString();
     }
 
-    /**
-     * @param  c
-     * @param  allowHyphens
-     * @return boolean
-     */
     public static boolean isJavaIdentifierPart(char c, boolean allowHyphens) {
         return allowHyphens
                 ? Character.isJavaIdentifierPart(c) || '-' == c
@@ -571,16 +551,11 @@ public class UtilsTextual {
         return line + (0 == lineSeparatorLength ? "\n" : "");
     }
 
-    /**
-     * @param  str
-     * @param  offset
-     * @return String
-     */
     public static String getLineAtOffset(String str, int offset) {
         int lenText      = str.length();
 
         int offsetStart = offset;
-        while (offsetStart > 0 && str.charAt(offsetStart-1) != '\n') {
+        while (offsetStart > 0 && str.charAt(offsetStart - 1) != '\n') {
             offsetStart--;
         }
 

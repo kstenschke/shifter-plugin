@@ -81,11 +81,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, phpConcatenation, null, null);
     }
 
-    /**
-     * @param delimiterSplitPattern
-     * @param delimiterGlue
-     * @param isUp
-     */
     void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsShiftableQuotes) {
             actionContainer.writeUndoable(
@@ -173,13 +168,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    /**
-     * @param shiftOptions
-     * @param isUp
-     * @param phpConcatenation
-     * @param delimiterSplitPattern
-     * @param delimiterGlue
-     */
     private void shiftSelectionByPopupInDocument(
             List<String> shiftOptions, final boolean isUp,
             @Nullable final PhpConcatenation phpConcatenation,
@@ -209,13 +197,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
-    /**
-     * @param mode
-     * @param isUp
-     * @param phpConcatenation
-     * @param delimiterSplitPattern
-     * @param delimiterGlue
-     */
     private void shiftSelectionByModeInDocument(
             String mode,
             boolean isUp,

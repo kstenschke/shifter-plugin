@@ -32,18 +32,10 @@ class PhpDocComment {
         return lines.length > 2 && str.startsWith("/**") && str.endsWith("*/") && str.contains(" * ");
     }
 
-    /**
-     * @param  str
-     * @return boolean
-     */
     public static boolean containsAtParam(String str) {
         return str.contains("@param ");
     }
 
-    /**
-     * @param  str
-     * @return String
-     */
     public static String getShifted(String str) {
         String lines[] = str.split("\n");
         String shifted = "";

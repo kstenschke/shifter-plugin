@@ -78,10 +78,6 @@ public class ShifterPreferences {
         return null == value ? defaultValue : value;
     }
 
-
-    /**
-     * @param   idDialog
-     */
     public static String getDialogPosition(String idDialog) {
         return getProperty(idDialog + ".Position");
     }
@@ -107,9 +103,6 @@ public class ShifterPreferences {
         PropertiesComponent.getInstance().setValue(PROPERTY_SHIFTING_MODE_TIMESTAMP, mode.toString());
     }
 
-    /**
-     * @param isActive
-     */
     public static void saveIsActivePreserveCase(boolean isActive) {
         PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PRESERVE_CASE, isActive ? "1":"0");
     }
@@ -150,9 +143,6 @@ public class ShifterPreferences {
         return null == dictionary ? "" : dictionary;
     }
 
-    /**
-     * @return int
-     */
     public static int getShiftMoreSize() {
         try {
             String size = PropertiesComponent.getInstance().getValue(PROPERTY_SIZE_SHIFT_MORE);

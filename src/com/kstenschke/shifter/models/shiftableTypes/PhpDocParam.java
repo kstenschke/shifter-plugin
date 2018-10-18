@@ -54,10 +54,6 @@ public class PhpDocParam {
         return     str.contains("$");
     }
 
-    /**
-     * @param  str
-     * @return String
-     */
     private static String extractVariableName(String str) {
         return trim(str.replace("* @param", "")).split(" ")[0];
     }

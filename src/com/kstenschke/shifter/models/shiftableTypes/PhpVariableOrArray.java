@@ -62,10 +62,6 @@ public class PhpVariableOrArray {
         return isVariable || isShiftableArray;
     }
 
-    /**
-     * @param  str
-     * @return boolean
-     */
     private boolean isShiftablePhpArray(String str) {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
@@ -154,10 +150,6 @@ public class PhpVariableOrArray {
             : allLeadChars.indexOf(variable.substring(1, 2));
     }
 
-    /**
-     * @param  allMatches
-     * @return List<String>
-     */
     private List<String> reducePhpVarsToFirstPerLeadChar(List<String> allMatches) {
         List<String> reducedMatches = new ArrayList<String>();
         String leadCharPrev = "";

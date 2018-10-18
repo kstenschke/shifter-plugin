@@ -35,11 +35,6 @@ public class TrailingComment {
         return parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 0;
     }
 
-    /**
-     * @param  selection
-     * @param  leadingWhiteSpace
-     * @return String
-     */
     public static String getShifted(String selection, String leadingWhiteSpace) {
         String[] parts = selection.split("//");
 

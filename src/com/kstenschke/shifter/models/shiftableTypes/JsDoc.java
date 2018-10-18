@@ -33,10 +33,6 @@ public class JsDoc {
     @NonNls
     private static final String REGEX_DATA_TYPES_ALIEN = "(bool|float|int|integer|void)";
 
-    /**
-     * @param  str
-     * @return boolean
-     */
     public static boolean isJsDocBlock(String str) {
         str = trim(str);
 
@@ -294,10 +290,6 @@ public class JsDoc {
                         : " " + parameterName));
     }
 
-    /**
-     * @param  parameterName
-     * @return String
-     */
     private static String guessDataTypeByParameterName(String parameterName) {
         String parameterNameLower = parameterName.toLowerCase();
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);

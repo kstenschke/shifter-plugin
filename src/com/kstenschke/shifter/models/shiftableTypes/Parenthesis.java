@@ -42,10 +42,6 @@ public class Parenthesis {
         return str.startsWith("{") && str.endsWith("}");
     }
 
-    /**
-     * @param  str
-     * @return String
-     */
     public static String getShifted(String str) {
         if (isWrappedInRoundBrackets(str)) {
             return "[" + str.substring(1, str.length() - 1) + "]";

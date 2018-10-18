@@ -28,9 +28,6 @@ public class CamelCaseString {
         CAMEL_WORDS_TO_UNDERSCORE_SEPARATED,
     }
 
-    /**
-     * @return boolean
-     */
     public static boolean isCamelCase(String str) {
         return !UtilsTextual.startsNumeric(str) && UtilsTextual.isCamelCase(str);
     }
