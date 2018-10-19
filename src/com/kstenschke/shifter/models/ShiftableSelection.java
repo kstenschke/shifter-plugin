@@ -43,14 +43,14 @@ public class ShiftableSelection {
 
         boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
         if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(actionContainer)) {
-            // Detect and shift whole PHPDoc block or single caretLine out of it, that contains @param caretLine(s) w/o data type
+            // Detect and shift whole PHPDoc block or single line out of it, that contains @param caretLine(s) w/o data type
             return;
         }
         if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) && JsDoc.isJsDocBlock(actionContainer.selectedText) && JsDoc.correctDocBlockInDocument(actionContainer)) {
             return;
         }
 
-        // Shift selected comment: Must be before multi-caretLine sort to allow multi-caretLine comment shifting
+        // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
         if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(actionContainer.selectedText)) {
             shiftSelectedCommentInDocument(actionContainer);
             return;
@@ -149,7 +149,7 @@ public class ShiftableSelection {
             return;
         }
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
-            // Multi-caretLine selection: sort lines or swap quotes
+            // Multi-line selection: sort lines or swap quotes
             new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
             return;
         }

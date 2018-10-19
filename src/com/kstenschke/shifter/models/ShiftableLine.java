@@ -24,8 +24,8 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Shiftable Line
  * Shifting strategy:
- * Either caretLine contains one word of a clearly detectable type  => shifting will transform that word.
- * Or caretLine context can be detected                             => resp. shifting be done.
+ * Either line contains one word of a clearly detectable type  => shifting will transform that word.
+ * Or line context can be detected                             => resp. shifting be done.
  */
 public class ShiftableLine {
 
@@ -48,7 +48,7 @@ public class ShiftableLine {
      */
     private String getShifted(@Nullable final Integer moreCount) {
         if (UtilsFile.isPhpFile(actionContainer.filename) && PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) && !PhpDocParam.containsDataType(actionContainer.caretLine) && PhpDocParam.containsVariableName(actionContainer.caretLine)) {
-            // Caret-caretLine is a PHP doc @param w/o data type: guess and insert one by the variable name
+            // Caret-line is a PHP doc @param w/o data type: guess and insert one by the variable name
             String shiftedLine = PhpDocParam.getShifted(actionContainer.caretLine);
             if (!shiftedLine.equals(actionContainer.caretLine)) {
                 return shiftedLine;
@@ -92,7 +92,7 @@ public class ShiftableLine {
         }
 
         if (amountShiftableWordsInSentence == 1) {
-            // Shift detected word in caretLine
+            // Shift detected word in lLine
             String line = actionContainer.caretLine;
             return line.replace(wordUnshifted, wordShifted);
         }
@@ -100,7 +100,7 @@ public class ShiftableLine {
         return HtmlEncodable.isHtmlEncodable(actionContainer.caretLine)
             // Encode or decode contained HTML special chars
             ? HtmlEncodable.getShifted(actionContainer.caretLine)
-            // No shift-ability detected, return original caretLine
+            // No shift-ability detected, return original line
             : actionContainer.caretLine;
     }
 
@@ -111,7 +111,7 @@ public class ShiftableLine {
     public static void shiftLineInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
         ShiftableLine shiftableShiftableLine = new ShiftableLine(actionContainer);
 
-        // Replace caretLine by shifted one
+        // Replace line by shifted one
         final CharSequence shiftedLine = shiftableShiftableLine.getShifted(moreCount);
         if (null != shiftedLine) {
             actionContainer.writeUndoable(

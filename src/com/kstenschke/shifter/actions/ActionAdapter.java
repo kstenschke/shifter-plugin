@@ -34,7 +34,7 @@ public class ActionAdapter {
     }
 
     /**
-     * Find shiftable string (selection block/lines/regular, word at caret, caretLine at caret) and replace it by its shifted value
+     * Find shiftable string (selection block/lines/regular, word at caret, line at caret) and replace it by its shifted value
      *
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
@@ -48,9 +48,9 @@ public class ActionAdapter {
             return;
         }
 
-        // Try shift word at caret, fallback: try shifting caretLine
+        // Try shift word at caret, fallback: try shifting care lLine
         if (!ShiftableWord.shiftWordAtCaretInDocument(actionContainer, moreCount)) {
-            // Word at caret wasn't identified/shifted, try shifting the whole caretLine
+            // Word at caret wasn't identified/shifted, try shifting the whole caret line
             ShiftableLine.shiftLineInDocument(actionContainer, moreCount);
         }
     }
@@ -62,7 +62,7 @@ public class ActionAdapter {
             return;
         }
 
-        // Shift regular selection: sort CSV or multi-caretLine selection: sort lines alphabetically, etc.
+        // Shift regular selection: sort CSV or multi-lLine selection: sort lines alphabetically, etc.
         ShiftableSelection.shiftSelectionInDocument(actionContainer, moreCount);
     }
 }

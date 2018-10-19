@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class DocCommentType {
 
     /**
-     * Check whether given String looks like a DOC comment caretLine
+     * Check whether given String looks like a DOC comment line
      *
      * @param line Line the caret is at
      * @return boolean.
@@ -44,7 +44,7 @@ public class DocCommentType {
      * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
      *
      * @param  prefixChar Prefix character
-     * @param  line       Whole caretLine containing the word
+     * @param  line       Whole line containing the word
      * @return boolean
      */
     public boolean isDocCommentType(String prefixChar, String line) {

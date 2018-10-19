@@ -195,7 +195,7 @@ public class JsDoc {
     }
 
     /**
-     * Correct JsDoc caretLine
+     * Correct JsDoc lLine
      *
      * @param line
      * @param keyword   "@param" / "@returns" / "@type"

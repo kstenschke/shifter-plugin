@@ -50,7 +50,7 @@ public class DictionaryTerm {
 
     /**
      * Check whether the given term exists in any section of shift-lists of the dictionary
-     * + Stores matching caretLine containing the term for use in shifting later
+     * + Stores matching line containing the term for use in shifting later
      * Note: this is a global dictionary check, and NOT file extension specific
      *
      * @param  term        String to be looked for in shifter dictionary
@@ -87,7 +87,7 @@ public class DictionaryTerm {
     /**
      * Check whether the given term exists in any section of shift-lists of the dictionary,
      * looking only at lists in blocks having assigned the given extension
-     * + Stores first matching caretLine containing the term for use in shifting later
+     * + Stores first matching line containing the term for use in shifting later
      *
      * @param  term            String to be looked for in shifter dictionary
      * @param  fileExtension   Extension of edited file
@@ -119,7 +119,7 @@ public class DictionaryTerm {
     /**
      * @param  termsLines   Terms lines from dictionary
      * @param  term         Word to be shifted
-     * @return String       First matching term caretLine
+     * @return String       First matching term lLine
      */
     private static String extractFirstMatchingTermsLine(String termsLines, String term) {
         String sword = "|" + term + "|";

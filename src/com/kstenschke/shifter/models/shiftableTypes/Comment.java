@@ -99,21 +99,21 @@ public class Comment {
             return "<!-- " + actionContainer.selectedText.substring(8, actionContainer.selectedText.length() - 5).trim() + " -->";
         }
 
-        // Default comment shifting: toggle among single-caretLine and block-comment style
+        // Default comment shifting: toggle among single-line and block-comment style
         String str = actionContainer.selectedText.trim();
 
         if (str.startsWith("//")) {
             if (!str.endsWith(" ")) {
                 str += " ";
             }
-            // Convert single caretLine comment to block comment
+            // Convert single line comment to block comment
             return "/*" + str.substring(2) + "*/";
         }
 
         str = str.substring(2, str.length() - 2);
 
         // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
-        // Convert block- to single caretLine comment
+        // Convert block- to single line comment
         if (str.contains("\n")) {
             return "//" + str.replace("\n", " ");
         }
@@ -129,8 +129,8 @@ public class Comment {
     }
 
     /**
-     * Shift multi-lined block comment into single caretLine comment(s)
-     * Show popup and perform selected shifting mode: join lines into 1 or convert into multiple single caretLine comments
+     * Shift multi-lined block comment into single line comment(s)
+     * Show popup and perform selected shifting mode: join lines into 1 or convert into multiple single line comments
      *
      * @param actionContainer
      */

@@ -99,7 +99,7 @@ public class PhpDocParam {
             String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
             final String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
             if (!dataType.equals("unknown")) {
-                // PHPDoc @param caretLine w/o data type, e.g. "* @param $name"
+                // PHPDoc @param line w/o data type, e.g. "* @param $name"
                 actionContainer.writeUndoable(
                         new Runnable() {
                             @Override

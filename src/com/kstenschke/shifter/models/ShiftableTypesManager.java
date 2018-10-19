@@ -55,7 +55,7 @@ class ShiftableTypesManager {
      * @return int
      */
     public ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, ActionContainer actionContainer) {
-        // Selected code caretLine w/ trailing //-comment: moves the comment into a new caretLine before the code
+        // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (com.kstenschke.shifter.models.shiftableTypes.TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
             return TRAILING_COMMENT;
         }
@@ -63,7 +63,7 @@ class ShiftableTypesManager {
         if (com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.isPhpDocParamLine(actionContainer.caretLine)
          && !com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
-            // PHP doc param caretLine is handled in caretLine-shifting fallback
+            // PHP doc param line is handled in caretLine-shifting fallback
             return UNKNOWN;
         }
         // PHP variable (must be prefixed w/ "$")
@@ -211,7 +211,7 @@ class ShiftableTypesManager {
                 return wordTypeAccessibilities.getShifted(word, actionContainer.isShiftUp);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
-                // The dictionary stored the matching terms-caretLine, we don't need to differ global/ext-specific anymore
+                // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return typeDictionaryTerm.getShifted(word, actionContainer.isShiftUp);
 
             // Generic shiftableTypes (shifting is calculated)

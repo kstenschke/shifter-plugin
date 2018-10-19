@@ -49,7 +49,7 @@ public class ShiftableWord {
      * @param word        Shiftable word
      * @param prefixChar  Char before the word, "#"?
      * @param postfixChar Char after the word, "#"?
-     * @param line        Whole caretLine to possibly guess the context
+     * @param line        Whole line to possibly guess the context
      * @param editorText  Whole text currently in editor
      * @param caretOffset Caret offset in document
      * @param filename    Filename of the edited file
@@ -190,7 +190,7 @@ public class ShiftableWord {
     private static Boolean shiftWordAtCaretInJsDocument(final ActionContainer actionContainer, final String word) {
         if (   (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine))
             && JsDoc.containsNoCompounds(actionContainer.caretLine) && JsDoc.isWordRightOfAtKeyword(word, actionContainer.caretLine) && JsDoc.isDataType(word)) {
-            // Add missing curly brackets around data type at caret in jsDoc @param caretLine
+            // Add missing curly brackets around data type at caret in jsDoc @param line
             actionContainer.writeUndoable(
                     new Runnable() {
                 @Override
