@@ -1,9 +1,10 @@
 h1. Shifter Plugin - Changelog
 
-* 1.9.1
+* 1.10.0
     ** Added: Toggle order of two operands in selected AND or OR logical conjunction
     ** Corrected: Clarified intention popup descriptions
     ** Improved: DOC type detections
+    ** Improved: Updated use of deprecated plugin API methods
 * 1.9.0
     ** Added: Selections containing whitespace around the shiftable term can be shifted
     ** Improved: Adapted UI more to recent IDE UI

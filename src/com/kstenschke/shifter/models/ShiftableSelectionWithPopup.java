@@ -171,7 +171,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
         final JBList modes = new JBList(options);
 
-        PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
+        PopupChooserBuilder popup = new PopupChooserBuilder(modes);
         popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
             public void run() {
                 ApplicationManager.getApplication().runWriteAction(new Runnable() {
