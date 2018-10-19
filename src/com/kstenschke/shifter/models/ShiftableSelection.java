@@ -25,12 +25,14 @@ import javax.swing.*;
 import java.util.List;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
-import static com.kstenschke.shifter.models.shiftableTypes.LogicalConjunction.ACTION_TEXT_SHIFT_LOGICAL_CONJUNCTION;
+import static com.kstenschke.shifter.models.shiftableTypes.LogicalConjunction.ACTION_TEXT;
 
 // Shiftable (non-block) selection
 public class ShiftableSelection {
 
     static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
+
+    private static final String ACTION_TEXT_SWAP_SLASHES = "Swap Slashes";
 
     /**
      * @param actionContainer
@@ -68,6 +70,7 @@ public class ShiftableSelection {
 
         ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
         ShiftableTypes.Type wordType = shiftingShiftableTypesManager.getWordType(actionContainer);
+
         boolean isPhpVariableOrArray = wordType == PHP_VARIABLE_OR_ARRAY;
 
         if (isWrappedInParenthesis) {
@@ -202,19 +205,19 @@ public class ShiftableSelection {
                 }
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(UtilsTextual.swapSlashes(actionContainer.selectedText)),
-                        ACTION_TEXT_SHIFT_SELECTION);
+                        ACTION_TEXT_SWAP_SLASHES);
                 return;
             }
             if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(actionContainer.selectedText)) {
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(LogicalOperator.getShifted(actionContainer.selectedText)),
-                        ACTION_TEXT_SHIFT_SELECTION);
+                        LogicalOperator.ACTION_TEXT);
                 return;
             }
             if (isLogicalConjunction) {
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(logicalConjunction.getShifted(actionContainer.selectedText)),
-                        ACTION_TEXT_SHIFT_LOGICAL_CONJUNCTION);
+                        LogicalConjunction.ACTION_TEXT);
                 return;
             }
             if (HtmlEncodable.isHtmlEncodable(actionContainer.selectedText)) {
@@ -296,7 +299,10 @@ public class ShiftableSelection {
             }
         }
 
-        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(actionContainer));
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        Comment.getShifted(actionContainer)),
+                Comment.ACTION_TEXT);
     }
 
     /**

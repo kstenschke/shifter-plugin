@@ -22,7 +22,7 @@ import com.kstenschke.shifter.utils.UtilsTextual;
  */
 public class LogicalConjunction {
 
-    static final public String ACTION_TEXT_SHIFT_LOGICAL_CONJUNCTION = "Toggle logical conjunction operands";
+    static final public String ACTION_TEXT = "Toggle logical conjunction operands";
 
     public boolean isOrLogic = false;
 

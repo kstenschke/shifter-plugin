@@ -134,7 +134,7 @@
                 <li>Added: Toggle order of two operands in selected AND or OR logical conjunction</li>
                 <li>Corrected: Clarified intention popup descriptions</li>
                 <li>Improved: DOC type detections</li>
-                <li>Improved: Updated use of deprecated plugin API methods</li>
+                <li>Improved: Updated use of deprecated plugin API methods, Tested and fixed edge-cases</li>
             </ul>
         </li>
         <li>1.9.0

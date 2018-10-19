@@ -20,6 +20,8 @@ package com.kstenschke.shifter.models.shiftableTypes;
  */
 public class LogicalOperator {
 
+    public static final String ACTION_TEXT = "Toggle Logical Operator";
+
     public static boolean isLogicalOperator(String word) {
         return word.equals("&&") || word.equals("||");
     }

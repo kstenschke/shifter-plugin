@@ -39,7 +39,7 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class Comment {
 
-    private static final String ACTION_TEXT_SHIFT_COMMENT = "Shift Comment";
+    public static final String ACTION_TEXT = "Shift Comment";
 
     /**
      * @param  str     String to be shifted currently
@@ -156,7 +156,7 @@ public class Comment {
 
                                         actionContainer.writeUndoable(
                                                 actionContainer.getRunnableReplaceSelection(shiftedBlockCommentLines),
-                                                ACTION_TEXT_SHIFT_COMMENT);
+                                                ACTION_TEXT);
                                     }
                                 },
                                 null, null);
@@ -204,7 +204,7 @@ public class Comment {
                                                 shifted = sortLineComments(actionContainer.selectedText, true);
                                                 break;
                                         }
-                                        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(shifted), ACTION_TEXT_SHIFT_COMMENT);
+                                        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(shifted), ACTION_TEXT);
                                     }
                                 },
                                 null, null);
