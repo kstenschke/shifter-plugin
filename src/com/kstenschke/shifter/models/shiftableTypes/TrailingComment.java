@@ -20,6 +20,8 @@ package com.kstenschke.shifter.models.shiftableTypes;
  */
 public class TrailingComment {
 
+    public static final String ACTION_TEXT = "Shift trailing Comment";
+
     /**
      * @param  word     String to be shifted currently
      * @return boolean

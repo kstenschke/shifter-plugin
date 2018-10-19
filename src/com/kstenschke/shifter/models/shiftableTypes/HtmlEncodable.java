@@ -22,6 +22,8 @@ import org.apache.commons.lang.StringEscapeUtils;
  */
 public class HtmlEncodable {
 
+    public static final String ACTION_TEXT = "Shift HTML Entities";
+
     /**
      * Check whether given character can be encoded to an HTML special char / or is already HTML encoded
      *

@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class XmlAttributes {
 
-    public static final String ACTION_TEXT_SHIFT_XML_ATTRIBUTES = "Sort Attributes";
+    public static final String ACTION_TEXT = "Sort Attributes";
 
     private final ActionContainer actionContainer;
 

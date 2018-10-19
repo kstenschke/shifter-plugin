@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.util.ui.Html;
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -25,13 +26,13 @@ import javax.swing.*;
 import java.util.List;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
-import static com.kstenschke.shifter.models.shiftableTypes.LogicalConjunction.ACTION_TEXT;
 
 // Shiftable (non-block) selection
 public class ShiftableSelection {
 
     static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
 
+    private static final String ACTION_TEXT_SWAP_QUOTES = "Swap Quotes";
     private static final String ACTION_TEXT_SWAP_SLASHES = "Swap Slashes";
 
     /**
@@ -62,7 +63,7 @@ public class ShiftableSelection {
         if (xmlAttributes.isXmlAttributes(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(xmlAttributes.getShifted(actionContainer.selectedText, true)),
-                    XmlAttributes.ACTION_TEXT_SHIFT_XML_ATTRIBUTES);
+                    XmlAttributes.ACTION_TEXT);
             return;
         }
 
@@ -79,7 +80,7 @@ public class ShiftableSelection {
                 // Swap surrounding "(" and ")" versus "[" and "]"
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(Parenthesis.getShifted(actionContainer.selectedText)),
-                        ACTION_TEXT_SHIFT_SELECTION);
+                        Parenthesis.ACTION_TEXT);
                 return;
             }
             // Swap parenthesis or convert PHP array
@@ -97,7 +98,7 @@ public class ShiftableSelection {
             if (null != shifted) {
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(shifted, true),
-                        ACTION_TEXT_SHIFT_SELECTION);
+                        Css.ACTION_TEXT);
                 return;
             }
         }
@@ -114,7 +115,7 @@ public class ShiftableSelection {
                     actionContainer.getRunnableReplaceSelection(
                             com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText),
                             true),
-                    ACTION_TEXT_SHIFT_SELECTION);
+                    TernaryExpression.ACTION_TEXT);
             return;
         }
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
@@ -125,13 +126,13 @@ public class ShiftableSelection {
         if (isJsVarsDeclarations) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(JsVariablesDeclarations.getShifted(actionContainer.selectedText)),
-                    ACTION_TEXT_SHIFT_SELECTION);
+                    JsVariablesDeclarations.ACTION_TEXT);
             return;
         }
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(SizzleSelector.getShifted(actionContainer.selectedText)),
-                    ACTION_TEXT_SHIFT_SELECTION);
+                    SizzleSelector.ACTION_TEXT);
             return;
         }
         if (TRAILING_COMMENT == wordType) {
@@ -142,7 +143,7 @@ public class ShiftableSelection {
 
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceCaretLine(com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace)),
-                    ACTION_TEXT_SHIFT_SELECTION);
+                    TrailingComment.ACTION_TEXT);
             return;
         }
 
@@ -169,7 +170,7 @@ public class ShiftableSelection {
                 if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
                     actionContainer.writeUndoable(
                             actionContainer.getRunnableReplaceSelection(UtilsTextual.swapQuotes(actionContainer.selectedText)),
-                            ACTION_TEXT_SHIFT_SELECTION);
+                            ACTION_TEXT_SWAP_QUOTES);
                     return;
                 }
                 new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
@@ -223,7 +224,7 @@ public class ShiftableSelection {
             if (HtmlEncodable.isHtmlEncodable(actionContainer.selectedText)) {
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(HtmlEncodable.getShifted(actionContainer.selectedText)),
-                        ACTION_TEXT_SHIFT_SELECTION);
+                        HtmlEncodable.ACTION_TEXT);
                 return;
             }
         }

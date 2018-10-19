@@ -22,6 +22,8 @@ import com.kstenschke.shifter.utils.UtilsTextual;
  */
 public class SizzleSelector {
 
+    public static final String ACTION_TEXT = "Shift Sizzle Selector";
+
     /**
      * Check whether given string represents a declaration of JS variables
      *

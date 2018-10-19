@@ -20,6 +20,8 @@ package com.kstenschke.shifter.models.shiftableTypes;
  */
 public class Parenthesis {
 
+    public static final String ACTION_TEXT = "Shift Parenthesis";
+
     /**
      * @param  str     String to be shifted currently
      * @return boolean

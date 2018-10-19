@@ -23,6 +23,8 @@ import java.util.regex.Pattern;
  */
 public class TernaryExpression {
 
+    public static final String ACTION_TEXT = "Shift Ternary Expression";
+
     /**
      * Check whether shifted string is a ternary expression
      *

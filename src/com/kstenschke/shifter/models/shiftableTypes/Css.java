@@ -28,6 +28,8 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class Css {
 
+    public static final String ACTION_TEXT = "Shift CSS";
+
     public static String getShifted(String value) {
 
         return value.contains("{") && value.contains("}")

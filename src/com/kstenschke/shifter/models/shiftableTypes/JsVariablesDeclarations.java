@@ -23,6 +23,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class JsVariablesDeclarations {
 
+    public static final String ACTION_TEXT = "Shift JS var declarations";
+
     /**
      * Check whether given string represents a declaration of (multiple) JS variables:
      * -selection has multiple lines
