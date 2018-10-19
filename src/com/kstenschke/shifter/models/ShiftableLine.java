@@ -115,12 +115,7 @@ public class ShiftableLine {
         final CharSequence shiftedLine = shiftableShiftableLine.getShifted(moreCount);
         if (null != shiftedLine) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetCaretLineStart, actionContainer.offsetCaretLineStart + actionContainer.caretLine.length(), shiftedLine);
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceCaretLine(actionContainer, shiftedLine),
                     "Shift Line");
         }
     }

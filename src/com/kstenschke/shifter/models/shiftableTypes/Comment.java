@@ -158,12 +158,7 @@ public class Comment {
                                             : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
 
                                         actionContainer.writeUndoable(
-                                                new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedBlockCommentLines);
-                                                    }
-                                                },
+                                                ActionContainer.getRunnableReplaceSelection(actionContainer, shiftedBlockCommentLines),
                                                 ACTION_TEXT_SHIFT_COMMENT);
                                     }
                                 },
@@ -210,14 +205,8 @@ public class Comment {
                                                 shifted = sortLineComments(actionContainer.selectedText, true);
                                                 break;
                                         }
-                                        final String shiftedFin = shifted;
                                         actionContainer.writeUndoable(
-                                                new Runnable() {
-                                                    @Override
-                                                    public void run() {
-                                                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedFin);
-                                                    }
-                                                },
+                                                ActionContainer.getRunnableReplaceSelection(actionContainer, shifted),
                                                 ACTION_TEXT_SHIFT_COMMENT);
                                     }
                                 },

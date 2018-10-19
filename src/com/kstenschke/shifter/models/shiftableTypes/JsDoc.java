@@ -181,15 +181,8 @@ public class JsDoc {
             return false;
         }
 
-        final String docBlockCorrectedFin = docBlockCorrected;
         actionContainer.writeUndoable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, docBlockCorrectedFin);
-                        UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
-                    }
-                },
+                ActionContainer.getRunnableReplaceSelection(actionContainer, docBlockCorrected,true),
                 "Shift JsDoc");
         return true;
     }

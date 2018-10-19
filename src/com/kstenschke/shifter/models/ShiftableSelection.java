@@ -60,15 +60,8 @@ public class ShiftableSelection {
         final XmlAttributes xmlAttributes = new XmlAttributes(actionContainer);
         if (xmlAttributes.isXmlAttributes(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            String shifted = xmlAttributes.getShifted(actionContainer.selectedText, true);
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, xmlAttributes.getShifted(actionContainer.selectedText)),
                     XmlAttributes.ACTION_TEXT_SHIFT_XML_ATTRIBUTES);
-
             return;
         }
 
@@ -83,12 +76,7 @@ public class ShiftableSelection {
             if (!isPhpVariableOrArray || !isShiftablePhpArray) {
                 // Swap surrounding "(" and ")" versus "[" and "]"
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, Parenthesis.getShifted(actionContainer.selectedText));
-                            }
-                        },
+                        ActionContainer.getRunnableReplaceSelection(actionContainer, Parenthesis.getShifted(actionContainer.selectedText)),
                         ACTION_TEXT_SHIFT_SELECTION);
                 return;
             }
@@ -106,22 +94,8 @@ public class ShiftableSelection {
             final String shifted = Css.getShifted(actionContainer.selectedText);
             if (null != shifted) {
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(
-                                        actionContainer.offsetSelectionStart,
-                                        actionContainer.offsetSelectionEnd,
-                                        shifted);
-                                UtilsEnvironment.reformatSubString(
-                                        actionContainer.editor,
-                                        actionContainer.project,
-                                        actionContainer.offsetSelectionStart,
-                                        actionContainer.offsetSelectionStart + shifted.length());
-                            }
-                        },
+                        ActionContainer.getRunnableReplaceSelection(actionContainer, shifted, true),
                         ACTION_TEXT_SHIFT_SELECTION);
-
                 return;
             }
         }
@@ -135,18 +109,11 @@ public class ShiftableSelection {
 
         if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(actionContainer.selectedText, "")) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    actionContainer.offsetSelectionStart,
-                                    actionContainer.offsetSelectionEnd,
-                                    com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText));
-                            UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(
+                            actionContainer,
+                            com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText),
+                            true),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
         if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
@@ -156,32 +123,14 @@ public class ShiftableSelection {
         }
         if (isJsVarsDeclarations) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    actionContainer.offsetSelectionStart,
-                                    actionContainer.offsetSelectionEnd,
-                                    com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(actionContainer.selectedText));
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, JsVariablesDeclarations.getShifted(actionContainer.selectedText)),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    actionContainer.offsetSelectionStart,
-                                    actionContainer.offsetSelectionEnd,
-                                    com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(actionContainer.selectedText));
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, SizzleSelector.getShifted(actionContainer.selectedText)),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
         if (TRAILING_COMMENT == wordType) {
@@ -191,17 +140,10 @@ public class ShiftableSelection {
             final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    offsetStartCaretLine,
-                                    offsetEndCaretLine,
-                                    com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace));
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceCaretLine(
+                            actionContainer,
+                            com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace)),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
 
@@ -227,17 +169,8 @@ public class ShiftableSelection {
             if (containsShiftableQuotes) {
                 if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
                     actionContainer.writeUndoable(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    actionContainer.document.replaceString(
-                                            actionContainer.offsetSelectionStart,
-                                            actionContainer.offsetSelectionEnd,
-                                            UtilsTextual.swapQuotes(actionContainer.selectedText));
-                                }
-                            },
+                            ActionContainer.getRunnableReplaceSelection(actionContainer, UtilsTextual.swapQuotes(actionContainer.selectedText)),
                             ACTION_TEXT_SHIFT_SELECTION);
-
                     return;
                 }
                 new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
@@ -261,17 +194,8 @@ public class ShiftableSelection {
                      * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
                      * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
                      */
-                    actionContainer.writeUndoable(
-                            new Runnable() {
-                                @Override
-                                public void run() {
-                                    actionContainer.document.replaceString(
-                                            actionContainer.offsetSelectionStart,
-                                            actionContainer.offsetSelectionEnd,
-                                            replacement);
-                                }
-                            },
-                            "Swap Words Order");
+                    actionContainer.writeUndoable(ActionContainer.getRunnableReplaceSelection(actionContainer, replacement),
+                    "Swap Words Order");
                 }
 
                 return;
@@ -282,58 +206,26 @@ public class ShiftableSelection {
                     return;
                 }
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(
-                                        actionContainer.offsetSelectionStart,
-                                        actionContainer.offsetSelectionEnd,
-                                        UtilsTextual.swapSlashes(actionContainer.selectedText));
-                            }
-                        },
+                        ActionContainer.getRunnableReplaceSelection(actionContainer, UtilsTextual.swapSlashes(actionContainer.selectedText)),
                         ACTION_TEXT_SHIFT_SELECTION);
-
                 return;
             }
             if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(actionContainer.selectedText)) {
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(
-                                        actionContainer.offsetSelectionStart,
-                                        actionContainer.offsetSelectionEnd,
-                                    com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(actionContainer.selectedText));
-                            }
-                        },
+                        ActionContainer.getRunnableReplaceSelection(actionContainer, LogicalOperator.getShifted(actionContainer.selectedText)),
                         ACTION_TEXT_SHIFT_SELECTION);
-
                 return;
             }
             if (isLogicalConjunction) {
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(
-                                        actionContainer.offsetSelectionStart,
-                                        actionContainer.offsetSelectionEnd,
-                                        logicalConjunction.getShifted(actionContainer.selectedText));
-                            }
-                        },
+                        ActionContainer.getRunnableReplaceSelection(actionContainer, logicalConjunction.getShifted(actionContainer.selectedText)),
                         ACTION_TEXT_SHIFT_LOGICAL_CONJUNCTION);
                 return;
             }
             if (HtmlEncodable.isHtmlEncodable(actionContainer.selectedText)) {
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, HtmlEncodable.getShifted(actionContainer.selectedText));
-                            }
-                        },
+                        ActionContainer.getRunnableReplaceSelection(actionContainer, HtmlEncodable.getShifted(actionContainer.selectedText)),
                         ACTION_TEXT_SHIFT_SELECTION);
-
                 return;
             }
         }
@@ -342,60 +234,25 @@ public class ShiftableSelection {
         final String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (isPhpVariableOrArray) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    actionContainer.offsetSelectionStart,
-                                    actionContainer.offsetSelectionEnd,
-                                    actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection);
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
         if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    actionContainer.offsetSelectionStart,
-                                    actionContainer.offsetSelectionEnd,
-                                    actionContainer.whiteSpaceLHSinSelection + shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelection);
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, actionContainer.whiteSpaceLHSinSelection + shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelection),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
         if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) || UtilsTextual.isUcFirst(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(
-                                    actionContainer.offsetSelectionStart,
-                                    actionContainer.offsetSelectionEnd,
-                                    actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection);
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return;
         }
 
         actionContainer.writeUndoable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        actionContainer.document.replaceString(
-                                actionContainer.offsetSelectionStart,
-                                actionContainer.offsetSelectionEnd,
-                                actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection);
-                    }
-                },
+                ActionContainer.getRunnableReplaceSelection(actionContainer, actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
                 ACTION_TEXT_SHIFT_SELECTION);
     }
 
@@ -415,26 +272,14 @@ public class ShiftableSelection {
         }
         if (com.kstenschke.shifter.models.shiftableTypes.Comment.isHtmlComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getPhpBlockCommentFromHtmlComment(actionContainer.selectedText));
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, Comment.getPhpBlockCommentFromHtmlComment(actionContainer.selectedText)),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return true;
         }
         if (com.kstenschke.shifter.models.shiftableTypes.Comment.isPhpBlockComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.Comment.getShifted(actionContainer));
-                        }
-                    },
+                    ActionContainer.getRunnableReplaceSelection(actionContainer, Comment.getShifted(actionContainer)),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return true;
         }
         return false;
@@ -481,14 +326,8 @@ public class ShiftableSelection {
             linesString = UtilsTextual.reduceDuplicateLines(linesString);
         }
 
-        final String linesStringFin = linesString;
         actionContainer.writeUndoable(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        actionContainer.document.replaceString(actionContainer.offsetSelectionLineStart, actionContainer.offsetSelectionLineEnd, linesStringFin);
-                    }
-                },
+                ActionContainer.getRunnableReplaceSelection(actionContainer, linesString),
                 ACTION_TEXT_SHIFT_SELECTION);
     }
 }

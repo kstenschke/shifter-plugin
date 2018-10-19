@@ -13,6 +13,7 @@ import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
@@ -102,6 +103,43 @@ public class ActionContainer {
             whiteSpaceRHSinSelection = selectedText.substring(index + selectedTextTrimmed.length());
         }
         selectedText = selectedTextTrimmed;
+    }
+
+    @NotNull
+    public static Runnable getRunnableReplaceSelection(final ActionContainer actionContainer, final String shifted) {
+        return getRunnableReplaceSelection(actionContainer, shifted, false);
+    }
+    @NotNull
+    public static Runnable getRunnableReplaceSelection(final ActionContainer actionContainer, final String shifted, final boolean reformat) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                actionContainer.document.replaceString(
+                        actionContainer.offsetSelectionStart,
+                        actionContainer.offsetSelectionEnd,
+                        shifted);
+                if (reformat) {
+                    UtilsEnvironment.reformatSubString(
+                            actionContainer.editor,
+                            actionContainer.project,
+                            actionContainer.offsetSelectionStart,
+                            actionContainer.offsetSelectionStart + shifted.length());
+                }
+            }
+        };
+    }
+
+    @NotNull
+    static Runnable getRunnableReplaceCaretLine(final ActionContainer actionContainer, final CharSequence shiftedLine) {
+        return new Runnable() {
+            @Override
+            public void run() {
+                actionContainer.document.replaceString(
+                        actionContainer.offsetCaretLineStart,
+                        actionContainer.offsetCaretLineStart + actionContainer.caretLine.length(),
+                        shiftedLine);
+            }
+        };
     }
 
     void writeUndoable(final Runnable runnable) {
