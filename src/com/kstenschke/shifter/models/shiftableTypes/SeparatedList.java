@@ -31,10 +31,6 @@ import java.util.List;
  */
 public class SeparatedList {
 
-    public static boolean isSeparatedList(String word) {
-        return isSeparatedList(word, ",");
-    }
-
     public static boolean isSeparatedList(String str, String delimiter) {
         if (!str.contains(delimiter)) {
             return false;

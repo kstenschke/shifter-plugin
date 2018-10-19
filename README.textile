@@ -46,6 +46,7 @@ h4. Sorting
 * Shifting a single-line selection, that is XML attribute-value pairs, sorts them alphabetically.
 * Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
 * Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
+* Shifting a selected AND && or OR || logical conjunction with two operands, swaps the operands' order
 * Shifting a selected (from questionmark on) ternary expression, swaps "than" and "else" statements
 * Shifting a selected PHP concatenation from two strings / variables, toggles the concatenated items' order
 * Shifting a selection from a CSS file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>

@@ -26,6 +26,7 @@ import javax.swing.*;
 import java.util.List;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+import static com.kstenschke.shifter.models.shiftableTypes.LogicalConjunction.ACTION_TEXT_SHIFT_LOGICAL_CONJUNCTION;
 
 // Shiftable (non-block) selection
 public class ShiftableSelection {
@@ -214,8 +215,12 @@ public class ShiftableSelection {
                 new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", actionContainer.isShiftUp);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(actionContainer.selectedText,"|")) {
-                // Pipe-separated list
+            final LogicalConjunction logicalConjunction = new LogicalConjunction();
+            boolean isLogicalConjunction = logicalConjunction.isLogicalConjunction(actionContainer.selectedText);
+            if ( (!isLogicalConjunction || !logicalConjunction.isOrLogic)
+                 && com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(actionContainer.selectedText,"|")
+            ) {
+                // Pipe-separated list (not confused w/ || of logical conjunctions)
                 new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument("\\|(\\s)*", "|", actionContainer.isShiftUp);
                 return;
             }
@@ -298,11 +303,25 @@ public class ShiftableSelection {
                                 actionContainer.document.replaceString(
                                         actionContainer.offsetSelectionStart,
                                         actionContainer.offsetSelectionEnd,
-                                        com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(actionContainer.selectedText));
+                                    com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(actionContainer.selectedText));
                             }
                         },
                         ACTION_TEXT_SHIFT_SELECTION);
 
+                return;
+            }
+            if (isLogicalConjunction) {
+                actionContainer.writeUndoable(
+                        new Runnable() {
+                            @Override
+                            public void run() {
+                                actionContainer.document.replaceString(
+                                        actionContainer.offsetSelectionStart,
+                                        actionContainer.offsetSelectionEnd,
+                                        logicalConjunction.getShifted(actionContainer.selectedText));
+                            }
+                        },
+                        ACTION_TEXT_SHIFT_LOGICAL_CONJUNCTION);
                 return;
             }
             if (HtmlEncodable.isHtmlEncodable(actionContainer.selectedText)) {
