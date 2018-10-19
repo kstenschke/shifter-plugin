@@ -80,7 +80,7 @@ public class PhpDocParam {
             if (!shifted.equals(actionContainer.selectedText)) {
                 // PHPDoc comment block: guess missing data shiftableTypes by resp. variable names
                 actionContainer.writeUndoable(
-                        ActionContainer.getRunnableReplaceSelection(actionContainer, shifted, true),
+                        actionContainer.getRunnableReplaceSelection(shifted, true),
                         "Shift PHPDoc comment");
                 return true;
             }
@@ -94,7 +94,7 @@ public class PhpDocParam {
             if (!dataType.equals("unknown")) {
                 // PHPDoc @param line w/o data type, e.g. "* @param $name"
                 actionContainer.writeUndoable(
-                        ActionContainer.getRunnableReplaceSelection(actionContainer, insertDataTypeIntoParamLine(actionContainer.selectedText, dataType)),
+                        actionContainer.getRunnableReplaceSelection(insertDataTypeIntoParamLine(actionContainer.selectedText, dataType)),
                         "Shift PHPDoc param");
                 return true;
             }

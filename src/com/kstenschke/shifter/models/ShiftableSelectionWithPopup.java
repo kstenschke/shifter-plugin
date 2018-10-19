@@ -84,8 +84,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
         if (!containsShiftableQuotes) {
             actionContainer.writeUndoable(
-                    ActionContainer.getRunnableReplaceSelection(
-                            actionContainer,
+                    actionContainer.getRunnableReplaceSelection(
                             SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp)),
                     ACTION_TEXT_SHIFT_SELECTION);
             return;

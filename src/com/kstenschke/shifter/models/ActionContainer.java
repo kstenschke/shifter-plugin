@@ -106,37 +106,30 @@ public class ActionContainer {
     }
 
     @NotNull
-    public static Runnable getRunnableReplaceSelection(final ActionContainer actionContainer, final String shifted) {
-        return getRunnableReplaceSelection(actionContainer, shifted, false);
+    public Runnable getRunnableReplaceSelection(final String shifted) {
+        return getRunnableReplaceSelection(shifted, false);
     }
     @NotNull
-    public static Runnable getRunnableReplaceSelection(final ActionContainer actionContainer, final String shifted, final boolean reformat) {
+    public Runnable getRunnableReplaceSelection(final String shifted, final boolean reformat) {
         return new Runnable() {
             @Override
             public void run() {
-                actionContainer.document.replaceString(
-                        actionContainer.offsetSelectionStart,
-                        actionContainer.offsetSelectionEnd,
-                        shifted);
+                document.replaceString(offsetSelectionStart, offsetSelectionEnd, shifted);
                 if (reformat) {
-                    UtilsEnvironment.reformatSubString(
-                            actionContainer.editor,
-                            actionContainer.project,
-                            actionContainer.offsetSelectionStart,
-                            actionContainer.offsetSelectionStart + shifted.length());
+                    UtilsEnvironment.reformatSubString(editor, project, offsetSelectionStart, offsetSelectionStart + shifted.length());
                 }
             }
         };
     }
 
     @NotNull
-    static Runnable getRunnableReplaceCaretLine(final ActionContainer actionContainer, final CharSequence shiftedLine) {
+    Runnable getRunnableReplaceCaretLine(final CharSequence shiftedLine) {
         return new Runnable() {
             @Override
             public void run() {
-                actionContainer.document.replaceString(
-                        actionContainer.offsetCaretLineStart,
-                        actionContainer.offsetCaretLineStart + actionContainer.caretLine.length(),
+                document.replaceString(
+                        offsetCaretLineStart,
+                        offsetCaretLineStart + caretLine.length(),
                         shiftedLine);
             }
         };

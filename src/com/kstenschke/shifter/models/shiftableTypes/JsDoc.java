@@ -181,9 +181,7 @@ public class JsDoc {
             return false;
         }
 
-        actionContainer.writeUndoable(
-                ActionContainer.getRunnableReplaceSelection(actionContainer, docBlockCorrected,true),
-                "Shift JsDoc");
+        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected,true), "Shift JsDoc");
         return true;
     }
 

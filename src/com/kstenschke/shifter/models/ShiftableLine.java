@@ -115,7 +115,7 @@ public class ShiftableLine {
         final CharSequence shiftedLine = shiftableShiftableLine.getShifted(moreCount);
         if (null != shiftedLine) {
             actionContainer.writeUndoable(
-                    ActionContainer.getRunnableReplaceCaretLine(actionContainer, shiftedLine),
+                    actionContainer.getRunnableReplaceCaretLine(shiftedLine),
                     "Shift Line");
         }
     }

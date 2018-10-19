@@ -158,7 +158,7 @@ public class Comment {
                                             : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
 
                                         actionContainer.writeUndoable(
-                                                ActionContainer.getRunnableReplaceSelection(actionContainer, shiftedBlockCommentLines),
+                                                actionContainer.getRunnableReplaceSelection(shiftedBlockCommentLines),
                                                 ACTION_TEXT_SHIFT_COMMENT);
                                     }
                                 },
@@ -205,9 +205,7 @@ public class Comment {
                                                 shifted = sortLineComments(actionContainer.selectedText, true);
                                                 break;
                                         }
-                                        actionContainer.writeUndoable(
-                                                ActionContainer.getRunnableReplaceSelection(actionContainer, shifted),
-                                                ACTION_TEXT_SHIFT_COMMENT);
+                                        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(shifted), ACTION_TEXT_SHIFT_COMMENT);
                                     }
                                 },
                                 null, null);
