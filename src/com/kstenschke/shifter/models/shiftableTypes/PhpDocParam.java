@@ -16,7 +16,6 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import static org.apache.commons.lang.StringUtils.trim;
 

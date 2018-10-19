@@ -43,7 +43,7 @@ public class LogicalConjunction {
     }
 
     public String swapOrder(String text) {
-        String[] parts = text.split(isOrLogic ? "||" : "&&");
+        String[] parts = text.split(isOrLogic ? "\\|\\|" : "&&");
 
         return parts[1].trim() + (isOrLogic ? " || " : " && ") + parts[0];
     }

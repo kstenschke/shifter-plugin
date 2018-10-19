@@ -17,7 +17,6 @@ package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
