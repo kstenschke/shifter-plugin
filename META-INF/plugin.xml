@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.8.4</version>
+    <version>1.9.0</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Detects type of selection, line or keyword at caret and shifts it "up" or "down" on keyboard shortcut.
@@ -122,11 +122,11 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
-        <li>1.8.4
+        <li>1.9.0
             <ul>
+                <li>Added: Selections containing whitespace around the shiftable term can be shifted</li>
                 <li>Improved: Adapted UI more to recent IDE UI</li>
                 <li>Improved: Extended default dictionary</li>
-                <li>Improved: Terms can be shifted also when surrounding whitespace is included in selection</li>
             </ul>
         </li>
         <li>1.8.3

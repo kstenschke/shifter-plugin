@@ -39,8 +39,10 @@ public class ActionContainer {
     public int lineNumberSelEnd;
     public int offsetSelectionLineStart;
     public int offsetSelectionLineEnd;
+
     public String selectedText;
-    public String whiteSpaceRHSinSelectedText;
+    public String whiteSpaceLHSinSelection;
+    public String whiteSpaceRHSinSelection;
 
     public int caretLineNumber;
     public int offsetCaretLineStart;
@@ -85,10 +87,21 @@ public class ActionContainer {
         }
     }
 
-    void rTrimSelectedText() {
-        String selectedTextRTrimmed = UtilsTextual.rtrim(selectedText);
-        whiteSpaceRHSinSelectedText = selectedText.replace(selectedTextRTrimmed, "");
-        selectedText = selectedTextRTrimmed;
+    /**
+     * Trim selection and store whitespace from both sides to properties
+     */
+    void trimSelectedText() {
+        String selectedTextTrimmed = selectedText.trim();
+
+        int index = selectedText.indexOf(selectedTextTrimmed);
+        whiteSpaceLHSinSelection = "";
+        if (0 == index ) {
+            whiteSpaceRHSinSelection = selectedText.replace(selectedTextTrimmed, "");
+        } else {
+            whiteSpaceLHSinSelection = selectedText.substring(0, index);
+            whiteSpaceRHSinSelection = selectedText.substring(index + selectedTextTrimmed.length());
+        }
+        selectedText = selectedTextTrimmed;
     }
 
     void writeUndoable(final Runnable runnable) {

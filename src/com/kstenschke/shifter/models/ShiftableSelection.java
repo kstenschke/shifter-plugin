@@ -108,8 +108,15 @@ public class ShiftableSelection {
                         new Runnable() {
                             @Override
                             public void run() {
-                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shifted);
-                                UtilsEnvironment.reformatSubString(actionContainer.editor, actionContainer.project, actionContainer.offsetSelectionStart, actionContainer.offsetSelectionStart + shifted.length());
+                                actionContainer.document.replaceString(
+                                        actionContainer.offsetSelectionStart,
+                                        actionContainer.offsetSelectionEnd,
+                                        shifted);
+                                UtilsEnvironment.reformatSubString(
+                                        actionContainer.editor,
+                                        actionContainer.project,
+                                        actionContainer.offsetSelectionStart,
+                                        actionContainer.offsetSelectionStart + shifted.length());
                             }
                         },
                         ACTION_TEXT_SHIFT_SELECTION);
@@ -130,7 +137,10 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText));
+                            actionContainer.document.replaceString(
+                                    actionContainer.offsetSelectionStart,
+                                    actionContainer.offsetSelectionEnd,
+                                    com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText));
                             UtilsEnvironment.reformatSelection(actionContainer.editor, actionContainer.project);
                         }
                     },
@@ -148,7 +158,10 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(actionContainer.selectedText));
+                            actionContainer.document.replaceString(
+                                    actionContainer.offsetSelectionStart,
+                                    actionContainer.offsetSelectionEnd,
+                                    com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.getShifted(actionContainer.selectedText));
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -160,7 +173,10 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(actionContainer.selectedText));
+                            actionContainer.document.replaceString(
+                                    actionContainer.offsetSelectionStart,
+                                    actionContainer.offsetSelectionEnd,
+                                    com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(actionContainer.selectedText));
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -177,7 +193,10 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(offsetStartCaretLine, offsetEndCaretLine, com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace));
+                            actionContainer.document.replaceString(
+                                    offsetStartCaretLine,
+                                    offsetEndCaretLine,
+                                    com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace));
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -206,7 +225,10 @@ public class ShiftableSelection {
                             new Runnable() {
                                 @Override
                                 public void run() {
-                                    actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapQuotes(actionContainer.selectedText));
+                                    actionContainer.document.replaceString(
+                                            actionContainer.offsetSelectionStart,
+                                            actionContainer.offsetSelectionEnd,
+                                            UtilsTextual.swapQuotes(actionContainer.selectedText));
                                 }
                             },
                             ACTION_TEXT_SHIFT_SELECTION);
@@ -238,7 +260,10 @@ public class ShiftableSelection {
                             new Runnable() {
                                 @Override
                                 public void run() {
-                                    actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, replacement);
+                                    actionContainer.document.replaceString(
+                                            actionContainer.offsetSelectionStart,
+                                            actionContainer.offsetSelectionEnd,
+                                            replacement);
                                 }
                             },
                             "Swap Words Order");
@@ -255,7 +280,10 @@ public class ShiftableSelection {
                         new Runnable() {
                             @Override
                             public void run() {
-                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.swapSlashes(actionContainer.selectedText));
+                                actionContainer.document.replaceString(
+                                        actionContainer.offsetSelectionStart,
+                                        actionContainer.offsetSelectionEnd,
+                                        UtilsTextual.swapSlashes(actionContainer.selectedText));
                             }
                         },
                         ACTION_TEXT_SHIFT_SELECTION);
@@ -267,7 +295,10 @@ public class ShiftableSelection {
                         new Runnable() {
                             @Override
                             public void run() {
-                                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(actionContainer.selectedText));
+                                actionContainer.document.replaceString(
+                                        actionContainer.offsetSelectionStart,
+                                        actionContainer.offsetSelectionEnd,
+                                        com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(actionContainer.selectedText));
                             }
                         },
                         ACTION_TEXT_SHIFT_SELECTION);
@@ -288,14 +319,17 @@ public class ShiftableSelection {
             }
         }
 
-        actionContainer.rTrimSelectedText();
+        actionContainer.trimSelectedText();
         final String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (isPhpVariableOrArray) {
             actionContainer.writeUndoable(
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord + actionContainer.whiteSpaceRHSinSelectedText);
+                            actionContainer.document.replaceString(
+                                    actionContainer.offsetSelectionStart,
+                                    actionContainer.offsetSelectionEnd,
+                                    actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection);
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -307,7 +341,10 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelectedText);
+                            actionContainer.document.replaceString(
+                                    actionContainer.offsetSelectionStart,
+                                    actionContainer.offsetSelectionEnd,
+                                    actionContainer.whiteSpaceLHSinSelection + shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelection);
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -319,7 +356,10 @@ public class ShiftableSelection {
                     new Runnable() {
                         @Override
                         public void run() {
-                            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelectedText);
+                            actionContainer.document.replaceString(
+                                    actionContainer.offsetSelectionStart,
+                                    actionContainer.offsetSelectionEnd,
+                                    actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection);
                         }
                     },
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -331,7 +371,10 @@ public class ShiftableSelection {
                 new Runnable() {
                     @Override
                     public void run() {
-                        actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, shiftedWord + actionContainer.whiteSpaceRHSinSelectedText);
+                        actionContainer.document.replaceString(
+                                actionContainer.offsetSelectionStart,
+                                actionContainer.offsetSelectionEnd,
+                                actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection);
                     }
                 },
                 ACTION_TEXT_SHIFT_SELECTION);
