@@ -25,6 +25,7 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * Separated list (delimiters e.g: ",", "|")
@@ -32,7 +33,10 @@ import java.util.List;
 public class SeparatedList {
 
     public static boolean isSeparatedList(String str, String delimiter) {
-        if (!str.contains(delimiter)) {
+        if (!str.contains(delimiter)
+            || str.trim().length() == delimiter.length()
+            || str.replaceAll(Pattern.quote(delimiter), "").length() == 0
+        ) {
             return false;
         }
         if (!UtilsTextual.isWrappedIntoQuotes(str)) {

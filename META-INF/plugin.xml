@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.10.0</version>
+    <version>1.9.1</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Implements numerous string manipulations on a single keyboard shortcut with detection of intended manipulation.
@@ -129,7 +129,7 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
-        <li>1.10.0
+        <li>1.9.1
             <ul>
                 <li>Added: Toggle order of two operands in selected AND or OR logical conjunction</li>
                 <li>Corrected: Clarified intention popup descriptions</li>

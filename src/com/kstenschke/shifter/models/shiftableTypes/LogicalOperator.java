@@ -27,7 +27,7 @@ public class LogicalOperator {
     }
 
     /**
-     * Toggle "&&" among "||"
+     * Toggle among "&&" and "||"
      *
      * @param  word
      * @return String
