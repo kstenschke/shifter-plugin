@@ -96,7 +96,7 @@ public class ActionContainer {
 
         int index = selectedText.indexOf(selectedTextTrimmed);
         whiteSpaceLHSinSelection = "";
-        if (0 == index ) {
+        if (0 == index) {
             whiteSpaceRHSinSelection = selectedText.replace(selectedTextTrimmed, "");
         } else {
             whiteSpaceLHSinSelection = selectedText.substring(0, index);

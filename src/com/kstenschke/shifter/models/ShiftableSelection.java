@@ -71,7 +71,7 @@ public class ShiftableSelection {
         ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
         ShiftableTypes.Type wordType = shiftingShiftableTypesManager.getWordType(actionContainer);
 
-        boolean isPhpVariableOrArray = wordType == PHP_VARIABLE_OR_ARRAY;
+        boolean isPhpVariableOrArray = PHP_VARIABLE_OR_ARRAY == wordType;
 
         if (isWrappedInParenthesis) {
             boolean isShiftablePhpArray = isPhpVariableOrArray && PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
@@ -87,7 +87,7 @@ public class ShiftableSelection {
             return;
         }
 
-        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && wordType == JS_VARIABLES_DECLARATIONS;
+        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && JS_VARIABLES_DECLARATIONS == wordType;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
         boolean isMultiLine             = UtilsTextual.isMultiLine(actionContainer.selectedText);
 

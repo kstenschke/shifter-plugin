@@ -212,10 +212,10 @@ public class UtilsTextual {
         if (null == str) {
             return null;
         }
-        if (str.isEmpty()) {
-            return "";
-        }
-        return Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
+
+        return str.isEmpty()
+                ? ""
+                : Character.toUpperCase(str.charAt(0)) + str.substring(1).toLowerCase();
     }
 
     /**

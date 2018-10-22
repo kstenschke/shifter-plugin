@@ -63,17 +63,16 @@ public class ShiftableWord {
             @Nullable Integer moreCount
     ) {
         this.actionContainer = actionContainer;
+        this.moreCount       = moreCount;
 
         shiftingShiftableTypesManager = new ShiftableTypesManager();
-
-        this.moreCount   = moreCount;
 
         // Detect word type
         wordType = shiftingShiftableTypesManager.getWordType(word, prefixChar, postfixChar, false, actionContainer);
 
         // Comprehend negative values of numeric shiftableTypes
         this.word = (
-                (wordType == CSS_UNIT || wordType == NUMERIC_VALUE)
+                (CSS_UNIT == wordType || NUMERIC_VALUE == wordType)
                 && "-".equals(prefixChar)
         )
             ? "-" + word
@@ -128,26 +127,22 @@ public class ShiftableWord {
      * @return String   Post-processed word
      */
     private String postProcess(String word, String postfix) {
-        if (UtilsFile.isCssFile(actionContainer.filename)) {
-            switch (wordType) {
-                // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
-                case NUMERIC_VALUE:
-                    if (!CssUnit.isCssUnit(postfix)) {
-                        return word + CssUnit.determineMostProminentUnit(actionContainer.editorText.toString());
-                    }
-                    break;
-                case CSS_UNIT:
-                    // Correct "0px" (or other unit) to "0"
-                    if (word.startsWith("0")) {
-                        return "0";
-                    }
-                    break;
-                default:
-                    return word;
-            }
+        if (!UtilsFile.isCssFile(actionContainer.filename)) {
+            return word;
         }
 
-        return word;
+        switch (wordType) {
+            // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
+            case NUMERIC_VALUE:
+                return CssUnit.isCssUnit(postfix)
+                        ? word
+                        : word + CssUnit.determineMostProminentUnit(actionContainer.editorText.toString());
+            case CSS_UNIT:
+                // Correct "0px" (or other unit) to "0"
+                return word.startsWith("0") ? "0" : word;
+            default:
+                return word;
+        }
     }
 
     /**
@@ -171,7 +166,6 @@ public class ShiftableWord {
         if (null == word || word.isEmpty()) {
             return false;
         }
-
         if (actionContainer.fileExtension.endsWith("js") && shiftWordAtCaretInJsDocument(actionContainer, word)) {
             return true;
         }

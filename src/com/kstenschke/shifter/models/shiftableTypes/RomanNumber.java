@@ -38,11 +38,9 @@ public class RomanNumber {
     public String getShifted(String value, boolean isUp) {
         int intVal = new RomanNumeral(value).toInt();
 
-        if (1 == intVal && !isUp) {
-            return value;
-        }
-
-        return new RomanNumeral(isUp ? intVal + 1 : intVal -1).toString();
+        return 1 == intVal && !isUp
+                ? value
+                : new RomanNumeral(isUp ? intVal + 1 : intVal -1).toString();
     }
 
     /**

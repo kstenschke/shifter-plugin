@@ -115,10 +115,7 @@ public class ShiftableBlockSelection {
      * @param stepSize
      */
     private static void shiftNumericalBlockSelectionInDocument(final ActionContainer actionContainer, Integer startWith, final int stepSize) {
-        Integer firstNumber = startWith;
-        if (null == firstNumber) {
-            firstNumber = 0;
-        }
+        Integer firstNumber = null == startWith ? 0 : startWith;
         final DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
         UtilsEnvironment.setDialogVisible(actionContainer.editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
         if (!optionsDialog.wasCancelled()) {

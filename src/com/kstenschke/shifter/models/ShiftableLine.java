@@ -91,7 +91,7 @@ public class ShiftableLine {
             }
         }
 
-        if (amountShiftableWordsInSentence == 1) {
+        if (1 == amountShiftableWordsInSentence) {
             // Shift detected word in lLine
             String line = actionContainer.caretLine;
             return line.replace(wordUnshifted, wordShifted);
