@@ -27,6 +27,8 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
  */
 class ShiftableTypesManager {
 
+    public ShiftableTypes.Type wordType;
+
     // Word type objects
     private com.kstenschke.shifter.models.shiftableTypes.StaticWordType wordTypeAccessibilities;
     private com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm typeDictionaryTerm;
@@ -38,7 +40,7 @@ class ShiftableTypesManager {
     private com.kstenschke.shifter.models.shiftableTypes.NumericValue typeNumericValue;
     private com.kstenschke.shifter.models.shiftableTypes.OperatorSign typeOperatorSign;
     private PhpVariableOrArray typePhpVariableOrArray;
-    private com.kstenschke.shifter.models.shiftableTypes.RbgColor typeRgbColor;
+    private RgbColor typeRgbColor;
     private com.kstenschke.shifter.models.shiftableTypes.RomanNumber typeRomanNumber;
     private MonoCharacter typeMonoCharacterString;
     private com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel;
@@ -117,8 +119,8 @@ class ShiftableTypesManager {
             return QUOTED_STRING;
         }
         // RGB (must be prefixed w/ "#")
-        if (com.kstenschke.shifter.models.shiftableTypes.RbgColor.isRgbColorString(word, prefixChar)) {
-            typeRgbColor = new com.kstenschke.shifter.models.shiftableTypes.RbgColor();
+        if (RgbColor.isRgbColorString(word, prefixChar)) {
+            typeRgbColor = new RgbColor();
             return RGB_COLOR;
         }
         // Pixel value (must consist of numeric value followed by "px")
@@ -261,9 +263,39 @@ class ShiftableTypesManager {
     }
 
     public String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
-        //String line                  = UtilsTextual.getLineAtOffset(actionContainer.editorText.toString(), actionContainer.caretOffset);
-        ShiftableTypes.Type wordType = getWordType(actionContainer.selectedText, "", "", false, actionContainer);
+        wordType = getWordType(actionContainer.selectedText, "", "", false, actionContainer);
 
         return getShiftedWord(actionContainer, actionContainer.selectedText, wordType, moreCount);
+    }
+
+    public String getActionText(String defaultText) {
+        if (null == wordType) {
+            return defaultText;
+        }
+
+        switch (wordType) {
+            case CSS_UNIT:
+                return CssUnit.ACTION_TEXT;
+            case HTML_ENCODABLE:
+                return HtmlEncodable.ACTION_TEXT;
+            case JS_VARIABLES_DECLARATIONS:
+                return JsVariablesDeclarations.ACTION_TEXT;
+            case LOGICAL_OPERATOR:
+                return LogicalOperator.ACTION_TEXT;
+            case MONO_CHARACTER:
+                return MonoCharacter.ACTION_TEXT;
+            case NUMERIC_VALUE:
+                return NumericValue.ACTION_TEXT;
+            case RGB_COLOR:
+                return RgbColor.ACTION_TEXT;
+            case TERNARY_EXPRESSION:
+                return TernaryExpression.ACTION_TEXT;
+            case TRAILING_COMMENT:
+                return TrailingComment.ACTION_TEXT;
+            case WORDS_TUPEL:
+                return Tupel.ACTION_TEXT;
+            default:
+                return defaultText;
+        }
     }
 }

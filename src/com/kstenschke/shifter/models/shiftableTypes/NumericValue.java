@@ -36,6 +36,8 @@ import java.util.Date;
  */
 public class NumericValue {
 
+    public static final String ACTION_TEXT = "Shift numeric value";
+
     private static final int SECONDS_PER_DAY = 86400;
 
     /**

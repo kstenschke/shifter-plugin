@@ -20,7 +20,9 @@ import java.awt.*;
 /**
  * RGB color class
  */
-public class RbgColor {
+public class RgbColor {
+
+    public static final String ACTION_TEXT = "Shift RGB Color";
 
     /**
      * Check whether given string represents a hex RGB color, prefix must be "#"

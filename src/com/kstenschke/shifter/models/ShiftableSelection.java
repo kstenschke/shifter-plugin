@@ -31,8 +31,9 @@ public class ShiftableSelection {
 
     static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
 
-    private static final String ACTION_TEXT_SWAP_QUOTES = "Swap Quotes";
-    private static final String ACTION_TEXT_SWAP_SLASHES = "Swap Slashes";
+    private static final String ACTION_TEXT_SWAP_SLASHES     = "Swap Slashes";
+    private static final String ACTION_TEXT_SWAP_WORDS_ORDER = "Swap Words Order";
+    private static final String ACTION_TEXT_SWAP_QUOTES      = "Swap Quotes";
 
     /**
      * @param actionContainer
@@ -68,8 +69,8 @@ public class ShiftableSelection {
 
         boolean isWrappedInParenthesis = Parenthesis.isWrappedInParenthesis(actionContainer.selectedText);
 
-        ShiftableTypesManager shiftingShiftableTypesManager = new ShiftableTypesManager();
-        ShiftableTypes.Type wordType = shiftingShiftableTypesManager.getWordType(actionContainer);
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager();
+        ShiftableTypes.Type wordType = shiftableTypesManager.getWordType(actionContainer);
 
         boolean isPhpVariableOrArray = PHP_VARIABLE_OR_ARRAY == wordType;
 
@@ -193,7 +194,7 @@ public class ShiftableSelection {
                      * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
                      * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
                      */
-                    actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(replacement),"Swap Words Order");
+                    actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(replacement), ACTION_TEXT_SWAP_WORDS_ORDER);
                 }
 
                 return;
@@ -229,11 +230,11 @@ public class ShiftableSelection {
         }
 
         actionContainer.trimSelectedText();
-        final String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, moreCount);
+        final String shiftedWord = shiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (isPhpVariableOrArray) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
-                    ACTION_TEXT_SHIFT_SELECTION);
+                    shiftableTypesManager.getActionText(ACTION_TEXT_SHIFT_SELECTION));
             return;
         }
         if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {

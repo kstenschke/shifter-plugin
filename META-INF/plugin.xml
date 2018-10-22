@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.9.1</version>
+    <version>1.9.2</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Implements numerous string manipulations on a single keyboard shortcut with detection of intended manipulation.
@@ -129,6 +129,11 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.9.2
+            <ul>
+                <li>Improved: Added more distinct undo action texts for various detected+shifted types</li>
+            </ul>
+        </li>
         <li>1.9.1
             <ul>
                 <li>Added: Toggle order of two operands in selected AND or OR logical conjunction</li>
@@ -143,11 +148,6 @@
                 <li>Added: Selections containing whitespace around the shiftable term can be shifted</li>
                 <li>Improved: Adapted UI more to recent IDE UI</li>
                 <li>Improved: Extended default dictionary</li>
-            </ul>
-        </li>
-        <li>1.8.3
-            <ul>
-                <li>Added: Alphabetical sorting of single-lined selection of XML attribute-value pairs</li>
             </ul>
         </li>
     </ul>

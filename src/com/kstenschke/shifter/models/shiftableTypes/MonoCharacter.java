@@ -22,6 +22,8 @@ import org.apache.commons.lang.StringUtils;
  */
 public class MonoCharacter {
 
+    public static final String ACTION_TEXT = "Shift Mono-Character";
+
     /**
      * @param  word     String to be shifted currently
      * @return boolean

@@ -26,6 +26,8 @@ import java.util.HashMap;
  */
 public class CssUnit {
 
+    public static final String ACTION_TEXT = "Shift CSS unit";
+
     private static final String UNIT_CM   = "cm";
     private static final String UNIT_EM   = "em";
     private static final String UNIT_IN   = "in";

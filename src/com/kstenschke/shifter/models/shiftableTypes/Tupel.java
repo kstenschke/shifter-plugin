@@ -27,6 +27,8 @@ import java.util.regex.Pattern;
  */
 public class Tupel {
 
+    public static final String ACTION_TEXT = "Shift Tupel";
+
     private final ActionContainer actionContainer;
 
     // Defined during detection of being a tupel

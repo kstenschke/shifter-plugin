@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableLine {
 
+    public static final String ACTION_TEXT = "Shift Line";
     private final ActionContainer actionContainer;
 
     /**
@@ -114,9 +115,7 @@ public class ShiftableLine {
         // Replace line by shifted one
         final CharSequence shiftedLine = shiftableShiftableLine.getShifted(moreCount);
         if (null != shiftedLine) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceCaretLine(shiftedLine),
-                    "Shift Line");
+            actionContainer.writeUndoable(actionContainer.getRunnableReplaceCaretLine(shiftedLine), ACTION_TEXT);
         }
     }
 }

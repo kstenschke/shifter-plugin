@@ -28,6 +28,8 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class JsDoc {
 
+    public static final String ACTION_TEXT = "Shift JsDoc";
+
     @NonNls
     private static final String REGEX_DATA_TYPES_NATIVE = "(array|boolean|date|event|function|null|number|object|string|undefined|\\*)";
     @NonNls
@@ -181,7 +183,7 @@ public class JsDoc {
             return false;
         }
 
-        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected,true), "Shift JsDoc");
+        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected,true), ACTION_TEXT);
         return true;
     }
 
