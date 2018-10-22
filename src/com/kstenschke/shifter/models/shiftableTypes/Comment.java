@@ -284,7 +284,7 @@ public class Comment {
         List<String> shiftedList = UtilsTextual.sortLinesNatural(lines, reverse);
         String result = "";
         int index = 0;
-        for(String line : shiftedList) {
+        for (String line : shiftedList) {
             result += (0 == index ? "" : "\n") + line;
             index++;
         }

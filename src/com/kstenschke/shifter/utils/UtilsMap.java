@@ -22,7 +22,7 @@ public class UtilsMap {
 
     public static int getSumOfValues(HashMap<String, Integer> map) {
         int sum = 0;
-        for(int value : map.values()){
+        for (int value : map.values()){
             sum+= value;
         }
         return sum;

@@ -110,7 +110,7 @@ public class UtilsTextual {
             return false;
         }
 
-        for(String c : characters) {
+        for (String c : characters) {
             str = str.replaceAll(c, "");
         }
 
@@ -625,7 +625,7 @@ public class UtilsTextual {
         String previousLine = "";
 
         int index = 0;
-        for(String currentLine : linesArray) {
+        for (String currentLine : linesArray) {
             if (index > 0 && currentLine.equals(previousLine)) {
                 return true;
             }
@@ -644,7 +644,7 @@ public class UtilsTextual {
         int resultIndex = 0;
         String previousLine = "";
 
-        for(String currentLine : linesArray) {
+        for (String currentLine : linesArray) {
             if (0 == index || !currentLine.equals(previousLine)) {
                 resultLines[resultIndex] = currentLine;
                 resultIndex++;

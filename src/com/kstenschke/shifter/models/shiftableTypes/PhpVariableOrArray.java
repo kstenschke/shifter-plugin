@@ -154,7 +154,7 @@ public class PhpVariableOrArray {
         List<String> reducedMatches = new ArrayList<String>();
         String leadCharPrev = "";
         String leadCharCur;
-        for(String currentMatch : allMatches) {
+        for (String currentMatch : allMatches) {
             leadCharCur = currentMatch.substring(1,2);
             if (!leadCharCur.matches(leadCharPrev)) {
                 reducedMatches.add(currentMatch);
@@ -172,7 +172,7 @@ public class PhpVariableOrArray {
     private List<String> getLeadChars(List<String> matches) {
         List<String> leadChars = new ArrayList<String>();
 
-        for(String currentMatch : matches) {
+        for (String currentMatch : matches) {
             leadChars.add(currentMatch.substring(1,2));
         }
 
