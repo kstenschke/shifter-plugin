@@ -109,6 +109,7 @@
 	|deka|hekto|kilo|mega|giga|tera|peta|exa|zetta|yotta|
 	|dev|test|stage|prod|
 	|development|testing|staging|production|
+	|doc|docx|ppt|pptx|xls|xlsx|
 	|double|single|
 	|earth|jupiter|mars|mercury|neptune|pluto|saturn|uranus|venus|
 	|en|de|fr|it|
