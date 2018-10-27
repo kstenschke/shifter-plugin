@@ -90,7 +90,7 @@ public class XmlAttributes {
         // Sort attribute-value pairs alphabetically by attribute name
         List pairsList = Arrays.asList(attributeValuePairs);
         // @note sorting itemsList, does also update items
-        Collections.sort(pairsList, new AlphanumComparator());
+        pairsList.sort(new AlphanumComparator());
 
         if (!actionContainer.isShiftUp) {
             Collections.reverse(Arrays.asList(pairsList));

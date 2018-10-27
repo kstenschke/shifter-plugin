@@ -72,7 +72,7 @@ public class SeparatedList {
 
         List itemsList = Arrays.asList(items);
         // @note sorting itemsList, does also update items
-        Collections.sort(itemsList, new AlphanumComparator());
+        itemsList.sort(new AlphanumComparator());
 
         if (UtilsArray.hasDuplicateItems(items) && JOptionPane.showConfirmDialog(
                 null,

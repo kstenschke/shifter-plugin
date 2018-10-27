@@ -124,7 +124,7 @@ public class DocCommentTag {
      * @return String JavaScript method name
      */
     private String parseNextMethod(String jsCode) {
-        List<String> allMatches = new ArrayList<String>();
+        List<String> allMatches = new ArrayList<>();
 
         String regExPattern = "[a-zA-Z_$][0-9a-zA-Z_$]*\\s*:\\s*function";
         Matcher m           = Pattern.compile(regExPattern).matcher(jsCode);

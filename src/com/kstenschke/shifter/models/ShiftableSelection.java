@@ -54,7 +54,7 @@ public class ShiftableSelection {
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isComment(actionContainer.selectedText)) {
+        if (Comment.isComment(actionContainer.selectedText)) {
             shiftSelectedCommentInDocument(actionContainer);
             return;
         }
@@ -110,10 +110,10 @@ public class ShiftableSelection {
             lineNumberSelEnd--;
         }
 
-        if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(actionContainer.selectedText, "")) {
+        if (TernaryExpression.isTernaryExpression(actionContainer.selectedText, "")) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
-                            com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(actionContainer.selectedText),
+                            TernaryExpression.getShifted(actionContainer.selectedText),
                             true),
                     TernaryExpression.ACTION_TEXT);
             return;
@@ -142,7 +142,7 @@ public class ShiftableSelection {
             final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceCaretLine(com.kstenschke.shifter.models.shiftableTypes.TrailingComment.getShifted(caretLine, leadWhitespace)),
+                    actionContainer.getRunnableReplaceCaretLine(TrailingComment.getShifted(caretLine, leadWhitespace)),
                     TrailingComment.ACTION_TEXT);
             return;
         }
@@ -152,7 +152,7 @@ public class ShiftableSelection {
         }
 
         if (!isPhpVariableOrArray) {
-            if (com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
+            if (SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
                 // Comma-separated list: sort / ask whether to sort or toggle quotes
                 new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", actionContainer.isShiftUp);
                 return;
@@ -160,7 +160,7 @@ public class ShiftableSelection {
             final LogicalConjunction logicalConjunction = new LogicalConjunction();
             boolean isLogicalConjunction = logicalConjunction.isLogicalConjunction(actionContainer.selectedText);
             if ( (!isLogicalConjunction || !logicalConjunction.isOrLogic)
-                 && com.kstenschke.shifter.models.shiftableTypes.SeparatedList.isSeparatedList(actionContainer.selectedText,"|")
+                 && SeparatedList.isSeparatedList(actionContainer.selectedText,"|")
             ) {
                 // Pipe-separated list (not confused w/ || of logical conjunctions)
                 new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument("\\|(\\s)*", "|", actionContainer.isShiftUp);
@@ -186,7 +186,7 @@ public class ShiftableSelection {
                 return;
             }
 
-            final com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel(actionContainer);
+            final Tupel wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel(actionContainer);
             if (wordsTupel.isWordsTupel(actionContainer.selectedText)) {
                 final String replacement = wordsTupel.getShifted(actionContainer.selectedText, false);
                 if (!replacement.isEmpty()) {
@@ -209,7 +209,7 @@ public class ShiftableSelection {
                         ACTION_TEXT_SWAP_SLASHES);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(actionContainer.selectedText)) {
+            if (LogicalOperator.isLogicalOperator(actionContainer.selectedText)) {
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(LogicalOperator.getShifted(actionContainer.selectedText)),
                         LogicalOperator.ACTION_TEXT);
@@ -256,26 +256,21 @@ public class ShiftableSelection {
     }
 
     private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer, boolean containsQuotes) {
-        final com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation(actionContainer.selectedText);
+        final PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation(actionContainer.selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation);
-                        }
-                    },
+                    () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation),
                     ACTION_TEXT_SHIFT_SELECTION);
 
             return true;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isHtmlComment(actionContainer.selectedText)) {
+        if (Comment.isHtmlComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(Comment.getPhpBlockCommentFromHtmlComment(actionContainer.selectedText)),
                     ACTION_TEXT_SHIFT_SELECTION);
             return true;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.Comment.isPhpBlockComment(actionContainer.selectedText)) {
+        if (Comment.isPhpBlockComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(Comment.getShifted(actionContainer)),
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -286,16 +281,16 @@ public class ShiftableSelection {
 
     private static void shiftSelectedCommentInDocument(ActionContainer actionContainer) {
         if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
-            if (actionContainer.filename.endsWith("js") && com.kstenschke.shifter.models.shiftableTypes.JsDoc.isJsDocBlock(actionContainer.selectedText)) {
-                com.kstenschke.shifter.models.shiftableTypes.JsDoc.correctDocBlockInDocument(actionContainer);
+            if (actionContainer.filename.endsWith("js") && JsDoc.isJsDocBlock(actionContainer.selectedText)) {
+                JsDoc.correctDocBlockInDocument(actionContainer);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.Comment.isBlockComment(actionContainer.selectedText)) {
-                com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultiLineBlockCommentInDocument(actionContainer);
+            if (Comment.isBlockComment(actionContainer.selectedText)) {
+                Comment.shiftMultiLineBlockCommentInDocument(actionContainer);
                 return;
             }
-            if (com.kstenschke.shifter.models.shiftableTypes.Comment.isMultipleSingleLineComments(actionContainer.selectedText)) {
-                com.kstenschke.shifter.models.shiftableTypes.Comment.shiftMultipleSingleLineCommentsInDocument(actionContainer);
+            if (Comment.isMultipleSingleLineComments(actionContainer.selectedText)) {
+                Comment.shiftMultipleSingleLineCommentsInDocument(actionContainer);
                 return;
             }
         }
@@ -315,19 +310,18 @@ public class ShiftableSelection {
     static void sortLinesInDocument(final ActionContainer actionContainer, boolean reverse) {
         List<String> lines       = UtilsTextual.extractLines(actionContainer.document, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
         List<String> linesSorted = UtilsTextual.sortLinesNatural(lines, reverse);
+        String linesSortedString = UtilsTextual.joinLines(linesSorted).toString().trim();
 
-        String linesString = UtilsTextual.joinLines(linesSorted).toString();
-
-        if (UtilsTextual.hasDuplicateLines(linesString) && JOptionPane.showConfirmDialog(
+        if (UtilsTextual.hasDuplicateLines(linesSortedString) && JOptionPane.showConfirmDialog(
                 null,
                 StaticTexts.MESSAGE_REDUCE_DUPLICATE_LINES,
                 StaticTexts.TITLE_REDUCE_DUPLICATE_LINES,
                 JOptionPane.OK_CANCEL_OPTION
         ) == JOptionPane.OK_OPTION)
         {
-            linesString = UtilsTextual.reduceDuplicateLines(linesString);
+            linesSortedString = UtilsTextual.reduceDuplicateLines(linesSortedString);
         }
 
-        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(linesString), ACTION_TEXT_SHIFT_SELECTION);
+        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(linesSortedString, true), ACTION_TEXT_SHIFT_SELECTION);
     }
 }

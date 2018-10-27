@@ -50,7 +50,7 @@ public class RomanNumber {
      * standardized Roman numeral representation of the number.  The function
      * toInt() will return the number as a value of type int.
      */
-    public class RomanNumeral {
+    class RomanNumeral {
 
         private final int num;   // The number represented by this Roman numeral.
 
@@ -69,7 +69,7 @@ public class RomanNumber {
          * Constructor.  Creates the Roman number w/ the int value specified by the parameter.
          * Throws a NumberFormatException if arabic is not in the range 1 to 3999 inclusive.
          */
-        public RomanNumeral(int arabic) {
+        RomanNumeral(int arabic) {
             if (arabic < 1) {
                 throw new NumberFormatException("Value of RomanNumeral must be positive.");
             } else if (arabic > 3999) {
@@ -85,7 +85,7 @@ public class RomanNumber {
          * legal Roman numeral, a NumberFormatException is thrown.  Both upper and
          * lower case letters are allowed.
          */
-        public RomanNumeral(String roman) {
+        RomanNumeral(String roman) {
             if (roman.length() == 0) {
                 throw new NumberFormatException("An empty string does not define a Roman numeral.");
             }
@@ -173,7 +173,7 @@ public class RomanNumber {
         /**
          * Return the value of this Roman numeral as an int.
          */
-        public int toInt() {
+        int toInt() {
             return num;
         }
     }

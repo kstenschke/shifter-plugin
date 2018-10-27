@@ -134,7 +134,7 @@ public class Comment {
      * @param actionContainer
      */
     public static void shiftMultiLineBlockCommentInDocument(final ActionContainer actionContainer) {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
 
@@ -142,32 +142,25 @@ public class Comment {
 
         final JBList modes = new JBList(options);
         PopupChooserBuilder popup = new PopupChooserBuilder(modes);
-        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
-            public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    public void run() {
-                        // Callback when item chosen
-                        CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
-                                    public void run() {
-                                        final int index = modes.getSelectedIndex();
-                                        final String shiftedBlockCommentLines = 0 == index
-                                            ? shiftMultipleBlockCommentLines(actionContainer.selectedText, true)
-                                            : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(
+                () -> ApplicationManager.getApplication().runWriteAction(() -> {
+            // Callback when item chosen
+            CommandProcessor.getInstance().executeCommand(actionContainer.project, () -> {
+                final int index = modes.getSelectedIndex();
+                final String shiftedBlockCommentLines = 0 == index
+                    ? shiftMultipleBlockCommentLines(actionContainer.selectedText, true)
+                    : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
 
-                                        actionContainer.writeUndoable(
-                                                actionContainer.getRunnableReplaceSelection(shiftedBlockCommentLines),
-                                                ACTION_TEXT);
-                                    }
-                                },
-                                null, null);
-                    }
-                });
-            }
-        }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
+                actionContainer.writeUndoable(
+                        actionContainer.getRunnableReplaceSelection(shiftedBlockCommentLines),
+                        ACTION_TEXT);
+            },
+                    null, null);
+        })).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
     public static void shiftMultipleSingleLineCommentsInDocument(final ActionContainer actionContainer) {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_MERGE);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_SORT_ASCENDING);
@@ -179,39 +172,31 @@ public class Comment {
         //PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
         PopupChooserBuilder popup = new PopupChooserBuilder(modes);
 
-        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
-            public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    public void run() {
-                        // Callback when item chosen
-                        CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
-                                    public void run() {
-                                        final int index = modes.getSelectedIndex();
-                                        String shifted;
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+            // Callback when item chosen
+            CommandProcessor.getInstance().executeCommand(actionContainer.project, () -> {
+                final int index = modes.getSelectedIndex();
+                String shifted;
 
-                                        switch (index) {
-                                            case 0:
-                                                shifted = mergeMultipleLineComments(actionContainer.selectedText);
-                                                break;
-                                            case 1:
-                                                shifted = convertMultipleLineCommentsToBlockComment(actionContainer.selectedText);
-                                                break;
-                                            case 2:
-                                                shifted = sortLineComments(actionContainer.selectedText, false);
-                                                break;
-                                            case 3:
-                                            default:
-                                                shifted = sortLineComments(actionContainer.selectedText, true);
-                                                break;
-                                        }
-                                        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(shifted), ACTION_TEXT);
-                                    }
-                                },
-                                null, null);
-                    }
-                });
-            }
-        }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
+                switch (index) {
+                    case 0:
+                        shifted = mergeMultipleLineComments(actionContainer.selectedText);
+                        break;
+                    case 1:
+                        shifted = convertMultipleLineCommentsToBlockComment(actionContainer.selectedText);
+                        break;
+                    case 2:
+                        shifted = sortLineComments(actionContainer.selectedText, false);
+                        break;
+                    case 3:
+                    default:
+                        shifted = sortLineComments(actionContainer.selectedText, true);
+                        break;
+                }
+                actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(shifted), ACTION_TEXT);
+            },
+                    null, null);
+        })).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
     private static String shiftMultipleBlockCommentLines(String str, boolean merge) {

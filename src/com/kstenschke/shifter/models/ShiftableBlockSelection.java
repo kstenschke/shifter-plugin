@@ -81,22 +81,14 @@ public class ShiftableBlockSelection {
         }
         if (ShiftableBlockSelection.areBlockItemsIdentical(blockSelectionStarts, blockSelectionEnds, actionContainer.documentText)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            shiftIdenticalBlockItemsInDocument(actionContainer, stepSize, blockSelectionStarts, blockSelectionEnds);
-                        }
-                    },
+                    () -> shiftIdenticalBlockItemsInDocument(actionContainer, stepSize, blockSelectionStarts, blockSelectionEnds),
                     ACTION_TEXT_SHIFT_COLUMN_SELECTION
             );
         }
     }
 
     private static void shiftIdenticalBlockItemsInDocument(ActionContainer actionContainer, @Nullable Integer moreCount, int[] blockSelectionStarts, int[] blockSelectionEnds) {
-        String word = actionContainer.editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
-        // @todo ensure line of block selection is not needed
-        String line = UtilsTextual.getLine(actionContainer.document, actionContainer.document.getLineNumber(blockSelectionStarts[0])).trim();
-
+        String word        = actionContainer.editorText.subSequence(blockSelectionStarts[0], blockSelectionEnds[0]).toString();
         Integer wordOffset = UtilsTextual.getStartOfWordAtOffset(actionContainer.editorText, blockSelectionStarts[0]);
         String newWord     = ShiftableWord.getShiftedWordInDocument(actionContainer, word, wordOffset, false, false, moreCount);
 
@@ -121,12 +113,7 @@ public class ShiftableBlockSelection {
         if (!optionsDialog.wasCancelled()) {
             if (optionsDialog.isShiftModeEnumerate()) {
                 actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                insertBlockEnumerationInDocument(actionContainer, optionsDialog.getFirstNumber());
-                            }
-                        },
+                        () -> insertBlockEnumerationInDocument(actionContainer, optionsDialog.getFirstNumber()),
                         ACTION_TEXT_SHIFT_COLUMN_SELECTION
                 );
 
@@ -134,12 +121,7 @@ public class ShiftableBlockSelection {
             }
 
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            inOrDecrementNumericBlockInDocument(actionContainer, stepSize);
-                        }
-                    },
+                    () -> inOrDecrementNumericBlockInDocument(actionContainer, stepSize),
                     ACTION_TEXT_SHIFT_COLUMN_SELECTION
             );
         }

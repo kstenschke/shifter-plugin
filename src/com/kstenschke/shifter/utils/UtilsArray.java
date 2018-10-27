@@ -71,7 +71,7 @@ public class UtilsArray {
      * @param array2 Array of strings
      * @return array    Merged array containing each of the elements of array1 and array2
      */
-    public static String[] mergeArrays(String[] array1, String[] array2) {
+    private static String[] mergeArrays(String[] array1, String[] array2) {
         if (null == array1 || array1.length == 0) {
             return array2;
         }
@@ -82,9 +82,9 @@ public class UtilsArray {
         List<String> array1List = Arrays.asList(array1);
         List<String> array2List = Arrays.asList(array2);
 
-        List<String> result = new ArrayList<String>(array1List);
+        List<String> result = new ArrayList<>(array1List);
 
-        List<String> tmp = new ArrayList<String>(array1List);
+        List<String> tmp = new ArrayList<>(array1List);
         tmp.retainAll(array2List);
 
         result.removeAll(tmp);
@@ -118,6 +118,6 @@ public class UtilsArray {
     }
 
     public static String[] reduceDuplicateItems(String[] items) {
-        return new HashSet<String>(Arrays.asList(items)).toArray(new String[0]);
+        return new HashSet<>(Arrays.asList(items)).toArray(new String[0]);
     }
 }

@@ -20,7 +20,7 @@ import com.kstenschke.shifter.utils.UtilsArray;
 /**
  * Shifter general word type class
  */
-public class StaticWordType {
+class StaticWordType {
 
     private final String[] keywords;
     private final int amountKeywords;

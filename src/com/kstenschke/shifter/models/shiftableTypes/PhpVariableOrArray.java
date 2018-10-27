@@ -151,7 +151,7 @@ public class PhpVariableOrArray {
     }
 
     private List<String> reducePhpVarsToFirstPerLeadChar(List<String> allMatches) {
-        List<String> reducedMatches = new ArrayList<String>();
+        List<String> reducedMatches = new ArrayList<>();
         String leadCharPrev = "";
         String leadCharCur;
         for (String currentMatch : allMatches) {
@@ -170,7 +170,7 @@ public class PhpVariableOrArray {
      * @return List of first letters of given matches
      */
     private List<String> getLeadChars(List<String> matches) {
-        List<String> leadChars = new ArrayList<String>();
+        List<String> leadChars = new ArrayList<>();
 
         for (String currentMatch : matches) {
             leadChars.add(currentMatch.substring(1,2));

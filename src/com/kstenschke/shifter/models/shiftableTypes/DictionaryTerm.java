@@ -148,7 +148,7 @@ public class DictionaryTerm {
      * @return Object[]    e.g. [0 => "('js') {", 1 => "('html') {", 2 => ...]
      */
     private Object[] getAllFileExtensionsBlockStarts() {
-        List<String> allMatches = new ArrayList<String>();
+        List<String> allMatches = new ArrayList<>();
 
         String pattern = "\\(\\|([a-z|*]+\\|)*\\)(\\s)*\\{";
         Matcher m = Pattern.compile(pattern).matcher(dictionaryContents);
@@ -166,7 +166,7 @@ public class DictionaryTerm {
      * @return Object[]
      */
     private Object[] getAllFileExtensionsBlockStarts(String fileExtension) {
-        List<String> allMatches = new ArrayList<String>();
+        List<String> allMatches = new ArrayList<>();
         Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
 
         for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {

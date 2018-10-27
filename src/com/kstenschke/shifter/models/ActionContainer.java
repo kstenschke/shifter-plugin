@@ -22,36 +22,32 @@ import javax.annotation.Nullable;
  */
 public class ActionContainer {
     public final boolean isShiftUp;
-    public final boolean isShiftMore;
+    private final boolean isShiftMore;
 
     public Project project;
     public final Editor editor;
     public Document document;
 
     public CharSequence editorText;
-    public String documentText;
+    String documentText;
 
     public SelectionModel selectionModel;
     public int caretOffset;
 
     public int offsetSelectionStart;
     public int offsetSelectionEnd;
-    public int lineNumberSelStart;
-    public int lineNumberSelEnd;
-    public int offsetSelectionLineStart;
-    public int offsetSelectionLineEnd;
+    int lineNumberSelStart;
+    int lineNumberSelEnd;
 
     public String selectedText;
-    public String whiteSpaceLHSinSelection;
-    public String whiteSpaceRHSinSelection;
+    String whiteSpaceLHSinSelection;
+    String whiteSpaceRHSinSelection;
 
-    public int caretLineNumber;
-    public int offsetCaretLineStart;
-    public int offsetCaretLineEnd;
-    public String caretLine;
+    private int offsetCaretLineStart;
+    String caretLine;
 
     public String filename;
-    public String fileExtension;
+    String fileExtension;
 
     /**
      * Constructor
@@ -70,18 +66,20 @@ public class ActionContainer {
             selectionModel       = editor.getSelectionModel();
             offsetSelectionStart = selectionModel.getSelectionStart();
             offsetSelectionEnd   = selectionModel.getSelectionEnd();
+            if (documentText.charAt(offsetSelectionEnd -1) == '\n') {
+                // Prevent including line following a selection being included e.g. in line sorting
+                offsetSelectionEnd--;
+                selectionModel.setSelection(offsetSelectionStart, offsetSelectionEnd);
+            }
             lineNumberSelStart   = document.getLineNumber(offsetSelectionStart);
             lineNumberSelEnd     = document.getLineNumber(offsetSelectionEnd);
             selectedText         = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
             caretOffset          = editor.getCaretModel().getOffset();
-            caretLineNumber      = document.getLineNumber(caretOffset);
+            int caretLineNumber = document.getLineNumber(caretOffset);
             offsetCaretLineStart = document.getLineStartOffset(caretLineNumber);
-            offsetCaretLineEnd   = document.getLineEndOffset(caretLineNumber);
+            int offsetCaretLineEnd = document.getLineEndOffset(caretLineNumber);
             caretLine            = editorText.subSequence(offsetCaretLineStart, offsetCaretLineEnd).toString();
-
-            offsetSelectionLineStart = document.getLineStartOffset(lineNumberSelStart);
-            offsetSelectionLineEnd   = document.getLineEndOffset(lineNumberSelEnd) + document.getLineSeparatorLength(lineNumberSelEnd);
 
             filename      = UtilsEnvironment.getDocumentFilename(document);
             fileExtension = UtilsFile.extractFileExtension(filename, true);
@@ -111,28 +109,20 @@ public class ActionContainer {
     }
     @NotNull
     public Runnable getRunnableReplaceSelection(final String shifted, final boolean reformat) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                document.replaceString(offsetSelectionStart, offsetSelectionEnd, shifted);
-                if (reformat) {
-                    UtilsEnvironment.reformatSubString(editor, project, offsetSelectionStart, offsetSelectionStart + shifted.length());
-                }
+        return () -> {
+            document.replaceString(offsetSelectionStart, offsetSelectionEnd, shifted);
+            if (reformat) {
+                UtilsEnvironment.reformatSubString(editor, project, offsetSelectionStart, offsetSelectionStart + shifted.length());
             }
         };
     }
 
     @NotNull
     Runnable getRunnableReplaceCaretLine(final CharSequence shiftedLine) {
-        return new Runnable() {
-            @Override
-            public void run() {
-                document.replaceString(
-                        offsetCaretLineStart,
-                        offsetCaretLineStart + caretLine.length(),
-                        shiftedLine);
-            }
-        };
+        return () -> document.replaceString(
+                offsetCaretLineStart,
+                offsetCaretLineStart + caretLine.length(),
+                shiftedLine);
     }
 
     void writeUndoable(final Runnable runnable) {
@@ -143,17 +133,11 @@ public class ActionContainer {
         if (null == actionText) {
             actionText = getDefaultActionText();
         }
-        CommandProcessor.getInstance().executeCommand(project, new Runnable() {
-            @Override
-            public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        runnable.run();
-                    }
-                });
-            }
-        }, actionText, UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
+        CommandProcessor.getInstance().executeCommand(
+                project,
+                () -> ApplicationManager.getApplication().runWriteAction(runnable),
+                actionText,
+                UndoConfirmationPolicy.DO_NOT_REQUEST_CONFIRMATION);
     }
 
     private String getDefaultActionText() {

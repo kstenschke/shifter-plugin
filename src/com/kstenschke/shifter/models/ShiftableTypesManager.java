@@ -17,7 +17,6 @@ package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;
-import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
@@ -27,24 +26,24 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
  */
 class ShiftableTypesManager {
 
-    public ShiftableTypes.Type wordType;
+    private ShiftableTypes.Type wordType;
 
     // Word type objects
-    private com.kstenschke.shifter.models.shiftableTypes.StaticWordType wordTypeAccessibilities;
-    private com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm typeDictionaryTerm;
+    private DictionaryTerm typeDictionaryTerm;
+    private AccessType accessType;
 
     // Generic shiftableTypes (calculated when shifted)
-    private com.kstenschke.shifter.models.shiftableTypes.CssUnit typePixelValue;
-    private com.kstenschke.shifter.models.shiftableTypes.DocCommentTag typeTagInDocComment;
-    private com.kstenschke.shifter.models.shiftableTypes.DocCommentType typeDataTypeInDocComment;
-    private com.kstenschke.shifter.models.shiftableTypes.NumericValue typeNumericValue;
-    private com.kstenschke.shifter.models.shiftableTypes.OperatorSign typeOperatorSign;
+    private CssUnit typePixelValue;
+    private DocCommentTag typeTagInDocComment;
+    private DocCommentType typeDataTypeInDocComment;
+    private NumericValue typeNumericValue;
+    private OperatorSign typeOperatorSign;
     private PhpVariableOrArray typePhpVariableOrArray;
     private RgbColor typeRgbColor;
-    private com.kstenschke.shifter.models.shiftableTypes.RomanNumber typeRomanNumber;
+    private RomanNumber typeRomanNumber;
     private MonoCharacter typeMonoCharacterString;
-    private com.kstenschke.shifter.models.shiftableTypes.Tupel wordsTupel;
-    private com.kstenschke.shifter.models.shiftableTypes.QuotedString typeQuotedString;
+    private Tupel wordsTupel;
+    private QuotedString typeQuotedString;
 
     /**
      * Detect word type (get the one w/ highest priority to be shifted) of given string
@@ -58,12 +57,12 @@ class ShiftableTypesManager {
      */
     public ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, ActionContainer actionContainer) {
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
-        if (com.kstenschke.shifter.models.shiftableTypes.TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
+        if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
             return TRAILING_COMMENT;
         }
 
-        if (com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.isPhpDocParamLine(actionContainer.caretLine)
-         && !com.kstenschke.shifter.models.shiftableTypes.PhpDocParam.containsDataType(actionContainer.caretLine)) {
+        if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine)
+         && !PhpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
             // PHP doc param line is handled in caretLine-shifting fallback
             return UNKNOWN;
@@ -77,17 +76,17 @@ class ShiftableTypesManager {
             return PARENTHESIS;
         }
 
-        if (com.kstenschke.shifter.models.shiftableTypes.JsVariablesDeclarations.isJsVariables(word)) {
+        if (JsVariablesDeclarations.isJsVariables(word)) {
             return JS_VARIABLES_DECLARATIONS;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.isSelector(word)) {
+        if (SizzleSelector.isSelector(word)) {
             return SIZZLE_SELECTOR;
         }
 
         // DocComment shiftableTypes (must be prefixed w/ "@")
-        typeDataTypeInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentType();
+        typeDataTypeInDocComment = new DocCommentType();
         if (DocCommentType.isDocCommentTypeLineContext(actionContainer.caretLine)) {
-            typeTagInDocComment = new com.kstenschke.shifter.models.shiftableTypes.DocCommentTag();
+            typeTagInDocComment = new DocCommentTag();
             if (prefixChar.matches("@") && typeTagInDocComment.isDocCommentTag(prefixChar, actionContainer.caretLine)) {
                 return DOC_COMMENT_TAG;
             }
@@ -97,24 +96,25 @@ class ShiftableTypesManager {
         }
 
         // Object visibility
-        if (!"@".equals(prefixChar) && isKeywordAccessType(word)) {
-            return ACCESSIBILITY;
+        accessType = new AccessType();
+        if (!"@".equals(prefixChar) && accessType.isAccessType(word)) {
+            return ACCESS_TYPE;
         }
 
         // File extension specific term in dictionary
-        typeDictionaryTerm = new com.kstenschke.shifter.models.shiftableTypes.DictionaryTerm();
+        typeDictionaryTerm = new DictionaryTerm();
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension && typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
             return DICTIONARY_WORD_EXT_SPECIFIC;
         }
 
         // Ternary Expression - swap IF and ELSE
-        if (com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.isTernaryExpression(word, prefixChar)) {
+        if (TernaryExpression.isTernaryExpression(word, prefixChar)) {
             return TERNARY_EXPRESSION;
         }
 
         // Quoted (must be wrapped in single or double quotes or backticks)
-        typeQuotedString = new com.kstenschke.shifter.models.shiftableTypes.QuotedString();
+        typeQuotedString = new QuotedString();
         if (typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
             return QUOTED_STRING;
         }
@@ -124,25 +124,25 @@ class ShiftableTypesManager {
             return RGB_COLOR;
         }
         // Pixel value (must consist of numeric value followed by "px")
-        if (com.kstenschke.shifter.models.shiftableTypes.CssUnit.isCssUnitValue(word)) {
-            typePixelValue = new com.kstenschke.shifter.models.shiftableTypes.CssUnit();
+        if (CssUnit.isCssUnitValue(word)) {
+            typePixelValue = new CssUnit();
             return CSS_UNIT;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.NumericValue.isNumericValue(word)) {
-            typeNumericValue = new com.kstenschke.shifter.models.shiftableTypes.NumericValue();
+        if (NumericValue.isNumericValue(word)) {
+            typeNumericValue = new NumericValue();
             return NUMERIC_VALUE;
         }
         // Operator sign (<, >, +, -)
-        if (com.kstenschke.shifter.models.shiftableTypes.OperatorSign.isOperatorSign(word)) {
-            typeOperatorSign = new com.kstenschke.shifter.models.shiftableTypes.OperatorSign();
+        if (OperatorSign.isOperatorSign(word)) {
+            typeOperatorSign = new OperatorSign();
             return OPERATOR_SIGN;
         }
         // Roman Numeral
-        if (com.kstenschke.shifter.models.shiftableTypes.RomanNumber.isRomanNumber(word)) {
-            typeRomanNumber = new com.kstenschke.shifter.models.shiftableTypes.RomanNumber();
+        if (RomanNumber.isRomanNumber(word)) {
+            typeRomanNumber = new RomanNumber();
             return ROMAN_NUMERAL;
         }
-        if (com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.isLogicalOperator(word)) {
+        if (LogicalOperator.isLogicalOperator(word)) {
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
             return LOGICAL_OPERATOR;
         }
@@ -158,7 +158,7 @@ class ShiftableTypesManager {
         if (NumericPostfixed.hasNumericPostfix(word)) {
             return NUMERIC_POSTFIXED;
         }
-        wordsTupel = new com.kstenschke.shifter.models.shiftableTypes.Tupel(actionContainer);
+        wordsTupel = new Tupel(actionContainer);
         if (wordsTupel.isWordsTupel(word)) {
             return WORDS_TUPEL;
         }
@@ -176,8 +176,6 @@ class ShiftableTypesManager {
     }
 
     public ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
-        String line = UtilsTextual.getLineAtOffset(actionContainer.editorText.toString(), actionContainer.caretOffset);
-
         int editorTextLength = actionContainer.editorText.length();
         int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
         String postfixChar = editorTextLength > offsetPostfixChar
@@ -186,13 +184,6 @@ class ShiftableTypesManager {
         boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
 
         return getWordType(actionContainer.selectedText, "", postfixChar, isLastLineInDocument, actionContainer);
-    }
-
-    private boolean isKeywordAccessType(String word) {
-        String[] keywordsAccessType = {"public", "private", "protected"};
-        wordTypeAccessibilities = new com.kstenschke.shifter.models.shiftableTypes.StaticWordType(keywordsAccessType);
-
-        return wordTypeAccessibilities.hasWord(word);
     }
 
     /**
@@ -209,8 +200,8 @@ class ShiftableTypesManager {
     String getShiftedWord(ActionContainer actionContainer, String word, ShiftableTypes.Type wordType, Integer moreCount) {
         switch (wordType) {
             // String based word shiftableTypes
-            case ACCESSIBILITY:
-                return wordTypeAccessibilities.getShifted(word, actionContainer.isShiftUp);
+            case ACCESS_TYPE:
+                return accessType.getShifted(word, actionContainer.isShiftUp);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
@@ -218,7 +209,7 @@ class ShiftableTypesManager {
 
             // Generic shiftableTypes (shifting is calculated)
             case SIZZLE_SELECTOR:
-                return com.kstenschke.shifter.models.shiftableTypes.SizzleSelector.getShifted(word);
+                return SizzleSelector.getShifted(word);
             case RGB_COLOR:
                 return typeRgbColor.getShifted(word, actionContainer.isShiftUp);
             case NUMERIC_VALUE:
@@ -229,7 +220,7 @@ class ShiftableTypesManager {
             case PHP_VARIABLE_OR_ARRAY:
                 return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:
-                return com.kstenschke.shifter.models.shiftableTypes.TernaryExpression.getShifted(word);
+                return TernaryExpression.getShifted(word);
             case QUOTED_STRING:
                 return typeQuotedString.getShifted(word, actionContainer);
             case PARENTHESIS:
@@ -239,7 +230,7 @@ class ShiftableTypesManager {
             case ROMAN_NUMERAL:
                 return typeRomanNumber.getShifted(word, actionContainer.isShiftUp);
             case LOGICAL_OPERATOR:
-                return com.kstenschke.shifter.models.shiftableTypes.LogicalOperator.getShifted(word);
+                return LogicalOperator.getShifted(word);
             case MONO_CHARACTER:
                 return typeMonoCharacterString.getShifted(word, actionContainer.isShiftUp);
             case DOC_COMMENT_TAG:

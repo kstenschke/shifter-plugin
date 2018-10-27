@@ -132,6 +132,8 @@
         <li>1.9.2
             <ul>
                 <li>Improved: Added more distinct undo action texts for various detected+shifted types</li>
+                <li>Improved: Sorting lines w/ different surrounding whitespace: are reformatted now after sorting</li>
+                <li>Improved: Adapted UI more to recent IDE UI</li>
             </ul>
         </li>
         <li>1.9.1

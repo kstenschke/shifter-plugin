@@ -22,7 +22,7 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Adapter to bundle setup and delegation of different kinds of shift actions
  */
-public class ActionAdapter {
+class ActionAdapter {
 
     public final ActionContainer actionContainer;
 

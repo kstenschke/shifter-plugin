@@ -105,7 +105,7 @@ public class CssUnit {
      * @return String       most prominently used unit of given stylesheet, 'px' if none used yet
      */
     public static String determineMostProminentUnit(String stylesheet) {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
 
         map.put(UNIT_CM,   StringUtils.countMatches(stylesheet,UNIT_CM + ";"));
         map.put(UNIT_EM,   StringUtils.countMatches(stylesheet,UNIT_EM + ";"));

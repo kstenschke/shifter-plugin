@@ -73,7 +73,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
 
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER);
         addQuoteShiftingOptions(shiftOptions);
 
@@ -89,7 +89,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
 
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
 
         String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(items.length == 2 ? StaticTexts.SHIFT_OPTION_LIST_ITEMS_SWAP : StaticTexts.SHIFT_OPTION_LIST_ITEMS_SORT);
@@ -99,7 +99,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     }
 
     void swapParenthesisOrConvertPphpArray() {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_SWAP_PARENTHESIS);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX);
 
@@ -107,14 +107,14 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     }
 
     void shiftQuotesInDocument() {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         addQuoteShiftingOptions(shiftOptions);
 
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
     void swapSlashesOrUnescapeQuotes() {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_SLASHES_SWAP);
         addQuoteShiftingOptions(shiftOptions);
 
@@ -127,7 +127,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
 
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_LINES_SORT);
         addQuoteShiftingOptions(shiftOptions);
 
@@ -135,7 +135,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     }
 
     void shiftCamelCase(boolean isTwoWords) {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_PATH);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED);
 
@@ -147,7 +147,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     }
 
     public void shiftDictionaryTermOrToggleTupelOrder() {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_SHIFT_DICTIONARY_TERM);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_SWAP_TUPEL_WORDS_ORDER);
 
@@ -155,7 +155,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     }
 
     void shiftSeparatedPathOrSwapWords() {
-        List<String> shiftOptions = new ArrayList<String>();
+        List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_TO_CAMEL_CASE);
         shiftOptions.add(StaticTexts.SHIFT_OPTION_PATH_PAIR_SWAP_ORDER);
 
@@ -171,24 +171,14 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         final JBList modes = new JBList(options);
 
         PopupChooserBuilder popup = new PopupChooserBuilder(modes);
-        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(new Runnable() {
-            public void run() {
-                ApplicationManager.getApplication().runWriteAction(new Runnable() {
-                    public void run() {
-                        // Callback when item chosen
-                        CommandProcessor.getInstance().executeCommand(actionContainer.project, new Runnable() {
-                                    public void run() {
-                                        shiftSelectionByModeInDocument(
-                                                modes.getSelectedValue().toString(),
-                                                isUp,
-                                                phpConcatenation, delimiterSplitPattern, delimiterGlue);
-                                    }
-                                },
-                                null, null);
-                    }
-                });
-            }
-        }).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
+        popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(() -> ApplicationManager.getApplication().runWriteAction(() -> {
+            // Callback when item chosen
+            CommandProcessor.getInstance().executeCommand(actionContainer.project, () -> shiftSelectionByModeInDocument(
+                    modes.getSelectedValue().toString(),
+                    isUp,
+                    phpConcatenation, delimiterSplitPattern, delimiterGlue),
+                    null, null);
+        })).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
 
     private void shiftSelectionByModeInDocument(

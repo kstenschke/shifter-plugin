@@ -55,7 +55,7 @@ public class UtilsFile {
         return extractFileExtension(filename, false);
     }
 
-    public static boolean filenameEndsWithExtension(@Nullable String filename) {
+    private static boolean filenameEndsWithExtension(@Nullable String filename) {
         if (null == filename || filename.isEmpty() || !filename.contains(".")) {
             return false;
         }

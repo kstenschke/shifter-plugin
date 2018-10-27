@@ -79,7 +79,7 @@ public class UtilsTextual {
         DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
         boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
 
-        Collections.sort(lines, new AlphanumComparator());
+        lines.sort(new AlphanumComparator());
         if (reverse) {
             Collections.reverse(lines);
         }
@@ -138,7 +138,7 @@ public class UtilsTextual {
      * @param  wrap
      * @return boolean Is the given string wrapped into the wrapper string?
      */
-    public static boolean isWrappedWith(@Nullable String str, String wrap, boolean needsToBeTwoSided, boolean needsContent) {
+    private static boolean isWrappedWith(@Nullable String str, String wrap, boolean needsToBeTwoSided, boolean needsContent) {
         if (null == str) {
             return false;
         }
@@ -249,7 +249,7 @@ public class UtilsTextual {
         return null != str && str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
-    public static boolean isLowerCamelCase(@Nullable String str) {
+    private static boolean isLowerCamelCase(@Nullable String str) {
         return null != str && str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
@@ -285,7 +285,7 @@ public class UtilsTextual {
         return parts;
     }
 
-    public static String[] toLower(String[] strings) {
+    private static String[] toLower(String[] strings) {
         int index = 0;
         for (String part : strings) {
             strings[index] = part.toLowerCase();
@@ -399,7 +399,7 @@ public class UtilsTextual {
         return str.subSequence(start, end).toString();
     }
 
-    public static boolean isJavaIdentifierPart(char c, boolean allowHyphens) {
+    private static boolean isJavaIdentifierPart(char c, boolean allowHyphens) {
         return allowHyphens
                 ? Character.isJavaIdentifierPart(c) || '-' == c
                 : Character.isJavaIdentifierPart(c);
@@ -413,7 +413,7 @@ public class UtilsTextual {
         return isCamelIdentifierPart(c, true);
     }
 
-    public static boolean isCamelIdentifierPart(char c, boolean allowNumbers) {
+    private static boolean isCamelIdentifierPart(char c, boolean allowNumbers) {
         return allowNumbers
                 ? Character.toString(c).matches("[a-zA-Z0-9]+")
                 : Character.toString(c).matches("[a-zA-Z]+");
@@ -521,7 +521,7 @@ public class UtilsTextual {
      * @return List<String> Extracted list of lines
      */
     public static List<String> extractLines(Document doc, int startLine, int endLine) {
-        List<String> lines = new ArrayList<String>(endLine - startLine);
+        List<String> lines = new ArrayList<>(endLine - startLine);
 
         for (int i = startLine; i <= endLine; i++) {
             String line = UtilsTextual.getLine(doc, i);
@@ -537,7 +537,7 @@ public class UtilsTextual {
      * @param  lineNumber    Number of line to be extracted
      * @return String        The extracted line
      */
-    public static String getLine(Document doc, int lineNumber) {
+    private static String getLine(Document doc, int lineNumber) {
         int lineSeparatorLength = doc.getLineSeparatorLength(lineNumber);
 
         int startOffset = doc.getLineStartOffset(lineNumber);
@@ -551,7 +551,7 @@ public class UtilsTextual {
         return line + (0 == lineSeparatorLength ? "\n" : "");
     }
 
-    public static String getLineAtOffset(String str, int offset) {
+    private static String getLineAtOffset(String str, int offset) {
         int lenText      = str.length();
 
         int offsetStart = offset;
@@ -682,11 +682,11 @@ public class UtilsTextual {
     @NotNull
     public static List<String> getPregMatches(@Nullable String str, String pattern) {
         if (null == str) {
-            return new ArrayList<String>();
+            return new ArrayList<>();
         }
         Matcher m = Pattern.compile(pattern).matcher(str);
 
-        List<String> allMatches = new ArrayList<String>();
+        List<String> allMatches = new ArrayList<>();
         while (m.find()) {
             if (!allMatches.contains(m.group())) {
                 allMatches.add(m.group());
@@ -700,7 +700,7 @@ public class UtilsTextual {
      * @param delimiter
      * @return Given lines ending w/ given delimiter (last line is not being delimited)
      */
-    public static List<String> addDelimiter(List<String> lines, String delimiter) {
+    private static List<String> addDelimiter(List<String> lines, String delimiter) {
         int amountLines = lines.size();
         int index = 0;
 

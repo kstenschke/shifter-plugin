@@ -110,7 +110,7 @@ public class Css {
      * @return List<String>
      */
     private static List<String> sortAttributeStyles(List<String> list) {
-        Collections.sort(list, new CssAttributesStyleLineComparator());
+        list.sort(new CssAttributesStyleLineComparator());
         return list;
     }
 

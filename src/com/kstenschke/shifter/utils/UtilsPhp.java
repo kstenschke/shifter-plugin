@@ -50,7 +50,7 @@ public class UtilsPhp {
         if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"args", "array", "data", "ids", "items", "list", "pieces", "params", "parameters", "values", "vars"})) {
             return "array";
         }
-        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"int", "amount"})) {
+        if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"int", "amount", "count", "id", "index", "offset"})) {
             return "int";
         }
         if ("float".equals(lastWord)) {

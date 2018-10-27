@@ -29,7 +29,9 @@ import org.jetbrains.annotations.Nullable;
  */
 public class ShiftableLine {
 
+    @SuppressWarnings("WeakerAccess")
     public static final String ACTION_TEXT = "Shift Line";
+
     private final ActionContainer actionContainer;
 
     /**
@@ -37,7 +39,7 @@ public class ShiftableLine {
      *
      * @param actionContainer
      */
-    public ShiftableLine(ActionContainer actionContainer) {
+    private ShiftableLine(ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
     }
 
