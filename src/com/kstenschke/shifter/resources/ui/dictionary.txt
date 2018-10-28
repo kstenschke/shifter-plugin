@@ -1,6 +1,11 @@
 (|bash|sh|zsh) {
+	|bzip2|gzip|rar|zip|
 	|cat|head|tail|sort|wc|
+	|chgroup|chmod|chown|
 	|find|grep|
+	|ln|link|
+	|ls|lsattr|lsblk|lsof|lspci|
+	|mkdir|mkfifo|mkfile|mkisofs|mknod|mktemp|
 	|while|do|done|
 }
 (|htm|html|js|phtml) {
@@ -9,6 +14,7 @@
 	|abort|error|load|resize|scroll|unload|
 	|b|strong|
 	|input|button|submit|
+	|id|class|
 	|blur|change|focus|reset|select|submit|
 	|class|id|name|style|type|value|
 	|click|dblclick|mousedown|mousemove|mouseover|mouseout|mouseup|
@@ -96,8 +102,8 @@
 	|break|continue|
 	|cancel|ok|
 	|char|varchar|binary|varbinary|tinyblob|tinytext|blob|text|mediumblob|mediumtext|longblob|longtext|enum|set|
-    |child|parent|
-    |clicked|entered|exited|pressed|released|
+	|child|parent|
+	|clicked|entered|exited|pressed|released|
 	|close|open|
 	|copy|cut|paste|
 	|column|row|
@@ -126,8 +132,6 @@
 	|fail|pass|
 	|false|true|
 	|file|folder|
-	|first|last|
-	|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|
 	|foo|bar|baz|qux|
 	|from|until|
 	|connect|delete|get|head|options|patch|post|put|trace|
@@ -138,6 +142,7 @@
 	|horizontal|vertical|
 	|increment|decrement|
 	|inner|outer|
+	|last|first|second|third|fourth|fifth|sixth|seventh|ninth|tenth|
 	|long|short|
 	|lower|upper|
 	|january|february|march|april|mai|june|july|august|september|october|november|december|

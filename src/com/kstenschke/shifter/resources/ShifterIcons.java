@@ -22,5 +22,6 @@ import javax.swing.*;
 
 public class ShifterIcons {
 
-    public static final Icon ICON_DICTIONARY    = IconLoader.getIcon("/com/kstenschke/shifter/resources/icons/dictionary.png");
+    public static final Icon ICON_DICTIONARY      = IconLoader.getIcon("/com/kstenschke/shifter/resources/icons/dictionary.png");
+    public static final Icon ICON_DICTIONARY_DARK = IconLoader.getIcon("/com/kstenschke/shifter/resources/icons/dictionary@dark.png");
 }

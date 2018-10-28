@@ -16,6 +16,7 @@
 
 package com.kstenschke.shifter.resources.ui;
 
+import com.intellij.util.ui.UIUtil;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.resources.ShifterIcons;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -57,7 +58,7 @@ public class PluginConfiguration {
      * Constructor
      */
     public PluginConfiguration() {
-        tabDictionary.setIconAt(1, ShifterIcons.ICON_DICTIONARY);
+        tabDictionary.setIconAt(1, UIUtil.isUnderDarcula() ? ShifterIcons.ICON_DICTIONARY_DARK : ShifterIcons.ICON_DICTIONARY);
 
         initFormValues();
         initFormListeners();

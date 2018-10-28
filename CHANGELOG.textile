@@ -4,6 +4,7 @@ h1. Shifter Plugin - Changelog
     ** Improved: Added more distinct undo action texts for various detected+shifted types
     ** Improved: Sorting lines w/ different surrounding whitespace: are reformatted now after sorting
     ** Improved: Adapted UI more to recent IDE UI
+    ** Improved: Extended default dictionary
 * 1.9.1
     ** Added: Toggle order of two operands in selected AND or OR logical conjunction
     ** Corrected: Clarified intention popup descriptions
