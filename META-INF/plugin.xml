@@ -20,8 +20,8 @@
     <version>1.9.2</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
-    Implements numerous string manipulations on a single keyboard shortcut with detection of intended manipulation.
-    The type of manipulation has to be selected manually only when several are possible.<br/>
+    Adds numerous string manipulations performed on keyboard shortcut with detection of intended manipulation.
+    The type of manipulation only has to be selected manually when multiple are possible.<br/>
     <br/>
     When evoked, Shifter detects the type of selection (or lets the user chose when ambiguous) in the current line or
     keyword at the caret and performs the possible string manipulation.
