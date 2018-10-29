@@ -129,9 +129,15 @@ public class ShiftableSelection {
                     JsVariablesDeclarations.ACTION_TEXT);
             return;
         }
+        if (JqueryObserver.isJQueryObserver(actionContainer.selectedText)) {
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(JqueryObserver.getShifted(actionContainer.selectedText)),
+                    JqueryObserver.ACTION_TEXT);
+            return;
+        }
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(SizzleSelector.getShifted(actionContainer.selectedText)),
+                    actionContainer.getRunnableReplaceSelection(SizzleSelector.getShifted(actionContainer.selectedText, actionContainer)),
                     SizzleSelector.ACTION_TEXT);
             return;
         }

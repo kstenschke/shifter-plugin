@@ -104,8 +104,15 @@ class ShiftableTypesManager {
         // File extension specific term in dictionary
         typeDictionaryTerm = new DictionaryTerm();
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
-        if (null != fileExtension && typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
-            return DICTIONARY_WORD_EXT_SPECIFIC;
+        if (null != fileExtension) {
+            if (typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
+                return DICTIONARY_WORD_EXT_SPECIFIC;
+            }
+            if (UtilsFile.isJavaScriptFile(actionContainer.filename, true)) {
+                if (JqueryObserver.isJQueryObserver(word)) {
+                    return JQUERY_OBSERVER;
+                }
+            }
         }
 
         // Ternary Expression - swap IF and ELSE
@@ -209,7 +216,7 @@ class ShiftableTypesManager {
 
             // Generic shiftableTypes (shifting is calculated)
             case SIZZLE_SELECTOR:
-                return SizzleSelector.getShifted(word);
+                return SizzleSelector.getShifted(word, actionContainer);
             case RGB_COLOR:
                 return typeRgbColor.getShifted(word, actionContainer.isShiftUp);
             case NUMERIC_VALUE:
@@ -217,6 +224,8 @@ class ShiftableTypesManager {
                 return typeNumericValue.getShifted(word, actionContainer);
             case CSS_UNIT:
                 return typePixelValue.getShifted(word, actionContainer.isShiftUp);
+            case JQUERY_OBSERVER:
+                return JqueryObserver.getShifted(word);
             case PHP_VARIABLE_OR_ARRAY:
                 return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:

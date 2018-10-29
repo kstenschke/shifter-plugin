@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 /**
@@ -41,7 +42,7 @@ public class SizzleSelector {
      * @return String
      * TODO    extend: duplicate line around selection, from 1st of the 2 resulting lines: strip all non-selector strings (making it a declaration as is already when shifting just the selector)
      */
-    public static String getShifted(String selector) {
+    public static String getShifted(String selector, ActionContainer actionContainer) {
         String varName = selector.replaceAll("\\$|\\.|'|\"|\\)|#|\\[|\\(|>|<|]|=|_|\\s", "-");
         varName = varName.replaceAll("--", "-");
 
@@ -53,6 +54,7 @@ public class SizzleSelector {
             index++;
         }
 
-        return "var $" + UtilsTextual.toLcFirst(varName) + " = " + selector + ";";
+        return (actionContainer.filename.endsWith("ts") ? "var" : "let")
+                + " $" + UtilsTextual.toLcFirst(varName) + " = " + selector + ";";
     }
 }

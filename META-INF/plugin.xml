@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.9.2</version>
+    <version>1.9.3</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Adds numerous string manipulations performed on keyboard shortcut with detection of intended manipulation.
@@ -101,6 +101,7 @@
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
         <li>Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration</li>
         <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
+        <li>Selected deprecated jQuery observer methods are modernized, e.g. ".click(" becomes ".on('click', ": Event types: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload</li>
     </ul>
     <strong>Dictionaric Keyword Shifting</strong>
     <br/>
@@ -129,6 +130,13 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.9.3
+            <ul>
+                <li>Added: Shift (selected) deprecated jQuery ".click" method: selected "click(" becomes "on('click', "</li>
+                <li>Added: Shift (selected) deprecated jQuery observer methods: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload</li>
+                <li>Changed: Shifting Sizzle-Selector to variable declaration now uses "let" instead of "var" in TypeScript files</li>
+            </ul>
+        </li>
         <li>1.9.2
             <ul>
                 <li>Improved: Added more distinct undo action texts for various detected+shifted types</li>
@@ -144,13 +152,6 @@
                 <li>Improved: DOC type detections</li>
                 <li>Improved: Added more distinct undo action texts for various detected+shifted types</li>
                 <li>Improved: Updated use of deprecated plugin API methods, Tested and fixed edge-cases</li>
-            </ul>
-        </li>
-        <li>1.9.0
-            <ul>
-                <li>Added: Selections containing whitespace around the shiftable term can be shifted</li>
-                <li>Improved: Adapted UI more to recent IDE UI</li>
-                <li>Improved: Extended default dictionary</li>
             </ul>
         </li>
     </ul>

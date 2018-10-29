@@ -1,5 +1,9 @@
 h1. Shifter Plugin - Changelog
 
+* 1.9.3
+    ** Added: Shift (selected) deprecated jQuery ".click" method: selected "click(" becomes "on('click', "
+    ** Added: Shift (selected) deprecated jQuery observer methods: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload</li>
+    ** Changed: Shifting Sizzle-Selector to variable declaration now uses "let" instead of "var" in TypeScript files
 * 1.9.2
     ** Improved: Added more distinct undo action texts for various detected+shifted types
     ** Improved: Sorting lines w/ different surrounding whitespace: are reformatted now after sorting

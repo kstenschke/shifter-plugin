@@ -46,7 +46,7 @@ public class ShiftableTypes {
         PHP_VARIABLE_OR_ARRAY, PHP_DOC_PARAM_LINE,
 
         // JavaScript specific
-        JS_VARIABLES_DECLARATIONS, SIZZLE_SELECTOR,
+        JS_VARIABLES_DECLARATIONS, SIZZLE_SELECTOR, JQUERY_OBSERVER,
 
         TRAILING_COMMENT
     }
