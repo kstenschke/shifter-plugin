@@ -49,6 +49,7 @@
 	|toDegrees|toRadians|
 }
 (|js|ts|) {
+	|attr|prop|
 	|ceil|floor|round|
 	|const|let|var|
 	|log|info|warn|debug|error|
