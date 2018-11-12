@@ -176,6 +176,7 @@
 	|request|response|
 	|second|minute|hour|day|week|month|year|
 	|seconds|minutes|hours|days|weeks|months|years|
+	|success|error|
 	|sum|difference|product|quotient|remainder|opposite|
 	|top|right|bottom|left|
 	|trace|debug|info|warn|error|
