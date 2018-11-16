@@ -20,15 +20,14 @@
     <version>1.9.4</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
-    Adds numerous string manipulations performed on keyboard shortcut with detection of intended manipulation.
+    Various string manipulations and code manipulations, performed on keyboard shortcut with detection of intended manipulation.
     The type of manipulation only has to be selected manually when multiple are possible.<br/>
     <br/>
     When evoked, Shifter detects the type of selection (or lets the user chose when ambiguous) in the current line or
     keyword at the caret and performs the possible string manipulation.
-    To manipulations with multiple steps, there is an "up"- and "down"-shifting mode available.<br/>
     <br/>
     If there's only one shiftable word in a line, it can be shifted without the caret touching it.
-    Lowercase/uppercase or lower case with upper first character of shifted words is maintained.<br/>
+    Lowercase/uppercase or lower case with upper first character within shifted words is maintained.<br/>
     <br/>
     <strong>DEFAULT KEYBOARD SHORTCUTS</strong>
     <ul>
