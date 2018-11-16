@@ -135,8 +135,8 @@ public class Comment {
      */
     public static void shiftMultiLineBlockCommentInDocument(final ActionContainer actionContainer) {
         List<String> shiftOptions = new ArrayList<>();
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT);
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
+        shiftOptions.add(StaticTexts.SHIFT_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT);
+        shiftOptions.add(StaticTexts.SHIFT_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
 
         final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
 
@@ -161,10 +161,10 @@ public class Comment {
 
     public static void shiftMultipleSingleLineCommentsInDocument(final ActionContainer actionContainer) {
         List<String> shiftOptions = new ArrayList<>();
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_MERGE);
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT);
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_SORT_ASCENDING);
-        shiftOptions.add(StaticTexts.SHIFT_OPTION_MULTIPLE_LINE_SORT_DESCENDING);
+        shiftOptions.add(StaticTexts.SHIFT_MULTIPLE_LINE_COMMENTS_MERGE);
+        shiftOptions.add(StaticTexts.SHIFT_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT);
+        shiftOptions.add(StaticTexts.SHIFT_MULTIPLE_LINE_SORT_ASCENDING);
+        shiftOptions.add(StaticTexts.SHIFT_MULTIPLE_LINE_SORT_DESCENDING);
 
         final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
         final JBList modes = new JBList(options);
@@ -242,10 +242,10 @@ public class Comment {
 
     private static String convertMultipleLineCommentsToBlockComment(String str) {
         String lines[] = str.split("\n");
-        String result  = "";
+        StringBuilder result  = new StringBuilder();
         int index = 0;
         for (String line : lines) {
-            result += (0 == index ? "" : "\n") + " * " + trim(trim(line).substring(2));
+            result.append(0 == index ? "" : "\n").append(" * ").append(trim(trim(line).substring(2)));
             index++;
         }
 
@@ -254,10 +254,10 @@ public class Comment {
 
     private static String mergeMultipleLineComments(String str) {
         String lines[] = str.split("\n");
-        String result  = "";
+        StringBuilder result  = new StringBuilder();
         int index = 0;
         for (String line : lines) {
-            result += (0 == index ? "" : " ") + trim(trim(line).substring(2));
+            result.append(0 == index ? "" : " ").append(trim(trim(line).substring(2)));
             index++;
         }
 
@@ -267,13 +267,13 @@ public class Comment {
     private static String sortLineComments(String str, boolean reverse) {
         List<String> lines       = Arrays.asList(str.split("\n"));
         List<String> shiftedList = UtilsTextual.sortLinesNatural(lines, reverse);
-        String result = "";
+        StringBuilder result = new StringBuilder();
         int index = 0;
         for (String line : shiftedList) {
-            result += (0 == index ? "" : "\n") + line;
+            result.append(0 == index ? "" : "\n").append(line);
             index++;
         }
 
-        return result;
+        return result.toString();
     }
 }

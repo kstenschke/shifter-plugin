@@ -80,12 +80,13 @@ h4. Code- and DOC Comments
 * JsDOC: Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside an "@param", "@returns" or "@type" annotation: adds the missing curly brackets
 * Selected JsDoc block: Convert "@return" into "@returns", add missing curly brackets around data types in "@param", "@returns" and "@type" lines, correct invalid data types into existing data types (bool => boolean, int(eger) => number), reduce empty JsDoc lines
 
-h4. PHP and JavaScript
+h4. PHP, JavaScript and TypeScript shifting
 * PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)
 * Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
 * Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration
 * Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations
 * Selected deprecated jQuery observer methods are modernized, e.g. ".click(" becomes ".on('click', ": Event types: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload
+* Selected JavaScript string concatenation in TypeScript file - Converts to TypeScript string interpolation
 
 h4. Dictionaric Keyword Shifting
 
@@ -112,7 +113,7 @@ Some keyword types from the default dictionary:
 
 h2. Changelog
 
-Read full changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
+Read changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
 
 
 h2. Contributors

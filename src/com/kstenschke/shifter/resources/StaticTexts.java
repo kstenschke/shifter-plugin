@@ -46,53 +46,55 @@ public class StaticTexts {
     public static final String POPUP_TITLE_SHIFT = "Shifting Mode";
     @NonNls
 
-    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT       = "Merge lines into one single-line comment";
+    public static final String SHIFT_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT = "Merge lines into one single-line comment";
     @NonNls
-    public static final String SHIFT_OPTION_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS = "Convert into multiple single-line comments";
+    public static final String SHIFT_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS = "Convert into multiple single-line comments";
 
     @NonNls
-    public static final String SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT = "Convert to block comment";
+    public static final String SHIFT_MULTIPLE_LINE_COMMENTS_TO_BLOCK_COMMENT = "Convert to block comment";
     @NonNls
-    public static final String SHIFT_OPTION_MULTIPLE_LINE_COMMENTS_MERGE = "Merge into one comment";
+    public static final String SHIFT_MULTIPLE_LINE_COMMENTS_MERGE = "Merge into one comment";
     @NonNls
-    public static final String SHIFT_OPTION_MULTIPLE_LINE_SORT_DESCENDING = "Sort comments alphabetically descending";
+    public static final String SHIFT_MULTIPLE_LINE_SORT_DESCENDING = "Sort comments alphabetically descending";
     @NonNls
-    public static final String SHIFT_OPTION_MULTIPLE_LINE_SORT_ASCENDING = "Sort comments alphabetically ascending";
+    public static final String SHIFT_MULTIPLE_LINE_SORT_ASCENDING = "Sort comments alphabetically ascending";
 
     @NonNls
-    public static final String SHIFT_OPTION_LINES_SORT = "Sort lines alphabetical";
+    public static final String SHIFT_LINES_SORT = "Sort lines alphabetical";
     @NonNls
-    public static final String SHIFT_OPTION_LIST_ITEMS_SORT = "Sort items alphabetical";
+    public static final String SHIFT_LIST_ITEMS_SORT = "Sort items alphabetical";
     @NonNls
-    public static final String SHIFT_OPTION_LIST_ITEMS_SWAP = "Swap list items";
+    public static final String SHIFT_LIST_ITEMS_SWAP = "Swap list items";
     @NonNls
-    public static final String SHIFT_OPTION_QUOTES_SWAP = "Swap single and double quotes";
+    public static final String SHIFT_QUOTES_SWAP = "Swap single and double quotes";
     @NonNls
-    public static final String SHIFT_OPTION_QUOTES_DOUBLE_TO_SINGLE = "Convert double to single quoutes";
+    public static final String SHIFT_QUOTES_DOUBLE_TO_SINGLE = "Convert double to single quoutes";
     @NonNls
-    public static final String SHIFT_OPTION_QUOTES_SINGLE_TO_DOUBLE = "Convert single to double quoutes";
+    public static final String SHIFT_QUOTES_SINGLE_TO_DOUBLE = "Convert single to double quoutes";
     @NonNls
-    public static final String SHIFT_OPTION_UNESCAPE_QUOTES = "Unescape escaped quoutes";
+    public static final String SHIFT_UNESCAPE_QUOTES = "Unescape escaped quoutes";
     @NonNls
-    public static final String SHIFT_OPTION_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
+    public static final String SHIFT_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
     @NonNls
-    public static final String SHIFT_OPTION_SWAP_TUPEL_WORDS_ORDER = "Swap order of words pair";
+    public static final String SHIFT_SWAP_TUPEL_WORDS_ORDER = "Swap order of words pair";
     @NonNls
-    public static final String SHIFT_OPTION_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";
+    public static final String SHIFT_CONCATENATION_ITEMS_SWAP_ORDER = "Swap items order";
     @NonNls
-    public static final String SHIFT_OPTION_PATH_PAIR_SWAP_ORDER = "Swap path items order";
+    public static final String SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION = "Convert to string interpolation";
     @NonNls
-    public static final String SHIFT_OPTION_CAMEL_CASE_TO_PATH = "Convert to minus-separated path";
+    public static final String SHIFT_PATH_PAIR_SWAP_ORDER = "Swap path items order";
     @NonNls
-    public static final String SHIFT_OPTION_CAMEL_CASE_TO_UNDERSCORE_SEPARATED = "Convert to underscore-separated";
+    public static final String SHIFT_CAMEL_CASE_TO_PATH = "Convert to minus-separated path";
     @NonNls
-    public static final String SHIFT_OPTION_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
+    public static final String SHIFT_CAMEL_CASE_TO_UNDERSCORE_SEPARATED = "Convert to underscore-separated";
     @NonNls
-    public static final String SHIFT_OPTION_SHIFT_DICTIONARY_TERM = "Shift dictionary term";
+    public static final String SHIFT_PATH_TO_CAMEL_CASE = "Convert to camel-cased string";
     @NonNls
-    public static final String SHIFT_OPTION_SWAP_PARENTHESIS = "Toggle (...) and [...]";
+    public static final String SHIFT_SHIFT_DICTIONARY_TERM = "Shift dictionary term";
     @NonNls
-    public static final String SHIFT_OPTION_SLASHES_SWAP = "Toggle \\ and /";
+    public static final String SHIFT_SWAP_PARENTHESIS = "Toggle (...) and [...]";
     @NonNls
-    public static final String SHIFT_OPTION_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX = "Convert to PHP array long syntax";
+    public static final String SHIFT_SLASHES_SWAP = "Toggle \\ and /";
+    @NonNls
+    public static final String SHIFT_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX = "Convert to PHP array long syntax";
 }

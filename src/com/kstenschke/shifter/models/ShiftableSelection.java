@@ -153,11 +153,10 @@ public class ShiftableSelection {
             return;
         }
 
-        if (!isPhpVariableOrArray && isPhpFile && shiftSelectionInPhpDocument(actionContainer, containsShiftableQuotes)) {
-            return;
-        }
-
         if (!isPhpVariableOrArray) {
+            if (isPhpFile && shiftSelectionInPhpDocument(actionContainer, containsShiftableQuotes)) {
+                return;
+            }
             if (SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
                 // Comma-separated list: sort / ask whether to sort or toggle quotes
                 new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument(",(\\s)*", ", ", actionContainer.isShiftUp);
@@ -171,6 +170,20 @@ public class ShiftableSelection {
                 // Pipe-separated list (not confused w/ || of logical conjunctions)
                 new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesInDocument("\\|(\\s)*", "|", actionContainer.isShiftUp);
                 return;
+            }
+            boolean isJsConcatenationInTypeScript = actionContainer.fileExtension.equals("ts") && JsConcatenation.isJsConcatenation(actionContainer.selectedText);
+            if (isJsConcatenationInTypeScript) {
+                if (containsShiftableQuotes) {
+                    // Can toggle quotes or convert to interpolation
+                    new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument("\\|(\\s)*", "|", actionContainer.isShiftUp);
+                    return;
+                } else {
+                    // @todo add popup: toggle order or convert to interpolation
+                    actionContainer.writeUndoable(
+                            actionContainer.getRunnableReplaceSelection(new JsConcatenation().getShifted(actionContainer.selectedText)),
+                            JsConcatenation.ACTION_TEXT);
+                    return;
+                }
             }
             if (containsShiftableQuotes) {
                 if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {

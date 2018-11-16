@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.9.3</version>
+    <version>1.9.4</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     Adds numerous string manipulations performed on keyboard shortcut with detection of intended manipulation.
@@ -95,13 +95,14 @@
         <li>JsDOC: Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside an "@param", "@returns" or "@type" annotation: adds the missing curly brackets</li>
         <li>Selected JsDoc block: Convert "@return" into "@returns", add missing curly brackets around data types in "@param", "@returns" and "@type" lines, correct invalid data types into existing data types (bool => boolean, int(eger) => number), reduce empty JsDoc lines</li>
     </ul>
-    <strong>PHP and JavaScript</strong>
+    <strong>PHP, JavaScript and TypeScript shifting</strong>
     <ul>
         <li>PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)</li>
         <li>Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)</li>
         <li>Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration</li>
         <li>Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations</li>
         <li>Selected deprecated jQuery observer methods are modernized, e.g. ".click(" becomes ".on('click', ": Event types: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload</li>
+        <li>Selected JavaScript string concatenation in TypeScript file - Converts to TypeScript string interpolation</li>
     </ul>
     <strong>Dictionaric Keyword Shifting</strong>
     <br/>
@@ -130,6 +131,12 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.9.4
+            <ul>
+                <li>Added: Shifting selected string concatenation in TypeScript file converts it to string interpolation</li>
+                <li>Improved: Minor performance improvements</li>
+            </ul>
+        </li>
         <li>1.9.3
             <ul>
                 <li>Added: Shift (selected) deprecated jQuery ".click" method: selected "click(" becomes "on('click', "</li>
@@ -143,15 +150,6 @@
                 <li>Improved: Sorting lines w/ different surrounding whitespace: are reformatted now after sorting</li>
                 <li>Improved: Adapted UI more to recent IDE UI</li>
                 <li>Extended default dictionary</li>
-            </ul>
-        </li>
-        <li>1.9.1
-            <ul>
-                <li>Added: Toggle order of two operands in selected AND or OR logical conjunction</li>
-                <li>Corrected: Clarified intention popup descriptions</li>
-                <li>Improved: DOC type detections</li>
-                <li>Improved: Added more distinct undo action texts for various detected+shifted types</li>
-                <li>Improved: Updated use of deprecated plugin API methods, Tested and fixed edge-cases</li>
             </ul>
         </li>
     </ul>

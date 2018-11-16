@@ -168,22 +168,22 @@ public class JsDoc {
         String docBlock = documentText.substring(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
         String lines[] = docBlock.split("\n");
 
-        String docBlockCorrected = "";
+        StringBuilder docBlockCorrected = new StringBuilder();
         int index = 0;
         for (String line : lines) {
             if (isAtParamLine(line) || isAtReturnsLine(line, true) || isAtTypeLine(line)) {
                 line = correctAtKeywordLine(line);
             }
 
-            docBlockCorrected += (index > 0 ? "\n" : "") + line;
+            docBlockCorrected.append(index > 0 ? "\n" : "").append(line);
             index++;
         }
-        docBlockCorrected = reduceDoubleEmptyCommentLines(docBlockCorrected);
-        if (docBlockCorrected.equals(docBlock)) {
+        docBlockCorrected = new StringBuilder(reduceDoubleEmptyCommentLines(docBlockCorrected.toString()));
+        if (docBlockCorrected.toString().equals(docBlock)) {
             return false;
         }
 
-        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected,true), ACTION_TEXT);
+        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected.toString(),true), ACTION_TEXT);
         return true;
     }
 
@@ -239,7 +239,7 @@ public class JsDoc {
 
     private static String reduceDoubleEmptyCommentLines(String block) {
         String lines[] = block.split("\n");
-        String blockCleaned = "";
+        StringBuilder blockCleaned = new StringBuilder();
 
         boolean wasPreviousEmpty = false;
         int index = 0;
@@ -247,13 +247,13 @@ public class JsDoc {
             boolean isEmpty = 0 == index || (trim(trim(line).replaceAll("\\*", "")).isEmpty());
 
             if (0 == index || !(isEmpty && wasPreviousEmpty)) {
-                blockCleaned += (index > 0 ? "\n" : "") + line;
+                blockCleaned.append(index > 0 ? "\n" : "").append(line);
             }
             wasPreviousEmpty = isEmpty;
             index++;
         }
 
-        return blockCleaned;
+        return blockCleaned.toString();
     }
 
     private static String addDataType(String line) {
