@@ -33,7 +33,7 @@ public class JsConcatenation {
         JsConcatenation jsConcatenation = new JsConcatenation();
         jsConcatenation.getShifted(str);
 
-        return jsConcatenation.amountStrings + jsConcatenation.amountVariables > 1;
+        return jsConcatenation.amountStrings > 0 && jsConcatenation.amountVariables > 0;
     }
 
     /**
