@@ -39,7 +39,7 @@ public class SeparatedList {
         ) {
             return false;
         }
-        if (!UtilsTextual.isWrappedIntoQuotes(str)) {
+        if (!UtilsTextual.isWrappedWithQuotes(str)) {
             return true;
         }
 

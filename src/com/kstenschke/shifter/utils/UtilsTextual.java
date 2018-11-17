@@ -111,27 +111,12 @@ public class UtilsTextual {
         return !(null == str || str.isEmpty()) && Character.isDigit(str.charAt(0));
     }
 
-    public static boolean isWrappedIntoQuotes(@Nullable String str) {
+    public static boolean isWrappedWithQuotes(@Nullable String str) {
         return isWrappedWith(str, "'") || isWrappedWith(str, "\"");
     }
 
-    /**
-     * @param  str
-     * @param  wrap
-     * @return boolean Is the given string wrapped into the wrapper string?
-     */
-    private static boolean isWrappedWith(@Nullable String str, String wrap, boolean needsToBeTwoSided, boolean needsContent) {
-        if (null == str) {
-            return false;
-        }
-        int stringLength = str.length();
-
-        return !((needsContent && stringLength < 3) || (needsToBeTwoSided && stringLength < 2))
-            && str.startsWith(wrap) && str.endsWith(wrap);
-    }
-
     private static boolean isWrappedWith(@Nullable String str, String wrap) {
-        return isWrappedWith(str, wrap, false, false);
+        return null != str && (str.startsWith(wrap) && str.endsWith(wrap));
     }
 
     /**

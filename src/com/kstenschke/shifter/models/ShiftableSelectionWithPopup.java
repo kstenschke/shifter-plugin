@@ -99,7 +99,8 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
     }
 
-    void interpolateConcatenationOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
+    void interpolateConcatenationOrSwapQuotesInDocument(final boolean isUp) {
+        String delimiterSplitPattern = "\\|(\\s)*";
         List<String> shiftOptions = new ArrayList<>();
 
         String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
@@ -109,7 +110,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
         addQuoteShiftingOptions(shiftOptions);
 
-        shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
+        shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, "|");
     }
 
     void swapParenthesisOrConvertPphpArray() {

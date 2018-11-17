@@ -175,7 +175,7 @@ public class ShiftableSelection {
             if (isJsConcatenationInTypeScript) {
                 if (containsShiftableQuotes) {
                     // Can toggle quotes or convert to interpolation
-                    new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument("\\|(\\s)*", "|", actionContainer.isShiftUp);
+                    new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument(actionContainer.isShiftUp);
                     return;
                 } else {
                     // @todo add popup: toggle order or convert to interpolation

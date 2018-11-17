@@ -43,7 +43,7 @@ public class ShiftableTypes {
         DOC_COMMENT_TAG, DOC_COMMENT_DATA_TYPE,
 
         // PHP specific
-        PHP_VARIABLE_OR_ARRAY, PHP_DOC_PARAM_LINE,
+        PHP_VARIABLE_OR_ARRAY,
 
         // JavaScript specific
         JS_VARIABLES_DECLARATIONS, SIZZLE_SELECTOR, JQUERY_OBSERVER,
