@@ -70,8 +70,8 @@ public class PhpConcatenation {
 
         if (strLen > 4) {
             // Detect LHS Type / how it ends
-            String leftHandSide = strTrimmed.substring(0, 1);
-            String endChar = detectConcatenationTypeAndGetEndingChar(leftHandSide, false);
+            StringBuilder leftHandSide = new StringBuilder(strTrimmed.substring(0, 1));
+            String endChar = detectConcatenationTypeAndGetEndingChar(leftHandSide.toString(), false);
 
             if (null != endChar) {
                 Integer currentOffset = 1;
@@ -92,11 +92,11 @@ public class PhpConcatenation {
                                 isFoundDot = true;
                                 offsetDot    = currentOffset;
                             } else {
-                                leftHandSide += currentChar;
+                                leftHandSide.append(currentChar);
                             }
                         }
                     } else {
-                        leftHandSide += currentChar;
+                        leftHandSide.append(currentChar);
                     }
                     currentOffset++;
                 }
@@ -143,7 +143,7 @@ public class PhpConcatenation {
                                     }
 
                                     if (!isFailed) {
-                                        partLHS    = leftHandSide;
+                                        partLHS    = leftHandSide.toString();
                                         partRHS    = rightHandSide;
                                     }
                                 }

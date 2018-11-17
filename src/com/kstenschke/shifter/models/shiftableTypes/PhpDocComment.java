@@ -38,7 +38,7 @@ class PhpDocComment {
 
     public static String getShifted(String str) {
         String lines[] = str.split("\n");
-        String shifted = "";
+        StringBuilder shifted = new StringBuilder();
 
         int indexLine = 1;
         for (String line : lines) {
@@ -46,10 +46,10 @@ class PhpDocComment {
                 // PHP doc @param comment that contains variable name but no data type: guess data type by variable name
                 line = PhpDocParam.getShifted(line);
             }
-            shifted += line + (indexLine < lines.length ? "\n" : "");
+            shifted.append(line).append(indexLine < lines.length ? "\n" : "");
             indexLine++;
         }
 
-        return shifted;
+        return shifted.toString();
     }
 }

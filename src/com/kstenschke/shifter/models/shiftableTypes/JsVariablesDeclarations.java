@@ -53,14 +53,14 @@ public class JsVariablesDeclarations {
      */
     public static String getShifted(String str) {
         String[] lines = str.split("\n");
-        String shiftedLines = "";
+        StringBuilder shiftedLines = new StringBuilder();
 
         int lineNumber = 0;
         String shiftedLine;
         for (String line : lines) {
             line = line.trim();
             shiftedLine = line.isEmpty() || line.startsWith("//") ? line : shiftNonCommentLine(line);
-            shiftedLines += (0 == lineNumber ? "" : "\t") + shiftedLine + "\n";
+            shiftedLines.append(0 == lineNumber ? "" : "\t").append(shiftedLine).append("\n");
             lineNumber++;
         }
 

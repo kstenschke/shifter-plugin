@@ -157,17 +157,17 @@ public class RomanNumber {
          * Return the standard representation of this Roman numeral.
          */
         public String toString() {
-            String roman = "";
+            StringBuilder roman = new StringBuilder();
             // N represents the part of num that still has to be converted to Roman numeral representation.
             int nonRoman = num;
             for (int i = 0; i < numbers.length; i++) {
                 while (nonRoman >= numbers[i]) {
-                    roman += letters[i];
+                    roman.append(letters[i]);
                     nonRoman -= numbers[i];
                 }
             }
 
-            return roman;
+            return roman.toString();
         }
 
         /**

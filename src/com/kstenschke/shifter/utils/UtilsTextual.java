@@ -564,11 +564,12 @@ public class UtilsTextual {
      * @return String           Given numerical string, w/ given length (if >= original length)
      */
     public static String formatAmountDigits(String numberString, int length) {
-        while (numberString.length() < length) {
-            numberString = "0" + numberString;
+        StringBuilder numberStringBuilder = new StringBuilder(numberString);
+        while (numberStringBuilder.length() < length) {
+            numberStringBuilder.insert(0, "0");
         }
 
-        return numberString;
+        return numberStringBuilder.toString();
     }
 
     /**
@@ -617,15 +618,15 @@ public class UtilsTextual {
         if (null == str) {
             return null;
         }
-        String whitespace = "";
+        StringBuilder whitespace = new StringBuilder();
         int offset = 0;
         int length = str.length();
         while (offset < length && Character.isWhitespace(str.charAt(offset))) {
-            whitespace += str.charAt(offset);
+            whitespace.append(str.charAt(offset));
             offset++;
         }
 
-        return whitespace;
+        return whitespace.toString();
     }
 
     @NotNull

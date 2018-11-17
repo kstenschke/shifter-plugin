@@ -43,18 +43,18 @@ public class SizzleSelector {
      * TODO    extend: duplicate line around selection, from 1st of the 2 resulting lines: strip all non-selector strings (making it a declaration as is already when shifting just the selector)
      */
     public static String getShifted(String selector, ActionContainer actionContainer) {
-        String varName = selector.replaceAll("\\$|\\.|'|\"|\\)|#|\\[|\\(|>|<|]|=|_|\\s", "-");
-        varName = varName.replaceAll("--", "-");
+        StringBuilder varName = new StringBuilder(selector.replaceAll("\\$|\\.|'|\"|\\)|#|\\[|\\(|>|<|]|=|_|\\s", "-"));
+        varName = new StringBuilder(varName.toString().replaceAll("--", "-"));
 
-        String[] words = varName.split("-");
-        varName = "";
+        String[] words = varName.toString().split("-");
+        varName = new StringBuilder();
         int index = 0;
         for (String word : words) {
-            varName += index > 0 ? UtilsTextual.toUcFirstRestLower(word) : word;
+            varName.append(index > 0 ? UtilsTextual.toUcFirstRestLower(word) : word);
             index++;
         }
 
         return (actionContainer.filename.endsWith("ts") ? "var" : "let")
-                + " $" + UtilsTextual.toLcFirst(varName) + " = " + selector + ";";
+                + " $" + UtilsTextual.toLcFirst(varName.toString()) + " = " + selector + ";";
     }
 }

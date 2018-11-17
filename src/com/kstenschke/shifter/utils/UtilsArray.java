@@ -30,7 +30,7 @@ public class UtilsArray {
      *
      * @param haystack String array to search in
      * @param needle   String to be looked for
-     * @return int        Found position or -1
+     * @return int     Found position or -1
      */
     public static int getOffset(String[] haystack, String needle) {
         for (int i = 0; i < haystack.length; i++) {
@@ -47,16 +47,15 @@ public class UtilsArray {
      *
      * @param stringsArr Array of strings
      * @param glue       Glue in between concatenated strings
-     * @return String      All items of stringsArr concatenated w/ glue
+     * @return String    All items of stringsArr concatenated w/ glue
      */
     public static String implode(String[] stringsArr, String glue) {
-        String out = "";
-
+        StringBuilder out = new StringBuilder();
         for (int i = 0; i < stringsArr.length; i++) {
-            out += (0 == i ? "" : glue) + stringsArr[i];
+            out.append(0 == i ? "" : glue).append(stringsArr[i]);
         }
 
-        return out;
+        return out.toString();
     }
 
     /**
@@ -69,7 +68,7 @@ public class UtilsArray {
      *
      * @param array1 Array of strings
      * @param array2 Array of strings
-     * @return array    Merged array containing each of the elements of array1 and array2
+     * @return array Merged array containing each of the elements of array1 and array2
      */
     private static String[] mergeArrays(String[] array1, String[] array2) {
         if (null == array1 || array1.length == 0) {
@@ -99,7 +98,7 @@ public class UtilsArray {
      * @param array1 Array of strings
      * @param array2 Array of strings
      * @param array3 Array of strings
-     * @return array    Merged array containing each of the elements of array1, array2 and array3
+     * @return array Merged array containing each of the elements of array1, array2 and array3
      */
     public static String[] mergeArrays(String[] array1, String[] array2, String[] array3) {
         return mergeArrays(mergeArrays(array1, array2), array3);

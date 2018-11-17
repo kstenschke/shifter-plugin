@@ -205,7 +205,7 @@ public class Comment {
         String lines[] = str.split("\n");
         int index = 0;
 
-        String result = "//";
+        StringBuilder result = new StringBuilder("//");
         for (String line : lines) {
             line = trim(line);
             if (line.startsWith("* ")) {
@@ -216,28 +216,28 @@ public class Comment {
                 line = trim(line.substring(1));
             }
             if (!line.isEmpty()) {
-                result += merge
+                result.append(merge
                     ? " " + line
-                    : (0 == index ? "" : "\n") + "// " + line;
+                    : (0 == index ? "" : "\n") + "// " + line);
             }
             index++;
         }
 
         // Remove trailing "*/"
-        result = result.substring(0, result.length() - 2);
+        result = new StringBuilder(result.substring(0, result.length() - 2));
 
         if (!merge) {
             // Remove empty comment lines
-            result = result.replace("\n//\n", "\n");
-            if (result.startsWith("//\n")) {
-                result = result.substring(3);
+            result = new StringBuilder(result.toString().replace("\n//\n", "\n"));
+            if (result.toString().startsWith("//\n")) {
+                result = new StringBuilder(result.substring(3));
             }
-            if (result.endsWith("\n// ")) {
-                result = result.substring(0, result.length() - 4);
+            if (result.toString().endsWith("\n// ")) {
+                result = new StringBuilder(result.substring(0, result.length() - 4));
             }
         }
 
-        return result;
+        return result.toString();
     }
 
     private static String convertMultipleLineCommentsToBlockComment(String str) {

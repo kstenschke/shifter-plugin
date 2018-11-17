@@ -125,9 +125,11 @@ public class AlphanumComparator implements Comparator<String>
         int index = 0;
         for (String part : parts) {
             if (StringUtils.isNumeric(part)) {
-                while (part.length() < 10) {
-                    part = "0" + part;
+                StringBuilder partBuilder = new StringBuilder(part);
+                while (partBuilder.length() < 10) {
+                    partBuilder.insert(0, "0");
                 }
+                part = partBuilder.toString();
                 parts[index] = part;
             }
             index++;

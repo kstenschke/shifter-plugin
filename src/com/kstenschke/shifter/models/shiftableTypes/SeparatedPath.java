@@ -45,14 +45,14 @@ public class SeparatedPath {
      */
     public static String getShifted(String word) {
         String parts[] = word.split(getWordsGlue(word));
-        String shifted = "";
+        StringBuilder shifted = new StringBuilder();
         int index = 0;
         for (String part : parts) {
-            shifted += index == 0 ? part : UtilsTextual.toUcFirstRestLower(part);
+            shifted.append(index == 0 ? part : UtilsTextual.toUcFirstRestLower(part));
             index++;
         }
 
-        return shifted;
+        return shifted.toString();
     }
 
     @NotNull
