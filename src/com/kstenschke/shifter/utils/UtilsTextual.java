@@ -34,12 +34,7 @@ import java.util.regex.Pattern;
  */
 public class UtilsTextual {
 
-    private final static Pattern TRIM_LEFT = Pattern.compile("^\\s+");
     private final static Pattern TRIM_RIGHT = Pattern.compile("\\s+$");
-
-    public static String ltrim(String s) {
-        return TRIM_LEFT.matcher(s).replaceAll("");
-    }
 
     public static String rtrim(String s) {
         return TRIM_RIGHT.matcher(s).replaceAll("");
@@ -55,19 +50,6 @@ public class UtilsTextual {
 
     public static boolean isMultiLine(@Nullable String str) {
         return null != str && str.contains("\n");
-    }
-
-    public static boolean allLinesContainAnyOf(String lines[], String needles[]) {
-        for (String line : lines) {
-            boolean contains = false;
-            for (String needle : needles) {
-                contains = contains || line.contains(needle);
-            }
-            if (!contains) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -162,14 +144,6 @@ public class UtilsTextual {
 
     /**
      * @param  str         String to be checked
-     * @return boolean     Does the given string contain single or double quotes?
-     */
-    public static boolean containsQuotes(String str) {
-        return null != str && (str.contains("\"") || str.contains("'"));
-    }
-
-    /**
-     * @param  str         String to be checked
      * @return String      Given string w/ contained slashes swapped against backslashes and vise versa
      */
     public static String swapSlashes(@Nullable String str) {
@@ -240,9 +214,6 @@ public class UtilsTextual {
      */
     public static boolean isUcFirst(String str) {
         return str.isEmpty() || str.equals(UtilsTextual.toUcFirstRestLower(str));
-    }
-    public static boolean isUcFirst(char c) {
-        return isUcFirst("" + c);
     }
 
     public static boolean isUpperCamelCase(@Nullable String str) {
@@ -403,20 +374,6 @@ public class UtilsTextual {
         return allowHyphens
                 ? Character.isJavaIdentifierPart(c) || '-' == c
                 : Character.isJavaIdentifierPart(c);
-    }
-
-    public static boolean isLetter(char c) {
-        return Character.toString(c).matches("[a-zA-Z]+");
-    }
-
-    public static boolean isCamelIdentifierPart(char c) {
-        return isCamelIdentifierPart(c, true);
-    }
-
-    private static boolean isCamelIdentifierPart(char c, boolean allowNumbers) {
-        return allowNumbers
-                ? Character.toString(c).matches("[a-zA-Z0-9]+")
-                : Character.toString(c).matches("[a-zA-Z]+");
     }
 
     /**

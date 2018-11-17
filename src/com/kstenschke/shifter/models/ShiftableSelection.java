@@ -154,7 +154,7 @@ public class ShiftableSelection {
         }
 
         if (!isPhpVariableOrArray) {
-            if (isPhpFile && shiftSelectionInPhpDocument(actionContainer, containsShiftableQuotes)) {
+            if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
                 return;
             }
             if (SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
@@ -274,7 +274,7 @@ public class ShiftableSelection {
                 ACTION_TEXT_SHIFT_SELECTION);
     }
 
-    private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer, boolean containsQuotes) {
+    private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer) {
         final PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftableTypes.PhpConcatenation(actionContainer.selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
             actionContainer.writeUndoable(

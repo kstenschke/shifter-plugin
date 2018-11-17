@@ -85,7 +85,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             // Sort
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
-                            SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp)),
+                            SeparatedList.getShifted(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp)),
                     ACTION_TEXT_SHIFT_SELECTION);
             return;
         }
@@ -234,7 +234,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             }
         }
         if (mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SWAP)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.sortSeparatedList(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.getShifted(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_PATH_PAIR_SWAP_ORDER)) {

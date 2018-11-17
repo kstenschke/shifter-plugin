@@ -16,10 +16,8 @@
 package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Editor;
-import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.project.Project;
-import com.intellij.openapi.project.ProjectManager;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.codeStyle.CodeStyleManager;
@@ -31,15 +29,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class UtilsEnvironment {
-
-    /**
-     * @return The currently opened project
-     */
-    public static Project getOpenProject() {
-        Project[] projects = ProjectManager.getInstance().getOpenProjects();
-
-        return (projects.length > 0) ? projects[0] : null;
-    }
 
     public static String getDocumentFilename(com.intellij.openapi.editor.Document document) {
         VirtualFile file = FileDocumentManager.getInstance().getFile(document);
@@ -58,21 +47,6 @@ public class UtilsEnvironment {
     public static void reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
         if (null == psiFile) {
-            return;
-        }
-
-        CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
-    }
-
-    public static void reformatSelection(Editor editor, Project project) {
-        PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
-        if (null == psiFile) {
-            return;
-        }
-        SelectionModel selectionModel = editor.getSelectionModel();
-        int offsetStart = selectionModel.getSelectionStart();
-        int offsetEnd   = selectionModel.getSelectionEnd();
-        if (offsetStart == offsetEnd) {
             return;
         }
 

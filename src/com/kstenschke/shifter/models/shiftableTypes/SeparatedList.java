@@ -62,7 +62,7 @@ public class SeparatedList {
      * @param  sortAscending
      * @return Given delimiter separated list, sorted (natural) alphabetically ascending / descending
      */
-    public static String sortSeparatedList(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean sortAscending) {
+    public static String getShifted(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean sortAscending) {
         String[] items = selectedText.split(delimiterSplitPattern);
 
         if (items.length == 2) {
@@ -88,9 +88,5 @@ public class SeparatedList {
         }
 
         return UtilsArray.implode(items, delimiterGlue);
-    }
-
-    public static String getShifted(String word, String delimiterSplitPattern, String delimiterGlue, boolean shiftUp) {
-        return sortSeparatedList(word, delimiterSplitPattern, delimiterGlue, shiftUp);
     }
 }
