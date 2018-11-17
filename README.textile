@@ -113,7 +113,7 @@ Some keyword types from the default dictionary:
 
 h2. Changelog
 
-Read changelog: https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
+Read "changelog":https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
 
 
 h2. Contributors
