@@ -130,6 +130,11 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.9.5
+            <ul>
+                <li>Added: Intention popup when shifted selection is comma-separated items and string concatenation (= sort or interpolate)</li>
+                <li>Improved: Minor performance improvements</li>
+            </ul>
         <li>1.9.4
             <ul>
                 <li>Added: Shifting selected string concatenation in TypeScript file converts it to string interpolation</li>
@@ -141,14 +146,6 @@
                 <li>Added: Shift (selected) deprecated jQuery ".click" method: selected "click(" becomes "on('click', "</li>
                 <li>Added: Shift (selected) deprecated jQuery observer methods: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload</li>
                 <li>Changed: Shifting Sizzle-Selector to variable declaration now uses "let" instead of "var" in TypeScript files</li>
-            </ul>
-        </li>
-        <li>1.9.2
-            <ul>
-                <li>Improved: Added more distinct undo action texts for various detected+shifted types</li>
-                <li>Improved: Sorting lines w/ different surrounding whitespace: are reformatted now after sorting</li>
-                <li>Improved: Adapted UI more to recent IDE UI</li>
-                <li>Extended default dictionary</li>
             </ul>
         </li>
     </ul>

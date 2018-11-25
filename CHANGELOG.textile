@@ -1,5 +1,8 @@
 h1. Shifter Plugin - Changelog
 
+* 1.9.5
+    ** Added: Intention popup when shifted selection is comma-separated items and string concatenation (= sort or interpolate)
+    ** Improved: Minor performance improvements
 * 1.9.4
     ** Added: Shifting selected string concatenation in TypeScript file converts it to string interpolation
     ** Improved: Minor performance improvements

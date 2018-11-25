@@ -64,9 +64,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
     }
 
-    /**
-     * @param phpConcatenation
-     */
     void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
         if (!containsShiftableQuotes) {
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpConcatenation.getShifted());
@@ -80,8 +77,8 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, phpConcatenation, null, null);
     }
 
-    void sortListOrSwapQuotesInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isUp) {
-        if (!containsShiftableQuotes) {
+    void sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isJsConcatenation, final boolean isUp) {
+        if (!containsShiftableQuotes && !isJsConcatenation) {
             // Sort
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
@@ -91,9 +88,13 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
 
         List<String> shiftOptions = new ArrayList<>();
+        if (isJsConcatenation) {
+            shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
+        }
 
         String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(items.length == 2 ? StaticTexts.SHIFT_LIST_ITEMS_SWAP : StaticTexts.SHIFT_LIST_ITEMS_SORT);
+
         addQuoteShiftingOptions(shiftOptions);
 
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);

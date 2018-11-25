@@ -15,7 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
-public class ShiftableTypes {
+class ShiftableTypes {
 
     public enum Type {
         UNKNOWN,

@@ -132,13 +132,6 @@ public class PhpVariableOrArray {
         return phpVariables.get(curIndex);
     }
 
-    /**
-     * @param  variable     string
-     * @param  moreCount    int
-     * @param  phpVariables List<String>
-     * @param  allLeadChars List<String>
-     * @return Integer
-     */
     @NotNull
     private Integer getVariableIndex(String variable, Integer moreCount, List<String> phpVariables, List<String> allLeadChars) {
         if (null == moreCount || moreCount > 1) {

@@ -250,30 +250,30 @@ public class ShiftableWord {
         }
 
         String newWord = shiftableShiftableWord.getShifted();
-        if (null != newWord && newWord.length() > 0 && !newWord.matches(Pattern.quote(word)) && null != wordOffset) {
-            newWord = shiftableShiftableWord.postProcess(newWord, postfixChar);
-            final int wordOffsetFin = wordOffset;
-            final int wordOffsetEndFin = wordOffset + word.length();
-            final String newWordFin = newWord;
-
-            if (replaceInDocument) {
-                // Replace word at caret by shifted one (if any)
-                actionContainer.writeUndoable(
-                        new Runnable() {
-                            @Override
-                            public void run() {
-                                actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
-                                if (actionContainer.selectedText.isEmpty() && newWordFin.contains(" ")) {
-                                    // There's no selection and shifted word newly contains a space: select it
-                                    actionContainer.selectionModel.setSelection(wordOffsetFin, wordOffsetFin + newWordFin.length());
-                                }
-                            }
-                        });
-
-            }
-            return newWord;
+        if (null == newWord || newWord.length() == 0 || newWord.matches(Pattern.quote(word)) || null == wordOffset) {
+            return word;
         }
 
-        return word;
+        newWord = shiftableShiftableWord.postProcess(newWord, postfixChar);
+        final int wordOffsetFin = wordOffset;
+        final int wordOffsetEndFin = wordOffset + word.length();
+        final String newWordFin = newWord;
+
+        if (replaceInDocument) {
+            // Replace word at caret by shifted one (if any)
+            actionContainer.writeUndoable(
+                    new Runnable() {
+                        @Override
+                        public void run() {
+                            actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
+                            if (actionContainer.selectedText.isEmpty() && newWordFin.contains(" ")) {
+                                // There's no selection and shifted word newly contains a space: select it
+                                actionContainer.selectionModel.setSelection(wordOffsetFin, wordOffsetFin + newWordFin.length());
+                            }
+                        }
+                    });
+
+        }
+        return newWord;
     }
 }

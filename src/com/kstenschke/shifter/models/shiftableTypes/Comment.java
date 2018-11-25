@@ -55,7 +55,7 @@ public class Comment {
         return isBlockComment(str, false, false);
     }
 
-    public static boolean isBlockComment(String str, boolean allowDocBlockComment, boolean commentSignsNeedSpaces) {
+    static boolean isBlockComment(String str, boolean allowDocBlockComment, boolean commentSignsNeedSpaces) {
         str = str.trim();
 
         String innerWrap  = commentSignsNeedSpaces ? " " : "";

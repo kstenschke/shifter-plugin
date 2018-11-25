@@ -19,6 +19,7 @@ import com.kstenschke.shifter.models.shiftableTypes.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
+import static com.kstenschke.shifter.models.ShiftableSelection.ACTION_TEXT_SHIFT_SELECTION;
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
 /**
@@ -55,7 +56,7 @@ class ShiftableTypesManager {
      * @param  actionContainer
      * @return int
      */
-    public ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, ActionContainer actionContainer) {
+    ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, ActionContainer actionContainer) {
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
             return TRAILING_COMMENT;
@@ -182,7 +183,7 @@ class ShiftableTypesManager {
         return UNKNOWN;
     }
 
-    public ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
+    ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
         int editorTextLength = actionContainer.editorText.length();
         int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
         String postfixChar = editorTextLength > offsetPostfixChar
@@ -262,17 +263,13 @@ class ShiftableTypesManager {
         }
     }
 
-    public String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
+    String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
         wordType = getWordType(actionContainer.selectedText, "", "", false, actionContainer);
 
         return getShiftedWord(actionContainer, actionContainer.selectedText, wordType, moreCount);
     }
 
-    public String getActionText(String defaultText) {
-        if (null == wordType) {
-            return defaultText;
-        }
-
+    String getActionText() {
         switch (wordType) {
             case CSS_UNIT:
                 return CssUnit.ACTION_TEXT;
@@ -295,7 +292,7 @@ class ShiftableTypesManager {
             case WORDS_TUPEL:
                 return Tupel.ACTION_TEXT;
             default:
-                return defaultText;
+                return ACTION_TEXT_SHIFT_SELECTION;
         }
     }
 }

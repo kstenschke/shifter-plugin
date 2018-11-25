@@ -57,33 +57,35 @@ public class ActionContainer {
         this.isShiftMore = isShiftMore;
 
         editor = event.getData(PlatformDataKeys.EDITOR);
-        if (null != editor) {
-            project        = editor.getProject();
-            document       = editor.getDocument();
-            editorText     = document.getCharsSequence();
-            documentText   = document.getText();
-
-            selectionModel       = editor.getSelectionModel();
-            offsetSelectionStart = selectionModel.getSelectionStart();
-            offsetSelectionEnd   = selectionModel.getSelectionEnd();
-            if (documentText.charAt(offsetSelectionEnd -1) == '\n') {
-                // Prevent including line following a selection being included e.g. in line sorting
-                offsetSelectionEnd--;
-                selectionModel.setSelection(offsetSelectionStart, offsetSelectionEnd);
-            }
-            lineNumberSelStart   = document.getLineNumber(offsetSelectionStart);
-            lineNumberSelEnd     = document.getLineNumber(offsetSelectionEnd);
-            selectedText         = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
-
-            caretOffset          = editor.getCaretModel().getOffset();
-            int caretLineNumber = document.getLineNumber(caretOffset);
-            offsetCaretLineStart = document.getLineStartOffset(caretLineNumber);
-            int offsetCaretLineEnd = document.getLineEndOffset(caretLineNumber);
-            caretLine            = editorText.subSequence(offsetCaretLineStart, offsetCaretLineEnd).toString();
-
-            filename      = UtilsEnvironment.getDocumentFilename(document);
-            fileExtension = UtilsFile.extractFileExtension(filename, true);
+        if (null == editor) {
+            return;
         }
+
+        project        = editor.getProject();
+        document       = editor.getDocument();
+        editorText     = document.getCharsSequence();
+        documentText   = document.getText();
+
+        selectionModel       = editor.getSelectionModel();
+        offsetSelectionStart = selectionModel.getSelectionStart();
+        offsetSelectionEnd   = selectionModel.getSelectionEnd();
+        if (documentText.charAt(offsetSelectionEnd -1) == '\n') {
+            // Prevent including line following a selection being included e.g. in line sorting
+            offsetSelectionEnd--;
+            selectionModel.setSelection(offsetSelectionStart, offsetSelectionEnd);
+        }
+        lineNumberSelStart   = document.getLineNumber(offsetSelectionStart);
+        lineNumberSelEnd     = document.getLineNumber(offsetSelectionEnd);
+        selectedText         = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+
+        caretOffset          = editor.getCaretModel().getOffset();
+        int caretLineNumber = document.getLineNumber(caretOffset);
+        offsetCaretLineStart = document.getLineStartOffset(caretLineNumber);
+        int offsetCaretLineEnd = document.getLineEndOffset(caretLineNumber);
+        caretLine            = editorText.subSequence(offsetCaretLineStart, offsetCaretLineEnd).toString();
+
+        filename      = UtilsEnvironment.getDocumentFilename(document);
+        fileExtension = UtilsFile.extractFileExtension(filename, true);
     }
 
     /**

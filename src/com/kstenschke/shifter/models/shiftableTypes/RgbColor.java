@@ -139,17 +139,17 @@ public class RgbColor {
     }
 
     /**
-     * Darken given color.
+     * Darken given color
      *
      * @param color Color to make darker
-     * @return Darker color.
+     * @return Darker color
      */
     private static Color darker(Color color) {
         return addToRGB(color, -1);
     }
 
     /**
-     * Lighten given color.
+     * Lighten given color
      *
      * @param  color    Color to be made lighter.
      * @return Color    Lighter color
