@@ -20,8 +20,12 @@
     <version>1.9.5</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
-    Various string manipulations and code manipulations, performed on keyboard shortcut with detection of intended manipulation.
+    String and code manipulations, performed on keyboard shortcut with detection of intended manipulation.
     The type of manipulation only has to be selected manually when multiple are possible.<br/>
+    <br/>
+    Do you like it? Give it a star at <a href="https://github.com/kstenschke/shifter-plugin">GitHub</a>.
+    Rate it at <a href="https://plugins.jetbrains.com/plugin/6149-shifter">plugins.jetbrains.com</a>.<br/>
+    There's no future for Shifter without support from the community!<br/>
     <br/>
     When evoked, Shifter detects the type of selection (or lets the user chose when ambiguous) in the current line or
     keyword at the caret and performs the possible string manipulation.
