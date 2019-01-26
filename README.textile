@@ -30,14 +30,6 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 
 *Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 
-h4. Tip: Using Mouse Wheel
-
-To setup the mouse wheel to invoke shifting, open the IDE preferences and go to: "Keymap". Search for "Shift",
-than right-click the shifter action items and use the option "Add mouse shortcut".
-Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" can be assigned to "Shift-Up",
-"Shift + Wheel Down" to "Shift-Down".
-
-
 h3. Shifting Types
 
 h4. Sorting
@@ -109,6 +101,14 @@ Some keyword types from the default dictionary:
 * Names of common data collection types (list/set/bag/dictionary/tree...)
 * Names of numbers (one/two/three etc.) and ordinal numbers (first/second/third  etc.)
 * Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
+
+
+h4. Tip: Using Mouse Wheel
+
+To setup the mouse wheel to invoke shifting, open the IDE preferences and go to: "Keymap". Search for "Shift",
+than right-click the shifter action items and use the option "Add mouse shortcut".
+Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" can be assigned to "Shift-Up",
+"Shift + Wheel Down" to "Shift-Down".
 
 
 h2. Changelog
