@@ -56,7 +56,13 @@ class ShiftableTypesManager {
      * @param  actionContainer
      * @return int
      */
-    ShiftableTypes.Type getWordType(String word, String prefixChar, String postfixChar, boolean isLastLineInDocument, ActionContainer actionContainer) {
+    ShiftableTypes.Type getWordType(
+            String word,
+            String prefixChar,
+            String postfixChar,
+            boolean isLastLineInDocument,
+            ActionContainer actionContainer
+    ) {
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
             return TRAILING_COMMENT;
@@ -88,7 +94,9 @@ class ShiftableTypesManager {
         typeDataTypeInDocComment = new DocCommentType();
         if (DocCommentType.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag();
-            if (prefixChar.matches("@") && typeTagInDocComment.isDocCommentTag(prefixChar, actionContainer.caretLine)) {
+            if (prefixChar.matches("@")
+                && typeTagInDocComment.isDocCommentTag(prefixChar, actionContainer.caretLine)
+            ) {
                 return DOC_COMMENT_TAG;
             }
             if (typeDataTypeInDocComment.isDocCommentType(prefixChar, actionContainer.caretLine)) {
@@ -205,7 +213,12 @@ class ShiftableTypesManager {
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return              The shifted word
      */
-    String getShiftedWord(ActionContainer actionContainer, String word, ShiftableTypes.Type wordType, Integer moreCount) {
+    String getShiftedWord(
+            ActionContainer actionContainer,
+            String word,
+            ShiftableTypes.Type wordType,
+            Integer moreCount
+    ) {
         switch (wordType) {
             // String based word shiftableTypes
             case ACCESS_TYPE:

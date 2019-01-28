@@ -21,17 +21,27 @@ class ShiftableTypes {
         UNKNOWN,
 
         // Dictionaric types
-        ACCESS_TYPE, DICTIONARY_WORD_EXT_SPECIFIC, DICTIONARY_WORD_GLOBAL,
+        ACCESS_TYPE,
+        DICTIONARY_WORD_EXT_SPECIFIC,
+        DICTIONARY_WORD_GLOBAL,
 
         // Numeric types
-        NUMERIC_VALUE, NUMERIC_POSTFIXED, ROMAN_NUMERAL,
+        NUMERIC_VALUE,
+        NUMERIC_POSTFIXED,
+        ROMAN_NUMERAL,
 
         // Generic shiftable types
-        QUOTED_STRING, PARENTHESIS, HTML_ENCODABLE, CAMEL_CASED, SEPARATED_PATH,
+        QUOTED_STRING,
+        PARENTHESIS,
+        HTML_ENCODABLE,
+        CAMEL_CASED,
+        SEPARATED_PATH,
         WORDS_TUPEL,
 
         // Operators (<, >, +, -, etc.) and expressions
-        OPERATOR_SIGN, LOGICAL_OPERATOR, MONO_CHARACTER,
+        OPERATOR_SIGN,
+        LOGICAL_OPERATOR,
+        MONO_CHARACTER,
         TERNARY_EXPRESSION,
 
         RGB_COLOR,
@@ -40,13 +50,16 @@ class ShiftableTypes {
         CSS_UNIT,
 
         // DOC comment related
-        DOC_COMMENT_TAG, DOC_COMMENT_DATA_TYPE,
+        DOC_COMMENT_TAG,
+        DOC_COMMENT_DATA_TYPE,
 
         // PHP specific
         PHP_VARIABLE_OR_ARRAY,
 
         // JavaScript specific
-        JS_VARIABLES_DECLARATIONS, SIZZLE_SELECTOR, JQUERY_OBSERVER,
+        JS_VARIABLES_DECLARATIONS,
+        SIZZLE_SELECTOR,
+        JQUERY_OBSERVER,
 
         TRAILING_COMMENT
     }
