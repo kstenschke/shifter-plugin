@@ -76,7 +76,7 @@ h4. PHP, JavaScript and TypeScript shifting
 * PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)
 * Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
 * Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration
-* Selection of multiple JavaScript var declarations in succession - are joined into multiple comma-separated declarations
+* Selection of multiple JavaScript (const, var or let) declarations in succession - are joined into multiple comma-separated declarations
 * Selected deprecated jQuery observer methods are modernized, e.g. ".click(" becomes ".on('click', ": Event types: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload
 * Selected JavaScript string concatenation in TypeScript file - Converts to TypeScript string interpolation
 
@@ -134,7 +134,7 @@ Thanks for their input, ideas, help or other contribution
 
 h2. License
 
-Copyright 2011-2018 Kay Stenschke
+Copyright 2011-2019 Kay Stenschke
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

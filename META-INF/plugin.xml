@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright 2011-2018 Kay Stenschke
+  ~ Copyright 2011-2019 Kay Stenschke
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.9.5</version>
+    <version>1.9.6</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     String and code manipulations, performed on keyboard shortcut with detection of intended manipulation.
@@ -135,6 +135,7 @@
   ]]></description>
     <change-notes><![CDATA[
     <ul>
+        <li>1.9.6 Improved: Shift multiple successive JavaScript variable declarations now also shift const and let scopes into comma-separated declarations</li>
         <li>1.9.5
             <ul>
                 <li>Added: Intention popup when shifted selection is comma-separated items and string concatenation (= sort or interpolate)</li>
@@ -144,13 +145,6 @@
             <ul>
                 <li>Added: Shifting selected string concatenation in TypeScript file converts it to string interpolation</li>
                 <li>Improved: Minor performance improvements</li>
-            </ul>
-        </li>
-        <li>1.9.3
-            <ul>
-                <li>Added: Shift (selected) deprecated jQuery ".click" method: selected "click(" becomes "on('click', "</li>
-                <li>Added: Shift (selected) deprecated jQuery observer methods: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload</li>
-                <li>Changed: Shifting Sizzle-Selector to variable declaration now uses "let" instead of "var" in TypeScript files</li>
             </ul>
         </li>
     </ul>

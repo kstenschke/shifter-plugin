@@ -1,5 +1,5 @@
 /*
- * Copyright 2011-2018 Kay Stenschke
+ * Copyright 2011-2019 Kay Stenschke
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,6 +25,9 @@ public class JsVariablesDeclarations {
 
     public static final String ACTION_TEXT = "Shift JS var declarations";
 
+    // Declaration/assignment scope: "const", "let", "var"
+    private static String scope;
+
     /**
      * Check whether given string represents a declaration of (multiple) JS variables:
      * -selection has multiple lines
@@ -38,13 +41,20 @@ public class JsVariablesDeclarations {
      */
     public static Boolean isJsVariables(String str) {
         str = str.trim();
-        return !(
-                 !str.startsWith("var")
-              || !str.endsWith(";")
-              || !str.contains("\n")
-              || StringUtils.countMatches(str, "var") < 2
-              || StringUtils.countMatches(str, ";") < 2
-        );
+
+        if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {
+            scope = "const";
+            return true;
+        }
+        if (isMultiLinedMultiVarDeclaration(str, "var")) {
+            scope = "var";
+            return true;
+        }
+        if (isMultiLinedMultiVarDeclaration(str, "let")) {
+            scope = "let";
+            return true;
+        }
+        return false;
     }
 
     /**
@@ -56,23 +66,43 @@ public class JsVariablesDeclarations {
         StringBuilder shiftedLines = new StringBuilder();
 
         int lineNumber = 0;
+        int indexShifted = 0;
         String shiftedLine;
         for (String line : lines) {
             line = line.trim();
-            shiftedLine = line.isEmpty() || line.startsWith("//") ? line : shiftNonCommentLine(line);
-            shiftedLines.append(0 == lineNumber ? "" : "\t").append(shiftedLine).append("\n");
+            boolean doShift = !(line.isEmpty() || line.startsWith("//"));
+            shiftedLine = doShift ? shiftNonCommentLine(line, indexShifted) : line;
+            shiftedLines
+                    .append(0 == lineNumber ? "" : "    ")
+                    .append(shiftedLine)
+                    .append("\n");
             lineNumber++;
+            if (doShift) {
+                indexShifted++;
+            }
         }
 
-        return "var " + shiftedLines.substring(0, shiftedLines.length()-2) + ";";
+        return scope + " " + shiftedLines.substring(0, shiftedLines.length() - 2) + ";";
+    }
+
+    private static boolean isMultiLinedMultiVarDeclaration(String str, String scope) {
+        return !(
+                !str.startsWith(scope)
+                        || !str.endsWith(";")
+                        || !str.contains("\n")
+                        || StringUtils.countMatches(str, scope) < 2
+                        || StringUtils.countMatches(str, ";") < 2
+        );
     }
 
     @NotNull
-    private static String shiftNonCommentLine(String line) {
-        // Remove "var " from beginning
-        line = line.substring(4);
+    private static String shiftNonCommentLine(String line, int indexShiftedLine) {
+        // Remove scope ("const ", "let " or "var ") from beginning
+        line = line.substring(scope.length() + 1);
+        if (scope.equals("const") && indexShiftedLine > 0) {
+            line = "  " + line;
+        }
 
-        // Replace ";" from ending by ",\n"
         if (StringUtils.countMatches(line, "//") == 1) {
             // Handle line ending w/ comment intact
             String[] parts = line.split("//");
@@ -80,6 +110,7 @@ public class JsVariablesDeclarations {
             return parts[0].substring(0, parts[0].length() - 1) + ", //" + parts[1];
         }
 
+        // Replace ";" termination by ","
         return line.substring(0, line.length() - 1) + ",";
     }
 }
