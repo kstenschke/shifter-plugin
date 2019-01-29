@@ -138,7 +138,7 @@ public class Comment {
         shiftOptions.add(StaticTexts.SHIFT_MULTILINE_BLOCK_COMMENT_TO_ONE_SINGLE_COMMENT);
         shiftOptions.add(StaticTexts.SHIFT_MULTILINE_BLOCK_COMMENT_TO_MULTIPLE_SINGLE_COMMENTS);
 
-        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final Object[] options = shiftOptions.toArray(new String[0]);
 
         final JBList modes = new JBList(options);
         PopupChooserBuilder popup = new PopupChooserBuilder(modes);
@@ -166,7 +166,7 @@ public class Comment {
         shiftOptions.add(StaticTexts.SHIFT_MULTIPLE_LINE_SORT_ASCENDING);
         shiftOptions.add(StaticTexts.SHIFT_MULTIPLE_LINE_SORT_DESCENDING);
 
-        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final Object[] options = shiftOptions.toArray(new String[0]);
         final JBList modes = new JBList(options);
 
         //PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);

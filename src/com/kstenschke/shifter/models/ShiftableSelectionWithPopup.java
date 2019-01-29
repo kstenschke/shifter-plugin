@@ -183,7 +183,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             @Nullable final PhpConcatenation phpConcatenation,
             @Nullable final String delimiterSplitPattern, @Nullable final String delimiterGlue
     ) {
-        final Object[] options = shiftOptions.toArray(new String[shiftOptions.size()]);
+        final Object[] options = shiftOptions.toArray(new String[0]);
         final JBList modes = new JBList(options);
 
         PopupChooserBuilder popup = new PopupChooserBuilder(modes);

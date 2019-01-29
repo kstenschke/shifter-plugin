@@ -89,7 +89,7 @@ public class UtilsArray {
         result.removeAll(tmp);
         result.addAll(array2List);
 
-        return result.toArray(new String[result.size()]);
+        return result.toArray(new String[0]);
     }
 
     /**
