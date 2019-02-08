@@ -56,24 +56,28 @@ public class UtilsFile {
     }
 
     private static boolean filenameEndsWithExtension(@Nullable String filename) {
+        filename = getBasename(filename);
         if (null == filename || filename.isEmpty() || !filename.contains(".")) {
             return false;
         }
 
         String[] parts = filename.split("\\.");
 
-        return parts.length > 1 && parts[0].length() > 0 && parts[1].length() > 2;
+        return parts.length > 1 && parts[0].length() > 0 && parts[1].length() >= 2;
     }
 
     public static boolean isPhpFile(@Nullable String filename) {
+        filename = getBasename(filename).toLowerCase();
         return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(php|phtml)");
     }
 
     public static boolean isCssFile(@Nullable String filename) {
+        filename = getBasename(filename).toLowerCase();
         return filenameEndsWithExtension(filename) && extractFileExtension(filename).matches("(css|scss|sass|less|styl)");
     }
 
     public static boolean isJavaScriptFile(@Nullable String filename, boolean allowTypeScript) {
+        filename = getBasename(filename).toLowerCase();
         if (!filenameEndsWithExtension(filename)) {
             return false;
         }

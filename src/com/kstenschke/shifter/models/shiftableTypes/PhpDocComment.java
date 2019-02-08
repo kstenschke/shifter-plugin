@@ -25,14 +25,14 @@ class PhpDocComment {
      * @param  str
      * @return boolean
      */
-    public static boolean isPhpDocComment(String str) {
+    static boolean isPhpDocComment(String str) {
         str = trim(str);
         String lines[] = str.split("\n");
 
         return lines.length > 2 && str.startsWith("/**") && str.endsWith("*/") && str.contains(" * ");
     }
 
-    public static boolean containsAtParam(String str) {
+    static boolean containsAtParam(String str) {
         return str.contains("@param ");
     }
 

@@ -108,7 +108,7 @@ public class ShiftableWord {
             if (UtilsTextual.isAllUppercase(word)) {
                 return shiftedWord.toUpperCase();
             }
-            if (UtilsTextual.isUcFirst(word)) {
+            if (UtilsTextual.isUcFirstRestLower(word)) {
                 return UtilsTextual.toUcFirstRestLower(shiftedWord);
             }
             if (UtilsTextual.isLcFirst(word)) {

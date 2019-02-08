@@ -18,7 +18,7 @@ package com.kstenschke.shifter.utils;
 import java.util.List;
 
 /**
- * Utility Class: Detect common delimiter of list of lines
+ * Utility Class: Detect common delimiter (before newline) of list of lines
  */
 class DelimiterDetector {
 
@@ -40,16 +40,16 @@ class DelimiterDetector {
             return;
         }
 
-        int lenLine;
+        int lineLength;
 
         findingDelimiterFailed = false;
         int lineNumber = 0;
         for (String line : lines) {
             line = line.trim();
-            lenLine = line.length();
+            lineLength = line.length();
 
-            if (lenLine > 0) {
-                char currentDelimiter = line.charAt(lenLine - 1);
+            if (lineLength > 0) {
+                char currentDelimiter = line.charAt(lineLength - 1);
                 if (0 == lineNumber) {
                     commonDelimiter = currentDelimiter;
                 } else {

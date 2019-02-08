@@ -61,10 +61,10 @@ public class ActionContainer {
             return;
         }
 
-        project        = editor.getProject();
-        document       = editor.getDocument();
-        editorText     = document.getCharsSequence();
-        documentText   = document.getText();
+        project      = editor.getProject();
+        document     = editor.getDocument();
+        editorText   = document.getCharsSequence();
+        documentText = document.getText();
 
         selectionModel       = editor.getSelectionModel();
         offsetSelectionStart = selectionModel.getSelectionStart();
@@ -74,9 +74,9 @@ public class ActionContainer {
             offsetSelectionEnd--;
             selectionModel.setSelection(offsetSelectionStart, offsetSelectionEnd);
         }
-        lineNumberSelStart   = document.getLineNumber(offsetSelectionStart);
-        lineNumberSelEnd     = document.getLineNumber(offsetSelectionEnd);
-        selectedText         = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+        lineNumberSelStart = document.getLineNumber(offsetSelectionStart);
+        lineNumberSelEnd   = document.getLineNumber(offsetSelectionEnd);
+        selectedText       = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
         caretOffset          = editor.getCaretModel().getOffset();
         int caretLineNumber = document.getLineNumber(caretOffset);

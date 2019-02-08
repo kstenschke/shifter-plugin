@@ -116,7 +116,7 @@ public class AlphanumComparator implements Comparator<String>
     }
 
     /**
-     * @param str
+     * @param  str
      * @return Lowercase version of given string w/ all contained number-chunks converted to having 10 digits
      */
     private static String prepareStringForCompare(String str) {

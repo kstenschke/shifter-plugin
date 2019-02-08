@@ -37,15 +37,16 @@ public class CamelCaseString {
     }
 
     /**
-     * @param str
+     * @param  str
      * @return string   Converts: "camelCase" to "caseCamel" and: "TitleCase" to "CaseTitle"
      */
     public static String flipWordPairOrder(String str) {
-        boolean isLcFirst = UtilsTextual.isLcFirst(str);
-
         String words[] = UtilsTextual.splitCamelCaseIntoWords(str);
+        if (words.length <= 1 || words.length > 2) {
+            return str;
+        }
 
-        return isLcFirst
+        return UtilsTextual.isLcFirst(str)
                 ? UtilsTextual.toLcFirst(words[1]) + UtilsTextual.toUcFirstRestLower(words[0])
                 : words[1] + words[0];
     }

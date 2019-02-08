@@ -17,7 +17,7 @@
 <idea-plugin url="https://plugins.jetbrains.com/idea/plugin/6149">
     <id>Shifter</id>
     <name>Shifter</name>
-    <version>1.9.6</version>
+    <version>1.9.7</version>
     <vendor url="https://github.com/kstenschke/shifter-plugin" email="info@stenschke.com">Kay Stenschke</vendor>
     <description><![CDATA[
     String and code manipulations, performed on keyboard shortcut with detection of intended manipulation.

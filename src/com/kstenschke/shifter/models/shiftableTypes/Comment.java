@@ -46,9 +46,15 @@ public class Comment {
      * @return boolean
      */
     public static boolean isComment(String str) {
+        if (null == str) {
+            return false;
+        }
+
         str = str.trim();
 
-        return str.startsWith("//") || isBlockComment(str);
+        return str.startsWith("//")
+                ? !str.contains("\n") || isMultipleSingleLineComments(str)
+                : isBlockComment(str);
     }
 
     public static boolean isBlockComment(String str) {
@@ -56,11 +62,16 @@ public class Comment {
     }
 
     static boolean isBlockComment(String str, boolean allowDocBlockComment, boolean commentSignsNeedSpaces) {
+        if (null == str) {
+            return false;
+        }
+
         str = str.trim();
 
         String innerWrap  = commentSignsNeedSpaces ? " " : "";
 
-        boolean isBlockComment = str.startsWith("/*" + innerWrap) && str.endsWith(innerWrap + "*/");
+        boolean isBlockComment = str.startsWith("/*" + innerWrap) && str.endsWith(innerWrap + "*/")
+                && str.indexOf("/*") != str.length() - 3;
 
         return allowDocBlockComment
                 ? isBlockComment || (str.startsWith("/**" + innerWrap) && str.endsWith(innerWrap + "*/"))
@@ -68,6 +79,10 @@ public class Comment {
     }
 
     public static boolean isMultipleSingleLineComments(String str) {
+        if (null == str) {
+            return false;
+        }
+
         if (!str.contains("\n")) {
             return false;
         }
@@ -81,15 +96,26 @@ public class Comment {
     }
 
     public static boolean isPhpBlockComment(String str) {
+        if (null == str) {
+            return false;
+        }
+
         str = str.trim();
 
-        return str.startsWith("<?php /*") && str.endsWith("*/ ?>");
+        return (str.startsWith("<? /*") || str.startsWith("<?php /*"))
+                && str.endsWith("*/ ?>")
+                && str.indexOf("/*") != str.lastIndexOf("*/") - 1;
     }
 
     public static  boolean isHtmlComment(String str) {
+        if (null == str) {
+            return false;
+        }
+
         str = str.trim();
 
-        return str.startsWith("<!--") && str.endsWith("-->");
+        return str.startsWith("<!--") && str.endsWith("-->")
+                && str.indexOf("<!--") != str.length() -5;
     }
 
     public static String getShifted(ActionContainer actionContainer) {
@@ -124,7 +150,15 @@ public class Comment {
     }
 
     public static String getPhpBlockCommentFromHtmlComment(String str) {
-        return "<?php /* " + str.substring(4, str.length() - 3).trim() + " */ ?>";
+        if (null == str) {
+            return "<?php /* */ ?>";
+        }
+
+        int length = str.length();
+
+        return length > 3
+                ? "<?php /* " + str.substring(4, length - 3).trim() + " */ ?>"
+                : "<?php /* " + str.trim() + " */ ?>";
     }
 
     /**
@@ -265,11 +299,11 @@ public class Comment {
     }
 
     private static String sortLineComments(String str, boolean reverse) {
-        List<String> lines       = Arrays.asList(str.split("\n"));
-        List<String> shiftedList = UtilsTextual.sortLinesNatural(lines, reverse);
+        List<String> lines = Arrays.asList(str.split("\n"));
+        UtilsTextual.sortLinesNatural(lines, reverse);
         StringBuilder result = new StringBuilder();
         int index = 0;
-        for (String line : shiftedList) {
+        for (String line : lines) {
             result.append(0 == index ? "" : "\n").append(line);
             index++;
         }

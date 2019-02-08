@@ -93,6 +93,7 @@ public class XmlAttributes {
         pairsList.sort(new AlphanumComparator());
 
         if (!actionContainer.isShiftUp) {
+            //noinspection ArraysAsListWithZeroOrOneArgument
             Collections.reverse(Arrays.asList(pairsList));
         }
 

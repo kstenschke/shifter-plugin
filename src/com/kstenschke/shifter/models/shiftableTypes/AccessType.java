@@ -26,6 +26,9 @@ public class AccessType {
     private StaticWordType accessTypes;
 
     public boolean isAccessType(String word) {
+        if (null == word) {
+            return false;
+        }
         String[] keywordsAccessType = {"public", "private", "protected"};
         accessTypes = new StaticWordType(keywordsAccessType);
 

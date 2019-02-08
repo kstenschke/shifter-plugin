@@ -133,7 +133,7 @@ public class NumericValue {
      * @param  isUp         Shifting up or down?
      * @return int
      */
-    public static int moduloShiftInteger(int value, int maxValue, boolean isUp) {
+    static int moduloShiftInteger(int value, int maxValue, boolean isUp) {
         if (isUp) {
             value++;
             return value == maxValue ? 0 : value;

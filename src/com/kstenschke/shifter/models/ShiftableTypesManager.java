@@ -227,7 +227,6 @@ class ShiftableTypesManager {
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return typeDictionaryTerm.getShifted(word, actionContainer.isShiftUp);
-
             // Generic shiftableTypes (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return SizzleSelector.getShifted(word, actionContainer);

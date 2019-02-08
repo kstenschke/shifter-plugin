@@ -262,7 +262,7 @@ public class ShiftableSelection {
                     ACTION_TEXT_SHIFT_SELECTION);
             return;
         }
-        if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) || UtilsTextual.isUcFirst(actionContainer.selectedText)) {
+        if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) || UtilsTextual.isUcFirstRestLower(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection),
                     ACTION_TEXT_SHIFT_SELECTION);
@@ -327,20 +327,20 @@ public class ShiftableSelection {
      * @param reverse
      */
     static void sortLinesInDocument(final ActionContainer actionContainer, boolean reverse) {
-        List<String> lines       = UtilsTextual.extractLines(actionContainer.document, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
-        List<String> linesSorted = UtilsTextual.sortLinesNatural(lines, reverse);
-        String linesSortedString = UtilsTextual.joinLines(linesSorted).toString().trim();
+        List<String> lines = UtilsTextual.extractLines(actionContainer.document, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
+        UtilsTextual.sortLinesNatural(lines, reverse);
+        String linesString = UtilsTextual.joinLines(lines).toString().trim();
 
-        if (UtilsTextual.hasDuplicateLines(linesSortedString) && JOptionPane.showConfirmDialog(
+        if (UtilsTextual.hasDuplicateLines(linesString) && JOptionPane.showConfirmDialog(
                 null,
                 StaticTexts.MESSAGE_REDUCE_DUPLICATE_LINES,
                 StaticTexts.TITLE_REDUCE_DUPLICATE_LINES,
                 JOptionPane.OK_CANCEL_OPTION
         ) == JOptionPane.OK_OPTION)
         {
-            linesSortedString = UtilsTextual.reduceDuplicateLines(linesSortedString);
+            linesString = UtilsTextual.reduceDuplicateLines(linesString);
         }
 
-        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(linesSortedString, true), ACTION_TEXT_SHIFT_SELECTION);
+        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(linesString, true), ACTION_TEXT_SHIFT_SELECTION);
     }
 }

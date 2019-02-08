@@ -112,13 +112,15 @@ public class ShifterPreferences {
     }
 
     public static void saveConvertQuoteActiveModes(boolean isActiveConvertSingleQuotes, boolean isActiveConvertDoubleQuotes) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES, isActiveConvertSingleQuotes ? "1":"0");
-        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES, isActiveConvertDoubleQuotes ? "1":"0");
+        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+        propertiesComponent.setValue(PROPERTY_IS_ACTIVE_CONVERT_SINGLE_QUOTES, isActiveConvertSingleQuotes ? "1":"0");
+        propertiesComponent.setValue(PROPERTY_IS_ACTIVE_CONVERT_DOUBLE_QUOTES, isActiveConvertDoubleQuotes ? "1":"0");
     }
 
     public static void saveConvertPhpArrayActiveModes(boolean isActiveLongToShort, boolean isActiveShortToLong) {
-        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_LONG_TO_SHORT, isActiveLongToShort ? "1":"0");
-        PropertiesComponent.getInstance().setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG, isActiveShortToLong ? "1":"0");
+        PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
+        propertiesComponent.setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_LONG_TO_SHORT, isActiveLongToShort ? "1":"0");
+        propertiesComponent.setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG, isActiveShortToLong ? "1":"0");
     }
 
     /**

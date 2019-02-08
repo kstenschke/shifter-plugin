@@ -1,5 +1,7 @@
 h1. Shifter Plugin - Changelog
 
+* 1.9.7
+    ** Improved: Stabilized against various edge cases / added unit tests
 * 1.9.6
     ** Improved: Shift multiple successive JavaScript variable declarations now also shifts const and let scopes into comma-separated declarations
 * 1.9.5

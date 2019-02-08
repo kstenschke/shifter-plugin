@@ -37,7 +37,9 @@ public class UtilsTextual {
     private final static Pattern TRIM_RIGHT = Pattern.compile("\\s+$");
 
     public static String rtrim(String s) {
-        return TRIM_RIGHT.matcher(s).replaceAll("");
+        return null == s
+            ? ""
+            : TRIM_RIGHT.matcher(s).replaceAll("");
     }
 
     /**
@@ -57,7 +59,7 @@ public class UtilsTextual {
      * @param  reverse
      * @return Given lines sorted alphabetically ascending / descending
      */
-    public static List<String> sortLinesNatural(List<String> lines, boolean reverse) {
+    public static void sortLinesNatural(List<String> lines, boolean reverse) {
         DelimiterDetector delimiterDetector = new DelimiterDetector(lines);
         boolean isDelimitedLastLine = delimiterDetector.isDelimitedLastLine();
 
@@ -68,13 +70,14 @@ public class UtilsTextual {
 
         if (delimiterDetector.isFoundDelimiter() && !isDelimitedLastLine) {
             // Maintain detected lines delimiter (ex: comma-separated values, w/ last item w/o trailing comma)
-            lines = addDelimiter(lines, delimiterDetector.getCommonDelimiter());
+            addDelimiter(lines, delimiterDetector.getCommonDelimiter());
         }
-
-        return lines;
     }
 
     static boolean equalsAnyOf(String str, String words[]) {
+        if (null == str || null == words) {
+            return false;
+        }
         for (String word : words) {
             if (str.equals(word)) {
                 return true;
@@ -84,7 +87,11 @@ public class UtilsTextual {
     }
 
     public static boolean containsCaseInSensitive(@Nullable String haystack, String needle) {
-        return null != haystack && Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
+        return
+                null != haystack
+                && null != needle
+                && !needle.equals("")
+                && Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
     }
 
     public static boolean containsOnly(@Nullable String str, String[] characters) {
@@ -132,27 +139,40 @@ public class UtilsTextual {
      * @return String      Given string w/ contained slashes swapped against backslashes and vise versa
      */
     public static String swapSlashes(@Nullable String str) {
-        return null == str
-                ? null
-                : str.
-            replace("\\", "###SHIFTERSLASH###").
-            replace("/", "\\").
-            replace("###SHIFTERSLASH###", "/");
-    }
-
-    public static String swapQuotes(String str, boolean singleToDouble, boolean doubleToSingle) {
         if (null == str) {
             return null;
         }
 
-        if (doubleToSingle) {
-            str = str.replace("\"", "###SHIFTERSINGLEQUOTE###");
-        }
-        if (singleToDouble) {
-            str = str.replace("'", "\"");
+        char chars[] = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            switch (chars[i]) {
+                case '/':
+                    chars[i] = '\\';
+                    break;
+                case '\\':
+                    chars[i] = '/';
+                    break;
+            }
         }
 
-        return str.replace("###SHIFTERSINGLEQUOTE###", "'");
+        return new String(chars);
+    }
+
+    public static String swapQuotes(String str, boolean singleToDouble, boolean doubleToSingle) {
+        if (null == str || (!singleToDouble && !doubleToSingle)) {
+            return str;
+        }
+
+        char chars[] = str.toCharArray();
+        for (int i = 0; i < str.length(); i++) {
+            if (chars[i] == '\'' && singleToDouble) {
+                chars[i] = '"';
+            } else if (chars[i] == '"' && doubleToSingle) {
+                chars[i] = '\'';
+            }
+        }
+
+        return new String(chars);
     }
 
     /**
@@ -182,13 +202,17 @@ public class UtilsTextual {
      * @return String   Given string w/ first char in lower case
      */
     public static String toLcFirst(String str) {
-        return str.isEmpty() ? "" : Character.toLowerCase(str.charAt(0)) + str.substring(1);
+        return null == str || "".equals(str) ? str : Character.toLowerCase(str.charAt(0)) + str.substring(1);
     }
 
     public static boolean isLcFirst(String str) {
+        if (null == str || "".equals(str)) {
+            return false;
+        }
+
         char leadChar = str.charAt(0);
 
-        return Character.toLowerCase(leadChar) == leadChar;
+        return Character.isAlphabetic(leadChar) && Character.toLowerCase(leadChar) == leadChar;
     }
 
     /**
@@ -197,20 +221,26 @@ public class UtilsTextual {
      * @param  str      String to be checked
      * @return boolean  If the string is lower case w/ only first char in upper case.
      */
-    public static boolean isUcFirst(String str) {
-        return str.isEmpty() || str.equals(UtilsTextual.toUcFirstRestLower(str));
+    public static boolean isUcFirstRestLower(String str) {
+        if (null == str || "".equals(str)) {
+            return false;
+        }
+
+        char leadChar = str.charAt(0);
+
+        return Character.isAlphabetic(leadChar) && str.equals(UtilsTextual.toUcFirstRestLower(str));
     }
 
     public static boolean isUpperCamelCase(@Nullable String str) {
-        return null != str && str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+        return null != str && !"".equals(str) && str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
     private static boolean isLowerCamelCase(@Nullable String str) {
-        return null != str && str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+        return null != str && !"".equals(str)  && str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
     public static boolean isCamelCase(@Nullable String str) {
-        return null != str && str.length() > 2 && (isLowerCamelCase(str) || isUpperCamelCase(str));
+        return null != str && !"".equals(str) && str.length() > 2 && (isLowerCamelCase(str) || isUpperCamelCase(str));
     }
 
     /**
@@ -226,15 +256,17 @@ public class UtilsTextual {
             return new String[0];
         }
 
-        boolean isUcFirst = isUcFirst(str);
+        boolean isUcFirst = isUcFirstRestLower(str);
         if (isUcFirst) {
             str = UtilsTextual.toLcFirst(str);
         }
         String parts[] = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
         if (toLower) {
-            parts = toLower(parts);
-        } else if (isUcFirst) {
+            return toLower(parts);
+        }
+
+        if (isUcFirst) {
             parts[0] = toUcFirstRestLower(parts[0]);
         }
 
@@ -323,6 +355,9 @@ public class UtilsTextual {
      * @return                 The extracted word or null
      */
     public static String getWordAtOffset(CharSequence str, int offset, boolean allowHyphens) {
+        if (null == str) {
+            return null;
+        }
         int textLength = str.length();
 
         if (0 == textLength || offset < 0 || offset >= textLength) {
@@ -361,17 +396,28 @@ public class UtilsTextual {
                 : Character.isJavaIdentifierPart(c);
     }
 
-    /**
-     * @param  str
-     * @param  offsetStart    Sub sequence start character offset
-     * @param  offsetEnd      Sub sequence end character offset
-     * @return String         Sub sequence of given offsets out of given text
-     */
-    public static String getSubString(CharSequence str, int offsetStart, int offsetEnd) {
-        return str.length() == 0 ? null : str.subSequence(offsetStart, offsetEnd).toString();
+    public static String getSubString(CharSequence str, int offsetStart, int offsetEndExclusive) {
+        int length = str.length();
+        if (
+                length == 0
+                || offsetStart > length
+                || offsetEndExclusive < offsetStart
+                || offsetStart < 0
+        ) {
+            return null;
+        }
+
+        if (offsetEndExclusive >= length) {
+            return str.subSequence(offsetStart, length).toString();
+        }
+
+        return str.subSequence(offsetStart, offsetEndExclusive).toString();
     }
 
     public static int subStringCount(String str, String subStr) {
+        if (str.equals("") || subStr.equals("")) {
+            return 0;
+        }
         int count = 0;
         for (int pos = str.indexOf(subStr); pos >= 0; pos = str.indexOf(subStr, pos + 1)) {
             count++;
@@ -380,14 +426,13 @@ public class UtilsTextual {
         return count;
     }
 
-    /**
-     * @param  str      Full text
-     * @param  offset   Offset from before which to extract one character
-     * @return String   Character BEFORE word at given caret offset
-     */
     public static String getCharBeforeOffset(CharSequence str, int offset) {
-        if (str.length() == 0 || offset == 0) {
+        int length = str.length();
+        if (length == 0 || offset <= 0) {
             return "";
+        }
+        if (offset > length) {
+            offset = length;
         }
 
         return offset > 0
@@ -401,14 +446,12 @@ public class UtilsTextual {
      * @return String      Character AFTER word at caret offset
      */
     public static String getCharAfterOffset(CharSequence str, int offset) {
-        if (str.length() < offset + 2 || 0 == offset) {
-            return "";
-        }
-
-        return offset > 0 ? str.subSequence(offset+1, offset+2).toString() : "";
+        return str.length() < offset + 2 || -1 > offset
+                ? ""
+                : str.subSequence(offset + 1, offset + 2).toString();
     }
 
-    public static int getOffsetEndOfWordAtOffset(CharSequence str, int offset) {
+    static int getOffsetEndOfWordAtOffset(CharSequence str, int offset) {
         int strLength = str.length();
         if (0 == strLength || offset < 0) {
             return 0;
@@ -623,7 +666,7 @@ public class UtilsTextual {
     }
 
     @NotNull
-    public static List<String> getPregMatches(@Nullable String str, String pattern) {
+    static List<String> getPregMatches(@Nullable String str, String pattern) {
         if (null == str) {
             return new ArrayList<>();
         }
@@ -639,11 +682,16 @@ public class UtilsTextual {
     }
 
     /**
-     * @param lines
+     * Add given delimiter to ending of each of given lines (last line is not being delimited)
+     *
+     * @param lines         Passed by reference
      * @param delimiter
-     * @return Given lines ending w/ given delimiter (last line is not being delimited)
      */
-    private static List<String> addDelimiter(List<String> lines, String delimiter) {
+    private static void addDelimiter(List<String> lines, String delimiter) {
+        if (null == delimiter) {
+            return;
+        }
+
         int amountLines = lines.size();
         int index = 0;
 
@@ -662,7 +710,5 @@ public class UtilsTextual {
             lines.set(index, line + "\n");
             index++;
         }
-
-        return lines;
     }
 }

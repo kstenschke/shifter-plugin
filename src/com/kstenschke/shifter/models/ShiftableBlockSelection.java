@@ -110,21 +110,23 @@ public class ShiftableBlockSelection {
         Integer firstNumber = null == startWith ? 0 : startWith;
         final DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
         UtilsEnvironment.setDialogVisible(actionContainer.editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
-        if (!optionsDialog.wasCancelled()) {
-            if (optionsDialog.isShiftModeEnumerate()) {
-                actionContainer.writeUndoable(
-                        () -> insertBlockEnumerationInDocument(actionContainer, optionsDialog.getFirstNumber()),
-                        ACTION_TEXT_SHIFT_COLUMN_SELECTION
-                );
+        if (optionsDialog.wasCancelled()) {
+            return;
+        }
 
-                return;
-            }
-
+        if (optionsDialog.isShiftModeEnumerate()) {
             actionContainer.writeUndoable(
-                    () -> inOrDecrementNumericBlockInDocument(actionContainer, stepSize),
+                    () -> insertBlockEnumerationInDocument(actionContainer, optionsDialog.getFirstNumber()),
                     ACTION_TEXT_SHIFT_COLUMN_SELECTION
             );
+
+            return;
         }
+
+        actionContainer.writeUndoable(
+                () -> inOrDecrementNumericBlockInDocument(actionContainer, stepSize),
+                ACTION_TEXT_SHIFT_COLUMN_SELECTION
+        );
     }
 
     /**

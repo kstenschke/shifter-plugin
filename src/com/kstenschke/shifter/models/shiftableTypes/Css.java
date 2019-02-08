@@ -31,7 +31,6 @@ public class Css {
     public static final String ACTION_TEXT = "Shift CSS";
 
     public static String getShifted(String value) {
-
         return value.contains("{") && value.contains("}")
             ? sortAttributeStyleLinesInsideSelectors(value)
             : sortAttributeStyleLines(value);
@@ -47,11 +46,9 @@ public class Css {
         for (String attributeGroup : attributeGroups) {
             if (indexMatch > 0) {
                 List<String> lines = splitAttributesIntoLines(attributeGroup);
-
-                lines = prepareAttributeStyleLinesForConcat(lines);
-                List<String> linesSorted = sortAttributeStyles(lines);
-
-                attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
+                prepareAttributeStyleLinesForConcat(lines);
+                sortAttributeStyles(lines);
+                attributeGroupsSorted[indexMatch] = UtilsTextual.rtrim(UtilsTextual.joinLines(lines).toString());
 
                 value = value.replaceFirst(Pattern.quote(attributeGroup), "###SHIFTERMARKER" + indexMatch + "###");
             }
@@ -79,8 +76,9 @@ public class Css {
             lines.set(lines.size() - 1, UtilsTextual.rtrim(lines.get(lines.size() - 1)) + ";");
         }
 
-        List<String> linesSorted = sortAttributeStyles(lines);
-        return UtilsTextual.rtrim(UtilsTextual.joinLines(linesSorted).toString());
+        sortAttributeStyles(lines);
+
+        return UtilsTextual.rtrim(UtilsTextual.joinLines(lines).toString());
     }
 
     private static boolean doAllButLastLineEndWithSemicolon(List<String> lines) {
@@ -106,21 +104,18 @@ public class Css {
     /**
      * Sort CSS lines containing "<attribute>:<style>"
      *
-     * @param  list
-     * @return List<String>
+     * @param  list Passed by reference
      */
-    private static List<String> sortAttributeStyles(List<String> list) {
+    private static void sortAttributeStyles(List<String> list) {
         list.sort(new CssAttributesStyleLineComparator());
-        return list;
     }
 
     /**
      * Ensure that all attribute lines end w/ ";\n"
      *
-     * @param  lines
-     * @return List<String>
+     * @param  lines    Lists are passed by reference
      */
-    private static List<String> prepareAttributeStyleLinesForConcat(List<String> lines) {
+    private static void prepareAttributeStyleLinesForConcat(List<String> lines) {
         int index = 0;
         for (String line : lines) {
             String trimmed = trim(line);
@@ -136,7 +131,5 @@ public class Css {
             lines.set(index, line);
             index++;
         }
-
-        return lines;
     }
 }
