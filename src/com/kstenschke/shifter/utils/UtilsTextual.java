@@ -479,8 +479,8 @@ public class UtilsTextual {
         if (0 == strLength || offset < 0) {
             return 0;
         }
-        if (offset > strLength) {
-            return strLength;
+        if (offset >= strLength) {
+            return getStartOfWordAtOffset(str, strLength - 1);
         }
 
         if (offset > 0 && !Character.isJavaIdentifierPart(str.charAt(offset)) && Character.isJavaIdentifierPart(str.charAt(offset - 1))) {

@@ -340,6 +340,21 @@ public class UtilsTextualTest {
     @Test
     @Ignore
     public void splitCamelCaseIntoWords() {
+        java.lang.String[] strArr0Words = {};
+        assertArrayEquals(strArr0Words, UtilsTextual.splitCamelCaseIntoWords(null));
+
+        java.lang.String[] strArr1Word = {""};
+        assertArrayEquals(strArr1Word, UtilsTextual.splitCamelCaseIntoWords(""));
+        strArr1Word[0] = "foo";
+        assertArrayEquals(strArr1Word, UtilsTextual.splitCamelCaseIntoWords("foo"));
+
+        java.lang.String[] strArr3Words = {"foo", "Bar", "Baz"};
+        assertArrayEquals(strArr3Words, UtilsTextual.splitCamelCaseIntoWords("fooBarBaz"));
+
+        // @todo edge case: improve handling
+        assertEquals(2, UtilsTextual.splitCamelCaseIntoWords("FOObar").length);
+        java.lang.String[] strArr3Words2 = {"FO", "Obar"};
+        assertArrayEquals(strArr3Words2, UtilsTextual.splitCamelCaseIntoWords("FOObar"));
     }
 
 
@@ -435,6 +450,36 @@ public class UtilsTextualTest {
     @Test
     @Ignore
     public void getStartOfWordAtOffset() {
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("", 0));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("", 1));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo", 10));
+
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo bar", 0));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo bar", 1));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo bar", 2));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo bar", 3));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo bar", 4));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo bar", 5));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo bar", 6));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo bar", 7));
+
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo,bar", 0));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo,bar", 1));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo,bar", 2));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo,bar", 3));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo,bar", 4));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo,bar", 5));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo,bar", 6));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo,bar", 7));
+
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo.bar", 0));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo.bar", 1));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo.bar", 2));
+        assertEquals(0, UtilsTextual.getStartOfWordAtOffset("foo.bar", 3));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo.bar", 4));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo.bar", 5));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo.bar", 6));
+        assertEquals(4, UtilsTextual.getStartOfWordAtOffset("foo.bar", 7));
     }
 
     @Test
