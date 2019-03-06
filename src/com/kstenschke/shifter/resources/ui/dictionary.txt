@@ -153,6 +153,7 @@
 	|list|set|bag|multiset|dictionary|table|tree|sequence|queue|heap|graph|
 	|linux|windows|mac|
 	|milliard|billion|billiard|trillion|trilliard|quadrillion|
+	|major|minor|
 	|maximum|minimum|
 	|max|min|
 	|model|view|controller|
