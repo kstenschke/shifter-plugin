@@ -49,7 +49,9 @@ public class ShiftableSelection {
             // Detect and shift whole PHPDoc block or single line out of it, that contains @param caretLine(s) w/o data type
             return;
         }
-        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) && JsDoc.isJsDocBlock(actionContainer.selectedText) && JsDoc.correctDocBlockInDocument(actionContainer)) {
+        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
+            JsDoc.isJsDocBlock(actionContainer.selectedText) &&
+            JsDoc.correctDocBlockInDocument(actionContainer)) {
             return;
         }
 
@@ -62,7 +64,9 @@ public class ShiftableSelection {
         final XmlAttributes xmlAttributes = new XmlAttributes(actionContainer);
         if (xmlAttributes.isXmlAttributes(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(xmlAttributes.getShifted(actionContainer.selectedText, true)),
+                    actionContainer.getRunnableReplaceSelection(
+                            xmlAttributes.getShifted(
+                                    actionContainer.selectedText, true)),
                     XmlAttributes.ACTION_TEXT);
             return;
         }
@@ -75,7 +79,8 @@ public class ShiftableSelection {
         boolean isPhpVariableOrArray = PHP_VARIABLE_OR_ARRAY == wordType;
 
         if (isWrappedInParenthesis) {
-            boolean isShiftablePhpArray = isPhpVariableOrArray && PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
+            boolean isShiftablePhpArray = isPhpVariableOrArray &&
+                                          PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
             if (!isPhpVariableOrArray || !isShiftablePhpArray) {
                 // Swap surrounding "(" and ")" versus "[" and "]"
                 actionContainer.writeUndoable(
@@ -144,7 +149,8 @@ public class ShiftableSelection {
         if (TRAILING_COMMENT == wordType) {
             final int offsetStartCaretLine = actionContainer.document.getLineStartOffset(lineNumberSelStart);
             final int offsetEndCaretLine   = actionContainer.document.getLineEndOffset(lineNumberSelStart);
-            final String leadWhitespace    = UtilsTextual.getLeadWhitespace(actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+            final String leadWhitespace    = UtilsTextual.getLeadWhitespace(
+                actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
             final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
             actionContainer.writeUndoable(
@@ -157,10 +163,15 @@ public class ShiftableSelection {
             if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
                 return;
             }
-            boolean isJsConcatenationInTypeScript = actionContainer.fileExtension.equals("ts") && JsConcatenation.isJsConcatenation(actionContainer.selectedText);
+            boolean isJsConcatenationInTypeScript = actionContainer.fileExtension.equals("ts") &&
+                    JsConcatenation.isJsConcatenation(actionContainer.selectedText);
             if (SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
                 // Comma-separated list: sort / ask whether to sort or toggle quotes
-                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(",(\\s)*", ", ", true, actionContainer.isShiftUp);
+                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+                        ",(\\s)*",
+                        ", ",
+                        true,
+                        actionContainer.isShiftUp);
                 return;
             }
             final LogicalConjunction logicalConjunction = new LogicalConjunction();
@@ -169,7 +180,11 @@ public class ShiftableSelection {
                  && SeparatedList.isSeparatedList(actionContainer.selectedText,"|")
             ) {
                 // Pipe-separated list (not confused w/ || of logical conjunctions)
-                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument("\\|(\\s)*", "|", isJsConcatenationInTypeScript, actionContainer.isShiftUp);
+                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+                    "\\|(\\s)*",
+                    "|",
+                    isJsConcatenationInTypeScript,
+                    actionContainer.isShiftUp);
                 return;
             }
             if (isJsConcatenationInTypeScript) {
@@ -252,25 +267,30 @@ public class ShiftableSelection {
         final String shiftedWord = shiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (isPhpVariableOrArray) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
+                    actionContainer.getRunnableReplaceSelection(
+                        actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
                     shiftableTypesManager.getActionText());
             return;
         }
         if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(actionContainer.whiteSpaceLHSinSelection + shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelection),
+                    actionContainer.getRunnableReplaceSelection(
+                        actionContainer.whiteSpaceLHSinSelection + shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelection),
                     ACTION_TEXT_SHIFT_SELECTION);
             return;
         }
-        if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) || UtilsTextual.isUcFirstRestLower(actionContainer.selectedText)) {
+        if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) ||
+            UtilsTextual.isUcFirstRestLower(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection),
+                    actionContainer.getRunnableReplaceSelection(
+                        actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection),
                     ACTION_TEXT_SHIFT_SELECTION);
             return;
         }
 
         actionContainer.writeUndoable(
-                actionContainer.getRunnableReplaceSelection(actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
+                actionContainer.getRunnableReplaceSelection(
+                    actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
                 ACTION_TEXT_SHIFT_SELECTION);
     }
 
@@ -327,7 +347,8 @@ public class ShiftableSelection {
      * @param reverse
      */
     static void sortLinesInDocument(final ActionContainer actionContainer, boolean reverse) {
-        List<String> lines = UtilsTextual.extractLines(actionContainer.document, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
+        List<String> lines = UtilsTextual.extractLines(
+            actionContainer.document, actionContainer.lineNumberSelStart, actionContainer.lineNumberSelEnd);
         UtilsTextual.sortLinesNatural(lines, reverse);
         String linesString = UtilsTextual.joinLines(lines).toString().trim();
 

@@ -70,7 +70,7 @@ public class StaticTexts {
     @NonNls
     public static final String SHIFT_UNESCAPE_QUOTES = "Unescape escaped quoutes";
     @NonNls
-    public static final String SHIFT_CAMEL_WORDS_SWAP_ORDER = "Swap words order";
+    public static final String SHIFT_CAMEL_WORDS_SWAP_ORDER = "Swap camel-case words order";
     @NonNls
     public static final String SHIFT_SWAP_TUPEL_WORDS_ORDER = "Swap order of words pair";
     @NonNls

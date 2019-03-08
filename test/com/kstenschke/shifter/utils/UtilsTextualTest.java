@@ -350,13 +350,13 @@ public class UtilsTextualTest {
 
         java.lang.String[] strArr3Words = {"foo", "Bar", "Baz"};
         assertArrayEquals(strArr3Words, UtilsTextual.splitCamelCaseIntoWords("fooBarBaz"));
+        java.lang.String[] strArr3Words2 = {"Foo", "Bar", "Baz"};
+        assertArrayEquals(strArr3Words2, UtilsTextual.splitCamelCaseIntoWords("FooBarBaz"));
 
-        // @todo edge case: improve handling
-        assertEquals(2, UtilsTextual.splitCamelCaseIntoWords("FOObar").length);
-        java.lang.String[] strArr3Words2 = {"FO", "Obar"};
-        assertArrayEquals(strArr3Words2, UtilsTextual.splitCamelCaseIntoWords("FOObar"));
+        assertEquals(5, UtilsTextual.splitCamelCaseIntoWords("aFooIsAFoo").length);
+        java.lang.String[] strArr3Words5 = {"a", "Foo", "Is", "A", "Foo"};
+        assertArrayEquals(strArr3Words5, UtilsTextual.splitCamelCaseIntoWords("aFooIsAFoo"));
     }
-
 
     @Test
     @Ignore

@@ -206,41 +206,72 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     ) {
         if (mode.equals(StaticTexts.SHIFT_CONCATENATION_ITEMS_SWAP_ORDER)) {
             assert null != phpConcatenation;
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpConcatenation.getShifted());
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    phpConcatenation.getShifted());
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, new JsConcatenation().getShifted(actionContainer.selectedText));
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    new JsConcatenation().getShifted(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_UNESCAPE_QUOTES)) {
-            String text = actionContainer.selectedText.replace("\\\'", "'").replace("\\\"", "\"");
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, text);
+            String text = actionContainer.selectedText
+                    .replace("\\\'", "'")
+                    .replace("\\\"", "\"");
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    text);
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_CAMEL_WORDS_SWAP_ORDER)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, CamelCaseString.flipWordPairOrder(actionContainer.selectedText));
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    CamelCaseString.flipWordPairOrder(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_TUPEL_WORDS_ORDER)) {
             Tupel tupel = new Tupel(actionContainer);
             tupel.isWordsTupel(actionContainer.selectedText);
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, tupel.getShifted(actionContainer.selectedText, true));
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    tupel.getShifted(actionContainer.selectedText, true));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SHIFT_DICTIONARY_TERM)) {
             DictionaryTerm dictionaryTerm = new DictionaryTerm();
             if (dictionaryTerm.isTermInDictionary(actionContainer.selectedText)) {
-                actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, dictionaryTerm.getShifted(actionContainer.selectedText, actionContainer.isShiftUp));
+                actionContainer.document.replaceString(
+                        actionContainer.offsetSelectionStart,
+                        actionContainer.offsetSelectionEnd,
+                        dictionaryTerm.getShifted(
+                                actionContainer.selectedText, actionContainer.isShiftUp));
                 return;
             }
         }
         if (mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SWAP)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedList.getShifted(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp));
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    SeparatedList.getShifted(
+                            actionContainer.selectedText,
+                            delimiterSplitPattern,
+                            delimiterGlue,
+                            isUp));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_PATH_PAIR_SWAP_ORDER)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedPath.flipWordsOrder(actionContainer.selectedText));
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    SeparatedPath.flipWordsOrder(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_LINES_SORT)) {

@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models.shiftableTypes;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -39,7 +40,7 @@ public class Tupel {
      *
      * @param actionContainer
      */
-    public Tupel(ActionContainer actionContainer) {
+    public Tupel(@Nullable ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
     }
 
@@ -50,6 +51,8 @@ public class Tupel {
      * @return boolean
      */
     public boolean isWordsTupel(String str) {
+        if (null == str) return false;
+
         String glues[] = new String[]{
                 ",",
 
@@ -106,6 +109,14 @@ public class Tupel {
 
     @NotNull
     private String getShiftedTupelReplacement(String str) {
+        if (null == delimiter) return str;
+
+        if (!delimiter.equals(" ") && str.contains(" ")) {
+            // Edge-case: there is a space and another tupel-delimiter, space overrules than
+            // Example: ensure turning "foo bar-baz" into "bar-baz foo", not into "baz-foo bar"
+            delimiter = " ";
+        }
+
         // Split into tupel
         String splitPattern = "\\s*" + Pattern.quote(delimiter) + "\\s*";
         String[] parts      = str.split(splitPattern);
