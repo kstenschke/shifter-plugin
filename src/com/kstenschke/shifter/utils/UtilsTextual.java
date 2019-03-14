@@ -145,13 +145,10 @@ public class UtilsTextual {
 
         char chars[] = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
-            switch (chars[i]) {
-                case '/':
-                    chars[i] = '\\';
-                    break;
-                case '\\':
-                    chars[i] = '/';
-                    break;
+            if (chars[i] == '/') {
+                chars[i] = '\\';
+            } else if (chars[i] == '\\') {
+                chars[i] = '/';
             }
         }
 
