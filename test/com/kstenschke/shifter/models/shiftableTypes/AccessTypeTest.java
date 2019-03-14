@@ -1,15 +1,27 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class AccessTypeTest {
 
+    private AccessType accessType;
+
+    @Before
+    public void setUp() throws Exception {
+        accessType = new AccessType();
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        accessType = null;
+    }
+
     @Test
     public void isAccessType() {
-        AccessType accessType = new AccessType();
-
         assertFalse(accessType.isAccessType(null));
         assertFalse(accessType.isAccessType(""));
         assertFalse(accessType.isAccessType("foo"));
@@ -25,8 +37,6 @@ public class AccessTypeTest {
 
     @Test
     public void getShifted() {
-        AccessType accessType = new AccessType();
-
         accessType.isAccessType("public");
         assertEquals("protected", accessType.getShifted("public", false));
 

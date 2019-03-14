@@ -1,5 +1,7 @@
 package com.kstenschke.shifter.models.shiftableTypes;
 
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
@@ -7,9 +9,20 @@ import static org.junit.Assert.*;
 
 public class TupelTest {
 
+    private Tupel tupel;
+
+    @Before
+    public void setUp() throws Exception {
+        tupel = new Tupel(null);
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        tupel = null;
+    }
+
     @Test
     public void isWordsTupel() {
-        Tupel tupel = new Tupel(null);
         assertFalse(tupel.isWordsTupel(null));
         assertFalse(tupel.isWordsTupel(""));
         assertFalse(tupel.isWordsTupel("foo"));
@@ -25,7 +38,6 @@ public class TupelTest {
     @Test
     @Ignore
     public void getShifted() {
-        Tupel tupel = new Tupel(null);
         tupel.isWordsTupel("foo bar-baz");
         assertEquals("bar-baz foo", tupel.getShifted("foo bar-baz", true));
     }

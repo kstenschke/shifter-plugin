@@ -12,15 +12,22 @@ public class CssTest {
                 "color: #fff;font-size: 10px;",
                 Css.getShifted(
                         "color: #fff;\n" +
-                              "font-size: 10px;"
-                )
+                              "font-size: 10px;")
         );
+
         assertEquals(
                 "color: #fff;font-size: 10px;",
                 Css.getShifted(
                               "font-size: 10px;\n" +
-                                      "color: #fff;"
-                )
+                                      "color: #fff;")
+        );
+
+        assertEquals(
+                "clear: both;content: \"\";display: table;",
+                Css.getShifted(
+                              "content: \"\";\n" +
+                                     "display: table;\n" +
+                                     "clear: both;")
         );
     }
 }
