@@ -15,7 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.kstenschke.shifter.models.shiftableTypes.*;
+import com.kstenschke.shifter.models.shiftable_types.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
@@ -23,7 +23,7 @@ import static com.kstenschke.shifter.models.ShiftableSelection.ACTION_TEXT_SHIFT
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
 /**
- * Manager of "shiftable" word shiftableTypes - detects word type to evoke resp. shifting
+ * Manager of "shiftable" word shiftable_types - detects word type to evoke resp. shifting
  */
 class ShiftableTypesManager {
 
@@ -33,7 +33,7 @@ class ShiftableTypesManager {
     private DictionaryTerm typeDictionaryTerm;
     private AccessType accessType;
 
-    // Generic shiftableTypes (calculated when shifted)
+    // Generic shiftable_types (calculated when shifted)
     private CssUnit typePixelValue;
     private DocCommentTag typeTagInDocComment;
     private DocCommentType typeDataTypeInDocComment;
@@ -90,7 +90,7 @@ class ShiftableTypesManager {
             return SIZZLE_SELECTOR;
         }
 
-        // DocComment shiftableTypes (must be prefixed w/ "@")
+        // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType();
         if (DocCommentType.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag();
@@ -220,14 +220,14 @@ class ShiftableTypesManager {
             Integer moreCount
     ) {
         switch (wordType) {
-            // String based word shiftableTypes
+            // String based word shiftable_types
             case ACCESS_TYPE:
                 return accessType.getShifted(word, actionContainer.isShiftUp);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return typeDictionaryTerm.getShifted(word, actionContainer.isShiftUp);
-            // Generic shiftableTypes (shifting is calculated)
+            // Generic shiftable_types (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return SizzleSelector.getShifted(word, actionContainer);
             case RGB_COLOR:

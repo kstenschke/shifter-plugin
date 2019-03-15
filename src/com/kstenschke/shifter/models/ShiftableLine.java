@@ -15,9 +15,9 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.kstenschke.shifter.models.shiftableTypes.JsDoc;
-import com.kstenschke.shifter.models.shiftableTypes.PhpDocParam;
-import com.kstenschke.shifter.models.shiftableTypes.HtmlEncodable;
+import com.kstenschke.shifter.models.shiftable_types.JsDoc;
+import com.kstenschke.shifter.models.shiftable_types.PhpDocParam;
+import com.kstenschke.shifter.models.shiftable_types.HtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
@@ -69,7 +69,7 @@ public class ShiftableLine {
 
         String[] words = actionContainer.caretLine.trim().split("\\s+");
 
-        // Check all words for shiftable shiftableTypes - shiftable if there's not more than one
+        // Check all words for shiftable shiftable_types - shiftable if there's not more than one
         int amountShiftableWordsInSentence = 0;
         String wordShiftedTest;
         String wordUnshifted = "";

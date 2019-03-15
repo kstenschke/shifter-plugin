@@ -16,9 +16,9 @@
 package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.models.shiftableTypes.CssUnit;
-import com.kstenschke.shifter.models.shiftableTypes.JsDoc;
-import com.kstenschke.shifter.models.shiftableTypes.NumericValue;
+import com.kstenschke.shifter.models.shiftable_types.CssUnit;
+import com.kstenschke.shifter.models.shiftable_types.JsDoc;
+import com.kstenschke.shifter.models.shiftable_types.NumericValue;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -70,7 +70,7 @@ public class ShiftableWord {
         // Detect word type
         wordType = shiftingShiftableTypesManager.getWordType(word, prefixChar, postfixChar, false, actionContainer);
 
-        // Comprehend negative values of numeric shiftableTypes
+        // Comprehend negative values of numeric shiftable_types
         this.word = (
                 (CSS_UNIT == wordType || NUMERIC_VALUE == wordType)
                 && "-".equals(prefixChar)
