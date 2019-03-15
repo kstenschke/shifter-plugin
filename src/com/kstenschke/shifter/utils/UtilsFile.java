@@ -19,6 +19,10 @@ import org.jetbrains.annotations.Nullable;
 
 public class UtilsFile {
 
+    public static String extractFileExtension(@Nullable String filename) {
+        return extractFileExtension(filename, false);
+    }
+
     /**
      * @param  filename         Filename from which to extract the extension
      * @param  toLowerCase      Convert extension to lower case?
@@ -49,10 +53,6 @@ public class UtilsFile {
             filename = filename.substring(filename.lastIndexOf("\\") + 1);
         }
         return filename;
-    }
-
-    public static String extractFileExtension(@Nullable String filename) {
-        return extractFileExtension(filename, false);
     }
 
     private static boolean filenameEndsWithExtension(@Nullable String filename) {
