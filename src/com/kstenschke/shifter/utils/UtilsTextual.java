@@ -90,7 +90,7 @@ public class UtilsTextual {
         return
                 null != haystack
                 && null != needle
-                && !needle.equals("")
+                && !"".equals(needle)
                 && Pattern.compile(Pattern.quote(needle), Pattern.CASE_INSENSITIVE).matcher(haystack).find();
     }
 
@@ -199,7 +199,11 @@ public class UtilsTextual {
      * @return String   Given string w/ first char in lower case
      */
     public static String toLcFirst(String str) {
-        return null == str || "".equals(str) ? str : Character.toLowerCase(str.charAt(0)) + str.substring(1);
+        return
+                null == str ||
+                "".equals(str)
+                        ? str
+                        : Character.toLowerCase(str.charAt(0)) + str.substring(1);
     }
 
     public static boolean isLcFirst(String str) {
@@ -209,7 +213,9 @@ public class UtilsTextual {
 
         char leadChar = str.charAt(0);
 
-        return Character.isAlphabetic(leadChar) && Character.toLowerCase(leadChar) == leadChar;
+        return
+                Character.isAlphabetic(leadChar) &&
+                Character.toLowerCase(leadChar) == leadChar;
     }
 
     /**
@@ -225,19 +231,34 @@ public class UtilsTextual {
 
         char leadChar = str.charAt(0);
 
-        return Character.isAlphabetic(leadChar) && str.equals(UtilsTextual.toUcFirstRestLower(str));
+        return
+                Character.isAlphabetic(leadChar) &&
+                str.equals(UtilsTextual.toUcFirstRestLower(str));
     }
 
     public static boolean isUpperCamelCase(@Nullable String str) {
-        return null != str && !"".equals(str) && str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+        return
+                null != str &&
+                !"".equals(str) &&
+                str.matches("[A-Z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
     private static boolean isLowerCamelCase(@Nullable String str) {
-        return null != str && !"".equals(str)  && str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
+        return
+                null != str &&
+                !"".equals(str) &&
+                str.matches("[a-z]([A-Z0-9]*[a-z][a-z0-9]*[A-Z]|[a-z0-9]*[A-Z][A-Z0-9]*[a-z])[A-Za-z0-9]*");
     }
 
     public static boolean isCamelCase(@Nullable String str) {
-        return null != str && !"".equals(str) && str.length() > 2 && (isLowerCamelCase(str) || isUpperCamelCase(str));
+        return
+                null != str &&
+                !"".equals(str) &&
+                str.length() > 2 &&
+                (
+                        isLowerCamelCase(str) ||
+                        isUpperCamelCase(str)
+                );
     }
 
     /**
@@ -412,7 +433,9 @@ public class UtilsTextual {
     }
 
     public static int subStringCount(String str, String subStr) {
-        if (str.equals("") || subStr.equals("")) {
+        if ("".equals(str) ||
+            subStr.equals("")
+        ) {
             return 0;
         }
         int count = 0;
@@ -609,7 +632,9 @@ public class UtilsTextual {
 
         int index = 0;
         for (String currentLine : linesArray) {
-            if (index > 0 && currentLine.equals(previousLine)) {
+            if (index > 0 &&
+                currentLine.equals(previousLine)
+            ) {
                 return true;
             }
             index++;
@@ -628,7 +653,9 @@ public class UtilsTextual {
         String previousLine = "";
 
         for (String currentLine : linesArray) {
-            if (0 == index || !currentLine.equals(previousLine)) {
+            if (0 == index ||
+                !currentLine.equals(previousLine)
+            ) {
                 resultLines[resultIndex] = currentLine;
                 resultIndex++;
             }
