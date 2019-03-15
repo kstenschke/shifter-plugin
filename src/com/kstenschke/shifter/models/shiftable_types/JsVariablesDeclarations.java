@@ -99,7 +99,7 @@ public class JsVariablesDeclarations {
     private static String shiftNonCommentLine(String line, int indexShiftedLine) {
         // Remove scope ("const ", "let " or "var ") from beginning
         line = line.substring(scope.length() + 1);
-        if (scope.equals("const") && indexShiftedLine > 0) {
+        if ("const".equals(scope) && (indexShiftedLine > 0)) {
             line = "  " + line;
         }
 

@@ -91,7 +91,7 @@ public class PhpDocParam {
           && !containsDataType(actionContainer.selectedText)) {
             String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
             final String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
-            if (!dataType.equals("unknown")) {
+            if (!"unknown".equals(dataType)) {
                 // PHPDoc @param line w/o data type, e.g. "* @param $name"
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(insertDataTypeIntoParamLine(actionContainer.selectedText, dataType)),

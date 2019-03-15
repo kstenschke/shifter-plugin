@@ -163,7 +163,7 @@ public class ShiftableSelection {
             if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
                 return;
             }
-            boolean isJsConcatenationInTypeScript = actionContainer.fileExtension.equals("ts") &&
+            boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
                     JsConcatenation.isJsConcatenation(actionContainer.selectedText);
             if (SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
                 // Comma-separated list: sort / ask whether to sort or toggle quotes

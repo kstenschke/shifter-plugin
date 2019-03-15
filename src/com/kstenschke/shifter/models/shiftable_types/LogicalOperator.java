@@ -23,7 +23,7 @@ public class LogicalOperator {
     public static final String ACTION_TEXT = "Toggle Logical Operator";
 
     public static boolean isLogicalOperator(String word) {
-        return word.equals("&&") || word.equals("||");
+        return "&&".equals(word) || word.equals("||");
     }
 
     /**
@@ -33,6 +33,6 @@ public class LogicalOperator {
      * @return String
      */
     public static String getShifted(String word) {
-        return word.equals("&&") ? "||" : "&&";
+        return "&&".equals(word) ? "||" : "&&";
     }
 }

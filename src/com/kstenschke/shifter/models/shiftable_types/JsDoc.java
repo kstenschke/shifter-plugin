@@ -293,7 +293,7 @@ public class JsDoc {
         if (parameterName.matches("(?i)(\\w*date\\w*)")) {
             return "Date";
         }
-        if (parameterName.equals("e")) {
+        if ("e".equals(parameterName)) {
             return "Event";
         }
         if (lastWord.matches("func|function|callback")) {
@@ -309,7 +309,7 @@ public class JsDoc {
         if ("useragent".equals(parameterNameLower)) {
             return "string";
         }
-        if (parameterName.equals("void")) {
+        if ("void".equals(parameterName)) {
             // Intercept "id"-ending before it is mistaken for a numeric "ID" parameter
             return "void";
         }

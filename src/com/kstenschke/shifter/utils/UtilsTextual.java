@@ -434,7 +434,7 @@ public class UtilsTextual {
 
     public static int subStringCount(String str, String subStr) {
         if ("".equals(str) ||
-            subStr.equals("")
+                "".equals(subStr)
         ) {
             return 0;
         }

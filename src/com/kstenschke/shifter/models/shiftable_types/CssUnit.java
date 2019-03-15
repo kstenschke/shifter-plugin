@@ -62,7 +62,7 @@ public class CssUnit {
         // Get int from PX value
         String unit = detectUnit(value);
         try {
-            int numericValue = unit.equals("")
+            int numericValue = "".equals(unit)
                     ? Integer.parseInt(value)
                     : Integer.parseInt(value.replace(unit, ""));
 

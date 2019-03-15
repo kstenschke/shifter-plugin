@@ -111,7 +111,7 @@ public class Tupel {
     private String getShiftedTupelReplacement(String str) {
         if (null == delimiter) return str;
 
-        if (!delimiter.equals(" ") && str.contains(" ")) {
+        if (!" ".equals(delimiter) && str.contains(" ")) {
             // Edge-case: there is a space and another tupel-delimiter, space overrules than
             // Example: ensure turning "foo bar-baz" into "bar-baz foo", not into "baz-foo bar"
             delimiter = " ";

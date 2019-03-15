@@ -119,7 +119,7 @@ public class Css {
         int index = 0;
         for (String line : lines) {
             String trimmed = trim(line);
-            if (!trimmed.isEmpty() && !trimmed.equals("}")) {
+            if (!trimmed.isEmpty() && !"}".equals(trimmed)) {
                 line = UtilsTextual.rtrim(line);
 
                 if (!line.endsWith(";")) {

@@ -35,10 +35,10 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
         String str2Trimmed = trim(str2);
 
         // Move empty line to the very end. Ensure closing of selector is at the end
-        if (str2Trimmed.isEmpty() || str2Trimmed.equals("}")) {
+        if (str2Trimmed.isEmpty() || "}".equals(str2Trimmed)) {
             return -1;
         }
-        if (str1Trimmed.isEmpty() || str1Trimmed.equals("}")) {
+        if (str1Trimmed.isEmpty() || "}".equals(str1Trimmed)) {
             return 1;
         }
 
