@@ -38,22 +38,22 @@ public class JqueryObserver {
             str = str.substring(1);
         }
 
-        return str.equals("blur(")
-            || str.equals("change(")
-            || str.equals("click(")
-            || str.equals("dblclick(")
-            || str.equals("error(")
-            || str.equals("focus(")
-            || str.equals("keypress(")
-            || str.equals("keydown(")
-            || str.equals("keyup(")
-            || str.equals("load(")
-            || str.equals("mouseenter(")
-            || str.equals("mouseleave(")
-            || str.equals("resize(")
-            || str.equals("submit(")
-            || str.equals("scroll(")
-            || str.equals("unload(");
+        return "blur(".equals(str)
+            || "change(".equals(str)
+            || "click(".equals(str)
+            || "dblclick(".equals(str)
+            || "error(".equals(str)
+            || "focus(".equals(str)
+            || "keypress(".equals(str)
+            || "keydown(".equals(str)
+            || "keyup(".equals(str)
+            || "load(".equals(str)
+            || "mouseenter(".equals(str)
+            || "mouseleave(".equals(str)
+            || "resize(".equals(str)
+            || "submit(".equals(str)
+            || "scroll(".equals(str)
+            || "unload(".equals(str);
     }
 
     /**
