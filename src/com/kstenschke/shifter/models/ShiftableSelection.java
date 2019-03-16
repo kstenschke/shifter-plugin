@@ -220,7 +220,7 @@ public class ShiftableSelection {
                 return;
             }
 
-            final Tupel wordsTupel = new com.kstenschke.shifter.models.shiftable_types.Tupel(actionContainer);
+            final Tupel wordsTupel = new Tupel(actionContainer);
             if (wordsTupel.isWordsTupel(actionContainer.selectedText)) {
                 final String replacement = wordsTupel.getShifted(actionContainer.selectedText, false);
                 if (!replacement.isEmpty()) {
@@ -295,7 +295,7 @@ public class ShiftableSelection {
     }
 
     private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer) {
-        final PhpConcatenation phpConcatenation = new com.kstenschke.shifter.models.shiftable_types.PhpConcatenation(actionContainer.selectedText);
+        final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer.selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
             actionContainer.writeUndoable(
                     () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation),
