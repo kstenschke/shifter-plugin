@@ -36,7 +36,8 @@ public class NumericPostfixed {
      * @return String
      */
     public static String getShifted(String word, boolean isUp) {
-        int indexFirstNumericChar, indexLastNumericChar;
+        int indexFirstNumericChar,
+            indexLastNumericChar;
 
         for (indexLastNumericChar = word.length() - 1; indexLastNumericChar >= 0; indexLastNumericChar--) {
             String curChar = word.substring(indexLastNumericChar, indexLastNumericChar + 1);

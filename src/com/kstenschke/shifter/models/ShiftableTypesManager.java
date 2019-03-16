@@ -117,10 +117,11 @@ class ShiftableTypesManager {
             if (typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
                 return DICTIONARY_WORD_EXT_SPECIFIC;
             }
-            if (UtilsFile.isJavaScriptFile(actionContainer.filename, true)) {
-                if (JqueryObserver.isJQueryObserver(word)) {
+            if (
+                UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
+                JqueryObserver.isJQueryObserver(word)
+            ) {
                     return JQUERY_OBSERVER;
-                }
             }
         }
 

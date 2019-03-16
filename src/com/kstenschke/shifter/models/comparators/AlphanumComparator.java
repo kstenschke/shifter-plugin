@@ -35,7 +35,6 @@ public class AlphanumComparator implements Comparator<String>
     }
 
     public AlphanumComparator() {
-
     }
 
     private boolean isDigit(char ch) {

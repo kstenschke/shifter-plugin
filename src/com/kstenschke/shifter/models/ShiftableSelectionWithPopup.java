@@ -179,9 +179,11 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     }
 
     private void shiftSelectionByPopupInDocument(
-            List<String> shiftOptions, final boolean isUp,
+            List<String> shiftOptions,
+            final boolean isUp,
             @Nullable final PhpConcatenation phpConcatenation,
-            @Nullable final String delimiterSplitPattern, @Nullable final String delimiterGlue
+            @Nullable final String delimiterSplitPattern,
+            @Nullable final String delimiterGlue
     ) {
         final Object[] options = shiftOptions.toArray(new String[0]);
         final JBList modes = new JBList(options);

@@ -29,7 +29,11 @@ public class UtilsFile {
      * @return The extension    Everything after the last "." in the full filename
      */
     public static String extractFileExtension(@Nullable String filename, boolean toLowerCase) {
-        if (null == filename || filename.isEmpty() || filename.length() < 3 || !filename.contains(".")) {
+        if (null == filename ||
+            filename.isEmpty() ||
+            filename.length() < 3 ||
+            !filename.contains(".")
+        ) {
             return "";
         }
         filename = getBasename(filename);
