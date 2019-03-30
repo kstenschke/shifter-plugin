@@ -20,6 +20,7 @@ import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsFile;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +30,9 @@ import java.util.regex.Pattern;
 /**
  * DocCommentType class
  */
-public class DocCommentTag {
+public class DocCommentTag extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     private final String[] tagsJavaScript;
 
@@ -40,10 +43,23 @@ public class DocCommentTag {
     /**
      * Constructor
      */
-    public DocCommentTag() {
+    public DocCommentTag(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+
         tagsJavaScript = new String[]{"author", "class", "constructor", "deprecated", "exception", "method", "module", "namespace", "param", "private", "property", "returns", "see", "this", "throws", "type", "version"};
-        tagsJava       = new String[]{"author", "version", "param", "return", "exception", "throws", "see", "since", "serial", "deprecated"};
-        tagsPHP        = new String[]{"abstract", "access", "author", "constant", "deprecated", "final", "global", "magic", "module", "param", "package", "return", "see", "static", "subpackage", "throws", "todo", "var", "version"};
+        tagsJava = new String[]{"author", "version", "param", "return", "exception", "throws", "see", "since", "serial", "deprecated"};
+        tagsPHP = new String[]{"abstract", "access", "author", "constant", "deprecated", "final", "global", "magic", "module", "param", "package", "return", "see", "static", "subpackage", "throws", "todo", "var", "version"};
+    }
+
+
+    /**
+     * @return boolean    Does the given String represent a data type (number / integer / string /...) from a DOC comment (param / return /...)?
+     */
+    public boolean isApplicable() {
+        String line = actionContainer.caretLine;
+
+        return "@".equals(actionContainer.prefixChar) &&
+                isDocCommentLineContext(line);
     }
 
     /**
@@ -63,25 +79,13 @@ public class DocCommentTag {
     }
 
     /**
-     * @param  prefixChar Prefix character
-     * @param  line       Whole line containing the word
-     * @return boolean    Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
-     */
-    public boolean isApplicable(
-            String prefixChar,
-            String line
-    ) {
-        return "@".equals(prefixChar) && isDocCommentLineContext(line);
-    }
-
-    /**
      * Check whether given String looks like a doc comment line
      *
-     * @param  line     Line the caret is at
+     * @param line Line the caret is at
      * @return boolean
      */
     private boolean isDocCommentLineContext(String line) {
-        String allTagsPiped     = getAllTagsPiped();
+        String allTagsPiped = getAllTagsPiped();
         String regExPatternLine = "\\s*\\*\\s+@(" + allTagsPiped + ")";
 
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
@@ -90,17 +94,19 @@ public class DocCommentTag {
     }
 
     public static boolean isDocCommentLine(String line) {
-        DocCommentTag docCommentTag = new DocCommentTag();
+        DocCommentTag docCommentTag = new DocCommentTag(null);
         return docCommentTag.isDocCommentLineContext(line);
     }
 
     /**
-     * @param  word             String to be shifted
-     * @param  actionContainer
-     * @param  textAfterCaret   Document text after the caret
      * @return Shifting result
      */
-    public String getShifted(String word, ActionContainer actionContainer, String textAfterCaret) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         String[] commentTags = getTagsByFilename(actionContainer.filename);
         int amountTags = commentTags.length;
         if (amountTags > 0) {
@@ -108,10 +114,10 @@ public class DocCommentTag {
             List<String> commentTagsList = Arrays.asList(commentTags);
             int curIndex = commentTagsList.indexOf(wordLower);
             if (curIndex > -1) {
-                curIndex           = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.isShiftUp);
+                curIndex = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.isShiftUp);
                 String shiftedWord = commentTagsList.get(curIndex);
                 if ("method".equals(shiftedWord)) {
-                    shiftedWord = shiftedWord + parseNextMethod(textAfterCaret);
+                    shiftedWord = shiftedWord + parseNextMethod(actionContainer.textAfterCaret);
                 }
 
                 return shiftedWord;
@@ -124,14 +130,14 @@ public class DocCommentTag {
     /**
      * Find first JavaScript function's name out of given code
      *
-     * @param  jsCode JavaScript source code to be analyzed
+     * @param jsCode JavaScript source code to be analyzed
      * @return String JavaScript method name
      */
     private String parseNextMethod(String jsCode) {
         List<String> allMatches = new ArrayList<>();
 
         String regExPattern = "[a-zA-Z_$][0-9a-zA-Z_$]*\\s*:\\s*function";
-        Matcher m           = Pattern.compile(regExPattern).matcher(jsCode);
+        Matcher m = Pattern.compile(regExPattern).matcher(jsCode);
         while (m.find()) {
             if (!allMatches.contains(m.group())) {
                 allMatches.add(m.group());
@@ -146,7 +152,7 @@ public class DocCommentTag {
     /**
      * Return array of data shiftable_types of detected language of edited file
      *
-     * @param  filename Filename of edited file
+     * @param filename Filename of edited file
      * @return String[]
      */
     private String[] getTagsByFilename(String filename) {

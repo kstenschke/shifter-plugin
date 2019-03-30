@@ -15,15 +15,20 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsFile;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
 /**
  * DocCommentType class
  */
-class DocCommentDataType {
+class DocCommentDataType extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     private final String[] typesJavaScript;
     private final String[] typesJava;
@@ -33,21 +38,26 @@ class DocCommentDataType {
     /**
      * Constructor
      */
-    DocCommentDataType() {
+    DocCommentDataType(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+
         typesJavaScript = new String[]{ "array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined" };
         typesJava       = new String[]{ "boolean", "byte", "char", "double", "float", "int", "long", "short", "string" };
         typesPHP        = new String[]{ "array", "bool", "float", "int", "null", "object", "resource", "string" };
         typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
     }
 
-    /**
-     * @param  word        String to be shifted
-     * @param  filename    Filename of the edited file
-     * @param  isUp        Shifting up or down?
-     * @return String      Shifting result
-     */
-    public String getShifted(String word, String filename, boolean isUp) {
-        String[] dataTypes   = getDataTypesByFilename(filename);
+    public boolean isApplicable() {
+        return !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar));
+    }
+
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
+        String[] dataTypes   = getDataTypesByFilename(actionContainer.filename);
         int amountTypes      = dataTypes.length;
         String wordLower     = word.toLowerCase();
 
@@ -57,7 +67,7 @@ class DocCommentDataType {
 
         List<String> dataTypesList = Arrays.asList(dataTypes);
         int curIndex               = dataTypesList.indexOf(wordLower);
-        curIndex                   = NumericValue.moduloShiftInteger(curIndex, amountTypes, isUp);
+        curIndex                   = NumericValue.moduloShiftInteger(curIndex, amountTypes, actionContainer.isShiftUp);
 
         if (curIndex < 0) {
             curIndex = 0;

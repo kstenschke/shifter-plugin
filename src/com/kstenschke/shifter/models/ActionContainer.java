@@ -40,6 +40,8 @@ public class ActionContainer {
     @Nullable public SelectionModel selectionModel;
     public int caretOffset;
 
+    public String textAfterCaret;
+
     public int offsetSelectionStart;
     public int offsetSelectionEnd;
     int lineNumberSelStart;

@@ -29,6 +29,9 @@ public class DocCommentType extends ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;
 
+    // Sub types
+    private ShiftableTypeAbstract subType;
+
     public DocCommentType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
@@ -40,11 +43,25 @@ public class DocCommentType extends ShiftableTypeAbstract {
      * @return boolean
      */
     public boolean isApplicable() {
-        String str = actionContainer.caretLine;
+        if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return false;
 
-        return !("#".equals(actionContainer.prefixChar) ||
-                "@".equals(actionContainer.prefixChar)) &&
-                isDocCommentTypeLineContext(str);
+        DocCommentTag typeTagInDocComment = new DocCommentTag(actionContainer);
+        if (actionContainer.prefixChar.matches("@") &&
+            typeTagInDocComment.isApplicable()) {
+            this.subType = typeTagInDocComment;
+            return true;
+        }
+        DocCommentDataType docCommentDataType = new DocCommentDataType(actionContainer);
+        if (docCommentDataType.isApplicable()) {
+            this.subType = docCommentDataType;
+            return true;
+        }
+
+        return false;
+    }
+
+    public ShiftableTypeAbstract getSubType() {
+        return subType;
     }
 
     /**
@@ -54,7 +71,7 @@ public class DocCommentType extends ShiftableTypeAbstract {
      * @return boolean.
      */
     public boolean isDocCommentTypeLineContext(String line) {
-        String allTags = new DocCommentTag().getAllTagsPiped();
+        String allTags = new DocCommentTag(null).getAllTagsPiped();
         String regExPatternLine = "\\s*\\*\\s+@(" + allTags + ")\\s*";
 
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
@@ -71,6 +88,7 @@ public class DocCommentType extends ShiftableTypeAbstract {
             Integer moreCount,
             String leadingWhiteSpace
     ) {
-        return new DocCommentDataType().getShifted(str, actionContainer.filename, actionContainer.isShiftUp);
+        return new DocCommentDataType(actionContainer)
+                .getShifted(str, actionContainer, moreCount, leadingWhiteSpace);
     }
 }

@@ -48,8 +48,8 @@ class ShiftableTypesManager {
     private QuotedString typeQuotedString;
 
     ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
-        TrailingComment trailingComment = new TrailingComment(actionContainer);
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
+        TrailingComment trailingComment = new TrailingComment(actionContainer);
         if (trailingComment.isApplicable()) return trailingComment;
 
         if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
@@ -59,8 +59,8 @@ class ShiftableTypesManager {
             return null;
         }
 
-        typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
         // PHP variable (must be prefixed w/ "$")
+        typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
         if (typePhpVariableOrArray.isApplicable()) return typePhpVariableOrArray;
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
@@ -74,16 +74,11 @@ class ShiftableTypesManager {
 
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
-        if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
-            typeTagInDocComment = new DocCommentTag();
-            /*if (prefixChar.matches("@")
-                    && typeTagInDocComment.isApplicable(prefixChar, actionContainer.caretLine)
-            ) {
-                return DOC_COMMENT_TAG;
-            }*/
+        if (typeDataTypeInDocComment.isApplicable()) return typeDataTypeInDocComment.getSubType();
 
-            if (typeDataTypeInDocComment.isApplicable()) return typeDataTypeInDocComment;
-        }
+        // Object visibility
+        accessType = new AccessType(actionContainer);
+        if (accessType.isApplicable()) return accessType;
 
         // @todo 1. convert all shiftable types and add them here
 
@@ -146,9 +141,9 @@ class ShiftableTypesManager {
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
-            typeTagInDocComment = new DocCommentTag();
+            typeTagInDocComment = new DocCommentTag(actionContainer);
             if (prefixChar.matches("@")
-                && typeTagInDocComment.isApplicable(prefixChar, actionContainer.caretLine)
+                && typeTagInDocComment.isApplicable()
             ) {
                 return DOC_COMMENT_TAG;
             }
@@ -246,6 +241,10 @@ class ShiftableTypesManager {
     }
 
     ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
+        if (null == actionContainer.editorText) {
+            return UNKNOWN;
+        }
+
         int editorTextLength = actionContainer.editorText.length();
         int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
         String postfixChar = editorTextLength > offsetPostfixChar
@@ -311,8 +310,8 @@ class ShiftableTypesManager {
             case MONO_CHARACTER:
                 return typeMonoCharacterString.getShifted(word, actionContainer.isShiftUp);
             case DOC_COMMENT_TAG:
-                String textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
-                return typeTagInDocComment.getShifted(word, actionContainer, textAfterCaret);
+                actionContainer.textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
+                return typeTagInDocComment.getShifted(word, actionContainer, null);
             case DOC_COMMENT_DATA_TYPE:
                 return typeDataTypeInDocComment.getShifted(word, actionContainer);
             case SEPARATED_PATH:
