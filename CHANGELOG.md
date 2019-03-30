@@ -1,6 +1,8 @@
 Shifter Plugin - Changelog
 ==========================
 
+* 2.0.0
+  * Reworked architecture: All shiftable types extend a common abstract class
 * 1.9.7
   * Improved edge case handling: Shifting selected word tupel containing space and another delimiter
   * Improved: Stabilized against various edge cases
