@@ -113,7 +113,7 @@ Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" ca
 
 h2. Changelog
 
-Read "changelog":https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.textile
+Read "changelog":https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.md
 
 
 h2. Contributors
