@@ -89,6 +89,12 @@ class ShiftableTypesManager {
             return sizzleSelector;
         }
 
+        // @todo 1. convert all shiftable types and add them here
+
+        // @todo 2. completely remove getWordType() when 1. is done
+
+        // @todo 3. rework shiftable type initialization, so shifting doesn't contain redundant arguments
+
         return null;
     }
 
