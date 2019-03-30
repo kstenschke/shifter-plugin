@@ -15,13 +15,15 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * JavaScript Variables (multi-lined declarations of multiple vars)
  */
-public class JsVariablesDeclarations {
+public class JsVariablesDeclarations extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift JS var declarations";
 
@@ -39,7 +41,11 @@ public class JsVariablesDeclarations {
      * @param  str     String to be checked
      * @return boolean
      */
-    public static Boolean isJsVariables(String str) {
+    public boolean isApplicable(
+            String str,
+            String postfixChar,
+            Boolean isLastLineInDocument
+    ) {
         str = str.trim();
 
         if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {
@@ -61,7 +67,12 @@ public class JsVariablesDeclarations {
      * @param  str      text selection to be shifted
      * @return String
      */
-    public static String getShifted(String str) {
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         String[] lines = str.split("\n");
         StringBuilder shiftedLines = new StringBuilder();
 

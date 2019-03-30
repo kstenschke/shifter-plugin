@@ -131,9 +131,11 @@ public class ShiftableSelection {
             return;
         }
         if (isJsVarsDeclarations) {
+            JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(JsVariablesDeclarations.getShifted(actionContainer.selectedText)),
-                    JsVariablesDeclarations.ACTION_TEXT);
+                    actionContainer.getRunnableReplaceSelection(
+                            jsVariablesDeclarations.getShifted(actionContainer.selectedText)),
+                            JsVariablesDeclarations.ACTION_TEXT);
             return;
         }
         if (JqueryObserver.isJQueryObserver(actionContainer.selectedText)) {

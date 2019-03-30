@@ -75,6 +75,11 @@ class ShiftableTypesManager {
             return parenthesis;
         }
 
+        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
+        if (jsVariablesDeclarations.isApplicable(word)) {
+            return jsVariablesDeclarations;
+        }
+
         return null;
     }
 
@@ -117,7 +122,8 @@ class ShiftableTypesManager {
             return PARENTHESIS;
         }
 
-        if (JsVariablesDeclarations.isJsVariables(word)) {
+        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
+        if (jsVariablesDeclarations.isApplicable(word)) {
             return JS_VARIABLES_DECLARATIONS;
         }
         if (SizzleSelector.isSelector(word)) {
