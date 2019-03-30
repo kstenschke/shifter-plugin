@@ -49,10 +49,8 @@ class ShiftableTypesManager {
 
     ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
         TrailingComment trailingComment = new TrailingComment(actionContainer);
-        if (trailingComment.isApplicable()) {
-            // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
-            return trailingComment;
-        }
+        // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
+        if (trailingComment.isApplicable()) return trailingComment;
 
         if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
             !PhpDocParam.containsDataType(actionContainer.caretLine)) {
@@ -62,25 +60,17 @@ class ShiftableTypesManager {
         }
 
         typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
-        if (typePhpVariableOrArray.isApplicable()) {
-            // PHP variable (must be prefixed w/ "$")
-            return typePhpVariableOrArray;
-        }
+        // PHP variable (must be prefixed w/ "$")
+        if (typePhpVariableOrArray.isApplicable()) return typePhpVariableOrArray;
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
-        if (parenthesis.isApplicable()) {
-            return parenthesis;
-        }
+        if (parenthesis.isApplicable()) return parenthesis;
 
         JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-        if (jsVariablesDeclarations.isApplicable()) {
-            return jsVariablesDeclarations;
-        }
+        if (jsVariablesDeclarations.isApplicable()) return jsVariablesDeclarations;
 
         SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
-        if (sizzleSelector.isApplicable()) {
-            return sizzleSelector;
-        }
+        if (sizzleSelector.isApplicable()) return sizzleSelector;
 
         // @todo 1. convert all shiftable types and add them here
 
