@@ -19,14 +19,13 @@ import javax.annotation.Nullable;
 
 public abstract class ShiftableTypeAbstract {
 
-    public boolean isApplicable(String word) {
-        return isApplicable(word, null, null);
+    private ActionContainer actionContainer;
+
+    public ShiftableTypeAbstract(@Nullable ActionContainer actionContainer) {
+        this.actionContainer = actionContainer;
     }
 
-    abstract public boolean isApplicable(
-            String word,
-            String postfixChar,
-            Boolean isLastLineInDocument);
+    abstract public boolean isApplicable();
 
     abstract public String getShifted(
             String word,

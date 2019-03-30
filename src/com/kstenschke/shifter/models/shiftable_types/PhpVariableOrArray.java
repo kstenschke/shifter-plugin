@@ -22,6 +22,7 @@ import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -31,27 +32,21 @@ import java.util.List;
  */
 public class PhpVariableOrArray extends ShiftableTypeAbstract {
 
+    private ActionContainer actionContainer;
+
     // Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
     private boolean isShiftableArray = false;
 
     // Shorthand (since PHP5.4) or long syntax array?
     private boolean isConventionalArray = false;
 
-    public void init(String str) {
-        isApplicable(str, null, false);
+    public PhpVariableOrArray(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    /**
-     * Check whether given string represents a PHP variable
-     *
-     * @param  word     String to be checked
-     * @return boolean
-     */
-    public boolean isApplicable(
-            String word,
-            String postfixChar,
-            Boolean isLastLineInDocument
-    ) {
+    public boolean isApplicable() {
+        String word = actionContainer.selectedText;
+
         boolean isVariable = false;
         if (word.startsWith("$")) {
             String identifier = word.substring(1);

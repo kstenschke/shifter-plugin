@@ -19,25 +19,28 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
+import javax.annotation.Nullable;
+
 /**
  * Sizzle DOM selector
  */
 public class SizzleSelector extends ShiftableTypeAbstract {
 
+    private ActionContainer actionContainer;
+
     public static final String ACTION_TEXT = "Shift Sizzle Selector";
+
+    public SizzleSelector(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     /**
      * Check whether given string represents a declaration of JS variables
      *
-     * @param  str     String to be checked
      * @return boolean
      */
-    public boolean isApplicable(
-            String str,
-            String postfixChar,
-            Boolean isLastLineInDocument
-    ) {
-        str = str.trim();
+    public boolean isApplicable() {
+        String str = actionContainer.selectedText.trim();
 
         return !(!str.startsWith("$(") || !str.endsWith(")"));
     }

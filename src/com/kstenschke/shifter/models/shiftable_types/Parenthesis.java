@@ -18,25 +18,30 @@ package com.kstenschke.shifter.models.shiftable_types;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 
+import javax.annotation.Nullable;
+
 /**
  * Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
  */
 public class Parenthesis extends ShiftableTypeAbstract {
 
+    private ActionContainer actionContainer;
+
     public static final String ACTION_TEXT = "Shift Parenthesis";
 
-    /**
-     * @param  str     String to be shifted currently
-     * @return boolean
-     */
-    public boolean isApplicable(
-            String str,
-            String postfixChar,
-            Boolean isLastLineInDocument
-    ) {
+    public Parenthesis(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    public boolean isApplicable() {
+        String str = actionContainer.selectedText;
+
         str = str.trim();
 
-        return isWrappedInRoundBrackets(str) || isWrappedInSquareBrackets(str) || isWrappedInCurlyBrackets(str);
+        return
+                isWrappedInRoundBrackets(str) ||
+                isWrappedInSquareBrackets(str) ||
+                isWrappedInCurlyBrackets(str);
     }
 
     private static boolean isWrappedInRoundBrackets(String str) {

@@ -47,16 +47,9 @@ class ShiftableTypesManager {
     private Tupel wordsTupel;
     private QuotedString typeQuotedString;
 
-    ShiftableTypeAbstract getShiftableType(
-            String word,
-            String prefixChar,
-            String postfixChar,
-            boolean isLastLineInDocument,
-            ActionContainer actionContainer
-    ) {
-
-        TrailingComment trailingComment = new TrailingComment();
-        if (trailingComment.isApplicable(word, postfixChar, isLastLineInDocument)) {
+    ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
+        TrailingComment trailingComment = new TrailingComment(actionContainer);
+        if (trailingComment.isApplicable()) {
             // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
             return trailingComment;
         }
@@ -68,24 +61,24 @@ class ShiftableTypesManager {
             return null;
         }
 
-        typePhpVariableOrArray = new PhpVariableOrArray();
-        if (typePhpVariableOrArray.isApplicable(word)) {
+        typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
+        if (typePhpVariableOrArray.isApplicable()) {
             // PHP variable (must be prefixed w/ "$")
             return typePhpVariableOrArray;
         }
 
-        Parenthesis parenthesis = new Parenthesis();
-        if (parenthesis.isApplicable(word)) {
+        Parenthesis parenthesis = new Parenthesis(actionContainer);
+        if (parenthesis.isApplicable()) {
             return parenthesis;
         }
 
-        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
-        if (jsVariablesDeclarations.isApplicable(word)) {
+        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
+        if (jsVariablesDeclarations.isApplicable()) {
             return jsVariablesDeclarations;
         }
 
-        SizzleSelector sizzleSelector = new SizzleSelector();
-        if (sizzleSelector.isApplicable(word)) {
+        SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
+        if (sizzleSelector.isApplicable()) {
             return sizzleSelector;
         }
 
@@ -93,7 +86,7 @@ class ShiftableTypesManager {
 
         // @todo 2. completely remove getWordType() when 1. is done
 
-        // @todo 3. rework shiftable type initialization, so shifting doesn't contain redundant arguments
+        // @todo 3. rework: remove redundant arguments
 
         return null;
     }
@@ -115,8 +108,8 @@ class ShiftableTypesManager {
             boolean isLastLineInDocument,
             ActionContainer actionContainer
     ) {
-        TrailingComment trailingComment = new TrailingComment();
-        if (trailingComment.isApplicable(word, postfixChar, isLastLineInDocument)) {
+        TrailingComment trailingComment = new TrailingComment(actionContainer);
+        if (trailingComment.isApplicable()) {
             // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
             return TRAILING_COMMENT;
         }
@@ -128,42 +121,42 @@ class ShiftableTypesManager {
             return UNKNOWN;
         }
         // PHP variable (must be prefixed w/ "$")
-        typePhpVariableOrArray = new PhpVariableOrArray();
-        if (typePhpVariableOrArray.isApplicable(word)) {
+        typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
+        if (typePhpVariableOrArray.isApplicable()) {
             return PHP_VARIABLE_OR_ARRAY;
         }
-        Parenthesis parenthesis = new Parenthesis();
-        if (parenthesis.isApplicable(word)) {
+        Parenthesis parenthesis = new Parenthesis(actionContainer);
+        if (parenthesis.isApplicable()) {
             return PARENTHESIS;
         }
 
-        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
-        if (jsVariablesDeclarations.isApplicable(word)) {
+        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
+        if (jsVariablesDeclarations.isApplicable()) {
             return JS_VARIABLES_DECLARATIONS;
         }
 
-        typeSizzleSelector = new SizzleSelector();
-        if (typeSizzleSelector.isApplicable(word)) {
+        typeSizzleSelector = new SizzleSelector(actionContainer);
+        if (typeSizzleSelector.isApplicable()) {
             return SIZZLE_SELECTOR;
         }
 
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType();
-        if (DocCommentType.isDocCommentTypeLineContext(actionContainer.caretLine)) {
+        if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag();
             if (prefixChar.matches("@")
-                && typeTagInDocComment.isDocCommentTag(prefixChar, actionContainer.caretLine)
+                && typeTagInDocComment.isApplicable(prefixChar, actionContainer.caretLine)
             ) {
                 return DOC_COMMENT_TAG;
             }
-            if (typeDataTypeInDocComment.isDocCommentType(prefixChar, actionContainer.caretLine)) {
+            if (typeDataTypeInDocComment.isApplicable(prefixChar, actionContainer.caretLine)) {
                 return DOC_COMMENT_DATA_TYPE;
             }
         }
 
         // Object visibility
-        accessType = new AccessType();
-        if (!"@".equals(prefixChar) && accessType.isApplicable(word)) {
+        accessType = new AccessType(actionContainer);
+        if (!"@".equals(prefixChar) && accessType.isApplicable()) {
             return ACCESS_TYPE;
         }
 
@@ -304,7 +297,7 @@ class ShiftableTypesManager {
             case QUOTED_STRING:
                 return typeQuotedString.getShifted(word, actionContainer);
             case PARENTHESIS:
-                Parenthesis parenthesis = new Parenthesis();
+                Parenthesis parenthesis = new Parenthesis(actionContainer);
                 return parenthesis.getShifted(word);
             case OPERATOR_SIGN:
                 return typeOperatorSign.getShifted(word);
@@ -335,13 +328,9 @@ class ShiftableTypesManager {
     }
 
     String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
-        ShiftableTypeAbstract shiftableType = getShiftableType(
-                actionContainer.selectedText,
-                "",
-                "",
-                false,
-                actionContainer
-        );
+        actionContainer.shiftSelectedText = true;
+
+        ShiftableTypeAbstract shiftableType = getShiftableType(actionContainer);
         if (null != shiftableType) {
             return shiftableType.getShifted(
                     actionContainer.selectedText,

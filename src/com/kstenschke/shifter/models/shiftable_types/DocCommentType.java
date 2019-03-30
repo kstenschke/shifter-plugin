@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -23,22 +24,7 @@ import java.util.regex.Pattern;
 /**
  * DOC comment type class
  */
-public class DocCommentType {
-
-    /**
-     * Check whether given String looks like a DOC comment line
-     *
-     * @param line Line the caret is at
-     * @return boolean.
-     */
-    public static boolean isDocCommentTypeLineContext(String line) {
-        String allTags = new DocCommentTag().getAllTagsPiped();
-        String regExPatternLine = "\\s*\\*\\s+@(" + allTags + ")\\s*";
-
-        Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
-
-        return m.find();
-    }
+public class DocCommentType { /*extends ShiftableTypeAbstract {*/
 
     /**
      * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
@@ -47,9 +33,25 @@ public class DocCommentType {
      * @param  line       Whole line containing the word
      * @return boolean
      */
-    public boolean isDocCommentType(String prefixChar, String line) {
-        return !("#".equals(prefixChar) || "@".equals(prefixChar)) && isDocCommentTypeLineContext(line);
+    public boolean isApplicable(String prefixChar, String line) {
+        return !("#".equals(prefixChar) ||
+                "@".equals(prefixChar)) &&
+                isDocCommentTypeLineContext(line);
+    }
 
+    /**
+     * Check whether given String looks like a DOC comment line
+     *
+     * @param line Line the caret is at
+     * @return boolean.
+     */
+    public boolean isDocCommentTypeLineContext(String line) {
+        String allTags = new DocCommentTag().getAllTagsPiped();
+        String regExPatternLine = "\\s*\\*\\s+@(" + allTags + ")\\s*";
+
+        Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
+
+        return m.find();
     }
 
     /**

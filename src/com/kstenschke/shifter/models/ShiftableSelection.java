@@ -71,8 +71,8 @@ public class ShiftableSelection {
             return;
         }
 
-        Parenthesis parenthesis = new Parenthesis();
-        boolean isWrappedInParenthesis = parenthesis.isApplicable(actionContainer.selectedText);
+        Parenthesis parenthesis = new Parenthesis(actionContainer);
+        boolean isWrappedInParenthesis = parenthesis.isApplicable();
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager();
         ShiftableTypes.Type wordType = shiftableTypesManager.getWordType(actionContainer);
@@ -131,7 +131,7 @@ public class ShiftableSelection {
             return;
         }
         if (isJsVarsDeclarations) {
-            JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
+            JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                             jsVariablesDeclarations.getShifted(actionContainer.selectedText)),
@@ -145,7 +145,7 @@ public class ShiftableSelection {
             return;
         }
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
-            SizzleSelector sizzleSelector = new SizzleSelector();
+            SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(sizzleSelector.getShifted(actionContainer.selectedText, actionContainer)),
                     SizzleSelector.ACTION_TEXT);
@@ -158,7 +158,7 @@ public class ShiftableSelection {
                 actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
             final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
-            TrailingComment trailingComment = new TrailingComment();
+            TrailingComment trailingComment = new TrailingComment(actionContainer);
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceCaretLine(
                             trailingComment.getShifted(caretLine, actionContainer, moreCount, leadWhitespace)),

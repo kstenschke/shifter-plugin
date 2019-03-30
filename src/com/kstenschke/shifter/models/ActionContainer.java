@@ -21,6 +21,12 @@ import javax.annotation.Nullable;
  * Container for event and deducible IDE environment attributes (project, editor, etc.)
  */
 public class ActionContainer {
+
+    public String prefixChar = "";
+    public String postfixChar = "";
+
+    public boolean isLastLineInDocument = false; // regards selected or shifted line/selection
+
     public boolean isShiftUp;
     private final boolean isShiftMore;
 
@@ -38,6 +44,8 @@ public class ActionContainer {
     public int offsetSelectionEnd;
     int lineNumberSelStart;
     int lineNumberSelEnd;
+
+    boolean shiftSelectedText = true;
 
     public String selectedText;
     String whiteSpaceLHSinSelection;

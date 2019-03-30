@@ -308,13 +308,12 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, SeparatedPath.getShifted(actionContainer.selectedText));
         }
         if (mode.equals(StaticTexts.SHIFT_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX)) {
-            PhpVariableOrArray phpVariableOrArray = new PhpVariableOrArray();
-            phpVariableOrArray.init(actionContainer.selectedText);
+            PhpVariableOrArray phpVariableOrArray = new PhpVariableOrArray(actionContainer);
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpVariableOrArray.getShiftedArray(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_PARENTHESIS)) {
-            Parenthesis parenthesis = new Parenthesis();
+            Parenthesis parenthesis = new Parenthesis(actionContainer);
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, parenthesis.getShifted(actionContainer.selectedText));
         }
     }

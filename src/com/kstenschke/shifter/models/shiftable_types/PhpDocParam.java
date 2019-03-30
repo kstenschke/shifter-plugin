@@ -85,8 +85,9 @@ public class PhpDocParam {
                 return true;
             }
         }
+        DocCommentType docCommentType = new DocCommentType();
         if (!actionContainer.selectedText.contains("\n")
-          && DocCommentType.isDocCommentTypeLineContext(actionContainer.selectedText)
+          && docCommentType.isDocCommentTypeLineContext(actionContainer.selectedText)
           && isPhpDocParamLine(actionContainer.selectedText)
           && !containsDataType(actionContainer.selectedText)) {
             String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));

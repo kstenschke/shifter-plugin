@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsFile;
 
@@ -62,6 +63,18 @@ public class DocCommentTag {
     }
 
     /**
+     * @param  prefixChar Prefix character
+     * @param  line       Whole line containing the word
+     * @return boolean    Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
+     */
+    public boolean isApplicable(
+            String prefixChar,
+            String line
+    ) {
+        return "@".equals(prefixChar) && isDocCommentLineContext(line);
+    }
+
+    /**
      * Check whether given String looks like a doc comment line
      *
      * @param  line     Line the caret is at
@@ -74,15 +87,6 @@ public class DocCommentTag {
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 
         return m.find();
-    }
-
-    /**
-     * @param  prefixChar Prefix character
-     * @param  line       Whole line containing the word
-     * @return boolean    Does the given String represent a data type (number / integer / string /...) from a doc comment (param / return /...)?
-     */
-    public boolean isDocCommentTag(String prefixChar, String line) {
-        return "@".equals(prefixChar) && isDocCommentLineContext(line);
     }
 
     public static boolean isDocCommentLine(String line) {

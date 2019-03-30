@@ -18,23 +18,30 @@ package com.kstenschke.shifter.models.shiftable_types;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 
+import javax.annotation.Nullable;
+
 /**
  * Trailing (to line of code) comment - shifting = move comment to new empty caretLine above
  */
 public class TrailingComment extends ShiftableTypeAbstract {
 
+    private ActionContainer actionContainer;
+
     public static final String ACTION_TEXT = "Shift trailing Comment";
 
+    public TrailingComment(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
     /**
-     * @param  word     String to be shifted currently
-     * @return boolean
      * TODO    maybe later - implement also for multi-line selections(?)
      */
-    public boolean isApplicable(String word, String postfixChar, Boolean isLastLineInDocument) {
+    public boolean isApplicable() {
+        String word = actionContainer.selectedText;
         if (
             null == word ||
             !word.contains("//") ||
-            (!isLastLineInDocument && !"\n".equals(postfixChar))
+            (!actionContainer.isLastLineInDocument && !"\n".equals(actionContainer.postfixChar))
         ) {
             return false;
         }

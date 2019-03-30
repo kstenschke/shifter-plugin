@@ -18,21 +18,26 @@ package com.kstenschke.shifter.models.shiftable_types;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 
+import javax.annotation.Nullable;
+
 /**
  * Pixel value class
  */
 public class AccessType extends ShiftableTypeAbstract  {
 
-    @SuppressWarnings("unused")
+    private ActionContainer actionContainer;
+
     public static final String ACTION_TEXT = "Shift Access Type";
 
     private StaticWordType accessTypes;
 
-    public boolean isApplicable(
-            String word,
-            String postfixChar,
-            Boolean isLastLineInDocument
-    ) {
+    public AccessType(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    public boolean isApplicable() {
+        String word = actionContainer.selectedText;
+
         if (null == word) {
             return false;
         }
@@ -44,7 +49,6 @@ public class AccessType extends ShiftableTypeAbstract  {
 
     /**
      * @param  value    The full length value, post-fixed by its unit
-     * @param  isUp     Shifting up or down?
      * @return String   Length (em / px / pt / cm / in / rem / vw / vh / vmin / vmax) value shifted up or down by 1 unit
      */
     public String getShifted(

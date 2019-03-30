@@ -20,15 +20,23 @@ import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
+
 /**
  * JavaScript Variables (multi-lined declarations of multiple vars)
  */
 public class JsVariablesDeclarations extends ShiftableTypeAbstract {
 
+    private ActionContainer actionContainer;
+
     public static final String ACTION_TEXT = "Shift JS var declarations";
 
     // Declaration/assignment scope: "const", "let", "var"
     private static String scope;
+
+    public JsVariablesDeclarations(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     /**
      * Check whether given string represents a declaration of (multiple) JS variables:
@@ -38,15 +46,10 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
      * -there can be empty lines
      * -there can be commented lines, beginning w/ "//"
      *
-     * @param  str     String to be checked
      * @return boolean
      */
-    public boolean isApplicable(
-            String str,
-            String postfixChar,
-            Boolean isLastLineInDocument
-    ) {
-        str = str.trim();
+    public boolean isApplicable() {
+        String str = actionContainer.selectedText.trim();
 
         if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {
             scope = "const";
