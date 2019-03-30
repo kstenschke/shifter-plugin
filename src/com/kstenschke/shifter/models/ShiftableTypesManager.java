@@ -42,6 +42,7 @@ class ShiftableTypesManager {
     private PhpVariableOrArray typePhpVariableOrArray;
     private RgbColor typeRgbColor;
     private RomanNumber typeRomanNumber;
+    private SizzleSelector typeSizzleSelector;
     private MonoCharacter typeMonoCharacterString;
     private Tupel wordsTupel;
     private QuotedString typeQuotedString;
@@ -59,17 +60,20 @@ class ShiftableTypesManager {
             // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
             return trailingComment;
         }
+
         if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
             !PhpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
             // PHP doc param line is handled in caretLine-shifting fallback
             return null;
         }
+
         typePhpVariableOrArray = new PhpVariableOrArray();
         if (typePhpVariableOrArray.isApplicable(word)) {
             // PHP variable (must be prefixed w/ "$")
             return typePhpVariableOrArray;
         }
+
         Parenthesis parenthesis = new Parenthesis();
         if (parenthesis.isApplicable(word)) {
             return parenthesis;
@@ -78,6 +82,11 @@ class ShiftableTypesManager {
         JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations();
         if (jsVariablesDeclarations.isApplicable(word)) {
             return jsVariablesDeclarations;
+        }
+
+        SizzleSelector sizzleSelector = new SizzleSelector();
+        if (sizzleSelector.isApplicable(word)) {
+            return sizzleSelector;
         }
 
         return null;
@@ -126,7 +135,9 @@ class ShiftableTypesManager {
         if (jsVariablesDeclarations.isApplicable(word)) {
             return JS_VARIABLES_DECLARATIONS;
         }
-        if (SizzleSelector.isSelector(word)) {
+
+        typeSizzleSelector = new SizzleSelector();
+        if (typeSizzleSelector.isApplicable(word)) {
             return SIZZLE_SELECTOR;
         }
 
@@ -270,7 +281,7 @@ class ShiftableTypesManager {
                 return typeDictionaryTerm.getShifted(word, actionContainer.isShiftUp);
             // Generic shiftable_types (shifting is calculated)
             case SIZZLE_SELECTOR:
-                return SizzleSelector.getShifted(word, actionContainer);
+                return typeSizzleSelector.getShifted(word, actionContainer);
             case RGB_COLOR:
                 return typeRgbColor.getShifted(word, actionContainer.isShiftUp);
             case NUMERIC_VALUE:

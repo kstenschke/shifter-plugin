@@ -145,8 +145,9 @@ public class ShiftableSelection {
             return;
         }
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
+            SizzleSelector sizzleSelector = new SizzleSelector();
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(SizzleSelector.getShifted(actionContainer.selectedText, actionContainer)),
+                    actionContainer.getRunnableReplaceSelection(sizzleSelector.getShifted(actionContainer.selectedText, actionContainer)),
                     SizzleSelector.ACTION_TEXT);
             return;
         }
