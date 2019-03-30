@@ -1,4 +1,5 @@
-h1. Shifter Plugin - Changelog
+Shifter Plugin - Changelog
+==========================
 
 * 1.9.7
   * Improved edge case handling: Shifting selected word tupel containing space and another delimiter
