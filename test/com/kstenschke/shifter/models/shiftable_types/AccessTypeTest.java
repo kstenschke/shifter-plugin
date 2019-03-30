@@ -1,5 +1,6 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -22,37 +23,46 @@ public class AccessTypeTest {
 
     @Test
     public void isAccessType() {
-        assertFalse(accessType.isAccessType(null));
-        assertFalse(accessType.isAccessType(""));
-        assertFalse(accessType.isAccessType("foo"));
+        assertFalse(accessType.isApplicable(null));
+        assertFalse(accessType.isApplicable(""));
+        assertFalse(accessType.isApplicable("foo"));
 
-        assertTrue(accessType.isAccessType("public"));
-        assertTrue(accessType.isAccessType("protected"));
-        assertTrue(accessType.isAccessType("private"));
+        assertTrue(accessType.isApplicable("public"));
+        assertTrue(accessType.isApplicable("protected"));
+        assertTrue(accessType.isApplicable("private"));
 
-        assertFalse(accessType.isAccessType("public "));
-        assertFalse(accessType.isAccessType("protected "));
-        assertFalse(accessType.isAccessType("private "));
+        assertFalse(accessType.isApplicable("public "));
+        assertFalse(accessType.isApplicable("protected "));
+        assertFalse(accessType.isApplicable("private "));
     }
 
     @Test
     public void getShifted() {
-        accessType.isAccessType("public");
-        assertEquals("protected", accessType.getShifted("public", false));
+        ActionContainer actionContainer = new ActionContainer(null, false, false);
 
-        accessType.isAccessType("protected");
-        assertEquals("private", accessType.getShifted("protected", false));
+        accessType.isApplicable("public");
+        assertEquals("protected", accessType.getShifted(
+                "public", actionContainer, null, null));
 
-        accessType.isAccessType("private");
-        assertEquals("public", accessType.getShifted("private", false));
+        accessType.isApplicable("protected");
+        assertEquals("private", accessType.getShifted(
+                "protected", actionContainer, null, null));
 
-        accessType.isAccessType("public");
-        assertEquals("private", accessType.getShifted("public", true));
+        accessType.isApplicable("private");
+        assertEquals("public", accessType.getShifted(
+                "private", actionContainer,null, null));
 
-        accessType.isAccessType("protected");
-        assertEquals("public", accessType.getShifted("protected", true));
+        actionContainer.setIsShiftUp(true);
+        accessType.isApplicable("public");
+        assertEquals("private", accessType.getShifted(
+                "public", actionContainer,null, null));
 
-        accessType.isAccessType("private");
-        assertEquals("protected", accessType.getShifted("private", true));
+        accessType.isApplicable("protected");
+        assertEquals("public", accessType.getShifted(
+                "protected", actionContainer,null, null));
+
+        accessType.isApplicable("private");
+        assertEquals("protected", accessType.getShifted(
+                "private", actionContainer,null, null));
     }
 }

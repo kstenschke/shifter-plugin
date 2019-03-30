@@ -46,6 +46,38 @@ class ShiftableTypesManager {
     private Tupel wordsTupel;
     private QuotedString typeQuotedString;
 
+    ShiftableTypeAbstract getShiftableType(
+            String word,
+            String prefixChar,
+            String postfixChar,
+            boolean isLastLineInDocument,
+            ActionContainer actionContainer
+    ) {
+
+        TrailingComment trailingComment = new TrailingComment();
+        if (trailingComment.isApplicable(word, postfixChar, isLastLineInDocument)) {
+            // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
+            return trailingComment;
+        }
+        if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
+            !PhpDocParam.containsDataType(actionContainer.caretLine)) {
+//            return TYPE_PHP_DOC_PARAM_LINE;
+            // PHP doc param line is handled in caretLine-shifting fallback
+            return null;
+        }
+        typePhpVariableOrArray = new PhpVariableOrArray();
+        if (typePhpVariableOrArray.isApplicable(word)) {
+            // PHP variable (must be prefixed w/ "$")
+            return typePhpVariableOrArray;
+        }
+        Parenthesis parenthesis = new Parenthesis();
+        if (parenthesis.isApplicable(word)) {
+            return parenthesis;
+        }
+
+        return null;
+    }
+
     /**
      * Detect word type (get the one w/ highest priority to be shifted) of given string
      *
@@ -63,8 +95,9 @@ class ShiftableTypesManager {
             boolean isLastLineInDocument,
             ActionContainer actionContainer
     ) {
-        // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
-        if (TrailingComment.isTrailingComment(word, postfixChar, isLastLineInDocument)) {
+        TrailingComment trailingComment = new TrailingComment();
+        if (trailingComment.isApplicable(word, postfixChar, isLastLineInDocument)) {
+            // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
             return TRAILING_COMMENT;
         }
 
@@ -76,10 +109,11 @@ class ShiftableTypesManager {
         }
         // PHP variable (must be prefixed w/ "$")
         typePhpVariableOrArray = new PhpVariableOrArray();
-        if (typePhpVariableOrArray.isPhpVariableOrArray(word)) {
+        if (typePhpVariableOrArray.isApplicable(word)) {
             return PHP_VARIABLE_OR_ARRAY;
         }
-        if (Parenthesis.isWrappedInParenthesis(word)) {
+        Parenthesis parenthesis = new Parenthesis();
+        if (parenthesis.isApplicable(word)) {
             return PARENTHESIS;
         }
 
@@ -106,7 +140,7 @@ class ShiftableTypesManager {
 
         // Object visibility
         accessType = new AccessType();
-        if (!"@".equals(prefixChar) && accessType.isAccessType(word)) {
+        if (!"@".equals(prefixChar) && accessType.isApplicable(word)) {
             return ACCESS_TYPE;
         }
 
@@ -223,7 +257,7 @@ class ShiftableTypesManager {
         switch (wordType) {
             // String based word shiftable_types
             case ACCESS_TYPE:
-                return accessType.getShifted(word, actionContainer.isShiftUp);
+                return accessType.getShifted(word, actionContainer);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
@@ -247,7 +281,8 @@ class ShiftableTypesManager {
             case QUOTED_STRING:
                 return typeQuotedString.getShifted(word, actionContainer);
             case PARENTHESIS:
-                return Parenthesis.getShifted(word);
+                Parenthesis parenthesis = new Parenthesis();
+                return parenthesis.getShifted(word);
             case OPERATOR_SIGN:
                 return typeOperatorSign.getShifted(word);
             case ROMAN_NUMERAL:
@@ -277,7 +312,27 @@ class ShiftableTypesManager {
     }
 
     String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
-        wordType = getWordType(actionContainer.selectedText, "", "", false, actionContainer);
+        ShiftableTypeAbstract shiftableType = getShiftableType(
+                actionContainer.selectedText,
+                "",
+                "",
+                false,
+                actionContainer
+        );
+        if (null != shiftableType) {
+            return shiftableType.getShifted(
+                    actionContainer.selectedText,
+                    actionContainer,
+                    moreCount,
+                    null);
+        }
+
+        wordType = getWordType(
+                actionContainer.selectedText,
+                "",
+                "",
+                false,
+                actionContainer);
 
         return getShiftedWord(actionContainer, actionContainer.selectedText, wordType, moreCount);
     }

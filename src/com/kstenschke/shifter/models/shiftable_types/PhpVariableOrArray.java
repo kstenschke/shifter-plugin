@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
@@ -28,7 +29,7 @@ import java.util.List;
 /**
  * PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
  */
-public class PhpVariableOrArray {
+public class PhpVariableOrArray extends ShiftableTypeAbstract {
 
     // Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
     private boolean isShiftableArray = false;
@@ -37,26 +38,30 @@ public class PhpVariableOrArray {
     private boolean isConventionalArray = false;
 
     public void init(String str) {
-        isPhpVariableOrArray(str);
+        isApplicable(str, null, false);
     }
 
     /**
      * Check whether given string represents a PHP variable
      *
-     * @param  str     String to be checked
+     * @param  word     String to be checked
      * @return boolean
      */
-    public boolean isPhpVariableOrArray(String str) {
+    public boolean isApplicable(
+            String word,
+            String postfixChar,
+            Boolean isLastLineInDocument
+    ) {
         boolean isVariable = false;
-        if (str.startsWith("$")) {
-            String identifier = str.substring(1);
+        if (word.startsWith("$")) {
+            String identifier = word.substring(1);
             // Must contain a-z,A-Z or 0-9, _
             isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
         }
 
         if (!isVariable) {
             // Detect array definition
-            isShiftableArray = isShiftablePhpArray(str);
+            isShiftableArray = isShiftablePhpArray(word);
         }
 
         return isVariable || isShiftableArray;
@@ -98,7 +103,12 @@ public class PhpVariableOrArray {
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return String
      */
-    public String getShifted(String variable, ActionContainer actionContainer, Integer moreCount) {
+    public String getShifted(
+            String variable,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         if (isShiftableArray) {
             return getShiftedArray(variable);
         }

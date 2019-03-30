@@ -71,7 +71,8 @@ public class ShiftableSelection {
             return;
         }
 
-        boolean isWrappedInParenthesis = Parenthesis.isWrappedInParenthesis(actionContainer.selectedText);
+        Parenthesis parenthesis = new Parenthesis();
+        boolean isWrappedInParenthesis = parenthesis.isApplicable(actionContainer.selectedText);
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager();
         ShiftableTypes.Type wordType = shiftableTypesManager.getWordType(actionContainer);
@@ -84,7 +85,8 @@ public class ShiftableSelection {
             if (!isPhpVariableOrArray || !isShiftablePhpArray) {
                 // Swap surrounding "(" and ")" versus "[" and "]"
                 actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(Parenthesis.getShifted(actionContainer.selectedText)),
+                        actionContainer.getRunnableReplaceSelection(
+                                parenthesis.getShifted(actionContainer.selectedText)),
                         Parenthesis.ACTION_TEXT);
                 return;
             }
@@ -153,9 +155,11 @@ public class ShiftableSelection {
                 actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
             final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
+            TrailingComment trailingComment = new TrailingComment();
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceCaretLine(TrailingComment.getShifted(caretLine, leadWhitespace)),
-                    TrailingComment.ACTION_TEXT);
+                    actionContainer.getRunnableReplaceCaretLine(
+                            trailingComment.getShifted(caretLine, actionContainer, moreCount, leadWhitespace)),
+                            TrailingComment.ACTION_TEXT);
             return;
         }
 

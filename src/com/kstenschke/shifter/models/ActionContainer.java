@@ -21,17 +21,17 @@ import javax.annotation.Nullable;
  * Container for event and deducible IDE environment attributes (project, editor, etc.)
  */
 public class ActionContainer {
-    public final boolean isShiftUp;
+    public boolean isShiftUp;
     private final boolean isShiftMore;
 
-    public Project project;
-    public final Editor editor;
-    public Document document;
+    @Nullable public Project project;
+    @Nullable public Editor editor;
+    @Nullable public Document document;
 
-    public CharSequence editorText;
+    @Nullable public CharSequence editorText;
     String documentText;
 
-    public SelectionModel selectionModel;
+    @Nullable public SelectionModel selectionModel;
     public int caretOffset;
 
     public int offsetSelectionStart;
@@ -56,36 +56,42 @@ public class ActionContainer {
         this.isShiftUp = isShiftUp;
         this.isShiftMore = isShiftMore;
 
+        if (null == event) return;
+
         editor = event.getData(PlatformDataKeys.EDITOR);
         if (null == editor) {
             return;
         }
 
-        project      = editor.getProject();
-        document     = editor.getDocument();
-        editorText   = document.getCharsSequence();
+        project = editor.getProject();
+        document = editor.getDocument();
+        editorText = document.getCharsSequence();
         documentText = document.getText();
 
-        selectionModel       = editor.getSelectionModel();
+        selectionModel = editor.getSelectionModel();
         offsetSelectionStart = selectionModel.getSelectionStart();
-        offsetSelectionEnd   = selectionModel.getSelectionEnd();
-        if (documentText.charAt(offsetSelectionEnd -1) == '\n') {
+        offsetSelectionEnd = selectionModel.getSelectionEnd();
+        if (documentText.charAt(offsetSelectionEnd - 1) == '\n') {
             // Prevent including line following a selection being included e.g. in line sorting
             offsetSelectionEnd--;
             selectionModel.setSelection(offsetSelectionStart, offsetSelectionEnd);
         }
         lineNumberSelStart = document.getLineNumber(offsetSelectionStart);
-        lineNumberSelEnd   = document.getLineNumber(offsetSelectionEnd);
-        selectedText       = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+        lineNumberSelEnd = document.getLineNumber(offsetSelectionEnd);
+        selectedText = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
-        caretOffset          = editor.getCaretModel().getOffset();
+        caretOffset = editor.getCaretModel().getOffset();
         int caretLineNumber = document.getLineNumber(caretOffset);
         offsetCaretLineStart = document.getLineStartOffset(caretLineNumber);
         int offsetCaretLineEnd = document.getLineEndOffset(caretLineNumber);
-        caretLine            = editorText.subSequence(offsetCaretLineStart, offsetCaretLineEnd).toString();
+        caretLine = editorText.subSequence(offsetCaretLineStart, offsetCaretLineEnd).toString();
 
-        filename      = UtilsEnvironment.getDocumentFilename(document);
+        filename = UtilsEnvironment.getDocumentFilename(document);
         fileExtension = UtilsFile.extractFileExtension(filename, true);
+    }
+
+    public void setIsShiftUp(boolean isShiftUp) {
+        this.isShiftUp = isShiftUp;
     }
 
     /**

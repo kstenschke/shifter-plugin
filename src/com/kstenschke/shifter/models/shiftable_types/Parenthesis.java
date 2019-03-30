@@ -15,10 +15,13 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+
 /**
  * Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
  */
-public class Parenthesis {
+public class Parenthesis extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift Parenthesis";
 
@@ -26,7 +29,11 @@ public class Parenthesis {
      * @param  str     String to be shifted currently
      * @return boolean
      */
-    public static boolean isWrappedInParenthesis(String str) {
+    public boolean isApplicable(
+            String str,
+            String postfixChar,
+            Boolean isLastLineInDocument
+    ) {
         str = str.trim();
 
         return isWrappedInRoundBrackets(str) || isWrappedInSquareBrackets(str) || isWrappedInCurlyBrackets(str);
@@ -44,7 +51,12 @@ public class Parenthesis {
         return str.startsWith("{") && str.endsWith("}");
     }
 
-    public static String getShifted(String str) {
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         if (isWrappedInRoundBrackets(str)) {
             return "[" + str.substring(1, str.length() - 1) + "]";
         }

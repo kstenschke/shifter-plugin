@@ -314,7 +314,8 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_PARENTHESIS)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, Parenthesis.getShifted(actionContainer.selectedText));
+            Parenthesis parenthesis = new Parenthesis();
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, parenthesis.getShifted(actionContainer.selectedText));
         }
     }
 }
