@@ -52,7 +52,7 @@ public class ActionContainer {
     String whiteSpaceRHSinSelection;
 
     private int offsetCaretLineStart;
-    String caretLine;
+    public String caretLine;
 
     public String filename;
     String fileExtension;

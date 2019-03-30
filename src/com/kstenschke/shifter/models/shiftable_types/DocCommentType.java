@@ -18,25 +18,33 @@ package com.kstenschke.shifter.models.shiftable_types;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 
+import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * DOC comment type class
  */
-public class DocCommentType { /*extends ShiftableTypeAbstract {*/
+public class DocCommentType extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
+
+    public DocCommentType(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     /**
-     * Check whether given String represents a data type (number / integer / string /...) from a doc comment (param / return /...)
+     * Check whether given String represents a data type (number / integer / string /...)
+     * from a DOC comment (param / return /...)
      *
-     * @param  prefixChar Prefix character
-     * @param  line       Whole line containing the word
      * @return boolean
      */
-    public boolean isApplicable(String prefixChar, String line) {
-        return !("#".equals(prefixChar) ||
-                "@".equals(prefixChar)) &&
-                isDocCommentTypeLineContext(line);
+    public boolean isApplicable() {
+        String str = actionContainer.caretLine;
+
+        return !("#".equals(actionContainer.prefixChar) ||
+                "@".equals(actionContainer.prefixChar)) &&
+                isDocCommentTypeLineContext(str);
     }
 
     /**
@@ -55,11 +63,14 @@ public class DocCommentType { /*extends ShiftableTypeAbstract {*/
     }
 
     /**
-     * @param  word     String to be shifted
-     * @param  actionContainer
      * @return Shifting result
      */
-    public String getShifted(String word, ActionContainer actionContainer) {
-        return new DocCommentDataType().getShifted(word, actionContainer.filename, actionContainer.isShiftUp);
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
+        return new DocCommentDataType().getShifted(str, actionContainer.filename, actionContainer.isShiftUp);
     }
 }

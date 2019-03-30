@@ -85,7 +85,7 @@ public class PhpDocParam {
                 return true;
             }
         }
-        DocCommentType docCommentType = new DocCommentType();
+        DocCommentType docCommentType = new DocCommentType(actionContainer);
         if (!actionContainer.selectedText.contains("\n")
           && docCommentType.isDocCommentTypeLineContext(actionContainer.selectedText)
           && isPhpDocParamLine(actionContainer.selectedText)

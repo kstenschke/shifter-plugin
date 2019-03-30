@@ -72,6 +72,19 @@ class ShiftableTypesManager {
         SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
         if (sizzleSelector.isApplicable()) return sizzleSelector;
 
+        // DocComment shiftable_types (must be prefixed w/ "@")
+        typeDataTypeInDocComment = new DocCommentType(actionContainer);
+        if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
+            typeTagInDocComment = new DocCommentTag();
+            /*if (prefixChar.matches("@")
+                    && typeTagInDocComment.isApplicable(prefixChar, actionContainer.caretLine)
+            ) {
+                return DOC_COMMENT_TAG;
+            }*/
+
+            if (typeDataTypeInDocComment.isApplicable()) return typeDataTypeInDocComment;
+        }
+
         // @todo 1. convert all shiftable types and add them here
 
         // @todo 2. completely remove getWordType() when 1. is done
@@ -131,7 +144,7 @@ class ShiftableTypesManager {
         }
 
         // DocComment shiftable_types (must be prefixed w/ "@")
-        typeDataTypeInDocComment = new DocCommentType();
+        typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag();
             if (prefixChar.matches("@")
@@ -139,7 +152,7 @@ class ShiftableTypesManager {
             ) {
                 return DOC_COMMENT_TAG;
             }
-            if (typeDataTypeInDocComment.isApplicable(prefixChar, actionContainer.caretLine)) {
+            if (typeDataTypeInDocComment.isApplicable()) {
                 return DOC_COMMENT_DATA_TYPE;
             }
         }
