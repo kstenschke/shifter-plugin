@@ -98,6 +98,8 @@ class ShiftableTypesManager {
 
         // @todo 3. rework: remove redundant arguments (e.g. from getShifted())
 
+        // @todo 4. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
+
         return null;
     }
 
