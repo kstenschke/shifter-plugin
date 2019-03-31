@@ -57,7 +57,7 @@ public class ActionContainer {
     public String caretLine;
 
     public String filename;
-    String fileExtension;
+    public String fileExtension;
 
     /**
      * Constructor

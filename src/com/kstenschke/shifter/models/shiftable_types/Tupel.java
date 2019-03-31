@@ -97,8 +97,8 @@ public class Tupel {
             !actionContainer.selectedText.isEmpty() &&
             UtilsTextual.subStringCount(str, " ") == 1
         ) {
-            DictionaryTerm dictionaryTerm = new DictionaryTerm();
-            if (dictionaryTerm.isTermInDictionary(str)) {
+            DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
+            if (dictionaryTerm.isApplicable()) {
                 // Shifted string is a selected tupel, and a two-words term from the dictionary
                 new ShiftableSelectionWithPopup(actionContainer)
                         .shiftDictionaryTermOrToggleTupelOrder();

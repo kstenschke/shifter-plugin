@@ -80,6 +80,20 @@ class ShiftableTypesManager {
         accessType = new AccessType(actionContainer);
         if (accessType.isApplicable()) return accessType;
 
+        // File extension specific term in dictionary
+        typeDictionaryTerm = new DictionaryTerm(actionContainer);
+        if (typeDictionaryTerm.isApplicable()) return typeDictionaryTerm;
+
+            /*
+            if (
+            if (null != fileExtension &&
+                UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
+                JqueryObserver.isJQueryObserver(word)
+            ) {
+                return JQUERY_OBSERVER;
+            }*/
+
+
         // @todo 1. convert all shiftable types and add them here
 
         // @todo 2. completely remove getWordType() when 1. is done
@@ -159,10 +173,10 @@ class ShiftableTypesManager {
         }
 
         // File extension specific term in dictionary
-        typeDictionaryTerm = new DictionaryTerm();
+        typeDictionaryTerm = new DictionaryTerm(actionContainer);
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension) {
-            if (typeDictionaryTerm.isTermInDictionary(word, fileExtension)) {
+            if (typeDictionaryTerm.isApplicable(word, fileExtension)) {
                 return DICTIONARY_WORD_EXT_SPECIFIC;
             }
             if (
@@ -217,7 +231,7 @@ class ShiftableTypesManager {
             return MONO_CHARACTER;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (typeDictionaryTerm.isTermInDictionary(word)) {
+        if (typeDictionaryTerm.isApplicable()) {
             return DICTIONARY_WORD_GLOBAL;
         }
         if (NumericPostfixed.hasNumericPostfix(word)) {
@@ -279,7 +293,7 @@ class ShiftableTypesManager {
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                return typeDictionaryTerm.getShifted(word, actionContainer.isShiftUp);
+                return typeDictionaryTerm.getShifted(word, actionContainer);
             // Generic shiftable_types (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return typeSizzleSelector.getShifted(word, actionContainer);

@@ -16,16 +16,22 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
 import org.apache.commons.lang.StringUtils;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DictionaryTerm {
+public class DictionaryTerm extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     // Set during extension specific detection of dictionary term
     private String fileExtension;
@@ -39,7 +45,9 @@ public class DictionaryTerm {
     /**
      * Constructor
      */
-    public DictionaryTerm() {
+    public DictionaryTerm(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+
         String contents = ShifterPreferences.getDictionary();
         if (contents.isEmpty()) {
             contents = new PluginConfiguration().getDefaultDictionary();
@@ -53,11 +61,46 @@ public class DictionaryTerm {
      * + Stores matching line containing the term for use in shifting later
      * Note: this is a global dictionary check, and NOT file extension specific
      *
-     * @param  term        String to be looked for in shifter dictionary
      * @return boolean
      */
-    public boolean isTermInDictionary(String term) {
-        if (dictionaryContents.contains("|" + fileExtension + "|")) {
+    public boolean isApplicable() {
+        return null != actionContainer.fileExtension && isTermInDictionary(actionContainer.selectedText);
+    }
+
+    /**
+     * Check whether the given term exists in any section of shift-lists of the dictionary,
+     * looking only at lists in blocks having assigned the given extension
+     * + Stores first matching line containing the term for use in shifting later
+     *
+     * @param  term            String to be looked for in shifter dictionary
+     * @param  fileExtension   Extension of edited file
+     * @return boolean
+     */
+    public boolean isApplicable(String term, String fileExtension) {
+        if (null != fileExtension && dictionaryContents.contains("|" + fileExtension + "|")) {
+            this.fileExtension = fileExtension;
+
+            // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
+            Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(fileExtension);
+
+            // Go over all blocks of lists of shift-terms, fetch first one containing the term
+            for (Object aBlocksOfExtension : blocksOfExtension) {
+                String curExtensionsList = aBlocksOfExtension.toString();
+                String curShiftTermsBlock = StringUtils.substringBetween(dictionaryContents, curExtensionsList, "}");
+
+                // Term is contained? store list of shifting neighbours
+                if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
+                    relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+
+    private boolean isTermInDictionary(String term) {
+        if (dictionaryContents.contains("|" + actionContainer.fileExtension.toLowerCase() + "|")) {
             // Merge all terms-blocks
             String dictionaryTerms = dictionaryContents;
             Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
@@ -78,38 +121,6 @@ public class DictionaryTerm {
             if (dictionaryTermsLower.contains("|" + termLower + "|")) {
                 relevantTermsList = extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
                 return true;
-            }
-        }
-
-        return false;
-    }
-
-    /**
-     * Check whether the given term exists in any section of shift-lists of the dictionary,
-     * looking only at lists in blocks having assigned the given extension
-     * + Stores first matching line containing the term for use in shifting later
-     *
-     * @param  term            String to be looked for in shifter dictionary
-     * @param  fileExtension   Extension of edited file
-     * @return boolean
-     */
-    public boolean isTermInDictionary(String term, String fileExtension) {
-        if (null != fileExtension && dictionaryContents.contains("|" + fileExtension + "|")) {
-            this.fileExtension = fileExtension;
-
-            // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
-            Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(fileExtension);
-
-            // Go over all blocks of lists of shift-terms, fetch first one containing the term
-            for (Object aBlocksOfExtension : blocksOfExtension) {
-                String curExtensionsList = aBlocksOfExtension.toString();
-                String curShiftTermsBlock = StringUtils.substringBetween(dictionaryContents, curExtensionsList, "}");
-
-                // Term is contained? store list of shifting neighbours
-                if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
-                    relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
-                    return true;
-                }
             }
         }
 
@@ -183,10 +194,14 @@ public class DictionaryTerm {
      * Shift given word, using the (already fetched) list of relevant terms
      *
      * @param  word     Word to be shifted
-     * @param  isUp     Shifting up? (otherwise down)
      * @return String   The shifted word
      */
-    public String getShifted(String word, boolean isUp) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         if (null == relevantTermsList) {
             return word;
         }
@@ -200,10 +215,10 @@ public class DictionaryTerm {
         }
 
         StaticWordType wordType = new StaticWordType(termsList);
-        String shiftedWord = wordType.getShifted(word, isUp);
+        String shiftedWord = wordType.getShifted(word, actionContainer.isShiftUp);
 
         return shiftedWord.equals(word)
-                ? wordType.getShifted(word.toLowerCase(), isUp)
+                ? wordType.getShifted(word.toLowerCase(), actionContainer.isShiftUp)
                 : shiftedWord;
     }
 }
