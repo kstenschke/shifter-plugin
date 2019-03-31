@@ -17,17 +17,41 @@ package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
 /**
  * Quoted String.
  */
-public class QuotedString {
+public class QuotedString extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     private String quoteChar;
+
+    public QuotedString(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    /**
+     * @return boolean  Is word to be shifted wrapped in quote characters?
+     */
+    public boolean isApplicable() {
+        quoteChar = actionContainer.prefixChar;
+
+        // Must be wrapped in single-, double quotes, or backticks
+
+        return  // Word is wrapped in single quotes
+                ("'".equals(actionContainer.prefixChar) && "'".equals(actionContainer.postfixChar))
+                        // Word is wrapped in double quotes
+                        || ("\"".equals(actionContainer.prefixChar) && "\"".equals(actionContainer.postfixChar))
+                        // Word is wrapped in backticks
+                        || ("`".equals(actionContainer.prefixChar) && "`".equals(actionContainer.postfixChar));
+    }
 
     public static boolean containsShiftableQuotes(String str) {
         return (ShifterPreferences.getIsActiveConvertSingleQuotes() && str.contains("'"))
@@ -39,33 +63,18 @@ public class QuotedString {
     }
 
     /**
-     * Check whether shifted word is wrapped in quote characters
-     *
-     * @param  prefixChar  Character preceding the string
-     * @param  postfixChar Character after the string
-     * @return boolean
-     */
-    public boolean isQuotedString(String prefixChar, String postfixChar) {
-        quoteChar = prefixChar;
-
-        // Must begin be wrapped in single-, double quotes, or backticks
-
-        return  // Word is wrapped in single quotes
-                ("'".equals(prefixChar) && "'".equals(postfixChar))
-                // Word is wrapped in double quotes
-                || ("\"".equals(prefixChar) && "\"".equals(postfixChar))
-                // Word is wrapped in backticks
-                || ("`".equals(prefixChar) && "`".equals(postfixChar));
-    }
-
-    /**
      * Shift to previous/next quoted string
      *
      * @param  word       Quoted word to be shifted
      * @param  actionContainer
      * @return String
      */
-    public String getShifted(String word, ActionContainer actionContainer) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         // Get array of all strings wrapped in current quoting sign
         String text = actionContainer.editorText.toString();
         List<String> allMatches = UtilsTextual.extractQuotedStrings(text, quoteChar);

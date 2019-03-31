@@ -91,6 +91,9 @@ class ShiftableTypesManager {
         TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
         if (ternaryExpression.isApplicable()) return ternaryExpression;
 
+        // Quoted (must be wrapped in single or double quotes or backticks)
+        typeQuotedString = new QuotedString(actionContainer);
+        if (typeQuotedString.isApplicable()) return typeQuotedString;
 
         // @todo 1. convert all shiftable types and add them here
 
@@ -171,8 +174,8 @@ class ShiftableTypesManager {
         if (ternaryExpression.isApplicable()) return TERNARY_EXPRESSION;
 
         // Quoted (must be wrapped in single or double quotes or backticks)
-        typeQuotedString = new QuotedString();
-        if (typeQuotedString.isQuotedString(prefixChar, postfixChar)) return QUOTED_STRING;
+        typeQuotedString = new QuotedString(actionContainer);
+        if (typeQuotedString.isApplicable()) return QUOTED_STRING;
 
         // RGB (must be prefixed w/ "#")
         if (RgbColor.isRgbColorString(word, prefixChar)) {
