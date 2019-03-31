@@ -84,14 +84,9 @@ class ShiftableTypesManager {
         typeDictionaryTerm = new DictionaryTerm(actionContainer);
         if (typeDictionaryTerm.isApplicable()) return typeDictionaryTerm;
 
-            /*
-            if (
-            if (null != fileExtension &&
-                UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
-                JqueryObserver.isJQueryObserver(word)
-            ) {
-                return JQUERY_OBSERVER;
-            }*/
+        JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
+        if (jqueryObserver.isApplicable()) return jqueryObserver;
+
 
 
         // @todo 1. convert all shiftable types and add them here
@@ -134,69 +129,45 @@ class ShiftableTypesManager {
         }
         // PHP variable (must be prefixed w/ "$")
         typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
-        if (typePhpVariableOrArray.isApplicable()) {
-            return PHP_VARIABLE_OR_ARRAY;
-        }
+        if (typePhpVariableOrArray.isApplicable()) return PHP_VARIABLE_OR_ARRAY;
+
         Parenthesis parenthesis = new Parenthesis(actionContainer);
-        if (parenthesis.isApplicable()) {
-            return PARENTHESIS;
-        }
+        if (parenthesis.isApplicable()) return PARENTHESIS;
 
         JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-        if (jsVariablesDeclarations.isApplicable()) {
-            return JS_VARIABLES_DECLARATIONS;
-        }
+        if (jsVariablesDeclarations.isApplicable()) return JS_VARIABLES_DECLARATIONS;
 
         typeSizzleSelector = new SizzleSelector(actionContainer);
-        if (typeSizzleSelector.isApplicable()) {
-            return SIZZLE_SELECTOR;
-        }
+        if (typeSizzleSelector.isApplicable()) return SIZZLE_SELECTOR;
 
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag(actionContainer);
-            if (prefixChar.matches("@")
-                && typeTagInDocComment.isApplicable()
-            ) {
-                return DOC_COMMENT_TAG;
-            }
-            if (typeDataTypeInDocComment.isApplicable()) {
-                return DOC_COMMENT_DATA_TYPE;
-            }
+            if (prefixChar.matches("@") && typeTagInDocComment.isApplicable()) return DOC_COMMENT_TAG;
+            if (typeDataTypeInDocComment.isApplicable()) return DOC_COMMENT_DATA_TYPE;
         }
 
         // Object visibility
         accessType = new AccessType(actionContainer);
-        if (!"@".equals(prefixChar) && accessType.isApplicable()) {
-            return ACCESS_TYPE;
-        }
+        if (!"@".equals(prefixChar) && accessType.isApplicable()) return ACCESS_TYPE;
 
         // File extension specific term in dictionary
         typeDictionaryTerm = new DictionaryTerm(actionContainer);
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension) {
-            if (typeDictionaryTerm.isApplicable(word, fileExtension)) {
-                return DICTIONARY_WORD_EXT_SPECIFIC;
-            }
-            if (
-                UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
-                JqueryObserver.isJQueryObserver(word)
-            ) {
-                    return JQUERY_OBSERVER;
-            }
+            if (typeDictionaryTerm.isApplicable(word, fileExtension)) return DICTIONARY_WORD_EXT_SPECIFIC;
+            JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
+            if (jqueryObserver.isApplicable()) return JQUERY_OBSERVER;
         }
 
         // Ternary Expression - swap IF and ELSE
-        if (TernaryExpression.isTernaryExpression(word, prefixChar)) {
-            return TERNARY_EXPRESSION;
-        }
+        if (TernaryExpression.isTernaryExpression(word, prefixChar)) return TERNARY_EXPRESSION;
 
         // Quoted (must be wrapped in single or double quotes or backticks)
         typeQuotedString = new QuotedString();
-        if (typeQuotedString.isQuotedString(prefixChar, postfixChar)) {
-            return QUOTED_STRING;
-        }
+        if (typeQuotedString.isQuotedString(prefixChar, postfixChar)) return QUOTED_STRING;
+
         // RGB (must be prefixed w/ "#")
         if (RgbColor.isRgbColorString(word, prefixChar)) {
             typeRgbColor = new RgbColor();
@@ -231,33 +202,24 @@ class ShiftableTypesManager {
             return MONO_CHARACTER;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (typeDictionaryTerm.isApplicable()) {
-            return DICTIONARY_WORD_GLOBAL;
-        }
-        if (NumericPostfixed.hasNumericPostfix(word)) {
-            return NUMERIC_POSTFIXED;
-        }
+        if (typeDictionaryTerm.isApplicable()) return DICTIONARY_WORD_GLOBAL;
+
+        if (NumericPostfixed.hasNumericPostfix(word)) return NUMERIC_POSTFIXED;
+
         wordsTupel = new Tupel(actionContainer);
-        if (wordsTupel.isWordsTupel(word)) {
-            return WORDS_TUPEL;
-        }
-        if (SeparatedPath.isSeparatedPath(word)) {
-            return SEPARATED_PATH;
-        }
-        if (CamelCaseString.isCamelCase(word)) {
-            return CAMEL_CASED;
-        }
-        if (HtmlEncodable.isHtmlEncodable(word)) {
-            return HTML_ENCODABLE;
-        }
+        if (wordsTupel.isWordsTupel(word)) return WORDS_TUPEL;
+
+        if (SeparatedPath.isSeparatedPath(word)) return SEPARATED_PATH;
+
+        if (CamelCaseString.isCamelCase(word)) return CAMEL_CASED;
+
+        if (HtmlEncodable.isHtmlEncodable(word)) return HTML_ENCODABLE;
 
         return UNKNOWN;
     }
 
     ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
-        if (null == actionContainer.editorText) {
-            return UNKNOWN;
-        }
+        if (null == actionContainer.editorText) return UNKNOWN;
 
         int editorTextLength = actionContainer.editorText.length();
         int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
@@ -305,7 +267,8 @@ class ShiftableTypesManager {
             case CSS_UNIT:
                 return typePixelValue.getShifted(word, actionContainer.isShiftUp);
             case JQUERY_OBSERVER:
-                return JqueryObserver.getShifted(word);
+                JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
+                return jqueryObserver.getShifted(word, actionContainer, null, null);
             case PHP_VARIABLE_OR_ARRAY:
                 return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:

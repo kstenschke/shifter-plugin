@@ -15,12 +15,29 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+import com.kstenschke.shifter.utils.UtilsFile;
+
+import javax.annotation.Nullable;
+
 /**
  * JavaScript Variables (multi-lined declarations of multiple vars)
  */
-public class JqueryObserver {
+public class JqueryObserver extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift jQuery Observer";
+
+    /**
+     * Constructor
+     *
+     * @param actionContainer
+     */
+    public JqueryObserver(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     /**
      * Check whether given string represents a declaration of (multiple) JS variables:
@@ -30,10 +47,14 @@ public class JqueryObserver {
      * -there can be empty lines
      * -there can be commented lines, beginning w/ "//"
      *
-     * @param  str     String to be checked
      * @return boolean
      */
-    public static Boolean isJQueryObserver(String str) {
+    public boolean isApplicable() {
+        String str = actionContainer.selectedText;
+
+        if (null == actionContainer.fileExtension ||
+            !UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return false;
+
         if (str.startsWith(".")) {
             str = str.substring(1);
         }
@@ -60,7 +81,12 @@ public class JqueryObserver {
      * @param  str      text selection to be shifted
      * @return String
      */
-    public static String getShifted(String str) {
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         boolean startsWithDot = str.startsWith(".");
         if (startsWithDot) {
             str = str.substring(1);
