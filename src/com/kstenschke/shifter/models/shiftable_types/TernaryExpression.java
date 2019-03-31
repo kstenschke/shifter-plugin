@@ -15,31 +15,39 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+
+import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * Ternary Expression
  */
-public class TernaryExpression {
+public class TernaryExpression extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift Ternary Expression";
+
+    public TernaryExpression(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     /**
      * Check whether shifted string is a ternary expression
      *
-     * @param  str
-     * @param  prefixChar   Character preceding the string
      * @return boolean
      */
-    public static boolean isTernaryExpression(String str, String prefixChar) {
-        String expression = str.trim();
+    public boolean isApplicable() {
+        String expression = actionContainer.selectedText.trim();
 
         return (
-            expression.startsWith("?") || "?".equals(prefixChar)
+            expression.startsWith("?") || "?".equals(actionContainer.prefixChar)
             && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
             && expression.length() >= 3
-            && ("?".equals(prefixChar) || expression.indexOf("?") < expression.indexOf(":"))
+            && ("?".equals(actionContainer.prefixChar) || expression.indexOf("?") < expression.indexOf(":"))
         );
     }
 
@@ -49,7 +57,12 @@ public class TernaryExpression {
      * @param  str      string to be shifted
      * @return String   The shifted string
      */
-    public static String getShifted(String str) {
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         int offsetElse = str.indexOf(":");
         if (-1 == offsetElse) {
             return str;

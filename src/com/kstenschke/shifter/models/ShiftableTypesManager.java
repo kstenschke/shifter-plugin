@@ -87,13 +87,16 @@ class ShiftableTypesManager {
         JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
         if (jqueryObserver.isApplicable()) return jqueryObserver;
 
+        // Ternary Expression - swap IF and ELSE
+        TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
+        if (ternaryExpression.isApplicable()) return ternaryExpression;
 
 
         // @todo 1. convert all shiftable types and add them here
 
         // @todo 2. completely remove getWordType() when 1. is done
 
-        // @todo 3. rework: remove redundant arguments
+        // @todo 3. rework: remove redundant arguments (e.g. from getShifted())
 
         return null;
     }
@@ -162,7 +165,8 @@ class ShiftableTypesManager {
         }
 
         // Ternary Expression - swap IF and ELSE
-        if (TernaryExpression.isTernaryExpression(word, prefixChar)) return TERNARY_EXPRESSION;
+        TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
+        if (ternaryExpression.isApplicable()) return TERNARY_EXPRESSION;
 
         // Quoted (must be wrapped in single or double quotes or backticks)
         typeQuotedString = new QuotedString();
@@ -272,7 +276,8 @@ class ShiftableTypesManager {
             case PHP_VARIABLE_OR_ARRAY:
                 return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:
-                return TernaryExpression.getShifted(word);
+                TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
+                return ternaryExpression.getShifted(word);
             case QUOTED_STRING:
                 return typeQuotedString.getShifted(word, actionContainer);
             case PARENTHESIS:

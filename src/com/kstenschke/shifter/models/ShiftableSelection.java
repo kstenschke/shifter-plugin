@@ -117,10 +117,11 @@ public class ShiftableSelection {
             lineNumberSelEnd--;
         }
 
-        if (TernaryExpression.isTernaryExpression(actionContainer.selectedText, "")) {
+        TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
+        if (ternaryExpression.isApplicable()) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
-                            TernaryExpression.getShifted(actionContainer.selectedText),
+                            ternaryExpression.getShifted(actionContainer.selectedText, actionContainer, null, null),
                             true),
                     TernaryExpression.ACTION_TEXT);
             return;
