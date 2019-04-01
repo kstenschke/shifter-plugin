@@ -21,6 +21,7 @@ public abstract class ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;
 
+    // Constructor
     public ShiftableTypeAbstract(@Nullable ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
     }

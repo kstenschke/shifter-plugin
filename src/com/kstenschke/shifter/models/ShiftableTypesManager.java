@@ -72,7 +72,7 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new CssUnit(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new NumericValue(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new OperatorSign(actionContainer).getShiftableType())) break;
-
+            if (null != (shiftableType = new RomanNumber(actionContainer).getShiftableType())) break;
             // @todo 1. convert all shiftable types and add them here
 
             // @todo 2. completely remove getWordType() when 1. is done
@@ -146,11 +146,8 @@ class ShiftableTypesManager {
         if (null != new CssUnit(actionContainer).getShiftableType()) return CSS_UNIT;
         if (null != new NumericValue(actionContainer).getShiftableType()) return NUMERIC_VALUE;
         if (null != new OperatorSign(actionContainer).getShiftableType()) return OPERATOR_SIGN;
+        if (null != new RomanNumber(actionContainer).getShiftableType()) return ROMAN_NUMERAL;
 
-        if (RomanNumber.isRomanNumber(word)) {
-            typeRomanNumber = new RomanNumber();
-            return ROMAN_NUMERAL;
-        }
         if (LogicalOperator.isLogicalOperator(word)) {
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
             return LOGICAL_OPERATOR;
@@ -240,9 +237,9 @@ class ShiftableTypesManager {
                 Parenthesis parenthesis = new Parenthesis(actionContainer);
                 return parenthesis.getShifted(word);
             case OPERATOR_SIGN:
-                return typeOperatorSign.getShifted(word);
+                return typeOperatorSign.getShifted(word, actionContainer);
             case ROMAN_NUMERAL:
-                return typeRomanNumber.getShifted(word, actionContainer.isShiftUp);
+                return typeRomanNumber.getShifted(word, actionContainer);
             case LOGICAL_OPERATOR:
                 return LogicalOperator.getShifted(word);
             case MONO_CHARACTER:
