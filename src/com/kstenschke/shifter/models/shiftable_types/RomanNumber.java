@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.RomanNumeral;
+import com.kstenschke.shifter.models.entities.RomanNumeral;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsTextual;
 

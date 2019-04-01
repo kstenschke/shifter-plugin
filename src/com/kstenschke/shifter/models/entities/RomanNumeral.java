@@ -1,4 +1,4 @@
-package com.kstenschke.shifter.models;
+package com.kstenschke.shifter.models.entities;
 
 /**
  * An object of type RomanNumeral is an integer between 1 and 3999.  It can
