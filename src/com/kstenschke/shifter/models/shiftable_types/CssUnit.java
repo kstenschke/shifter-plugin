@@ -15,16 +15,21 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsMap;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.util.HashMap;
 
 /**
  * Pixel value class
  */
-public class CssUnit {
+public class CssUnit extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift CSS unit";
 
@@ -41,12 +46,16 @@ public class CssUnit {
     private static final String UNIT_VMIN = "vmin";
     private static final String UNIT_VW   = "vw";
 
-    /**
-     * @param  str      String to be checked
-     * @return boolean  Does the given string represents a CSS length value?
-     */
-    public static boolean isCssUnitValue(String str) {
-        return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)");
+    // Constructor
+    public CssUnit(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    // Does the given string represent a CSS length value?
+    public CssUnit getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)") ? this : null;
     }
 
     public static boolean isCssUnit(String str) {
@@ -55,10 +64,17 @@ public class CssUnit {
 
     /**
      * @param  value    The full length value, post-fixed by its unit
-     * @param  isUp     Shifting up or down?
+     * @param  actionContainer
+     * @param  moreCount
+     * @param  leadingWhiteSpace
      * @return String   Length (em / px / pt / cm / in / rem / vw / vh / vmin / vmax) value shifted up or down by 1 unit
      */
-    public String getShifted(String value, boolean isUp) {
+    public String getShifted(
+            String value,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         // Get int from PX value
         String unit = detectUnit(value);
         try {
@@ -67,7 +83,7 @@ public class CssUnit {
                     : Integer.parseInt(value.replace(unit, ""));
 
             // Shift up/down by 1
-            numericValue = numericValue + (isUp ? 1 : -1);
+            numericValue = numericValue + (actionContainer.isShiftUp ? 1 : -1);
 
             // Prepend w/ unit again
             return Integer.toString(numericValue).concat(unit);

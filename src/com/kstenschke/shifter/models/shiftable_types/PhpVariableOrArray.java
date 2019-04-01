@@ -40,6 +40,7 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
     // Shorthand (since PHP5.4) or long syntax array?
     private boolean isConventionalArray = false;
 
+    // Constructor
     public PhpVariableOrArray(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }

@@ -34,6 +34,7 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
     // Declaration/assignment scope: "const", "let", "var"
     private static String scope;
 
+    // Constructor
     public JsVariablesDeclarations(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }

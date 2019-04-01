@@ -30,15 +30,12 @@ public class SizzleSelector extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift Sizzle Selector";
 
+    // Constructor
     public SizzleSelector(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    /**
-     * Check whether given string represents a declaration of JS variables
-     *
-     * @return boolean
-     */
+    // Check whether given string represents a declaration of JS variables
     public SizzleSelector getShiftableType() {
         String str = actionContainer.selectedText.trim();
 

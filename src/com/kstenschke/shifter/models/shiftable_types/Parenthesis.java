@@ -29,6 +29,7 @@ public class Parenthesis extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift Parenthesis";
 
+    // Constructor
     public Parenthesis(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }

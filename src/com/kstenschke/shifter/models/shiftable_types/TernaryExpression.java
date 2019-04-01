@@ -31,15 +31,12 @@ public class TernaryExpression extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift Ternary Expression";
 
+    // Constructor
     public TernaryExpression(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    /**
-     * Check whether shifted string is a ternary expression
-     *
-     * @return boolean
-     */
+    // Check whether shifted string is a ternary expression
     public TernaryExpression getShiftableType() {
         String expression = actionContainer.selectedText.trim();
 

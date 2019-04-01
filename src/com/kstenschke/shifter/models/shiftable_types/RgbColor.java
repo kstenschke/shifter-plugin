@@ -15,10 +15,8 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
-import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
-import com.kstenschke.shifter.resources.ui.PluginConfiguration;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -32,9 +30,7 @@ public class RgbColor extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift RGB Color";
 
-    /**
-     * Constructor
-     */
+    // Constructor
     public RgbColor(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
@@ -54,7 +50,8 @@ public class RgbColor extends ShiftableTypeAbstract {
             String rgbStr,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace) {
+            String leadingWhiteSpace
+    ) {
         String rgbStrSixFold = rgbStr.length() == 3 ? sixfoldTripleColor(rgbStr) : rgbStr;
 
         if (actionContainer.isShiftUp && !isWhite(rgbStrSixFold)) return lightenRgbString(rgbStrSixFold);

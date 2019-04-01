@@ -29,16 +29,13 @@ public class DocCommentType extends ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;
 
+    // Constructor
     public DocCommentType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    /**
-     * Check whether given String represents a data type (number / integer / string /...)
-     * from a DOC comment (param / return /...)
-     *
-     * @return boolean
-     */
+    // Check whether given String represents a data type (number / integer / string /...)
+    // from a DOC comment (param / return /...)
     public ShiftableTypeAbstract getShiftableType() {
         if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return null;
 

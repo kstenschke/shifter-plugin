@@ -30,25 +30,17 @@ public class JqueryObserver extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift jQuery Observer";
 
-    /**
-     * Constructor
-     *
-     * @param actionContainer
-     */
+    // Constructor
     public JqueryObserver(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    /**
-     * Check whether given string represents a declaration of (multiple) JS variables:
-     * -selection has multiple lines
-     * -each trimmed line starts w/ "var" (at least 2 occurrences)
-     * -each trimmed line ends w/ ";"
-     * -there can be empty lines
-     * -there can be commented lines, beginning w/ "//"
-     *
-     * @return boolean
-     */
+    // Check whether given string represents a declaration of (multiple) JS variables:
+    // -selection has multiple lines
+    // -each trimmed line starts w/ "var" (at least 2 occurrences)
+    // -each trimmed line ends w/ ";"
+    // -there can be empty lines
+    // -there can be commented lines, beginning w/ "//"
     public JqueryObserver getShiftableType() {
         String str = actionContainer.selectedText;
 

@@ -18,7 +18,6 @@ package com.kstenschke.shifter.models.shiftable_types;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
-import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
 import org.apache.commons.lang.StringUtils;
@@ -42,9 +41,7 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
     // The complete dictionary
     private final String dictionaryContents;
 
-    /**
-     * Constructor
-     */
+    // Constructor
     public DictionaryTerm(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
 
@@ -56,13 +53,9 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
         dictionaryContents = contents;
     }
 
-    /**
-     * Check whether the given term exists in any section of shift-lists of the dictionary
-     * + Stores matching line containing the term for use in shifting later
-     * Note: this is a global dictionary check, and NOT file extension specific
-     *
-     * @return boolean
-     */
+    // Check whether the given term exists in any section of shift-lists of the dictionary
+    // + Stores matching line containing the term for use in shifting later
+    // Note: this is a global dictionary check, and NOT file extension specific
     public DictionaryTerm getShiftableType() {
         return null != actionContainer.fileExtension && isTermInDictionary(actionContainer.selectedText)
                 ? this : null;

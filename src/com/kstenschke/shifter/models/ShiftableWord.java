@@ -244,7 +244,10 @@ public class ShiftableWord {
         // Identify word type and shift it accordingly
         ShiftableWord shiftableShiftableWord = new ShiftableWord(actionContainer, word, prefixChar, postfixChar, moreCount);
 
-        if (!isOperator && (NumericValue.isNumericValue(word) || CssUnit.isCssUnitValue(word)) && "-".equals(prefixChar)) {
+        if (!isOperator &&
+            (NumericValue.isNumericValue(word) || null != new CssUnit(actionContainer).getShiftableType()) &&
+            "-".equals(prefixChar)
+        ) {
             word = "-" + word;
             wordOffset--;
         }

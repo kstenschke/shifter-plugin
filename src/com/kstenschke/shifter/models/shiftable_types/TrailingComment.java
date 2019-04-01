@@ -29,6 +29,7 @@ public class TrailingComment extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift trailing Comment";
 
+    // Constructor
     public TrailingComment(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }

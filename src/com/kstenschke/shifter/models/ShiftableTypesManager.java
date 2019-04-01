@@ -69,6 +69,7 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new TernaryExpression(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new QuotedString(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new RgbColor(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new CssUnit(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -78,6 +79,7 @@ class ShiftableTypesManager {
 
             // @todo 4. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
 
+            // No shiftable type detected
             return null;
         }
 
@@ -139,12 +141,8 @@ class ShiftableTypesManager {
         if (null != new TernaryExpression(actionContainer).getShiftableType()) return TERNARY_EXPRESSION;
         if (null != new QuotedString(actionContainer).getShiftableType()) return QUOTED_STRING;
         if (null != new RgbColor(actionContainer).getShiftableType()) return RGB_COLOR;
+        if (null != new CssUnit(actionContainer).getShiftableType()) return CSS_UNIT;
 
-
-        if (CssUnit.isCssUnitValue(word)) {
-            typePixelValue = new CssUnit();
-            return CSS_UNIT;
-        }
         if (NumericValue.isNumericValue(word)) {
             typeNumericValue = new NumericValue();
             return NUMERIC_VALUE;
@@ -233,7 +231,7 @@ class ShiftableTypesManager {
                 // Numeric values including UNIX and millisecond timestamps
                 return typeNumericValue.getShifted(word, actionContainer);
             case CSS_UNIT:
-                return typePixelValue.getShifted(word, actionContainer.isShiftUp);
+                return typePixelValue.getShifted(word, actionContainer);
             case JQUERY_OBSERVER:
                 JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
                 return jqueryObserver.getShifted(word, actionContainer, null, null);

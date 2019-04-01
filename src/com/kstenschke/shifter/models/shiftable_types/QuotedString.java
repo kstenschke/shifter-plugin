@@ -33,13 +33,12 @@ public class QuotedString extends ShiftableTypeAbstract {
 
     private String quoteChar;
 
+    // Constructor
     public QuotedString(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    /**
-     * @return boolean  Is word to be shifted wrapped in quote characters?
-     */
+    // Is word to be shifted wrapped in quote characters?
     public QuotedString getShiftableType() {
         quoteChar = actionContainer.prefixChar;
 

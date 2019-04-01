@@ -31,6 +31,7 @@ public class AccessType extends ShiftableTypeAbstract  {
 
     private StaticWordType accessTypes;
 
+    // Constructor
     public AccessType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
