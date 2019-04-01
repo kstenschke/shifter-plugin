@@ -73,6 +73,10 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new NumericValue(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new OperatorSign(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new RomanNumber(actionContainer).getShiftableType())) break;
+
+            // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
+            if (null != (shiftableType = new LogicalOperator(actionContainer).getShiftableType())) break;
+
             // @todo 1. convert all shiftable types and add them here
 
             // @todo 2. completely remove getWordType() when 1. is done
@@ -147,11 +151,8 @@ class ShiftableTypesManager {
         if (null != new NumericValue(actionContainer).getShiftableType()) return NUMERIC_VALUE;
         if (null != new OperatorSign(actionContainer).getShiftableType()) return OPERATOR_SIGN;
         if (null != new RomanNumber(actionContainer).getShiftableType()) return ROMAN_NUMERAL;
-
-        if (LogicalOperator.isLogicalOperator(word)) {
-            // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
-            return LOGICAL_OPERATOR;
-        }
+        // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
+        if (null != new LogicalOperator(actionContainer).getShiftableType()) return LOGICAL_OPERATOR;
 
         if (MonoCharacter.isMonoCharacterString(word)) {
             typeMonoCharacterString = new MonoCharacter();
@@ -241,7 +242,7 @@ class ShiftableTypesManager {
             case ROMAN_NUMERAL:
                 return typeRomanNumber.getShifted(word, actionContainer);
             case LOGICAL_OPERATOR:
-                return LogicalOperator.getShifted(word);
+                return new LogicalOperator(actionContainer).getShifted(word);
             case MONO_CHARACTER:
                 return typeMonoCharacterString.getShifted(word, actionContainer.isShiftUp);
             case DOC_COMMENT_TAG:

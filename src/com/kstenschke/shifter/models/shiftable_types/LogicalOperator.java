@@ -15,24 +15,39 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+
+import javax.annotation.Nullable;
+
 /**
  * Quoted String.
  */
-public class LogicalOperator {
+public class LogicalOperator extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Toggle Logical Operator";
 
-    public static boolean isLogicalOperator(String word) {
-        return "&&".equals(word) || "||".equals(word);
+    // Constructor
+    public LogicalOperator(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    /**
-     * Toggle among "&&" and "||"
-     *
-     * @param  word
-     * @return String
-     */
-    public static String getShifted(String word) {
+    public LogicalOperator getShiftableType() {
+        String word = actionContainer.selectedText;
+
+        return "&&".equals(word) || "||".equals(word)
+                ? this : null;
+    }
+
+    // Toggle among "&&" and "||"
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         return "&&".equals(word) ? "||" : "&&";
     }
 }

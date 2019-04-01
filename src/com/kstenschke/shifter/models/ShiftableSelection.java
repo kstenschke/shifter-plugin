@@ -253,9 +253,11 @@ public class ShiftableSelection {
                         ACTION_TEXT_SWAP_SLASHES);
                 return;
             }
-            if (LogicalOperator.isLogicalOperator(actionContainer.selectedText)) {
+            LogicalOperator logicalOperator = new LogicalOperator(actionContainer);
+            if (null != logicalOperator.getShiftableType()) {
                 actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(LogicalOperator.getShifted(actionContainer.selectedText)),
+                        actionContainer.getRunnableReplaceSelection(
+                                logicalOperator.getShifted(actionContainer.selectedText)),
                         LogicalOperator.ACTION_TEXT);
                 return;
             }
