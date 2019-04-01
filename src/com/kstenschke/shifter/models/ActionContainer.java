@@ -24,6 +24,7 @@ public class ActionContainer {
 
     public String prefixChar = "";
     public String postfixChar = "";
+    public String firstChar = "";
 
     public boolean isLastLineInDocument = false; // regards selected or shifted line/selection
 

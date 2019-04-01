@@ -16,19 +16,34 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
-public class OperatorSign {
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 
-    /**
-     * @param  word     String to be shifted currently
-     * @return boolean
-     */
-    public static boolean isOperatorSign(String word) {
-        return null != word && word.length() == 1 && "+-<>*/%".contains(word);
+import javax.annotation.Nullable;
+
+public class OperatorSign extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public OperatorSign(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    public static boolean isWhitespaceWrappedOperator(String str) {
+    public OperatorSign getShiftableType() {
+        String word = actionContainer.firstChar == null
+                ? actionContainer.selectedText
+                : actionContainer.firstChar;
+
+        return null != word && word.length() == 1 && "+-<>*/%".contains(word)
+                ? this : null;
+    }
+
+    public boolean isWhitespaceWrappedOperator(String str) {
+        actionContainer.firstChar = String.valueOf(str.charAt(1));
+
         return Character.isWhitespace(str.charAt(0))
-                && OperatorSign.isOperatorSign(String.valueOf(str.charAt(1)))
+                && null != this.getShiftableType()
                 && Character.isWhitespace(str.charAt(2));
     }
 
@@ -38,7 +53,12 @@ public class OperatorSign {
      * @param  word     Quoted word to be shifted
      * @return String
      */
-    public String getShifted(String word) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         if ("-".equals(word)) {
             return "+";
         }

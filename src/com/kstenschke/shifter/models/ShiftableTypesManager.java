@@ -71,6 +71,7 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new RgbColor(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new CssUnit(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new NumericValue(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new OperatorSign(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -144,11 +145,7 @@ class ShiftableTypesManager {
         if (null != new RgbColor(actionContainer).getShiftableType()) return RGB_COLOR;
         if (null != new CssUnit(actionContainer).getShiftableType()) return CSS_UNIT;
         if (null != new NumericValue(actionContainer).getShiftableType()) return NUMERIC_VALUE;
-
-        if (OperatorSign.isOperatorSign(word)) {
-            typeOperatorSign = new OperatorSign();
-            return OPERATOR_SIGN;
-        }
+        if (null != new OperatorSign(actionContainer).getShiftableType()) return OPERATOR_SIGN;
 
         if (RomanNumber.isRomanNumber(word)) {
             typeRomanNumber = new RomanNumber();

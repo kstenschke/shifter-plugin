@@ -324,7 +324,7 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if (null != operatorOnLHS && OperatorSign.isWhitespaceWrappedOperator(operatorOnLHS)) {
+        if (null != operatorOnLHS && new OperatorSign(null).isWhitespaceWrappedOperator(operatorOnLHS)) {
              return operatorOnLHS.trim();
         }
 
@@ -334,10 +334,11 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
-        return (null != operatorToTheRight && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
-                ? operatorToTheRight.trim()
-                // No operator found
-                : null;
+        return (null != operatorToTheRight &&
+                new OperatorSign(null).isWhitespaceWrappedOperator(operatorToTheRight))
+                    ? operatorToTheRight.trim()
+                    // No operator found
+                    : null;
     }
 
     public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
@@ -350,7 +351,9 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if (null != operatorToTheLeft && OperatorSign.isWhitespaceWrappedOperator(operatorToTheLeft)) {
+        if (null != operatorToTheLeft &&
+            new OperatorSign(null).isWhitespaceWrappedOperator(operatorToTheLeft)
+        ) {
             return offset - 1;
         }
 
@@ -359,7 +362,8 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 1, offset + 2).toString()
                 : null;
 
-        return (null != operatorToTheRight && OperatorSign.isWhitespaceWrappedOperator(operatorToTheRight))
+        return (null != operatorToTheRight &&
+                new OperatorSign(null).isWhitespaceWrappedOperator(operatorToTheRight))
                 ? offset
                 : null;
     }
