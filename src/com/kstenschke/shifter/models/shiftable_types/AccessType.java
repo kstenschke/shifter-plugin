@@ -35,18 +35,17 @@ public class AccessType extends ShiftableTypeAbstract  {
         super(actionContainer);
     }
 
-    public boolean isShiftable() {
-        if ("@".equals(actionContainer.prefixChar)) return false;
+    public AccessType getShiftableType() {
+        if ("@".equals(actionContainer.prefixChar)) return null;
 
         String word = actionContainer.selectedText;
-
         if (null == word) {
-            return false;
+            return null;
         }
         String[] keywordsAccessType = {"public", "private", "protected"};
         accessTypes = new StaticWordType(keywordsAccessType);
 
-        return accessTypes.hasWord(word);
+        return accessTypes.hasWord(word) ? this : null;
     }
 
     /**

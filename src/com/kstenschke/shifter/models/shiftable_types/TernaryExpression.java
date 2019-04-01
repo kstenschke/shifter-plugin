@@ -40,7 +40,7 @@ public class TernaryExpression extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isShiftable() {
+    public TernaryExpression getShiftableType() {
         String expression = actionContainer.selectedText.trim();
 
         return (
@@ -48,7 +48,7 @@ public class TernaryExpression extends ShiftableTypeAbstract {
             && (expression.contains(":") && !expression.endsWith(":") && !expression.startsWith(":"))
             && expression.length() >= 3
             && ("?".equals(actionContainer.prefixChar) || expression.indexOf("?") < expression.indexOf(":"))
-        );
+        ) ? this : null;
     }
 
     /**

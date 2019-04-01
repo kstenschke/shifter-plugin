@@ -72,7 +72,7 @@ public class ShiftableSelection {
         }
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
-        boolean isWrappedInParenthesis = parenthesis.isShiftable();
+        boolean isWrappedInParenthesis = parenthesis.getShiftableType() != null;
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager();
         ShiftableTypes.Type wordType = shiftableTypesManager.getWordType(actionContainer);
@@ -118,7 +118,7 @@ public class ShiftableSelection {
         }
 
         TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
-        if (ternaryExpression.isShiftable()) {
+        if (null != ternaryExpression.getShiftableType()) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                             ternaryExpression.getShifted(actionContainer.selectedText, actionContainer, null, null),
@@ -140,7 +140,7 @@ public class ShiftableSelection {
             return;
         }
         JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-        if (jqueryObserver.isShiftable()) {
+        if (null != jqueryObserver.getShiftableType()) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                             jqueryObserver.getShifted(actionContainer.selectedText, actionContainer, null, null)),

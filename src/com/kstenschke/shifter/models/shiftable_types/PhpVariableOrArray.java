@@ -44,7 +44,7 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
         super(actionContainer);
     }
 
-    public boolean isShiftable() {
+    public PhpVariableOrArray getShiftableType() {
         String word = actionContainer.selectedText;
 
         boolean isVariable = false;
@@ -59,7 +59,7 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
             isShiftableArray = isShiftablePhpArray(word);
         }
 
-        return isVariable || isShiftableArray;
+        return isVariable || isShiftableArray ? this : null;
     }
 
     private boolean isShiftablePhpArray(String str) {

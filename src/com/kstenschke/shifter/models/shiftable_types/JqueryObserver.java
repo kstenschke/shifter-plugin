@@ -49,11 +49,11 @@ public class JqueryObserver extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isShiftable() {
+    public JqueryObserver getShiftableType() {
         String str = actionContainer.selectedText;
 
         if (null == actionContainer.fileExtension ||
-            !UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return false;
+            !UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return null;
 
         if (str.startsWith(".")) {
             str = str.substring(1);
@@ -74,7 +74,8 @@ public class JqueryObserver extends ShiftableTypeAbstract {
             || "resize(".equals(str)
             || "submit(".equals(str)
             || "scroll(".equals(str)
-            || "unload(".equals(str);
+            || "unload(".equals(str)
+                ? this : null;
     }
 
     /**

@@ -48,22 +48,22 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isShiftable() {
+    public JsVariablesDeclarations getShiftableType() {
         String str = actionContainer.selectedText.trim();
 
         if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {
             scope = "const";
-            return true;
+            return this;
         }
         if (isMultiLinedMultiVarDeclaration(str, "var")) {
             scope = "var";
-            return true;
+            return this;
         }
         if (isMultiLinedMultiVarDeclaration(str, "let")) {
             scope = "let";
-            return true;
+            return this;
         }
-        return false;
+        return null;
     }
 
     /**

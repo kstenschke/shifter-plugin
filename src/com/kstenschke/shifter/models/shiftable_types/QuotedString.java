@@ -40,7 +40,7 @@ public class QuotedString extends ShiftableTypeAbstract {
     /**
      * @return boolean  Is word to be shifted wrapped in quote characters?
      */
-    public boolean isShiftable() {
+    public QuotedString getShiftableType() {
         quoteChar = actionContainer.prefixChar;
 
         // Must be wrapped in single-, double quotes, or backticks
@@ -50,7 +50,8 @@ public class QuotedString extends ShiftableTypeAbstract {
                         // Word is wrapped in double quotes
                         || ("\"".equals(actionContainer.prefixChar) && "\"".equals(actionContainer.postfixChar))
                         // Word is wrapped in backticks
-                        || ("`".equals(actionContainer.prefixChar) && "`".equals(actionContainer.postfixChar));
+                        || ("`".equals(actionContainer.prefixChar) && "`".equals(actionContainer.postfixChar))
+                ? this : null;
     }
 
     public static boolean containsShiftableQuotes(String str) {

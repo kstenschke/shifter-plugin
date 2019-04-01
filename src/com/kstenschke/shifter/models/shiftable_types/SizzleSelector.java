@@ -39,10 +39,11 @@ public class SizzleSelector extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isShiftable() {
+    public SizzleSelector getShiftableType() {
         String str = actionContainer.selectedText.trim();
 
-        return !(!str.startsWith("$(") || !str.endsWith(")"));
+        return !(!str.startsWith("$(") || !str.endsWith(")"))
+                ? this : null;
     }
 
     /**

@@ -55,11 +55,10 @@ public class DocCommentTag extends ShiftableTypeAbstract {
     /**
      * @return boolean    Does the given String represent a data type (number / integer / string /...) from a DOC comment (param / return /...)?
      */
-    public boolean isShiftable() {
+    public ShiftableTypeAbstract getShiftableType() {
         String line = actionContainer.caretLine;
 
-        return "@".equals(actionContainer.prefixChar) &&
-                isDocCommentLineContext(line);
+        return "@".equals(actionContainer.prefixChar) && isDocCommentLineContext(line) ? this : null;
     }
 
     /**

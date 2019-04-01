@@ -48,62 +48,39 @@ class ShiftableTypesManager {
     private QuotedString typeQuotedString;
 
     ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
-        // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
-        TrailingComment trailingComment = new TrailingComment(actionContainer);
-        if (trailingComment.isShiftable()) return trailingComment;
+        ShiftableTypeAbstract shiftableType;
 
-        if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
-            !PhpDocParam.containsDataType(actionContainer.caretLine)) {
-//            return TYPE_PHP_DOC_PARAM_LINE;
+        //noinspection LoopStatementThatDoesntLoop
+        while (true) {
+            if (null != (shiftableType = new TrailingComment(actionContainer).getShiftableType())) break;
+
             // PHP doc param line is handled in caretLine-shifting fallback
+            if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
+                !PhpDocParam.containsDataType(actionContainer.caretLine)) return null;
+
+            if (null != (shiftableType = new PhpVariableOrArray(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new Parenthesis(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new JsVariablesDeclarations(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new SizzleSelector(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new DocCommentType(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new AccessType(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new JqueryObserver(actionContainer).getShiftableType())) break;
+            if (null != (new TernaryExpression(actionContainer).getShiftableType())) break;
+            if (null != (new QuotedString(actionContainer).getShiftableType())) break;
+
+            // @todo 1. convert all shiftable types and add them here
+
+            // @todo 2. completely remove getWordType() when 1. is done
+
+            // @todo 3. rework: remove redundant arguments (e.g. from getShifted())
+
+            // @todo 4. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
+
             return null;
         }
 
-        // PHP variable (must be prefixed w/ "$")
-        typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
-        if (typePhpVariableOrArray.isShiftable()) return typePhpVariableOrArray;
-
-        Parenthesis parenthesis = new Parenthesis(actionContainer);
-        if (parenthesis.isShiftable()) return parenthesis;
-
-        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-        if (jsVariablesDeclarations.isShiftable()) return jsVariablesDeclarations;
-
-        SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
-        if (sizzleSelector.isShiftable()) return sizzleSelector;
-
-        // DocComment shiftable_types (must be prefixed w/ "@")
-        typeDataTypeInDocComment = new DocCommentType(actionContainer);
-        if (typeDataTypeInDocComment.isShiftable()) return typeDataTypeInDocComment.getSubType();
-
-        // Object visibility
-        accessType = new AccessType(actionContainer);
-        if (accessType.isShiftable()) return accessType;
-
-        // File extension specific term in dictionary
-        typeDictionaryTerm = new DictionaryTerm(actionContainer);
-        if (typeDictionaryTerm.isShiftable()) return typeDictionaryTerm;
-
-        JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-        if (jqueryObserver.isShiftable()) return jqueryObserver;
-
-        // Ternary Expression - swap IF and ELSE
-        TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
-        if (ternaryExpression.isShiftable()) return ternaryExpression;
-
-        // Quoted (must be wrapped in single or double quotes or backticks)
-        typeQuotedString = new QuotedString(actionContainer);
-        if (typeQuotedString.isShiftable()) return typeQuotedString;
-
-        // @todo 1. convert all shiftable types and add them here
-
-        // @todo 2. completely remove getWordType() when 1. is done
-
-        // @todo 3. rework: remove redundant arguments (e.g. from getShifted())
-
-        // @todo 4. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
-
-        return null;
+        return shiftableType;
     }
 
     /**
@@ -123,66 +100,49 @@ class ShiftableTypesManager {
             boolean isLastLineInDocument,
             ActionContainer actionContainer
     ) {
-        TrailingComment trailingComment = new TrailingComment(actionContainer);
-        if (trailingComment.isShiftable()) {
-            // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
-            return TRAILING_COMMENT;
-        }
+        ShiftableTypeAbstract shiftableType;
+        // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
+        if (null != new TrailingComment(actionContainer).getShiftableType()) return TRAILING_COMMENT;
 
-        if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine)
-         && !PhpDocParam.containsDataType(actionContainer.caretLine)) {
+        if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
+            !PhpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
             // PHP doc param line is handled in caretLine-shifting fallback
             return UNKNOWN;
         }
-        // PHP variable (must be prefixed w/ "$")
-        typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
-        if (typePhpVariableOrArray.isShiftable()) return PHP_VARIABLE_OR_ARRAY;
 
-        Parenthesis parenthesis = new Parenthesis(actionContainer);
-        if (parenthesis.isShiftable()) return PARENTHESIS;
-
-        JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-        if (jsVariablesDeclarations.isShiftable()) return JS_VARIABLES_DECLARATIONS;
-
-        typeSizzleSelector = new SizzleSelector(actionContainer);
-        if (typeSizzleSelector.isShiftable()) return SIZZLE_SELECTOR;
+        if (null != new PhpVariableOrArray(actionContainer).getShiftableType()) return PHP_VARIABLE_OR_ARRAY;
+        if (null != new Parenthesis(actionContainer).getShiftableType()) return PARENTHESIS;
+        if (null != new JsVariablesDeclarations(actionContainer).getShiftableType()) return JS_VARIABLES_DECLARATIONS;
+        if (null != new SizzleSelector(actionContainer).getShiftableType()) return SIZZLE_SELECTOR;
 
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag(actionContainer);
-            if (prefixChar.matches("@") && typeTagInDocComment.isShiftable()) return DOC_COMMENT_TAG;
-            if (typeDataTypeInDocComment.isShiftable()) return DOC_COMMENT_DATA_TYPE;
+            if (prefixChar.matches("@") && null != typeTagInDocComment.getShiftableType()) return DOC_COMMENT_TAG;
+            if (null != typeDataTypeInDocComment.getShiftableType()) return DOC_COMMENT_DATA_TYPE;
         }
 
         // Object visibility
-        accessType = new AccessType(actionContainer);
-        if (!"@".equals(prefixChar) && accessType.isShiftable()) return ACCESS_TYPE;
+        if (!"@".equals(prefixChar) && null != new AccessType(actionContainer).getShiftableType()) return ACCESS_TYPE;
 
         // File extension specific term in dictionary
         typeDictionaryTerm = new DictionaryTerm(actionContainer);
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension) {
-            if (typeDictionaryTerm.isApplicable(word, fileExtension)) return DICTIONARY_WORD_EXT_SPECIFIC;
-            JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-            if (jqueryObserver.isShiftable()) return JQUERY_OBSERVER;
+            if (typeDictionaryTerm.isInFileTypeDictionary(word, fileExtension)) return DICTIONARY_WORD_EXT_SPECIFIC;
+            if (null != new JqueryObserver(actionContainer).getShiftableType()) return JQUERY_OBSERVER;
         }
 
-        // Ternary Expression - swap IF and ELSE
-        TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
-        if (ternaryExpression.isShiftable()) return TERNARY_EXPRESSION;
+        if (null != new TernaryExpression(actionContainer).getShiftableType()) return TERNARY_EXPRESSION;
+        if (null != new QuotedString(actionContainer).getShiftableType()) return QUOTED_STRING;
 
-        // Quoted (must be wrapped in single or double quotes or backticks)
-        typeQuotedString = new QuotedString(actionContainer);
-        if (typeQuotedString.isShiftable()) return QUOTED_STRING;
-
-        // RGB (must be prefixed w/ "#")
         if (RgbColor.isRgbColorString(word, prefixChar)) {
             typeRgbColor = new RgbColor();
             return RGB_COLOR;
         }
-        // Pixel value (must consist of numeric value followed by "px")
+
         if (CssUnit.isCssUnitValue(word)) {
             typePixelValue = new CssUnit();
             return CSS_UNIT;
@@ -191,12 +151,12 @@ class ShiftableTypesManager {
             typeNumericValue = new NumericValue();
             return NUMERIC_VALUE;
         }
-        // Operator sign (<, >, +, -)
+
         if (OperatorSign.isOperatorSign(word)) {
             typeOperatorSign = new OperatorSign();
             return OPERATOR_SIGN;
         }
-        // Roman Numeral
+
         if (RomanNumber.isRomanNumber(word)) {
             typeRomanNumber = new RomanNumber();
             return ROMAN_NUMERAL;
@@ -205,13 +165,14 @@ class ShiftableTypesManager {
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
             return LOGICAL_OPERATOR;
         }
-        // MonoCharString (= consisting from any amount of the same character)
+
         if (MonoCharacter.isMonoCharacterString(word)) {
             typeMonoCharacterString = new MonoCharacter();
             return MONO_CHARACTER;
         }
+
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (typeDictionaryTerm.isShiftable()) return DICTIONARY_WORD_GLOBAL;
+        if (null != typeDictionaryTerm.getShiftableType()) return DICTIONARY_WORD_GLOBAL;
 
         if (NumericPostfixed.hasNumericPostfix(word)) return NUMERIC_POSTFIXED;
 

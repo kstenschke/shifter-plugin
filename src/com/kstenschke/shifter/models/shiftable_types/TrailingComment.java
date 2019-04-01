@@ -36,19 +36,23 @@ public class TrailingComment extends ShiftableTypeAbstract {
     /**
      * TODO    maybe later - implement also for multi-line selections(?)
      */
-    public boolean isShiftable() {
+    public TrailingComment getShiftableType() {
         String word = actionContainer.selectedText;
         if (
             null == word ||
             !word.contains("//") ||
             (!actionContainer.isLastLineInDocument && !"\n".equals(actionContainer.postfixChar))
         ) {
-            return false;
+            return null;
         }
 
         String[] parts = word.split("//");
 
-        return parts.length == 2 && parts[0].length() > 0 && parts[1].length() > 0;
+        return
+                parts.length == 2 &&
+                parts[0].length() > 0 &&
+                parts[1].length() > 0
+                        ? this : null;
     }
 
     public String getShifted(

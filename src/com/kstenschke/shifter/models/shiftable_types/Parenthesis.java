@@ -33,15 +33,14 @@ public class Parenthesis extends ShiftableTypeAbstract {
         super(actionContainer);
     }
 
-    public boolean isShiftable() {
-        String str = actionContainer.selectedText;
-
-        str = str.trim();
+    public Parenthesis getShiftableType() {
+        String str = actionContainer.selectedText.trim();
 
         return
                 isWrappedInRoundBrackets(str) ||
                 isWrappedInSquareBrackets(str) ||
-                isWrappedInCurlyBrackets(str);
+                isWrappedInCurlyBrackets(str)
+                    ? this : null;
     }
 
     private static boolean isWrappedInRoundBrackets(String str) {

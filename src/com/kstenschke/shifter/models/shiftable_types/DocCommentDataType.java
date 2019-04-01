@@ -47,8 +47,9 @@ class DocCommentDataType extends ShiftableTypeAbstract {
         typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
     }
 
-    public boolean isShiftable() {
-        return !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar));
+    public DocCommentDataType getShiftableType() {
+        return !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar))
+                ? this : null;
     }
 
     public String getShifted(

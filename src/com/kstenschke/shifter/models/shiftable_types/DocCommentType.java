@@ -29,9 +29,6 @@ public class DocCommentType extends ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;
 
-    // Sub types
-    private ShiftableTypeAbstract subType;
-
     public DocCommentType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
@@ -42,26 +39,16 @@ public class DocCommentType extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isShiftable() {
-        if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return false;
+    public ShiftableTypeAbstract getShiftableType() {
+        if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return null;
 
-        DocCommentTag typeTagInDocComment = new DocCommentTag(actionContainer);
-        if (actionContainer.prefixChar.matches("@") &&
-            typeTagInDocComment.isShiftable()) {
-            this.subType = typeTagInDocComment;
-            return true;
-        }
-        DocCommentDataType docCommentDataType = new DocCommentDataType(actionContainer);
-        if (docCommentDataType.isShiftable()) {
-            this.subType = docCommentDataType;
-            return true;
-        }
+        ShiftableTypeAbstract shiftableType = new DocCommentTag(actionContainer);
+        if (actionContainer.prefixChar.matches("@") && null != shiftableType.getShiftableType()) return shiftableType;
 
-        return false;
-    }
+        shiftableType = new DocCommentDataType(actionContainer);
+        if (null != shiftableType.getShiftableType()) return shiftableType;
 
-    public ShiftableTypeAbstract getSubType() {
-        return subType;
+        return null;
     }
 
     /**

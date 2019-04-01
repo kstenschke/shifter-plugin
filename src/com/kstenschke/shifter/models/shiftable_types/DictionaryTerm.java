@@ -63,8 +63,9 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isShiftable() {
-        return null != actionContainer.fileExtension && isTermInDictionary(actionContainer.selectedText);
+    public DictionaryTerm getShiftableType() {
+        return null != actionContainer.fileExtension && isTermInDictionary(actionContainer.selectedText)
+                ? this : null;
     }
 
     /**
@@ -76,7 +77,7 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
      * @param  fileExtension   Extension of edited file
      * @return boolean
      */
-    public boolean isApplicable(String term, String fileExtension) {
+    public boolean isInFileTypeDictionary(String term, String fileExtension) {
         if (null != fileExtension && dictionaryContents.contains("|" + fileExtension + "|")) {
             this.fileExtension = fileExtension;
 
