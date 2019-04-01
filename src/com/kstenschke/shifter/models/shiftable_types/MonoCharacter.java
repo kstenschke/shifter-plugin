@@ -15,40 +15,48 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import org.apache.commons.lang.StringUtils;
+
+import javax.annotation.Nullable;
 
 /**
  * Mono-Character String = String that contains only one character (no matter how often)
  */
-public class MonoCharacter {
+public class MonoCharacter extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift Mono-Character";
 
-    /**
-     * @param  word     String to be shifted currently
-     * @return boolean
-     */
-    public static boolean isMonoCharacterString(String word) {
+    // Constructor
+    public MonoCharacter(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    public MonoCharacter getShiftableType() {
+        String word = actionContainer.selectedText;
+
         if (word.length() == 1) {
-            return true;
+            return null;
         }
 
         String wordLower = word.toLowerCase();
         String firstChar = wordLower.substring(0, 1);
 
-        return wordLower.replace(firstChar, "").length() == 0;
+        return wordLower.replace(firstChar, "").length() == 0
+                ? this : null;
     }
 
-    /**
-     * Shift mono-character string
-     *
-     * @param  word     Quoted word to be shifted
-     * @param  isUp     Shifting up or down?
-     * @return String
-     */
-    public String getShifted(String word, boolean isUp) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         char firstChar = word.toLowerCase().charAt(0);
-        firstChar      = (char) (firstChar + (isUp ? 1 : -1));
+        firstChar      = (char) (firstChar + (actionContainer.isShiftUp ? 1 : -1));
 
         return StringUtils.repeat(String.valueOf(firstChar), word.length());
     }

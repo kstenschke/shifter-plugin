@@ -31,21 +31,12 @@ class ShiftableTypesManager {
 
     // Word type objects
     private DictionaryTerm typeDictionaryTerm;
-    private AccessType accessType;
 
     // Generic shiftable_types (calculated when shifted)
-    private CssUnit typePixelValue;
     private DocCommentTag typeTagInDocComment;
     private DocCommentType typeDataTypeInDocComment;
-    private NumericValue typeNumericValue;
-    private OperatorSign typeOperatorSign;
-    private PhpVariableOrArray typePhpVariableOrArray;
-    private RgbColor typeRgbColor;
-    private RomanNumber typeRomanNumber;
-    private SizzleSelector typeSizzleSelector;
     private MonoCharacter typeMonoCharacterString;
     private Tupel wordsTupel;
-    private QuotedString typeQuotedString;
 
     ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
         ShiftableTypeAbstract shiftableType;
@@ -76,6 +67,8 @@ class ShiftableTypesManager {
 
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
             if (null != (shiftableType = new LogicalOperator(actionContainer).getShiftableType())) break;
+
+            if (null != (shiftableType = new MonoCharacter(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -151,13 +144,11 @@ class ShiftableTypesManager {
         if (null != new NumericValue(actionContainer).getShiftableType()) return NUMERIC_VALUE;
         if (null != new OperatorSign(actionContainer).getShiftableType()) return OPERATOR_SIGN;
         if (null != new RomanNumber(actionContainer).getShiftableType()) return ROMAN_NUMERAL;
+
         // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
         if (null != new LogicalOperator(actionContainer).getShiftableType()) return LOGICAL_OPERATOR;
 
-        if (MonoCharacter.isMonoCharacterString(word)) {
-            typeMonoCharacterString = new MonoCharacter();
-            return MONO_CHARACTER;
-        }
+        if (null != new MonoCharacter(actionContainer).getShiftableType()) return MONO_CHARACTER;
 
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if (null != typeDictionaryTerm.getShiftableType()) return DICTIONARY_WORD_GLOBAL;
@@ -209,42 +200,42 @@ class ShiftableTypesManager {
         switch (wordType) {
             // String based word shiftable_types
             case ACCESS_TYPE:
-                return accessType.getShifted(word, actionContainer);
+                return new AccessType(actionContainer).getShifted(word, actionContainer);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return typeDictionaryTerm.getShifted(word, actionContainer);
             // Generic shiftable_types (shifting is calculated)
             case SIZZLE_SELECTOR:
-                return typeSizzleSelector.getShifted(word, actionContainer);
+                return new SizzleSelector(actionContainer).getShifted(word, actionContainer);
             case RGB_COLOR:
-                return typeRgbColor.getShifted(word, actionContainer);
+                return new RgbColor(actionContainer).getShifted(word, actionContainer);
             case NUMERIC_VALUE:
                 // Numeric values including UNIX and millisecond timestamps
-                return typeNumericValue.getShifted(word, actionContainer);
+                return new NumericValue(actionContainer).getShifted(word, actionContainer);
             case CSS_UNIT:
-                return typePixelValue.getShifted(word, actionContainer);
+                return new CssUnit(actionContainer).getShifted(word, actionContainer);
             case JQUERY_OBSERVER:
                 JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
                 return jqueryObserver.getShifted(word, actionContainer, null, null);
             case PHP_VARIABLE_OR_ARRAY:
-                return typePhpVariableOrArray.getShifted(word, actionContainer, moreCount);
+                return new PhpVariableOrArray(actionContainer).getShifted(word, actionContainer, moreCount);
             case TERNARY_EXPRESSION:
                 TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
                 return ternaryExpression.getShifted(word);
             case QUOTED_STRING:
-                return typeQuotedString.getShifted(word, actionContainer);
+                return new QuotedString(actionContainer).getShifted(word, actionContainer);
             case PARENTHESIS:
                 Parenthesis parenthesis = new Parenthesis(actionContainer);
                 return parenthesis.getShifted(word);
             case OPERATOR_SIGN:
-                return typeOperatorSign.getShifted(word, actionContainer);
+                return new OperatorSign(actionContainer).getShifted(word, actionContainer);
             case ROMAN_NUMERAL:
-                return typeRomanNumber.getShifted(word, actionContainer);
+                return new RomanNumber(actionContainer).getShifted(word, actionContainer);
             case LOGICAL_OPERATOR:
                 return new LogicalOperator(actionContainer).getShifted(word);
             case MONO_CHARACTER:
-                return typeMonoCharacterString.getShifted(word, actionContainer.isShiftUp);
+                return typeMonoCharacterString.getShifted(word, actionContainer);
             case DOC_COMMENT_TAG:
                 actionContainer.textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
                 return typeTagInDocComment.getShifted(word, actionContainer, null);
