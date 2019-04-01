@@ -48,7 +48,7 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         String str = actionContainer.selectedText.trim();
 
         if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {

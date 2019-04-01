@@ -44,7 +44,7 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
         super(actionContainer);
     }
 
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         String word = actionContainer.selectedText;
 
         boolean isVariable = false;

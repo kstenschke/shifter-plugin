@@ -40,7 +40,7 @@ public class QuotedString extends ShiftableTypeAbstract {
     /**
      * @return boolean  Is word to be shifted wrapped in quote characters?
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         quoteChar = actionContainer.prefixChar;
 
         // Must be wrapped in single-, double quotes, or backticks

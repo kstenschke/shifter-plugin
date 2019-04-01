@@ -33,7 +33,7 @@ public class Parenthesis extends ShiftableTypeAbstract {
         super(actionContainer);
     }
 
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         String str = actionContainer.selectedText;
 
         str = str.trim();

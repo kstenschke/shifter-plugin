@@ -35,7 +35,7 @@ public class AccessType extends ShiftableTypeAbstract  {
         super(actionContainer);
     }
 
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         if ("@".equals(actionContainer.prefixChar)) return false;
 
         String word = actionContainer.selectedText;

@@ -36,7 +36,7 @@ public class TrailingComment extends ShiftableTypeAbstract {
     /**
      * TODO    maybe later - implement also for multi-line selections(?)
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         String word = actionContainer.selectedText;
         if (
             null == word ||

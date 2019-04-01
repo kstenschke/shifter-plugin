@@ -25,7 +25,7 @@ public abstract class ShiftableTypeAbstract {
         this.actionContainer = actionContainer;
     }
 
-    abstract public boolean isApplicable();
+    abstract public boolean isShiftable();
 
     abstract public String getShifted(
             String word,

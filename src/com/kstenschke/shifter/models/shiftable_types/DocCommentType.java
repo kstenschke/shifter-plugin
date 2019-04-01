@@ -42,17 +42,17 @@ public class DocCommentType extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return false;
 
         DocCommentTag typeTagInDocComment = new DocCommentTag(actionContainer);
         if (actionContainer.prefixChar.matches("@") &&
-            typeTagInDocComment.isApplicable()) {
+            typeTagInDocComment.isShiftable()) {
             this.subType = typeTagInDocComment;
             return true;
         }
         DocCommentDataType docCommentDataType = new DocCommentDataType(actionContainer);
-        if (docCommentDataType.isApplicable()) {
+        if (docCommentDataType.isShiftable()) {
             this.subType = docCommentDataType;
             return true;
         }

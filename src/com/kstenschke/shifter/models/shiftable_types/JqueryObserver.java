@@ -49,7 +49,7 @@ public class JqueryObserver extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         String str = actionContainer.selectedText;
 
         if (null == actionContainer.fileExtension ||

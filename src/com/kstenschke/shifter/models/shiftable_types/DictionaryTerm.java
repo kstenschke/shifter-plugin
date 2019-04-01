@@ -63,7 +63,7 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         return null != actionContainer.fileExtension && isTermInDictionary(actionContainer.selectedText);
     }
 

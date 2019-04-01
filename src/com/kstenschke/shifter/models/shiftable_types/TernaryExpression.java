@@ -40,7 +40,7 @@ public class TernaryExpression extends ShiftableTypeAbstract {
      *
      * @return boolean
      */
-    public boolean isApplicable() {
+    public boolean isShiftable() {
         String expression = actionContainer.selectedText.trim();
 
         return (

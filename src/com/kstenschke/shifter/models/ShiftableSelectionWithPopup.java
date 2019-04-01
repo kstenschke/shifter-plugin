@@ -249,7 +249,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
         if (mode.equals(StaticTexts.SHIFT_SHIFT_DICTIONARY_TERM)) {
             DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
-            if (dictionaryTerm.isApplicable()) {
+            if (dictionaryTerm.isShiftable()) {
                 actionContainer.document.replaceString(
                         actionContainer.offsetSelectionStart,
                         actionContainer.offsetSelectionEnd,

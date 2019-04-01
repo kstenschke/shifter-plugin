@@ -50,7 +50,7 @@ class ShiftableTypesManager {
     ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         TrailingComment trailingComment = new TrailingComment(actionContainer);
-        if (trailingComment.isApplicable()) return trailingComment;
+        if (trailingComment.isShiftable()) return trailingComment;
 
         if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
             !PhpDocParam.containsDataType(actionContainer.caretLine)) {
@@ -61,39 +61,39 @@ class ShiftableTypesManager {
 
         // PHP variable (must be prefixed w/ "$")
         typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
-        if (typePhpVariableOrArray.isApplicable()) return typePhpVariableOrArray;
+        if (typePhpVariableOrArray.isShiftable()) return typePhpVariableOrArray;
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
-        if (parenthesis.isApplicable()) return parenthesis;
+        if (parenthesis.isShiftable()) return parenthesis;
 
         JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-        if (jsVariablesDeclarations.isApplicable()) return jsVariablesDeclarations;
+        if (jsVariablesDeclarations.isShiftable()) return jsVariablesDeclarations;
 
         SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
-        if (sizzleSelector.isApplicable()) return sizzleSelector;
+        if (sizzleSelector.isShiftable()) return sizzleSelector;
 
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
-        if (typeDataTypeInDocComment.isApplicable()) return typeDataTypeInDocComment.getSubType();
+        if (typeDataTypeInDocComment.isShiftable()) return typeDataTypeInDocComment.getSubType();
 
         // Object visibility
         accessType = new AccessType(actionContainer);
-        if (accessType.isApplicable()) return accessType;
+        if (accessType.isShiftable()) return accessType;
 
         // File extension specific term in dictionary
         typeDictionaryTerm = new DictionaryTerm(actionContainer);
-        if (typeDictionaryTerm.isApplicable()) return typeDictionaryTerm;
+        if (typeDictionaryTerm.isShiftable()) return typeDictionaryTerm;
 
         JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-        if (jqueryObserver.isApplicable()) return jqueryObserver;
+        if (jqueryObserver.isShiftable()) return jqueryObserver;
 
         // Ternary Expression - swap IF and ELSE
         TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
-        if (ternaryExpression.isApplicable()) return ternaryExpression;
+        if (ternaryExpression.isShiftable()) return ternaryExpression;
 
         // Quoted (must be wrapped in single or double quotes or backticks)
         typeQuotedString = new QuotedString(actionContainer);
-        if (typeQuotedString.isApplicable()) return typeQuotedString;
+        if (typeQuotedString.isShiftable()) return typeQuotedString;
 
         // @todo 1. convert all shiftable types and add them here
 
@@ -124,7 +124,7 @@ class ShiftableTypesManager {
             ActionContainer actionContainer
     ) {
         TrailingComment trailingComment = new TrailingComment(actionContainer);
-        if (trailingComment.isApplicable()) {
+        if (trailingComment.isShiftable()) {
             // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
             return TRAILING_COMMENT;
         }
@@ -137,28 +137,28 @@ class ShiftableTypesManager {
         }
         // PHP variable (must be prefixed w/ "$")
         typePhpVariableOrArray = new PhpVariableOrArray(actionContainer);
-        if (typePhpVariableOrArray.isApplicable()) return PHP_VARIABLE_OR_ARRAY;
+        if (typePhpVariableOrArray.isShiftable()) return PHP_VARIABLE_OR_ARRAY;
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
-        if (parenthesis.isApplicable()) return PARENTHESIS;
+        if (parenthesis.isShiftable()) return PARENTHESIS;
 
         JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-        if (jsVariablesDeclarations.isApplicable()) return JS_VARIABLES_DECLARATIONS;
+        if (jsVariablesDeclarations.isShiftable()) return JS_VARIABLES_DECLARATIONS;
 
         typeSizzleSelector = new SizzleSelector(actionContainer);
-        if (typeSizzleSelector.isApplicable()) return SIZZLE_SELECTOR;
+        if (typeSizzleSelector.isShiftable()) return SIZZLE_SELECTOR;
 
         // DocComment shiftable_types (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag(actionContainer);
-            if (prefixChar.matches("@") && typeTagInDocComment.isApplicable()) return DOC_COMMENT_TAG;
-            if (typeDataTypeInDocComment.isApplicable()) return DOC_COMMENT_DATA_TYPE;
+            if (prefixChar.matches("@") && typeTagInDocComment.isShiftable()) return DOC_COMMENT_TAG;
+            if (typeDataTypeInDocComment.isShiftable()) return DOC_COMMENT_DATA_TYPE;
         }
 
         // Object visibility
         accessType = new AccessType(actionContainer);
-        if (!"@".equals(prefixChar) && accessType.isApplicable()) return ACCESS_TYPE;
+        if (!"@".equals(prefixChar) && accessType.isShiftable()) return ACCESS_TYPE;
 
         // File extension specific term in dictionary
         typeDictionaryTerm = new DictionaryTerm(actionContainer);
@@ -166,16 +166,16 @@ class ShiftableTypesManager {
         if (null != fileExtension) {
             if (typeDictionaryTerm.isApplicable(word, fileExtension)) return DICTIONARY_WORD_EXT_SPECIFIC;
             JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-            if (jqueryObserver.isApplicable()) return JQUERY_OBSERVER;
+            if (jqueryObserver.isShiftable()) return JQUERY_OBSERVER;
         }
 
         // Ternary Expression - swap IF and ELSE
         TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
-        if (ternaryExpression.isApplicable()) return TERNARY_EXPRESSION;
+        if (ternaryExpression.isShiftable()) return TERNARY_EXPRESSION;
 
         // Quoted (must be wrapped in single or double quotes or backticks)
         typeQuotedString = new QuotedString(actionContainer);
-        if (typeQuotedString.isApplicable()) return QUOTED_STRING;
+        if (typeQuotedString.isShiftable()) return QUOTED_STRING;
 
         // RGB (must be prefixed w/ "#")
         if (RgbColor.isRgbColorString(word, prefixChar)) {
@@ -211,7 +211,7 @@ class ShiftableTypesManager {
             return MONO_CHARACTER;
         }
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (typeDictionaryTerm.isApplicable()) return DICTIONARY_WORD_GLOBAL;
+        if (typeDictionaryTerm.isShiftable()) return DICTIONARY_WORD_GLOBAL;
 
         if (NumericPostfixed.hasNumericPostfix(word)) return NUMERIC_POSTFIXED;
 
