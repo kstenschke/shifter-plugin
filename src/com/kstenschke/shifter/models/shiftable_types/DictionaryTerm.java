@@ -57,21 +57,20 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
     public DictionaryTerm getShiftableType() {
-        return null != actionContainer.fileExtension && isTermInDictionary(actionContainer.selectedText)
+        return null != actionContainer.fileExtension && isTermInAnyDictionary()
                 ? this : null;
     }
 
-    /**
-     * Check whether the given term exists in any section of shift-lists of the dictionary,
-     * looking only at lists in blocks having assigned the given extension
-     * + Stores first matching line containing the term for use in shifting later
-     *
-     * @param  term            String to be looked for in shifter dictionary
-     * @param  fileExtension   Extension of edited file
-     * @return boolean
-     */
-    public boolean isInFileTypeDictionary(String term, String fileExtension) {
-        if (null != fileExtension && dictionaryContents.contains("|" + fileExtension + "|")) {
+    // Check whether the given term exists in any section of shift-lists of the dictionary,
+    // looking only at lists in blocks having assigned the given extension
+    // + Stores first matching line containing the term for use in shifting later
+    public DictionaryTerm isInFileTypeDictionary() {
+        String term = actionContainer.selectedText;
+        String fileExtension = actionContainer.fileExtension;
+
+        if (null != fileExtension &&
+            dictionaryContents.contains("|" + fileExtension + "|")
+        ) {
             this.fileExtension = fileExtension;
 
             // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
@@ -85,15 +84,18 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
                 // Term is contained? store list of shifting neighbours
                 if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
                     relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
-                    return true;
+                    return this;
                 }
             }
         }
 
-        return false;
+        return null;
     }
 
-    private boolean isTermInDictionary(String term) {
+    private boolean isTermInAnyDictionary() {
+        String term = actionContainer.selectedText;
+
+        // @todo why check for extension in search over all type-dictionaries?
         if (dictionaryContents.contains("|" + actionContainer.fileExtension.toLowerCase() + "|")) {
             // Merge all terms-blocks
             String dictionaryTerms = dictionaryContents;

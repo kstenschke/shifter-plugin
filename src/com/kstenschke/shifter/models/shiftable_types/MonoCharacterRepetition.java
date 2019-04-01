@@ -24,18 +24,18 @@ import javax.annotation.Nullable;
 /**
  * Mono-Character String = String that contains only one character (no matter how often)
  */
-public class MonoCharacter extends ShiftableTypeAbstract {
+public class MonoCharacterRepetition extends ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift Mono-Character";
 
     // Constructor
-    public MonoCharacter(@Nullable ActionContainer actionContainer) {
+    public MonoCharacterRepetition(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    public MonoCharacter getShiftableType() {
+    public MonoCharacterRepetition getShiftableType() {
         String word = actionContainer.selectedText;
 
         if (word.length() == 1) {

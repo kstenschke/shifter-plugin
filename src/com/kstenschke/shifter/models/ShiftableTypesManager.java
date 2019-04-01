@@ -29,13 +29,9 @@ class ShiftableTypesManager {
 
     private ShiftableTypes.Type wordType;
 
-    // Word type objects
-    private DictionaryTerm typeDictionaryTerm;
-
     // Generic shiftable_types (calculated when shifted)
     private DocCommentTag typeTagInDocComment;
     private DocCommentType typeDataTypeInDocComment;
-    private MonoCharacter typeMonoCharacterString;
     private Tupel wordsTupel;
 
     ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
@@ -55,7 +51,10 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new SizzleSelector(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new DocCommentType(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new AccessType(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
+
+            // File extension specific term in dictionary
+            if (null != (shiftableType = new DictionaryTerm(actionContainer).isInFileTypeDictionary())) break;
+
             if (null != (shiftableType = new JqueryObserver(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new TernaryExpression(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new QuotedString(actionContainer).getShiftableType())) break;
@@ -68,7 +67,10 @@ class ShiftableTypesManager {
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
             if (null != (shiftableType = new LogicalOperator(actionContainer).getShiftableType())) break;
 
-            if (null != (shiftableType = new MonoCharacter(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new MonoCharacterRepetition(actionContainer).getShiftableType())) break;
+
+            // Term in any dictionary (w/o limiting to edited file's extension)
+            if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -130,10 +132,9 @@ class ShiftableTypesManager {
         if (!"@".equals(prefixChar) && null != new AccessType(actionContainer).getShiftableType()) return ACCESS_TYPE;
 
         // File extension specific term in dictionary
-        typeDictionaryTerm = new DictionaryTerm(actionContainer);
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension) {
-            if (typeDictionaryTerm.isInFileTypeDictionary(word, fileExtension)) return DICTIONARY_WORD_EXT_SPECIFIC;
+            if (null != new DictionaryTerm(actionContainer).isInFileTypeDictionary()) return DICTIONARY_WORD_EXT_SPECIFIC;
             if (null != new JqueryObserver(actionContainer).getShiftableType()) return JQUERY_OBSERVER;
         }
 
@@ -148,10 +149,10 @@ class ShiftableTypesManager {
         // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
         if (null != new LogicalOperator(actionContainer).getShiftableType()) return LOGICAL_OPERATOR;
 
-        if (null != new MonoCharacter(actionContainer).getShiftableType()) return MONO_CHARACTER;
+        if (null != new MonoCharacterRepetition(actionContainer).getShiftableType()) return MONO_CHARACTER_REPETITION;
 
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (null != typeDictionaryTerm.getShiftableType()) return DICTIONARY_WORD_GLOBAL;
+        if (null != new DictionaryTerm(actionContainer).getShiftableType()) return DICTIONARY_WORD_GLOBAL;
 
         if (NumericPostfixed.hasNumericPostfix(word)) return NUMERIC_POSTFIXED;
 
@@ -204,7 +205,7 @@ class ShiftableTypesManager {
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                return typeDictionaryTerm.getShifted(word, actionContainer);
+                return new DictionaryTerm(actionContainer).getShifted(word, actionContainer);
             // Generic shiftable_types (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return new SizzleSelector(actionContainer).getShifted(word, actionContainer);
@@ -234,8 +235,8 @@ class ShiftableTypesManager {
                 return new RomanNumber(actionContainer).getShifted(word, actionContainer);
             case LOGICAL_OPERATOR:
                 return new LogicalOperator(actionContainer).getShifted(word);
-            case MONO_CHARACTER:
-                return typeMonoCharacterString.getShifted(word, actionContainer);
+            case MONO_CHARACTER_REPETITION:
+                return new MonoCharacterRepetition(actionContainer).getShifted(word, actionContainer);
             case DOC_COMMENT_TAG:
                 actionContainer.textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
                 return typeTagInDocComment.getShifted(word, actionContainer, null);
@@ -288,8 +289,8 @@ class ShiftableTypesManager {
                 return JsVariablesDeclarations.ACTION_TEXT;
             case LOGICAL_OPERATOR:
                 return LogicalOperator.ACTION_TEXT;
-            case MONO_CHARACTER:
-                return MonoCharacter.ACTION_TEXT;
+            case MONO_CHARACTER_REPETITION:
+                return MonoCharacterRepetition.ACTION_TEXT;
             case NUMERIC_VALUE:
                 return NumericValue.ACTION_TEXT;
             case RGB_COLOR:

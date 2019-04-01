@@ -41,7 +41,7 @@ class ShiftableTypes {
         // Operators (<, >, +, -, etc.) and expressions
         OPERATOR_SIGN,
         LOGICAL_OPERATOR,
-        MONO_CHARACTER,
+        MONO_CHARACTER_REPETITION,
         TERNARY_EXPRESSION,
 
         RGB_COLOR,
