@@ -23,6 +23,7 @@ import com.intellij.ui.JBColor;
 import com.intellij.ui.awt.RelativePoint;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -34,38 +35,37 @@ import java.util.Date;
  * Numeric value class
  * also handles timestamps in UNIX and JavaScript (milli seconds) format
  */
-public class NumericValue {
+public class NumericValue extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift numeric value";
 
     private static final int SECONDS_PER_DAY = 86400;
 
-    /**
-     * Shift timestamps day-wise as seconds (or milliseconds: 1000)
-     */
+    // Shift timestamps day-wise as seconds (or milliseconds: 1000)
     private final int timestampShiftMode;
 
-    /**
-     * Constructor
-     */
-    public NumericValue() {
+    // Constructor
+    public NumericValue(ActionContainer actionContainer) {
+        super(actionContainer);
         timestampShiftMode = ShifterPreferences.getShiftingModeOfTimestamps();
     }
 
-    /**
-     * @param str String to be checked
-     * @return boolean     Does the given string represent a CSS length value?
-     */
-    public static boolean isNumericValue(String str) {
-        return str.matches("[0-9]+");
+    // Does the given string represent a CSS length value?
+    public NumericValue getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return str.matches("[0-9]+")
+                ? this : null;
     }
 
-    /**
-     * @param value String representing a numeric value
-     * @param actionContainer
-     * @return String      Value shifted up or down by one
-     */
-    public String getShifted(String value, ActionContainer actionContainer) {
+    public String getShifted(
+            String value,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         int strLen = value.length();
 
         return strLen <= 7

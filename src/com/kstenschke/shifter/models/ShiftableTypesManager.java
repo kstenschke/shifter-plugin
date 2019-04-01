@@ -70,6 +70,7 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new QuotedString(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new RgbColor(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new CssUnit(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new NumericValue(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -142,11 +143,7 @@ class ShiftableTypesManager {
         if (null != new QuotedString(actionContainer).getShiftableType()) return QUOTED_STRING;
         if (null != new RgbColor(actionContainer).getShiftableType()) return RGB_COLOR;
         if (null != new CssUnit(actionContainer).getShiftableType()) return CSS_UNIT;
-
-        if (NumericValue.isNumericValue(word)) {
-            typeNumericValue = new NumericValue();
-            return NUMERIC_VALUE;
-        }
+        if (null != new NumericValue(actionContainer).getShiftableType()) return NUMERIC_VALUE;
 
         if (OperatorSign.isOperatorSign(word)) {
             typeOperatorSign = new OperatorSign();
