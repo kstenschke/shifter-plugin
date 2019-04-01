@@ -15,37 +15,50 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+import com.kstenschke.shifter.resources.ui.PluginConfiguration;
+
+import javax.annotation.Nullable;
 import java.awt.*;
 
 /**
  * RGB color class
  */
-public class RgbColor {
+public class RgbColor extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift RGB Color";
 
     /**
-     * Check whether given string represents a hex RGB color, prefix must be "#"
-     *
-     * @param str        String to be checked
-     * @param prefixChar Character preceding the string
-     * @return boolean
+     * Constructor
      */
-    public static boolean isRgbColorString(String str, String prefixChar) {
-        return !(!"#".equals(prefixChar) || !(str.matches("[0-9a-fA-F]{3}") || str.matches("[0-9a-fA-F]{6}")));
+    public RgbColor(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    /**
-     * @param rgbStr String representing an RGB color
-     * @param isUp   Shifting up or down?
-     * @return String
-     */
-    public String getShifted(String rgbStr, boolean isUp) {
+    // Check whether given string represents a hex RGB color, prefix must be "#"
+    public RgbColor getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return !
+               (!"#".equals(actionContainer.prefixChar) ||
+               !(str.matches("[0-9a-fA-F]{3}") ||
+               str.matches("[0-9a-fA-F]{6}")))
+                ? this : null;
+    }
+
+    public String getShifted(
+            String rgbStr,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace) {
         String rgbStrSixFold = rgbStr.length() == 3 ? sixfoldTripleColor(rgbStr) : rgbStr;
 
-        if (isUp && !isWhite(rgbStrSixFold)) {
-            return lightenRgbString(rgbStrSixFold);
-        }
+        if (actionContainer.isShiftUp && !isWhite(rgbStrSixFold)) return lightenRgbString(rgbStrSixFold);
+
         return isBlack(rgbStrSixFold) ? rgbStrSixFold : darkenRgbString(rgbStr);
     }
 

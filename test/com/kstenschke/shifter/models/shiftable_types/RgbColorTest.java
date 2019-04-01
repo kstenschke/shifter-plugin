@@ -9,28 +9,28 @@ public class RgbColorTest {
 
     @Test
     public void isRgbColorString() {
-        assertFalse(RgbColor.isRgbColorString(null, null));
-        assertFalse(RgbColor.isRgbColorString(null, ""));
-        assertFalse(RgbColor.isRgbColorString("", null));
-        assertFalse(RgbColor.isRgbColorString("", ""));
-        assertFalse(RgbColor.isRgbColorString("", "#"));
-        assertFalse(RgbColor.isRgbColorString("1", "#"));
-        assertFalse(RgbColor.isRgbColorString("11", "#"));
+        assertFalse(RgbColor.getShiftableType(null, null));
+        assertFalse(RgbColor.getShiftableType(null, ""));
+        assertFalse(RgbColor.getShiftableType("", null));
+        assertFalse(RgbColor.getShiftableType("", ""));
+        assertFalse(RgbColor.getShiftableType("", "#"));
+        assertFalse(RgbColor.getShiftableType("1", "#"));
+        assertFalse(RgbColor.getShiftableType("11", "#"));
 
-        assertTrue(RgbColor.isRgbColorString("111", "#"));
+        assertTrue(RgbColor.getShiftableType("111", "#"));
 
-        assertFalse(RgbColor.isRgbColorString("1111", "#"));
-        assertFalse(RgbColor.isRgbColorString("11111", "#"));
+        assertFalse(RgbColor.getShiftableType("1111", "#"));
+        assertFalse(RgbColor.getShiftableType("11111", "#"));
 
-        assertTrue(RgbColor.isRgbColorString("111111", "#"));
-        assertTrue(RgbColor.isRgbColorString("11aaff", "#"));
-        assertTrue(RgbColor.isRgbColorString("ffffff", "#"));
+        assertTrue(RgbColor.getShiftableType("111111", "#"));
+        assertTrue(RgbColor.getShiftableType("11aaff", "#"));
+        assertTrue(RgbColor.getShiftableType("ffffff", "#"));
 
-        assertFalse(RgbColor.isRgbColorString("gfffff", "#"));
-        assertFalse(RgbColor.isRgbColorString("ffgfff", "#"));
-        assertFalse(RgbColor.isRgbColorString("ffffgf", "#"));
+        assertFalse(RgbColor.getShiftableType("gfffff", "#"));
+        assertFalse(RgbColor.getShiftableType("ffgfff", "#"));
+        assertFalse(RgbColor.getShiftableType("ffffgf", "#"));
 
-        assertFalse(RgbColor.isRgbColorString("fffffff", "#"));
+        assertFalse(RgbColor.getShiftableType("fffffff", "#"));
     }
 
     @Test

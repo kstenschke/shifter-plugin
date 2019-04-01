@@ -66,8 +66,9 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new AccessType(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new JqueryObserver(actionContainer).getShiftableType())) break;
-            if (null != (new TernaryExpression(actionContainer).getShiftableType())) break;
-            if (null != (new QuotedString(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new TernaryExpression(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new QuotedString(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new RgbColor(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -137,11 +138,8 @@ class ShiftableTypesManager {
 
         if (null != new TernaryExpression(actionContainer).getShiftableType()) return TERNARY_EXPRESSION;
         if (null != new QuotedString(actionContainer).getShiftableType()) return QUOTED_STRING;
+        if (null != new RgbColor(actionContainer).getShiftableType()) return RGB_COLOR;
 
-        if (RgbColor.isRgbColorString(word, prefixChar)) {
-            typeRgbColor = new RgbColor();
-            return RGB_COLOR;
-        }
 
         if (CssUnit.isCssUnitValue(word)) {
             typePixelValue = new CssUnit();
@@ -230,7 +228,7 @@ class ShiftableTypesManager {
             case SIZZLE_SELECTOR:
                 return typeSizzleSelector.getShifted(word, actionContainer);
             case RGB_COLOR:
-                return typeRgbColor.getShifted(word, actionContainer.isShiftUp);
+                return typeRgbColor.getShifted(word, actionContainer);
             case NUMERIC_VALUE:
                 // Numeric values including UNIX and millisecond timestamps
                 return typeNumericValue.getShifted(word, actionContainer);
