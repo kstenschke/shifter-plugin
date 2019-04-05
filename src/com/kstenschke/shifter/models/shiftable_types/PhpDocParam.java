@@ -16,28 +16,81 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsPhp;
+
+import javax.annotation.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
  * PHPDoc @param comment
  */
-public class PhpDocParam {
+public class PhpDocParam extends ShiftableTypeAbstract {
 
-    /**
-     * Check whether given string represents a PHP variable
-     *
-     * @param  str     String to be checked
-     * @return boolean
-     */
-    public static Boolean isPhpDocParamLine(String str) {
-        str = trim(str);
+    private ActionContainer actionContainer;
 
-        return str.startsWith("*") && str.contains("@param");
+    // Constructor
+    public PhpDocParam(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    public static Boolean containsDataType(String str) {
+    // Check whether given string represents a PHP variable
+    public PhpDocParam getShiftableType() {
+        String str = actionContainer.shiftCaretLine
+                ? actionContainer.caretLine
+                : actionContainer.selectedText;
+        str = trim(str);
+
+        return str.startsWith("*") && str.contains("@param")
+                ? this : null;
+    }
+
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
+        if (null == actionContainer ||
+            actionContainer.shiftCaretLine
+        ) {
+            return getShiftedCaretLine(null == actionContainer ? str : actionContainer.caretLine);
+        }
+
+        if (PhpDocComment.isPhpDocComment(actionContainer.selectedText) &&
+            PhpDocComment.containsAtParam(actionContainer.selectedText)
+        ) {
+            final String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
+            if (!shifted.equals(actionContainer.selectedText)) {
+                // PHPDoc comment block: guess missing data shiftable_types by resp. variable names
+                actionContainer.writeUndoable(
+                        actionContainer.getRunnableReplaceSelection(shifted, true),
+                        "Shift PHPDoc comment");
+                return null;
+            }
+        }
+        DocCommentType docCommentType = new DocCommentType(actionContainer);
+        actionContainer.shiftSelectedText = true;
+        actionContainer.shiftCaretLine = false;
+        if (!actionContainer.selectedText.contains("\n") &&
+            docCommentType.isDocCommentTypeLineContext(actionContainer.selectedText) &&
+            null != getShiftableType() &&
+            !containsDataType(actionContainer.selectedText)
+        ) {
+            String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
+            final String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
+            if (!"unknown".equals(dataType)) {
+                // PHPDoc @param line w/o data type, e.g. "* @param $name"
+                actionContainer.writeUndoable(
+                        actionContainer.getRunnableReplaceSelection(insertDataTypeIntoParamLine(actionContainer.selectedText, dataType)),
+                        "Shift PHPDoc param");
+            }
+        }
+        return null;
+    }
+
+    public Boolean containsDataType(String str) {
         str = trim(str.toLowerCase());
 
         return     str.contains("array")
@@ -50,56 +103,26 @@ public class PhpDocParam {
                 || str.contains("null");
     }
 
-    public static Boolean containsVariableName(String str) {
-        return     str.contains("$");
+    public Boolean containsVariableName(String str) {
+        return str.contains("$");
+    }
+
+    /**
+     * @param  line     e.g. "* @param $var"
+     * @return string
+     * @todo merge into other getShifted method
+     */
+    private static String getShiftedCaretLine(String line) {
+        String variableName = trim(extractVariableName(line).replace("$", ""));
+
+        return insertDataTypeIntoParamLine(line, UtilsPhp.guessDataTypeByParameterName(variableName));
     }
 
     private static String extractVariableName(String str) {
         return trim(str.replace("* @param", "")).split(" ")[0];
     }
 
-    /**
-     * Guess (by variable name) and insert data type
-     *
-     * @param  line     e.g. "* @param $var"
-     * @return string
-     */
-    public static String getShifted(String line) {
-        String variableName = trim(extractVariableName(line).replace("$", ""));
-
-        return insertDataTypeIntoParamLine(line, UtilsPhp.guessDataTypeByParameterName(variableName));
-    }
-
     private static String insertDataTypeIntoParamLine(String line, String dataType) {
         return line.replace("@param", "@param " + dataType);
-    }
-
-    public static boolean shiftSelectedPhpDocInDocument(final ActionContainer actionContainer) {
-        if (PhpDocComment.isPhpDocComment(actionContainer.selectedText) && PhpDocComment.containsAtParam(actionContainer.selectedText)) {
-            final String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
-            if (!shifted.equals(actionContainer.selectedText)) {
-                // PHPDoc comment block: guess missing data shiftable_types by resp. variable names
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(shifted, true),
-                        "Shift PHPDoc comment");
-                return true;
-            }
-        }
-        DocCommentType docCommentType = new DocCommentType(actionContainer);
-        if (!actionContainer.selectedText.contains("\n")
-          && docCommentType.isDocCommentTypeLineContext(actionContainer.selectedText)
-          && isPhpDocParamLine(actionContainer.selectedText)
-          && !containsDataType(actionContainer.selectedText)) {
-            String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));
-            final String dataType     = UtilsPhp.guessDataTypeByParameterName(variableName);
-            if (!"unknown".equals(dataType)) {
-                // PHPDoc @param line w/o data type, e.g. "* @param $name"
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(insertDataTypeIntoParamLine(actionContainer.selectedText, dataType)),
-                        "Shift PHPDoc param");
-                return true;
-            }
-        }
-        return false;
     }
 }

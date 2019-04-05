@@ -19,12 +19,7 @@ import static org.apache.commons.lang.StringUtils.trim;
 
 class PhpDocComment {
 
-    /**
-     * Check whether given String is a PHP doc comment block
-     *
-     * @param  str
-     * @return boolean
-     */
+    // Check whether given String is a PHP doc comment block
     static boolean isPhpDocComment(String str) {
         str = trim(str);
         String lines[] = str.split("\n");
@@ -41,10 +36,14 @@ class PhpDocComment {
         StringBuilder shifted = new StringBuilder();
 
         int indexLine = 1;
+        PhpDocParam phpDocParam = new PhpDocParam(null);
         for (String line : lines) {
-            if (containsAtParam(line) && !PhpDocParam.containsDataType(line) && PhpDocParam.containsVariableName(line)) {
+            if (containsAtParam(line) &&
+                !phpDocParam.containsDataType(line) &&
+                phpDocParam.containsVariableName(line)
+            ) {
                 // PHP doc @param comment that contains variable name but no data type: guess data type by variable name
-                line = PhpDocParam.getShifted(line);
+                line = phpDocParam.getShifted(line);
             }
             shifted.append(line).append(indexLine < lines.length ? "\n" : "");
             indexLine++;

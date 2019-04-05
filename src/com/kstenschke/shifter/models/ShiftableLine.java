@@ -50,9 +50,18 @@ public class ShiftableLine {
      * @return String       Next upper/lower word
      */
     private String getShifted(@Nullable final Integer moreCount) {
-        if (UtilsFile.isPhpFile(actionContainer.filename) && PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) && !PhpDocParam.containsDataType(actionContainer.caretLine) && PhpDocParam.containsVariableName(actionContainer.caretLine)) {
+        actionContainer.shiftSelectedText = false;
+        actionContainer.shiftCaretLine = true;
+
+        PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
+        if (UtilsFile.isPhpFile(actionContainer.filename) &&
+            null != phpDocParam.getShiftableType() &&
+            !phpDocParam.containsDataType(actionContainer.caretLine) &&
+            phpDocParam.containsVariableName(actionContainer.caretLine)
+        ) {
             // Caret-line is a PHP doc @param w/o data type: guess and insert one by the variable name
-            String shiftedLine = PhpDocParam.getShifted(actionContainer.caretLine);
+            actionContainer.shiftCaretLine = true;
+            String shiftedLine = phpDocParam.getShifted(actionContainer.caretLine);
             if (!shiftedLine.equals(actionContainer.caretLine)) {
                 return shiftedLine;
             }

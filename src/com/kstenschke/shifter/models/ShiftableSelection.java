@@ -47,7 +47,9 @@ public class ShiftableSelection {
         // @todo convert all shiftable type to extend ShiftableTypeAbstract
 
         boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
-        if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(actionContainer)) {
+        if (isPhpFile &&
+            null != new PhpDocParam(actionContainer).getShifted(actionContainer.selectedText)
+        ) {
             // Detect and shift whole PHPDoc block or single line out of it, that contains @param caretLine(s) w/o data type
             return;
         }

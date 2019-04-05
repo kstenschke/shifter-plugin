@@ -46,8 +46,11 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new TrailingComment(actionContainer).getShiftableType())) break;
 
             // PHP doc param line is handled in caretLine-shifting fallback
-            if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
-                !PhpDocParam.containsDataType(actionContainer.caretLine)) return null;
+            PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
+            actionContainer.shiftSelectedText = false;
+            actionContainer.shiftCaretLine = true;
+            if (null != phpDocParam.getShiftableType() &&
+                !phpDocParam.containsDataType(actionContainer.caretLine)) return null;
 
             if (null != (shiftableType = new PhpVariableOrArray(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new Parenthesis(actionContainer).getShiftableType())) break;
@@ -116,8 +119,11 @@ class ShiftableTypesManager {
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (null != new TrailingComment(actionContainer).getShiftableType()) return TRAILING_COMMENT;
 
-        if (PhpDocParam.isPhpDocParamLine(actionContainer.caretLine) &&
-            !PhpDocParam.containsDataType(actionContainer.caretLine)) {
+        PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
+        actionContainer.shiftSelectedText = false;
+        actionContainer.shiftCaretLine = true;
+        if (null != phpDocParam.getShiftableType() &&
+            !phpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
             // PHP doc param line is handled in caretLine-shifting fallback
             return UNKNOWN;
