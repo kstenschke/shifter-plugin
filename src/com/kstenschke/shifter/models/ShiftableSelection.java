@@ -15,7 +15,6 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.util.ui.Html;
 import com.kstenschke.shifter.models.shiftable_types.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -44,6 +43,8 @@ public class ShiftableSelection {
         if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) {
             return;
         }
+
+        // @todo convert all shiftable type to extend ShiftableTypeAbstract
 
         boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
         if (isPhpFile && PhpDocParam.shiftSelectedPhpDocInDocument(actionContainer)) {
@@ -84,7 +85,6 @@ public class ShiftableSelection {
         if (null == actionContainer.editorText) {
             wordType = UNKNOWN;
         } else {
-
             int editorTextLength = actionContainer.editorText.length();
             int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
             String postfixChar = editorTextLength > offsetPostfixChar
