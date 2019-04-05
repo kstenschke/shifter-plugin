@@ -27,14 +27,19 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
  */
 class ShiftableTypesManager {
 
-    private ShiftableTypes.Type wordType;
+    private ActionContainer actionContainer;
 
     // Generic shiftable_types (calculated when shifted)
     private DocCommentTag typeTagInDocComment;
     private DocCommentType typeDataTypeInDocComment;
     private Tupel wordsTupel;
 
-    ShiftableTypeAbstract getShiftableType(ActionContainer actionContainer) {
+    // Constructor
+    public ShiftableTypesManager(ActionContainer actionContainer) {
+        this.actionContainer = actionContainer;
+    }
+
+    ShiftableTypeAbstract getShiftableType() {
         ShiftableTypeAbstract shiftableType;
 
         //noinspection LoopStatementThatDoesntLoop
@@ -260,27 +265,16 @@ class ShiftableTypesManager {
     String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
         actionContainer.shiftSelectedText = true;
 
-        ShiftableTypeAbstract shiftableType = getShiftableType(actionContainer);
-        if (null != shiftableType) {
-            return shiftableType.getShifted(
-                    actionContainer.selectedText,
-                    actionContainer,
-                    moreCount,
-                    null);
-        }
-
-        wordType = getWordType(
-                actionContainer.selectedText,
-                "",
-                "",
-                false,
-                actionContainer);
-
-        return getShiftedWord(actionContainer, actionContainer.selectedText, wordType, moreCount);
+        ShiftableTypeAbstract shiftableType = getShiftableType();
+        return null == shiftableType
+                ? actionContainer.selectedText
+                : shiftableType.getShifted(actionContainer.selectedText, actionContainer, moreCount,null);
     }
 
     String getActionText() {
-        switch (wordType) {
+        // @todo return ShiftableTypeAbstract.ACTION_TXT
+        return "@todo return ShiftableTypeAbstract.ACTION_TXT";
+        /*switch (wordType) {
             case CSS_UNIT:
                 return CssUnit.ACTION_TEXT;
             case HTML_ENCODABLE:
@@ -304,5 +298,6 @@ class ShiftableTypesManager {
             default:
                 return ACTION_TEXT_SHIFT_SELECTION;
         }
+        */
     }
 }

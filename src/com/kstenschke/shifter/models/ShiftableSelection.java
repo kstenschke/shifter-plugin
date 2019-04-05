@@ -75,7 +75,8 @@ public class ShiftableSelection {
         Parenthesis parenthesis = new Parenthesis(actionContainer);
         boolean isWrappedInParenthesis = parenthesis.getShiftableType() != null;
 
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager();
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        //ShiftableTypeAbstract shiftableType = shiftableTypesManager.getShiftableType(actionContainer);
         ShiftableTypes.Type wordType = shiftableTypesManager.getWordType(actionContainer);
 
         boolean isPhpVariableOrArray = PHP_VARIABLE_OR_ARRAY == wordType;

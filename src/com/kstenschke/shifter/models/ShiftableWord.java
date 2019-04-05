@@ -65,7 +65,7 @@ public class ShiftableWord {
         this.actionContainer = actionContainer;
         this.moreCount       = moreCount;
 
-        shiftingShiftableTypesManager = new ShiftableTypesManager();
+        shiftingShiftableTypesManager = new ShiftableTypesManager(actionContainer);
 
         // Detect word type
         wordType = shiftingShiftableTypesManager.getWordType(word, prefixChar, postfixChar, false, actionContainer);
