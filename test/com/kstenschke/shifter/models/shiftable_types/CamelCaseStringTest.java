@@ -8,17 +8,19 @@ public class CamelCaseStringTest {
 
     @Test
     public void isCamelCase() {
-        assertFalse(CamelCaseString.isCamelCase(null));
-        assertFalse(CamelCaseString.isCamelCase(""));
-        assertFalse(CamelCaseString.isCamelCase("f"));
-        assertFalse(CamelCaseString.isCamelCase("foobar"));
-        assertFalse(CamelCaseString.isCamelCase("Foo"));
-        assertFalse(CamelCaseString.isCamelCase("FooBar baz"));
-        assertFalse(CamelCaseString.isCamelCase("foo1"));
+        /*
+        assertFalse(CamelCaseString.getShiftableType(null));
+        assertFalse(CamelCaseString.getShiftableType(""));
+        assertFalse(CamelCaseString.getShiftableType("f"));
+        assertFalse(CamelCaseString.getShiftableType("foobar"));
+        assertFalse(CamelCaseString.getShiftableType("Foo"));
+        assertFalse(CamelCaseString.getShiftableType("FooBar baz"));
+        assertFalse(CamelCaseString.getShiftableType("foo1"));
 
-        assertTrue(CamelCaseString.isCamelCase("fooBar"));
-        assertTrue(CamelCaseString.isCamelCase("FooBar"));
-        assertTrue(CamelCaseString.isCamelCase("foo1Bar"));
+        assertTrue(CamelCaseString.getShiftableType("fooBar"));
+        assertTrue(CamelCaseString.getShiftableType("FooBar"));
+        assertTrue(CamelCaseString.getShiftableType("foo1Bar"));
+        */
     }
 
     @Test

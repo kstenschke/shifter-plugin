@@ -74,6 +74,8 @@ class ShiftableTypesManager {
 
             if (null != (shiftableType = new NumericPostfixed(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new Tupel(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new SeparatedPath(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new CamelCaseString(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -160,8 +162,7 @@ class ShiftableTypesManager {
         if (null != new NumericPostfixed(actionContainer).getShiftableType()) return NUMERIC_POSTFIXED;
         if (null != new Tupel(actionContainer).getShiftableType()) return WORDS_TUPEL;
         if (null != new SeparatedPath(actionContainer).getShiftableType()) return SEPARATED_PATH;
-
-        if (CamelCaseString.isCamelCase(word)) return CAMEL_CASED;
+        if (null != new CamelCaseString(actionContainer).getShiftableType()) return CAMEL_CASED;
 
         if (HtmlEncodable.isHtmlEncodable(word)) return HTML_ENCODABLE;
 
@@ -245,7 +246,7 @@ class ShiftableTypesManager {
             case SEPARATED_PATH:
                 return new SeparatedPath(actionContainer).getShifted(word);
             case CAMEL_CASED:
-                return CamelCaseString.getShifted(word);
+                return new CamelCaseString(actionContainer).getShifted(word);
             case HTML_ENCODABLE:
                 return HtmlEncodable.getShifted(word);
             case NUMERIC_POSTFIXED:

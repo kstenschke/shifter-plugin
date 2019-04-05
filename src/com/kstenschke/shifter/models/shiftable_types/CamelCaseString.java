@@ -15,21 +15,36 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
+
+import javax.annotation.Nullable;
 
 /**
  * "camelCase" and "TitleCase" strings
  */
-public class CamelCaseString {
+public class CamelCaseString extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public CamelCaseString(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     public enum ShiftMode {
         CAMEL_WORDS_TO_MINUS_SEPARATED,
         CAMEL_WORDS_TO_UNDERSCORE_SEPARATED,
     }
 
-    public static boolean isCamelCase(String str) {
-        return !UtilsTextual.startsNumeric(str) && UtilsTextual.isCamelCase(str);
+    public CamelCaseString getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return !UtilsTextual.startsNumeric(str) &&
+               UtilsTextual.isCamelCase(str)
+                ? this : null;
     }
 
     public static boolean isWordPair(String str) {
@@ -55,13 +70,13 @@ public class CamelCaseString {
         return UtilsTextual.splitCamelCaseIntoWords(word, true).length;
     }
 
-    /**
-     * Convert into minus-separated path
-     *
-     * @param  word
-     * @return String
-     */
-    public static String getShifted(String word) {
+    // Convert into minus-separated path
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         return getShifted(word, ShiftMode.CAMEL_WORDS_TO_MINUS_SEPARATED);
     }
 

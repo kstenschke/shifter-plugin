@@ -220,7 +220,9 @@ public class ShiftableSelection {
                 new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
                 return;
             }
-            if (CamelCaseString.isCamelCase(actionContainer.selectedText)) {
+
+            CamelCaseString camelCaseString = new CamelCaseString(actionContainer);
+            if (null != camelCaseString.getShiftableType()) {
                 new ShiftableSelectionWithPopup(actionContainer).shiftCamelCase(
                         CamelCaseString.isWordPair(actionContainer.selectedText));
                 return;

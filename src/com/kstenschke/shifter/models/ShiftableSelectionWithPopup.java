@@ -297,7 +297,8 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_CAMEL_CASE_TO_PATH)) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, CamelCaseString.getShifted(actionContainer.selectedText));
+            CamelCaseString camelCaseString = new CamelCaseString(actionContainer);
+            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, camelCaseString.getShifted(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_CAMEL_CASE_TO_UNDERSCORE_SEPARATED)) {
