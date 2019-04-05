@@ -15,27 +15,36 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+
+import javax.annotation.Nullable;
+
 /**
  * String w/ numeric postfix
  */
-public class NumericPostfixed {
+public class NumericPostfixed extends ShiftableTypeAbstract {
 
-    /**
-     * @param  word     String to be analyzed
-     * @return boolean
-     */
-    public static boolean hasNumericPostfix(String word) {
-        return word.matches("^.+?\\d$");
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public NumericPostfixed(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    /**
-     * Shift numeric postfix of string
-     *
-     * @param  word     Quoted word to be shifted
-     * @param  isUp     Shifting up or down?
-     * @return String
-     */
-    public static String getShifted(String word, boolean isUp) {
+    public NumericPostfixed getShiftableType() {
+        String word = actionContainer.selectedText;
+
+        return word.matches("^.+?\\d$")
+            ? this : null;
+    }
+
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         int indexFirstNumericChar,
             indexLastNumericChar;
 
@@ -58,7 +67,7 @@ public class NumericPostfixed {
         String leadPart    = word.substring(0, indexFirstNumericChar);
         String numericPart = word.substring(indexFirstNumericChar, indexLastNumericChar + 1);
 
-        int shiftedNumber = Integer.parseInt(numericPart) + (isUp ? 1 : -1);
+        int shiftedNumber = Integer.parseInt(numericPart) + (actionContainer.isShiftUp ? 1 : -1);
 
         return leadPart + shiftedNumber;
     }

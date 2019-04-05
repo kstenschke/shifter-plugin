@@ -72,6 +72,8 @@ class ShiftableTypesManager {
             // Term in any dictionary (w/o limiting to edited file's extension)
             if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
 
+            if (null != (shiftableType = new NumericPostfixed(actionContainer).getShiftableType())) break;
+
             // @todo 1. convert all shiftable types and add them here
 
             // @todo 2. completely remove getWordType() when 1. is done
@@ -154,7 +156,7 @@ class ShiftableTypesManager {
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if (null != new DictionaryTerm(actionContainer).getShiftableType()) return DICTIONARY_WORD_GLOBAL;
 
-        if (NumericPostfixed.hasNumericPostfix(word)) return NUMERIC_POSTFIXED;
+        if (null != new NumericPostfixed(actionContainer).getShiftableType()) return NUMERIC_POSTFIXED;
 
         wordsTupel = new Tupel(actionContainer);
         if (wordsTupel.isWordsTupel(word)) return WORDS_TUPEL;
@@ -249,7 +251,7 @@ class ShiftableTypesManager {
             case HTML_ENCODABLE:
                 return HtmlEncodable.getShifted(word);
             case NUMERIC_POSTFIXED:
-                return NumericPostfixed.getShifted(word, actionContainer.isShiftUp);
+                return new NumericPostfixed(actionContainer).getShifted(word, actionContainer);
             case WORDS_TUPEL:
                 return wordsTupel.getShifted(word, true);
             default:
