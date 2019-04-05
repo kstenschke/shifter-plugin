@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,32 +28,23 @@ import java.util.regex.Pattern;
 /**
  * Tupel (two items w/ delimiter in between)
  */
-public class Tupel {
+public class Tupel extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift Tupel";
-
-    private final ActionContainer actionContainer;
 
     // Defined during detection of being a tupel
     private String delimiter;
 
-    /**
-     * Constructor
-     *
-     * @param actionContainer
-     */
+    // Constructor
     public Tupel(@Nullable ActionContainer actionContainer) {
-        this.actionContainer = actionContainer;
+        super(actionContainer);
     }
 
-    /**
-     * Check whether shifted string is a ternary expression
-     *
-     * @param  str
-     * @return boolean
-     */
-    public boolean isWordsTupel(String str) {
-        if (null == str) return false;
+    public Tupel getShiftableType() {
+        String str = actionContainer.selectedText;
+        if (null == str) return null;
 
         String glues[] = new String[]{
                 ",",
@@ -76,26 +68,26 @@ public class Tupel {
             String parts[] = str.split("\\s*" + Pattern.quote(glue) + "\\s*");
             if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
                 delimiter = glue;
-                return true;
+                return this;
             }
         }
 
-        return false;
+        return null;
     }
 
-    /**
-     * Shift: swap tupel parts
-     *
-     * @param  str      string to be shifted
-     * @param  disableIntentionPopup
-     * @return String   The shifted string
-     */
-    public String getShifted(String str, boolean disableIntentionPopup) {
-        if (!disableIntentionPopup &&
-            " ".equals(delimiter) &&
-            actionContainer != null &&
-            !actionContainer.selectedText.isEmpty() &&
-            UtilsTextual.subStringCount(str, " ") == 1
+    // Swap tupel parts
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
+        if (
+                actionContainer != null &&
+                !actionContainer.disableIntentionPopup &&
+                " ".equals(delimiter) &&
+                !actionContainer.selectedText.isEmpty() &&
+                UtilsTextual.subStringCount(str, " ") == 1
         ) {
             DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
             if (null != dictionaryTerm.getShiftableType()) {

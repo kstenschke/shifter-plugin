@@ -26,7 +26,10 @@ public class ActionContainer {
     public String postfixChar = "";
     public String firstChar = "";
 
-    public boolean isLastLineInDocument = false; // regards selected or shifted line/selection
+    // regards selected or shifted line/selection
+    public boolean isLastLineInDocument = false;
+
+    public boolean disableIntentionPopup = false;
 
     public boolean isShiftUp;
     private final boolean isShiftMore;

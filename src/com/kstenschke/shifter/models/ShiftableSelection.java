@@ -231,8 +231,9 @@ public class ShiftableSelection {
             }
 
             final Tupel wordsTupel = new Tupel(actionContainer);
-            if (wordsTupel.isWordsTupel(actionContainer.selectedText)) {
-                final String replacement = wordsTupel.getShifted(actionContainer.selectedText, false);
+            if (null != wordsTupel.getShiftableType()) {
+                actionContainer.disableIntentionPopup = false;
+                final String replacement = wordsTupel.getShifted(actionContainer.selectedText, actionContainer);
                 if (!replacement.isEmpty()) {
                     /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
                      * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric

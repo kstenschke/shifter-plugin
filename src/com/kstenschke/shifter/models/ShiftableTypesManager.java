@@ -73,6 +73,7 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
 
             if (null != (shiftableType = new NumericPostfixed(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new Tupel(actionContainer).getShiftableType())) break;
 
             // @todo 1. convert all shiftable types and add them here
 
@@ -157,9 +158,7 @@ class ShiftableTypesManager {
         if (null != new DictionaryTerm(actionContainer).getShiftableType()) return DICTIONARY_WORD_GLOBAL;
 
         if (null != new NumericPostfixed(actionContainer).getShiftableType()) return NUMERIC_POSTFIXED;
-
-        wordsTupel = new Tupel(actionContainer);
-        if (wordsTupel.isWordsTupel(word)) return WORDS_TUPEL;
+        if (null != new Tupel(actionContainer).getShiftableType()) return WORDS_TUPEL;
 
         if (SeparatedPath.isSeparatedPath(word)) return SEPARATED_PATH;
 
@@ -253,7 +252,8 @@ class ShiftableTypesManager {
             case NUMERIC_POSTFIXED:
                 return new NumericPostfixed(actionContainer).getShifted(word, actionContainer);
             case WORDS_TUPEL:
-                return wordsTupel.getShifted(word, true);
+                actionContainer.disableIntentionPopup = true;
+                return wordsTupel.getShifted(word, actionContainer);
             default:
                 return word;
         }

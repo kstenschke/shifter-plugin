@@ -239,12 +239,12 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_TUPEL_WORDS_ORDER)) {
-            Tupel tupel = new Tupel(actionContainer);
-            tupel.isWordsTupel(actionContainer.selectedText);
+            Tupel tupel = new Tupel(actionContainer).getShiftableType();
+            actionContainer.disableIntentionPopup = true;
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    tupel.getShifted(actionContainer.selectedText, true));
+                    tupel.getShifted(actionContainer.selectedText, actionContainer));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SHIFT_DICTIONARY_TERM)) {
