@@ -51,7 +51,8 @@ public class ActionContainer {
     int lineNumberSelStart;
     int lineNumberSelEnd;
 
-    boolean shiftSelectedText = true;
+    public boolean shiftCaretLine = false;
+    public boolean shiftSelectedText = true;
 
     public String selectedText;
     String whiteSpaceLHSinSelection;

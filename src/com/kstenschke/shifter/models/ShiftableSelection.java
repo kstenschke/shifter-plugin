@@ -15,6 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.util.ui.Html;
 import com.kstenschke.shifter.models.shiftable_types.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -273,9 +274,11 @@ public class ShiftableSelection {
                         LogicalConjunction.ACTION_TEXT);
                 return;
             }
-            if (HtmlEncodable.isHtmlEncodable(actionContainer.selectedText)) {
+            HtmlEncodable htmlEncodable = new HtmlEncodable(actionContainer);
+            if (null != htmlEncodable.getShiftableType()) {
                 actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(HtmlEncodable.getShifted(actionContainer.selectedText)),
+                        actionContainer.getRunnableReplaceSelection(
+                                htmlEncodable.getShifted(actionContainer.selectedText, actionContainer)),
                         HtmlEncodable.ACTION_TEXT);
                 return;
             }

@@ -76,14 +76,13 @@ class ShiftableTypesManager {
             if (null != (shiftableType = new Tupel(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new SeparatedPath(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new CamelCaseString(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new HtmlEncodable(actionContainer).getShiftableType())) break;
 
-            // @todo 1. convert all shiftable types and add them here
+            // @todo 1. completely remove getWordType()
 
-            // @todo 2. completely remove getWordType() when 1. is done
+            // @todo 2. rework: remove redundant arguments (e.g. from getShifted())
 
-            // @todo 3. rework: remove redundant arguments (e.g. from getShifted())
-
-            // @todo 4. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
+            // @todo 3. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
 
             // No shiftable type detected
             return null;
@@ -163,8 +162,7 @@ class ShiftableTypesManager {
         if (null != new Tupel(actionContainer).getShiftableType()) return WORDS_TUPEL;
         if (null != new SeparatedPath(actionContainer).getShiftableType()) return SEPARATED_PATH;
         if (null != new CamelCaseString(actionContainer).getShiftableType()) return CAMEL_CASED;
-
-        if (HtmlEncodable.isHtmlEncodable(word)) return HTML_ENCODABLE;
+        if (null != new HtmlEncodable(actionContainer).getShiftableType()) return HTML_ENCODABLE;
 
         return UNKNOWN;
     }
@@ -248,7 +246,7 @@ class ShiftableTypesManager {
             case CAMEL_CASED:
                 return new CamelCaseString(actionContainer).getShifted(word);
             case HTML_ENCODABLE:
-                return HtmlEncodable.getShifted(word);
+                return new HtmlEncodable(actionContainer).getShifted(word);
             case NUMERIC_POSTFIXED:
                 return new NumericPostfixed(actionContainer).getShifted(word, actionContainer);
             case WORDS_TUPEL:

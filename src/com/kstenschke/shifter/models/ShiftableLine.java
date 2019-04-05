@@ -100,9 +100,13 @@ public class ShiftableLine {
             return line.replace(wordUnshifted, wordShifted);
         }
 
-        return HtmlEncodable.isHtmlEncodable(actionContainer.caretLine)
+        HtmlEncodable htmlEncodable = new HtmlEncodable(actionContainer);
+        actionContainer.shiftSelectedText = false;
+        actionContainer.shiftCaretLine = true;
+
+        return null != htmlEncodable.getShiftableType()
             // Encode or decode contained HTML special chars
-            ? HtmlEncodable.getShifted(actionContainer.caretLine)
+            ? htmlEncodable.getShifted(actionContainer.caretLine, actionContainer)
             // No shift-ability detected, return original line
             : actionContainer.caretLine;
     }

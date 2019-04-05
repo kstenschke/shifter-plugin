@@ -15,28 +15,40 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import org.apache.commons.lang.StringEscapeUtils;
+
+import javax.annotation.Nullable;
 
 /**
  * HTML encoded/encode-able (=containing char(s) that be be encoded) String.
  */
-public class HtmlEncodable {
+public class HtmlEncodable extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Shift HTML Entities";
 
-    /**
-     * Check whether given character can be encoded to an HTML special char / or is already HTML encoded
-     *
-     * @param  str      String to be shifted currently
-     * @return boolean
-     */
-    public static boolean isHtmlEncodable(String str) {
+    // Constructor
+    public HtmlEncodable(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    // Check whether given character can be encoded to an HTML special char / or is already HTML encoded
+    public HtmlEncodable getShiftableType() {
+        String str = actionContainer.shiftCaretLine
+                ? actionContainer.caretLine
+                : actionContainer.selectedText;
+
         Integer strLenOriginal = str.length();
 
         String encoded = StringEscapeUtils.escapeHtml(str);
         String decoded = StringEscapeUtils.unescapeHtml(str);
 
-        return !strLenOriginal.equals(encoded.length()) || !strLenOriginal.equals(decoded.length());
+        return !strLenOriginal.equals(encoded.length()) ||
+               !strLenOriginal.equals(decoded.length())
+                ? this : null;
     }
 
     /**
@@ -45,7 +57,12 @@ public class HtmlEncodable {
      * @param  word     word to be shifted
      * @return String
      */
-    public static String getShifted(String word) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         Integer strLenOriginal = word.length();
 
         String decoded = StringEscapeUtils.unescapeHtml(word);
