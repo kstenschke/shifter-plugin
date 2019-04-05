@@ -19,7 +19,6 @@ import com.kstenschke.shifter.models.shiftable_types.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
-import static com.kstenschke.shifter.models.ShiftableSelection.ACTION_TEXT_SHIFT_SELECTION;
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
 /**
@@ -170,19 +169,6 @@ class ShiftableTypesManager {
         if (null != new HtmlEncodable(actionContainer).getShiftableType()) return HTML_ENCODABLE;
 
         return UNKNOWN;
-    }
-
-    ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
-        if (null == actionContainer.editorText) return UNKNOWN;
-
-        int editorTextLength = actionContainer.editorText.length();
-        int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
-        String postfixChar = editorTextLength > offsetPostfixChar
-                ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
-                : "";
-        boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
-
-        return getWordType(actionContainer.selectedText, "", postfixChar, isLastLineInDocument, actionContainer);
     }
 
     /**

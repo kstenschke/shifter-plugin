@@ -76,8 +76,25 @@ public class ShiftableSelection {
         boolean isWrappedInParenthesis = parenthesis.getShiftableType() != null;
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
         //ShiftableTypeAbstract shiftableType = shiftableTypesManager.getShiftableType(actionContainer);
-        ShiftableTypes.Type wordType = shiftableTypesManager.getWordType(actionContainer);
+
+
+        ShiftableTypes.Type wordType;
+        if (null == actionContainer.editorText) {
+            wordType = UNKNOWN;
+        } else {
+
+            int editorTextLength = actionContainer.editorText.length();
+            int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
+            String postfixChar = editorTextLength > offsetPostfixChar
+                    ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
+                    : "";
+            boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
+
+            wordType = shiftableTypesManager.getWordType(actionContainer.selectedText, "", postfixChar, isLastLineInDocument, actionContainer);
+        }
+
 
         boolean isPhpVariableOrArray = PHP_VARIABLE_OR_ARRAY == wordType;
 
