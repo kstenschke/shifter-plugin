@@ -55,7 +55,7 @@ public class ShiftableSelection {
         }
         if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
             JsDoc.isJsDocBlock(actionContainer.selectedText) &&
-            JsDoc.correctDocBlockInDocument(actionContainer)) {
+            JsDoc.getShifted(actionContainer)) {
             return;
         }
 
@@ -362,7 +362,7 @@ public class ShiftableSelection {
     private static void shiftSelectedCommentInDocument(ActionContainer actionContainer) {
         if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
             if (actionContainer.filename.endsWith("js") && JsDoc.isJsDocBlock(actionContainer.selectedText)) {
-                JsDoc.correctDocBlockInDocument(actionContainer);
+                JsDoc.getShifted(actionContainer);
                 return;
             }
             if (Comment.isBlockComment(actionContainer.selectedText)) {

@@ -51,6 +51,8 @@ class ShiftableTypesManager {
             actionContainer.shiftCaretLine = true;
             if (null != phpDocParam.getShiftableType() &&
                 !phpDocParam.containsDataType(actionContainer.caretLine)) return null;
+            actionContainer.shiftSelectedText = true;
+            actionContainer.shiftCaretLine = false;
 
             if (null != (shiftableType = new PhpVariableOrArray(actionContainer).getShiftableType())) break;
             if (null != (shiftableType = new Parenthesis(actionContainer).getShiftableType())) break;

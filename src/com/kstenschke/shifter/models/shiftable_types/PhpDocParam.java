@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsPhp;
 
 import javax.annotation.Nullable;
@@ -37,6 +38,8 @@ public class PhpDocParam extends ShiftableTypeAbstract {
 
     // Check whether given string represents a PHP variable
     public PhpDocParam getShiftableType() {
+        if (!UtilsFile.isPhpFile(actionContainer.filename)) return null;
+
         String str = actionContainer.shiftCaretLine
                 ? actionContainer.caretLine
                 : actionContainer.selectedText;

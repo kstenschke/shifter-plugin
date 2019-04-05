@@ -43,6 +43,12 @@ public class JsDoc {
                 || str.contains("@type"));
     }
 
+    public static boolean getShifted(ActionContainer actionContainer) {
+        // @todo move sub-type detection or switch to resp. sub-shifting here
+
+        return correctDocBlockInDocument(actionContainer);
+    }
+
     /**
      * Check whether given string represents a JsDoc @param comment
      *
