@@ -225,7 +225,10 @@ public class ShiftableSelection {
                         CamelCaseString.isWordPair(actionContainer.selectedText));
                 return;
             }
-            if (SeparatedPath.isSeparatedPath(actionContainer.selectedText) && SeparatedPath.isWordPair(actionContainer.selectedText)) {
+            SeparatedPath separatedPath = new SeparatedPath(actionContainer);
+            if (null != separatedPath.getShiftableType() &&
+                separatedPath.isWordPair(actionContainer.selectedText)
+            ) {
                 new ShiftableSelectionWithPopup(actionContainer).shiftSeparatedPathOrSwapWords();
                 return;
             }

@@ -15,35 +15,55 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
 
-public class SeparatedPath {
+import javax.annotation.Nullable;
 
-    public static boolean isSeparatedPath(String str) {
-        return isSeparatedPath(str, "-") || isSeparatedPath(str, "_");
+public class SeparatedPath extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public SeparatedPath(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    private static boolean isSeparatedPath(String str, CharSequence glue) {
-        return str.length() > 3 && UtilsTextual.startsAlphabetic(str) && str.contains(glue)
-            && UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase());
+    public SeparatedPath getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return null != getShiftableType(str, "-") ||
+               null != getShiftableType(str, "_")
+                ? this : null;
     }
 
-    public static boolean isWordPair(String str) {
+    private SeparatedPath getShiftableType(String str, CharSequence glue) {
+        return
+                str.length() > 3 &&
+                UtilsTextual.startsAlphabetic(str) &&
+                str.contains(glue) &&
+                UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase())
+                    ? this : null;
+    }
+
+    public boolean isWordPair(String str) {
         return str.split("-").length == 2;
     }
 
-    public static String flipWordsOrder(String str) {
+    public String flipWordsOrder(String str) {
         String words[] = str.split(getWordsGlue(str));
 
         return words[1] + "-" + words[0];
     }
 
-    /**
-     * @param  word
-     * @return String   Given string converted to camelCase
-     */
-    public static String getShifted(String word) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadingWhiteSpace
+    ) {
         String parts[] = word.split(getWordsGlue(word));
         StringBuilder shifted = new StringBuilder();
         int index = 0;
@@ -56,7 +76,9 @@ public class SeparatedPath {
     }
 
     @NotNull
-    private static String getWordsGlue(String word) {
-        return isSeparatedPath(word, "-") ? "-" : "_";
+    private String getWordsGlue(String word) {
+        return null != getShiftableType(word, "-")
+                ? "-"
+                : "_";
     }
 }

@@ -159,8 +159,7 @@ class ShiftableTypesManager {
 
         if (null != new NumericPostfixed(actionContainer).getShiftableType()) return NUMERIC_POSTFIXED;
         if (null != new Tupel(actionContainer).getShiftableType()) return WORDS_TUPEL;
-
-        if (SeparatedPath.isSeparatedPath(word)) return SEPARATED_PATH;
+        if (null != new SeparatedPath(actionContainer).getShiftableType()) return SEPARATED_PATH;
 
         if (CamelCaseString.isCamelCase(word)) return CAMEL_CASED;
 
@@ -244,7 +243,7 @@ class ShiftableTypesManager {
             case DOC_COMMENT_DATA_TYPE:
                 return typeDataTypeInDocComment.getShifted(word, actionContainer);
             case SEPARATED_PATH:
-                return SeparatedPath.getShifted(word);
+                return new SeparatedPath(actionContainer).getShifted(word);
             case CAMEL_CASED:
                 return CamelCaseString.getShifted(word);
             case HTML_ENCODABLE:
