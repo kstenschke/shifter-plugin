@@ -60,10 +60,11 @@ public class TrailingComment extends ShiftableTypeAbstract {
             String selection,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         String[] parts = selection.split("//");
 
-        return leadingWhiteSpace + "//" + parts[1] + "\n" + parts[0];
+        return leadWhitespace + "//" + parts[1] + "\n" + parts[0];
     }
 }

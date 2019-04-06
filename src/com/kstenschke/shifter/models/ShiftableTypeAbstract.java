@@ -33,15 +33,19 @@ public abstract class ShiftableTypeAbstract {
             String word,
             @Nullable ActionContainer actionContainer,
             @Nullable Integer moreCount,
-            @Nullable String leadingWhiteSpace
+            @Nullable String leadWhiteSpace,
+            boolean updateInDocument
     );
     public String getShifted(String word) {
-        return getShifted(word, null, null, null);
+        return getShifted(word, null, null, null, false);
     }
     public String getShifted(String word, ActionContainer actionContainer) {
-        return getShifted(word, actionContainer, null, null);
+        return getShifted(word, actionContainer, null, null, false);
     }
     public String getShifted(String word, ActionContainer actionContainer, Integer moreCount) {
-        return getShifted(word, actionContainer, moreCount, null);
+        return getShifted(word, actionContainer, moreCount, null, false);
+    }
+    public String getShifted(String word, ActionContainer actionContainer, Integer moreCount, String leadWhitespace) {
+        return getShifted(word, actionContainer, moreCount, leadWhitespace, false);
     }
 }

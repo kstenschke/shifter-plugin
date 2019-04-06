@@ -64,7 +64,8 @@ public class NumericValue extends ShiftableTypeAbstract {
             String value,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         int strLen = value.length();
 

@@ -70,9 +70,10 @@ public class DocCommentType extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         return new DocCommentDataType(actionContainer)
-                .getShifted(str, actionContainer, moreCount, leadingWhiteSpace);
+                .getShifted(str, actionContainer, moreCount, leadWhitespace);
     }
 }

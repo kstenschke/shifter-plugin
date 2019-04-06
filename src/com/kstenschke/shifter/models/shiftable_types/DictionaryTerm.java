@@ -196,7 +196,8 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         if (null == relevantTermsList) {
             return word;

@@ -66,14 +66,15 @@ public class CssUnit extends ShiftableTypeAbstract {
      * @param  value    The full length value, post-fixed by its unit
      * @param  actionContainer
      * @param  moreCount
-     * @param  leadingWhiteSpace
+     * @param  leadWhitespace
      * @return String   Length (em / px / pt / cm / in / rem / vw / vh / vmin / vmax) value shifted up or down by 1 unit
      */
     public String getShifted(
             String value,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         // Get int from PX value
         String unit = detectUnit(value);

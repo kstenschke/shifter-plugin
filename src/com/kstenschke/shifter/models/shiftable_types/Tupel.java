@@ -80,7 +80,8 @@ public class Tupel extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         if (
                 actionContainer != null &&

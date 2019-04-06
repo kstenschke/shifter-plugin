@@ -75,7 +75,8 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         String[] lines = str.split("\n");
         StringBuilder shiftedLines = new StringBuilder();

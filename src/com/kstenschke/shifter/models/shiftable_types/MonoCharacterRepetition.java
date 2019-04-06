@@ -53,7 +53,8 @@ public class MonoCharacterRepetition extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         char firstChar = word.toLowerCase().charAt(0);
         firstChar      = (char) (firstChar + (actionContainer.isShiftUp ? 1 : -1));

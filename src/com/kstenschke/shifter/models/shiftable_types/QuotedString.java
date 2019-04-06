@@ -73,7 +73,8 @@ public class QuotedString extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         // Get array of all strings wrapped in current quoting sign
         String text = actionContainer.editorText.toString();

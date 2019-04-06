@@ -52,7 +52,8 @@ public class SizzleSelector extends ShiftableTypeAbstract {
             String selector,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         StringBuilder varName = new StringBuilder(selector.replaceAll("\\$|\\.|'|\"|\\)|#|\\[|\\(|>|<|]|=|_|\\s", "-"));
         varName = new StringBuilder(varName.toString().replaceAll("--", "-"));

@@ -57,7 +57,8 @@ public class OperatorSign extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         if ("-".equals(word)) {
             return "+";

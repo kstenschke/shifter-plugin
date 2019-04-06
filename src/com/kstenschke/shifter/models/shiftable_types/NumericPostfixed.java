@@ -43,7 +43,8 @@ public class NumericPostfixed extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         int indexFirstNumericChar,
             indexLastNumericChar;

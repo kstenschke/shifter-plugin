@@ -103,7 +103,8 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
             String variable,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         if (isShiftableArray) {
             return getShiftedArray(variable);

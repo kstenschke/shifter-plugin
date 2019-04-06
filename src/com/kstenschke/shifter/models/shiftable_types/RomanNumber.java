@@ -45,7 +45,8 @@ public class RomanNumber extends ShiftableTypeAbstract {
             String value,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         int intVal = new RomanNumeral(value).toInt();
 

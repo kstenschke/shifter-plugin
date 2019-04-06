@@ -60,7 +60,8 @@ public class Parenthesis extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         if (isWrappedInRoundBrackets(str)) {
             return "[" + str.substring(1, str.length() - 1) + "]";

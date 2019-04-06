@@ -16,17 +16,22 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NonNls;
+
+import javax.annotation.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
 /**
  * JavaScript DOC @param comment
  */
-public class JsDoc {
+public class JsDoc extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     private static final String ACTION_TEXT = "Shift JsDoc";
 
@@ -34,6 +39,18 @@ public class JsDoc {
     private static final String REGEX_DATA_TYPES_NATIVE = "(array|boolean|date|event|function|null|number|object|string|undefined|\\*)";
     @NonNls
     private static final String REGEX_DATA_TYPES_ALIEN = "(bool|float|int|integer|void)";
+
+    // Constructor
+    public JsDoc(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    public JsDoc getShiftableType() {
+        if (!actionContainer.filename.endsWith("js")) return null;
+
+        return isJsDocBlock(actionContainer.selectedText)
+                ? this : null;
+    }
 
     public static boolean isJsDocBlock(String str) {
         str = trim(str);
@@ -43,10 +60,19 @@ public class JsDoc {
                 || str.contains("@type"));
     }
 
-    public static boolean getShifted(ActionContainer actionContainer) {
+    public String getShifted(
+            String word,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadWhiteSpace,
+            boolean updateInDocument
+    ) {
         // @todo move sub-type detection or switch to resp. sub-shifting here
+        if (updateInDocument) {
+            correctDocBlockInDocument(actionContainer);
+        }
+        return "";
 
-        return correctDocBlockInDocument(actionContainer);
     }
 
     /**

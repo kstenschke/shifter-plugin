@@ -78,7 +78,8 @@ public class JqueryObserver extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         boolean startsWithDot = str.startsWith(".");
         if (startsWithDot) {

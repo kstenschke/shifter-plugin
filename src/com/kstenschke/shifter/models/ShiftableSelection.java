@@ -53,10 +53,17 @@ public class ShiftableSelection {
             // Detect and shift whole PHPDoc block or single line out of it, that contains @param caretLine(s) w/o data type
             return;
         }
-        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
-            JsDoc.isJsDocBlock(actionContainer.selectedText) &&
-            JsDoc.getShifted(actionContainer)) {
-            return;
+        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true)) {
+            JsDoc jsDoc = new JsDoc(actionContainer);
+            if (null != jsDoc.getShiftableType()) {
+                jsDoc.getShifted(
+                    actionContainer.selectedText,
+                    actionContainer,
+                    null,
+                    null,
+                    true);
+                return;
+            }
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
@@ -360,9 +367,15 @@ public class ShiftableSelection {
     }
 
     private static void shiftSelectedCommentInDocument(ActionContainer actionContainer) {
+        ShiftableTypeAbstract shiftableType;
         if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
-            if (actionContainer.filename.endsWith("js") && JsDoc.isJsDocBlock(actionContainer.selectedText)) {
-                JsDoc.getShifted(actionContainer);
+            if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
+                shiftableType.getShifted(
+                        actionContainer.selectedText,
+                        actionContainer,
+                        null,
+                        null,
+                        true);
                 return;
             }
             if (Comment.isBlockComment(actionContainer.selectedText)) {

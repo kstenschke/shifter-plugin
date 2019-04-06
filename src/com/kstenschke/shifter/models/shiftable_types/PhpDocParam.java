@@ -53,7 +53,8 @@ public class PhpDocParam extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         if (null == actionContainer ||
             actionContainer.shiftCaretLine

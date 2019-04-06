@@ -61,7 +61,8 @@ public class HtmlEncodable extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         Integer strLenOriginal = word.length();
 

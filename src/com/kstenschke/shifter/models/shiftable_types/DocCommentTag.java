@@ -104,7 +104,8 @@ public class DocCommentTag extends ShiftableTypeAbstract {
             String word,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         String[] commentTags = getTagsByFilename(actionContainer.filename);
         int amountTags = commentTags.length;

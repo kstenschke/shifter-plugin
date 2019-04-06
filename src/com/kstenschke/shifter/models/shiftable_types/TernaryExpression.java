@@ -58,7 +58,8 @@ public class TernaryExpression extends ShiftableTypeAbstract {
             String str,
             ActionContainer actionContainer,
             Integer moreCount,
-            String leadingWhiteSpace
+            String leadWhitespace,
+            boolean updateInDocument
     ) {
         int offsetElse = str.indexOf(":");
         if (-1 == offsetElse) {
