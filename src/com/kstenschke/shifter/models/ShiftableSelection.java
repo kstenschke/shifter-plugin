@@ -56,9 +56,8 @@ public class ShiftableSelection {
             return;
         }
         if (UtilsFile.isJavaScriptFile(actionContainer.filename, true)) {
-            JsDoc jsDoc = new JsDoc(actionContainer);
-            if (null != jsDoc.getShiftableType()) {
-                jsDoc.getShifted(
+            if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
+                shiftableType.getShifted(
                         actionContainer.selectedText,
                     actionContainer,
                     null,
@@ -70,7 +69,7 @@ public class ShiftableSelection {
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
         if (null != (shiftableType = new Comment(actionContainer).getShiftableType())) {
-            shiftSelectedCommentInDocument(actionContainer);
+            shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true);
             return;
         }
 
@@ -372,40 +371,6 @@ public class ShiftableSelection {
             return true;
         }
         return false;
-    }
-
-    private static void shiftSelectedCommentInDocument(ActionContainer actionContainer) {
-        ShiftableTypeAbstract shiftableType;
-        if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
-            if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
-                shiftableType.getShifted(
-                        actionContainer.selectedText,
-                        actionContainer,
-                        null,
-                        null,
-                        true);
-                return;
-            }
-            if (Comment.isBlockComment(actionContainer.selectedText)) {
-                Comment.shiftMultiLineBlockCommentInDocument(actionContainer);
-                return;
-            }
-            if (Comment.isMultipleSingleLineComments(actionContainer.selectedText)) {
-                Comment.shiftMultipleSingleLineCommentsInDocument(actionContainer);
-                return;
-            }
-        }
-
-        shiftableType = new Comment(actionContainer);
-        actionContainer.writeUndoable(
-                actionContainer.getRunnableReplaceSelection(
-                        shiftableType.getShifted(
-                                actionContainer.selectedText,
-                                actionContainer,
-                                null,
-                                null,
-                                true)),
-                Comment.ACTION_TEXT);
     }
 
     /**

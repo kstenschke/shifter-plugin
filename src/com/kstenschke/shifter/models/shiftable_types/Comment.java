@@ -63,6 +63,11 @@ public class Comment extends ShiftableTypeAbstract {
             String leadWhitespace,
             boolean updateInDocument
     ) {
+        if (updateInDocument) {
+            shiftSelectionInDocument(actionContainer);
+            return null;
+        }
+
         if (null != actionContainer.filename &&
             UtilsFile.isPhpFile(actionContainer.filename) &&
             isPhpBlockComment(actionContainer.selectedText)
@@ -94,6 +99,41 @@ public class Comment extends ShiftableTypeAbstract {
                 // Convert a single-lined block-comment in DOC format to "// ..." and not "//* ..."
                 ? str.substring(1)
                 : str);
+    }
+
+    // Shift selected comment
+    private void shiftSelectionInDocument(ActionContainer actionContainer) {
+        ShiftableTypeAbstract shiftableType;
+        if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
+            if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
+                shiftableType.getShifted(
+                        actionContainer.selectedText,
+                        actionContainer,
+                        null,
+                        null,
+                        true);
+                return;
+            }
+            if (isBlockComment(actionContainer.selectedText)) {
+                shiftMultiLineBlockCommentInDocument(actionContainer);
+                return;
+            }
+            if (isMultipleSingleLineComments(actionContainer.selectedText)) {
+                shiftMultipleSingleLineCommentsInDocument(actionContainer);
+                return;
+            }
+        }
+
+        shiftableType = new Comment(actionContainer);
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        shiftableType.getShifted(
+                                actionContainer.selectedText,
+                                actionContainer,
+                                null,
+                                null,
+                                true)),
+                ACTION_TEXT);
     }
 
     private boolean isComment(String str) {
