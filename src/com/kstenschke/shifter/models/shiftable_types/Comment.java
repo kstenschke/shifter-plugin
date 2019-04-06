@@ -20,10 +20,12 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -37,15 +39,64 @@ import static org.apache.commons.lang.StringUtils.trim;
  * 2. Block comment       => /* ... *\/
  * 3. HTML comment        => <!-- ... -->
  */
-public class Comment {
+public class Comment extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public Comment(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     public static final String ACTION_TEXT = "Shift Comment";
 
-    /**
-     * @param  str     String to be shifted currently
-     * @return boolean
-     */
-    public static boolean isComment(String str) {
+    public Comment getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return isComment(str) ? this : null;
+    }
+
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument
+    ) {
+        if (null != actionContainer.filename &&
+            UtilsFile.isPhpFile(actionContainer.filename) &&
+            isPhpBlockComment(actionContainer.selectedText)
+        ) {
+            // PHP Block-comment inside PHP or PHTML: convert to HTML comment
+            return "<!-- " + actionContainer.selectedText.substring(8, actionContainer.selectedText.length() - 5).trim() + " -->";
+        }
+
+        // Default comment shifting: toggle among single-line and block-comment style
+        str = actionContainer.selectedText.trim();
+
+        if (str.startsWith("//")) {
+            if (!str.endsWith(" ")) {
+                str += " ";
+            }
+            // Convert single line comment to block comment
+            return "/*" + str.substring(2) + "*/";
+        }
+
+        str = str.substring(2, str.length() - 2);
+
+        // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
+        // Convert block- to single line comment
+        if (str.contains("\n")) {
+            return "//" + str.replace("\n", " ");
+        }
+
+        return "//" + (str.startsWith("* ")
+                // Convert a single-lined block-comment in DOC format to "// ..." and not "//* ..."
+                ? str.substring(1)
+                : str);
+    }
+
+    private boolean isComment(String str) {
         if (null == str) {
             return false;
         }
@@ -116,37 +167,6 @@ public class Comment {
 
         return str.startsWith("<!--") && str.endsWith("-->")
                 && str.indexOf("<!--") != str.length() -5;
-    }
-
-    public static String getShifted(ActionContainer actionContainer) {
-        if (null != actionContainer.filename && UtilsFile.isPhpFile(actionContainer.filename) && isPhpBlockComment(actionContainer.selectedText)) {
-            // PHP Block-comment inside PHP or PHTML: convert to HTML comment
-            return "<!-- " + actionContainer.selectedText.substring(8, actionContainer.selectedText.length() - 5).trim() + " -->";
-        }
-
-        // Default comment shifting: toggle among single-line and block-comment style
-        String str = actionContainer.selectedText.trim();
-
-        if (str.startsWith("//")) {
-            if (!str.endsWith(" ")) {
-                str += " ";
-            }
-            // Convert single line comment to block comment
-            return "/*" + str.substring(2) + "*/";
-        }
-
-        str = str.substring(2, str.length() - 2);
-
-        // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
-        // Convert block- to single line comment
-        if (str.contains("\n")) {
-            return "//" + str.replace("\n", " ");
-        }
-
-        return "//" + (str.startsWith("* ")
-            // Convert a single-lined block-comment in DOC format to "// ..." and not "//* ..."
-            ? str.substring(1)
-            : str);
     }
 
     public static String getPhpBlockCommentFromHtmlComment(String str) {

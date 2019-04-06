@@ -74,6 +74,7 @@ public class PhpDocParam extends ShiftableTypeAbstract {
                 return null;
             }
         }
+
         DocCommentType docCommentType = new DocCommentType(actionContainer);
         actionContainer.shiftSelectedText = true;
         actionContainer.shiftCaretLine = false;

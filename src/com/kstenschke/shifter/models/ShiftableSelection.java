@@ -44,6 +44,8 @@ public class ShiftableSelection {
             return;
         }
 
+        ShiftableTypeAbstract shiftableType;
+
         // @todo convert all shiftable type to extend ShiftableTypeAbstract
 
         boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
@@ -57,7 +59,7 @@ public class ShiftableSelection {
             JsDoc jsDoc = new JsDoc(actionContainer);
             if (null != jsDoc.getShiftableType()) {
                 jsDoc.getShifted(
-                    actionContainer.selectedText,
+                        actionContainer.selectedText,
                     actionContainer,
                     null,
                     null,
@@ -67,7 +69,7 @@ public class ShiftableSelection {
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
-        if (Comment.isComment(actionContainer.selectedText)) {
+        if (null != (shiftableType = new Comment(actionContainer).getShiftableType())) {
             shiftSelectedCommentInDocument(actionContainer);
             return;
         }
@@ -88,7 +90,6 @@ public class ShiftableSelection {
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
 
         //ShiftableTypeAbstract shiftableType = shiftableTypesManager.getShiftableType(actionContainer);
-
 
         ShiftableTypes.Type wordType;
         if (null == actionContainer.editorText) {
@@ -343,6 +344,8 @@ public class ShiftableSelection {
     }
 
     private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer) {
+        ShiftableTypeAbstract shiftableType;
+
         final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer.selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
             actionContainer.writeUndoable(
@@ -351,15 +354,20 @@ public class ShiftableSelection {
 
             return true;
         }
+
         if (Comment.isHtmlComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(Comment.getPhpBlockCommentFromHtmlComment(actionContainer.selectedText)),
                     ACTION_TEXT_SHIFT_SELECTION);
             return true;
         }
+        shiftableType = new Comment(actionContainer);
         if (Comment.isPhpBlockComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(Comment.getShifted(actionContainer)),
+                    actionContainer.getRunnableReplaceSelection(shiftableType.getShifted(
+                            actionContainer.selectedText,
+                            actionContainer
+                    )),
                     ACTION_TEXT_SHIFT_SELECTION);
             return true;
         }
@@ -388,9 +396,15 @@ public class ShiftableSelection {
             }
         }
 
+        shiftableType = new Comment(actionContainer);
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(
-                        Comment.getShifted(actionContainer)),
+                        shiftableType.getShifted(
+                                actionContainer.selectedText,
+                                actionContainer,
+                                null,
+                                null,
+                                true)),
                 Comment.ACTION_TEXT);
     }
 
