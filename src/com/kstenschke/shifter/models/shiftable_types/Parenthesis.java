@@ -61,7 +61,8 @@ public class Parenthesis extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         if (isWrappedInRoundBrackets(str)) {
             return "[" + str.substring(1, str.length() - 1) + "]";

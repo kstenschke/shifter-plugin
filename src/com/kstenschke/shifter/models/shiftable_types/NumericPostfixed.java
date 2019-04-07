@@ -44,7 +44,8 @@ public class NumericPostfixed extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         int indexFirstNumericChar,
             indexLastNumericChar;

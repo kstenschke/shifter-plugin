@@ -61,7 +61,8 @@ public class TrailingComment extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         String[] parts = selection.split("//");
 

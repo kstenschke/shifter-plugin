@@ -59,7 +59,8 @@ public class TernaryExpression extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         int offsetElse = str.indexOf(":");
         if (-1 == offsetElse) {

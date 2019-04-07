@@ -16,11 +16,13 @@
 package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -28,39 +30,33 @@ import java.util.List;
 /**
  * Multiple XML attribute-value pairs within one line
  */
-public class XmlAttributes {
+public class XmlAttributes extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Sort Attributes";
 
-    private final ActionContainer actionContainer;
-
-    /**
-     * Constructor
-     *
-     * @param actionContainer
-     */
-    public XmlAttributes(ActionContainer actionContainer) {
-        this.actionContainer = actionContainer;
+    // Constructor
+    public XmlAttributes(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    /**
-     * Check whether shifted string represents multiple xml attributes
-     *
-     * @param  str
-     * @return boolean
-     */
-    public boolean isXmlAttributes(String str) {
-        return str.matches("([A-Za-z-_0-9]*[ ]*=[ ]*[\"'][A-Za-z-_0-9]*[\"'][ ]*){2,99}");
+    // Check whether shifted string represents multiple XML attributes
+    public XmlAttributes getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        return str.matches("([A-Za-z-_0-9]*[ ]*=[ ]*[\"'][A-Za-z-_0-9]*[\"'][ ]*){2,99}")
+                ? this : null;
     }
 
-    /**
-     * Shift: swap tupel parts
-     *
-     * @param  str      string to be shifted
-     * @param  disableIntentionPopup
-     * @return String   The shifted string
-     */
-    public String getShifted(String str, boolean disableIntentionPopup) {
+    public String getShifted(
+            String str,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
         if (!disableIntentionPopup) {
             if (QuotedString.containsEscapedQuotes(str)) {
                 // Shifted string is xml attributes that can be sorted and the quoting character can be toggled

@@ -51,7 +51,8 @@ public class RgbColor extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         String rgbStrSixFold = rgbStr.length() == 3 ? sixfoldTripleColor(rgbStr) : rgbStr;
 

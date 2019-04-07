@@ -57,28 +57,27 @@ public class ShiftableSelection {
         }
         if (UtilsFile.isJavaScriptFile(actionContainer.filename, true)) {
             if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
-                shiftableType.getShifted(
-                        actionContainer.selectedText,
-                    actionContainer,
-                    null,
-                    null,
-                    true);
+                shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true, false);
                 return;
             }
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
         if (null != (shiftableType = new Comment(actionContainer).getShiftableType())) {
-            shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true);
+            shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true, false);
             return;
         }
 
-        final XmlAttributes xmlAttributes = new XmlAttributes(actionContainer);
-        if (xmlAttributes.isXmlAttributes(actionContainer.selectedText)) {
+        if (null != (shiftableType =  new XmlAttributes(actionContainer).getShiftableType())) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
-                            xmlAttributes.getShifted(
-                                    actionContainer.selectedText, true)),
+                            shiftableType.getShifted(
+                                    actionContainer.selectedText,
+                                    null,
+                                    null,
+                                    null,
+                                    true,
+                                    false)),
                     XmlAttributes.ACTION_TEXT);
             return;
         }

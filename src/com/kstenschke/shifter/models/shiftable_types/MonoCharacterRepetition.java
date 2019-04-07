@@ -54,7 +54,8 @@ public class MonoCharacterRepetition extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         char firstChar = word.toLowerCase().charAt(0);
         firstChar      = (char) (firstChar + (actionContainer.isShiftUp ? 1 : -1));

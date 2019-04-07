@@ -65,7 +65,8 @@ public class JsDoc extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhiteSpace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         // @todo move sub-type detection or switch to resp. sub-shifting here
         if (updateInDocument) {

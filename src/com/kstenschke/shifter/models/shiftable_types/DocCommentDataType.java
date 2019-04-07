@@ -57,7 +57,8 @@ class DocCommentDataType extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         String[] dataTypes   = getDataTypesByFilename(actionContainer.filename);
         int amountTypes      = dataTypes.length;

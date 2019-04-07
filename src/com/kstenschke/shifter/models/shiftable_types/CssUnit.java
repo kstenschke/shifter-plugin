@@ -74,7 +74,8 @@ public class CssUnit extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         // Get int from PX value
         String unit = detectUnit(value);

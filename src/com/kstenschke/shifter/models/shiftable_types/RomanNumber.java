@@ -46,7 +46,8 @@ public class RomanNumber extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         int intVal = new RomanNumeral(value).toInt();
 

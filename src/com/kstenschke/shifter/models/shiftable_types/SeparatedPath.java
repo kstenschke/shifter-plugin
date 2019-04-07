@@ -63,7 +63,8 @@ public class SeparatedPath extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         String parts[] = word.split(getWordsGlue(word));
         StringBuilder shifted = new StringBuilder();

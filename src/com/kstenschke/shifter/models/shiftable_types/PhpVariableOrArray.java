@@ -104,7 +104,8 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         if (isShiftableArray) {
             return getShiftedArray(variable);

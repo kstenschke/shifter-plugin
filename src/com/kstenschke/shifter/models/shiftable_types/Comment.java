@@ -61,7 +61,8 @@ public class Comment extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         if (updateInDocument) {
             shiftSelectionInDocument(actionContainer);
@@ -111,7 +112,8 @@ public class Comment extends ShiftableTypeAbstract {
                         actionContainer,
                         null,
                         null,
-                        true);
+                        true,
+                        false);
                 return;
             }
             if (isBlockComment(actionContainer.selectedText)) {
@@ -132,7 +134,8 @@ public class Comment extends ShiftableTypeAbstract {
                                 actionContainer,
                                 null,
                                 null,
-                                true)),
+                                true,
+                                false)),
                 ACTION_TEXT);
     }
 

@@ -76,7 +76,8 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         String[] lines = str.split("\n");
         StringBuilder shiftedLines = new StringBuilder();

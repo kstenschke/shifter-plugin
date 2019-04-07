@@ -47,7 +47,8 @@ public class LogicalOperator extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         return "&&".equals(word) ? "||" : "&&";
     }

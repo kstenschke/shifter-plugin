@@ -76,7 +76,8 @@ public class CamelCaseString extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         return getShifted(word, ShiftMode.CAMEL_WORDS_TO_MINUS_SEPARATED);
     }

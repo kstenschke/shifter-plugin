@@ -62,7 +62,8 @@ public class HtmlEncodable extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         Integer strLenOriginal = word.length();
 

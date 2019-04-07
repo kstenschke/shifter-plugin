@@ -58,7 +58,8 @@ public class AccessType extends ShiftableTypeAbstract  {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         return accessTypes.getShifted(value, actionContainer.isShiftUp);
     }

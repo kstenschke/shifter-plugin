@@ -71,7 +71,8 @@ public class DocCommentType extends ShiftableTypeAbstract {
             ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
-            boolean updateInDocument
+            boolean updateInDocument,
+            boolean disableIntentionPopup
     ) {
         return new DocCommentDataType(actionContainer)
                 .getShifted(str, actionContainer, moreCount, leadWhitespace);
