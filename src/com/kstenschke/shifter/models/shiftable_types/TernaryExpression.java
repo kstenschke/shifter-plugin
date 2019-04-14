@@ -95,4 +95,12 @@ public class TernaryExpression extends ShiftableTypeAbstract {
 
         return endsWithSemicolon ? str + ";" : str;
     }
+
+    public void replaceSelectionShifted(boolean updateInDocument) {
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        getShifted(actionContainer.selectedText, actionContainer, null, null),
+                        true),
+                ACTION_TEXT);
+    }
 }

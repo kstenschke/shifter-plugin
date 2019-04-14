@@ -21,6 +21,8 @@ public abstract class ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;
 
+    public static final String ACTION_TEXT = "Shift abstract";
+
     // Constructor
     public ShiftableTypeAbstract(@Nullable ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
@@ -52,4 +54,16 @@ public abstract class ShiftableTypeAbstract {
     public String getShifted(String word, ActionContainer actionContainer, Integer moreCount, String leadWhitespace, boolean updateInDocument) {
         return getShifted(word, actionContainer, moreCount, leadWhitespace, false, false);
     }
+
+    public void replaceSelectionShifted(boolean reformat) {
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        getShifted(actionContainer.selectedText, actionContainer, null, null),
+                        reformat),
+                ACTION_TEXT);
+    }
+
+    public void replaceSelectionShifted() {
+        replaceSelectionShifted(true);
+    };
 }

@@ -53,6 +53,8 @@ public class ShiftableLine {
         actionContainer.shiftSelectedText = false;
         actionContainer.shiftCaretLine = true;
 
+        //ShiftableTypeAbstract shiftableType;
+
         PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
         if (UtilsFile.isPhpFile(actionContainer.filename) &&
             null != phpDocParam.getShiftableType() &&

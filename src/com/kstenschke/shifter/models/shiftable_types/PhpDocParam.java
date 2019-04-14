@@ -79,6 +79,7 @@ public class PhpDocParam extends ShiftableTypeAbstract {
         DocCommentType docCommentType = new DocCommentType(actionContainer);
         actionContainer.shiftSelectedText = true;
         actionContainer.shiftCaretLine = false;
+
         if (!actionContainer.selectedText.contains("\n") &&
             docCommentType.isDocCommentTypeLineContext(actionContainer.selectedText) &&
             null != getShiftableType() &&

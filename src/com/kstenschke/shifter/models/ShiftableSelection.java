@@ -40,26 +40,24 @@ public class ShiftableSelection {
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
      */
     public static void shiftSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
-        if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) {
-            return;
-        }
+        if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) return;
 
         ShiftableTypeAbstract shiftableType;
 
         // @todo convert all shiftable type to extend ShiftableTypeAbstract
 
         boolean isPhpFile = UtilsFile.isPhpFile(actionContainer.filename);
+        // Detect and shift whole PHPDoc block or single line out of it,
+        // that contains @param caretLine(s) w/o data type
         if (isPhpFile &&
             null != new PhpDocParam(actionContainer).getShifted(actionContainer.selectedText)
+        ) return;
+
+        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
+            null != (shiftableType = new JsDoc(actionContainer).getShiftableType())
         ) {
-            // Detect and shift whole PHPDoc block or single line out of it, that contains @param caretLine(s) w/o data type
+            shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true, false);
             return;
-        }
-        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true)) {
-            if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
-                shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true, false);
-                return;
-            }
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
@@ -139,39 +137,27 @@ public class ShiftableSelection {
 
         int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
         int lineNumberSelEnd   = actionContainer.document.getLineNumber(actionContainer.offsetSelectionEnd);
-
         if (actionContainer.document.getLineStartOffset(lineNumberSelEnd) == actionContainer.offsetSelectionEnd) {
             lineNumberSelEnd--;
         }
 
-        TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
-        if (null != ternaryExpression.getShiftableType()) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                            ternaryExpression.getShifted(actionContainer.selectedText, actionContainer, null, null),
-                            true),
-                    TernaryExpression.ACTION_TEXT);
+        if (null != (shiftableType = new TernaryExpression(actionContainer).getShiftableType())) {
+            shiftableType.replaceSelectionShifted();
             return;
         }
-        if (!isJsVarsDeclarations && ((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
-            // Multi-line selection: sort lines or swap quotes
-            new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
-            return;
+        if (!isJsVarsDeclarations) {
+            if (((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
+                // Multi-line selection: sort lines or swap quotes
+                new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
+                return;
+            } else {
+                shiftableType = new JsVariablesDeclarations(actionContainer);
+                shiftableType.replaceSelectionShifted();
+                return;
+            }
         }
-        if (isJsVarsDeclarations) {
-            JsVariablesDeclarations jsVariablesDeclarations = new JsVariablesDeclarations(actionContainer);
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                            jsVariablesDeclarations.getShifted(actionContainer.selectedText)),
-                            JsVariablesDeclarations.ACTION_TEXT);
-            return;
-        }
-        JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-        if (null != jqueryObserver.getShiftableType()) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                            jqueryObserver.getShifted(actionContainer.selectedText, actionContainer, null, null)),
-                    JqueryObserver.ACTION_TEXT);
+        if (null != (shiftableType = new JqueryObserver(actionContainer).getShiftableType())) {
+            shiftableType.replaceSelectionShifted(false);
             return;
         }
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
