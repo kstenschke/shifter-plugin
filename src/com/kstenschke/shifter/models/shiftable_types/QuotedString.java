@@ -66,12 +66,10 @@ public class QuotedString extends ShiftableTypeAbstract {
      * Shift to previous/next quoted string
      *
      * @param  word       Quoted word to be shifted
-     * @param  actionContainer
      * @return String
      */
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

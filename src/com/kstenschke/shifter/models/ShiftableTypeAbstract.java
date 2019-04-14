@@ -33,32 +33,28 @@ public abstract class ShiftableTypeAbstract {
 
     abstract public String getShifted(
             String word,
-            @Nullable ActionContainer actionContainer,
             @Nullable Integer moreCount,
             @Nullable String leadWhiteSpace,
             boolean updateInDocument,
             boolean disableIntentionPopup
     );
     public String getShifted(String word) {
-        return getShifted(word, null, null, null, false, false);
+        return getShifted(word, null, null, false, false);
     }
-    public String getShifted(String word, ActionContainer actionContainer) {
-        return getShifted(word, actionContainer, null, null, false, false);
+    public String getShifted(String word, Integer moreCount) {
+        return getShifted(word, moreCount, null, false, false);
     }
-    public String getShifted(String word, ActionContainer actionContainer, Integer moreCount) {
-        return getShifted(word, actionContainer, moreCount, null, false, false);
+    public String getShifted(String word, Integer moreCount, String leadWhitespace) {
+        return getShifted(word, moreCount, leadWhitespace, false, false);
     }
-    public String getShifted(String word, ActionContainer actionContainer, Integer moreCount, String leadWhitespace) {
-        return getShifted(word, actionContainer, moreCount, leadWhitespace, false, false);
-    }
-    public String getShifted(String word, ActionContainer actionContainer, Integer moreCount, String leadWhitespace, boolean updateInDocument) {
-        return getShifted(word, actionContainer, moreCount, leadWhitespace, false, false);
+    public String getShifted(String word,  Integer moreCount, String leadWhitespace, boolean updateInDocument) {
+        return getShifted(word, moreCount, leadWhitespace, false, false);
     }
 
     public void replaceSelectionShifted(boolean reformat) {
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(
-                        getShifted(actionContainer.selectedText, actionContainer, null, null),
+                        getShifted(actionContainer.selectedText, null, null),
                         reformat),
                 ACTION_TEXT);
     }

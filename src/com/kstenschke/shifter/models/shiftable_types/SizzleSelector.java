@@ -50,7 +50,6 @@ public class SizzleSelector extends ShiftableTypeAbstract {
      */
     public String getShifted(
             String selector,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

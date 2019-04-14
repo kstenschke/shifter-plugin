@@ -43,7 +43,6 @@ class PhpDocComment extends ShiftableTypeAbstract {
 
     public String getShifted(
             String variable,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

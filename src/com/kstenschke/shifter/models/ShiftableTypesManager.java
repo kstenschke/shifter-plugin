@@ -199,47 +199,47 @@ class ShiftableTypesManager {
         switch (wordType) {
             // String based word shiftable_types
             case ACCESS_TYPE:
-                return new AccessType(actionContainer).getShifted(word, actionContainer);
+                return new AccessType(actionContainer).getShifted(word);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
-                return new DictionaryTerm(actionContainer).getShifted(word, actionContainer);
+                return new DictionaryTerm(actionContainer).getShifted(word);
             // Generic shiftable_types (shifting is calculated)
             case SIZZLE_SELECTOR:
-                return new SizzleSelector(actionContainer).getShifted(word, actionContainer);
+                return new SizzleSelector(actionContainer).getShifted(word);
             case RGB_COLOR:
-                return new RgbColor(actionContainer).getShifted(word, actionContainer);
+                return new RgbColor(actionContainer).getShifted(word);
             case NUMERIC_VALUE:
                 // Numeric values including UNIX and millisecond timestamps
-                return new NumericValue(actionContainer).getShifted(word, actionContainer);
+                return new NumericValue(actionContainer).getShifted(word);
             case CSS_UNIT:
-                return new CssUnit(actionContainer).getShifted(word, actionContainer);
+                return new CssUnit(actionContainer).getShifted(word);
             case JQUERY_OBSERVER:
                 JqueryObserver jqueryObserver = new JqueryObserver(actionContainer);
-                return jqueryObserver.getShifted(word, actionContainer, null, null);
+                return jqueryObserver.getShifted(word, null, null);
             case PHP_VARIABLE_OR_ARRAY:
-                return new PhpVariableOrArray(actionContainer).getShifted(word, actionContainer, moreCount);
+                return new PhpVariableOrArray(actionContainer).getShifted(word, moreCount);
             case TERNARY_EXPRESSION:
                 TernaryExpression ternaryExpression = new TernaryExpression(actionContainer);
                 return ternaryExpression.getShifted(word);
             case QUOTED_STRING:
-                return new QuotedString(actionContainer).getShifted(word, actionContainer);
+                return new QuotedString(actionContainer).getShifted(word);
             case PARENTHESIS:
                 Parenthesis parenthesis = new Parenthesis(actionContainer);
                 return parenthesis.getShifted(word);
             case OPERATOR_SIGN:
-                return new OperatorSign(actionContainer).getShifted(word, actionContainer);
+                return new OperatorSign(actionContainer).getShifted(word);
             case ROMAN_NUMERAL:
-                return new RomanNumber(actionContainer).getShifted(word, actionContainer);
+                return new RomanNumber(actionContainer).getShifted(word);
             case LOGICAL_OPERATOR:
                 return new LogicalOperator(actionContainer).getShifted(word);
             case MONO_CHARACTER_REPETITION:
-                return new MonoCharacterRepetition(actionContainer).getShifted(word, actionContainer);
+                return new MonoCharacterRepetition(actionContainer).getShifted(word);
             case DOC_COMMENT_TAG:
                 actionContainer.textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
-                return typeTagInDocComment.getShifted(word, actionContainer, null);
+                return typeTagInDocComment.getShifted(word, null);
             case DOC_COMMENT_DATA_TYPE:
-                return typeDataTypeInDocComment.getShifted(word, actionContainer);
+                return typeDataTypeInDocComment.getShifted(word);
             case SEPARATED_PATH:
                 return new SeparatedPath(actionContainer).getShifted(word);
             case CAMEL_CASED:
@@ -247,10 +247,10 @@ class ShiftableTypesManager {
             case HTML_ENCODABLE:
                 return new HtmlEncodable(actionContainer).getShifted(word);
             case NUMERIC_POSTFIXED:
-                return new NumericPostfixed(actionContainer).getShifted(word, actionContainer);
+                return new NumericPostfixed(actionContainer).getShifted(word);
             case WORDS_TUPEL:
                 actionContainer.disableIntentionPopup = true;
-                return wordsTupel.getShifted(word, actionContainer);
+                return wordsTupel.getShifted(word);
             default:
                 return word;
         }
@@ -262,7 +262,7 @@ class ShiftableTypesManager {
         ShiftableTypeAbstract shiftableType = getShiftableType();
         return null == shiftableType
                 ? actionContainer.selectedText
-                : shiftableType.getShifted(actionContainer.selectedText, actionContainer, moreCount,null);
+                : shiftableType.getShifted(actionContainer.selectedText, moreCount,null);
     }
 
     String getActionText() {

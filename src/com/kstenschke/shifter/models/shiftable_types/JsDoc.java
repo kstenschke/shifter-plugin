@@ -62,7 +62,6 @@ public class JsDoc extends ShiftableTypeAbstract {
 
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhiteSpace,
             boolean updateInDocument,

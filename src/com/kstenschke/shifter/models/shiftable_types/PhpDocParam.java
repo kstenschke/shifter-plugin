@@ -51,7 +51,6 @@ public class PhpDocParam extends ShiftableTypeAbstract {
 
     public String getShifted(
             String str,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,
@@ -64,7 +63,7 @@ public class PhpDocParam extends ShiftableTypeAbstract {
         if (null != (shiftableType = new PhpDocComment(actionContainer).getShiftableType()) &&
             PhpDocComment.containsAtParam(actionContainer.selectedText)
         ) {
-            final String shifted = shiftableType.getShifted(actionContainer.selectedText, actionContainer);
+            final String shifted = shiftableType.getShifted(actionContainer.selectedText);
             if (!shifted.equals(actionContainer.selectedText)) {
                 // PHPDoc comment block: guess missing data shiftable_types by resp. variable names
                 actionContainer.writeUndoable(

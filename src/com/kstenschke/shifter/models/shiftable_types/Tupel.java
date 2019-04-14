@@ -78,7 +78,6 @@ public class Tupel extends ShiftableTypeAbstract {
     // Swap tupel parts
     public String getShifted(
             String str,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

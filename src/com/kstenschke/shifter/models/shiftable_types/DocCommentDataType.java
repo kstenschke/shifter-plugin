@@ -54,7 +54,6 @@ class DocCommentDataType extends ShiftableTypeAbstract {
 
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

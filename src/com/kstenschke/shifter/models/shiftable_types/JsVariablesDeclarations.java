@@ -67,13 +67,8 @@ public class JsVariablesDeclarations extends ShiftableTypeAbstract {
         return null;
     }
 
-    /**
-     * @param  str      text selection to be shifted
-     * @return String
-     */
     public String getShifted(
             String str,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

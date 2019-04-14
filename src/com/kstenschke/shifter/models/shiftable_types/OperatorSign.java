@@ -39,14 +39,6 @@ public class OperatorSign extends ShiftableTypeAbstract {
                 ? this : null;
     }
 
-    public boolean isWhitespaceWrappedOperator(String str) {
-        actionContainer.firstChar = String.valueOf(str.charAt(1));
-
-        return Character.isWhitespace(str.charAt(0))
-                && null != this.getShiftableType()
-                && Character.isWhitespace(str.charAt(2));
-    }
-
     /**
      * Shift mono-character string
      *
@@ -55,31 +47,26 @@ public class OperatorSign extends ShiftableTypeAbstract {
      */
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if ("-".equals(word)) {
-            return "+";
-        }
-        if ("+".equals(word)) {
-            return "-";
-        }
-        if ("<".equals(word)) {
-            return ">";
-        }
-        if (">".equals(word)) {
-            return "<";
-        }
-        if ("*".equals(word)) {
-            return "/";
-        }
-        if ("/".equals(word)) {
-            return "*";
-        }
+        if ("-".equals(word)) return "+";
+        if ("+".equals(word)) return "-";
+        if ("<".equals(word)) return ">";
+        if (">".equals(word)) return "<";
+        if ("*".equals(word)) return "/";
+        if ("/".equals(word)) return "*";
 
         return word;
+    }
+
+    public boolean isWhitespaceWrappedOperator(String str) {
+        actionContainer.firstChar = String.valueOf(str.charAt(1));
+
+        return Character.isWhitespace(str.charAt(0))
+                && null != this.getShiftableType()
+                && Character.isWhitespace(str.charAt(2));
     }
 }

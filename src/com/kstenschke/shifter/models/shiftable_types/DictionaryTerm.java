@@ -61,6 +61,40 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
                 ? this : null;
     }
 
+    /**
+     * Shift given word, using the (already fetched) list of relevant terms
+     *
+     * @param  word     Word to be shifted
+     * @return String   The shifted word
+     */
+    public String getShifted(
+            String word,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        if (null == relevantTermsList) {
+            return word;
+        }
+
+        String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
+        shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
+
+        String[] termsList = shiftTerms.split("\\|");
+        if (termsList.length == 0) {
+            return word;
+        }
+
+        StaticWordType wordType = new StaticWordType(termsList);
+        String shiftedWord = wordType.getShifted(word, actionContainer.isShiftUp);
+
+        return shiftedWord.equals(word)
+                // Shifting did not change given word, fallback: try case-insensitive
+                ? wordType.getShifted(word.toLowerCase(), actionContainer.isShiftUp)
+                : shiftedWord;
+    }
+
     // Check whether the given term exists in any section of shift-lists of the dictionary,
     // looking only at lists in blocks having assigned the given extension
     // + Stores first matching line containing the term for use in shifting later
@@ -183,40 +217,5 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
         }
 
         return allMatches.toArray();
-    }
-
-    /**
-     * Shift given word, using the (already fetched) list of relevant terms
-     *
-     * @param  word     Word to be shifted
-     * @return String   The shifted word
-     */
-    public String getShifted(
-            String word,
-            ActionContainer actionContainer,
-            Integer moreCount,
-            String leadWhitespace,
-            boolean updateInDocument,
-            boolean disableIntentionPopup
-    ) {
-        if (null == relevantTermsList) {
-            return word;
-        }
-
-        String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
-        shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
-
-        String[] termsList = shiftTerms.split("\\|");
-        if (termsList.length == 0) {
-            return word;
-        }
-
-        StaticWordType wordType = new StaticWordType(termsList);
-        String shiftedWord = wordType.getShifted(word, actionContainer.isShiftUp);
-
-        return shiftedWord.equals(word)
-                // Shifting did not change given word, fallback: try case-insensitive
-                ? wordType.getShifted(word.toLowerCase(), actionContainer.isShiftUp)
-                : shiftedWord;
     }
 }

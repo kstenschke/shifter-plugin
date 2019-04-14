@@ -63,45 +63,15 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
         return isVariable || isShiftableArray ? this : null;
     }
 
-    private boolean isShiftablePhpArray(String str) {
-        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
-        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
-
-        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
-            return false;
-        }
-
-        isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
-
-        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
-    }
-
-    public static boolean isStaticShiftablePhpArray(String str) {
-        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
-        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
-
-        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
-            return false;
-        }
-
-        boolean isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
-
-        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
-    }
-
     /**
      * Shift PX value up/down by 16px
      *
      * @param  variable     Variable name string
-     * @param  actionContainer
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return String
      */
     public String getShifted(
             String variable,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,
@@ -138,6 +108,34 @@ public class PhpVariableOrArray extends ShiftableTypeAbstract {
         }
 
         return phpVariables.get(curIndex);
+    }
+
+    private boolean isShiftablePhpArray(String str) {
+        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
+        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
+
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
+            return false;
+        }
+
+        isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
+
+        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
+    }
+
+    public static boolean isStaticShiftablePhpArray(String str) {
+        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
+        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
+
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
+            return false;
+        }
+
+        boolean isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
+
+        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
     }
 
     @NotNull

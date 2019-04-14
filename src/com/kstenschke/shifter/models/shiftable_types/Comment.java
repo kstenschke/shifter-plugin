@@ -58,7 +58,6 @@ public class Comment extends ShiftableTypeAbstract {
 
     public String getShifted(
             String str,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,
@@ -109,7 +108,6 @@ public class Comment extends ShiftableTypeAbstract {
             if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
                 shiftableType.getShifted(
                         actionContainer.selectedText,
-                        actionContainer,
                         null,
                         null,
                         true,
@@ -131,7 +129,6 @@ public class Comment extends ShiftableTypeAbstract {
                 actionContainer.getRunnableReplaceSelection(
                         shiftableType.getShifted(
                                 actionContainer.selectedText,
-                                actionContainer,
                                 null,
                                 null,
                                 true,

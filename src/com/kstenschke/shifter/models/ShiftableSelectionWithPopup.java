@@ -94,7 +94,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
                     actionContainer.getRunnableReplaceSelection(
                             shiftableTypeAbstract.getShifted(
                                     actionContainer.selectedText,
-                                    actionContainer,
                                     null,
                                     null,
                                     false,
@@ -262,7 +261,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    tupel.getShifted(actionContainer.selectedText, actionContainer));
+                    tupel.getShifted(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SHIFT_DICTIONARY_TERM)) {
@@ -271,7 +270,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
                 actionContainer.document.replaceString(
                         actionContainer.offsetSelectionStart,
                         actionContainer.offsetSelectionEnd,
-                        dictionaryTerm.getShifted(actionContainer.selectedText, actionContainer));
+                        dictionaryTerm.getShifted(actionContainer.selectedText));
                 return;
             }
         }
@@ -288,10 +287,8 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
                     actionContainer.offsetSelectionEnd,
                     shiftableType.getShifted(
                             actionContainer.selectedText,
-                            actionContainer,
                             null,
                             null,
-                            false,
                             false));
             return;
         }

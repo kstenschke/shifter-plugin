@@ -48,7 +48,6 @@ public class RgbColor extends ShiftableTypeAbstract {
 
     public String getShifted(
             String rgbStr,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

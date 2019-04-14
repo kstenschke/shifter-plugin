@@ -73,7 +73,6 @@ public class CamelCaseString extends ShiftableTypeAbstract {
     // Convert into minus-separated path
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

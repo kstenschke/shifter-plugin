@@ -44,7 +44,6 @@ public class LogicalOperator extends ShiftableTypeAbstract {
     // Toggle among "&&" and "||"
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

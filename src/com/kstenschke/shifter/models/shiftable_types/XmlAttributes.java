@@ -51,7 +51,6 @@ public class XmlAttributes extends ShiftableTypeAbstract {
 
     public String getShifted(
             String str,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

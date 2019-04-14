@@ -62,6 +62,36 @@ public class DocCommentTag extends ShiftableTypeAbstract {
     }
 
     /**
+     * @return Shifting result
+     */
+    public String getShifted(
+            String word,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        String[] commentTags = getTagsByFilename(actionContainer.filename);
+        int amountTags = commentTags.length;
+        if (amountTags > 0) {
+            String wordLower = word.toLowerCase();
+            List<String> commentTagsList = Arrays.asList(commentTags);
+            int curIndex = commentTagsList.indexOf(wordLower);
+            if (curIndex > -1) {
+                curIndex = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.isShiftUp);
+                String shiftedWord = commentTagsList.get(curIndex);
+                if ("method".equals(shiftedWord)) {
+                    shiftedWord = shiftedWord + parseNextMethod(actionContainer.textAfterCaret);
+                }
+
+                return shiftedWord;
+            }
+        }
+
+        return word;
+    }
+
+    /**
      * @return Array    String array w/ all recognized doc comment tags
      */
     private String[] getAllTags() {
@@ -95,37 +125,6 @@ public class DocCommentTag extends ShiftableTypeAbstract {
     public static boolean isDocCommentLine(String line) {
         DocCommentTag docCommentTag = new DocCommentTag(null);
         return docCommentTag.isDocCommentLineContext(line);
-    }
-
-    /**
-     * @return Shifting result
-     */
-    public String getShifted(
-            String word,
-            ActionContainer actionContainer,
-            Integer moreCount,
-            String leadWhitespace,
-            boolean updateInDocument,
-            boolean disableIntentionPopup
-    ) {
-        String[] commentTags = getTagsByFilename(actionContainer.filename);
-        int amountTags = commentTags.length;
-        if (amountTags > 0) {
-            String wordLower = word.toLowerCase();
-            List<String> commentTagsList = Arrays.asList(commentTags);
-            int curIndex = commentTagsList.indexOf(wordLower);
-            if (curIndex > -1) {
-                curIndex = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.isShiftUp);
-                String shiftedWord = commentTagsList.get(curIndex);
-                if ("method".equals(shiftedWord)) {
-                    shiftedWord = shiftedWord + parseNextMethod(actionContainer.textAfterCaret);
-                }
-
-                return shiftedWord;
-            }
-        }
-
-        return word;
     }
 
     /**

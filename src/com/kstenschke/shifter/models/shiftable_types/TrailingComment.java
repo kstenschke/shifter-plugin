@@ -58,7 +58,6 @@ public class TrailingComment extends ShiftableTypeAbstract {
 
     public String getShifted(
             String selection,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

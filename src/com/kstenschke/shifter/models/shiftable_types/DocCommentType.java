@@ -48,6 +48,17 @@ public class DocCommentType extends ShiftableTypeAbstract {
         return null;
     }
 
+    public String getShifted(
+            String str,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        return new DocCommentDataType(actionContainer)
+                .getShifted(str, moreCount, leadWhitespace);
+    }
+
     /**
      * Check whether given String looks like a DOC comment line
      *
@@ -61,20 +72,5 @@ public class DocCommentType extends ShiftableTypeAbstract {
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 
         return m.find();
-    }
-
-    /**
-     * @return Shifting result
-     */
-    public String getShifted(
-            String str,
-            ActionContainer actionContainer,
-            Integer moreCount,
-            String leadWhitespace,
-            boolean updateInDocument,
-            boolean disableIntentionPopup
-    ) {
-        return new DocCommentDataType(actionContainer)
-                .getShifted(str, actionContainer, moreCount, leadWhitespace);
     }
 }

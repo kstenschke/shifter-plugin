@@ -117,7 +117,7 @@ public class ShiftableLine {
 
         return null != htmlEncodable.getShiftableType()
             // Encode or decode contained HTML special chars
-            ? htmlEncodable.getShifted(actionContainer.caretLine, actionContainer)
+            ? htmlEncodable.getShifted(actionContainer.caretLine)
             // No shift-ability detected, return original line
             : actionContainer.caretLine;
     }

@@ -60,7 +60,6 @@ public class SeparatedPath extends ShiftableTypeAbstract {
 
     public String getShifted(
             String word,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,

@@ -56,7 +56,6 @@ public class TernaryExpression extends ShiftableTypeAbstract {
      */
     public String getShifted(
             String str,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,
@@ -99,7 +98,7 @@ public class TernaryExpression extends ShiftableTypeAbstract {
     public void replaceSelectionShifted(boolean updateInDocument) {
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(
-                        getShifted(actionContainer.selectedText, actionContainer, null, null),
+                        getShifted(actionContainer.selectedText, null, null),
                         true),
                 ACTION_TEXT);
     }

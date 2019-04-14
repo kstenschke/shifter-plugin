@@ -56,13 +56,13 @@ public class ShiftableSelection {
         if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
             null != (shiftableType = new JsDoc(actionContainer).getShiftableType())
         ) {
-            shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true, false);
+            shiftableType.getShifted(actionContainer.selectedText, null, null, true, false);
             return;
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
         if (null != (shiftableType = new Comment(actionContainer).getShiftableType())) {
-            shiftableType.getShifted(actionContainer.selectedText, actionContainer, null, null, true, false);
+            shiftableType.getShifted(actionContainer.selectedText, null, null, true, false);
             return;
         }
 
@@ -71,7 +71,6 @@ public class ShiftableSelection {
                     actionContainer.getRunnableReplaceSelection(
                             shiftableType.getShifted(
                                     actionContainer.selectedText,
-                                    null,
                                     null,
                                     null,
                                     true,
@@ -163,7 +162,7 @@ public class ShiftableSelection {
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
             SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(sizzleSelector.getShifted(actionContainer.selectedText, actionContainer)),
+                    actionContainer.getRunnableReplaceSelection(sizzleSelector.getShifted(actionContainer.selectedText)),
                     SizzleSelector.ACTION_TEXT);
             return;
         }
@@ -177,7 +176,7 @@ public class ShiftableSelection {
             TrailingComment trailingComment = new TrailingComment(actionContainer);
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceCaretLine(
-                            trailingComment.getShifted(caretLine, actionContainer, moreCount, leadWhitespace)),
+                            trailingComment.getShifted(caretLine, moreCount, leadWhitespace)),
                             TrailingComment.ACTION_TEXT);
             return;
         }
@@ -252,7 +251,7 @@ public class ShiftableSelection {
         final Tupel wordsTupel = new Tupel(actionContainer);
         if (null != wordsTupel.getShiftableType()) {
             actionContainer.disableIntentionPopup = false;
-            final String replacement = wordsTupel.getShifted(actionContainer.selectedText, actionContainer);
+            final String replacement = wordsTupel.getShifted(actionContainer.selectedText);
             if (!replacement.isEmpty()) {
                 /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
                  * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
@@ -291,7 +290,7 @@ public class ShiftableSelection {
         if (null != htmlEncodable.getShiftableType()) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
-                            htmlEncodable.getShifted(actionContainer.selectedText, actionContainer)),
+                            htmlEncodable.getShifted(actionContainer.selectedText)),
                     HtmlEncodable.ACTION_TEXT);
             return;
         }
@@ -348,10 +347,7 @@ public class ShiftableSelection {
         shiftableType = new Comment(actionContainer);
         if (Comment.isPhpBlockComment(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(shiftableType.getShifted(
-                            actionContainer.selectedText,
-                            actionContainer
-                    )),
+                    actionContainer.getRunnableReplaceSelection(shiftableType.getShifted(actionContainer.selectedText)),
                     ACTION_TEXT_SHIFT_SELECTION);
             return true;
         }

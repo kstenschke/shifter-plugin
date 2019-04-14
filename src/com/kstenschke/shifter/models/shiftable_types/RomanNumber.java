@@ -43,7 +43,6 @@ public class RomanNumber extends ShiftableTypeAbstract {
 
     public String getShifted(
             String value,
-            ActionContainer actionContainer,
             Integer moreCount,
             String leadWhitespace,
             boolean updateInDocument,
