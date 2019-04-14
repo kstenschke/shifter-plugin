@@ -26,9 +26,7 @@ class StaticWordType {
     private final int amountKeywords;
     private final String regExPattern;
 
-    /**
-     * Constructor
-     */
+    // Constructor
     public StaticWordType(String[] keywords) {
         this.keywords  = keywords;
         amountKeywords = keywords.length;

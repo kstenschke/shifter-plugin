@@ -15,23 +15,41 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
+
+import javax.annotation.Nullable;
+
 import static org.apache.commons.lang.StringUtils.trim;
 
-class PhpDocComment {
+class PhpDocComment extends ShiftableTypeAbstract {
+
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public PhpDocComment(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
 
     // Check whether given String is a PHP doc comment block
-    static boolean isPhpDocComment(String str) {
-        str = trim(str);
+    public PhpDocComment getShiftableType() {
+        String str = trim(actionContainer.selectedText);
         String lines[] = str.split("\n");
 
-        return lines.length > 2 && str.startsWith("/**") && str.endsWith("*/") && str.contains(" * ");
+        return lines.length > 2 && str.startsWith("/**") &&
+                str.endsWith("*/") && str.contains(" * ")
+                ? this : null;
     }
 
-    static boolean containsAtParam(String str) {
-        return str.contains("@param ");
-    }
-
-    public static String getShifted(String str) {
+    public String getShifted(
+            String variable,
+            ActionContainer actionContainer,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        String str = actionContainer.selectedText;
         String lines[] = str.split("\n");
         StringBuilder shifted = new StringBuilder();
 
@@ -50,5 +68,9 @@ class PhpDocComment {
         }
 
         return shifted.toString();
+    }
+
+    static boolean containsAtParam(String str) {
+        return str.contains("@param ");
     }
 }

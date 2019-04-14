@@ -138,7 +138,6 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
         while (i < amountLines) {
             curLine = allLines[i];
             curLine = curLine.replaceAll("\\{*", "").replaceAll("}*", "").trim();
-
             if (!curLine.isEmpty() && curLine.contains(sword)) {
                 return curLine;
             }
@@ -216,6 +215,7 @@ public class DictionaryTerm extends ShiftableTypeAbstract {
         String shiftedWord = wordType.getShifted(word, actionContainer.isShiftUp);
 
         return shiftedWord.equals(word)
+                // Shifting did not change given word, fallback: try case-insensitive
                 ? wordType.getShifted(word.toLowerCase(), actionContainer.isShiftUp)
                 : shiftedWord;
     }

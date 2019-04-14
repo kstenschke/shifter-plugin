@@ -57,16 +57,14 @@ public class PhpDocParam extends ShiftableTypeAbstract {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if (null == actionContainer ||
-            actionContainer.shiftCaretLine
-        ) {
+        if (null == actionContainer || actionContainer.shiftCaretLine)
             return getShiftedCaretLine(null == actionContainer ? str : actionContainer.caretLine);
-        }
 
-        if (PhpDocComment.isPhpDocComment(actionContainer.selectedText) &&
+        ShiftableTypeAbstract shiftableType;
+        if (null != (shiftableType = new PhpDocComment(actionContainer).getShiftableType()) &&
             PhpDocComment.containsAtParam(actionContainer.selectedText)
         ) {
-            final String shifted = PhpDocComment.getShifted(actionContainer.selectedText);
+            final String shifted = shiftableType.getShifted(actionContainer.selectedText, actionContainer);
             if (!shifted.equals(actionContainer.selectedText)) {
                 // PHPDoc comment block: guess missing data shiftable_types by resp. variable names
                 actionContainer.writeUndoable(
