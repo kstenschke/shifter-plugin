@@ -26,6 +26,11 @@ public class ActionContainer {
     public String postfixChar = "";
     public String firstChar = "";
 
+    // Used by SeparatedList @todo move into separatedList
+    public String delimiterSplitPattern;
+    public String delimiter;
+    public String delimiterGlue;
+
     // regards selected or shifted line/selection
     public boolean isLastLineInDocument = false;
 

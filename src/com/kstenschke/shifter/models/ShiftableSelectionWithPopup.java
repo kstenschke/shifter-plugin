@@ -77,12 +77,28 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, phpConcatenation, null, null);
     }
 
-    void sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(final String delimiterSplitPattern, final String delimiterGlue, final boolean isJsConcatenation, final boolean isUp) {
+    void sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+            final String delimiterSplitPattern,
+            final String delimiterGlue,
+            final boolean isJsConcatenation,
+            final boolean isUp
+    ) {
         if (!containsShiftableQuotes && !isJsConcatenation) {
             // Sort
+            actionContainer.delimiterSplitPattern = delimiterSplitPattern;
+            actionContainer.delimiterGlue = delimiterGlue;
+            actionContainer.isShiftUp = isUp;
+            ShiftableTypeAbstract shiftableTypeAbstract = new SeparatedList(actionContainer);
+
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
-                            SeparatedList.getShifted(actionContainer.selectedText, delimiterSplitPattern, delimiterGlue, isUp)),
+                            shiftableTypeAbstract.getShifted(
+                                    actionContainer.selectedText,
+                                    actionContainer,
+                                    null,
+                                    null,
+                                    false,
+                                    false)),
                     ACTION_TEXT_SHIFT_SELECTION);
             return;
         }
@@ -206,6 +222,8 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             @Nullable String delimiterSplitPattern,
             @Nullable String delimiterGlue
     ) {
+        ShiftableTypeAbstract shiftableType;
+
         if (mode.equals(StaticTexts.SHIFT_CONCATENATION_ITEMS_SWAP_ORDER)) {
             assert null != phpConcatenation;
             actionContainer.document.replaceString(
@@ -257,15 +275,24 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
                 return;
             }
         }
-        if (mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SORT) || mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SWAP)) {
+        if (mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SORT) ||
+            mode.equals(StaticTexts.SHIFT_LIST_ITEMS_SWAP)
+        ) {
+            actionContainer.delimiterSplitPattern = delimiterSplitPattern;
+            actionContainer.delimiterGlue = delimiterGlue;
+            actionContainer.isShiftUp = isUp;
+            shiftableType = new SeparatedList(actionContainer);
+
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    SeparatedList.getShifted(
+                    shiftableType.getShifted(
                             actionContainer.selectedText,
-                            delimiterSplitPattern,
-                            delimiterGlue,
-                            isUp));
+                            actionContainer,
+                            null,
+                            null,
+                            false,
+                            false));
             return;
         }
         SeparatedPath separatedPath = new SeparatedPath(actionContainer);

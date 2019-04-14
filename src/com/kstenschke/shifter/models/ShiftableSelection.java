@@ -182,118 +182,118 @@ public class ShiftableSelection {
             return;
         }
 
-        if (!isPhpVariableOrArray) {
-            if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
-                return;
-            }
-            boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
-                    JsConcatenation.isJsConcatenation(actionContainer.selectedText);
-            if (SeparatedList.isSeparatedList(actionContainer.selectedText,",")) {
-                // Comma-separated list: sort / ask whether to sort or toggle quotes
-                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
-                        ",(\\s)*",
-                        ", ",
-                        true,
-                        actionContainer.isShiftUp);
-                return;
-            }
-            final LogicalConjunction logicalConjunction = new LogicalConjunction();
-            boolean isLogicalConjunction = logicalConjunction.isLogicalConjunction(actionContainer.selectedText);
-            if ( (!isLogicalConjunction || !logicalConjunction.isOrLogic)
-                 && SeparatedList.isSeparatedList(actionContainer.selectedText,"|")
-            ) {
-                // Pipe-separated list (not confused w/ || of logical conjunctions)
-                new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
-                    "\\|(\\s)*",
-                    "|",
-                    isJsConcatenationInTypeScript,
+        if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
+            return;
+        }
+        boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
+                JsConcatenation.isJsConcatenation(actionContainer.selectedText);
+        actionContainer.delimiter = ",";
+        if (null != new SeparatedList(actionContainer).getShiftableType()) {
+            // Comma-separated list: sort / ask whether to sort or toggle quotes
+            new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+                    ",(\\s)*",
+                    ", ",
+                    true,
                     actionContainer.isShiftUp);
-                return;
-            }
-            if (isJsConcatenationInTypeScript) {
-                if (containsShiftableQuotes) {
-                    // Can toggle quotes or convert to interpolation
-                    new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument(actionContainer.isShiftUp);
-                    return;
-                } else {
-                    // @todo add popup: toggle order or convert to interpolation
-                    actionContainer.writeUndoable(
-                            actionContainer.getRunnableReplaceSelection(new JsConcatenation().getShifted(actionContainer.selectedText)),
-                            JsConcatenation.ACTION_TEXT);
-                    return;
-                }
-            }
+            return;
+        }
+        final LogicalConjunction logicalConjunction = new LogicalConjunction();
+        boolean isLogicalConjunction = logicalConjunction.isLogicalConjunction(actionContainer.selectedText);
+        actionContainer.delimiter = "|";
+        if ( (!isLogicalConjunction || !logicalConjunction.isOrLogic) &&
+              null != new SeparatedList(actionContainer).getShiftableType()
+        ) {
+            // Pipe-separated list (not confused w/ || of logical conjunctions)
+            new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+                "\\|(\\s)*",
+                "|",
+                isJsConcatenationInTypeScript,
+                actionContainer.isShiftUp);
+            return;
+        }
+        if (isJsConcatenationInTypeScript) {
             if (containsShiftableQuotes) {
-                if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
-                    actionContainer.writeUndoable(
-                            actionContainer.getRunnableReplaceSelection(UtilsTextual.swapQuotes(actionContainer.selectedText)),
-                            ACTION_TEXT_SWAP_QUOTES);
-                    return;
-                }
-                new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
+                // Can toggle quotes or convert to interpolation
+                new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument(actionContainer.isShiftUp);
                 return;
+            } else {
+                // @todo add popup: toggle order or convert to interpolation
+                actionContainer.writeUndoable(
+                        actionContainer.getRunnableReplaceSelection(new JsConcatenation().getShifted(actionContainer.selectedText)),
+                        JsConcatenation.ACTION_TEXT);
+                return;
+            }
+        }
+        if (containsShiftableQuotes) {
+            if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
+                actionContainer.writeUndoable(
+                        actionContainer.getRunnableReplaceSelection(UtilsTextual.swapQuotes(actionContainer.selectedText)),
+                        ACTION_TEXT_SWAP_QUOTES);
+                return;
+            }
+            new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
+            return;
+        }
+
+        CamelCaseString camelCaseString = new CamelCaseString(actionContainer);
+        if (null != camelCaseString.getShiftableType()) {
+            new ShiftableSelectionWithPopup(actionContainer).shiftCamelCase(
+                    CamelCaseString.isWordPair(actionContainer.selectedText));
+            return;
+        }
+        SeparatedPath separatedPath = new SeparatedPath(actionContainer);
+        if (null != separatedPath.getShiftableType() &&
+            separatedPath.isWordPair(actionContainer.selectedText)
+        ) {
+            new ShiftableSelectionWithPopup(actionContainer).shiftSeparatedPathOrSwapWords();
+            return;
+        }
+
+        final Tupel wordsTupel = new Tupel(actionContainer);
+        if (null != wordsTupel.getShiftableType()) {
+            actionContainer.disableIntentionPopup = false;
+            final String replacement = wordsTupel.getShifted(actionContainer.selectedText, actionContainer);
+            if (!replacement.isEmpty()) {
+                /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
+                 * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
+                 * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
+                 */
+                actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(replacement), ACTION_TEXT_SWAP_WORDS_ORDER);
             }
 
-            CamelCaseString camelCaseString = new CamelCaseString(actionContainer);
-            if (null != camelCaseString.getShiftableType()) {
-                new ShiftableSelectionWithPopup(actionContainer).shiftCamelCase(
-                        CamelCaseString.isWordPair(actionContainer.selectedText));
+            return;
+        }
+        if (UtilsTextual.containsSlashes(actionContainer.selectedText)) {
+            if (QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
+                new ShiftableSelectionWithPopup(actionContainer).swapSlashesOrUnescapeQuotes();
                 return;
             }
-            SeparatedPath separatedPath = new SeparatedPath(actionContainer);
-            if (null != separatedPath.getShiftableType() &&
-                separatedPath.isWordPair(actionContainer.selectedText)
-            ) {
-                new ShiftableSelectionWithPopup(actionContainer).shiftSeparatedPathOrSwapWords();
-                return;
-            }
-
-            final Tupel wordsTupel = new Tupel(actionContainer);
-            if (null != wordsTupel.getShiftableType()) {
-                actionContainer.disableIntentionPopup = false;
-                final String replacement = wordsTupel.getShifted(actionContainer.selectedText, actionContainer);
-                if (!replacement.isEmpty()) {
-                    /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
-                     * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
-                     * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
-                     */
-                    actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(replacement), ACTION_TEXT_SWAP_WORDS_ORDER);
-                }
-
-                return;
-            }
-            if (UtilsTextual.containsSlashes(actionContainer.selectedText)) {
-                if (QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
-                    new ShiftableSelectionWithPopup(actionContainer).swapSlashesOrUnescapeQuotes();
-                    return;
-                }
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(UtilsTextual.swapSlashes(actionContainer.selectedText)),
-                        ACTION_TEXT_SWAP_SLASHES);
-                return;
-            }
-            LogicalOperator logicalOperator = new LogicalOperator(actionContainer);
-            if (null != logicalOperator.getShiftableType()) {
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(
-                                logicalOperator.getShifted(actionContainer.selectedText)),
-                        LogicalOperator.ACTION_TEXT);
-                return;
-            }
-            if (isLogicalConjunction) {
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(logicalConjunction.getShifted(actionContainer.selectedText)),
-                        LogicalConjunction.ACTION_TEXT);
-                return;
-            }
-            HtmlEncodable htmlEncodable = new HtmlEncodable(actionContainer);
-            if (null != htmlEncodable.getShiftableType()) {
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(
-                                htmlEncodable.getShifted(actionContainer.selectedText, actionContainer)),
-                        HtmlEncodable.ACTION_TEXT);
-                return;
-            }
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(UtilsTextual.swapSlashes(actionContainer.selectedText)),
+                    ACTION_TEXT_SWAP_SLASHES);
+            return;
+        }
+        LogicalOperator logicalOperator = new LogicalOperator(actionContainer);
+        if (null != logicalOperator.getShiftableType()) {
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(
+                            logicalOperator.getShifted(actionContainer.selectedText)),
+                    LogicalOperator.ACTION_TEXT);
+            return;
+        }
+        if (isLogicalConjunction) {
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(logicalConjunction.getShifted(actionContainer.selectedText)),
+                    LogicalConjunction.ACTION_TEXT);
+            return;
+        }
+        HtmlEncodable htmlEncodable = new HtmlEncodable(actionContainer);
+        if (null != htmlEncodable.getShiftableType()) {
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(
+                            htmlEncodable.getShifted(actionContainer.selectedText, actionContainer)),
+                    HtmlEncodable.ACTION_TEXT);
+            return;
         }
 
         actionContainer.trimSelectedText();
