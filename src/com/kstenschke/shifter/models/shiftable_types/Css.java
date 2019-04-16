@@ -15,9 +15,13 @@
  */
 package com.kstenschke.shifter.models.shiftable_types;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypeAbstract;
 import com.kstenschke.shifter.models.comparators.CssAttributesStyleLineComparator;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
+import javax.annotation.Nullable;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -26,11 +30,30 @@ import static org.apache.commons.lang.StringUtils.trim;
 /**
  * Cascading Stylesheet - sort all attributes in all selectors alphabetically
  */
-public class Css {
+public class Css extends ShiftableTypeAbstract {
 
     public static final String ACTION_TEXT = "Shift CSS";
 
-    public static String getShifted(String value) {
+    private ActionContainer actionContainer;
+
+    // Constructor
+    public Css(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    public Css getShiftableType() {
+        return UtilsFile.isCssFile(actionContainer.filename) &&
+               UtilsTextual.isMultiLine(actionContainer.selectedText)
+                ? this : null;
+    }
+
+    public String getShifted(
+            String value,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
         return value.contains("{") && value.contains("}")
             ? sortAttributeStyleLinesInsideSelectors(value)
             : sortAttributeStyleLines(value);

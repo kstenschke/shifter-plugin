@@ -40,9 +40,7 @@ public class DocCommentTag extends ShiftableTypeAbstract {
 
     private final String[] tagsPHP;
 
-    /**
-     * Constructor
-     */
+    // Constructor
     public DocCommentTag(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
 

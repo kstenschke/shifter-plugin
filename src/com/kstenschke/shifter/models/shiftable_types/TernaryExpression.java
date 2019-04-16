@@ -22,9 +22,6 @@ import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Ternary Expression
- */
 public class TernaryExpression extends ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;

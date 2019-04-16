@@ -27,9 +27,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Multiple XML attribute-value pairs within one line
- */
+// Multiple XML attribute-value pairs within one line
 public class XmlAttributes extends ShiftableTypeAbstract {
 
     private ActionContainer actionContainer;

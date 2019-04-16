@@ -17,9 +17,7 @@ package com.kstenschke.shifter.models.shiftable_types;
 
 import com.kstenschke.shifter.utils.UtilsArray;
 
-/**
- * Shifter general word type class
- */
+// General word type class
 class StaticWordType {
 
     private final String[] keywords;

@@ -121,11 +121,10 @@ public class ShiftableSelection {
 
         boolean isJsVarsDeclarations    = !isPhpVariableOrArray && JS_VARIABLES_DECLARATIONS == wordType;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
-        boolean isMultiLine             = UtilsTextual.isMultiLine(actionContainer.selectedText);
 
-        if (UtilsFile.isCssFile(actionContainer.filename) && isMultiLine) {
+        if (null != (shiftableType = new Css(actionContainer).getShiftableType())) {
             // CSS: Sort attributes per selector alphabetically
-            final String shifted = Css.getShifted(actionContainer.selectedText);
+            final String shifted = shiftableType.getShifted(actionContainer.selectedText);
             if (null != shifted) {
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(shifted, true),
