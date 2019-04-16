@@ -17,8 +17,8 @@ package com.kstenschke.shifter.utils;
 
 import com.intellij.openapi.editor.Document;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
-import com.kstenschke.shifter.models.shiftable_types.DocCommentTag;
-import com.kstenschke.shifter.models.shiftable_types.OperatorSign;
+import com.kstenschke.shifter.models.shiftables.DocCommentTag;
+import com.kstenschke.shifter.models.shiftables.OperatorSign;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -20,7 +20,7 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.models.shiftable_types.*;
+import com.kstenschke.shifter.models.shiftables.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -88,7 +88,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             actionContainer.delimiterSplitPattern = delimiterSplitPattern;
             actionContainer.delimiterGlue = delimiterGlue;
             actionContainer.isShiftUp = isUp;
-            ShiftableTypeAbstract shiftableTypeAbstract = new SeparatedList(actionContainer);
+            AbstractShiftable shiftableTypeAbstract = new SeparatedList(actionContainer);
 
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
@@ -221,7 +221,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             @Nullable String delimiterSplitPattern,
             @Nullable String delimiterGlue
     ) {
-        ShiftableTypeAbstract shiftableType;
+        AbstractShiftable shiftableType;
 
         if (mode.equals(StaticTexts.SHIFT_CONCATENATION_ITEMS_SWAP_ORDER)) {
             assert null != phpConcatenation;

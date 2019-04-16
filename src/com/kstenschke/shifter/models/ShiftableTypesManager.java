@@ -15,20 +15,20 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.kstenschke.shifter.models.shiftable_types.*;
+import com.kstenschke.shifter.models.shiftables.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
 /**
- * Manager of "shiftable" word shiftable_types - detects word type to evoke resp. shifting
+ * Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
  */
 class ShiftableTypesManager {
 
     private ActionContainer actionContainer;
 
-    // Generic shiftable_types (calculated when shifted)
+    // Generic shiftables (calculated when shifted)
     private DocCommentTag typeTagInDocComment;
     private DocCommentType typeDataTypeInDocComment;
     private Tupel wordsTupel;
@@ -38,8 +38,8 @@ class ShiftableTypesManager {
         this.actionContainer = actionContainer;
     }
 
-    ShiftableTypeAbstract getShiftableType() {
-        ShiftableTypeAbstract shiftableType;
+    AbstractShiftable getShiftableType() {
+        AbstractShiftable shiftableType;
 
         //noinspection LoopStatementThatDoesntLoop
         while (true) {
@@ -117,7 +117,7 @@ class ShiftableTypesManager {
             boolean isLastLineInDocument,
             ActionContainer actionContainer
     ) {
-        ShiftableTypeAbstract shiftableType;
+        AbstractShiftable shiftableType;
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (null != new TrailingComment(actionContainer).getShiftableType()) return TRAILING_COMMENT;
 
@@ -136,7 +136,7 @@ class ShiftableTypesManager {
         if (null != new JsVariablesDeclarations(actionContainer).getShiftableType()) return JS_VARIABLES_DECLARATIONS;
         if (null != new SizzleSelector(actionContainer).getShiftableType()) return SIZZLE_SELECTOR;
 
-        // DocComment shiftable_types (must be prefixed w/ "@")
+        // DocComment shiftables (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag(actionContainer);
@@ -197,14 +197,14 @@ class ShiftableTypesManager {
             Integer moreCount
     ) {
         switch (wordType) {
-            // String based word shiftable_types
+            // String based word shiftables
             case ACCESS_TYPE:
                 return new AccessType(actionContainer).getShifted(word);
             case DICTIONARY_WORD_GLOBAL:
             case DICTIONARY_WORD_EXT_SPECIFIC:
                 // The dictionary stored the matching terms-line, we don't need to differ global/ext-specific anymore
                 return new DictionaryTerm(actionContainer).getShifted(word);
-            // Generic shiftable_types (shifting is calculated)
+            // Generic shiftables (shifting is calculated)
             case SIZZLE_SELECTOR:
                 return new SizzleSelector(actionContainer).getShifted(word);
             case RGB_COLOR:
@@ -259,7 +259,7 @@ class ShiftableTypesManager {
     String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
         actionContainer.shiftSelectedText = true;
 
-        ShiftableTypeAbstract shiftableType = getShiftableType();
+        AbstractShiftable shiftableType = getShiftableType();
         return null == shiftableType
                 ? actionContainer.selectedText
                 : shiftableType.getShifted(actionContainer.selectedText, moreCount,null);

@@ -15,7 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.kstenschke.shifter.models.shiftable_types.*;
+import com.kstenschke.shifter.models.shiftables.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -42,7 +42,7 @@ public class ShiftableSelection {
     public static void shiftSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
         if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) return;
 
-        ShiftableTypeAbstract shiftableType;
+        AbstractShiftable shiftableType;
 
         // @todo convert all shiftable type to extend ShiftableTypeAbstract
 
@@ -326,7 +326,7 @@ public class ShiftableSelection {
     }
 
     private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer) {
-        ShiftableTypeAbstract shiftableType;
+        AbstractShiftable shiftableType;
 
         final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer.selectedText);
         if (phpConcatenation.isPhpConcatenation()) {
