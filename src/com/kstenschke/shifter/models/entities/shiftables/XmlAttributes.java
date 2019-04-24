@@ -54,14 +54,10 @@ public class XmlAttributes extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if (!disableIntentionPopup) {
-            if (QuotedString.containsEscapedQuotes(str)) {
-                // Shifted string is xml attributes that can be sorted and the quoting character can be toggled
-                // @todo add intention popup
-                return "";
-            }
-        }
+        if (!disableIntentionPopup && QuotedString.containsEscapedQuotes(str)) return "";
+        // @todo add intention popup
 
+        // Shifted string is xml attributes that can be sorted and the quoting character can be toggled
         return getShiftedXmlAttributesReplacement(str);
     }
 
