@@ -16,9 +16,9 @@
 package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.ShifterPreferences;
-import com.kstenschke.shifter.models.shiftables.CssUnit;
-import com.kstenschke.shifter.models.shiftables.JsDoc;
-import com.kstenschke.shifter.models.shiftables.NumericValue;
+import com.kstenschke.shifter.models.entities.shiftables.CssUnit;
+import com.kstenschke.shifter.models.entities.shiftables.JsDoc;
+import com.kstenschke.shifter.models.entities.shiftables.NumericValue;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;

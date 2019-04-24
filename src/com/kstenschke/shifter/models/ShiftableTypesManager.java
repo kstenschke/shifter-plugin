@@ -15,7 +15,8 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.kstenschke.shifter.models.shiftables.*;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
+import com.kstenschke.shifter.models.entities.shiftables.*;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
