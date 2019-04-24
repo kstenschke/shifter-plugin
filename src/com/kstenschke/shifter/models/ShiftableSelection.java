@@ -194,16 +194,15 @@ public class ShiftableSelection {
                     actionContainer.isShiftUp);
             return;
         }
-        final LogicalConjunction logicalConjunction = new LogicalConjunction();
-        boolean isLogicalConjunction = logicalConjunction.isLogicalConjunction(actionContainer.selectedText);
-        actionContainer.delimiter = "|";
+        final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getShiftableType();
+        boolean isLogicalConjunction = null != logicalConjunction;
 
         boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
                 null != new JsConcatenation(actionContainer).getShiftableType();
         if (isJsConcatenationInTypeScript) actionContainer.delimiter = ",";
 
-        if ( (!isLogicalConjunction || !logicalConjunction.isOrLogic) &&
-              null != new SeparatedList(actionContainer).getShiftableType()
+        if ((!isLogicalConjunction || !logicalConjunction.isOrLogic) &&
+             null != new SeparatedList(actionContainer).getShiftableType()
         ) {
             // Pipe-separated list (not confused w/ || of logical conjunctions)
             new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
@@ -286,7 +285,8 @@ public class ShiftableSelection {
         }
         if (isLogicalConjunction) {
             actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(logicalConjunction.getShifted(actionContainer.selectedText)),
+                    actionContainer.getRunnableReplaceSelection(
+                            logicalConjunction.getShifted(actionContainer.selectedText)),
                     LogicalConjunction.ACTION_TEXT);
             return;
         }

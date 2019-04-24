@@ -15,40 +15,60 @@
  */
 package com.kstenschke.shifter.models.entities.shiftables;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
+
+import javax.annotation.Nullable;
 
 /**
  * Logical conjunction (selected AND && / OR ||, w/ two operands)
  */
-public class LogicalConjunction {
+public class LogicalConjunction extends AbstractShiftable {
+
+    private ActionContainer actionContainer;
 
     static final public String ACTION_TEXT = "Toggle logical conjunction operands";
 
     public boolean isOrLogic = false;
 
-    public boolean isLogicalConjunction(String str) {
-        if (null == str || str.length() < 4) {
-            return false;
-        }
-        if (str.indexOf("||") > 0 && UtilsTextual.subStringCount(str, "||") == 1) {
-            isOrLogic = true;
-            return true;
-        }
-        if (str.indexOf("&&") > 0 && UtilsTextual.subStringCount(str, "&&") == 1) {
-            isOrLogic = false;
-            return true;
-        }
-
-        return false;
+    // Constructor
+    public LogicalConjunction(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
     }
 
-    private String swapOrder(String text) {
-        String[] parts = text.split(isOrLogic ? "\\|\\|" : "&&");
+    public LogicalConjunction getShiftableType() {
+        String str = actionContainer.selectedText;
+
+        if (null == str || str.length() < 4) return null;
+
+        if (str.indexOf("||") > 0 &&
+            UtilsTextual.subStringCount(str, "||") == 1
+        ) {
+            isOrLogic = true;
+            actionContainer.delimiter = "|";
+            return this;
+        }
+        if (str.indexOf("&&") > 0 &&
+            UtilsTextual.subStringCount(str, "&&") == 1
+        ) {
+            isOrLogic = false;
+            actionContainer.delimiter = "|";
+            return this;
+        }
+
+        return null;
+    }
+
+    public String getShifted(
+            String str,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        String[] parts = actionContainer.selectedText.split(isOrLogic ? "\\|\\|" : "&&");
 
         return parts[1].trim() + (isOrLogic ? " || " : " && ") + parts[0];
-    }
-
-    public String getShifted(String text) {
-        return swapOrder(text);
     }
 }
