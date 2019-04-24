@@ -20,9 +20,7 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
 
-/**
- * Pixel value class
- */
+// Pixel value class
 public class AccessType extends AbstractShiftable {
 
     private ActionContainer actionContainer;

@@ -21,9 +21,7 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 
 import javax.annotation.Nullable;
 
-/**
- * Sizzle DOM selector
- */
+// Sizzle DOM selector
 public class SizzleSelector extends AbstractShiftable {
 
     private ActionContainer actionContainer;

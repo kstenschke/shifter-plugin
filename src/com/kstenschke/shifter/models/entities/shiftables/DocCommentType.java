@@ -22,9 +22,7 @@ import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * DOC comment type class
- */
+// DOC comment type class
 public class DocCommentType extends AbstractShiftable {
 
     private ActionContainer actionContainer;

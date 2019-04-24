@@ -31,10 +31,7 @@ import org.jetbrains.annotations.Nullable;
 import java.awt.*;
 import java.util.Date;
 
-/**
- * Numeric value class
- * also handles timestamps in UNIX and JavaScript (milli seconds) format
- */
+// Numeric value class. Also handles timestamps in UNIX and JavaScript (milli seconds) format
 public class NumericValue extends AbstractShiftable {
 
     private ActionContainer actionContainer;

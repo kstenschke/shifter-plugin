@@ -20,9 +20,7 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
 
-/**
- * Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
- */
+// Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
 public class Parenthesis extends AbstractShiftable {
 
     private ActionContainer actionContainer;

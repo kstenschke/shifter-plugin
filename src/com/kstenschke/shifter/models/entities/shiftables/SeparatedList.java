@@ -30,9 +30,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.regex.Pattern;
 
-/**
- * Separated list (delimiters e.g: ",", "|")
- */
+// Separated list (delimiters e.g: ",", "|")
 public class SeparatedList extends AbstractShiftable {
 
     private ActionContainer actionContainer;

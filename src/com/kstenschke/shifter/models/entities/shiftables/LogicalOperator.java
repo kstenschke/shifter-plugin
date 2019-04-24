@@ -20,9 +20,6 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
 
-/**
- * Quoted String.
- */
 public class LogicalOperator extends AbstractShiftable {
 
     private ActionContainer actionContainer;

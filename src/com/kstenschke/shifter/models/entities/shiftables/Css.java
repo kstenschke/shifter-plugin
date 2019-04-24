@@ -27,9 +27,7 @@ import java.util.regex.Pattern;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
-/**
- * Cascading Stylesheet - sort all attributes in all selectors alphabetically
- */
+// Cascading Stylesheet - sort all attributes in all selectors alphabetically
 public class Css extends AbstractShiftable {
 
     public static final String ACTION_TEXT = "Shift CSS";

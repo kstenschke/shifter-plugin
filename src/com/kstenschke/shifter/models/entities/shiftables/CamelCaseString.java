@@ -22,9 +22,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nullable;
 
-/**
- * "camelCase" and "TitleCase" strings
- */
+// "camelCase" and "TitleCase" strings
 public class CamelCaseString extends AbstractShiftable {
 
     private ActionContainer actionContainer;

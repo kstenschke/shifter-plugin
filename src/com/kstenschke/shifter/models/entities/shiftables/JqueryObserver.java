@@ -21,9 +21,7 @@ import com.kstenschke.shifter.utils.UtilsFile;
 
 import javax.annotation.Nullable;
 
-/**
- * JavaScript Variables (multi-lined declarations of multiple vars)
- */
+// JavaScript Variables (multi-lined declarations of multiple vars)
 public class JqueryObserver extends AbstractShiftable {
 
     private ActionContainer actionContainer;

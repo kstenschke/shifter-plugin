@@ -21,9 +21,7 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 
 import javax.annotation.Nullable;
 
-/**
- * Logical conjunction (selected AND && / OR ||, w/ two operands)
- */
+// Logical conjunction (selected AND && / OR ||, w/ two operands)
 public class LogicalConjunction extends AbstractShiftable {
 
     private ActionContainer actionContainer;

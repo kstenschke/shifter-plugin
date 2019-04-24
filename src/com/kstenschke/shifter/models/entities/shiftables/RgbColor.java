@@ -21,9 +21,7 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import javax.annotation.Nullable;
 import java.awt.*;
 
-/**
- * RGB color class
- */
+// RGB color: shift lighter / darker
 public class RgbColor extends AbstractShiftable {
 
     private ActionContainer actionContainer;

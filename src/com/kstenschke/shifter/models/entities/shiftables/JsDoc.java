@@ -26,9 +26,7 @@ import javax.annotation.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
-/**
- * JavaScript DOC @param comment
- */
+// JavaScript DOC @param comment
 public class JsDoc extends AbstractShiftable {
 
     private ActionContainer actionContainer;

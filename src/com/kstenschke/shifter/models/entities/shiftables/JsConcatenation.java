@@ -20,9 +20,7 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
 
-/**
- * JavaScript concatenation in TypeScript file: shift into interpolation
- */
+// JavaScript concatenation in TypeScript file: shift into interpolation
 public class JsConcatenation extends AbstractShiftable {
 
     private ActionContainer actionContainer;

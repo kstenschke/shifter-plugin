@@ -20,9 +20,7 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
 
-/**
- * String w/ numeric postfix
- */
+// String w/ numeric postfix
 public class NumericPostfixed extends AbstractShiftable {
 
     private ActionContainer actionContainer;

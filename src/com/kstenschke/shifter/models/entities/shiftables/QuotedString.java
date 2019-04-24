@@ -24,9 +24,6 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Quoted String.
- */
 public class QuotedString extends AbstractShiftable {
 
     private ActionContainer actionContainer;

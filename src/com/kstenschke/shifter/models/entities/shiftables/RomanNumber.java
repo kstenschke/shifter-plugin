@@ -22,9 +22,7 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 
 import javax.annotation.Nullable;
 
-/**
- * Roman number class
- */
+// Roman number: increment / decrement
 public class RomanNumber extends AbstractShiftable {
 
     private ActionContainer actionContainer;

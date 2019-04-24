@@ -21,9 +21,7 @@ import org.apache.commons.lang.StringEscapeUtils;
 
 import javax.annotation.Nullable;
 
-/**
- * HTML encoded/encode-able (=containing char(s) that be be encoded) String.
- */
+// HTML encoded/encode-able (=containing char(s) that be be encoded) String.
 public class HtmlEncodable extends AbstractShiftable {
 
     private ActionContainer actionContainer;

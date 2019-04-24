@@ -27,9 +27,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
- */
+// PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
 public class PhpVariableOrArray extends AbstractShiftable {
 
     private ActionContainer actionContainer;

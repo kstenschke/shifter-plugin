@@ -22,9 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-/**
- * JavaScript Variables (multi-lined declarations of multiple vars)
- */
+// JavaScript Variables (multi-lined declarations of multiple vars)
 public class JsVariablesDeclarations extends AbstractShiftable {
 
     private ActionContainer actionContainer;

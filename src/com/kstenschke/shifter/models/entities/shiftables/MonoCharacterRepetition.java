@@ -21,9 +21,7 @@ import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nullable;
 
-/**
- * Mono-Character String = String that contains only one character (no matter how often)
- */
+// Mono-Character String = String that contains only one character (no matter how often)
 public class MonoCharacterRepetition extends AbstractShiftable {
 
     private ActionContainer actionContainer;

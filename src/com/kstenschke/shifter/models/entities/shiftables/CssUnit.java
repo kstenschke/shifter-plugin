@@ -24,9 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 
-/**
- * Pixel value class
- */
+// Pixel value class
 public class CssUnit extends AbstractShiftable {
 
     private ActionContainer actionContainer;

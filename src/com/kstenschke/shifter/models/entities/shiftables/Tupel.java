@@ -25,9 +25,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Tupel (two items w/ delimiter in between)
- */
+// Tupel (two items w/ delimiter in between)
 public class Tupel extends AbstractShiftable {
 
     private ActionContainer actionContainer;

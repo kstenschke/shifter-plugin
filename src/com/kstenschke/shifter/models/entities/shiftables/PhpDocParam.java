@@ -24,9 +24,7 @@ import javax.annotation.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
-/**
- * PHPDoc @param comment
- */
+// PHPDoc @param comment
 public class PhpDocParam extends AbstractShiftable {
 
     private ActionContainer actionContainer;
