@@ -236,7 +236,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    new JsConcatenation().getShifted(actionContainer.selectedText));
+                    new JsConcatenation(actionContainer).getShifted(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_UNESCAPE_QUOTES)) {

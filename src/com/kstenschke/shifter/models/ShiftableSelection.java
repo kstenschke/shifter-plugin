@@ -184,9 +184,7 @@ public class ShiftableSelection {
         if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
             return;
         }
-        boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
-                JsConcatenation.isJsConcatenation(actionContainer.selectedText);
-        actionContainer.delimiter = ",";
+
         if (null != new SeparatedList(actionContainer).getShiftableType()) {
             // Comma-separated list: sort / ask whether to sort or toggle quotes
             new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
@@ -199,6 +197,11 @@ public class ShiftableSelection {
         final LogicalConjunction logicalConjunction = new LogicalConjunction();
         boolean isLogicalConjunction = logicalConjunction.isLogicalConjunction(actionContainer.selectedText);
         actionContainer.delimiter = "|";
+
+        boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
+                null != new JsConcatenation(actionContainer).getShiftableType();
+        if (isJsConcatenationInTypeScript) actionContainer.delimiter = ",";
+
         if ( (!isLogicalConjunction || !logicalConjunction.isOrLogic) &&
               null != new SeparatedList(actionContainer).getShiftableType()
         ) {
@@ -218,7 +221,8 @@ public class ShiftableSelection {
             } else {
                 // @todo add popup: toggle order or convert to interpolation
                 actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(new JsConcatenation().getShifted(actionContainer.selectedText)),
+                        actionContainer.getRunnableReplaceSelection(
+                                new JsConcatenation(actionContainer).getShifted(actionContainer.selectedText)),
                         JsConcatenation.ACTION_TEXT);
                 return;
             }

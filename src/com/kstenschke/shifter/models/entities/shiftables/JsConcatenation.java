@@ -15,32 +15,51 @@
  */
 package com.kstenschke.shifter.models.entities.shiftables;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
+
+import javax.annotation.Nullable;
+
 /**
  * JavaScript concatenation in TypeScript file: shift into interpolation
  */
-public class JsConcatenation {
+public class JsConcatenation extends AbstractShiftable {
+
+    private ActionContainer actionContainer;
 
     public static final String ACTION_TEXT = "Convert to interpolation";
 
     private int amountVariables = 0;
     private int amountStrings = 0;
 
-    public static Boolean isJsConcatenation(String str) {
+    // Constructor
+    public JsConcatenation(@Nullable ActionContainer actionContainer) {
+        super(actionContainer);
+    }
+
+    public JsConcatenation getShiftableType() {
+        String str = actionContainer.selectedText;
         if (!str.contains("+") || str.replaceAll("[\\s|\\d]", "").length() < 3) {
-            return false;
+            return null;
         }
 
-        JsConcatenation jsConcatenation = new JsConcatenation();
-        jsConcatenation.getShifted(str);
+        getShifted(str);
 
-        return jsConcatenation.amountStrings > 0 && jsConcatenation.amountVariables > 0;
+        return amountStrings > 0 && amountVariables > 0
+                ? this : null;
     }
 
     /**
      * @param  str      text selection to be shifted
      * @return String
      */
-    public String getShifted(String str) {
+    public String getShifted(
+            String str,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
         // Remove whitespace around concatenation operators
         str = str.trim();
 
