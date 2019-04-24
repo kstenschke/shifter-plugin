@@ -67,7 +67,10 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
 
     void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
         if (!containsShiftableQuotes) {
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpConcatenation.getShifted());
+            actionContainer.document.replaceString(
+                    actionContainer.offsetSelectionStart,
+                    actionContainer.offsetSelectionEnd,
+                    phpConcatenation.getShifted(null));
             return;
         }
 
@@ -229,7 +232,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    phpConcatenation.getShifted());
+                    phpConcatenation.getShifted(null));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION)) {

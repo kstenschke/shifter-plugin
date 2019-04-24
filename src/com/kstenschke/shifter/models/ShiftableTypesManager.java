@@ -237,7 +237,7 @@ class ShiftableTypesManager {
             case MONO_CHARACTER_REPETITION:
                 return new MonoCharacterRepetition(actionContainer).getShifted(word);
             case DOC_COMMENT_TAG:
-                actionContainer.textAfterCaret   = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
+                actionContainer.textAfterCaret = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
                 return typeTagInDocComment.getShifted(word, null);
             case DOC_COMMENT_DATA_TYPE:
                 return typeDataTypeInDocComment.getShifted(word);

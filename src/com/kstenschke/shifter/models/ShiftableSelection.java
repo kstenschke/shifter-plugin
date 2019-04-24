@@ -333,12 +333,11 @@ public class ShiftableSelection {
     private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer) {
         AbstractShiftable shiftableType;
 
-        final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer.selectedText);
-        if (phpConcatenation.isPhpConcatenation()) {
+        final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer);
+        if (null != phpConcatenation.getShiftableType()) {
             actionContainer.writeUndoable(
                     () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation),
                     ACTION_TEXT_SHIFT_SELECTION);
-
             return true;
         }
 

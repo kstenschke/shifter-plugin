@@ -44,18 +44,6 @@ public class Parenthesis extends AbstractShiftable {
                     ? this : null;
     }
 
-    private static boolean isWrappedInRoundBrackets(String str) {
-        return str.startsWith("(") && str.endsWith(")");
-    }
-
-    private static boolean isWrappedInSquareBrackets(String str) {
-        return str.startsWith("[") && str.endsWith("]");
-    }
-
-    private static boolean isWrappedInCurlyBrackets(String str) {
-        return str.startsWith("{") && str.endsWith("}");
-    }
-
     public String getShifted(
             String str,
             Integer moreCount,
@@ -71,5 +59,17 @@ public class Parenthesis extends AbstractShiftable {
         }
         // Is wrapped in curly brackets
         return "(" + str.substring(1, str.length() - 1) + ")";
+    }
+
+    private static boolean isWrappedInRoundBrackets(String str) {
+        return str.startsWith("(") && str.endsWith(")");
+    }
+
+    private static boolean isWrappedInSquareBrackets(String str) {
+        return str.startsWith("[") && str.endsWith("]");
+    }
+
+    private static boolean isWrappedInCurlyBrackets(String str) {
+        return str.startsWith("{") && str.endsWith("}");
     }
 }

@@ -15,10 +15,12 @@
  */
 package com.kstenschke.shifter.models.entities.shiftables;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 // PHP Variable (word w/ $ prefix)
-public class PhpConcatenation {
+public class PhpConcatenation extends AbstractShiftable {
 
     private boolean isPhpConcatenation = false;
     private boolean isDotWhitespaceWrapped = false;
@@ -29,7 +31,10 @@ public class PhpConcatenation {
     private String partRHS = null;
 
     // Constructor
-    public PhpConcatenation(String str) {
+    public PhpConcatenation(ActionContainer actionContainer) {
+        super(actionContainer);
+
+        String str = actionContainer.selectedText;
         String strJoined = UtilsTextual.removeLineBreaks(str.trim());
         if (strJoined.length() <= 4 || !strJoined.contains(".")) return;
 
@@ -47,6 +52,32 @@ public class PhpConcatenation {
             isDotWhitespaceWrapped = true;
             dotWrapChar = String.valueOf(charAfterDot);
         }
+    }
+
+    public PhpConcatenation getShiftableType() {
+        return isPhpConcatenation ? this : null;
+    }
+
+    /**
+     * @return  String  Concatenation w/ left- and right-hand-side parts interchanged
+     */
+    public String getShifted(
+            String str,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        String dotWrapChar = null == this.dotWrapChar ? "" : this.dotWrapChar;
+
+        String concatenation =
+                (null == partRHS ? "" : partRHS)
+                        + (isDotWhitespaceWrapped ? dotWrapChar : "")
+                        + "."
+                        + (isDotWhitespaceWrapped ? dotWrapChar : "")
+                        + (null == partLHS ? "" : partLHS);
+
+        return concatenation.trim();
     }
 
     /**
@@ -168,25 +199,5 @@ public class PhpConcatenation {
         if ("\'".equals(str)) return "\'";
 
         return null;
-    }
-
-    public boolean isPhpConcatenation() {
-        return isPhpConcatenation;
-    }
-
-    /**
-     * @return  String  Concatenation w/ left- and right-hand-side parts interchanged
-     */
-    public String getShifted() {
-        String dotWrapChar = null == this.dotWrapChar ? "" : this.dotWrapChar;
-
-        String concatenation =
-              (null == partRHS ? "" : partRHS)
-            + (isDotWhitespaceWrapped ? dotWrapChar : "")
-            + "."
-            + (isDotWhitespaceWrapped ? dotWrapChar : "")
-            + (null == partLHS ? "" : partLHS);
-
-        return concatenation.trim();
     }
 }
