@@ -39,17 +39,14 @@ public class JsVariablesDeclarations extends AbstractShiftable {
         super(actionContainer);
     }
 
-    /**
-     * Check whether given string represents a declaration of (multiple) JS variables:
-     * -selection has multiple lines
-     * -each trimmed line starts w/ "var" (at least 2 occurrences)
-     * -each trimmed line ends w/ ";"
-     * -there can be empty lines
-     * -there can be commented lines, beginning w/ "//"
-     *
-     * @return boolean
-     */
-    public JsVariablesDeclarations getShiftableType() {
+    // Get instance or null if not applicable:
+    // Selected text must be a declaration of (multiple) JS variables:
+    // -selection has multiple lines
+    // -each trimmed line starts w/ "var" (at least 2 occurrences)
+    // -each trimmed line ends w/ ";"
+    // -there can be empty lines
+    // -there can be commented lines, beginning w/ "//"
+    public JsVariablesDeclarations getInstance() {
         String str = actionContainer.selectedText.trim();
 
         if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {

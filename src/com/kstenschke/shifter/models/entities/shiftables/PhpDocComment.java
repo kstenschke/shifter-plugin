@@ -31,8 +31,8 @@ class PhpDocComment extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Check whether given String is a PHP doc comment block
-    public PhpDocComment getShiftableType() {
+    // Get instance or null if not applicable: selected text must be a PHP DOC comment block
+    public PhpDocComment getInstance() {
         String str = trim(actionContainer.selectedText);
         String lines[] = str.split("\n");
 

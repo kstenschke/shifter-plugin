@@ -39,7 +39,8 @@ public class CamelCaseString extends AbstractShiftable {
         CAMEL_WORDS_TO_UNDERSCORE_SEPARATED,
     }
 
-    public CamelCaseString getShiftableType() {
+    // Get instance or null if not applicable
+    public CamelCaseString getInstance() {
         String str = actionContainer.selectedText;
 
         return !UtilsTextual.startsNumeric(str) &&

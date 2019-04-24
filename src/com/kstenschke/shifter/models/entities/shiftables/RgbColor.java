@@ -35,8 +35,9 @@ public class RgbColor extends AbstractShiftable {
         super(actionContainer);
     }
 
+    // Get instance or null if not applicable:
     // Check whether given string represents a hex RGB color, prefix must be "#"
-    public RgbColor getShiftableType() {
+    public RgbColor getInstance() {
         String str = actionContainer.selectedText;
 
         return !

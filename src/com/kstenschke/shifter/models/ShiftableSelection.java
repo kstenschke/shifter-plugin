@@ -55,19 +55,19 @@ public class ShiftableSelection {
         ) return;
 
         if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
-            null != (shiftableType = new JsDoc(actionContainer).getShiftableType())
+            null != (shiftableType = new JsDoc(actionContainer).getInstance())
         ) {
             shiftableType.getShifted(actionContainer.selectedText, null, null, true, false);
             return;
         }
 
         // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
-        if (null != (shiftableType = new Comment(actionContainer).getShiftableType())) {
+        if (null != (shiftableType = new Comment(actionContainer).getInstance())) {
             shiftableType.getShifted(actionContainer.selectedText, null, null, true, false);
             return;
         }
 
-        if (null != (shiftableType =  new XmlAttributes(actionContainer).getShiftableType())) {
+        if (null != (shiftableType =  new XmlAttributes(actionContainer).getInstance())) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                             shiftableType.getShifted(
@@ -81,11 +81,11 @@ public class ShiftableSelection {
         }
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
-        boolean isWrappedInParenthesis = parenthesis.getShiftableType() != null;
+        boolean isWrappedInParenthesis = parenthesis.getInstance() != null;
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
 
-        //ShiftableTypeAbstract shiftableType = shiftableTypesManager.getShiftableType(actionContainer);
+        //ShiftableTypeAbstract shiftableType = shiftableTypesManager.getInstance(actionContainer);
 
         ShiftableTypes.Type wordType;
         if (null == actionContainer.editorText) {
@@ -123,7 +123,7 @@ public class ShiftableSelection {
         boolean isJsVarsDeclarations    = !isPhpVariableOrArray && JS_VARIABLES_DECLARATIONS == wordType;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
 
-        if (null != (shiftableType = new Css(actionContainer).getShiftableType())) {
+        if (null != (shiftableType = new Css(actionContainer).getInstance())) {
             // CSS: Sort attributes per selector alphabetically
             final String shifted = shiftableType.getShifted(actionContainer.selectedText);
             if (null != shifted) {
@@ -140,7 +140,7 @@ public class ShiftableSelection {
             lineNumberSelEnd--;
         }
 
-        if (null != (shiftableType = new TernaryExpression(actionContainer).getShiftableType())) {
+        if (null != (shiftableType = new TernaryExpression(actionContainer).getInstance())) {
             shiftableType.replaceSelectionShifted();
             return;
         }
@@ -155,7 +155,7 @@ public class ShiftableSelection {
                 return;
             }
         }
-        if (null != (shiftableType = new JqueryObserver(actionContainer).getShiftableType())) {
+        if (null != (shiftableType = new JqueryObserver(actionContainer).getInstance())) {
             shiftableType.replaceSelectionShifted(false);
             return;
         }
@@ -185,7 +185,7 @@ public class ShiftableSelection {
             return;
         }
 
-        if (null != new SeparatedList(actionContainer).getShiftableType()) {
+        if (null != new SeparatedList(actionContainer).getInstance()) {
             // Comma-separated list: sort / ask whether to sort or toggle quotes
             new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
                     ",(\\s)*",
@@ -194,15 +194,15 @@ public class ShiftableSelection {
                     actionContainer.isShiftUp);
             return;
         }
-        final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getShiftableType();
+        final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance();
         boolean isLogicalConjunction = null != logicalConjunction;
 
         boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
-                null != new JsConcatenation(actionContainer).getShiftableType();
+                null != new JsConcatenation(actionContainer).getInstance();
         if (isJsConcatenationInTypeScript) actionContainer.delimiter = ",";
 
         if ((!isLogicalConjunction || !logicalConjunction.isOrLogic) &&
-             null != new SeparatedList(actionContainer).getShiftableType()
+             null != new SeparatedList(actionContainer).getInstance()
         ) {
             // Pipe-separated list (not confused w/ || of logical conjunctions)
             new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
@@ -238,13 +238,13 @@ public class ShiftableSelection {
         }
 
         CamelCaseString camelCaseString = new CamelCaseString(actionContainer);
-        if (null != camelCaseString.getShiftableType()) {
+        if (null != camelCaseString.getInstance()) {
             new ShiftableSelectionWithPopup(actionContainer).shiftCamelCase(
                     CamelCaseString.isWordPair(actionContainer.selectedText));
             return;
         }
         SeparatedPath separatedPath = new SeparatedPath(actionContainer);
-        if (null != separatedPath.getShiftableType() &&
+        if (null != separatedPath.getInstance() &&
             separatedPath.isWordPair(actionContainer.selectedText)
         ) {
             new ShiftableSelectionWithPopup(actionContainer).shiftSeparatedPathOrSwapWords();
@@ -252,7 +252,7 @@ public class ShiftableSelection {
         }
 
         final Tupel wordsTupel = new Tupel(actionContainer);
-        if (null != wordsTupel.getShiftableType()) {
+        if (null != wordsTupel.getInstance()) {
             actionContainer.disableIntentionPopup = false;
             final String replacement = wordsTupel.getShifted(actionContainer.selectedText);
             if (!replacement.isEmpty()) {
@@ -276,7 +276,7 @@ public class ShiftableSelection {
             return;
         }
         LogicalOperator logicalOperator = new LogicalOperator(actionContainer);
-        if (null != logicalOperator.getShiftableType()) {
+        if (null != logicalOperator.getInstance()) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                             logicalOperator.getShifted(actionContainer.selectedText)),
@@ -291,7 +291,7 @@ public class ShiftableSelection {
             return;
         }
         HtmlEncodable htmlEncodable = new HtmlEncodable(actionContainer);
-        if (null != htmlEncodable.getShiftableType()) {
+        if (null != htmlEncodable.getInstance()) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                             htmlEncodable.getShifted(actionContainer.selectedText)),
@@ -334,7 +334,7 @@ public class ShiftableSelection {
         AbstractShiftable shiftableType;
 
         final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer);
-        if (null != phpConcatenation.getShiftableType()) {
+        if (null != phpConcatenation.getInstance()) {
             actionContainer.writeUndoable(
                     () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation),
                     ACTION_TEXT_SHIFT_SELECTION);

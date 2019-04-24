@@ -8,28 +8,28 @@ public class OperatorSignTest {
     @Test
     public void isOperatorSign() {
         /*
-        assertFalse(OperatorSign.getShiftableType(null));
-        assertFalse(OperatorSign.getShiftableType(""));
-        assertFalse(OperatorSign.getShiftableType(";"));
-        assertFalse(OperatorSign.getShiftableType("§"));
-        assertFalse(OperatorSign.getShiftableType("°"));
-        assertFalse(OperatorSign.getShiftableType("("));
-        assertFalse(OperatorSign.getShiftableType(")"));
-        assertFalse(OperatorSign.getShiftableType("\\"));
+        assertFalse(OperatorSign.getInstance(null));
+        assertFalse(OperatorSign.getInstance(""));
+        assertFalse(OperatorSign.getInstance(";"));
+        assertFalse(OperatorSign.getInstance("§"));
+        assertFalse(OperatorSign.getInstance("°"));
+        assertFalse(OperatorSign.getInstance("("));
+        assertFalse(OperatorSign.getInstance(")"));
+        assertFalse(OperatorSign.getInstance("\\"));
         */
-        //assertFalse(OperatorSign.getShiftableType("+-<>*/%"));
+        //assertFalse(OperatorSign.getInstance("+-<>*/%"));
         /*
-        assertFalse(OperatorSign.getShiftableType("+-"));
-        assertFalse(OperatorSign.getShiftableType("+="));
-        assertFalse(OperatorSign.getShiftableType("=+"));
+        assertFalse(OperatorSign.getInstance("+-"));
+        assertFalse(OperatorSign.getInstance("+="));
+        assertFalse(OperatorSign.getInstance("=+"));
 
-        assertTrue(OperatorSign.getShiftableType("+"));
-        assertTrue(OperatorSign.getShiftableType("-"));
-        assertTrue(OperatorSign.getShiftableType("*"));
-        assertTrue(OperatorSign.getShiftableType("/"));
-        assertTrue(OperatorSign.getShiftableType(">"));
-        assertTrue(OperatorSign.getShiftableType("<"));
-        assertTrue(OperatorSign.getShiftableType("%"));
+        assertTrue(OperatorSign.getInstance("+"));
+        assertTrue(OperatorSign.getInstance("-"));
+        assertTrue(OperatorSign.getInstance("*"));
+        assertTrue(OperatorSign.getInstance("/"));
+        assertTrue(OperatorSign.getInstance(">"));
+        assertTrue(OperatorSign.getInstance("<"));
+        assertTrue(OperatorSign.getInstance("%"));
         */
     }
 

@@ -37,7 +37,8 @@ public class JsConcatenation extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public JsConcatenation getShiftableType() {
+    // Get instance or null if not applicable
+    public JsConcatenation getInstance() {
         String str = actionContainer.selectedText;
         if (!str.contains("+") || str.replaceAll("[\\s|\\d]", "").length() < 3) {
             return null;

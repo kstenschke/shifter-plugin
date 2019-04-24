@@ -36,8 +36,8 @@ public class PhpDocParam extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Check whether given string represents a PHP variable
-    public PhpDocParam getShiftableType() {
+    // Get instance or null if not applicable: string must be a PHP variable
+    public PhpDocParam getInstance() {
         if (!UtilsFile.isPhpFile(actionContainer.filename)) return null;
 
         String str = actionContainer.shiftCaretLine
@@ -60,7 +60,7 @@ public class PhpDocParam extends AbstractShiftable {
             return getShiftedCaretLine(null == actionContainer ? str : actionContainer.caretLine);
 
         AbstractShiftable shiftableType;
-        if (null != (shiftableType = new PhpDocComment(actionContainer).getShiftableType()) &&
+        if (null != (shiftableType = new PhpDocComment(actionContainer).getInstance()) &&
             PhpDocComment.containsAtParam(actionContainer.selectedText)
         ) {
             final String shifted = shiftableType.getShifted(actionContainer.selectedText);
@@ -79,7 +79,7 @@ public class PhpDocParam extends AbstractShiftable {
 
         if (!actionContainer.selectedText.contains("\n") &&
             docCommentType.isDocCommentTypeLineContext(actionContainer.selectedText) &&
-            null != getShiftableType() &&
+            null != getInstance() &&
             !containsDataType(actionContainer.selectedText)
         ) {
             String variableName = trim(extractVariableName(actionContainer.selectedText).replace("$", ""));

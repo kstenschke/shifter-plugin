@@ -30,7 +30,8 @@ public class OperatorSign extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public OperatorSign getShiftableType() {
+    // Get instance or null if not applicable
+    public OperatorSign getInstance() {
         String word = actionContainer.firstChar == null
                 ? actionContainer.selectedText
                 : actionContainer.firstChar;
@@ -66,7 +67,7 @@ public class OperatorSign extends AbstractShiftable {
         actionContainer.firstChar = String.valueOf(str.charAt(1));
 
         return Character.isWhitespace(str.charAt(0))
-                && null != this.getShiftableType()
+                && null != this.getInstance()
                 && Character.isWhitespace(str.charAt(2));
     }
 }

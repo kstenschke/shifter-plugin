@@ -35,13 +35,14 @@ public class JqueryObserver extends AbstractShiftable {
         super(actionContainer);
     }
 
+    // Get instance or null if not applicable:
     // Check whether given string represents a declaration of (multiple) JS variables:
     // -selection has multiple lines
     // -each trimmed line starts w/ "var" (at least 2 occurrences)
     // -each trimmed line ends w/ ";"
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
-    public JqueryObserver getShiftableType() {
+    public JqueryObserver getInstance() {
         String str = actionContainer.selectedText;
 
         if (null == actionContainer.fileExtension ||

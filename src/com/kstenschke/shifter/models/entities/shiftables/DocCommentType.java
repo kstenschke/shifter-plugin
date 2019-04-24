@@ -34,16 +34,17 @@ public class DocCommentType extends AbstractShiftable {
         super(actionContainer);
     }
 
+    // Get instance or null if not applicable:
     // Check whether given String represents a data type (number / integer / string /...)
     // from a DOC comment (param / return /...)
-    public AbstractShiftable getShiftableType() {
+    public AbstractShiftable getInstance() {
         if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return null;
 
         AbstractShiftable shiftableType = new DocCommentTag(actionContainer);
-        if (actionContainer.prefixChar.matches("@") && null != shiftableType.getShiftableType()) return shiftableType;
+        if (actionContainer.prefixChar.matches("@") && null != shiftableType.getInstance()) return shiftableType;
 
         shiftableType = new DocCommentDataType(actionContainer);
-        if (null != shiftableType.getShiftableType()) return shiftableType;
+        if (null != shiftableType.getInstance()) return shiftableType;
 
         return null;
     }

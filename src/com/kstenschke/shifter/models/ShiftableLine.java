@@ -57,7 +57,7 @@ public class ShiftableLine {
 
         PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
         if (UtilsFile.isPhpFile(actionContainer.filename) &&
-            null != phpDocParam.getShiftableType() &&
+            null != phpDocParam.getInstance() &&
             !phpDocParam.containsDataType(actionContainer.caretLine) &&
             phpDocParam.containsVariableName(actionContainer.caretLine)
         ) {
@@ -115,7 +115,7 @@ public class ShiftableLine {
         actionContainer.shiftSelectedText = false;
         actionContainer.shiftCaretLine = true;
 
-        return null != htmlEncodable.getShiftableType()
+        return null != htmlEncodable.getInstance()
             // Encode or decode contained HTML special chars
             ? htmlEncodable.getShifted(actionContainer.caretLine)
             // No shift-ability detected, return original line

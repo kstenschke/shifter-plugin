@@ -22,17 +22,17 @@ public class AccessTypeTest {
     @Test
     public void isAccessType() {
         /*
-        assertFalse(accessType.getShiftableType(null));
-        assertFalse(accessType.getShiftableType(""));
-        assertFalse(accessType.getShiftableType("foo"));
+        assertFalse(accessType.getInstance(null));
+        assertFalse(accessType.getInstance(""));
+        assertFalse(accessType.getInstance("foo"));
 
-        assertTrue(accessType.getShiftableType("public"));
-        assertTrue(accessType.getShiftableType("protected"));
-        assertTrue(accessType.getShiftableType("private"));
+        assertTrue(accessType.getInstance("public"));
+        assertTrue(accessType.getInstance("protected"));
+        assertTrue(accessType.getInstance("private"));
 
-        assertFalse(accessType.getShiftableType("public "));
-        assertFalse(accessType.getShiftableType("protected "));
-        assertFalse(accessType.getShiftableType("private "));
+        assertFalse(accessType.getInstance("public "));
+        assertFalse(accessType.getInstance("protected "));
+        assertFalse(accessType.getInstance("private "));
         */
     }
 
@@ -40,28 +40,28 @@ public class AccessTypeTest {
     public void getShifted() {
         ActionContainer actionContainer = new ActionContainer(null, false, false);
 /*
-        accessType.getShiftableType("public");
+        accessType.getInstance("public");
         assertEquals("protected", accessType.getShifted(
                 "public", actionContainer, null, null));
 
-        accessType.getShiftableType("protected");
+        accessType.getInstance("protected");
         assertEquals("private", accessType.getShifted(
                 "protected", actionContainer, null, null));
 
-        accessType.getShiftableType("private");
+        accessType.getInstance("private");
         assertEquals("public", accessType.getShifted(
                 "private", actionContainer,null, null));
 
         actionContainer.setIsShiftUp(true);
-        accessType.getShiftableType("public");
+        accessType.getInstance("public");
         assertEquals("private", accessType.getShifted(
                 "public", actionContainer,null, null));
 
-        accessType.getShiftableType("protected");
+        accessType.getInstance("protected");
         assertEquals("public", accessType.getShifted(
                 "protected", actionContainer,null, null));
 
-        accessType.getShiftableType("private");
+        accessType.getInstance("private");
         assertEquals("protected", accessType.getShifted(
                 "private", actionContainer,null, null));
                 */

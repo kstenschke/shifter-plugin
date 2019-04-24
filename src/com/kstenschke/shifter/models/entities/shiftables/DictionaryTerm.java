@@ -53,10 +53,11 @@ public class DictionaryTerm extends AbstractShiftable {
         dictionaryContents = contents;
     }
 
+    // Get instance or null if not applicable:
     // Check whether the given term exists in any section of shift-lists of the dictionary
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
-    public DictionaryTerm getShiftableType() {
+    public DictionaryTerm getInstance() {
         return null != actionContainer.fileExtension && isTermInAnyDictionary()
                 ? this : null;
     }

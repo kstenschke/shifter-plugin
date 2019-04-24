@@ -52,8 +52,8 @@ public class NumericValue extends AbstractShiftable {
         timestampShiftMode = ShifterPreferences.getShiftingModeOfTimestamps();
     }
 
-    // Does the given string represent a CSS length value?
-    public NumericValue getShiftableType() {
+    // Get instance or null if not applicable: selected text must be a CSS length value
+    public NumericValue getInstance() {
         String str = actionContainer.selectedText;
 
         return str.matches("[0-9]+")

@@ -42,7 +42,8 @@ public class SeparatedList extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public SeparatedList getShiftableType() {
+    // Get instance or null if not applicable
+    public SeparatedList getInstance() {
         String str = actionContainer.selectedText;
         String delimiter = actionContainer.delimiter;
 

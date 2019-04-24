@@ -42,7 +42,8 @@ public class Tupel extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public Tupel getShiftableType() {
+    // Get instance or null if not applicable
+    public Tupel getInstance() {
         String str = actionContainer.selectedText;
         if (null == str) return null;
 
@@ -91,7 +92,7 @@ public class Tupel extends AbstractShiftable {
                 UtilsTextual.subStringCount(str, " ") == 1
         ) {
             DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
-            if (null != dictionaryTerm.getShiftableType()) {
+            if (null != dictionaryTerm.getInstance()) {
                 // Shifted string is a selected tupel, and a two-words term from the dictionary
                 new ShiftableSelectionWithPopup(actionContainer)
                         .shiftDictionaryTermOrToggleTupelOrder();

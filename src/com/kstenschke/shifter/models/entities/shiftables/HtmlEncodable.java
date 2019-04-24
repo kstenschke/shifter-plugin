@@ -35,8 +35,9 @@ public class HtmlEncodable extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Check whether given character can be encoded to an HTML special char / or is already HTML encoded
-    public HtmlEncodable getShiftableType() {
+    // Get instance or null if not applicable:
+    // Shiftable sting must be encode-able to an HTML special char / or is already HTML encoded
+    public HtmlEncodable getInstance() {
         String str = actionContainer.shiftCaretLine
                 ? actionContainer.caretLine
                 : actionContainer.selectedText;

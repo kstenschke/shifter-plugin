@@ -33,8 +33,8 @@ public class TernaryExpression extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Check whether shifted string is a ternary expression
-    public TernaryExpression getShiftableType() {
+    // Get instance or null if not applicable: string must be a ternary expression
+    public TernaryExpression getInstance() {
         String expression = actionContainer.selectedText.trim();
 
         return (

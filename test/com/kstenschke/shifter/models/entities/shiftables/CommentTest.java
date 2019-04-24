@@ -10,25 +10,25 @@ public class CommentTest {
     @Test
     public void isComment() {
         /*
-        assertFalse(Comment.getShiftableType(null));
-        assertFalse(Comment.getShiftableType(""));
-        assertFalse(Comment.getShiftableType("/"));
-        assertFalse(Comment.getShiftableType("; //"));
-        assertFalse(Comment.getShiftableType("// comment\nnot a comment"));
-        assertFalse(Comment.getShiftableType("/* not closed"));
-        assertFalse(Comment.getShiftableType("<!-- not closed"));
+        assertFalse(Comment.getInstance(null));
+        assertFalse(Comment.getInstance(""));
+        assertFalse(Comment.getInstance("/"));
+        assertFalse(Comment.getInstance("; //"));
+        assertFalse(Comment.getInstance("// comment\nnot a comment"));
+        assertFalse(Comment.getInstance("/* not closed"));
+        assertFalse(Comment.getInstance("<!-- not closed"));
 
-        assertTrue(Comment.getShiftableType("//"));
-        assertTrue(Comment.getShiftableType("// line comment"));
-        assertTrue(Comment.getShiftableType("// multi-line comment\n// line 2"));
-        // assertTrue(Comment.getShiftableType("/* block comment * / "));
-        // assertTrue(Comment.getShiftableType("/** DOC comment * / "));
-        // assertTrue(Comment.getShiftableType("/**\n DOC comment\n * / "));
+        assertTrue(Comment.getInstance("//"));
+        assertTrue(Comment.getInstance("// line comment"));
+        assertTrue(Comment.getInstance("// multi-line comment\n// line 2"));
+        // assertTrue(Comment.getInstance("/* block comment * / "));
+        // assertTrue(Comment.getInstance("/** DOC comment * / "));
+        // assertTrue(Comment.getInstance("/**\n DOC comment\n * / "));
 
-        assertTrue(Comment.getShiftableType("\n//"));
-        assertTrue(Comment.getShiftableType("\n// line comment"));
-        assertTrue(Comment.getShiftableType("\n/* block comment * / "));
-        assertTrue(Comment.getShiftableType("\n/** DOC comment * / "));
+        assertTrue(Comment.getInstance("\n//"));
+        assertTrue(Comment.getInstance("\n// line comment"));
+        assertTrue(Comment.getInstance("\n/* block comment * / "));
+        assertTrue(Comment.getInstance("\n/** DOC comment * / "));
         */
     }
 

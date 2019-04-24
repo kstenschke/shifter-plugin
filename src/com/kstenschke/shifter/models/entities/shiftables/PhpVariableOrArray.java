@@ -45,7 +45,8 @@ public class PhpVariableOrArray extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public PhpVariableOrArray getShiftableType() {
+    // Get instance or null if not applicable
+    public PhpVariableOrArray getInstance() {
         String word = actionContainer.selectedText;
 
         boolean isVariable = false;
@@ -110,20 +111,6 @@ public class PhpVariableOrArray extends AbstractShiftable {
         return phpVariables.get(curIndex);
     }
 
-    private boolean isShiftablePhpArray(String str) {
-        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
-        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
-
-        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
-            return false;
-        }
-
-        isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
-        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
-
-        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
-    }
-
     public static boolean isStaticShiftablePhpArray(String str) {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
@@ -133,6 +120,30 @@ public class PhpVariableOrArray extends AbstractShiftable {
         }
 
         boolean isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
+        boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
+
+        return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
+    }
+
+    /**
+     * @param  variable
+     * @return String   converted array(...) <=> [...]
+     */
+    public String getShiftedArray(String variable) {
+        return isConventionalArray
+                ? UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]")
+                : UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
+    }
+
+    private boolean isShiftablePhpArray(String str) {
+        boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
+        boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
+
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
+            return false;
+        }
+
+        isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
         boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
 
         return (isActiveConvertLongToShort && isConventionalArray) || (isActiveConvertShortToLong && isShorthandArray);
@@ -176,15 +187,5 @@ public class PhpVariableOrArray extends AbstractShiftable {
         }
 
         return leadChars;
-    }
-
-    /**
-     * @param  variable
-     * @return String   converted array(...) <=> [...]
-     */
-    public String getShiftedArray(String variable) {
-        return isConventionalArray
-            ? UtilsTextual.replaceLast(variable.replaceFirst("array", "[").replaceFirst("\\(", ""), ")", "]")
-            : UtilsTextual.replaceLast(variable.replaceFirst("\\[", "array("), "]", ")");
     }
 }

@@ -44,49 +44,49 @@ class ShiftableTypesManager {
 
         //noinspection LoopStatementThatDoesntLoop
         while (true) {
-            if (null != (shiftableType = new TrailingComment(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new TrailingComment(actionContainer).getInstance())) break;
 
             // PHP doc param line is handled in caretLine-shifting fallback
             PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
             actionContainer.shiftSelectedText = false;
             actionContainer.shiftCaretLine = true;
-            if (null != phpDocParam.getShiftableType() &&
+            if (null != phpDocParam.getInstance() &&
                 !phpDocParam.containsDataType(actionContainer.caretLine)) return null;
             actionContainer.shiftSelectedText = true;
             actionContainer.shiftCaretLine = false;
 
-            if (null != (shiftableType = new PhpVariableOrArray(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new Parenthesis(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new JsVariablesDeclarations(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new SizzleSelector(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new DocCommentType(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new AccessType(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new PhpVariableOrArray(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new Parenthesis(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new JsVariablesDeclarations(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new SizzleSelector(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new DocCommentType(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new AccessType(actionContainer).getInstance())) break;
 
             // File extension specific term in dictionary
             if (null != (shiftableType = new DictionaryTerm(actionContainer).isInFileTypeDictionary())) break;
 
-            if (null != (shiftableType = new JqueryObserver(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new TernaryExpression(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new QuotedString(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new RgbColor(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new CssUnit(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new NumericValue(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new OperatorSign(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new RomanNumber(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new JqueryObserver(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new TernaryExpression(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new QuotedString(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new RgbColor(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new CssUnit(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new NumericValue(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new OperatorSign(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new RomanNumber(actionContainer).getInstance())) break;
 
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
-            if (null != (shiftableType = new LogicalOperator(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new LogicalOperator(actionContainer).getInstance())) break;
 
-            if (null != (shiftableType = new MonoCharacterRepetition(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new MonoCharacterRepetition(actionContainer).getInstance())) break;
 
             // Term in any dictionary (w/o limiting to edited file's extension)
-            if (null != (shiftableType = new DictionaryTerm(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new DictionaryTerm(actionContainer).getInstance())) break;
 
-            if (null != (shiftableType = new NumericPostfixed(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new Tupel(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new SeparatedPath(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new CamelCaseString(actionContainer).getShiftableType())) break;
-            if (null != (shiftableType = new HtmlEncodable(actionContainer).getShiftableType())) break;
+            if (null != (shiftableType = new NumericPostfixed(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new Tupel(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new SeparatedPath(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new CamelCaseString(actionContainer).getInstance())) break;
+            if (null != (shiftableType = new HtmlEncodable(actionContainer).getInstance())) break;
 
             // @todo 1. completely remove getWordType()
 
@@ -120,62 +120,62 @@ class ShiftableTypesManager {
     ) {
         AbstractShiftable shiftableType;
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
-        if (null != new TrailingComment(actionContainer).getShiftableType()) return TRAILING_COMMENT;
+        if (null != new TrailingComment(actionContainer).getInstance()) return TRAILING_COMMENT;
 
         PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
         actionContainer.shiftSelectedText = false;
         actionContainer.shiftCaretLine = true;
-        if (null != phpDocParam.getShiftableType() &&
+        if (null != phpDocParam.getInstance() &&
             !phpDocParam.containsDataType(actionContainer.caretLine)) {
 //            return TYPE_PHP_DOC_PARAM_LINE;
             // PHP doc param line is handled in caretLine-shifting fallback
             return UNKNOWN;
         }
 
-        if (null != new PhpVariableOrArray(actionContainer).getShiftableType()) return PHP_VARIABLE_OR_ARRAY;
-        if (null != new Parenthesis(actionContainer).getShiftableType()) return PARENTHESIS;
-        if (null != new JsVariablesDeclarations(actionContainer).getShiftableType()) return JS_VARIABLES_DECLARATIONS;
-        if (null != new SizzleSelector(actionContainer).getShiftableType()) return SIZZLE_SELECTOR;
+        if (null != new PhpVariableOrArray(actionContainer).getInstance()) return PHP_VARIABLE_OR_ARRAY;
+        if (null != new Parenthesis(actionContainer).getInstance()) return PARENTHESIS;
+        if (null != new JsVariablesDeclarations(actionContainer).getInstance()) return JS_VARIABLES_DECLARATIONS;
+        if (null != new SizzleSelector(actionContainer).getInstance()) return SIZZLE_SELECTOR;
 
         // DocComment shiftables (must be prefixed w/ "@")
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag(actionContainer);
-            if (prefixChar.matches("@") && null != typeTagInDocComment.getShiftableType()) return DOC_COMMENT_TAG;
-            if (null != typeDataTypeInDocComment.getShiftableType()) return DOC_COMMENT_DATA_TYPE;
+            if (prefixChar.matches("@") && null != typeTagInDocComment.getInstance()) return DOC_COMMENT_TAG;
+            if (null != typeDataTypeInDocComment.getInstance()) return DOC_COMMENT_DATA_TYPE;
         }
 
         // Object visibility
-        if (!"@".equals(prefixChar) && null != new AccessType(actionContainer).getShiftableType()) return ACCESS_TYPE;
+        if (!"@".equals(prefixChar) && null != new AccessType(actionContainer).getInstance()) return ACCESS_TYPE;
 
         // File extension specific term in dictionary
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
         if (null != fileExtension) {
             if (null != new DictionaryTerm(actionContainer).isInFileTypeDictionary()) return DICTIONARY_WORD_EXT_SPECIFIC;
-            if (null != new JqueryObserver(actionContainer).getShiftableType()) return JQUERY_OBSERVER;
+            if (null != new JqueryObserver(actionContainer).getInstance()) return JQUERY_OBSERVER;
         }
 
-        if (null != new TernaryExpression(actionContainer).getShiftableType()) return TERNARY_EXPRESSION;
-        if (null != new QuotedString(actionContainer).getShiftableType()) return QUOTED_STRING;
-        if (null != new RgbColor(actionContainer).getShiftableType()) return RGB_COLOR;
-        if (null != new CssUnit(actionContainer).getShiftableType()) return CSS_UNIT;
-        if (null != new NumericValue(actionContainer).getShiftableType()) return NUMERIC_VALUE;
-        if (null != new OperatorSign(actionContainer).getShiftableType()) return OPERATOR_SIGN;
-        if (null != new RomanNumber(actionContainer).getShiftableType()) return ROMAN_NUMERAL;
+        if (null != new TernaryExpression(actionContainer).getInstance()) return TERNARY_EXPRESSION;
+        if (null != new QuotedString(actionContainer).getInstance()) return QUOTED_STRING;
+        if (null != new RgbColor(actionContainer).getInstance()) return RGB_COLOR;
+        if (null != new CssUnit(actionContainer).getInstance()) return CSS_UNIT;
+        if (null != new NumericValue(actionContainer).getInstance()) return NUMERIC_VALUE;
+        if (null != new OperatorSign(actionContainer).getInstance()) return OPERATOR_SIGN;
+        if (null != new RomanNumber(actionContainer).getInstance()) return ROMAN_NUMERAL;
 
         // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
-        if (null != new LogicalOperator(actionContainer).getShiftableType()) return LOGICAL_OPERATOR;
+        if (null != new LogicalOperator(actionContainer).getInstance()) return LOGICAL_OPERATOR;
 
-        if (null != new MonoCharacterRepetition(actionContainer).getShiftableType()) return MONO_CHARACTER_REPETITION;
+        if (null != new MonoCharacterRepetition(actionContainer).getInstance()) return MONO_CHARACTER_REPETITION;
 
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
-        if (null != new DictionaryTerm(actionContainer).getShiftableType()) return DICTIONARY_WORD_GLOBAL;
+        if (null != new DictionaryTerm(actionContainer).getInstance()) return DICTIONARY_WORD_GLOBAL;
 
-        if (null != new NumericPostfixed(actionContainer).getShiftableType()) return NUMERIC_POSTFIXED;
-        if (null != new Tupel(actionContainer).getShiftableType()) return WORDS_TUPEL;
-        if (null != new SeparatedPath(actionContainer).getShiftableType()) return SEPARATED_PATH;
-        if (null != new CamelCaseString(actionContainer).getShiftableType()) return CAMEL_CASED;
-        if (null != new HtmlEncodable(actionContainer).getShiftableType()) return HTML_ENCODABLE;
+        if (null != new NumericPostfixed(actionContainer).getInstance()) return NUMERIC_POSTFIXED;
+        if (null != new Tupel(actionContainer).getInstance()) return WORDS_TUPEL;
+        if (null != new SeparatedPath(actionContainer).getInstance()) return SEPARATED_PATH;
+        if (null != new CamelCaseString(actionContainer).getInstance()) return CAMEL_CASED;
+        if (null != new HtmlEncodable(actionContainer).getInstance()) return HTML_ENCODABLE;
 
         return UNKNOWN;
     }

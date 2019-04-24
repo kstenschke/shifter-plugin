@@ -43,14 +43,15 @@ public class Comment extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public static final String ACTION_TEXT = "Shift Comment";
+
     // Constructor
     public Comment(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
-    public static final String ACTION_TEXT = "Shift Comment";
-
-    public Comment getShiftableType() {
+    // Get instance or null if not applicable
+    public Comment getInstance() {
         String str = actionContainer.selectedText;
 
         return isComment(str) ? this : null;
@@ -105,7 +106,7 @@ public class Comment extends AbstractShiftable {
     private void shiftSelectionInDocument(ActionContainer actionContainer) {
         AbstractShiftable shiftableType;
         if (UtilsTextual.isMultiLine(actionContainer.selectedText)) {
-            if (null != (shiftableType = new JsDoc(actionContainer).getShiftableType())) {
+            if (null != (shiftableType = new JsDoc(actionContainer).getInstance())) {
                 shiftableType.getShifted(
                         actionContainer.selectedText,
                         null,

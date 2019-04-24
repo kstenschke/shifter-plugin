@@ -31,21 +31,13 @@ public class SeparatedPath extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public SeparatedPath getShiftableType() {
+    // Get instance or null if not applicable
+    public SeparatedPath getInstance() {
         String str = actionContainer.selectedText;
 
         return null != getShiftableType(str, "-") ||
                null != getShiftableType(str, "_")
                 ? this : null;
-    }
-
-    private SeparatedPath getShiftableType(String str, CharSequence glue) {
-        return
-                str.length() > 3 &&
-                UtilsTextual.startsAlphabetic(str) &&
-                str.contains(glue) &&
-                UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase())
-                    ? this : null;
     }
 
     public boolean isWordPair(String str) {
@@ -74,6 +66,15 @@ public class SeparatedPath extends AbstractShiftable {
         }
 
         return shifted.toString();
+    }
+
+    private SeparatedPath getShiftableType(String str, CharSequence glue) {
+        return
+                str.length() > 3 &&
+                        UtilsTextual.startsAlphabetic(str) &&
+                        str.contains(glue) &&
+                        UtilsTextual.isAlphaNumericAndMinus(str.toLowerCase())
+                        ? this : null;
     }
 
     @NotNull

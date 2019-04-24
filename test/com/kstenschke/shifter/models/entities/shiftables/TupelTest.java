@@ -22,16 +22,16 @@ public class TupelTest {
     @Test
     public void isWordsTupel() {
         /*
-        assertFalse(tupel.getShiftableType(null));
-        assertFalse(tupel.getShiftableType(""));
-        assertFalse(tupel.getShiftableType("foo"));
-        assertFalse(tupel.getShiftableType("fooBar"));
+        assertFalse(tupel.getInstance(null));
+        assertFalse(tupel.getInstance(""));
+        assertFalse(tupel.getInstance("foo"));
+        assertFalse(tupel.getInstance("fooBar"));
 
-        assertTrue(tupel.getShiftableType("foo,bar"));
-        assertTrue(tupel.getShiftableType("foo.bar"));
-        assertTrue(tupel.getShiftableType("foo=bar"));
-        assertTrue(tupel.getShiftableType("foo bar"));
-        assertTrue(tupel.getShiftableType("foo bar-baz"));
+        assertTrue(tupel.getInstance("foo,bar"));
+        assertTrue(tupel.getInstance("foo.bar"));
+        assertTrue(tupel.getInstance("foo=bar"));
+        assertTrue(tupel.getInstance("foo bar"));
+        assertTrue(tupel.getInstance("foo bar-baz"));
         */
     }
 
@@ -39,7 +39,7 @@ public class TupelTest {
     @Ignore
     public void getShifted() {
         /*
-        tupel.getShiftableType("foo bar-baz");
+        tupel.getInstance("foo bar-baz");
         assertEquals("bar-baz foo", tupel.getShifted("foo bar-baz", true));
         */
     }

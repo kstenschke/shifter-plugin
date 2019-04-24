@@ -35,9 +35,7 @@ class DocCommentDataType extends AbstractShiftable {
     private final String[] typesPHP;
     private final String[] typesObjectiveC;
 
-    /**
-     * Constructor
-     */
+    // Constructor
     DocCommentDataType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
 
@@ -47,7 +45,8 @@ class DocCommentDataType extends AbstractShiftable {
         typesObjectiveC = new String[]{ "int", "char", "float", "double", "id", "BOOL", "long", "short", "signed", "unsigned" };
     }
 
-    public DocCommentDataType getShiftableType() {
+    // Get instance or null if not applicable
+    public DocCommentDataType getInstance() {
         return !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar))
                 ? this : null;
     }

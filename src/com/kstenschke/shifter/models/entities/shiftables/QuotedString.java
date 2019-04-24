@@ -38,8 +38,8 @@ public class QuotedString extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Is word to be shifted wrapped in quote characters?
-    public QuotedString getShiftableType() {
+    // Get instance or null if not applicable: string must be wrapped in quote characters
+    public QuotedString getInstance() {
         quoteChar = actionContainer.prefixChar;
 
         // Must be wrapped in single-, double quotes, or backticks

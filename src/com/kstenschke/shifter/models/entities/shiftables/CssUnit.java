@@ -51,8 +51,8 @@ public class CssUnit extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Does the given string represent a CSS length value?
-    public CssUnit getShiftableType() {
+    // Get instance or null if not applicable (selected text not a CSS length value)
+    public CssUnit getInstance() {
         String str = actionContainer.selectedText;
 
         return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)") ? this : null;

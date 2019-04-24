@@ -32,7 +32,8 @@ public class NumericPostfixed extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public NumericPostfixed getShiftableType() {
+    // Get instance or null if not applicable
+    public NumericPostfixed getInstance() {
         String word = actionContainer.selectedText;
 
         return word.matches("^.+?\\d$")

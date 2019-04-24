@@ -35,7 +35,8 @@ public class MonoCharacterRepetition extends AbstractShiftable {
         super(actionContainer);
     }
 
-    public MonoCharacterRepetition getShiftableType() {
+    // Get instance or null if not applicable
+    public MonoCharacterRepetition getInstance() {
         String word = actionContainer.selectedText;
 
         if (word.length() == 1) {

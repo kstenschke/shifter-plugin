@@ -46,19 +46,14 @@ public class DocCommentTag extends AbstractShiftable {
         tagsPHP = new String[]{"abstract", "access", "author", "constant", "deprecated", "final", "global", "magic", "module", "param", "package", "return", "see", "static", "subpackage", "throws", "todo", "var", "version"};
     }
 
-
-    /**
-     * @return boolean    Does the given String represent a data type (number / integer / string /...) from a DOC comment (param / return /...)?
-     */
-    public AbstractShiftable getShiftableType() {
+    // Get instance or null if not applicable:
+    // Caret line must be a data type (number / integer / string /...) from a DOC comment (param / return /...))
+    public AbstractShiftable getInstance() {
         String line = actionContainer.caretLine;
 
         return "@".equals(actionContainer.prefixChar) && isDocCommentLineContext(line) ? this : null;
     }
 
-    /**
-     * @return Shifting result
-     */
     public String getShifted(
             String word,
             Integer moreCount,
@@ -84,6 +79,11 @@ public class DocCommentTag extends AbstractShiftable {
         }
 
         return word;
+    }
+
+    public static boolean isDocCommentLine(String line) {
+        DocCommentTag docCommentTag = new DocCommentTag(null);
+        return docCommentTag.isDocCommentLineContext(line);
     }
 
     /**
@@ -115,11 +115,6 @@ public class DocCommentTag extends AbstractShiftable {
         Matcher m = Pattern.compile(regExPatternLine).matcher(line.toLowerCase());
 
         return m.find();
-    }
-
-    public static boolean isDocCommentLine(String line) {
-        DocCommentTag docCommentTag = new DocCommentTag(null);
-        return docCommentTag.isDocCommentLineContext(line);
     }
 
     /**

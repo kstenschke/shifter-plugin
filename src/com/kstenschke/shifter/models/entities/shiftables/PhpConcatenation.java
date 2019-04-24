@@ -54,7 +54,8 @@ public class PhpConcatenation extends AbstractShiftable {
         }
     }
 
-    public PhpConcatenation getShiftableType() {
+    // Get instance or null if not applicable
+    public PhpConcatenation getInstance() {
         return isPhpConcatenation ? this : null;
     }
 

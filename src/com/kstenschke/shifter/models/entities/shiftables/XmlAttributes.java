@@ -39,8 +39,8 @@ public class XmlAttributes extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Check whether shifted string represents multiple XML attributes
-    public XmlAttributes getShiftableType() {
+    // Get instance or null if not applicable: string must represent multiple XML attributes
+    public XmlAttributes getInstance() {
         String str = actionContainer.selectedText;
 
         return str.matches("([A-Za-z-_0-9]*[ ]*=[ ]*[\"'][A-Za-z-_0-9]*[\"'][ ]*){2,99}")

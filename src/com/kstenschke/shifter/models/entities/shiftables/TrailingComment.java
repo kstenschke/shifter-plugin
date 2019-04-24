@@ -34,10 +34,9 @@ public class TrailingComment extends AbstractShiftable {
         super(actionContainer);
     }
 
-    /**
-     * TODO    maybe later - implement also for multi-line selections(?)
-     */
-    public TrailingComment getShiftableType() {
+    // Get instance or null if not applicable
+    // TODO    implement also for multi-line selections(?)
+    public TrailingComment getInstance() {
         String word = actionContainer.selectedText;
         if (
             null == word ||

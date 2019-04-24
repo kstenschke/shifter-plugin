@@ -34,8 +34,8 @@ public class RomanNumber extends AbstractShiftable {
         super(actionContainer);
     }
 
-    // Does the given string represent a CSS length value?
-    public RomanNumber getShiftableType() {
+    // Get instance or null if not applicable: string must be a CSS length value
+    public RomanNumber getInstance() {
         String str = actionContainer.selectedText;
         return UtilsTextual.containsOnly(str, new String[]{"I", "V", "X", "L", "C", "D", "M"})
                 ? this : null;

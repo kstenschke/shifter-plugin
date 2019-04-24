@@ -260,7 +260,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_TUPEL_WORDS_ORDER)) {
-            Tupel tupel = new Tupel(actionContainer).getShiftableType();
+            Tupel tupel = new Tupel(actionContainer).getInstance();
             actionContainer.disableIntentionPopup = true;
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
@@ -270,7 +270,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
         if (mode.equals(StaticTexts.SHIFT_SHIFT_DICTIONARY_TERM)) {
             DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
-            if (null != dictionaryTerm.getShiftableType()) {
+            if (null != dictionaryTerm.getInstance()) {
                 actionContainer.document.replaceString(
                         actionContainer.offsetSelectionStart,
                         actionContainer.offsetSelectionEnd,

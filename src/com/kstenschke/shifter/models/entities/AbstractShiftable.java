@@ -30,8 +30,8 @@ public abstract class AbstractShiftable {
         this.actionContainer = actionContainer;
     }
 
-    // Get shiftable type or null if not applicable to given actionContainer
-    abstract public AbstractShiftable getShiftableType();
+    // Get shiftable type or null if not applicable
+    abstract public AbstractShiftable getInstance();
 
     abstract public String getShifted(
             String word,
