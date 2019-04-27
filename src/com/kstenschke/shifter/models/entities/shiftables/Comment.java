@@ -92,9 +92,7 @@ public class Comment extends AbstractShiftable {
 
         // This is a single-lined block comment, otherwise shiftMultiLineBlockCommentInDocument() is called
         // Convert block- to single line comment
-        if (str.contains("\n")) {
-            return "//" + str.replace("\n", " ");
-        }
+        if (str.contains("\n")) return "//" + str.replace("\n", " ");
 
         return "//" + (str.startsWith("* ")
                 // Convert a single-lined block-comment in DOC format to "// ..." and not "//* ..."
@@ -138,9 +136,7 @@ public class Comment extends AbstractShiftable {
     }
 
     private boolean isComment(String str) {
-        if (null == str) {
-            return false;
-        }
+        if (null == str) return false;
 
         str = str.trim();
 
@@ -154,9 +150,7 @@ public class Comment extends AbstractShiftable {
     }
 
     static boolean isBlockComment(String str, boolean allowDocBlockComment, boolean commentSignsNeedSpaces) {
-        if (null == str) {
-            return false;
-        }
+        if (null == str) return false;
 
         str = str.trim();
 
@@ -171,26 +165,17 @@ public class Comment extends AbstractShiftable {
     }
 
     public static boolean isMultipleSingleLineComments(String str) {
-        if (null == str) {
-            return false;
-        }
+        if (null == str || !str.contains("\n")) return false;
 
-        if (!str.contains("\n")) {
-            return false;
-        }
         String lines[] = str.split("\n");
         for (String line : lines) {
-            if (!trim(line).startsWith("//")) {
-                return false;
-            }
+            if (!trim(line).startsWith("//")) return false;
         }
         return true;
     }
 
     public static boolean isPhpBlockComment(String str) {
-        if (null == str) {
-            return false;
-        }
+        if (null == str) return false;
 
         str = str.trim();
 
@@ -200,9 +185,7 @@ public class Comment extends AbstractShiftable {
     }
 
     public static  boolean isHtmlComment(String str) {
-        if (null == str) {
-            return false;
-        }
+        if (null == str) return false;
 
         str = str.trim();
 
@@ -211,9 +194,7 @@ public class Comment extends AbstractShiftable {
     }
 
     public static String getPhpBlockCommentFromHtmlComment(String str) {
-        if (null == str) {
-            return "<?php /* */ ?>";
-        }
+        if (null == str) return "<?php /* */ ?>";
 
         int length = str.length();
 

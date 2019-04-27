@@ -37,9 +37,7 @@ public class MonoCharacterRepetition extends AbstractShiftable {
     public MonoCharacterRepetition getInstance() {
         String word = actionContainer.selectedText;
 
-        if (word.length() == 1) {
-            return null;
-        }
+        if (word.length() == 1) return null;
 
         String wordLower = word.toLowerCase();
         String firstChar = wordLower.substring(0, 1);

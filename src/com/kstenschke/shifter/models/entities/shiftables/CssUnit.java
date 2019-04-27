@@ -95,13 +95,11 @@ public class CssUnit extends AbstractShiftable {
     @NotNull
     private String detectUnit(String value) {
         // 4-digit units
-        if (value.endsWith(UNIT_VMAX) || value.endsWith(UNIT_VMIN)) {
-            return value.substring(value.length() - 4);
-        }
+        if (value.endsWith(UNIT_VMAX) || value.endsWith(UNIT_VMIN)) return value.substring(value.length() - 4);
+
         // 3-digit units
-        if (value.endsWith(UNIT_REM)) {
-            return value.substring(value.length() - 3);
-        }
+        if (value.endsWith(UNIT_REM)) return value.substring(value.length() - 3);
+
         // 2-digit units
         if (   value.endsWith(UNIT_CM) || value.endsWith(UNIT_EM)
             || value.endsWith(UNIT_IN) || value.endsWith(UNIT_MM)

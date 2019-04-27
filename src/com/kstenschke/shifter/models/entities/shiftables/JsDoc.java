@@ -210,9 +210,7 @@ public class JsDoc extends AbstractShiftable {
             index++;
         }
         docBlockCorrected = new StringBuilder(reduceDoubleEmptyCommentLines(docBlockCorrected.toString()));
-        if (docBlockCorrected.toString().equals(docBlock)) {
-            return false;
-        }
+        if (docBlockCorrected.toString().equals(docBlock)) return false;
 
         actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected.toString(),true), ACTION_TEXT);
         return true;
@@ -298,14 +296,12 @@ public class JsDoc extends AbstractShiftable {
             parameterName = parameterName.split("\\s")[0];
         }
 
-        if (parameterName.isEmpty()) {
-            return line;
-        }
+        if (parameterName.isEmpty()) return line;
+
         String jsDocParameterName = "{" + guessDataTypeByParameterName(parameterName) + "}";
 
-        if (line.contains(jsDocParameterName)) {
-            return line;
-        }
+        if (line.contains(jsDocParameterName)) return line;
+
         return line.replace(
                 parameterName,
                 jsDocParameterName + (isAtReturnsLine(line, false)
@@ -318,32 +314,26 @@ public class JsDoc extends AbstractShiftable {
         String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
         String lastWord = camelWords[camelWords.length - 1];
 
-        if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*elem)")) {
+        if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*elem)"))
             return "*";
-        }
-        if (parameterName.matches("(?i)(\\w*date\\w*)")) {
-            return "Date";
-        }
-        if ("e".equals(parameterName)) {
-            return "Event";
-        }
-        if (lastWord.matches("func|function|callback")) {
-            return "Function";
-        }
-        if (parameterName.length() == 1) {
-            // e.g. x, y, i, etc.
-            return "number";
-        }
-        if ("params".equals(parameterName) || parameterName.matches("(?i)(\\w*obj\\w*)")) {
+
+        if (parameterName.matches("(?i)(\\w*date\\w*)")) return "Date";
+
+        if ("e".equals(parameterName)) return "Event";
+
+        if (lastWord.matches("func|function|callback")) return "Function";
+
+        // e.g. x, y, i, etc.
+        if (parameterName.length() == 1) return "number";
+
+        if ("params".equals(parameterName) ||
+            parameterName.matches("(?i)(\\w*obj\\w*)")) {
             return "Object";
         }
-        if ("useragent".equals(parameterNameLower)) {
-            return "string";
-        }
-        if ("void".equals(parameterName)) {
-            // Intercept "id"-ending before it is mistaken for a numeric "ID" parameter
-            return "void";
-        }
+        if ("useragent".equals(parameterNameLower)) return "string";
+
+        // Intercept "id"-ending before it is mistaken for a numeric "ID" parameter
+        if ("void".equals(parameterName)) return "void";
 
         return correctInvalidDataTypes(UtilsPhp.guessDataTypeByParameterName(parameterName));
     }

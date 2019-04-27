@@ -50,12 +50,12 @@ public class Parenthesis extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if (isWrappedInRoundBrackets(str)) {
+        if (isWrappedInRoundBrackets(str))
             return "[" + str.substring(1, str.length() - 1) + "]";
-        }
-        if (isWrappedInSquareBrackets(str)) {
+
+        if (isWrappedInSquareBrackets(str))
             return "{" + str.substring(1, str.length() - 1) + "}";
-        }
+
         // Is wrapped in curly brackets
         return "(" + str.substring(1, str.length() - 1) + ")";
     }

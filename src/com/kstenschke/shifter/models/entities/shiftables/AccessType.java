@@ -39,9 +39,8 @@ public class AccessType extends AbstractShiftable {
         if ("@".equals(actionContainer.prefixChar)) return null;
 
         String word = actionContainer.selectedText;
-        if (null == word) {
-            return null;
-        }
+        if (null == word) return null;
+
         String[] keywordsAccessType = {"public", "private", "protected"};
         accessTypes = new StaticWordType(keywordsAccessType);
 

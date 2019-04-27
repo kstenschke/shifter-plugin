@@ -56,9 +56,7 @@ public class CamelCaseString extends AbstractShiftable {
      */
     public static String flipWordPairOrder(String str) {
         String words[] = UtilsTextual.splitCamelCaseIntoWords(str);
-        if (words.length <= 1 || words.length > 2) {
-            return str;
-        }
+        if (words.length <= 1 || words.length > 2) return str;
 
         return UtilsTextual.isLcFirst(str)
                 ? UtilsTextual.toLcFirst(words[1]) + UtilsTextual.toUcFirstRestLower(words[0])

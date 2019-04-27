@@ -59,9 +59,7 @@ public class TernaryExpression extends AbstractShiftable {
             boolean disableIntentionPopup
     ) {
         int offsetElse = str.indexOf(":");
-        if (-1 == offsetElse) {
-            return str;
-        }
+        if (-1 == offsetElse) return str;
 
         boolean endsWithSemicolon    = str.endsWith(";");
         boolean isQuestionMarkInline = str.startsWith("?");

@@ -107,12 +107,8 @@ public class Css extends AbstractShiftable {
         int amountLines = lines.size();
         int index = 0;
         for (String line : lines) {
-            if (index >= amountLines - 1) {
-                return !trim(line).endsWith(";");
-            }
-            if (!trim(line).endsWith(";")) {
-                return false;
-            }
+            if (index >= amountLines - 1) return !trim(line).endsWith(";");
+            if (!trim(line).endsWith(";")) return false;
             index++;
         }
 

@@ -97,9 +97,7 @@ public class PhpVariableOrArray extends AbstractShiftable {
 
         // Find position of given variable
         int curIndex = getVariableIndex(variable, moreCount, phpVariables, allLeadChars);
-        if (-1 == curIndex || 0 == amountVars) {
-            return variable;
-        }
+        if (-1 == curIndex || 0 == amountVars) return variable;
 
         // Find next/previous variable name (only once during iterations of "shift more")
         if (null == moreCount || 1 == moreCount) {
@@ -113,9 +111,7 @@ public class PhpVariableOrArray extends AbstractShiftable {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
 
-        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
-            return false;
-        }
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) return false;
 
         boolean isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
         boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
@@ -137,9 +133,7 @@ public class PhpVariableOrArray extends AbstractShiftable {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();
 
-        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) {
-            return false;
-        }
+        if (!isActiveConvertLongToShort && !isActiveConvertShortToLong) return false;
 
         isConventionalArray = str.matches("(array\\s*\\()((.|\\n|\\r|\\s)*)(\\)(;)*)");
         boolean isShorthandArray = !isConventionalArray && str.matches("(\\[)((.|\\n|\\r|\\s)*)(])(;)*");
@@ -149,9 +143,7 @@ public class PhpVariableOrArray extends AbstractShiftable {
 
     @NotNull
     private Integer getVariableIndex(String variable, Integer moreCount, List<String> phpVariables, List<String> allLeadChars) {
-        if (null == moreCount || moreCount > 1) {
-            return phpVariables.indexOf(variable);
-        }
+        if (null == moreCount || moreCount > 1) return phpVariables.indexOf(variable);
 
         return null == allLeadChars
             ? -1

@@ -83,20 +83,16 @@ public class ShiftableWord {
     }
 
     /**
-     * Get shifted up/down word
-     *
      * @uses  actionContainer.isUp     Shift up or down?
      * @uses  actionContainer.editor   Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
      * @return String   Next upper/lower word
      */
     public String getShifted() {
-        if (isShiftable) {
-            String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
+        if (!isShiftable) return word;
 
-            return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
-        }
+        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
 
-        return word;
+        return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
@@ -105,15 +101,9 @@ public class ShiftableWord {
              && CAMEL_CASED != wordType
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
-            if (UtilsTextual.isAllUppercase(word)) {
-                return shiftedWord.toUpperCase();
-            }
-            if (UtilsTextual.isUcFirstRestLower(word)) {
-                return UtilsTextual.toUcFirstRestLower(shiftedWord);
-            }
-            if (UtilsTextual.isLcFirst(word)) {
-                return UtilsTextual.toLcFirst(shiftedWord);
-            }
+            if (UtilsTextual.isAllUppercase(word)) return shiftedWord.toUpperCase();
+            if (UtilsTextual.isUcFirstRestLower(word)) return UtilsTextual.toUcFirstRestLower(shiftedWord);
+            if (UtilsTextual.isLcFirst(word)) return UtilsTextual.toLcFirst(shiftedWord);
         }
 
         return shiftedWord;
@@ -127,9 +117,7 @@ public class ShiftableWord {
      * @return String   Post-processed word
      */
     private String postProcess(String word, String postfix) {
-        if (!UtilsFile.isCssFile(actionContainer.filename)) {
-            return word;
-        }
+        if (!UtilsFile.isCssFile(actionContainer.filename)) return word;
 
         switch (wordType) {
             // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
@@ -163,12 +151,10 @@ public class ShiftableWord {
             isOperator = true;
         }
 
-        if (null == word || word.isEmpty()) {
-            return false;
-        }
-        if (actionContainer.fileExtension.endsWith("js") && shiftWordAtCaretInJsDocument(actionContainer, word)) {
-            return true;
-        }
+        if (null == word || word.isEmpty()) return false;
+        if (actionContainer.fileExtension.endsWith("js") &&
+            shiftWordAtCaretInJsDocument(actionContainer, word))
+                return true;
 
         boolean isWordShifted = !getShiftedWordInDocument(actionContainer, word, null, true, isOperator, moreCount).equals(word);
         if (!isWordShifted) {

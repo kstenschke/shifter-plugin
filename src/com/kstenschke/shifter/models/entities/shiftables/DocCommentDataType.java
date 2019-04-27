@@ -62,9 +62,7 @@ class DocCommentDataType extends AbstractShiftable {
         int amountTypes      = dataTypes.length;
         String wordLower     = word.toLowerCase();
 
-        if (0 == amountTypes) {
-            return wordLower;
-        }
+        if (0 == amountTypes) return wordLower;
 
         List<String> dataTypesList = Arrays.asList(dataTypes);
         int curIndex               = dataTypesList.indexOf(wordLower);

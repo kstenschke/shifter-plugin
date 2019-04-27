@@ -113,14 +113,10 @@ public class NumericValue extends AbstractShiftable {
         String fileEnding = UtilsFile.extractFileExtension(filename, true);
         String fileEndingsSeconds = ("," + ShifterPreferences.getSecondsFileEndings() + ",").toLowerCase();
 
-        if (fileEndingsSeconds.contains("," + fileEnding + ",")) {
-            return 1;
-        }
+        if (fileEndingsSeconds.contains("," + fileEnding + ",")) return 1;
 
         String fileEndingsMilliSeconds = ("," + ShifterPreferences.getMillisecondsFileEndings() + ",").toLowerCase();
-        if (fileEndingsMilliSeconds.contains("," + fileEnding + ",")) {
-            return 1000;
-        }
+        if (fileEndingsMilliSeconds.contains("," + fileEnding + ",")) return 1000;
 
         return ShifterPreferences.SHIFTING_MODE_TIMESTAMP_SECONDS == timestampShiftMode ? 1 : 1000;
     }

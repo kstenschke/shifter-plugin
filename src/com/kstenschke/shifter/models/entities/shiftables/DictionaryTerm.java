@@ -75,17 +75,13 @@ public class DictionaryTerm extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if (null == relevantTermsList) {
-            return word;
-        }
+        if (null == relevantTermsList) return word;
 
         String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
         shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
         String[] termsList = shiftTerms.split("\\|");
-        if (termsList.length == 0) {
-            return word;
-        }
+        if (termsList.length == 0) return word;
 
         StaticWordType wordType = new StaticWordType(termsList);
         String shiftedWord = wordType.getShifted(word, actionContainer.isShiftUp);
@@ -173,9 +169,7 @@ public class DictionaryTerm extends AbstractShiftable {
         while (i < amountLines) {
             curLine = allLines[i];
             curLine = curLine.replaceAll("\\{*", "").replaceAll("}*", "").trim();
-            if (!curLine.isEmpty() && curLine.contains(sword)) {
-                return curLine;
-            }
+            if (!curLine.isEmpty() && curLine.contains(sword)) return curLine;
 
             i++;
         }
