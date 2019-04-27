@@ -19,9 +19,9 @@ import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
+import com.kstenschke.shifter.models.entities.StaticWordType;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
-import org.apache.commons.lang.StringUtils;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;

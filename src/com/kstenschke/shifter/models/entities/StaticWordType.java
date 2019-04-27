@@ -13,12 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.kstenschke.shifter.models.entities.shiftables;
+package com.kstenschke.shifter.models.entities;
 
 import com.kstenschke.shifter.utils.UtilsArray;
 
 // General word type class
-class StaticWordType {
+public class StaticWordType {
 
     public final String ACTION_TEXT = "Shift Word";
 
