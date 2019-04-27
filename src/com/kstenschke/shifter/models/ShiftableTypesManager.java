@@ -21,9 +21,7 @@ import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
-/**
- * Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
- */
+// Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
 class ShiftableTypesManager {
 
     private ActionContainer actionContainer;
@@ -31,7 +29,6 @@ class ShiftableTypesManager {
     // Generic shiftables (calculated when shifted)
     private DocCommentTag typeTagInDocComment;
     private DocCommentType typeDataTypeInDocComment;
-    private Tupel wordsTupel;
 
     // Constructor
     ShiftableTypesManager(ActionContainer actionContainer) {
@@ -45,12 +42,10 @@ class ShiftableTypesManager {
     AbstractShiftable getShiftable() {
         AbstractShiftable shiftable;
 
-        if (null != (shiftable = new TrailingComment(actionContainer).getInstance())) return shiftable;
-
-        // PHP doc param line is handled in caretLine-shifting fallback
-        actionContainer.shiftSelectedText = false;
-        actionContainer.shiftCaretLine = true;
-        if (null != (shiftable = new PhpDocParamContainingDataType(actionContainer).getInstance())) return shiftable;
+        if (null != (shiftable = new TrailingComment(actionContainer).getInstance()) ||
+            // Handle only PHP DOC data type, param line is handled in caretLine-shifting fallback
+            null != (shiftable = new PhpDocParamContainingDataType(actionContainer).getInstance())
+        ) return shiftable;
 
         actionContainer.shiftSelectedText = true;
         actionContainer.shiftCaretLine = false;
@@ -199,7 +194,7 @@ class ShiftableTypesManager {
             case NUMERIC_POSTFIXED: return new NumericPostfixed(actionContainer).getShifted(word);
             case WORDS_TUPEL:
                 actionContainer.disableIntentionPopup = true;
-                return wordsTupel.getShifted(word);
+                return new Tupel(actionContainer).getShifted(word);
             default: return word;
         }
     }

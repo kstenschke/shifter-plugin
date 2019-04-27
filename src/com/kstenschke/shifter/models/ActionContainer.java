@@ -17,9 +17,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
-/**
- * Container for event and deducible IDE environment attributes (project, editor, etc.)
- */
+// Container for event and deducible IDE environment attributes (project, editor, etc.)
 public class ActionContainer {
 
     public String prefixChar = "";

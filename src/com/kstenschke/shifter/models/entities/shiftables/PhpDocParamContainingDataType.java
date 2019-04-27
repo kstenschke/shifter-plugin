@@ -34,10 +34,20 @@ public class PhpDocParamContainingDataType extends PhpDocParam {
 
     // Get instance or null if not applicable: string must be a PHP variable
     public PhpDocParamContainingDataType getInstance() {
-        return (super.getInstance() == null ||
-                !containsDataType(actionContainer.caretLine))
-            ? null
-            : this;
+        boolean shiftSelectedTextWas = actionContainer.shiftSelectedText;
+        boolean shiftCaretLineWas = actionContainer.shiftCaretLine;
+
+        actionContainer.shiftSelectedText = false;
+        actionContainer.shiftCaretLine = true;
+
+        if (super.getInstance() == null ||
+                !containsDataType(actionContainer.caretLine)) {
+            actionContainer.shiftSelectedText = shiftSelectedTextWas;
+            actionContainer.shiftCaretLine = shiftCaretLineWas;
+            return null;
+        }
+
+        return this;
     }
 
     public Boolean containsDataType(String str) {

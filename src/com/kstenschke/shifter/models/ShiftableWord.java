@@ -27,9 +27,6 @@ import java.util.regex.Pattern;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
-/**
- * Shiftable word
- */
 public class ShiftableWord {
 
     private final ShiftableTypesManager shiftingShiftableTypesManager;
