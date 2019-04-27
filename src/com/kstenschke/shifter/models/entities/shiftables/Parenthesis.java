@@ -25,7 +25,7 @@ public class Parenthesis extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Shift Parenthesis";
+    public final String ACTION_TEXT = "Shift Parenthesis";
 
     // Constructor
     public Parenthesis(@Nullable ActionContainer actionContainer) {

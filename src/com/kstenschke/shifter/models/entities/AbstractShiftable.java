@@ -23,7 +23,7 @@ public abstract class AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Shift abstract";
+    public final String ACTION_TEXT = "Shift abstract";
 
     // Constructor
     public AbstractShiftable(@Nullable ActionContainer actionContainer) {

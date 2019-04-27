@@ -26,7 +26,7 @@ public class HtmlEncodable extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Shift HTML Entities";
+    public final String ACTION_TEXT = "Shift HTML Entities";
 
     // Constructor
     public HtmlEncodable(@Nullable ActionContainer actionContainer) {

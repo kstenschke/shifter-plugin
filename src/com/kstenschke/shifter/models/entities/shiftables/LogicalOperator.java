@@ -24,7 +24,7 @@ public class LogicalOperator extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Toggle Logical Operator";
+    public final String ACTION_TEXT = "Toggle Logical Operator";
 
     // Constructor
     public LogicalOperator(@Nullable ActionContainer actionContainer) {

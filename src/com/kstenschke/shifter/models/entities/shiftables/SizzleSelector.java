@@ -26,7 +26,7 @@ public class SizzleSelector extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Shift Sizzle Selector";
+    public final String ACTION_TEXT = "Shift Sizzle Selector";
 
     // Constructor
     public SizzleSelector(@Nullable ActionContainer actionContainer) {

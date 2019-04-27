@@ -26,7 +26,7 @@ public class LogicalConjunction extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    static final public String ACTION_TEXT = "Toggle logical conjunction operands";
+    public final String ACTION_TEXT = "Toggle logical conjunction operands";
 
     public boolean isOrLogic = false;
 

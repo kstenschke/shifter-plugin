@@ -25,7 +25,7 @@ public class JsConcatenation extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Convert to interpolation";
+    public final String ACTION_TEXT = "Convert to interpolation";
 
     private int amountVariables = 0;
     private int amountStrings = 0;
