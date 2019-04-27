@@ -17,7 +17,6 @@ package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
-import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
@@ -65,10 +64,7 @@ class ShiftableTypesManager {
             if (null != (shiftable = new SizzleSelector(actionContainer).getInstance())) break;
             if (null != (shiftable = new DocCommentType(actionContainer).getInstance())) break;
             if (null != (shiftable = new AccessType(actionContainer).getInstance())) break;
-
-            // File extension specific term in dictionary
             if (null != (shiftable = new DictionaryTerm(actionContainer).isInFileTypeDictionary())) break;
-
             if (null != (shiftable = new JqueryObserver(actionContainer).getInstance())) break;
             if (null != (shiftable = new TernaryExpression(actionContainer).getInstance())) break;
             if (null != (shiftable = new QuotedString(actionContainer).getInstance())) break;
@@ -138,18 +134,9 @@ class ShiftableTypesManager {
             if (null != typeDataTypeInDocComment.getInstance()) return DOC_COMMENT_DATA_TYPE;
         }
 
-        // Object visibility
-        if (!"@".equals(actionContainer.prefixChar) &&
-            null != new AccessType(actionContainer).getInstance()
-        ) return ACCESS_TYPE;
-
-        // File extension specific term in dictionary
-        String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
-        if (null != fileExtension) {
-            if (null != new DictionaryTerm(actionContainer).isInFileTypeDictionary()) return DICTIONARY_WORD_EXT_SPECIFIC;
-            if (null != new JqueryObserver(actionContainer).getInstance()) return JQUERY_OBSERVER;
-        }
-
+        if (null != new AccessType(actionContainer).getInstance()) return ACCESS_TYPE;
+        if (null != new DictionaryTerm(actionContainer).isInFileTypeDictionary()) return DICTIONARY_WORD_EXT_SPECIFIC;
+        if (null != new JqueryObserver(actionContainer).getInstance()) return JQUERY_OBSERVER;
         if (null != new TernaryExpression(actionContainer).getInstance()) return TERNARY_EXPRESSION;
         if (null != new QuotedString(actionContainer).getInstance()) return QUOTED_STRING;
         if (null != new RgbColor(actionContainer).getInstance()) return RGB_COLOR;
@@ -157,15 +144,11 @@ class ShiftableTypesManager {
         if (null != new NumericValue(actionContainer).getInstance()) return NUMERIC_VALUE;
         if (null != new OperatorSign(actionContainer).getInstance()) return OPERATOR_SIGN;
         if (null != new RomanNumber(actionContainer).getInstance()) return ROMAN_NUMERAL;
-
         // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
         if (null != new LogicalOperator(actionContainer).getInstance()) return LOGICAL_OPERATOR;
-
         if (null != new MonoCharacterRepetition(actionContainer).getInstance()) return MONO_CHARACTER_REPETITION;
-
         // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
         if (null != new DictionaryTerm(actionContainer).getInstance()) return DICTIONARY_WORD_GLOBAL;
-
         if (null != new NumericPostfixed(actionContainer).getInstance()) return NUMERIC_POSTFIXED;
         if (null != new Tupel(actionContainer).getInstance()) return WORDS_TUPEL;
         if (null != new SeparatedPath(actionContainer).getInstance()) return SEPARATED_PATH;
@@ -204,8 +187,7 @@ class ShiftableTypesManager {
             // Numeric values including UNIX and millisecond timestamps
             case NUMERIC_VALUE: return new NumericValue(actionContainer).getShifted(word);
             case CSS_UNIT: return new CssUnit(actionContainer).getShifted(word);
-            case JQUERY_OBSERVER:
-                return new JqueryObserver(actionContainer).getShifted(word, null, null);
+            case JQUERY_OBSERVER: return new JqueryObserver(actionContainer).getShifted(word, null, null);
             case PHP_VARIABLE_OR_ARRAY: return new PhpVariableOrArray(actionContainer).getShifted(word, moreCount);
             case TERNARY_EXPRESSION: return new TernaryExpression(actionContainer).getShifted(word);
             case QUOTED_STRING: return new QuotedString(actionContainer).getShifted(word);
@@ -225,8 +207,7 @@ class ShiftableTypesManager {
             case WORDS_TUPEL:
                 actionContainer.disableIntentionPopup = true;
                 return wordsTupel.getShifted(word);
-            default:
-                return word;
+            default: return word;
         }
     }
 

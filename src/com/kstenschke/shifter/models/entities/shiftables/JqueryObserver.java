@@ -41,14 +41,11 @@ public class JqueryObserver extends AbstractShiftable {
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
     public JqueryObserver getInstance() {
-        String str = actionContainer.selectedText;
-
         if (null == actionContainer.fileExtension ||
             !UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return null;
 
-        if (str.startsWith(".")) {
-            str = str.substring(1);
-        }
+        String str = actionContainer.selectedText;
+        if (str.startsWith(".")) str = str.substring(1);
 
         return "blur(".equals(str)
             || "change(".equals(str)

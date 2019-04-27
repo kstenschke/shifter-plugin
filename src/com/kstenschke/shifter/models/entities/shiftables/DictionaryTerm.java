@@ -96,27 +96,25 @@ public class DictionaryTerm extends AbstractShiftable {
     // looking only at lists in blocks having assigned the given extension
     // + Stores first matching line containing the term for use in shifting later
     public DictionaryTerm isInFileTypeDictionary() {
+        if (null == actionContainer.fileExtension ||
+            !dictionaryContents.contains("|" + actionContainer.fileExtension + "|")
+        ) return null;
+
         String term = actionContainer.selectedText;
-        String fileExtension = actionContainer.fileExtension;
+        this.fileExtension = actionContainer.fileExtension;
 
-        if (null != fileExtension &&
-            dictionaryContents.contains("|" + fileExtension + "|")
-        ) {
-            this.fileExtension = fileExtension;
+        // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
+        Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(actionContainer.fileExtension);
 
-            // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
-            Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(fileExtension);
+        // Go over all blocks of lists of shift-terms, fetch first one containing the term
+        for (Object aBlocksOfExtension : blocksOfExtension) {
+            String curExtensionsList = aBlocksOfExtension.toString();
+            String curShiftTermsBlock = StringUtils.substringBetween(dictionaryContents, curExtensionsList, "}");
 
-            // Go over all blocks of lists of shift-terms, fetch first one containing the term
-            for (Object aBlocksOfExtension : blocksOfExtension) {
-                String curExtensionsList = aBlocksOfExtension.toString();
-                String curShiftTermsBlock = StringUtils.substringBetween(dictionaryContents, curExtensionsList, "}");
-
-                // Term is contained? store list of shifting neighbours
-                if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
-                    relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
-                    return this;
-                }
+            // Term is contained? store list of shifting neighbours
+            if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
+                relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
+                return this;
             }
         }
 
