@@ -105,6 +105,35 @@ public class Comment extends AbstractShiftable {
                 : str);
     }
 
+    public static boolean isPhpBlockComment(String str) {
+        if (null == str) return false;
+
+        str = str.trim();
+
+        return (str.startsWith("<? /*") || str.startsWith("<?php /*"))
+                && str.endsWith("*/ ?>")
+                && str.indexOf("/*") != str.lastIndexOf("*/") - 1;
+    }
+
+    public static  boolean isHtmlComment(String str) {
+        if (null == str) return false;
+
+        str = str.trim();
+
+        return str.startsWith("<!--") && str.endsWith("-->")
+                && str.indexOf("<!--") != str.length() -5;
+    }
+
+    public static String getPhpBlockCommentFromHtmlComment(String str) {
+        if (null == str) return "<?php /* */ ?>";
+
+        int length = str.length();
+
+        return length > 3
+                ? "<?php /* " + str.substring(4, length - 3).trim() + " */ ?>"
+                : "<?php /* " + str.trim() + " */ ?>";
+    }
+
     // Shift selected comment
     private void shiftSelectionInDocument(ActionContainer actionContainer) {
         AbstractShiftable shiftableType;
@@ -150,7 +179,7 @@ public class Comment extends AbstractShiftable {
                 : isBlockComment(str);
     }
 
-    public static boolean isBlockComment(String str) {
+    static boolean isBlockComment(String str) {
         return isBlockComment(str, false, false);
     }
 
@@ -167,35 +196,6 @@ public class Comment extends AbstractShiftable {
         return allowDocBlockComment
                 ? isBlockComment || (str.startsWith("/**" + innerWrap) && str.endsWith(innerWrap + "*/"))
                 : isBlockComment;
-    }
-
-    public static boolean isPhpBlockComment(String str) {
-        if (null == str) return false;
-
-        str = str.trim();
-
-        return (str.startsWith("<? /*") || str.startsWith("<?php /*"))
-                && str.endsWith("*/ ?>")
-                && str.indexOf("/*") != str.lastIndexOf("*/") - 1;
-    }
-
-    public static  boolean isHtmlComment(String str) {
-        if (null == str) return false;
-
-        str = str.trim();
-
-        return str.startsWith("<!--") && str.endsWith("-->")
-                && str.indexOf("<!--") != str.length() -5;
-    }
-
-    public static String getPhpBlockCommentFromHtmlComment(String str) {
-        if (null == str) return "<?php /* */ ?>";
-
-        int length = str.length();
-
-        return length > 3
-                ? "<?php /* " + str.substring(4, length - 3).trim() + " */ ?>"
-                : "<?php /* " + str.trim() + " */ ?>";
     }
 
     private static boolean isMultipleSingleLineComments(String str) {

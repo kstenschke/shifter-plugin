@@ -26,10 +26,6 @@ class ShiftableTypesManager {
 
     private ActionContainer actionContainer;
 
-    // Generic shiftables (calculated when shifted)
-    private DocCommentTag typeTagInDocComment;
-    private DocCommentType typeDataTypeInDocComment;
-
     // Constructor
     ShiftableTypesManager(ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
@@ -176,8 +172,8 @@ class ShiftableTypesManager {
             case ROMAN_NUMERAL: return new RomanNumeral(actionContainer).getShifted(word);
             case LOGICAL_OPERATOR: return new LogicalOperator(actionContainer).getShifted(word);
             case MONO_CHARACTER_REPETITION: return new MonoCharacterRepetition(actionContainer).getShifted(word);
-            case DOC_COMMENT_TAG: return typeTagInDocComment.getShifted(word);
-            case DOC_COMMENT_DATA_TYPE: return typeDataTypeInDocComment.getShifted(word);
+            case DOC_COMMENT_TAG: return new DocCommentTag(actionContainer).getShifted(word);
+            case DOC_COMMENT_DATA_TYPE: return new DocCommentType(actionContainer).getShifted(word);
             case SEPARATED_PATH: return new SeparatedPath(actionContainer).getShifted(word);
             case CAMEL_CASE_STRING: return new CamelCaseString(actionContainer).getShifted(word);
             case HTML_ENCODABLE: return new HtmlEncodable(actionContainer).getShifted(word);

@@ -36,7 +36,7 @@ public class ShiftableWord {
     // "more" count, starting w/ 1. If non-more shift: null
     private final Integer moreCount;
 
-    AbstractShiftable shiftable;
+    private AbstractShiftable shiftable;
     // @todo eliminate wordType, use shiftable
     private final ShiftableTypes.Type wordType;
 
