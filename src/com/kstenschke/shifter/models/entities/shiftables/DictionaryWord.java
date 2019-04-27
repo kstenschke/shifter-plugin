@@ -94,34 +94,6 @@ public class DictionaryWord extends AbstractShiftable {
                 : shiftedWord;
     }
 
-    // Check whether the given term exists in any section of shift-lists of the dictionary,
-    // looking only at lists in blocks having assigned the given extension
-    // + Stores first matching line containing the term for use in shifting later
-    public DictionaryWord isInFileTypeDictionary() {
-        if (null == actionContainer.fileExtension ||
-            !dictionaryContents.contains("|" + actionContainer.fileExtension + "|")
-        ) return null;
-
-        String term = actionContainer.selectedText;
-
-        // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
-        Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(actionContainer.fileExtension);
-
-        // Go over all blocks of lists of shift-terms, fetch first one containing the term
-        for (Object aBlocksOfExtension : blocksOfExtension) {
-            String curExtensionsList = aBlocksOfExtension.toString();
-            String curShiftTermsBlock = StringUtils.substringBetween(dictionaryContents, curExtensionsList, "}");
-
-            // Term is contained? store list of shifting neighbours
-            if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
-                relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
-                return this;
-            }
-        }
-
-        return null;
-    }
-
     private boolean isTermInAnyDictionary() {
         String term = actionContainer.selectedText;
 
@@ -158,7 +130,7 @@ public class DictionaryWord extends AbstractShiftable {
      * @param  term         Word to be shifted
      * @return String       First matching term lLine
      */
-    private static String extractFirstMatchingTermsLine(String termsLines, String term) {
+    static String extractFirstMatchingTermsLine(String termsLines, String term) {
         String sword = "|" + term + "|";
         String[] allLines = termsLines.split("\n");
         int amountLines = allLines.length;
@@ -181,7 +153,7 @@ public class DictionaryWord extends AbstractShiftable {
      *
      * @return Object[]    e.g. [0 => "('js') {", 1 => "('html') {", 2 => ...]
      */
-    private Object[] getAllFileExtensionsBlockStarts() {
+    protected Object[] getAllFileExtensionsBlockStarts() {
         List<String> allMatches = new ArrayList<>();
 
         String pattern = "\\(\\|([a-z|*]+\\|)*\\)(\\s)*\\{";
@@ -199,7 +171,7 @@ public class DictionaryWord extends AbstractShiftable {
      *
      * @return Object[]
      */
-    private Object[] getAllFileExtensionsBlockStarts(String fileExtension) {
+    protected Object[] getAllFileExtensionsBlockStarts(String fileExtension) {
         List<String> allMatches = new ArrayList<>();
         Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
 
