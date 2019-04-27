@@ -181,9 +181,7 @@ public class ShiftableSelection {
             return;
         }
 
-        if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) {
-            return;
-        }
+        if (isPhpFile && shiftSelectionInPhpDocument(actionContainer)) return;
 
         if (null != new SeparatedList(actionContainer).getInstance()) {
             // Comma-separated list: sort / ask whether to sort or toggle quotes

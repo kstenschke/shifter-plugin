@@ -238,7 +238,11 @@ public class ShiftableWord {
         }
 
         String newWord = shiftableShiftableWord.getShifted();
-        if (null == newWord || newWord.length() == 0 || newWord.matches(Pattern.quote(word)) || null == wordOffset) {
+        if (null == newWord ||
+            newWord.length() == 0 ||
+            newWord.matches(Pattern.quote(word)) ||
+            null == wordOffset
+        ) {
             return word;
         }
 

@@ -39,9 +39,8 @@ class ActionAdapter {
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     void delegate(final @Nullable Integer moreCount) {
-        if (null == actionContainer.editor) {
-            return;
-        }
+        if (null == actionContainer.editor) return;
+
         if (actionContainer.selectionModel.hasSelection()) {
             // Shift (regular or block-) selection
             shiftSelection(moreCount);

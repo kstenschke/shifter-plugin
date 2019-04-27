@@ -79,9 +79,7 @@ public class ActionContainer {
         if (null == event) return;
 
         editor = event.getData(PlatformDataKeys.EDITOR);
-        if (null == editor) {
-            return;
-        }
+        if (null == editor) return;
 
         project = editor.getProject();
         document = editor.getDocument();
@@ -169,10 +167,12 @@ public class ActionContainer {
     }
 
     private String getDefaultActionText() {
-        if (isShiftMore) {
-            return isShiftUp ? StaticTexts.ACTION_LABEL_SHIFT_UP_MORE : StaticTexts.ACTION_LABEL_SHIFT_DOWN_MORE;
-        }
+        if (isShiftMore) return isShiftUp
+                ? StaticTexts.ACTION_LABEL_SHIFT_UP_MORE
+                : StaticTexts.ACTION_LABEL_SHIFT_DOWN_MORE;
 
-        return isShiftUp ? StaticTexts.ACTION_LABEL_SHIFT_UP : StaticTexts.ACTION_LABEL_SHIFT_DOWN;
+        return isShiftUp
+                ? StaticTexts.ACTION_LABEL_SHIFT_UP
+                : StaticTexts.ACTION_LABEL_SHIFT_DOWN;
     }
 }

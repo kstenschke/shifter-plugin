@@ -37,9 +37,7 @@ public class UtilsFile {
             return "";
         }
         filename = getBasename(filename);
-        if ("".equals(filename)) {
-            return filename;
-        }
+        if ("".equals(filename)) return filename;
 
         return toLowerCase
                 ? filename.substring(filename.lastIndexOf('.') + 1).toLowerCase()
@@ -47,9 +45,7 @@ public class UtilsFile {
     }
 
     private static String getBasename(@Nullable String filename) {
-        if (null == filename) {
-            return "";
-        }
+        if (null == filename) return "";
         if (filename.contains("/")) {
             filename = filename.substring(filename.lastIndexOf("/") + 1);
         }
@@ -61,9 +57,7 @@ public class UtilsFile {
 
     private static boolean filenameEndsWithExtension(@Nullable String filename) {
         filename = getBasename(filename);
-        if (null == filename || filename.isEmpty() || !filename.contains(".")) {
-            return false;
-        }
+        if (null == filename || filename.isEmpty() || !filename.contains(".")) return false;
 
         String[] parts = filename.split("\\.");
 
@@ -82,9 +76,7 @@ public class UtilsFile {
 
     public static boolean isJavaScriptFile(@Nullable String filename, boolean allowTypeScript) {
         filename = getBasename(filename).toLowerCase();
-        if (!filenameEndsWithExtension(filename)) {
-            return false;
-        }
+        if (!filenameEndsWithExtension(filename)) return false;
 
         return extractFileExtension(filename).matches(allowTypeScript ? "(js|ts)" : "(js)");
     }

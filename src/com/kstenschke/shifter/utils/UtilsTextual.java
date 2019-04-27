@@ -75,13 +75,10 @@ public class UtilsTextual {
     }
 
     static boolean equalsAnyOf(String str, String words[]) {
-        if (null == str || null == words) {
-            return false;
-        }
+        if (null == str || null == words) return false;
+
         for (String word : words) {
-            if (str.equals(word)) {
-                return true;
-            }
+            if (str.equals(word)) return true;
         }
         return false;
     }
@@ -95,9 +92,7 @@ public class UtilsTextual {
     }
 
     public static boolean containsOnly(@Nullable String str, String[] characters) {
-        if (null == str || str.isEmpty()) {
-            return false;
-        }
+        if (null == str || str.isEmpty()) return false;
 
         for (String c : characters) {
             str = str.replaceAll(c, "");
@@ -139,9 +134,7 @@ public class UtilsTextual {
      * @return String      Given string w/ contained slashes swapped against backslashes and vise versa
      */
     public static String swapSlashes(@Nullable String str) {
-        if (null == str) {
-            return null;
-        }
+        if (null == str) return null;
 
         char chars[] = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
@@ -156,9 +149,7 @@ public class UtilsTextual {
     }
 
     public static String swapQuotes(String str, boolean singleToDouble, boolean doubleToSingle) {
-        if (null == str || (!singleToDouble && !doubleToSingle)) {
-            return str;
-        }
+        if (null == str || (!singleToDouble && !doubleToSingle)) return str;
 
         char chars[] = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
@@ -185,9 +176,7 @@ public class UtilsTextual {
      * @return String   Given string converted to lower case w/ only first char in upper case (rest lower)
      */
     public static String toUcFirstRestLower(@Nullable String str) {
-        if (null == str) {
-            return null;
-        }
+        if (null == str) return null;
 
         return str.isEmpty()
                 ? ""
@@ -207,9 +196,7 @@ public class UtilsTextual {
     }
 
     public static boolean isLcFirst(String str) {
-        if (null == str || "".equals(str)) {
-            return false;
-        }
+        if (null == str || "".equals(str)) return false;
 
         char leadChar = str.charAt(0);
 
@@ -225,9 +212,7 @@ public class UtilsTextual {
      * @return boolean  If the string is lower case w/ only first char in upper case.
      */
     public static boolean isUcFirstRestLower(String str) {
-        if (null == str || "".equals(str)) {
-            return false;
-        }
+        if (null == str || "".equals(str)) return false;
 
         char leadChar = str.charAt(0);
 
@@ -269,10 +254,9 @@ public class UtilsTextual {
     public static String[] splitCamelCaseIntoWords(@Nullable String str) {
         return splitCamelCaseIntoWords(str, false);
     }
+
     public static String[] splitCamelCaseIntoWords(@Nullable String str, boolean toLower) {
-        if (null == str) {
-            return new String[0];
-        }
+        if (null == str) return new String[0];
 
         boolean isUcFirst = isUcFirstRestLower(str);
         if (isUcFirst) {
@@ -280,13 +264,9 @@ public class UtilsTextual {
         }
         String parts[] = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
-        if (toLower) {
-            return toLower(parts);
-        }
+        if (toLower) return toLower(parts);
 
-        if (isUcFirst) {
-            parts[0] = toUcFirstRestLower(parts[0]);
-        }
+        if (isUcFirst) parts[0] = toUcFirstRestLower(parts[0]);
 
         return parts;
     }
@@ -310,7 +290,10 @@ public class UtilsTextual {
      */
     public static String getOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
-        if (0 == textLength || offset >= textLength || str.toString().trim().isEmpty()) {
+        if (0 == textLength ||
+            offset >= textLength ||
+            str.toString().trim().isEmpty()
+        ) {
             return null;
         }
 
@@ -343,9 +326,7 @@ public class UtilsTextual {
 
     public static Integer getStartOfOperatorAtOffset(CharSequence str, int offset) {
         int textLength = str.length();
-        if (0 == textLength || offset >= textLength) {
-            return null;
-        }
+        if (0 == textLength || offset >= textLength) return null;
 
         String operatorToTheLeft = offset > 2
                 ? str.subSequence(offset - 2, offset + 1).toString()
@@ -377,14 +358,11 @@ public class UtilsTextual {
      * @return                 The extracted word or null
      */
     public static String getWordAtOffset(CharSequence str, int offset, boolean allowHyphens) {
-        if (null == str) {
-            return null;
-        }
+        if (null == str) return null;
+
         int textLength = str.length();
 
-        if (0 == textLength || offset < 0 || offset >= textLength) {
-            return null;
-        }
+        if (0 == textLength || offset < 0 || offset >= textLength) return null;
 
         // Initialize offset
         if (offset > 0
@@ -393,9 +371,7 @@ public class UtilsTextual {
         ) {
             offset--;
         }
-        if (!isJavaIdentifierPart(str.charAt(offset), allowHyphens)) {
-            return null;
-        }
+        if (!isJavaIdentifierPart(str.charAt(offset), allowHyphens)) return null;
 
         // Decrement offset until start of word or CharSequence
         int start = offset;
@@ -429,19 +405,14 @@ public class UtilsTextual {
             return null;
         }
 
-        if (offsetEndExclusive >= length) {
-            return str.subSequence(offsetStart, length).toString();
-        }
-
-        return str.subSequence(offsetStart, offsetEndExclusive).toString();
+        return (offsetEndExclusive >= length)
+            ? str.subSequence(offsetStart, length).toString()
+            : str.subSequence(offsetStart, offsetEndExclusive).toString();
     }
 
     public static int subStringCount(String str, String subStr) {
-        if ("".equals(str) ||
-            "".equals(subStr)
-        ) {
-            return 0;
-        }
+        if ("".equals(str) || "".equals(subStr)) return 0;
+
         int count = 0;
         for (int pos = str.indexOf(subStr); pos >= 0; pos = str.indexOf(subStr, pos + 1)) {
             count++;
@@ -452,12 +423,9 @@ public class UtilsTextual {
 
     public static String getCharBeforeOffset(CharSequence str, int offset) {
         int length = str.length();
-        if (length == 0 || offset <= 0) {
-            return "";
-        }
-        if (offset > length) {
-            offset = length;
-        }
+        if (length == 0 || offset <= 0) return "";
+
+        if (offset > length) offset = length;
 
         return offset > 0
                 ? str.subSequence(offset - 1, offset).toString()
@@ -477,16 +445,13 @@ public class UtilsTextual {
 
     static int getOffsetEndOfWordAtOffset(CharSequence str, int offset) {
         int strLength = str.length();
-        if (0 == strLength || offset < 0) {
-            return 0;
-        }
-        if (offset > strLength) {
-            return strLength;
-        }
+
+        if (0 == strLength || offset < 0) return 0;
+
+        if (offset > strLength) return strLength;
+
         while(offset < strLength) {
-            if (!Character.isJavaIdentifierPart(str.charAt(offset))) {
-                return offset;
-            }
+            if (!Character.isJavaIdentifierPart(str.charAt(offset))) return offset;
             offset++;
         }
 
@@ -500,20 +465,17 @@ public class UtilsTextual {
      */
     public static int getStartOfWordAtOffset(CharSequence str, int offset) {
         int strLength = str.length();
-        if (0 == strLength || offset < 0) {
-            return 0;
-        }
-        if (offset >= strLength) {
-            return getStartOfWordAtOffset(str, strLength - 1);
-        }
+        if (0 == strLength || offset < 0) return 0;
+        if (offset >= strLength) return getStartOfWordAtOffset(str, strLength - 1);
 
-        if (offset > 0 && !Character.isJavaIdentifierPart(str.charAt(offset)) && Character.isJavaIdentifierPart(str.charAt(offset - 1))) {
+        if (offset > 0 &&
+            !Character.isJavaIdentifierPart(str.charAt(offset)) &&
+            Character.isJavaIdentifierPart(str.charAt(offset - 1))
+        ) {
             offset--;
         }
 
-        if (!Character.isJavaIdentifierPart(str.charAt(offset))) {
-            return 0;
-        }
+        if (!Character.isJavaIdentifierPart(str.charAt(offset))) return 0;
 
         int start = offset;
         while (start > 0 && Character.isJavaIdentifierPart(str.charAt(start - 1))) {
@@ -636,11 +598,8 @@ public class UtilsTextual {
 
         int index = 0;
         for (String currentLine : linesArray) {
-            if (index > 0 &&
-                currentLine.equals(previousLine)
-            ) {
-                return true;
-            }
+            if (index > 0 && currentLine.equals(previousLine)) return true;
+
             index++;
             previousLine = currentLine;
         }
@@ -671,9 +630,8 @@ public class UtilsTextual {
     }
 
     public static String getLeadWhitespace(@Nullable String str) {
-        if (null == str) {
-            return null;
-        }
+        if (null == str) return null;
+
         StringBuilder whitespace = new StringBuilder();
         int offset = 0;
         int length = str.length();
@@ -695,9 +653,8 @@ public class UtilsTextual {
 
     @NotNull
     static List<String> getPregMatches(@Nullable String str, String pattern) {
-        if (null == str) {
-            return new ArrayList<>();
-        }
+        if (null == str) return new ArrayList<>();
+
         Matcher m = Pattern.compile(pattern).matcher(str);
 
         List<String> allMatches = new ArrayList<>();
@@ -716,9 +673,7 @@ public class UtilsTextual {
      * @param delimiter
      */
     private static void addDelimiter(List<String> lines, String delimiter) {
-        if (null == delimiter) {
-            return;
-        }
+        if (null == delimiter) return;
 
         int amountLines = lines.size();
         int index = 0;

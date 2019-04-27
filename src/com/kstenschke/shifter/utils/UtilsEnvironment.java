@@ -46,9 +46,7 @@ public class UtilsEnvironment {
 
     public static void reformatSubString(Editor editor, Project project, int offsetStart, int offsetEnd) {
         PsiFile psiFile = PsiUtilBase.getPsiFileInEditor(editor, project);
-        if (null == psiFile) {
-            return;
-        }
+        if (null == psiFile) return;
 
         CodeStyleManager.getInstance(project).reformatText( psiFile, offsetStart, offsetEnd);
     }

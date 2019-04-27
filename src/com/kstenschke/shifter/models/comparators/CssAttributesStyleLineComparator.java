@@ -27,20 +27,14 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
      */
     @Override
     public int compare(String str1, String str2) {
-        if (str1.equals(str2)) {
-            return 0;
-        }
+        if (str1.equals(str2)) return 0;
 
         String str1Trimmed = trim(str1);
         String str2Trimmed = trim(str2);
 
         // Move empty line to the very end. Ensure closing of selector is at the end
-        if (str2Trimmed.isEmpty() || "}".equals(str2Trimmed)) {
-            return -1;
-        }
-        if (str1Trimmed.isEmpty() || "}".equals(str1Trimmed)) {
-            return 1;
-        }
+        if (str2Trimmed.isEmpty() || "}".equals(str2Trimmed)) return -1;
+        if (str1Trimmed.isEmpty() || "}".equals(str1Trimmed)) return 1;
 
         String parts1[] = str1.split(":");
         String attribute1 = trim(parts1[0]);
@@ -53,21 +47,16 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
         // Move vendor-attributes (prefixed w/ "-", ex: "-moz-transition: opacity .3s;") behind
         boolean attribute1IsVendor = attribute1.startsWith("-");
         boolean attribute2IsVendor = attribute2.startsWith("-");
-        if (attribute1IsVendor && !attribute2IsVendor) {
-            return 1;
-        }
-        if (attribute2IsVendor && !attribute1IsVendor) {
-            return -1;
-        }
+        if (attribute1IsVendor && !attribute2IsVendor) return 1;
+        if (attribute2IsVendor && !attribute1IsVendor) return -1;
 
         // Move shorter of otherwise identically beginning attributes ahead
         int attribute1Length = attribute1.length();
         int attribute2Length = attribute2.length();
         if (attribute1Length > attribute2Length) {
-            if (attribute1.startsWith(attribute2)) {
-                return 1;
-            }
-        } else if (attribute1Length < attribute2Length && attribute2.startsWith(attribute1)) {
+            if (attribute1.startsWith(attribute2)) return 1;
+        } else if (attribute1Length < attribute2Length &&
+                   attribute2.startsWith(attribute1)) {
             return -1;
         }
 
@@ -75,12 +64,8 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
         if (attribute1.equals(attribute2)) {
             boolean style1IsVendor = style1.matches("^-[a-z].*$");
             boolean style2IsVendor = style2.matches("^-[a-z].*$");
-            if (style1IsVendor && !style2IsVendor) {
-                return 1;
-            }
-            if (style2IsVendor && !style1IsVendor) {
-                return -1;
-            }
+            if (style1IsVendor && !style2IsVendor) return 1;
+            if (style2IsVendor && !style1IsVendor) return -1;
         }
 
         // Regular compare

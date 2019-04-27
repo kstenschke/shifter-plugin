@@ -34,9 +34,7 @@ public class UtilsArray {
      */
     public static int getOffset(String[] haystack, String needle) {
         for (int i = 0; i < haystack.length; i++) {
-            if (haystack[i].equals(needle)) {
-                return i;
-            }
+            if (haystack[i].equals(needle)) return i;
         }
 
         return -1;
@@ -71,12 +69,8 @@ public class UtilsArray {
      * @return array Merged array containing each of the elements of array1 and array2
      */
     private static String[] mergeArrays(String[] array1, String[] array2) {
-        if (null == array1 || array1.length == 0) {
-            return array2;
-        }
-        if (null == array2 || array2.length == 0) {
-            return array1;
-        }
+        if (null == array1 || array1.length == 0) return array2;
+        if (null == array2 || array2.length == 0) return array1;
 
         List<String> array1List = Arrays.asList(array1);
         List<String> array2List = Arrays.asList(array2);
@@ -107,9 +101,7 @@ public class UtilsArray {
     public static boolean hasDuplicateItems(String[] array) {
         for (int j = 0; j < array.length; j++) {
             for (int k = j + 1; k < array.length; k++) {
-                if (array[k].equals(array[j])) {
-                    return true;
-                }
+                if (array[k].equals(array[j])) return true;
             }
         }
 

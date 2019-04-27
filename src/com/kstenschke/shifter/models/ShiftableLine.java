@@ -64,18 +64,14 @@ public class ShiftableLine {
             // Caret-line is a PHP doc @param w/o data type: guess and insert one by the variable name
             actionContainer.shiftCaretLine = true;
             String shiftedLine = phpDocParam.getShifted(actionContainer.caretLine);
-            if (!shiftedLine.equals(actionContainer.caretLine)) {
-                return shiftedLine;
-            }
+            if (!shiftedLine.equals(actionContainer.caretLine)) return shiftedLine;
         }
 
         if (   UtilsFile.isJavaScriptFile(actionContainer.filename, true)
             && (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine) || JsDoc.isAtReturnsLine(actionContainer.caretLine, true))
         ) {
             String shiftedLine = JsDoc.correctAtKeywordLine(actionContainer.caretLine);
-            if (!shiftedLine.equals(actionContainer.caretLine)) {
-                return shiftedLine;
-            }
+            if (!shiftedLine.equals(actionContainer.caretLine)) return shiftedLine;
         }
 
         String[] words = actionContainer.caretLine.trim().split("\\s+");

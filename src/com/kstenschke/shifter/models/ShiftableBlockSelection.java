@@ -36,9 +36,7 @@ public class ShiftableBlockSelection {
 
         for (int i = 1; i < blockSelectionStarts.length; i++) {
             currentItem = editorText.subSequence(blockSelectionStarts[i], blockSelectionEnds[i]).toString();
-            if (!StringUtils.isNumeric(currentItem)) {
-                return false;
-            }
+            if (!StringUtils.isNumeric(currentItem)) return false;
         }
 
         return true;
@@ -50,9 +48,7 @@ public class ShiftableBlockSelection {
 
         for (int i = 1; i < blockSelectionStarts.length; i++) {
             currentItem = editorText.subSequence(blockSelectionStarts[i], blockSelectionEnds[i]).toString();
-            if (!currentItem.equals(firstItem)) {
-                return false;
-            }
+            if (!currentItem.equals(firstItem)) return false;
         }
 
         return true;
@@ -63,9 +59,7 @@ public class ShiftableBlockSelection {
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      */
     public static void shiftBlockSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
-        if (null == actionContainer.editor) {
-            return;
-        }
+        if (null == actionContainer.editor) return;
 
         final int stepSize = null == moreCount ? 1 : moreCount;
 
@@ -110,9 +104,7 @@ public class ShiftableBlockSelection {
         Integer firstNumber = null == startWith ? 0 : startWith;
         final DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
         UtilsEnvironment.setDialogVisible(actionContainer.editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
-        if (optionsDialog.wasCancelled()) {
-            return;
-        }
+        if (optionsDialog.wasCancelled()) return;
 
         if (optionsDialog.isShiftModeEnumerate()) {
             actionContainer.writeUndoable(
