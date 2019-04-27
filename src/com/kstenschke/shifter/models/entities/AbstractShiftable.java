@@ -49,9 +49,6 @@ public abstract class AbstractShiftable {
     public String getShifted(String word, Integer moreCount, String leadWhitespace) {
         return getShifted(word, moreCount, leadWhitespace, false, false);
     }
-    public String getShifted(String word,  Integer moreCount, String leadWhitespace, boolean updateInDocument) {
-        return getShifted(word, moreCount, leadWhitespace, false, false);
-    }
 
     public void replaceSelectionShifted(boolean reformat) {
         actionContainer.writeUndoable(
@@ -63,5 +60,5 @@ public abstract class AbstractShiftable {
 
     public void replaceSelectionShifted() {
         replaceSelectionShifted(true);
-    };
+    }
 }

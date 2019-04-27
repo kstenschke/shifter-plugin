@@ -19,9 +19,6 @@ import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 
-/**
- * Shift-Up Action
- */
 class ShiftUpAction extends AnAction {
 
     /**

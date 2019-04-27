@@ -282,8 +282,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
                     shiftableType.getShifted(
                             actionContainer.selectedText,
                             null,
-                            null,
-                            false));
+                            null));
             return;
         }
         SeparatedPath separatedPath = new SeparatedPath(actionContainer);

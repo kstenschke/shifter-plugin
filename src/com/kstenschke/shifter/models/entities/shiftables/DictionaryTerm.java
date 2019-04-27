@@ -32,9 +32,6 @@ public class DictionaryTerm extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    // Set during extension specific detection of dictionary term
-    private String fileExtension;
-
     // Terms-list containing the term to be shifted, set during detection
     private String relevantTermsList;
 
@@ -101,7 +98,6 @@ public class DictionaryTerm extends AbstractShiftable {
         ) return null;
 
         String term = actionContainer.selectedText;
-        this.fileExtension = actionContainer.fileExtension;
 
         // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
         Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(actionContainer.fileExtension);

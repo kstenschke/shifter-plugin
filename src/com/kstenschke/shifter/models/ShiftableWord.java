@@ -126,11 +126,9 @@ public class ShiftableWord {
                 return CssUnit.isCssUnit(postfix)
                         ? word
                         : word + CssUnit.determineMostProminentUnit(actionContainer.editorText.toString());
-            case CSS_UNIT:
-                // Correct "0px" (or other unit) to "0"
-                return word.startsWith("0") ? "0" : word;
-            default:
-                return word;
+            // Correct "0px" (or other unit) to "0"
+            case CSS_UNIT: return word.startsWith("0") ? "0" : word;
+            default: return word;
         }
     }
 
@@ -146,8 +144,10 @@ public class ShiftableWord {
         boolean isOperator = false;
         String word        = UtilsTextual.getOperatorAtOffset(actionContainer.editorText, actionContainer.caretOffset);
         if (null == word) {
-            boolean isCSS = actionContainer.fileExtension.endsWith("css");
-            word = UtilsTextual.getWordAtOffset(actionContainer.editorText, actionContainer.caretOffset, isCSS);
+            word = UtilsTextual.getWordAtOffset(
+                    actionContainer.editorText,
+                    actionContainer.caretOffset,
+                    actionContainer.fileExtension.endsWith("css"));
         } else {
             isOperator = true;
         }

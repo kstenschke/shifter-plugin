@@ -51,7 +51,7 @@ public class JsDoc extends AbstractShiftable {
                 ? this : null;
     }
 
-    public static boolean isJsDocBlock(String str) {
+    private static boolean isJsDocBlock(String str) {
         str = trim(str);
 
         return str.startsWith("/**") && str.endsWith("*/")
@@ -194,7 +194,7 @@ public class JsDoc extends AbstractShiftable {
      * @param actionContainer
      * @return
      */
-    public static boolean correctDocBlockInDocument(final ActionContainer actionContainer) {
+    private static void correctDocBlockInDocument(final ActionContainer actionContainer) {
         String documentText = actionContainer.document.getText();
         String docBlock = documentText.substring(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
         String lines[] = docBlock.split("\n");
@@ -210,10 +210,9 @@ public class JsDoc extends AbstractShiftable {
             index++;
         }
         docBlockCorrected = new StringBuilder(reduceDoubleEmptyCommentLines(docBlockCorrected.toString()));
-        if (docBlockCorrected.toString().equals(docBlock)) return false;
+        if (docBlockCorrected.toString().equals(docBlock)) return;
 
         actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(docBlockCorrected.toString(),true), ACTION_TEXT);
-        return true;
     }
 
     /**

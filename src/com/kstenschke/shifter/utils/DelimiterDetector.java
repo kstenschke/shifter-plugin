@@ -17,9 +17,7 @@ package com.kstenschke.shifter.utils;
 
 import java.util.List;
 
-/**
- * Utility Class: Detect common delimiter (before newline) of list of lines
- */
+// Utility Class: Detect common delimiter (before newline) of list of lines
 class DelimiterDetector {
 
     private boolean findingDelimiterFailed;

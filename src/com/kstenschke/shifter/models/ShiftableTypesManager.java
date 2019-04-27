@@ -34,7 +34,7 @@ class ShiftableTypesManager {
     private Tupel wordsTupel;
 
     // Constructor
-    public ShiftableTypesManager(ActionContainer actionContainer) {
+    ShiftableTypesManager(ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
     }
 
