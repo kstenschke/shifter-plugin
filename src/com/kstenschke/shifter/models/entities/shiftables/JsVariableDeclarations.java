@@ -46,9 +46,13 @@ public class JsVariableDeclarations extends AbstractShiftable {
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
     public JsVariableDeclarations getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText.trim();
 
-        if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {
+        if (isMultiLinedMultiVarDeclaration(str, "const") &&
+            StringUtils.countMatches(str, "=") > 1
+        ) {
             scope = "const";
             return this;
         }

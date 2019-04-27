@@ -42,6 +42,8 @@ public class XmlAttributes extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must represent multiple XML attributes
     public XmlAttributes getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
 
         return str.matches("([A-Za-z-_0-9]*[ ]*=[ ]*[\"'][A-Za-z-_0-9]*[\"'][ ]*){2,99}")

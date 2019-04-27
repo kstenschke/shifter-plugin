@@ -35,6 +35,8 @@ public class Parenthesis extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Parenthesis getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText.trim();
 
         return

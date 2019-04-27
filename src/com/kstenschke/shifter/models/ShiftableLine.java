@@ -93,7 +93,7 @@ public class ShiftableLine {
                         word, 
                         prefixChar,
                         postfixChar,
-                        moreCount).getShifted();
+                        moreCount).getShifted(true);
 
                 if (null != wordShiftedTest && !wordShiftedTest.equals(word)) {
                     amountShiftableWordsInSentence++;

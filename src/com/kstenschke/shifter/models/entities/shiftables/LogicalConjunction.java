@@ -38,6 +38,8 @@ public class LogicalConjunction extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public LogicalConjunction getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
 
         if (null == str || str.length() < 4) return null;

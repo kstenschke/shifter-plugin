@@ -34,6 +34,8 @@ public class LogicalOperator extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public LogicalOperator getInstance() {
+        if (null == actionContainer) return null;
+
         String word = actionContainer.selectedText;
 
         return "&&".equals(word) || "||".equals(word)

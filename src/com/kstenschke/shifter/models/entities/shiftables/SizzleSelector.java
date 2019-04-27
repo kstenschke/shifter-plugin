@@ -36,6 +36,8 @@ public class SizzleSelector extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a declaration of JS variables
     public SizzleSelector getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText.trim();
 
         return !(!str.startsWith("$(") || !str.endsWith(")"))

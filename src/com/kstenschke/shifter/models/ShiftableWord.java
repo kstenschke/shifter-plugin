@@ -91,11 +91,11 @@ public class ShiftableWord {
      * @uses  actionContainer.editor   Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
      * @return String   Next upper/lower word
      */
-    public String getShifted() {
-        if (!isShiftable) return word;
+    public String getShifted(boolean checkIfIsShiftable) {
+        if (!checkIfIsShiftable && !isShiftable) return word;
 
-        String shiftedWord = shiftable.getShifted(word, moreCount);
-        //String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
+        //String shiftedWord = shiftable.getShifted(word, moreCount);
+        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
 
         return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }
@@ -146,7 +146,7 @@ public class ShiftableWord {
      */
     public static boolean shiftWordAtCaretInDocument(ActionContainer actionContainer, @Nullable Integer moreCount) {
         boolean isOperator = false;
-        String word        = UtilsTextual.getOperatorAtOffset(actionContainer.editorText, actionContainer.caretOffset);
+        String word = UtilsTextual.getOperatorAtOffset(actionContainer.editorText, actionContainer.caretOffset);
         if (null == word) {
             word = UtilsTextual.getWordAtOffset(
                     actionContainer.editorText,
@@ -157,15 +157,29 @@ public class ShiftableWord {
         }
 
         if (null == word || word.isEmpty()) return false;
+
         if (actionContainer.fileExtension.endsWith("js") &&
             shiftWordAtCaretInJsDocument(actionContainer, word))
                 return true;
 
-        boolean isWordShifted = !getShiftedWordInDocument(actionContainer, word, null, true, isOperator, moreCount).equals(word);
+        boolean isWordShifted = !getShiftedWordInDocument(
+                actionContainer,
+                word,
+                null,
+                true,
+                isOperator,
+                moreCount).equals(word);
+
         if (!isWordShifted) {
             // Shifting failed, try shifting lower-cased string
             String wordLower = word.toLowerCase();
-            isWordShifted = !getShiftedWordInDocument(actionContainer, wordLower, null, true, false, moreCount).equals(wordLower);
+            isWordShifted = !getShiftedWordInDocument(
+                    actionContainer,
+                    wordLower,
+                    null,
+                    true,
+                    false,
+                    moreCount).equals(wordLower);
         }
 
         return isWordShifted;
@@ -173,8 +187,12 @@ public class ShiftableWord {
 
     @Nullable
     private static Boolean shiftWordAtCaretInJsDocument(final ActionContainer actionContainer, final String word) {
-        if (   (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine))
-            && JsDoc.containsNoCompounds(actionContainer.caretLine) && JsDoc.isWordRightOfAtKeyword(word, actionContainer.caretLine) && JsDoc.isDataType(word)) {
+        if (
+            (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine)) &&
+            JsDoc.containsNoCompounds(actionContainer.caretLine) &&
+            JsDoc.isWordRightOfAtKeyword(word, actionContainer.caretLine) &&
+            JsDoc.isDataType(word)
+        ) {
             // Add missing curly brackets around data type at caret in jsDoc @param line
             actionContainer.writeUndoable(
                     new Runnable() {
@@ -242,7 +260,7 @@ public class ShiftableWord {
             wordOffset--;
         }
 
-        String newWord = shiftableWord.getShifted();
+        String newWord = shiftableWord.getShifted(true);
         if (null == newWord ||
             newWord.length() == 0 ||
             newWord.matches(Pattern.quote(word)) ||

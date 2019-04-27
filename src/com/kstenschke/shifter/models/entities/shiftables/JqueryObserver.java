@@ -42,7 +42,8 @@ public class JqueryObserver extends AbstractShiftable {
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
     public JqueryObserver getInstance() {
-        if (null == actionContainer.fileExtension ||
+        if (null == actionContainer ||
+            null == actionContainer.fileExtension ||
             !UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return null;
 
         String str = actionContainer.selectedText;

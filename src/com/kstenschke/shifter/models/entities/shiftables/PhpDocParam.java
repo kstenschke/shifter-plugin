@@ -39,7 +39,7 @@ public class PhpDocParam extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a PHP variable
     public PhpDocParam getInstance() {
-        if (!UtilsFile.isPhpFile(actionContainer.filename)) return null;
+        if (null == actionContainer || !UtilsFile.isPhpFile(actionContainer.filename)) return null;
 
         String str = actionContainer.shiftCaretLine
                 ? actionContainer.caretLine

@@ -43,6 +43,8 @@ public class Tupel extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Tupel getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
         if (null == str) return null;
 

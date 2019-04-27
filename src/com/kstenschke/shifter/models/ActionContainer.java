@@ -58,6 +58,7 @@ public class ActionContainer {
     public boolean shiftSelectedText = true;
 
     public String selectedText;
+    public String stringAroundCaret;
     String whiteSpaceLHSinSelection;
     String whiteSpaceRHSinSelection;
 
@@ -92,7 +93,6 @@ public class ActionContainer {
         }
         lineNumberSelStart = document.getLineNumber(offsetSelectionStart);
         lineNumberSelEnd = document.getLineNumber(offsetSelectionEnd);
-        selectedText = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
 
         caretOffset = editor.getCaretModel().getOffset();
         int caretLineNumber = document.getLineNumber(caretOffset);
@@ -102,6 +102,20 @@ public class ActionContainer {
 
         filename = UtilsEnvironment.getDocumentFilename(document);
         fileExtension = UtilsFile.extractFileExtension(filename, true);
+
+        if (selectionModel.hasSelection())
+            selectedText = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
+        else
+            stringAroundCaret = UtilsTextual.getWordAtOffset(editorText, caretOffset, fileExtension.equals("css"));
+    }
+
+    public String getStringToBeShifted() {
+        if (null != selectedText) return selectedText;
+        if (null != stringAroundCaret) return stringAroundCaret;
+        if (null != caretLine && !caretLine.isEmpty()) return caretLine;
+        if (null != documentText) return documentText;
+
+        return null;
     }
 
     public void setIsShiftUp(boolean isShiftUp) {

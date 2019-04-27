@@ -36,6 +36,8 @@ public class SeparatedPath extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public SeparatedPath getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
 
         return null != getShiftableType(str, "-") ||

@@ -58,7 +58,9 @@ public class DictionaryWord extends AbstractShiftable {
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
     public DictionaryWord getInstance() {
-        return null != actionContainer.fileExtension && isTermInAnyDictionary()
+        return null != actionContainer &&
+               null != actionContainer.fileExtension &&
+               isTermInAnyDictionary()
                 ? this : null;
     }
 

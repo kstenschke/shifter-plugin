@@ -38,7 +38,7 @@ public class AccessType extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public AccessType getInstance() {
-        if ("@".equals(actionContainer.prefixChar)) return null;
+        if (null == actionContainer || "@".equals(actionContainer.prefixChar)) return null;
 
         String word = actionContainer.selectedText;
         if (null == word) return null;

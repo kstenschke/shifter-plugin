@@ -42,7 +42,8 @@ public class Css extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Css getInstance() {
-        return UtilsFile.isCssFile(actionContainer.filename) &&
+        return null != actionContainer &&
+               UtilsFile.isCssFile(actionContainer.filename) &&
                UtilsTextual.isMultiLine(actionContainer.selectedText)
                 ? this : null;
     }

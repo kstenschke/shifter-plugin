@@ -46,7 +46,7 @@ public class JsDoc extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public JsDoc getInstance() {
-        if (!actionContainer.filename.endsWith("js")) return null;
+        if (null == actionContainer || !actionContainer.filename.endsWith("js")) return null;
 
         return isJsDocBlock(actionContainer.selectedText)
                 ? this : null;

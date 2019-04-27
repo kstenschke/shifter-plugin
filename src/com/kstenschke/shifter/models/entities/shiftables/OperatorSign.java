@@ -35,12 +35,15 @@ public class OperatorSign extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public OperatorSign getInstance() {
+        if (null == actionContainer) return null;
+
         String word = actionContainer.firstChar == null
                 ? actionContainer.selectedText
                 : actionContainer.firstChar;
 
         return null != word && word.length() == 1 && "+-<>*/%".contains(word)
-                ? this : null;
+                    ? this
+                    : null;
     }
 
     public ShiftableTypes.Type getType() {
@@ -71,7 +74,9 @@ public class OperatorSign extends AbstractShiftable {
     }
 
     public boolean isWhitespaceWrappedOperator(String str) {
-        actionContainer.firstChar = String.valueOf(str.charAt(1));
+        if (null == str || str.length() < 1) return false;
+
+        if (null != actionContainer) actionContainer.firstChar = String.valueOf(str.charAt(1));
 
         return Character.isWhitespace(str.charAt(0))
                 && null != this.getInstance()

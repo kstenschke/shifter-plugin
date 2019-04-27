@@ -36,6 +36,8 @@ public class RomanNumeral extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a CSS length value
     public RomanNumeral getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
         return UtilsTextual.containsOnly(str, new String[]{"I", "V", "X", "L", "C", "D", "M"})
                 ? this : null;

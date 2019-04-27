@@ -36,6 +36,8 @@ public class TernaryExpression extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a ternary expression
     public TernaryExpression getInstance() {
+        if (null == actionContainer) return null;
+
         String expression = actionContainer.selectedText.trim();
 
         return (

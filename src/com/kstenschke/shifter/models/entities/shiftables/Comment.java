@@ -53,6 +53,8 @@ public class Comment extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Comment getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
 
         return isComment(str) ? this : null;

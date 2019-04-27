@@ -42,6 +42,8 @@ public class CamelCaseString extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public CamelCaseString getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
 
         return !UtilsTextual.startsNumeric(str) &&

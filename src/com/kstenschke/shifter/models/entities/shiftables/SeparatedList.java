@@ -45,6 +45,8 @@ public class SeparatedList extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public SeparatedList getInstance() {
+        if (null == actionContainer) return null;
+
         String str = actionContainer.selectedText;
         String delimiter = actionContainer.delimiter;
 

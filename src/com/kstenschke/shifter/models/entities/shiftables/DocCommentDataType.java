@@ -50,8 +50,9 @@ class DocCommentDataType extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public DocCommentDataType getInstance() {
-        return !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar))
-                ? this : null;
+        return null != actionContainer &&
+               !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar))
+                    ? this : null;
     }
 
     public ShiftableTypes.Type getType() {

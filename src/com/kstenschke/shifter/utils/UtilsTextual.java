@@ -307,9 +307,9 @@ public class UtilsTextual {
                 ? str.subSequence(offset - 2, offset + 1).toString()
                 : null;
 
-        if (null != operatorOnLHS && new OperatorSign(null).isWhitespaceWrappedOperator(operatorOnLHS)) {
-             return operatorOnLHS.trim();
-        }
+        if (null != operatorOnLHS &&
+            new OperatorSign(null).isWhitespaceWrappedOperator(operatorOnLHS)
+        ) return operatorOnLHS.trim();
 
         String operatorToTheRight =
             offset < textLength - 2
