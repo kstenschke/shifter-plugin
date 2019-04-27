@@ -91,12 +91,14 @@ public class ShiftableSelection {
         } else {
             int editorTextLength = actionContainer.editorText.length();
             int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
+
             String postfixChar = editorTextLength > offsetPostfixChar
                     ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
                     : "";
-            boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
 
-            wordType = shiftableTypesManager.getWordType(actionContainer.selectedText, "", postfixChar, isLastLineInDocument, actionContainer);
+            //boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
+            actionContainer.prefixChar = "";
+            wordType = shiftableTypesManager.getWordType(actionContainer);
         }
 
 

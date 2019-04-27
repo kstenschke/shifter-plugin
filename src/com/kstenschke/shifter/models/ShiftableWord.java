@@ -68,7 +68,8 @@ public class ShiftableWord {
         shiftingShiftableTypesManager = new ShiftableTypesManager(actionContainer);
 
         // Detect word type
-        wordType = shiftingShiftableTypesManager.getWordType(word, prefixChar, postfixChar, false, actionContainer);
+        actionContainer.prefixChar = prefixChar;
+        wordType = shiftingShiftableTypesManager.getWordType(actionContainer);
 
         // Comprehend negative values of numeric shiftables
         this.word = (
@@ -228,7 +229,7 @@ public class ShiftableWord {
         String postfixChar = UtilsTextual.getCharAfterOffset(actionContainer.editorText, wordOffset + word.length() - 1);
 
         // Identify word type and shift it accordingly
-        ShiftableWord shiftableShiftableWord = new ShiftableWord(actionContainer, word, prefixChar, postfixChar, moreCount);
+        ShiftableWord shiftableWord = new ShiftableWord(actionContainer, word, prefixChar, postfixChar, moreCount);
 
         if (!isOperator && "-".equals(prefixChar) &&
             (null != new NumericValue(actionContainer).getInstance() || null != new CssUnit(actionContainer).getInstance())
@@ -237,7 +238,7 @@ public class ShiftableWord {
             wordOffset--;
         }
 
-        String newWord = shiftableShiftableWord.getShifted();
+        String newWord = shiftableWord.getShifted();
         if (null == newWord ||
             newWord.length() == 0 ||
             newWord.matches(Pattern.quote(word)) ||
@@ -246,7 +247,7 @@ public class ShiftableWord {
             return word;
         }
 
-        newWord = shiftableShiftableWord.postProcess(newWord, postfixChar);
+        newWord = shiftableWord.postProcess(newWord, postfixChar);
         final int wordOffsetFin = wordOffset;
         final int wordOffsetEndFin = wordOffset + word.length();
         final String newWordFin = newWord;

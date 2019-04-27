@@ -104,21 +104,12 @@ class ShiftableTypesManager {
     /**
      * Detect word type (get the one w/ highest priority to be shifted) of given string
      *
-     * @param  word                     Word whose type shall be identified
-     * @param  prefixChar               Prefix character
-     * @param  postfixChar              Postfix character
-     * @param  isLastLineInDocument
      * @param  actionContainer
      * @return int
      */
-    ShiftableTypes.Type getWordType(
-            String word,
-            String prefixChar,
-            String postfixChar,
-            boolean isLastLineInDocument,
-            ActionContainer actionContainer
-    ) {
+    ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
         AbstractShiftable shiftableType;
+
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (null != new TrailingComment(actionContainer).getInstance()) return TRAILING_COMMENT;
 
@@ -141,12 +132,17 @@ class ShiftableTypesManager {
         typeDataTypeInDocComment = new DocCommentType(actionContainer);
         if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
             typeTagInDocComment = new DocCommentTag(actionContainer);
-            if (prefixChar.matches("@") && null != typeTagInDocComment.getInstance()) return DOC_COMMENT_TAG;
+            if (actionContainer.prefixChar.matches("@") &&
+                null != typeTagInDocComment.getInstance()
+            ) return DOC_COMMENT_TAG;
+
             if (null != typeDataTypeInDocComment.getInstance()) return DOC_COMMENT_DATA_TYPE;
         }
 
         // Object visibility
-        if (!"@".equals(prefixChar) && null != new AccessType(actionContainer).getInstance()) return ACCESS_TYPE;
+        if (!"@".equals(actionContainer.prefixChar) &&
+            null != new AccessType(actionContainer).getInstance()
+        ) return ACCESS_TYPE;
 
         // File extension specific term in dictionary
         String fileExtension    = UtilsFile.extractFileExtension(actionContainer.filename);
