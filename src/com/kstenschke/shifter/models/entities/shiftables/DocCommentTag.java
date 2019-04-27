@@ -68,20 +68,20 @@ public class DocCommentTag extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
+        actionContainer.initTextAfterCaret();
+
         String[] commentTags = getTagsByFilename(actionContainer.filename);
-        int amountTags = commentTags.length;
-        if (amountTags > 0) {
+        if (commentTags.length > 0) {
             String wordLower = word.toLowerCase();
             List<String> commentTagsList = Arrays.asList(commentTags);
             int curIndex = commentTagsList.indexOf(wordLower);
             if (curIndex > -1) {
-                curIndex = NumericValue.moduloShiftInteger(curIndex, amountTags, actionContainer.isShiftUp);
+                curIndex = NumericValue.moduloShiftInteger(curIndex, commentTags.length, actionContainer.isShiftUp);
                 String shiftedWord = commentTagsList.get(curIndex);
-                if ("method".equals(shiftedWord)) {
-                    shiftedWord = shiftedWord + parseNextMethod(actionContainer.textAfterCaret);
-                }
 
-                return shiftedWord;
+                return "method".equals(shiftedWord)
+                    ? shiftedWord + parseNextMethod(actionContainer.textAfterCaret)
+                    : shiftedWord;
             }
         }
 

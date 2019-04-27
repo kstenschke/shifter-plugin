@@ -44,12 +44,15 @@ public abstract class AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     );
+
     public String getShifted(String word) {
         return getShifted(word, null, null, false, false);
     }
+
     public String getShifted(String word, Integer moreCount) {
         return getShifted(word, moreCount, null, false, false);
     }
+
     public String getShifted(String word, Integer moreCount, String leadWhitespace) {
         return getShifted(word, moreCount, leadWhitespace, false, false);
     }

@@ -108,6 +108,12 @@ public class ActionContainer {
         this.isShiftUp = isShiftUp;
     }
 
+    public void initTextAfterCaret() {
+        if (editorText == null) return;
+
+        textAfterCaret = editorText.toString().substring(caretOffset);
+    }
+
     /**
      * Trim selection and store whitespace from both sides to properties
      */

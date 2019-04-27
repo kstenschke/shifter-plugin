@@ -88,7 +88,13 @@ public class ShiftableLine {
                     word = word.substring(1);
                 }
 
-                wordShiftedTest = new ShiftableWord(actionContainer, word, prefixChar, postfixChar, moreCount).getShifted();
+                wordShiftedTest = new ShiftableWord(
+                        actionContainer,
+                        word, 
+                        prefixChar,
+                        postfixChar,
+                        moreCount).getShifted();
+
                 if (null != wordShiftedTest && !wordShiftedTest.equals(word)) {
                     amountShiftableWordsInSentence++;
                     wordUnshifted = word;

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.ShifterPreferences;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.CssUnit;
 import com.kstenschke.shifter.models.entities.shiftables.JsDoc;
 import com.kstenschke.shifter.models.entities.shiftables.NumericValue;
@@ -35,7 +36,10 @@ public class ShiftableWord {
     // "more" count, starting w/ 1. If non-more shift: null
     private final Integer moreCount;
 
+    AbstractShiftable shiftable;
+    // @todo eliminate wordType, use shiftable
     private final ShiftableTypes.Type wordType;
+
     private final boolean isShiftable;
 
     final private ActionContainer actionContainer;
@@ -66,6 +70,8 @@ public class ShiftableWord {
 
         // Detect word type
         shiftingShiftableTypesManager.setPrefixChar(prefixChar);
+        // @todo eliminate wordType, use shiftable
+        shiftable = shiftingShiftableTypesManager.getShiftable();
         wordType = shiftingShiftableTypesManager.getWordType();
 
         // Comprehend negative values of numeric shiftables
@@ -88,7 +94,8 @@ public class ShiftableWord {
     public String getShifted() {
         if (!isShiftable) return word;
 
-        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
+        String shiftedWord = shiftable.getShifted(word, moreCount);
+        //String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
 
         return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }
@@ -264,6 +271,7 @@ public class ShiftableWord {
                     });
 
         }
+
         return newWord;
     }
 }

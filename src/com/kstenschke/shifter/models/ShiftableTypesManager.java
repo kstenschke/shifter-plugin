@@ -77,7 +77,7 @@ class ShiftableTypesManager {
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance())
         ) return shiftable;
 
-        // @todo 1. completely remove getType()
+        // @todo 1. completely eliminate getWordType() from manager
 
         // @todo 2. rework: remove redundant arguments (e.g. from getShifted())
 
@@ -94,6 +94,7 @@ class ShiftableTypesManager {
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
         if (null != (shiftable = new TrailingComment(actionContainer).getInstance())) return shiftable.getType();
 
+        // @todo implement extending phpDocComment sub-types and remove that logic from here
         PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
         actionContainer.shiftSelectedText = false;
         actionContainer.shiftCaretLine = true;
@@ -107,21 +108,10 @@ class ShiftableTypesManager {
         if (null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance()) ||
             null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
             null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
-            null != (shiftable = new SizzleSelector(actionContainer).getInstance())
-        ) return shiftable.getType();
-
-        // DocComment shiftables (must be prefixed w/ "@")
-        typeDataTypeInDocComment = new DocCommentType(actionContainer);
-        if (typeDataTypeInDocComment.isDocCommentTypeLineContext(actionContainer.caretLine)) {
-            typeTagInDocComment = new DocCommentTag(actionContainer);
-            if (actionContainer.prefixChar.matches("@") &&
-                null != typeTagInDocComment.getInstance()
-            ) return DOC_COMMENT_TAG;
-
-            if (null != typeDataTypeInDocComment.getInstance()) return DOC_COMMENT_DATA_TYPE;
-        }
-
-        if (null != (shiftable = new AccessType(actionContainer).getInstance()) ||
+            null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
+            null != (shiftable = new DocCommentTag(actionContainer).getInstance()) ||
+            null != (shiftable = new DocCommentType(actionContainer).getInstance()) ||
+            null != (shiftable = new AccessType(actionContainer).getInstance()) ||
             null != (shiftable = new DictionaryWordOfSpecificFileType(actionContainer).getInstance()) ||
             null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
             null != (shiftable = new TernaryExpression(actionContainer).getInstance()) ||
@@ -163,6 +153,8 @@ class ShiftableTypesManager {
             ShiftableTypes.Type wordType,
             Integer moreCount
     ) {
+        if (wordType == WORDS_TUPEL) actionContainer.disableIntentionPopup = true;
+
         switch (wordType) {
             // String based word shiftables
             case ACCESS_TYPE: return new AccessType(actionContainer).getShifted(word);
@@ -184,17 +176,13 @@ class ShiftableTypesManager {
             case ROMAN_NUMERAL: return new RomanNumeral(actionContainer).getShifted(word);
             case LOGICAL_OPERATOR: return new LogicalOperator(actionContainer).getShifted(word);
             case MONO_CHARACTER_REPETITION: return new MonoCharacterRepetition(actionContainer).getShifted(word);
-            case DOC_COMMENT_TAG:
-                actionContainer.textAfterCaret = actionContainer.editorText.toString().substring(actionContainer.caretOffset);
-                return typeTagInDocComment.getShifted(word, null);
+            case DOC_COMMENT_TAG: return typeTagInDocComment.getShifted(word);
             case DOC_COMMENT_DATA_TYPE: return typeDataTypeInDocComment.getShifted(word);
             case SEPARATED_PATH: return new SeparatedPath(actionContainer).getShifted(word);
             case CAMEL_CASE_STRING: return new CamelCaseString(actionContainer).getShifted(word);
             case HTML_ENCODABLE: return new HtmlEncodable(actionContainer).getShifted(word);
             case NUMERIC_POSTFIXED: return new NumericPostfixed(actionContainer).getShifted(word);
-            case WORDS_TUPEL:
-                actionContainer.disableIntentionPopup = true;
-                return new Tupel(actionContainer).getShifted(word);
+            case WORDS_TUPEL: return new Tupel(actionContainer).getShifted(word);
             default: return word;
         }
     }
