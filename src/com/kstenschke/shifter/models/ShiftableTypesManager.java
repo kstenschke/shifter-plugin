@@ -39,6 +39,10 @@ class ShiftableTypesManager {
         this.actionContainer = actionContainer;
     }
 
+    public void setPrefixChar(String prefix) {
+        actionContainer.prefixChar = prefix;
+    }
+
     AbstractShiftable getShiftableType() {
         AbstractShiftable shiftableType;
 
@@ -101,13 +105,8 @@ class ShiftableTypesManager {
         return shiftableType;
     }
 
-    /**
-     * Detect word type (get the one w/ highest priority to be shifted) of given string
-     *
-     * @param  actionContainer
-     * @return int
-     */
-    ShiftableTypes.Type getWordType(ActionContainer actionContainer) {
+    // Detect word type (get the one w/ highest priority to be shifted) of given string
+    ShiftableTypes.Type getWordType() {
         AbstractShiftable shiftableType;
 
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code

@@ -97,8 +97,8 @@ public class ShiftableSelection {
                     : "";
 
             //boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
-            actionContainer.prefixChar = "";
-            wordType = shiftableTypesManager.getWordType(actionContainer);
+            shiftableTypesManager.setPrefixChar("");
+            wordType = shiftableTypesManager.getWordType();
         }
 
 

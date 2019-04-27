@@ -68,8 +68,8 @@ public class ShiftableWord {
         shiftingShiftableTypesManager = new ShiftableTypesManager(actionContainer);
 
         // Detect word type
-        actionContainer.prefixChar = prefixChar;
-        wordType = shiftingShiftableTypesManager.getWordType(actionContainer);
+        shiftingShiftableTypesManager.setPrefixChar(prefixChar);
+        wordType = shiftingShiftableTypesManager.getWordType();
 
         // Comprehend negative values of numeric shiftables
         this.word = (
