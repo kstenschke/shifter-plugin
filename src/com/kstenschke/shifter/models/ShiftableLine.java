@@ -34,11 +34,7 @@ public class ShiftableLine {
 
     private final ActionContainer actionContainer;
 
-    /**
-     * Constructor
-     *
-     * @param actionContainer
-     */
+    // Constructor
     private ShiftableLine(ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
     }

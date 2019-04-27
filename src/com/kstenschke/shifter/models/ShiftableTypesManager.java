@@ -50,14 +50,12 @@ class ShiftableTypesManager {
             if (null != (shiftable = new TrailingComment(actionContainer).getInstance())) break;
 
             // PHP doc param line is handled in caretLine-shifting fallback
-            PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
             actionContainer.shiftSelectedText = false;
             actionContainer.shiftCaretLine = true;
-            if (null != phpDocParam.getInstance() &&
-                !phpDocParam.containsDataType(actionContainer.caretLine)) return null;
+            if (null != (shiftable = new PhpDocParamContainingDataType(actionContainer).getInstance())) break;
+
             actionContainer.shiftSelectedText = true;
             actionContainer.shiftCaretLine = false;
-
             if (null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())) break;
             if (null != (shiftable = new Parenthesis(actionContainer).getInstance())) break;
             if (null != (shiftable = new JsVariablesDeclarations(actionContainer).getInstance())) break;
@@ -73,15 +71,11 @@ class ShiftableTypesManager {
             if (null != (shiftable = new NumericValue(actionContainer).getInstance())) break;
             if (null != (shiftable = new OperatorSign(actionContainer).getInstance())) break;
             if (null != (shiftable = new RomanNumber(actionContainer).getInstance())) break;
-
             // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
             if (null != (shiftable = new LogicalOperator(actionContainer).getInstance())) break;
-
             if (null != (shiftable = new MonoCharacterRepetition(actionContainer).getInstance())) break;
-
             // Term in any dictionary (w/o limiting to edited file's extension)
             if (null != (shiftable = new DictionaryTerm(actionContainer).getInstance())) break;
-
             if (null != (shiftable = new NumericPostfixed(actionContainer).getInstance())) break;
             if (null != (shiftable = new Tupel(actionContainer).getInstance())) break;
             if (null != (shiftable = new SeparatedPath(actionContainer).getInstance())) break;

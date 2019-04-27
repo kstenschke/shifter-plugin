@@ -27,11 +27,7 @@ class PluginConfigurationListenerRestoreSettings implements MouseListener {
 
     private Font original;
 
-    /**
-     * Constructor
-     *
-     * @param pluginConfiguration
-     */
+    // Constructor
     public PluginConfigurationListenerRestoreSettings(PluginConfiguration pluginConfiguration) {
         this.pluginConfiguration = pluginConfiguration;
     }

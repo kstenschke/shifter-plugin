@@ -69,9 +69,7 @@ public class ActionContainer {
     public String filename;
     public String fileExtension;
 
-    /**
-     * Constructor
-     */
+    // Constructor
     public ActionContainer(final AnActionEvent event, boolean isShiftUp, boolean isShiftMore) {
         this.isShiftUp = isShiftUp;
         this.isShiftMore = isShiftMore;

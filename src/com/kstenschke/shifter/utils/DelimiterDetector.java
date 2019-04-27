@@ -26,11 +26,7 @@ class DelimiterDetector {
     private char commonDelimiter;
     private boolean isDelimitedLastLine;
 
-    /**
-     * Constructor
-     *
-     * @param lines
-     */
+    // Constructor
     DelimiterDetector(List<String> lines) {
         commonDelimiter = ' ';
 

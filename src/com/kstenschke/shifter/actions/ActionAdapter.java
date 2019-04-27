@@ -26,9 +26,7 @@ class ActionAdapter {
 
     public final ActionContainer actionContainer;
 
-    /**
-     * Constructor
-     */
+    // Constructor
     ActionAdapter(final AnActionEvent event, boolean isShiftUp, boolean isShiftMore) {
         actionContainer = new ActionContainer(event, isShiftUp, isShiftMore);
     }

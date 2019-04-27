@@ -36,11 +36,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     private final boolean containsShiftableQuotes;
     private final boolean containsEscapedQuotes;
 
-    /**
-     * Constructor
-     *
-     * @param actionContainer
-     */
+    // Constructor
     public ShiftableSelectionWithPopup(ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
 
