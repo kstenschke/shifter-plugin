@@ -131,9 +131,7 @@ public class ShifterPreferences {
 
         try {
             PropertiesComponent propertiesComponent = PropertiesComponent.getInstance();
-            if (null != propertiesComponent) {
-                dictionary = propertiesComponent.getValue(PROPERTY_DICTIONARY);
-            }
+            if (null != propertiesComponent) dictionary = propertiesComponent.getValue(PROPERTY_DICTIONARY);
         } catch(NullPointerException e) {
             return "";
         }

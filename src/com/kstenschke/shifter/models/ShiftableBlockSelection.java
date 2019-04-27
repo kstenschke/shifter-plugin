@@ -104,6 +104,7 @@ public class ShiftableBlockSelection {
         Integer firstNumber = null == startWith ? 0 : startWith;
         final DialogNumericBlockOptions optionsDialog = new DialogNumericBlockOptions(firstNumber);
         UtilsEnvironment.setDialogVisible(actionContainer.editor, ShifterPreferences.ID_DIALOG_NUMERIC_BLOCK_OPTIONS, optionsDialog, StaticTexts.TITLE_NUMERIC_BLOCK_OPTIONS);
+
         if (optionsDialog.wasCancelled()) return;
 
         if (optionsDialog.isShiftModeEnumerate()) {
@@ -142,6 +143,7 @@ public class ShiftableBlockSelection {
             caretsAndSelection = caretsAndSelectionCurrent;
             selectionStart = caretsAndSelection.getSelectionStart();
             selectionEnd = caretsAndSelection.getSelectionEnd();
+
             if (null != selectionStart && null != selectionEnd) {
                 offsetSelectionStart = actionContainer.editor.logicalPositionToOffset(selectionStart);
                 offsetSelectionEnd = actionContainer.editor.logicalPositionToOffset(selectionEnd);
@@ -176,6 +178,7 @@ public class ShiftableBlockSelection {
             caretsAndSelection = caretsAndSelectionCurrent;
             selectionStart = caretsAndSelection.getSelectionStart();
             selectionEnd = caretsAndSelection.getSelectionEnd();
+
             if (null != selectionStart && null != selectionEnd) {
                 offsetSelectionStart = actionContainer.editor.logicalPositionToOffset(selectionStart);
                 offsetSelectionEnd = actionContainer.editor.logicalPositionToOffset(selectionEnd);
@@ -185,9 +188,8 @@ public class ShiftableBlockSelection {
                 } catch (NumberFormatException e) {
                     // Silently continue
                 }
-                if (null == value) {
-                    value = 0;
-                }
+
+                if (null == value) value = 0;
 
                 actionContainer.document.replaceString(offsetSelectionStart, offsetSelectionEnd, String.valueOf(value + addend));
             }

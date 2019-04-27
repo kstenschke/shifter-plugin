@@ -48,26 +48,9 @@ public class AlphanumComparator implements Comparator<String>
         chunk.append(currentChar);
         offset++;
 
-        if (isDigit(currentChar)) {
-            while (offset < strLength) {
-                currentChar = str.charAt(offset);
-                if (!isDigit(currentChar)) {
-                    break;
-                }
-                chunk.append(currentChar);
-                offset++;
-            }
-        } else {
-            while (offset < strLength) {
-                currentChar = str.charAt(offset);
-                if (isDigit(currentChar)) {
-                    break;
-                }
-                chunk.append(currentChar);
-                offset++;
-            }
-        }
-        return chunk.toString();
+        return isDigit(currentChar)
+                ? extractChunkOfDigits(str, strLength, offset, chunk).toString()
+                : extractChunkOfNonDigits(str, strLength, offset, chunk).toString();
     }
 
     public int compare(String s1, String s2) {
@@ -108,6 +91,34 @@ public class AlphanumComparator implements Comparator<String>
         }
 
         return s1Length - s2Length;
+    }
+
+    private StringBuilder extractChunkOfNonDigits(String str, int strLength, int offset, StringBuilder chunk) {
+        char currentChar;
+        while (offset < strLength) {
+            currentChar = str.charAt(offset);
+            if (isDigit(currentChar)) {
+                break;
+            }
+            chunk.append(currentChar);
+            offset++;
+        }
+
+        return chunk;
+    }
+
+    private StringBuilder extractChunkOfDigits(String str, int strLength, int offset, StringBuilder chunk) {
+        char currentChar;
+        while (offset < strLength) {
+            currentChar = str.charAt(offset);
+            if (!isDigit(currentChar)) {
+                break;
+            }
+            chunk.append(currentChar);
+            offset++;
+        }
+
+        return chunk;
     }
 
     /**

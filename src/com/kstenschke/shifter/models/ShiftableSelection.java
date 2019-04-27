@@ -41,9 +41,7 @@ public class ShiftableSelection {
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
      */
     public static void shiftSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
-        if (null == actionContainer.selectedText ||
-            actionContainer.selectedText.trim().isEmpty()
-        ) return;
+        if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) return;
 
         AbstractShiftable shiftable;
 

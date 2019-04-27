@@ -156,9 +156,8 @@ public class ActionContainer {
     }
 
     public void writeUndoable(final Runnable runnable, @Nullable String actionText) {
-        if (null == actionText) {
-            actionText = getDefaultActionText();
-        }
+        if (null == actionText) actionText = getDefaultActionText();
+
         CommandProcessor.getInstance().executeCommand(
                 project,
                 () -> ApplicationManager.getApplication().runWriteAction(runnable),

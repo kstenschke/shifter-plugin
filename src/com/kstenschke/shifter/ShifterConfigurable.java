@@ -37,9 +37,7 @@ public class ShifterConfigurable implements Configurable {
     }
 
     public JComponent createComponent() {
-        if (null == settingsPanel) {
-            settingsPanel = new PluginConfiguration();
-        }
+        if (null == settingsPanel) settingsPanel = new PluginConfiguration();
 
         return settingsPanel.getRootPanel();
     }
@@ -59,9 +57,7 @@ public class ShifterConfigurable implements Configurable {
      * Reset unsaved changes
      */
     public void reset() {
-        if (null != settingsPanel) {
-            settingsPanel.initFormValues();
-        }
+        if (null != settingsPanel) settingsPanel.initFormValues();
     }
 
     public void disposeUIResources() {

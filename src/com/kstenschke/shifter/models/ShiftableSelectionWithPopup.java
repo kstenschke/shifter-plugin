@@ -51,18 +51,16 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     private void addQuoteShiftingOptions(List<String> shiftOptions) {
         boolean containsSingleQuotes = actionContainer.selectedText.contains("'");
         boolean containsDoubleQuotes = actionContainer.selectedText.contains("\"");
-        if (containsSingleQuotes && containsDoubleQuotes) {
-            shiftOptions.add(StaticTexts.SHIFT_QUOTES_SWAP);
-        }
-        if (containsDoubleQuotes && ShifterPreferences.getIsActiveConvertDoubleQuotes()) {
+
+        if (containsSingleQuotes && containsDoubleQuotes) shiftOptions.add(StaticTexts.SHIFT_QUOTES_SWAP);
+
+        if (containsDoubleQuotes && ShifterPreferences.getIsActiveConvertDoubleQuotes())
             shiftOptions.add(StaticTexts.SHIFT_QUOTES_DOUBLE_TO_SINGLE);
-        }
-        if (containsSingleQuotes && ShifterPreferences.getIsActiveConvertSingleQuotes()) {
+
+        if (containsSingleQuotes && ShifterPreferences.getIsActiveConvertSingleQuotes())
             shiftOptions.add(StaticTexts.SHIFT_QUOTES_SINGLE_TO_DOUBLE);
-        }
-        if (containsEscapedQuotes) {
-            shiftOptions.add(StaticTexts.SHIFT_UNESCAPE_QUOTES);
-        }
+
+        if (containsEscapedQuotes) shiftOptions.add(StaticTexts.SHIFT_UNESCAPE_QUOTES);
     }
 
     void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
@@ -107,9 +105,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         }
 
         List<String> shiftOptions = new ArrayList<>();
-        if (isJsConcatenation) {
-            shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
-        }
+        if (isJsConcatenation) shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
 
         String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(items.length == 2 ? StaticTexts.SHIFT_LIST_ITEMS_SWAP : StaticTexts.SHIFT_LIST_ITEMS_SORT);
@@ -125,9 +121,9 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
 
         String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
-        if (items.length == 2) {
-            shiftOptions.add(StaticTexts.SHIFT_LIST_ITEMS_SWAP);
-        }
+
+        if (items.length == 2) shiftOptions.add(StaticTexts.SHIFT_LIST_ITEMS_SWAP);
+
         addQuoteShiftingOptions(shiftOptions);
 
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, "|");
@@ -174,9 +170,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_CAMEL_CASE_TO_PATH);
         shiftOptions.add(StaticTexts.SHIFT_CAMEL_CASE_TO_UNDERSCORE_SEPARATED);
 
-        if (isTwoWords) {
-            shiftOptions.add(StaticTexts.SHIFT_CAMEL_WORDS_SWAP_ORDER);
-        }
+        if (isTwoWords) shiftOptions.add(StaticTexts.SHIFT_CAMEL_WORDS_SWAP_ORDER);
 
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
