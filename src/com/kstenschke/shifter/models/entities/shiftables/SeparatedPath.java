@@ -27,6 +27,8 @@ public class SeparatedPath extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift Path";
+
     // Constructor
     public SeparatedPath(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

@@ -27,6 +27,8 @@ public class PhpDocParamContainingDataType extends PhpDocParam {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift PHP DOC comment";
+
     // Constructor
     public PhpDocParamContainingDataType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

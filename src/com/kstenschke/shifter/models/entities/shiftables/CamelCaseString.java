@@ -28,6 +28,8 @@ public class CamelCaseString extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift camelCased string";
+
     // Constructor
     public CamelCaseString(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

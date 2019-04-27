@@ -20,6 +20,8 @@ import com.kstenschke.shifter.utils.UtilsArray;
 // General word type class
 class StaticWordType {
 
+    public final String ACTION_TEXT = "Shift Word";
+
     private final String[] keywords;
     private final int amountKeywords;
     private final String regExPattern;

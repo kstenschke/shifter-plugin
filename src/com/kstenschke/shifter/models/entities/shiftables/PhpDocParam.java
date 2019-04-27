@@ -30,6 +30,8 @@ public class PhpDocParam extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift PHP DOC comment";
+
     // Constructor
     public PhpDocParam(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

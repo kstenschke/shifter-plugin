@@ -24,7 +24,8 @@ public abstract class AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public final String ACTION_TEXT = "Shift abstract";
+    // Java doesn't know abstract properties, ensure all shiftables having this
+    public String ACTION_TEXT = "Shift abstract";
 
     // Constructor
     public AbstractShiftable(@Nullable ActionContainer actionContainer) {
@@ -63,5 +64,9 @@ public abstract class AbstractShiftable {
 
     public void replaceSelectionShifted() {
         replaceSelectionShifted(true);
+    }
+
+    public String getActionText() {
+        return ACTION_TEXT;
     }
 }

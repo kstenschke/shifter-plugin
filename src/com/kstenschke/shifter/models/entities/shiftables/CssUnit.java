@@ -30,7 +30,7 @@ public class CssUnit extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Shift CSS unit";
+    public static final String ACTION_TEXT = "Shift CSS Unit";
 
     private static final String UNIT_CM   = "cm";
     private static final String UNIT_EM   = "em";

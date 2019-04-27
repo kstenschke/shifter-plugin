@@ -26,6 +26,8 @@ public class NumericPostfixed extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift numeric ending";
+
     // Constructor
     public NumericPostfixed(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

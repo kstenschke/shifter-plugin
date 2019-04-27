@@ -167,8 +167,8 @@ class ShiftableTypesManager {
             // String based word shiftables
             case ACCESS_TYPE: return new AccessType(actionContainer).getShifted(word);
             // Numeric values including UNIX and millisecond timestamps
-            case DICTIONARY_WORD_GLOBAL:
-            case DICTIONARY_WORD_EXT_SPECIFIC: return new DictionaryWord(actionContainer).getShifted(word);
+            case DICTIONARY_WORD_GLOBAL: return new DictionaryWord(actionContainer).getShifted(word);
+            case DICTIONARY_WORD_EXT_SPECIFIC: return new DictionaryWordOfSpecificFileType(actionContainer).getShifted(word);
             // Generic shiftables (shifting is calculated)
             case SIZZLE_SELECTOR: return new SizzleSelector(actionContainer).getShifted(word);
             case RGB_COLOR: return new RgbColor(actionContainer).getShifted(word);
@@ -208,7 +208,9 @@ class ShiftableTypesManager {
                 : shiftable.getShifted(actionContainer.selectedText, moreCount,null);
     }
 
-    String getActionText() {
+    String getActionText(@Nullable AbstractShiftable shiftable) {
+        if (null != shiftable) return shiftable.getActionText();
+
         // @todo return ShiftableTypeAbstract.ACTION_TXT
         return "@todo return ShiftableTypeAbstract.ACTION_TXT";
         /*switch (wordType) {

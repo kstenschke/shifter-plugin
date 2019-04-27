@@ -36,6 +36,8 @@ public class SeparatedList extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift List";
+
     // Constructor
     public SeparatedList(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

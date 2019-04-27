@@ -23,6 +23,8 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 // PHP Variable (word w/ $ prefix)
 public class PhpConcatenation extends AbstractShiftable {
 
+    public final String ACTION_TEXT = "Shift PHP Concatenation";
+
     private boolean isPhpConcatenation = false;
     private boolean isDotWhitespaceWrapped = false;
     private Integer offsetDot = null;

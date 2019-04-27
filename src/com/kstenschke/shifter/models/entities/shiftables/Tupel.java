@@ -80,13 +80,7 @@ public class Tupel extends AbstractShiftable {
     }
 
     // Swap tupel parts
-    public String getShifted(
-            String str,
-            Integer moreCount,
-            String leadWhitespace,
-            boolean updateInDocument,
-            boolean disableIntentionPopup
-    ) {
+    public String getShifted(String str) {
         if (
                 actionContainer != null &&
                 !actionContainer.disableIntentionPopup &&
@@ -105,6 +99,16 @@ public class Tupel extends AbstractShiftable {
         }
 
         return getShiftedTupelReplacement(str);
+    }
+
+    public String getShifted(
+            String str,
+            Integer moreCount,
+            String leadWhitespace,
+            boolean updateInDocument,
+            boolean disableIntentionPopup
+    ) {
+        return getShifted(str);
     }
 
     @NotNull

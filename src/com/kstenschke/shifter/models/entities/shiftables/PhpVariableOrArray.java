@@ -33,6 +33,8 @@ public class PhpVariableOrArray extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift PHP";
+
     // Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
     private boolean isShiftableArray = false;
 

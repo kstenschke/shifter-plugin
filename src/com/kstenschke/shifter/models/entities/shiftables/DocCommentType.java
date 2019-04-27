@@ -28,6 +28,8 @@ public class DocCommentType extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift DOC comment";
+
     // Constructor
     public DocCommentType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

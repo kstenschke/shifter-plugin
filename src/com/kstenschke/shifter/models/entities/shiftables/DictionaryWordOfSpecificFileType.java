@@ -28,6 +28,8 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift Word";
+
     // Terms-list containing the term to be shifted, set during detection
     private String relevantTermsList;
 

@@ -26,7 +26,7 @@ public class AccessType extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
-    public static final String ACTION_TEXT = "Shift Access Type";
+    public final String ACTION_TEXT = "Shift Access Type";
 
     private StaticWordType accessTypes;
 

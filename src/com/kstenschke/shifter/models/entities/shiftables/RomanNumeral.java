@@ -27,6 +27,8 @@ public class RomanNumeral extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift Roman Numeral";
+
     // Constructor
     public RomanNumeral(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

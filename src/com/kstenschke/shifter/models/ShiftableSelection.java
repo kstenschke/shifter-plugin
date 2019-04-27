@@ -305,7 +305,7 @@ public class ShiftableSelection {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(
                         actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
-                    shiftableTypesManager.getActionText());
+                    shiftableTypesManager.getActionText(null));
             return;
         }
         if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {

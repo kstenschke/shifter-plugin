@@ -31,6 +31,8 @@ class DocCommentDataType extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
+    public final String ACTION_TEXT = "Shift DOC comment";
+
     private final String[] typesJavaScript;
     private final String[] typesJava;
     private final String[] typesPHP;
