@@ -20,6 +20,7 @@ import com.intellij.openapi.command.CommandProcessor;
 import com.intellij.openapi.ui.popup.PopupChooserBuilder;
 import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -55,6 +56,10 @@ public class Comment extends AbstractShiftable {
         String str = actionContainer.selectedText;
 
         return isComment(str) ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.COMMENT;
     }
 
     public String getShifted(

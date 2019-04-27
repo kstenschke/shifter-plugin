@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringEscapeUtils;
 
@@ -48,6 +49,10 @@ public class HtmlEncodable extends AbstractShiftable {
         return !strLenOriginal.equals(encoded.length()) ||
                !strLenOriginal.equals(decoded.length())
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.HTML_ENCODABLE;
     }
 
     /**

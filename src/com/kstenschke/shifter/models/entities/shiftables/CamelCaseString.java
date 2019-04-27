@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
@@ -44,6 +45,10 @@ public class CamelCaseString extends AbstractShiftable {
         return !UtilsTextual.startsNumeric(str) &&
                UtilsTextual.isCamelCase(str)
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.CAMEL_CASE_STRING;
     }
 
     public static boolean isWordPair(String str) {

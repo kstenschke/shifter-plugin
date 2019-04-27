@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsMap;
 import org.apache.commons.lang.StringUtils;
@@ -54,6 +55,10 @@ public class CssUnit extends AbstractShiftable {
         String str = actionContainer.selectedText;
 
         return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)") ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.CSS_UNIT;
     }
 
     public static boolean isCssUnit(String str) {

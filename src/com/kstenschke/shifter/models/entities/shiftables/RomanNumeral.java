@@ -16,27 +16,31 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.entities.RomanNumeral;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import javax.annotation.Nullable;
 
 // Roman number: increment / decrement
-public class RomanNumber extends AbstractShiftable {
+public class RomanNumeral extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
     // Constructor
-    public RomanNumber(@Nullable ActionContainer actionContainer) {
+    public RomanNumeral(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
     // Get instance or null if not applicable: string must be a CSS length value
-    public RomanNumber getInstance() {
+    public RomanNumeral getInstance() {
         String str = actionContainer.selectedText;
         return UtilsTextual.containsOnly(str, new String[]{"I", "V", "X", "L", "C", "D", "M"})
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.ROMAN_NUMERAL;
     }
 
     public String getShifted(
@@ -46,10 +50,10 @@ public class RomanNumber extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        int intVal = new RomanNumeral(value).toInt();
+        int intVal = new com.kstenschke.shifter.models.entities.RomanNumeral(value).toInt();
 
         return 1 == intVal && !actionContainer.isShiftUp
                 ? value
-                : new RomanNumeral(actionContainer.isShiftUp ? intVal + 1 : intVal -1).toString();
+                : new com.kstenschke.shifter.models.entities.RomanNumeral(actionContainer.isShiftUp ? intVal + 1 : intVal -1).toString();
     }
 }

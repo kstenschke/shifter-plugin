@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -23,7 +24,7 @@ import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 // JavaScript Variables (multi-lined declarations of multiple vars)
-public class JsVariablesDeclarations extends AbstractShiftable {
+public class JsVariableDeclarations extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
@@ -33,7 +34,7 @@ public class JsVariablesDeclarations extends AbstractShiftable {
     private static String scope;
 
     // Constructor
-    public JsVariablesDeclarations(@Nullable ActionContainer actionContainer) {
+    public JsVariableDeclarations(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
@@ -44,7 +45,7 @@ public class JsVariablesDeclarations extends AbstractShiftable {
     // -each trimmed line ends w/ ";"
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
-    public JsVariablesDeclarations getInstance() {
+    public JsVariableDeclarations getInstance() {
         String str = actionContainer.selectedText.trim();
 
         if (isMultiLinedMultiVarDeclaration(str, "const")  && StringUtils.countMatches(str, "=") > 1) {
@@ -60,6 +61,10 @@ public class JsVariablesDeclarations extends AbstractShiftable {
             return this;
         }
         return null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.JS_VARIABLE_DECLARATIONS;
     }
 
     public String getShifted(

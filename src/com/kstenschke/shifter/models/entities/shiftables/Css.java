@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.CssAttributesStyleLineComparator;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -44,6 +45,10 @@ public class Css extends AbstractShiftable {
         return UtilsFile.isCssFile(actionContainer.filename) &&
                UtilsTextual.isMultiLine(actionContainer.selectedText)
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.CSS;
     }
 
     public String getShifted(

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
@@ -39,6 +40,10 @@ public class SizzleSelector extends AbstractShiftable {
 
         return !(!str.startsWith("$(") || !str.endsWith(")"))
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.SIZZLE_SELECTOR;
     }
 
     /**

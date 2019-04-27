@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
@@ -41,6 +42,10 @@ public class Parenthesis extends AbstractShiftable {
                 isWrappedInSquareBrackets(str) ||
                 isWrappedInCurlyBrackets(str)
                     ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.PARENTHESIS;
     }
 
     public String getShifted(

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
@@ -57,6 +58,10 @@ public class LogicalConjunction extends AbstractShiftable {
         }
 
         return null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.LOGICAL_CONJUNCTION;
     }
 
     public String getShifted(

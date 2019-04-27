@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
@@ -48,6 +49,10 @@ public class QuotedString extends AbstractShiftable {
                         // Word is wrapped in backticks
                         || ("`".equals(actionContainer.prefixChar) && "`".equals(actionContainer.postfixChar))
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.QUOTED_STRING;
     }
 
     public static boolean containsShiftableQuotes(String str) {

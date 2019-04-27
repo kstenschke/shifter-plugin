@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
 import com.kstenschke.shifter.resources.StaticTexts;
@@ -62,6 +63,10 @@ public class SeparatedList extends AbstractShiftable {
         int amountDelimiters = StringUtils.countMatches(str, delimiter);
 
         return (amountDelimiters + 1) * 2 == amountQuotes ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.SEPARATED_LIST;
     }
 
     /**

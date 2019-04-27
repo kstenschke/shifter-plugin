@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
@@ -28,7 +29,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class DictionaryTerm extends AbstractShiftable {
+public class DictionaryWord extends AbstractShiftable {
 
     private ActionContainer actionContainer;
 
@@ -39,7 +40,7 @@ public class DictionaryTerm extends AbstractShiftable {
     private final String dictionaryContents;
 
     // Constructor
-    public DictionaryTerm(@Nullable ActionContainer actionContainer) {
+    public DictionaryWord(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
 
         String contents = ShifterPreferences.getDictionary();
@@ -54,9 +55,13 @@ public class DictionaryTerm extends AbstractShiftable {
     // Check whether the given term exists in any section of shift-lists of the dictionary
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
-    public DictionaryTerm getInstance() {
+    public DictionaryWord getInstance() {
         return null != actionContainer.fileExtension && isTermInAnyDictionary()
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.DICTIONARY_WORD;
     }
 
     /**
@@ -92,7 +97,7 @@ public class DictionaryTerm extends AbstractShiftable {
     // Check whether the given term exists in any section of shift-lists of the dictionary,
     // looking only at lists in blocks having assigned the given extension
     // + Stores first matching line containing the term for use in shifting later
-    public DictionaryTerm isInFileTypeDictionary() {
+    public DictionaryWord isInFileTypeDictionary() {
         if (null == actionContainer.fileExtension ||
             !dictionaryContents.contains("|" + actionContainer.fileExtension + "|")
         ) return null;

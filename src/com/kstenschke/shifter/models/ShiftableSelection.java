@@ -120,7 +120,7 @@ public class ShiftableSelection {
             return;
         }
 
-        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && JS_VARIABLES_DECLARATIONS == wordType;
+        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && JS_VARIABLE_DECLARATIONS == wordType;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
 
         if (null != (shiftable = new Css(actionContainer).getInstance())) {
@@ -150,7 +150,7 @@ public class ShiftableSelection {
                 new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
                 return;
             } else {
-                shiftable = new JsVariablesDeclarations(actionContainer);
+                shiftable = new JsVariableDeclarations(actionContainer);
                 shiftable.replaceSelectionShifted();
                 return;
             }

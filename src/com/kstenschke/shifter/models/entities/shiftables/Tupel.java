@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
@@ -74,6 +75,10 @@ public class Tupel extends AbstractShiftable {
         return null;
     }
 
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.WORDS_TUPEL;
+    }
+
     // Swap tupel parts
     public String getShifted(
             String str,
@@ -89,8 +94,8 @@ public class Tupel extends AbstractShiftable {
                 !actionContainer.selectedText.isEmpty() &&
                 UtilsTextual.subStringCount(str, " ") == 1
         ) {
-            DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
-            if (null != dictionaryTerm.getInstance()) {
+            DictionaryWord dictionaryWord = new DictionaryWord(actionContainer);
+            if (null != dictionaryWord.getInstance()) {
                 // Shifted string is a selected tupel, and a two-words term from the dictionary
                 new ShiftableSelectionWithPopup(actionContainer)
                         .shiftDictionaryTermOrToggleTupelOrder();

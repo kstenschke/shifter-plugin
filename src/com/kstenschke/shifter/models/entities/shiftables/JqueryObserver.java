@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
 
@@ -64,6 +65,10 @@ public class JqueryObserver extends AbstractShiftable {
             || "scroll(".equals(str)
             || "unload(".equals(str)
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.JQUERY_OBSERVER;
     }
 
     public String getShifted(

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
@@ -43,6 +44,10 @@ public class RgbColor extends AbstractShiftable {
                !(str.matches("[0-9a-fA-F]{3}") ||
                str.matches("[0-9a-fA-F]{6}")))
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.RGB_COLOR;
     }
 
     public String getShifted(

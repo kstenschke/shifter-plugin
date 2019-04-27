@@ -17,6 +17,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
@@ -38,6 +39,10 @@ public class OperatorSign extends AbstractShiftable {
 
         return null != word && word.length() == 1 && "+-<>*/%".contains(word)
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.OPERATOR_SIGN;
     }
 
     /**

@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
@@ -37,6 +38,10 @@ public class LogicalOperator extends AbstractShiftable {
 
         return "&&".equals(word) || "||".equals(word)
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.LOGICAL_OPERATOR;
     }
 
     // Toggle among "&&" and "||"

@@ -99,7 +99,7 @@ public class ShiftableWord {
     private String maintainCasingOnShiftedWord(String shiftedWord) {
         if (    PHP_VARIABLE_OR_ARRAY != wordType
              && QUOTED_STRING != wordType
-             && CAMEL_CASED != wordType
+             && CAMEL_CASE_STRING != wordType
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
             if (UtilsTextual.isAllUppercase(word)) return shiftedWord.toUpperCase();

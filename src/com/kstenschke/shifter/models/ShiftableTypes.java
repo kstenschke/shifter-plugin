@@ -15,7 +15,7 @@
  */
 package com.kstenschke.shifter.models;
 
-class ShiftableTypes {
+public class ShiftableTypes {
 
     public enum Type {
         UNKNOWN,
@@ -34,7 +34,7 @@ class ShiftableTypes {
         QUOTED_STRING,
         PARENTHESIS,
         HTML_ENCODABLE,
-        CAMEL_CASED,
+        CAMEL_CASE_STRING,
         SEPARATED_PATH,
         WORDS_TUPEL,
 
@@ -57,10 +57,23 @@ class ShiftableTypes {
         PHP_VARIABLE_OR_ARRAY,
 
         // JavaScript specific
-        JS_VARIABLES_DECLARATIONS,
+        JS_VARIABLE_DECLARATIONS,
         SIZZLE_SELECTOR,
         JQUERY_OBSERVER,
 
-        TRAILING_COMMENT
+        TRAILING_COMMENT,
+
+        // w/o use (but debugging)
+        XML_ATTRIBUTES,
+        JS_CONCATENATION,
+        PHP_CONCATENATION,
+        PHP_DOC_PARAM,
+        DICTIONARY_WORD,
+        SEPARATED_LIST,
+        COMMENT,
+        PHP_DOC_COMMENT,
+        CSS,
+        JS_DOC,
+        LOGICAL_CONJUNCTION
     }
 }

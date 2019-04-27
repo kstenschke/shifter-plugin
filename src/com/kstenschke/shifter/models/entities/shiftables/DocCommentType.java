@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
@@ -45,6 +46,10 @@ public class DocCommentType extends AbstractShiftable {
         if (null != shiftableType.getInstance()) return shiftableType;
 
         return null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.DOC_COMMENT_DATA_TYPE;
     }
 
     public String getShifted(

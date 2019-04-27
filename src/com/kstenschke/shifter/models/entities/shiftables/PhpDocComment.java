@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
@@ -39,6 +40,10 @@ class PhpDocComment extends AbstractShiftable {
         return lines.length > 2 && str.startsWith("/**") &&
                 str.endsWith("*/") && str.contains(" * ")
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.PHP_DOC_COMMENT;
     }
 
     public String getShifted(

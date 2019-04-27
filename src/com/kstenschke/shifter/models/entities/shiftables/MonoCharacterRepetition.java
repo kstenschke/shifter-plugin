@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringUtils;
 
@@ -44,6 +45,10 @@ public class MonoCharacterRepetition extends AbstractShiftable {
 
         return wordLower.replace(firstChar, "").length() == 0
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.MONO_CHARACTER_REPETITION;
     }
 
     public String getShifted(

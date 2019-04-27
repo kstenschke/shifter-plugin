@@ -259,12 +259,12 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SHIFT_DICTIONARY_TERM)) {
-            DictionaryTerm dictionaryTerm = new DictionaryTerm(actionContainer);
-            if (null != dictionaryTerm.getInstance()) {
+            DictionaryWord dictionaryWord = new DictionaryWord(actionContainer);
+            if (null != dictionaryWord.getInstance()) {
                 actionContainer.document.replaceString(
                         actionContainer.offsetSelectionStart,
                         actionContainer.offsetSelectionEnd,
-                        dictionaryTerm.getShifted(actionContainer.selectedText));
+                        dictionaryWord.getShifted(actionContainer.selectedText));
                 return;
             }
         }

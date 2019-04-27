@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
@@ -38,6 +39,10 @@ public class SeparatedPath extends AbstractShiftable {
         return null != getShiftableType(str, "-") ||
                null != getShiftableType(str, "_")
                 ? this : null;
+    }
+
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.SEPARATED_PATH;
     }
 
     public boolean isWordPair(String str) {

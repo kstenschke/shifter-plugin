@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 
 import javax.annotation.Nullable;
 
@@ -32,6 +33,8 @@ public abstract class AbstractShiftable {
 
     // Get shiftable instance or null if not applicable
     abstract public AbstractShiftable getInstance();
+
+    abstract public ShiftableTypes.Type getType();
 
     abstract public String getShifted(
             String word,
