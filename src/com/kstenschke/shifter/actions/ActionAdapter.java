@@ -39,7 +39,9 @@ class ActionAdapter {
     void delegate(final @Nullable Integer moreCount) {
         if (null == actionContainer.editor) return;
 
-        if (actionContainer.selectionModel.hasSelection()) {
+        if (actionContainer.selectionModel != null &&
+            actionContainer.selectionModel.hasSelection()
+        ) {
             // Shift (regular or block-) selection
             shiftSelection(moreCount);
             return;
@@ -56,10 +58,9 @@ class ActionAdapter {
         if (actionContainer.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
             ShiftableBlockSelection.shiftBlockSelectionInDocument(this.actionContainer, moreCount);
-            return;
+        } else {
+            // Shift regular selection: sort CSV or multi-lLine selection: sort lines alphabetically, etc.
+            ShiftableSelection.shiftSelectionInDocument(actionContainer, moreCount);
         }
-
-        // Shift regular selection: sort CSV or multi-lLine selection: sort lines alphabetically, etc.
-        ShiftableSelection.shiftSelectionInDocument(actionContainer, moreCount);
     }
 }
