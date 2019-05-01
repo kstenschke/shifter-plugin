@@ -27,8 +27,6 @@ import java.util.List;
 
 public class QuotedString extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Quotes";
 
     private String quoteChar;

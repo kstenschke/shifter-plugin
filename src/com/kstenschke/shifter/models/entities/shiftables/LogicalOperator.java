@@ -23,8 +23,6 @@ import javax.annotation.Nullable;
 
 public class LogicalOperator extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Toggle Logical Operator";
 
     // Constructor
@@ -34,7 +32,10 @@ public class LogicalOperator extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public LogicalOperator getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String word = actionContainer.selectedText;
 

@@ -42,8 +42,6 @@ import static org.apache.commons.lang.StringUtils.trim;
  */
 public class Comment extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift Comment";
 
     // Constructor
@@ -53,7 +51,10 @@ public class Comment extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Comment getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 

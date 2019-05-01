@@ -31,8 +31,6 @@ import java.util.List;
 // Multiple XML attribute-value pairs within one line
 public class XmlAttributes extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Sort Attributes";
 
     // Constructor
@@ -42,7 +40,10 @@ public class XmlAttributes extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must represent multiple XML attributes
     public XmlAttributes getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 

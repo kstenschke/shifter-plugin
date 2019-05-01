@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // Sizzle DOM selector
 public class SizzleSelector extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Sizzle Selector";
 
     // Constructor
@@ -36,7 +34,10 @@ public class SizzleSelector extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a declaration of JS variables
     public SizzleSelector getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText.trim();
 

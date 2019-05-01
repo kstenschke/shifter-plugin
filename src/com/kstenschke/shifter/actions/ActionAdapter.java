@@ -19,12 +19,10 @@ import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.kstenschke.shifter.models.*;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Adapter to bundle setup and delegation of different kinds of shift actions
- */
+// Adapter to bundle setup and delegation of different kinds of shift actions
 class ActionAdapter {
 
-    public final ActionContainer actionContainer;
+    public ActionContainer actionContainer;
 
     // Constructor
     ActionAdapter(final AnActionEvent event, boolean isShiftUp, boolean isShiftMore) {

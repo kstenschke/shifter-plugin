@@ -25,8 +25,6 @@ import java.awt.*;
 // RGB color: shift lighter / darker
 public class RgbColor extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift RGB Color";
 
     // Constructor
@@ -37,7 +35,10 @@ public class RgbColor extends AbstractShiftable {
     // Get instance or null if not applicable:
     // Check whether given string represents a hex RGB color, prefix must be "#"
     public RgbColor getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+                // @todo make shiftable also in non-selection
+                null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 

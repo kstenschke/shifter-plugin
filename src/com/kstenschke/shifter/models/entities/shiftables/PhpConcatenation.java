@@ -25,6 +25,7 @@ public class PhpConcatenation extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift PHP Concatenation";
 
+    private boolean isShiftable = true;
     private boolean isPhpConcatenation = false;
     private boolean isDotWhitespaceWrapped = false;
     private Integer offsetDot = null;
@@ -36,6 +37,14 @@ public class PhpConcatenation extends AbstractShiftable {
     // Constructor
     public PhpConcatenation(ActionContainer actionContainer) {
         super(actionContainer);
+
+        // @todo make shiftable also in non-selection
+        if (null == actionContainer ||
+            null == actionContainer.selectedText
+        ) {
+            isShiftable = false;
+            return;
+        }
 
         String str = actionContainer.selectedText;
         String strJoined = UtilsTextual.removeLineBreaks(str.trim());
@@ -59,7 +68,7 @@ public class PhpConcatenation extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public PhpConcatenation getInstance() {
-        return isPhpConcatenation ? this : null;
+        return isShiftable && isPhpConcatenation ? this : null;
     }
 
     public ShiftableTypes.Type getType() {

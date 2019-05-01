@@ -24,8 +24,6 @@ import javax.annotation.Nullable;
 // String w/ numeric postfix
 public class NumericPostfixed extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift numeric ending";
 
     // Constructor
@@ -35,7 +33,10 @@ public class NumericPostfixed extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public NumericPostfixed getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String word = actionContainer.selectedText;
 

@@ -29,8 +29,6 @@ import java.util.regex.Pattern;
 // Tupel (two items w/ delimiter in between)
 public class Tupel extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift Tupel";
 
     // Defined during detection of being a tupel
@@ -43,10 +41,12 @@ public class Tupel extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Tupel getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
-        if (null == str) return null;
 
         String glues[] = new String[]{
                 ",",

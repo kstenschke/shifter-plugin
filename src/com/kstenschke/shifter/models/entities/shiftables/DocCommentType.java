@@ -26,8 +26,6 @@ import java.util.regex.Pattern;
 // DOC comment type class
 public class DocCommentType extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift DOC comment";
 
     // Constructor

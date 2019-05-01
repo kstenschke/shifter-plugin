@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.CssUnit;
@@ -22,6 +25,7 @@ import com.kstenschke.shifter.models.entities.shiftables.JsDoc;
 import com.kstenschke.shifter.models.entities.shiftables.NumericValue;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
@@ -30,15 +34,15 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
 public class ShiftableWord {
 
-    private final ShiftableTypesManager shiftingShiftableTypesManager;
-    private final String word;
+    private ShiftableTypesManager shiftingShiftableTypesManager;
+    private String word;
 
     // "more" count, starting w/ 1. If non-more shift: null
     private final Integer moreCount;
 
     private AbstractShiftable shiftable;
     // @todo eliminate wordType, use shiftable
-    private final ShiftableTypes.Type wordType;
+    private ShiftableTypes.Type wordType;
 
     private final boolean isShiftable;
 
@@ -57,7 +61,7 @@ public class ShiftableWord {
      * @param moreCount   Current "more" count, starting w/ 1. If non-more shift: null
      */
     public ShiftableWord(
-            ActionContainer actionContainer,
+            @NotNull ActionContainer actionContainer,
             String word,
             String prefixChar,
             String postfixChar,
@@ -84,6 +88,10 @@ public class ShiftableWord {
 
         // Can the word be shifted?
         isShiftable = UNKNOWN != wordType;
+    }
+
+    public ShiftableTypes.Type getWordType() {
+        return wordType;
     }
 
     /**
@@ -162,27 +170,24 @@ public class ShiftableWord {
             shiftWordAtCaretInJsDocument(actionContainer, word))
                 return true;
 
-        boolean isWordShifted = !getShiftedWordInDocument(
+        if (!word.equals(getShiftedWordInDocument(
                 actionContainer,
                 word,
                 null,
                 true,
                 isOperator,
-                moreCount).equals(word);
+                moreCount)))
+            return true;
 
-        if (!isWordShifted) {
             // Shifting failed, try shifting lower-cased string
             String wordLower = word.toLowerCase();
-            isWordShifted = !getShiftedWordInDocument(
+            return !getShiftedWordInDocument(
                     actionContainer,
                     wordLower,
                     null,
                     true,
                     false,
                     moreCount).equals(wordLower);
-        }
-
-        return isWordShifted;
     }
 
     @Nullable
@@ -233,7 +238,7 @@ public class ShiftableWord {
      * @return String           resulting shifted or original word if no shift-ability was found
      */
     public static String getShiftedWordInDocument(
-            final ActionContainer actionContainer,
+            @NotNull ActionContainer actionContainer,
             String word,
             @Nullable Integer wordOffset,
             Boolean replaceInDocument,
@@ -281,9 +286,13 @@ public class ShiftableWord {
                         @Override
                         public void run() {
                             actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
-                            if (actionContainer.selectedText.isEmpty() && newWordFin.contains(" ")) {
+                            if ((null == actionContainer.selectedText || actionContainer.selectedText.isEmpty()) &&
+                                newWordFin.contains(" ")
+                            ) {
                                 // There's no selection and shifted word newly contains a space: select it
-                                actionContainer.selectionModel.setSelection(wordOffsetFin, wordOffsetFin + newWordFin.length());
+                                actionContainer.selectionModel.setSelection(
+                                        wordOffsetFin,
+                                        wordOffsetFin + newWordFin.length());
                             }
                         }
                     });

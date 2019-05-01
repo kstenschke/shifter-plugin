@@ -33,8 +33,6 @@ public class Css extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift CSS";
 
-    private ActionContainer actionContainer;
-
     // Constructor
     public Css(@Nullable ActionContainer actionContainer) {
         super(actionContainer);

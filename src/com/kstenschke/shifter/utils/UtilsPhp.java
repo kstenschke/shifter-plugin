@@ -18,9 +18,7 @@ package com.kstenschke.shifter.utils;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
-/**
- * Static helper methods for analysis and manipulation of texts
- */
+// Static helper methods for analysis and manipulation of texts
 public class UtilsPhp {
 
     /**

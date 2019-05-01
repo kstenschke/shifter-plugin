@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models.entities.shiftables;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
@@ -31,8 +34,6 @@ import java.util.List;
 // PHP Variable (word w/ $ prefix), includes array definition (toggle long versus shorthand syntax)
 public class PhpVariableOrArray extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift PHP";
 
     // Detected array definition? Shifts among long and shorthand than: array(...) <=> [...]
@@ -48,8 +49,6 @@ public class PhpVariableOrArray extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public PhpVariableOrArray getInstance() {
-        if (null == actionContainer) return null;
-
         //String word = actionContainer.selectedText;
         String word = actionContainer.getStringToBeShifted();
         if (null == word || word.length() < 2) return null;
@@ -60,7 +59,6 @@ public class PhpVariableOrArray extends AbstractShiftable {
             // Must contain a-z,A-Z or 0-9, _
             isVariable = identifier.toLowerCase().matches("[a-zA-Z0-9_]+");
         }
-
         if (!isVariable) {
             // Detect array definition
             isShiftableArray = isShiftablePhpArray(word);

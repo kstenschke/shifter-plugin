@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // HTML encoded/encode-able (=containing char(s) that be be encoded) String.
 public class HtmlEncodable extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift HTML Entities";
 
     // Constructor

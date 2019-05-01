@@ -20,6 +20,7 @@ import java.util.Comparator;
 import static org.apache.commons.lang.StringUtils.trim;
 
 public class CssAttributesStyleLineComparator implements Comparator<String> {
+
     /**
      * @param  str1
      * @param  str2

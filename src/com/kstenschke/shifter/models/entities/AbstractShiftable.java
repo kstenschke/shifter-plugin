@@ -22,7 +22,7 @@ import javax.annotation.Nullable;
 
 public abstract class AbstractShiftable {
 
-    private ActionContainer actionContainer;
+    protected ActionContainer actionContainer;
 
     // Java doesn't know abstract properties, ensure all shiftables having this
     public String ACTION_TEXT = "Shift abstract";

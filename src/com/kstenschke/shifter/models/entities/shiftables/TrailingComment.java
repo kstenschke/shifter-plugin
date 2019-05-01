@@ -24,8 +24,6 @@ import javax.annotation.Nullable;
 // Trailing (to line of code) comment - shifting = move comment to new empty caretLine above
 public class TrailingComment extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift trailing Comment";
 
     // Constructor

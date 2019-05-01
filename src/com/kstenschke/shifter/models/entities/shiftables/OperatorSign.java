@@ -24,8 +24,6 @@ import javax.annotation.Nullable;
 
 public class OperatorSign extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Operator";
 
     // Constructor

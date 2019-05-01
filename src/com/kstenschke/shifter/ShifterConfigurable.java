@@ -53,9 +53,7 @@ public class ShifterConfigurable implements Configurable {
         }
     }
 
-    /**
-     * Reset unsaved changes
-     */
+    // Reset unsaved changes
     public void reset() {
         if (null != settingsPanel) settingsPanel.initFormValues();
     }

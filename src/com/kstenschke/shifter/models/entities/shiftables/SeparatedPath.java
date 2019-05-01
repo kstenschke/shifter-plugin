@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 
 public class SeparatedPath extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Path";
 
     // Constructor
@@ -36,7 +34,10 @@ public class SeparatedPath extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public SeparatedPath getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 

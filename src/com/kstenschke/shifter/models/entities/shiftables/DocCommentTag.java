@@ -30,8 +30,6 @@ import java.util.regex.Pattern;
 
 public class DocCommentTag extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift DOC comment";
 
     private final String[] tagsJavaScript;

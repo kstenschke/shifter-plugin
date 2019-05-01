@@ -29,9 +29,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * Static helper methods for analysis and manipulation of texts
- */
+// Static helper methods for analysis and manipulation of texts
 public class UtilsTextual {
 
     private final static Pattern TRIM_RIGHT = Pattern.compile("\\s+$");

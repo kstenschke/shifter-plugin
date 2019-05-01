@@ -105,9 +105,7 @@ public class PluginConfiguration {
         return null == dictionaryStream ? "" : UtilsFile.getFileStreamAsString(dictionaryStream);
     }
 
-    /**
-     * Reset default settings
-     */
+    // Reset default settings
     void reset() {
         checkboxPreserveCase.setSelected(true);
         checkboxConvertDoubleQuotes.setSelected(true);
@@ -126,9 +124,6 @@ public class PluginConfiguration {
         textAreaDictionaryTerms.setText(getDefaultDictionary());
     }
 
-    /**
-     * @return  JPanel
-     */
     public JPanel getRootPanel() {
         return rootPanel;
     }
@@ -143,18 +138,10 @@ public class PluginConfiguration {
                 : ShifterPreferences.SHIFTING_MODE_TIMESTAMP_MILLISECONDS;
     }
 
-    /**
-     * @return  boolean
-     */
     private boolean getIsActivePreserveCase() {
         return checkboxPreserveCase.isSelected();
     }
 
-    /**
-     * Config modified?
-     *
-     * @return boolean
-     */
     public boolean isModified() {
         return   
              Integer.parseInt(spinnerShiftMore.getValue().toString()) != ShifterPreferences.getShiftMoreSize()
@@ -170,9 +157,6 @@ public class PluginConfiguration {
         ;
     }
 
-    /**
-     * @return  String
-     */
     private String getDictionary() {
         return textAreaDictionaryTerms.getText();
     }

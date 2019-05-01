@@ -20,9 +20,7 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 
-/**
- * Static helper methods for arrays
- */
+// Static helper methods for arrays
 public class UtilsArray {
 
     /**

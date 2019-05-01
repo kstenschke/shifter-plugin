@@ -30,8 +30,6 @@ import static org.apache.commons.lang.StringUtils.trim;
 // JavaScript DOC @param comment
 public class JsDoc extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     private static final String ACTION_TEXT = "Shift JsDoc";
 
     @NonNls

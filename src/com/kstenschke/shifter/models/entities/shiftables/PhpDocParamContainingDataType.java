@@ -25,8 +25,6 @@ import static org.apache.commons.lang.StringUtils.trim;
 // PHPDoc @param comment
 public class PhpDocParamContainingDataType extends PhpDocParam {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift PHP DOC comment";
 
     // Constructor

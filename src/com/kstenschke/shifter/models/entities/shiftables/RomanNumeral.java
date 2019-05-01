@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // Roman number: increment / decrement
 public class RomanNumeral extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Roman Numeral";
 
     // Constructor
@@ -36,7 +34,10 @@ public class RomanNumeral extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a CSS length value
     public RomanNumeral getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
         return UtilsTextual.containsOnly(str, new String[]{"I", "V", "X", "L", "C", "D", "M"})

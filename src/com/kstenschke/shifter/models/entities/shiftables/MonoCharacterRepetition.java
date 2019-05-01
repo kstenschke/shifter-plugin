@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // Mono-Character String = String that contains only one character (no matter how often)
 public class MonoCharacterRepetition extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift Mono-Character";
 
     // Constructor
@@ -36,7 +34,10 @@ public class MonoCharacterRepetition extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public MonoCharacterRepetition getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String word = actionContainer.selectedText;
 

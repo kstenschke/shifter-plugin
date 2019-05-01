@@ -123,9 +123,6 @@ public class ShifterPreferences {
         propertiesComponent.setValue(PROPERTY_IS_ACTIVE_PHP_ARRAY_SHORT_TO_LONG, isActiveShortToLong ? "1":"0");
     }
 
-    /**
-     * @return String  Dictionary
-     */
     public static String getDictionary() {
         String dictionary = null;
 

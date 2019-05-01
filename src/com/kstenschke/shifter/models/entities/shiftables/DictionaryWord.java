@@ -31,8 +31,6 @@ import java.util.regex.Pattern;
 
 public class DictionaryWord extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Word";
 
     // Terms-list containing the term to be shifted, set during detection

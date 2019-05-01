@@ -110,9 +110,7 @@ public class RomanNumeral {
         }
     }
 
-    /**
-     * Return the standard representation of this Roman numeral.
-     */
+    // Return the standard representation of this Roman numeral.
     public String toString() {
         StringBuilder roman = new StringBuilder();
         // N represents the part of num that still has to be converted to Roman numeral representation.
@@ -127,9 +125,7 @@ public class RomanNumeral {
         return roman.toString();
     }
 
-    /**
-     * Return the value of this Roman numeral as an int.
-     */
+    // Return the value of this Roman numeral as an int.
     public int toInt() {
         return num;
     }

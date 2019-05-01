@@ -24,12 +24,7 @@ import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
-/**
- * DocCommentType class
- */
 class DocCommentDataType extends AbstractShiftable {
-
-    private ActionContainer actionContainer;
 
     public final String ACTION_TEXT = "Shift DOC comment";
 

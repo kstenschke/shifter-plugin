@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // Logical conjunction (selected AND && / OR ||, w/ two operands)
 public class LogicalConjunction extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Toggle logical conjunction operands";
 
     public boolean isOrLogic = false;
@@ -38,7 +36,10 @@ public class LogicalConjunction extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public LogicalConjunction getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 

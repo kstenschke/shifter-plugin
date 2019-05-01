@@ -26,8 +26,6 @@ import javax.annotation.Nullable;
 // JavaScript Variables (multi-lined declarations of multiple vars)
 public class JsVariableDeclarations extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift JS var declarations";
 
     // Declaration/assignment scope: "const", "let", "var"
@@ -46,7 +44,9 @@ public class JsVariableDeclarations extends AbstractShiftable {
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
     public JsVariableDeclarations getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText) return null;
 
         String str = actionContainer.selectedText.trim();
 

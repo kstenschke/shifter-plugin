@@ -17,9 +17,7 @@ package com.kstenschke.shifter.actions;
 
 import com.intellij.openapi.actionSystem.*;
 
-/**
- * Shift-Down Action
- */
+// Shift-Down Action
 class ShiftDownAction extends AnAction {
 
     /**

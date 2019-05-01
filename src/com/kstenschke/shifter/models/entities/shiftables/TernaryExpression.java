@@ -25,8 +25,6 @@ import java.util.regex.Pattern;
 
 public class TernaryExpression extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift Ternary Expression";
 
     // Constructor
@@ -36,7 +34,10 @@ public class TernaryExpression extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a ternary expression
     public TernaryExpression getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String expression = actionContainer.selectedText.trim();
 

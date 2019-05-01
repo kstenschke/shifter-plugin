@@ -28,8 +28,6 @@ import java.util.HashMap;
 // Pixel value class
 public class CssUnit extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift CSS Unit";
 
     private static final String UNIT_CM   = "cm";
@@ -52,7 +50,10 @@ public class CssUnit extends AbstractShiftable {
 
     // Get instance or null if not applicable (selected text not a CSS length value)
     public CssUnit getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 

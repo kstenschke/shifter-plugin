@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // Pixel value class
 public class AccessType extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public final String ACTION_TEXT = "Shift Access Type";
 
     private StaticWordType accessTypes;
@@ -38,11 +36,13 @@ public class AccessType extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public AccessType getInstance() {
-        if (null == actionContainer || "@".equals(actionContainer.prefixChar)) return null;
+        if (null == actionContainer ||
+            "@".equals(actionContainer.prefixChar) ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String word = actionContainer.selectedText;
-        if (null == word) return null;
-
         String[] keywordsAccessType = {"public", "private", "protected"};
         accessTypes = new StaticWordType(keywordsAccessType);
 

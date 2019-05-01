@@ -25,8 +25,6 @@ import javax.annotation.Nullable;
 // JavaScript Variables (multi-lined declarations of multiple vars)
 public class JqueryObserver extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift jQuery Observer";
 
     // Constructor
@@ -43,8 +41,11 @@ public class JqueryObserver extends AbstractShiftable {
     // -there can be commented lines, beginning w/ "//"
     public JqueryObserver getInstance() {
         if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText ||
             null == actionContainer.fileExtension ||
-            !UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return null;
+            !UtilsFile.isJavaScriptFile(actionContainer.filename, true)
+        ) return null;
 
         String str = actionContainer.selectedText;
         if (str.startsWith(".")) str = str.substring(1);

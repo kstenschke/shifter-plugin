@@ -35,8 +35,6 @@ import java.util.Date;
 // Numeric value class. Also handles timestamps in UNIX and JavaScript (milli seconds) format
 public class NumericValue extends AbstractShiftable {
 
-    private ActionContainer actionContainer;
-
     public static final String ACTION_TEXT = "Shift numeric value";
 
     private static final int SECONDS_PER_DAY = 86400;
@@ -47,12 +45,16 @@ public class NumericValue extends AbstractShiftable {
     // Constructor
     public NumericValue(ActionContainer actionContainer) {
         super(actionContainer);
+
         timestampShiftMode = ShifterPreferences.getShiftingModeOfTimestamps();
     }
 
     // Get instance or null if not applicable: selected text must be a CSS length value
     public NumericValue getInstance() {
-        if (null == actionContainer) return null;
+        if (null == actionContainer ||
+            // @todo make shiftable also in non-selection
+            null == actionContainer.selectedText
+        ) return null;
 
         String str = actionContainer.selectedText;
 
