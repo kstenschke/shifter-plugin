@@ -48,7 +48,7 @@ public class SeparatedList extends AbstractShiftable {
         ) return null;
 
         String str = actionContainer.selectedText;
-        String delimiter = actionContainer.delimiter;
+        String delimiter = actionContainer.delimiter.isEmpty() ? "," : actionContainer.delimiter;
 
         if (!str.contains(delimiter)
             || str.trim().length() == delimiter.length()

@@ -63,6 +63,7 @@ public class JsVariableDeclarations extends AbstractShiftable {
             scope = "let";
             return this;
         }
+
         return null;
     }
 
@@ -85,7 +86,7 @@ public class JsVariableDeclarations extends AbstractShiftable {
         String shiftedLine;
         for (String line : lines) {
             line = line.trim();
-            boolean doShift = !(line.isEmpty() || line.startsWith("//"));
+            boolean doShift = scope != null && !(line.isEmpty() || line.startsWith("//"));
             shiftedLine = doShift ? shiftNonCommentLine(line, indexShifted) : line;
             shiftedLines
                     .append(0 == lineNumber ? "" : "    ")
@@ -111,7 +112,7 @@ public class JsVariableDeclarations extends AbstractShiftable {
     }
 
     @NotNull
-    private static String shiftNonCommentLine(String line, int indexShiftedLine) {
+    private static String shiftNonCommentLine(@NotNull String line, int indexShiftedLine) {
         // Remove scope ("const ", "let " or "var ") from beginning
         line = line.substring(scope.length() + 1);
         if ("const".equals(scope) && (indexShiftedLine > 0)) {

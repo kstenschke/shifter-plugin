@@ -35,7 +35,11 @@ public class NumericPostfixed extends AbstractShiftable {
     public NumericPostfixed getInstance() {
         String word = actionContainer.getStringToBeShifted();
 
-        return word.matches("^.+?\\d$")
+        // @todo improve regex (integrate all conditions)
+        return word.matches("^.+?\\d$") &&
+               !word.contains(" ") &&
+               !word.contains(",")
+
             ? this : null;
     }
 
