@@ -97,6 +97,11 @@ public class PhpDocParam extends AbstractShiftable {
         return null;
     }
 
+    @Override
+    public boolean shiftSelectionInDocument() {
+        return null != getShifted(actionContainer.selectedText);
+    }
+
     public Boolean containsDataType(String str) {
         str = trim(str.toLowerCase());
 

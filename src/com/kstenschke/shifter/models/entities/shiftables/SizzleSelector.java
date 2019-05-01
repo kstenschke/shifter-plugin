@@ -74,4 +74,13 @@ public class SizzleSelector extends AbstractShiftable {
         return (actionContainer.filename.endsWith("ts") ? "var" : "let")
                 + " $" + UtilsTextual.toLcFirst(varName.toString()) + " = " + selector + ";";
     }
+
+    @Override
+    public boolean shiftSelectionInDocument() {
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        getShifted(actionContainer.selectedText)),
+                ACTION_TEXT);
+        return true;
+    }
 }

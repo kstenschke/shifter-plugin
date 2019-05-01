@@ -56,4 +56,8 @@ public class RomanNumeral extends AbstractShiftable {
                 ? value
                 : new com.kstenschke.shifter.models.entities.RomanNumeral(actionContainer.isShiftUp ? intVal + 1 : intVal -1).toString();
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

@@ -62,4 +62,8 @@ public class AccessType extends AbstractShiftable {
     ) {
         return accessTypes.getShifted(value, actionContainer.isShiftUp);
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

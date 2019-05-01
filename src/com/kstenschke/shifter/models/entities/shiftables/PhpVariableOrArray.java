@@ -112,6 +112,10 @@ public class PhpVariableOrArray extends AbstractShiftable {
         return phpVariables.get(curIndex);
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     public static boolean isStaticShiftablePhpArray(String str) {
         boolean isActiveConvertLongToShort = ShifterPreferences.getIsActiveConvertPhpArrayLongToShort();
         boolean isActiveConvertShortToLong = ShifterPreferences.getIsActiveConvertPhpArrayShortToLong();

@@ -95,6 +95,10 @@ public class CssUnit extends AbstractShiftable {
         return value;
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     @NotNull
     private String detectUnit(String value) {
         // 4-digit units

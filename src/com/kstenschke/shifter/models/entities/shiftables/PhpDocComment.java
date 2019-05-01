@@ -74,6 +74,10 @@ class PhpDocComment extends AbstractShiftable {
         return shifted.toString();
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     static boolean containsAtParam(String str) {
         return str.contains("@param ");
     }

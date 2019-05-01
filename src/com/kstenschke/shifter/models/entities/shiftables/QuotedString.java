@@ -90,4 +90,8 @@ public class QuotedString extends AbstractShiftable {
 
         return allMatches.get(curIndex);
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

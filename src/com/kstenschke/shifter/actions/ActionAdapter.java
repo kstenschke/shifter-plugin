@@ -37,13 +37,8 @@ class ActionAdapter {
     void delegate(final @Nullable Integer moreCount) {
         if (null == actionContainer.editor) return;
 
-        if (actionContainer.selectionModel != null &&
-            actionContainer.selectionModel.hasSelection()
-        ) {
-            // Shift (regular or block-) selection
-            shiftSelection(moreCount);
-            return;
-        }
+        // Shift (regular or block-) selection
+        if (shiftSelection(moreCount)) return;
 
         // Try shift word at caret, fallback: try shifting care lLine
         if (!ShiftableWord.shiftWordAtCaretInDocument(actionContainer, moreCount)) {
@@ -52,7 +47,11 @@ class ActionAdapter {
         }
     }
 
-    private void shiftSelection(@Nullable Integer moreCount) {
+    private boolean shiftSelection(@Nullable Integer moreCount) {
+        if (null == actionContainer.selectionModel ||
+            !actionContainer.selectionModel.hasSelection()
+        ) return false;
+
         if (actionContainer.selectionModel.getBlockSelectionStarts().length > 1) {
             // Shift block selection: do word-shifting if all items are identical
             ShiftableBlockSelection.shiftBlockSelectionInDocument(this.actionContainer, moreCount);
@@ -60,5 +59,7 @@ class ActionAdapter {
             // Shift regular selection: sort CSV or multi-lLine selection: sort lines alphabetically, etc.
             ShiftableSelection.shiftSelectionInDocument(actionContainer, moreCount);
         }
+
+        return true;
     }
 }

@@ -63,6 +63,10 @@ public class DocCommentType extends AbstractShiftable {
                 .getShifted(str, moreCount, leadWhitespace);
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     /**
      * Check whether given String looks like a DOC comment line
      *

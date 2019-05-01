@@ -69,6 +69,10 @@ public class OperatorSign extends AbstractShiftable {
         return word;
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     public boolean isWhitespaceWrappedOperator(String str) {
         if (null == str || str.length() < 1) return false;
 

@@ -101,6 +101,12 @@ public class JsVariableDeclarations extends AbstractShiftable {
         return scope + " " + shiftedLines.substring(0, shiftedLines.length() - 2) + ";";
     }
 
+    @Override
+    public boolean shiftSelectionInDocument() {
+        replaceSelectionShifted();
+        return true;
+    }
+
     private static boolean isMultiLinedMultiVarDeclaration(String str, String scope) {
         return !(
                 !str.startsWith(scope)

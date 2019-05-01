@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.entities;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.annotation.Nullable;
 
@@ -56,6 +57,8 @@ public abstract class AbstractShiftable {
     public String getShifted(String word, Integer moreCount, String leadWhitespace) {
         return getShifted(word, moreCount, leadWhitespace, false, false);
     }
+
+    public abstract boolean shiftSelectionInDocument();
 
     public void replaceSelectionShifted(boolean reformat) {
         actionContainer.writeUndoable(

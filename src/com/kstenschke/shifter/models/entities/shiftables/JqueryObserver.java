@@ -87,4 +87,10 @@ public class JqueryObserver extends AbstractShiftable {
 
         return (startsWithDot ? "." : "") + "on('" + eventName + "', ";
     }
+
+    @Override
+    public boolean shiftSelectionInDocument() {
+        replaceSelectionShifted(false);
+        return true;
+    }
 }

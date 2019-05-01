@@ -112,6 +112,10 @@ public class Tupel extends AbstractShiftable {
         return getShifted(str);
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     @NotNull
     private String getShiftedTupelReplacement(String str) {
         if (null == delimiter) return str;

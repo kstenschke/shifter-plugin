@@ -41,45 +41,29 @@ public class ShiftableSelection {
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
      */
     public static void shiftSelectionInDocument(final ActionContainer actionContainer, @Nullable Integer moreCount) {
-        if (null == actionContainer.selectedText || actionContainer.selectedText.trim().isEmpty()) return;
+        if (null == actionContainer.selectedText ||
+            actionContainer.selectedText.trim().isEmpty()
+        ) return;
 
         AbstractShiftable shiftable;
 
-        if (// Detect and shift whole PHPDoc block or single line out of it, that contains @param caretLine(s) w/o data type
-            null != (shiftable = new PhpDocParam(actionContainer).getInstance()) &&
-            null != shiftable.getShifted(actionContainer.selectedText)
-        ) return;
-
-        if ((UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
-             null != (shiftable = new JsDoc(actionContainer).getInstance())) ||
+        if (
+            // Detect and shift PHPDoc block or single line out of it (containing @param caretLine(s) w/o data type)
+            null != (shiftable = new PhpDocParam(actionContainer).getInstance()) ||
             // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
-            (null != (shiftable = new Comment(actionContainer).getInstance()))
+            null != (shiftable = new JsDoc(actionContainer).getInstance()) ||
+            null != (shiftable = new Comment(actionContainer).getInstance()) ||
+            null != (shiftable = new XmlAttributes(actionContainer).getInstance())
         ) {
-            shiftable.getShifted(actionContainer.selectedText, null, null, true, false);
-            return;
-        }
-
-        if (null != (shiftable =  new XmlAttributes(actionContainer).getInstance())) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                            shiftable.getShifted(
-                                    actionContainer.selectedText,
-                                    null,
-                                    null,
-                                    true,
-                                    false)),
-                    shiftable.ACTION_TEXT);
-            return;
+            if (shiftable.shiftSelectionInDocument()) return;
         }
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
         boolean isWrappedInParenthesis = parenthesis.getInstance() != null;
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        //ShiftableTypeAbstract shiftableType = shiftableTypesManager.getInstance(actionContainer);
-
         ShiftableTypes.Type wordType;
+
         if (null == actionContainer.editorText) {
             wordType = UNKNOWN;
         } else {
@@ -95,12 +79,19 @@ public class ShiftableSelection {
             wordType = shiftableTypesManager.getWordType();
         }
 
-        boolean isPhpVariableOrArray = PHP_VARIABLE_OR_ARRAY == wordType;
+        boolean isPhpVariableOrArray    = PHP_VARIABLE_OR_ARRAY == wordType;
+        boolean isJsVarsDeclarations    = !isPhpVariableOrArray &&
+                                          JS_VARIABLE_DECLARATIONS == wordType;
+        boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
 
         if (isWrappedInParenthesis) {
-            boolean isShiftablePhpArray = isPhpVariableOrArray &&
-                                          PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
-            if (!isPhpVariableOrArray || !isShiftablePhpArray) {
+            boolean isShiftablePhpArray =
+                    isPhpVariableOrArray &&
+                    PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
+
+            if (!isPhpVariableOrArray ||
+                !isShiftablePhpArray
+            ) {
                 // Swap surrounding "(" and ")" versus "[" and "]"
                 actionContainer.writeUndoable(
                         actionContainer.getRunnableReplaceSelection(
@@ -108,23 +99,14 @@ public class ShiftableSelection {
                         parenthesis.ACTION_TEXT);
                 return;
             }
-            // Swap parenthesis or convert PHP array
-            new ShiftableSelectionWithPopup(actionContainer).swapParenthesisOrConvertPphpArray();
-            return;
+
+            if (parenthesis.shiftSelectionInDocument()) return;
         }
 
-        boolean isJsVarsDeclarations    = !isPhpVariableOrArray && JS_VARIABLE_DECLARATIONS == wordType;
-        boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
-
-        if (null != (shiftable = new Css(actionContainer).getInstance())) {
-            // CSS: Sort attributes per selector alphabetically
-            final String shifted = shiftable.getShifted(actionContainer.selectedText);
-            if (null != shifted) {
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(shifted, true),
-                        shiftable.ACTION_TEXT);
-                return;
-            }
+        if (null != (shiftable = new Css(actionContainer).getInstance()) ||
+            null != (shiftable = new TernaryExpression(actionContainer).getInstance())
+        ) {
+            if (shiftable.shiftSelectionInDocument()) return;
         }
 
         int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
@@ -133,47 +115,27 @@ public class ShiftableSelection {
             lineNumberSelEnd--;
         }
 
-        if (null != (shiftable = new TernaryExpression(actionContainer).getInstance())) {
-            shiftable.replaceSelectionShifted();
-            return;
-        }
         if (!isJsVarsDeclarations) {
             if (((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
                 // Multi-line selection: sort lines or swap quotes
                 new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
                 return;
-            } else {
-                shiftable = new JsVariableDeclarations(actionContainer);
-                shiftable.replaceSelectionShifted();
-                return;
+            } else if (null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance())) {
+                if (shiftable.shiftSelectionInDocument()) return;
             }
         }
 
         if (null != (shiftable = new JqueryObserver(actionContainer).getInstance())) {
-            shiftable.replaceSelectionShifted(false);
-            return;
+            if (shiftable.shiftSelectionInDocument()) return;
         }
 
         if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
-            SizzleSelector sizzleSelector = new SizzleSelector(actionContainer);
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(sizzleSelector.getShifted(actionContainer.selectedText)),
-                    sizzleSelector.ACTION_TEXT);
-            return;
+            shiftable = new SizzleSelector(actionContainer);
+            if (shiftable.shiftSelectionInDocument()) return;
         }
-        if (TRAILING_COMMENT == wordType) {
-            final int offsetStartCaretLine = actionContainer.document.getLineStartOffset(lineNumberSelStart);
-            final int offsetEndCaretLine   = actionContainer.document.getLineEndOffset(lineNumberSelStart);
-            final String leadWhitespace    = UtilsTextual.getLeadWhitespace(
-                actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
-            final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
 
-            TrailingComment trailingComment = new TrailingComment(actionContainer);
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceCaretLine(
-                            trailingComment.getShifted(caretLine, moreCount, leadWhitespace)),
-                            trailingComment.ACTION_TEXT);
-            return;
+        if (null != (shiftable = new TrailingComment(actionContainer).getInstance())) {
+            if (shiftable.shiftSelectionInDocument()) return;
         }
 
         if (UtilsFile.isPhpFile(actionContainer.filename) &&

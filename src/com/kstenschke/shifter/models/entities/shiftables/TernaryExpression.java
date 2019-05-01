@@ -97,6 +97,12 @@ public class TernaryExpression extends AbstractShiftable {
         return endsWithSemicolon ? str + ";" : str;
     }
 
+    @Override
+    public boolean shiftSelectionInDocument() {
+        replaceSelectionShifted();
+        return true;
+    }
+
     public void replaceSelectionShifted(boolean updateInDocument) {
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(

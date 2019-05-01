@@ -125,7 +125,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, "|");
     }
 
-    void swapParenthesisOrConvertPphpArray() {
+    public void swapParenthesisOrConvertPphpArray() {
         List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_SWAP_PARENTHESIS);
         shiftOptions.add(StaticTexts.SHIFT_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX);

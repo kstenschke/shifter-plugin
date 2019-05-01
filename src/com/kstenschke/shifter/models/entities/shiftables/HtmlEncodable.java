@@ -78,4 +78,8 @@ public class HtmlEncodable extends AbstractShiftable {
 
         return !strLenOriginal.equals(strLenEncoded) ? encoded : word;
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

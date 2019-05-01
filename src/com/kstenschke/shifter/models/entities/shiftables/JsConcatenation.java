@@ -148,4 +148,8 @@ public class JsConcatenation extends AbstractShiftable {
 
         return interpolation.append('`').toString();
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

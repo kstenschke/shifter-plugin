@@ -158,7 +158,7 @@ public class ActionContainer {
     }
 
     @NotNull
-    Runnable getRunnableReplaceCaretLine(final CharSequence shiftedLine) {
+    public Runnable getRunnableReplaceCaretLine(final CharSequence shiftedLine) {
         return () -> document.replaceString(
                 offsetCaretLineStart,
                 offsetCaretLineStart + caretLine.length(),

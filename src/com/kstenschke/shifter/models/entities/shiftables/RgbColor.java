@@ -62,6 +62,10 @@ public class RgbColor extends AbstractShiftable {
         return isBlack(rgbStrSixFold) ? rgbStrSixFold : darkenRgbString(rgbStr);
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     /**
      * Check whether given String represents RGB white (fff, FFF, ffffff, FFFFFF)
      *

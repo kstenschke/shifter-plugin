@@ -77,6 +77,10 @@ public class SeparatedPath extends AbstractShiftable {
         return shifted.toString();
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     private SeparatedPath getShiftableType(String str, CharSequence glue) {
         return
                 str.length() > 3 &&

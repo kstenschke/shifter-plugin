@@ -56,4 +56,8 @@ public class LogicalOperator extends AbstractShiftable {
     ) {
         return "&&".equals(word) ? "||" : "&&";
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

@@ -96,6 +96,10 @@ public class DictionaryWord extends AbstractShiftable {
                 : shiftedWord;
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     private boolean isTermInAnyDictionary() {
         String term = actionContainer.selectedText;
 

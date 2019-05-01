@@ -16,10 +16,13 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
+
+import static com.kstenschke.shifter.models.ShiftableTypes.Type.PHP_VARIABLE_OR_ARRAY;
 
 // Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
 public class Parenthesis extends AbstractShiftable {
@@ -64,6 +67,13 @@ public class Parenthesis extends AbstractShiftable {
 
         // Is wrapped in curly brackets
         return "(" + str.substring(1, str.length() - 1) + ")";
+    }
+
+    // Swap parenthesis or convert PHP array
+    public boolean shiftSelectionInDocument() {
+        new ShiftableSelectionWithPopup(actionContainer).swapParenthesisOrConvertPphpArray();
+
+        return true;
     }
 
     private static boolean isWrappedInRoundBrackets(String str) {

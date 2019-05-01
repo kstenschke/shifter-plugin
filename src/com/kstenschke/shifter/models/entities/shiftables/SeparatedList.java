@@ -108,4 +108,8 @@ public class SeparatedList extends AbstractShiftable {
 
         return UtilsArray.implode(items, actionContainer.delimiterGlue);
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

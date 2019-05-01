@@ -78,6 +78,10 @@ class DocCommentDataType extends AbstractShiftable {
         return dataTypesList.get(curIndex);
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     /**
      * Return array of data shiftables of detected language of edited file
      *

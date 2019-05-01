@@ -94,4 +94,8 @@ public class CamelCaseString extends AbstractShiftable {
                 return StringUtils.join(parts, "-");
         }
     }
+
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
 }

@@ -86,6 +86,10 @@ public class DocCommentTag extends AbstractShiftable {
         return word;
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     public static boolean isDocCommentLine(String line) {
         DocCommentTag docCommentTag = new DocCommentTag(null);
         return docCommentTag.isDocCommentLineContext(line);

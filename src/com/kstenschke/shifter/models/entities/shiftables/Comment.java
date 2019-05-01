@@ -108,6 +108,17 @@ public class Comment extends AbstractShiftable {
                 : str);
     }
 
+    public boolean shiftSelectionInDocument() {
+        getShifted(
+                actionContainer.selectedText,
+                null,
+                null,
+                true,
+                false);
+
+        return true;
+    }
+
     public static boolean isPhpBlockComment(String str) {
         if (null == str) return false;
 

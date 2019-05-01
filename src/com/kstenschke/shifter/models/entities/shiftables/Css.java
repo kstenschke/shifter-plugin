@@ -62,6 +62,17 @@ public class Css extends AbstractShiftable {
             : sortAttributeStyleLines(value);
     }
 
+    public boolean shiftSelectionInDocument() {
+        // CSS: Sort attributes per selector alphabetically
+        final String shifted = getShifted(actionContainer.selectedText);
+        if (null == shifted) return false;
+
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(shifted, true),
+                ACTION_TEXT);
+        return true;
+    }
+
     private static String sortAttributeStyleLinesInsideSelectors(String value) {
         // Split CSS into groups of attribute-style lines per selector
         String attributeGroups[]       = value.split("([^\r\n,{}]+)(,(?=[^}]*\\{)|\\s*\\{)");

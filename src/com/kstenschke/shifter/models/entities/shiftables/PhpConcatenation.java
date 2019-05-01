@@ -95,6 +95,10 @@ public class PhpConcatenation extends AbstractShiftable {
         return concatenation.trim();
     }
 
+    public boolean shiftSelectionInDocument() {
+        return false;
+    }
+
     /**
      * Iterate over characters of string, try to detect and extract exactly two PHP concatenation operands
      *

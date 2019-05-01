@@ -18,6 +18,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
+import com.kstenschke.shifter.utils.UtilsTextual;
 
 import javax.annotation.Nullable;
 
@@ -66,5 +67,24 @@ public class TrailingComment extends AbstractShiftable {
         String[] parts = selection.split("//");
 
         return leadWhitespace + "//" + parts[1] + "\n" + parts[0];
+    }
+
+    public boolean shiftSelectionInDocument() {
+        if (actionContainer.document == null ||
+            actionContainer.editorText == null
+        ) return false;
+        int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
+
+        final int offsetStartCaretLine = actionContainer.document.getLineStartOffset(lineNumberSelStart);
+        final int offsetEndCaretLine   = actionContainer.document.getLineEndOffset(lineNumberSelStart);
+        final String leadWhitespace    = UtilsTextual.getLeadWhitespace(
+                actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString());
+        final String caretLine         = actionContainer.editorText.subSequence(offsetStartCaretLine, offsetEndCaretLine).toString();
+
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceCaretLine(
+                        getShifted(caretLine, null, leadWhitespace)),
+                ACTION_TEXT);
+        return true;
     }
 }

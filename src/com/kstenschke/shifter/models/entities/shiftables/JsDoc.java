@@ -19,6 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsEnvironment;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NonNls;
@@ -44,7 +45,7 @@ public class JsDoc extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public JsDoc getInstance() {
-        if (!actionContainer.filename.endsWith("js")) return null;
+        if (!UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return null;
 
         return isJsDocBlock(actionContainer.selectedText)
                 ? this : null;
@@ -74,7 +75,16 @@ public class JsDoc extends AbstractShiftable {
             correctDocBlockInDocument(actionContainer);
         }
         return "";
+    }
 
+    public boolean shiftSelectionInDocument() {
+        getShifted(
+                actionContainer.selectedText,
+                null,
+                null,
+                true,
+                false);
+        return true;
     }
 
     /**
