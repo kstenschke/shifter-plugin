@@ -95,7 +95,7 @@ public class CamelCaseString extends AbstractShiftable {
         }
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 }

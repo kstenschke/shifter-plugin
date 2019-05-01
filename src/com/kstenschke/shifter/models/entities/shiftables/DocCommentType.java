@@ -63,7 +63,7 @@ public class DocCommentType extends AbstractShiftable {
                 .getShifted(str, moreCount, leadWhitespace);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

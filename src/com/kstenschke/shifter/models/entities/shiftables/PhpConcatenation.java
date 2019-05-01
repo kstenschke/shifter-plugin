@@ -19,6 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.Nullable;
 
 // PHP Variable (word w/ $ prefix)
 public class PhpConcatenation extends AbstractShiftable {
@@ -95,7 +96,7 @@ public class PhpConcatenation extends AbstractShiftable {
         return concatenation.trim();
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

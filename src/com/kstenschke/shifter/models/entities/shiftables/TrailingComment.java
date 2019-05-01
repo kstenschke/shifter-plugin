@@ -69,7 +69,7 @@ public class TrailingComment extends AbstractShiftable {
         return leadWhitespace + "//" + parts[1] + "\n" + parts[0];
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         if (actionContainer.document == null ||
             actionContainer.editorText == null
         ) return false;

@@ -55,7 +55,7 @@ public class ShiftableSelection {
             null != (shiftable = new Comment(actionContainer).getInstance()) ||
             null != (shiftable = new XmlAttributes(actionContainer).getInstance())
         ) {
-            if (shiftable.shiftSelectionInDocument()) return;
+            if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
 
         Parenthesis parenthesis = new Parenthesis(actionContainer);
@@ -100,13 +100,13 @@ public class ShiftableSelection {
                 return;
             }
 
-            if (parenthesis.shiftSelectionInDocument()) return;
+            if (parenthesis.shiftSelectionInDocument(moreCount)) return;
         }
 
         if (null != (shiftable = new Css(actionContainer).getInstance()) ||
             null != (shiftable = new TernaryExpression(actionContainer).getInstance())
         ) {
-            if (shiftable.shiftSelectionInDocument()) return;
+            if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
 
         int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
@@ -121,7 +121,7 @@ public class ShiftableSelection {
                 new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
                 return;
             } else if (null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance())) {
-                if (shiftable.shiftSelectionInDocument()) return;
+                if (shiftable.shiftSelectionInDocument(moreCount)) return;
             }
         }
 
@@ -131,7 +131,7 @@ public class ShiftableSelection {
             null != (shiftable = new PhpDocument(actionContainer).getInstance()) ||
             null != (shiftable = new SeparatedList(actionContainer).getInstance())
         ) {
-            if (shiftable.shiftSelectionInDocument()) return;
+            if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
 
         final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance();
@@ -230,15 +230,11 @@ public class ShiftableSelection {
             return;
         }
 
-        actionContainer.trimSelectedText();
-        final String shiftedWord = shiftableTypesManager.getShiftedWord(actionContainer, moreCount);
-        if (isPhpVariableOrArray) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                        actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
-                    shiftableTypesManager.getActionText(null));
-            return;
+        if (null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())) {
+            if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
+
+        final String shiftedWord = shiftableTypesManager.getShiftedWord(actionContainer, moreCount);
         if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {
             actionContainer.writeUndoable(
                     actionContainer.getRunnableReplaceSelection(

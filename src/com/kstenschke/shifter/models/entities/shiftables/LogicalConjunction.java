@@ -78,7 +78,7 @@ public class LogicalConjunction extends AbstractShiftable {
         return parts[1].trim() + (isOrLogic ? " || " : " && ") + parts[0];
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 }

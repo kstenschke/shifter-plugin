@@ -95,7 +95,7 @@ public class CssUnit extends AbstractShiftable {
         return value;
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

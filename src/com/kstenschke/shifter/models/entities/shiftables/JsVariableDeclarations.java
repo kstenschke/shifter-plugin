@@ -102,7 +102,7 @@ public class JsVariableDeclarations extends AbstractShiftable {
     }
 
     @Override
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         replaceSelectionShifted();
         return true;
     }

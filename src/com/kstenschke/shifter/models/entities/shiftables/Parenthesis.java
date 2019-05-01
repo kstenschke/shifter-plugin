@@ -70,7 +70,7 @@ public class Parenthesis extends AbstractShiftable {
     }
 
     // Swap parenthesis or convert PHP array
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         new ShiftableSelectionWithPopup(actionContainer).swapParenthesisOrConvertPphpArray();
 
         return true;

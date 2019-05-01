@@ -21,6 +21,7 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.PHP_DOCUMENT;
 
@@ -59,7 +60,7 @@ public class PhpDocument extends AbstractShiftable {
         return null;
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         AbstractShiftable shiftableType;
 
         final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer);

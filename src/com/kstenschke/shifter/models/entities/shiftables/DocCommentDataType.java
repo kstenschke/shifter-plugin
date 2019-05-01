@@ -78,7 +78,7 @@ class DocCommentDataType extends AbstractShiftable {
         return dataTypesList.get(curIndex);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

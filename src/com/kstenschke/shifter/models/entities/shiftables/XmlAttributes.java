@@ -68,7 +68,7 @@ public class XmlAttributes extends AbstractShiftable {
         return getShiftedXmlAttributesReplacement(str);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(
                         getShifted(

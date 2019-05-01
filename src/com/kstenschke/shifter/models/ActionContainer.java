@@ -59,8 +59,8 @@ public class ActionContainer {
 
     public String selectedText;
     public String stringAroundCaret;
-    String whiteSpaceLHSinSelection;
-    String whiteSpaceRHSinSelection;
+    public String whiteSpaceLHSinSelection;
+    public String whiteSpaceRHSinSelection;
 
     private int offsetCaretLineStart;
     public String caretLine;
@@ -129,7 +129,7 @@ public class ActionContainer {
     }
 
     // Trim selection and store whitespace from both sides to properties
-    void trimSelectedText() {
+    public void trimSelectedText() {
         String selectedTextTrimmed = selectedText.trim();
 
         int index = selectedText.indexOf(selectedTextTrimmed);

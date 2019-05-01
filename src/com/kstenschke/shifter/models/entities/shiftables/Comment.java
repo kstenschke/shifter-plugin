@@ -108,7 +108,7 @@ public class Comment extends AbstractShiftable {
                 : str);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         getShifted(
                 actionContainer.selectedText,
                 null,

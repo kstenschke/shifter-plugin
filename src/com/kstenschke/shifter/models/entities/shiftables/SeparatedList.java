@@ -110,7 +110,7 @@ public class SeparatedList extends AbstractShiftable {
         return UtilsArray.implode(items, actionContainer.delimiterGlue);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         // Comma-separated list w/ or w/o items wrapped in quotes: sort / ask whether to sort or toggle quotes
         new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
                 ",(\\s)*",

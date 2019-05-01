@@ -89,7 +89,7 @@ public class JqueryObserver extends AbstractShiftable {
     }
 
     @Override
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         replaceSelectionShifted(false);
         return true;
     }

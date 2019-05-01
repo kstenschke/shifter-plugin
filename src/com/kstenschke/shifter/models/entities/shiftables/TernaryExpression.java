@@ -98,7 +98,7 @@ public class TernaryExpression extends AbstractShiftable {
     }
 
     @Override
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         replaceSelectionShifted();
         return true;
     }

@@ -77,7 +77,7 @@ public class NumericValue extends AbstractShiftable {
             : getShiftedUnixTimestamp(value, actionContainer.isShiftUp, actionContainer.editor, actionContainer.filename);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

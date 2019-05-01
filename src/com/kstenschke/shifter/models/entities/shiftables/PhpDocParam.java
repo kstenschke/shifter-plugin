@@ -98,7 +98,7 @@ public class PhpDocParam extends AbstractShiftable {
     }
 
     @Override
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return null != getShifted(actionContainer.selectedText);
     }
 

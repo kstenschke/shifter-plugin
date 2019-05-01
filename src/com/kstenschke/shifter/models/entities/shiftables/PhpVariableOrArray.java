@@ -112,8 +112,14 @@ public class PhpVariableOrArray extends AbstractShiftable {
         return phpVariables.get(curIndex);
     }
 
-    public boolean shiftSelectionInDocument() {
-        return false;
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
+        actionContainer.trimSelectedText();
+        String shifted = getShifted(actionContainer.selectedText, moreCount,null);
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        actionContainer.whiteSpaceLHSinSelection + shifted + actionContainer.whiteSpaceRHSinSelection),
+                getActionText());
+        return true;
     }
 
     public static boolean isStaticShiftablePhpArray(String str) {

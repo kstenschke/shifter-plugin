@@ -81,7 +81,7 @@ public class NumericPostfixed extends AbstractShiftable {
         return leadPart + shiftedNumber;
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 }

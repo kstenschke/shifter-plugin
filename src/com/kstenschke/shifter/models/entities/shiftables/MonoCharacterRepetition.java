@@ -66,7 +66,7 @@ public class MonoCharacterRepetition extends AbstractShiftable {
         return StringUtils.repeat(String.valueOf(firstChar), word.length());
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 }

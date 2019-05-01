@@ -77,7 +77,7 @@ public class JsDoc extends AbstractShiftable {
         return "";
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         getShifted(
                 actionContainer.selectedText,
                 null,

@@ -62,7 +62,7 @@ public class Css extends AbstractShiftable {
             : sortAttributeStyleLines(value);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         // CSS: Sort attributes per selector alphabetically
         final String shifted = getShifted(actionContainer.selectedText);
         if (null == shifted) return false;

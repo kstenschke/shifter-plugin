@@ -77,7 +77,7 @@ public class SeparatedPath extends AbstractShiftable {
         return shifted.toString();
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

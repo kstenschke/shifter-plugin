@@ -58,7 +58,7 @@ public abstract class AbstractShiftable {
         return getShifted(word, moreCount, leadWhitespace, false, false);
     }
 
-    public abstract boolean shiftSelectionInDocument();
+    public abstract boolean shiftSelectionInDocument(@Nullable Integer moreCount);
 
     public void replaceSelectionShifted(boolean reformat) {
         actionContainer.writeUndoable(

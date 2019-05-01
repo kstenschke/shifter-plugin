@@ -57,7 +57,7 @@ public class LogicalOperator extends AbstractShiftable {
         return "&&".equals(word) ? "||" : "&&";
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 }

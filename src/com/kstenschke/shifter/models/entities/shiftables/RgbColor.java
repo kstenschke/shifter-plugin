@@ -62,7 +62,7 @@ public class RgbColor extends AbstractShiftable {
         return isBlack(rgbStrSixFold) ? rgbStrSixFold : darkenRgbString(rgbStr);
     }
 
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         return false;
     }
 

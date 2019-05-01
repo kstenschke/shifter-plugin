@@ -76,7 +76,7 @@ public class SizzleSelector extends AbstractShiftable {
     }
 
     @Override
-    public boolean shiftSelectionInDocument() {
+    public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(
                         getShifted(actionContainer.selectedText)),
