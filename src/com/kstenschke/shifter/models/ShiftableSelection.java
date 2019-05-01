@@ -40,6 +40,16 @@ public class ShiftableSelection {
             actionContainer.selectedText.trim().isEmpty()
         ) return;
 
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        //int editorTextLength = actionContainer.editorText.length();
+        //int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
+        //String postfixChar = editorTextLength > offsetPostfixChar
+        //        ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
+        //        : "";
+        //boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
+        shiftableTypesManager.setPrefixChar("");
+
         AbstractShiftable shiftable;
 
         if (
@@ -48,55 +58,9 @@ public class ShiftableSelection {
             // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
             null != (shiftable = new JsDoc(actionContainer).getInstance()) ||
             null != (shiftable = new Comment(actionContainer).getInstance()) ||
-            null != (shiftable = new XmlAttributes(actionContainer).getInstance())
-        ) {
-            if (shiftable.shiftSelectionInDocument(moreCount)) return;
-        }
-
-        Parenthesis parenthesis = new Parenthesis(actionContainer);
-        boolean isWrappedInParenthesis = parenthesis.getInstance() != null;
-
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-        ShiftableTypes.Type wordType;
-
-        if (null == actionContainer.editorText) {
-            wordType = UNKNOWN;
-        } else {
-            int editorTextLength = actionContainer.editorText.length();
-            int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
-
-            String postfixChar = editorTextLength > offsetPostfixChar
-                    ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
-                    : "";
-
-            //boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
-            shiftableTypesManager.setPrefixChar("");
-            wordType = shiftableTypesManager.getWordType();
-        }
-
-        boolean isPhpVariableOrArray    = PHP_VARIABLE_OR_ARRAY == wordType;
-        boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
-
-        if (isWrappedInParenthesis) {
-            boolean isShiftablePhpArray =
-                    isPhpVariableOrArray &&
-                    PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
-
-            if (!isPhpVariableOrArray ||
-                !isShiftablePhpArray
-            ) {
-                // Swap surrounding "(" and ")" versus "[" and "]"
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(
-                                parenthesis.getShifted(actionContainer.selectedText)),
-                        parenthesis.ACTION_TEXT);
-                return;
-            }
-
-            if (parenthesis.shiftSelectionInDocument(moreCount)) return;
-        }
-
-        if (null != (shiftable = new Css(actionContainer).getInstance()) ||
+            null != (shiftable = new XmlAttributes(actionContainer).getInstance()) ||
+            null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
+            null != (shiftable = new Css(actionContainer).getInstance()) ||
             null != (shiftable = new TernaryExpression(actionContainer).getInstance()) ||
             null != (shiftable = new MultipleLines(actionContainer).getInstance()) ||
             null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
@@ -128,8 +92,9 @@ public class ShiftableSelection {
                 actionContainer.isShiftUp);
             return;
         }
+
         if (isJsConcatenationInTypeScript) {
-            if (containsShiftableQuotes) {
+            if (QuotedString.containsShiftableQuotes(actionContainer.selectedText)) {
                 // Can toggle quotes or convert to interpolation
                 new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument(actionContainer.isShiftUp);
                 return;
