@@ -15,9 +15,6 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.notification.Notification;
-import com.intellij.notification.NotificationType;
-import com.intellij.notification.Notifications;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.CssUnit;
