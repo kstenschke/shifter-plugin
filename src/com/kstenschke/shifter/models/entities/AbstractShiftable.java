@@ -17,9 +17,7 @@ package com.kstenschke.shifter.models.entities;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
-import com.kstenschke.shifter.models.entities.shiftables.Tupel;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 
 import javax.annotation.Nullable;
 

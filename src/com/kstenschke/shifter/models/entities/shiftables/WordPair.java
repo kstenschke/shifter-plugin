@@ -18,10 +18,9 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
-import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import org.jetbrains.annotations.NotNull;
 
+import org.jetbrains.annotations.NotNull;
 import javax.annotation.Nullable;
 
 public class WordPair extends SeparatedPath {
@@ -52,16 +51,6 @@ public class WordPair extends SeparatedPath {
         String words[] = str.split(getWordsGlue(str));
 
         return words[1] + "-" + words[0];
-    }
-
-    public String getShifted(
-            String word,
-            Integer moreCount,
-            String leadWhitespace,
-            boolean updateInDocument,
-            boolean disableIntentionPopup
-    ) {
-        return super.getShifted(word, moreCount, leadWhitespace, updateInDocument, disableIntentionPopup);
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {

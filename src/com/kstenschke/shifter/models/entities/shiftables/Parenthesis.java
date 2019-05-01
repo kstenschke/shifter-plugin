@@ -22,8 +22,6 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 
 import javax.annotation.Nullable;
 
-import static com.kstenschke.shifter.models.ShiftableTypes.Type.PHP_VARIABLE_OR_ARRAY;
-
 // Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
 public class Parenthesis extends AbstractShiftable {
 

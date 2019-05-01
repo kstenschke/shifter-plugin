@@ -19,6 +19,7 @@ import com.kstenschke.shifter.models.entities.shiftables.JsDoc;
 import com.kstenschke.shifter.models.entities.shiftables.PhpDocParam;
 import com.kstenschke.shifter.models.entities.shiftables.HtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsFile;
+
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -49,7 +50,7 @@ public class ShiftableLine {
         actionContainer.shiftSelectedText = false;
         actionContainer.shiftCaretLine = true;
 
-        //ShiftableTypeAbstract shiftableType;
+        //AbstractShiftable shiftable;
 
         PhpDocParam phpDocParam = new PhpDocParam(actionContainer);
         if (UtilsFile.isPhpFile(actionContainer.filename) &&
@@ -63,8 +64,11 @@ public class ShiftableLine {
             if (!shiftedLine.equals(actionContainer.caretLine)) return shiftedLine;
         }
 
-        if (   UtilsFile.isJavaScriptFile(actionContainer.filename, true)
-            && (JsDoc.isAtParamLine(actionContainer.caretLine) || JsDoc.isAtTypeLine(actionContainer.caretLine) || JsDoc.isAtReturnsLine(actionContainer.caretLine, true))
+        if (UtilsFile.isJavaScriptFile(actionContainer.filename, true) &&
+            (JsDoc.isAtParamLine(actionContainer.caretLine) ||
+             JsDoc.isAtTypeLine(actionContainer.caretLine) ||
+             JsDoc.isAtReturnsLine(actionContainer.caretLine, true)
+            )
         ) {
             String shiftedLine = JsDoc.correctAtKeywordLine(actionContainer.caretLine);
             if (!shiftedLine.equals(actionContainer.caretLine)) return shiftedLine;

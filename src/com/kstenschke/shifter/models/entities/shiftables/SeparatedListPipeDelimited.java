@@ -18,18 +18,10 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
-import com.kstenschke.shifter.models.comparators.AlphanumComparator;
-import com.kstenschke.shifter.models.entities.AbstractShiftable;
-import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsTextual;
-import org.apache.commons.lang.StringUtils;
 
+import org.apache.commons.lang.StringUtils;
 import javax.annotation.Nullable;
-import javax.swing.*;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.regex.Pattern;
 
 // Separated list (delimiters e.g: ",", "|")
@@ -79,19 +71,6 @@ public class SeparatedListPipeDelimited extends SeparatedList {
 
     public ShiftableTypes.Type getType() {
         return ShiftableTypes.Type.SEPARATED_LIST;
-    }
-
-    /**
-     * @return Given delimiter separated list, sorted (natural) alphabetically ascending / descending
-     */
-    public String getShifted(
-            String word,
-            Integer moreCount,
-            String leadWhitespace,
-            boolean updateInDocument,
-            boolean disableIntentionPopup
-    ) {
-        return super.getShifted(word, moreCount, leadWhitespace, updateInDocument, disableIntentionPopup);
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {

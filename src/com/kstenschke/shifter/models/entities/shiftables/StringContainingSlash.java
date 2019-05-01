@@ -15,16 +15,13 @@
  */
 package com.kstenschke.shifter.models.entities.shiftables;
 
-import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
-import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.List;
+import org.jetbrains.annotations.Nullable;
 
 public class StringContainingSlash extends AbstractShiftable {
 
