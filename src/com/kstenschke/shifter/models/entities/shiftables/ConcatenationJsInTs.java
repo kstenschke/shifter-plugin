@@ -16,12 +16,13 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.jetbrains.annotations.Nullable;
 
 // JavaScript concatenation in TypeScript file: shift into interpolation
-public class JsConcatenation extends AbstractShiftable {
+public class ConcatenationJsInTs extends ConcatenationJs {
 
     public final String ACTION_TEXT = "Convert to interpolation";
 
@@ -29,30 +30,25 @@ public class JsConcatenation extends AbstractShiftable {
     private int amountStrings = 0;
 
     // Constructor
-    public JsConcatenation(@Nullable ActionContainer actionContainer) {
+    public ConcatenationJsInTs(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
     // Get instance or null if not applicable
-    public JsConcatenation getInstance(@Nullable Boolean checkIfShiftable) {
-        if (// @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
+    public ConcatenationJsInTs getInstance(@Nullable Boolean checkIfShiftable) {
+        if (!"ts".equals(actionContainer.fileExtension) ||
+            null == super.getInstance(checkIfShiftable)
         ) return null;
 
-        String str = actionContainer.selectedText;
-        if (!str.contains("+") ||
-            str.replaceAll("[\\s|\\d]", "").length() < 3) {
-            return null;
-        }
+        getShifted(actionContainer.selectedText);
 
-        getShifted(str);
-
-        return amountStrings > 0 && amountVariables > 0
+        return amountStrings > 0 &&
+               amountVariables > 0
                 ? this : null;
     }
 
     public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.JS_CONCATENATION;
+        return ShiftableTypes.Type.CONCATENATION_JS_IN_TS;
     }
 
     /**
@@ -149,6 +145,16 @@ public class JsConcatenation extends AbstractShiftable {
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        return false;
+        if (QuotedString.containsShiftableQuotes(actionContainer.selectedText)) {
+            // Can toggle quotes or convert to interpolation
+            new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument(actionContainer.isShiftUp);
+        } else {
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(
+                            getShifted(actionContainer.selectedText)),
+                    ACTION_TEXT);
+        }
+
+        return true;
     }
 }

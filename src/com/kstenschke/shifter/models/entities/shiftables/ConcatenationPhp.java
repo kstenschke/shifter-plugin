@@ -22,7 +22,7 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 // PHP Variable (word w/ $ prefix)
-public class PhpConcatenation extends AbstractShiftable {
+public class ConcatenationPhp extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift PHP Concatenation";
 
@@ -36,7 +36,7 @@ public class PhpConcatenation extends AbstractShiftable {
     private String partRHS = null;
 
     // Constructor
-    public PhpConcatenation(ActionContainer actionContainer) {
+    public ConcatenationPhp(ActionContainer actionContainer) {
         super(actionContainer);
 
         // @todo make shiftable also in non-selection
@@ -66,12 +66,12 @@ public class PhpConcatenation extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public PhpConcatenation getInstance(@Nullable Boolean checkIfShiftable) {
+    public ConcatenationPhp getInstance(@Nullable Boolean checkIfShiftable) {
         return isShiftable && isPhpConcatenation ? this : null;
     }
 
     public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.PHP_CONCATENATION;
+        return ShiftableTypes.Type.CONCATENATION_PHP;
     }
 
     /**

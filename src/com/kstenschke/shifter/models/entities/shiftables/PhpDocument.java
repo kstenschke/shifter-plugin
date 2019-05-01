@@ -20,7 +20,6 @@ import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
-import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.PHP_DOCUMENT;
@@ -63,10 +62,10 @@ public class PhpDocument extends AbstractShiftable {
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
         AbstractShiftable shiftableType;
 
-        final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer);
-        if (null != phpConcatenation.getInstance()) {
+        final ConcatenationPhp concatenationPhp = new ConcatenationPhp(actionContainer);
+        if (null != concatenationPhp.getInstance()) {
             actionContainer.writeUndoable(
-                    () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation),
+                    () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(concatenationPhp),
                     ACTION_TEXT_SHIFT_SELECTION);
             return true;
         }

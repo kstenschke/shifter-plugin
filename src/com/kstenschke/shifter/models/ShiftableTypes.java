@@ -63,10 +63,9 @@ public class ShiftableTypes {
 
         TRAILING_COMMENT,
 
-        // w/o use (but debugging)
         XML_ATTRIBUTES,
-        JS_CONCATENATION,
-        PHP_CONCATENATION,
+        CONCATENATION_JS,
+        CONCATENATION_PHP,
         PHP_DOC_PARAM,
         DICTIONARY_WORD,
         SEPARATED_LIST,
@@ -79,6 +78,7 @@ public class ShiftableTypes {
         STRING_CONTAINING_SLASHES,
         // @todo merge into words_tupel
         WORD_PAIR,
-        MULTIPLE_LINES
+        MULTIPLE_LINES,
+        CONCATENATION_JS_IN_TS
     }
 }

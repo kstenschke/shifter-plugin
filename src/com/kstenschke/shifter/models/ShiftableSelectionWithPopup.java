@@ -59,12 +59,12 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         if (containsEscapedQuotes) shiftOptions.add(StaticTexts.SHIFT_UNESCAPE_QUOTES);
     }
 
-    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
+    public void shiftPhpConcatenationOrSwapQuotesInDocument(final ConcatenationPhp concatenationPhp) {
         if (!containsShiftableQuotes) {
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    phpConcatenation.getShifted(null));
+                    concatenationPhp.getShifted(null));
             return;
         }
 
@@ -72,7 +72,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftOptions.add(StaticTexts.SHIFT_CONCATENATION_ITEMS_SWAP_ORDER);
         addQuoteShiftingOptions(shiftOptions);
 
-        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, phpConcatenation, null, null);
+        shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, concatenationPhp, null, null);
     }
 
     public void sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
@@ -100,6 +100,10 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
 
+        if (isJsConcatenation) {
+            actionContainer.delimiter = ",";
+        }
+
         List<String> shiftOptions = new ArrayList<>();
         if (isJsConcatenation) shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
 
@@ -111,7 +115,9 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, delimiterGlue);
     }
 
-    void interpolateConcatenationOrSwapQuotesInDocument(final boolean isUp) {
+    public void interpolateConcatenationOrSwapQuotesInDocument(final boolean isUp) {
+        actionContainer.delimiter = ",";
+
         String delimiterSplitPattern = "\\|(\\s)*";
         List<String> shiftOptions = new ArrayList<>();
 
@@ -190,7 +196,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     private void shiftSelectionByPopupInDocument(
             List<String> shiftOptions,
             final boolean isUp,
-            @Nullable final PhpConcatenation phpConcatenation,
+            @Nullable final ConcatenationPhp concatenationPhp,
             @Nullable final String delimiterSplitPattern,
             @Nullable final String delimiterGlue
     ) {
@@ -203,7 +209,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             CommandProcessor.getInstance().executeCommand(actionContainer.project, () -> shiftSelectionByModeInDocument(
                     modes.getSelectedValue().toString(),
                     isUp,
-                    phpConcatenation, delimiterSplitPattern, delimiterGlue),
+                    concatenationPhp, delimiterSplitPattern, delimiterGlue),
                     null, null);
         })).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
     }
@@ -211,25 +217,25 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     private void shiftSelectionByModeInDocument(
             String mode,
             boolean isUp,
-            @Nullable PhpConcatenation phpConcatenation,
+            @Nullable ConcatenationPhp concatenationPhp,
             @Nullable String delimiterSplitPattern,
             @Nullable String delimiterGlue
     ) {
         AbstractShiftable shiftableType;
 
         if (mode.equals(StaticTexts.SHIFT_CONCATENATION_ITEMS_SWAP_ORDER)) {
-            assert null != phpConcatenation;
+            assert null != concatenationPhp;
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    phpConcatenation.getShifted(null));
+                    concatenationPhp.getShifted(null));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION)) {
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
                     actionContainer.offsetSelectionEnd,
-                    new JsConcatenation(actionContainer).getShifted(actionContainer.selectedText));
+                    new ConcatenationJs(actionContainer).getShifted(actionContainer.selectedText));
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_UNESCAPE_QUOTES)) {

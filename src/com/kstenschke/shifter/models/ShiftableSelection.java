@@ -24,8 +24,6 @@ import org.jetbrains.annotations.Nullable;
 import javax.swing.*;
 import java.util.List;
 
-import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
-
 // Shiftable (non-block) selection
 public class ShiftableSelection {
 
@@ -68,59 +66,23 @@ public class ShiftableSelection {
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
             null != (shiftable = new TrailingComment(actionContainer).getInstance()) ||
             null != (shiftable = new PhpDocument(actionContainer).getInstance()) ||
-            null != (shiftable = new SeparatedList(actionContainer).getInstance())
-        ) {
-            if (shiftable.shiftSelectionInDocument(moreCount)) return;
-        }
-
-        final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance(null);
-        boolean isLogicalConjunction = null != logicalConjunction;
-
-        JsConcatenation jsConcatenation = new JsConcatenation(actionContainer);
-        boolean isJsConcatenationInTypeScript = "ts".equals(actionContainer.fileExtension) &&
-                null != jsConcatenation.getInstance();
-        if (isJsConcatenationInTypeScript) actionContainer.delimiter = ",";
-
-        if ((!isLogicalConjunction || !logicalConjunction.isOrLogic) &&
-             null != new SeparatedList(actionContainer).getInstance()
-        ) {
-            // Pipe-separated list (not confused w/ || of logical conjunctions)
-            new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
-                "\\|(\\s)*",
-                "|",
-                isJsConcatenationInTypeScript,
-                actionContainer.isShiftUp);
-            return;
-        }
-
-        if (isJsConcatenationInTypeScript) {
-            if (QuotedString.containsShiftableQuotes(actionContainer.selectedText)) {
-                // Can toggle quotes or convert to interpolation
-                new ShiftableSelectionWithPopup(actionContainer).interpolateConcatenationOrSwapQuotesInDocument(actionContainer.isShiftUp);
-                return;
-            } else {
-                // @todo add popup: toggle order or convert to interpolation
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(
-                                jsConcatenation.getShifted(actionContainer.selectedText)),
-                        jsConcatenation.ACTION_TEXT);
-                return;
-            }
-        }
-
-        if (null != (shiftable = new QuotedString(actionContainer).getInstance(null)) ||
+            null != (shiftable = new SeparatedList(actionContainer).getInstance()) ||
+            null != (shiftable = new SeparatedListPipeDelimited(actionContainer).getInstance()) ||
+            null != (shiftable = new ConcatenationJsInTs(actionContainer).getInstance()) ||
+            null != (shiftable = new QuotedString(actionContainer).getInstance(null)) ||
             null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
             null != (shiftable = new WordPair(actionContainer).getInstance()) ||
             null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
             null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
-            null != (shiftable = logicalConjunction) ||
+            null != (shiftable = new LogicalConjunction(actionContainer).getInstance(null)) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
             null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())
         ) {
             if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
 
+        // @todo call from within shiftSelectionInDocument()
         shiftable.replaceSelectionWithShiftedMaintainingCasing(
                 shiftableTypesManager.getShiftedWord(actionContainer, moreCount));
     }

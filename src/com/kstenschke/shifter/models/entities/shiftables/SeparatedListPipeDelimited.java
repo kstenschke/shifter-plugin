@@ -18,8 +18,8 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
-import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -33,23 +33,23 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 // Separated list (delimiters e.g: ",", "|")
-public class SeparatedList extends AbstractShiftable {
+public class SeparatedListPipeDelimited extends SeparatedList {
 
     public final String ACTION_TEXT = "Shift List";
 
     // Constructor
-    public SeparatedList(@Nullable ActionContainer actionContainer) {
+    public SeparatedListPipeDelimited(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
     // Get instance or null if not applicable
-    public SeparatedList getInstance(@Nullable Boolean checkIfShiftable) {
+    public SeparatedListPipeDelimited getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 
         String str = actionContainer.selectedText;
-        String delimiter = actionContainer.delimiter.isEmpty() ? "," : actionContainer.delimiter;
+        String delimiter = "|";
 
         if (!str.contains(delimiter)
             || str.trim().length() == delimiter.length()
@@ -69,13 +69,12 @@ public class SeparatedList extends AbstractShiftable {
 
         if ((amountDelimiters + 1) * 2 != amountQuotes) return null;
 
-        if (delimiter.equals("|")) {
-            // Pipe-separated list (not confused w/ || of logical conjunctions)
-            LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance(null);
-            if (null != logicalConjunction && logicalConjunction.isOrLogic) return null;
-        }
+        // Ensure not confusing w/ || of logical conjunctions
+        LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance(null);
 
-        return this;
+        return null != logicalConjunction &&
+               logicalConjunction.isOrLogic
+                    ? null : this;
     }
 
     public ShiftableTypes.Type getType() {
@@ -92,38 +91,14 @@ public class SeparatedList extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        String[] items = actionContainer.selectedText.split(actionContainer.delimiterSplitPattern);
-        if (items.length == 2) {
-            // Only 2 items: treat as tupel - always toggle order
-            return items[1] + actionContainer.delimiterGlue + items[0];
-        }
-
-        List itemsList = Arrays.asList(items);
-        // @note sorting itemsList, does also update items
-        itemsList.sort(new AlphanumComparator());
-
-        if (UtilsArray.hasDuplicateItems(items) && JOptionPane.showConfirmDialog(
-                null,
-                StaticTexts.MESSAGE_REDUCE_DUPLICATED_ITEMS,
-                StaticTexts.TITLE_REDUCE_DUPLICATED_ITEMS,
-                JOptionPane.OK_CANCEL_OPTION
-        ) == JOptionPane.OK_OPTION) {
-            items = UtilsArray.reduceDuplicateItems(items);
-        }
-
-        if (!actionContainer.isShiftUp) {
-            Collections.reverse(Arrays.asList(items));
-        }
-
-        return UtilsArray.implode(items, actionContainer.delimiterGlue);
+        return super.getShifted(word, moreCount, leadWhitespace, updateInDocument, disableIntentionPopup);
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        // Comma-separated list w/ or w/o items wrapped in quotes: sort / ask whether to sort or toggle quotes
         new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
-                ",(\\s)*",
-                ", ",
-                true,
+                "\\|(\\s)*",
+                "|",
+                null != new ConcatenationJsInTs(actionContainer).getInstance(),
                 actionContainer.isShiftUp);
         return true;
     }
