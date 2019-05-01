@@ -207,18 +207,9 @@ public class ShiftableSelection {
 
             return;
         }
-        if (UtilsTextual.containsSlashes(actionContainer.selectedText)) {
-            if (QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
-                new ShiftableSelectionWithPopup(actionContainer).swapSlashesOrUnescapeQuotes();
-                return;
-            }
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(UtilsTextual.swapSlashes(actionContainer.selectedText)),
-                    ACTION_TEXT_SWAP_SLASHES);
-            return;
-        }
 
-        if (null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
+        if (null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
+            null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
             null != (shiftable = logicalConjunction) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
             null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())

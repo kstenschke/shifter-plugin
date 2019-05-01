@@ -75,6 +75,7 @@ public class ShiftableTypes {
         CSS,
         JS_DOC,
         LOGICAL_CONJUNCTION,
-        PHP_DOCUMENT
+        PHP_DOCUMENT,
+        STRING_CONTAINING_SLASHES
     }
 }

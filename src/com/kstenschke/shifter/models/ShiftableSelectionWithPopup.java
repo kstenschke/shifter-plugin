@@ -140,7 +140,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    void swapSlashesOrUnescapeQuotes() {
+    public void swapSlashesOrUnescapeQuotes() {
         List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_SLASHES_SWAP);
         addQuoteShiftingOptions(shiftOptions);
