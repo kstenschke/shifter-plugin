@@ -125,16 +125,9 @@ public class ShiftableSelection {
             }
         }
 
-        if (null != (shiftable = new JqueryObserver(actionContainer).getInstance())) {
-            if (shiftable.shiftSelectionInDocument()) return;
-        }
-
-        if (!isPhpVariableOrArray && SIZZLE_SELECTOR == wordType) {
-            shiftable = new SizzleSelector(actionContainer);
-            if (shiftable.shiftSelectionInDocument()) return;
-        }
-
-        if (null != (shiftable = new TrailingComment(actionContainer).getInstance())) {
+        if (null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
+            null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
+            null != (shiftable = new TrailingComment(actionContainer).getInstance())) {
             if (shiftable.shiftSelectionInDocument()) return;
         }
 
