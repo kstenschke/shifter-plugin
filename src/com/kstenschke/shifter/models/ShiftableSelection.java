@@ -31,8 +31,6 @@ public class ShiftableSelection {
 
     static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
 
-    private static final String ACTION_TEXT_SWAP_QUOTES      = "Swap Quotes";
-
     /**
      * @param actionContainer
      * @param moreCount     Current "more" count, starting w/ 1. If non-more shift: null
@@ -164,19 +162,9 @@ public class ShiftableSelection {
                 return;
             }
         }
-        if (containsShiftableQuotes) {
-            if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
-                actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(
-                                UtilsTextual.swapQuotes(actionContainer.selectedText)),
-                        ACTION_TEXT_SWAP_QUOTES);
-                return;
-            }
-            new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
-            return;
-        }
 
-        if (null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
+        if (null != (shiftable = new QuotedString(actionContainer).getInstance(null)) ||
+            null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
             null != (shiftable = new WordPair(actionContainer).getInstance()) ||
             null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
             null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||

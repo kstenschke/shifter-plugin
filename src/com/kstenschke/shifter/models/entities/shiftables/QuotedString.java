@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -28,6 +29,7 @@ import java.util.List;
 public class QuotedString extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift Quotes";
+    private static final String ACTION_TEXT_SWAP_QUOTES = "Swap Quotes";
 
     private String quoteChar;
 
@@ -38,6 +40,8 @@ public class QuotedString extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be wrapped in quote characters
     public QuotedString getInstance(@Nullable Boolean checkIfShiftable) {
+        if (!QuotedString.containsShiftableQuotes(actionContainer.selectedText)) return null;
+
         quoteChar = actionContainer.prefixChar;
 
         // Must be wrapped in single-, double quotes, or backticks
@@ -55,6 +59,7 @@ public class QuotedString extends AbstractShiftable {
     }
 
     public static boolean containsShiftableQuotes(String str) {
+        // @todo add backticks handling
         return (ShifterPreferences.getIsActiveConvertSingleQuotes() && str.contains("'"))
             || (ShifterPreferences.getIsActiveConvertDoubleQuotes() && str.contains("\""));
     }
@@ -92,6 +97,15 @@ public class QuotedString extends AbstractShiftable {
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        return false;
+        if (!QuotedString.containsEscapedQuotes(actionContainer.selectedText)) {
+            actionContainer.writeUndoable(
+                    actionContainer.getRunnableReplaceSelection(
+                            UtilsTextual.swapQuotes(actionContainer.selectedText)),
+                    ACTION_TEXT_SWAP_QUOTES);
+            return true;
+        }
+        new ShiftableSelectionWithPopup(actionContainer).shiftQuotesInDocument();
+
+        return true;
     }
 }

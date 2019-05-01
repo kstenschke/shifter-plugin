@@ -133,7 +133,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    void shiftQuotesInDocument() {
+    public void shiftQuotesInDocument() {
         List<String> shiftOptions = new ArrayList<>();
         addQuoteShiftingOptions(shiftOptions);
 
