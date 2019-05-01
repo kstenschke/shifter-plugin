@@ -182,16 +182,9 @@ public class ShiftableSelection {
                     CamelCaseString.isWordPair(actionContainer.selectedText));
             return;
         }
-        // @todo split path and wordPair into separate types
-        SeparatedPath separatedPath = new SeparatedPath(actionContainer);
-        if (null != separatedPath.getInstance() &&
-            separatedPath.isWordPair(actionContainer.selectedText)
-        ) {
-            new ShiftableSelectionWithPopup(actionContainer).shiftSeparatedPathOrSwapWords();
-            return;
-        }
 
-        if (null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
+        if (null != (shiftable = new WordPair(actionContainer).getInstance()) ||
+            null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
             null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
             null != (shiftable = logicalConjunction) ||

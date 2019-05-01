@@ -179,7 +179,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    void shiftSeparatedPathOrSwapWords() {
+    public void shiftSeparatedPathOrSwapWords() {
         List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_PATH_TO_CAMEL_CASE);
         shiftOptions.add(StaticTexts.SHIFT_PATH_PAIR_SWAP_ORDER);

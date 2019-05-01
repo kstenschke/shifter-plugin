@@ -76,6 +76,8 @@ public class ShiftableTypes {
         JS_DOC,
         LOGICAL_CONJUNCTION,
         PHP_DOCUMENT,
-        STRING_CONTAINING_SLASHES
+        STRING_CONTAINING_SLASHES,
+        // @todo merge into words_tupel
+        WORD_PAIR
     }
 }
