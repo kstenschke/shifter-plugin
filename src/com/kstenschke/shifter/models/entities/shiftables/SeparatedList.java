@@ -43,7 +43,7 @@ public class SeparatedList extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public SeparatedList getInstance() {
+    public SeparatedList getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;

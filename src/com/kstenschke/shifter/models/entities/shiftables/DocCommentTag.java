@@ -20,8 +20,8 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsArray;
 import com.kstenschke.shifter.utils.UtilsFile;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -49,7 +49,7 @@ public class DocCommentTag extends AbstractShiftable {
 
     // Get instance or null if not applicable:
     // Caret line must be a data type (number / integer / string /...) from a DOC comment (param / return /...))
-    public AbstractShiftable getInstance() {
+    public AbstractShiftable getInstance(@Nullable Boolean checkIfShiftable) {
         String line = actionContainer.caretLine;
 
         return "@".equals(actionContainer.prefixChar) && isDocCommentLineContext(line) ? this : null;

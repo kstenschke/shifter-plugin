@@ -32,7 +32,7 @@ public class NumericPostfixed extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public NumericPostfixed getInstance() {
+    public NumericPostfixed getInstance(@Nullable Boolean checkIfShiftable) {
         String word = actionContainer.getStringToBeShifted();
 
         // @todo improve regex (integrate all conditions)

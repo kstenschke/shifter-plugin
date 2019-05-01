@@ -17,6 +17,7 @@ package com.kstenschke.shifter.models.entities;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.entities.shiftables.Tupel;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.sun.org.apache.xpath.internal.operations.Bool;
 
@@ -37,7 +38,10 @@ public abstract class AbstractShiftable {
     }
 
     // Get shiftable instance or null if not applicable
-    abstract public AbstractShiftable getInstance();
+    abstract public AbstractShiftable getInstance(Boolean checkIfShiftable);
+    public AbstractShiftable getInstance() {
+        return getInstance(null);
+    }
 
     abstract public ShiftableTypes.Type getType();
 

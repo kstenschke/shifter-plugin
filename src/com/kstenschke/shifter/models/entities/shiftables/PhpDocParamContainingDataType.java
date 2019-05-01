@@ -33,7 +33,7 @@ public class PhpDocParamContainingDataType extends PhpDocParam {
     }
 
     // Get instance or null if not applicable: string must be a PHP variable
-    public PhpDocParamContainingDataType getInstance() {
+    public PhpDocParamContainingDataType getInstance(@Nullable Boolean checkIfShiftable) {
         boolean shiftSelectedTextWas = actionContainer.shiftSelectedText;
         boolean shiftCaretLineWas = actionContainer.shiftCaretLine;
 

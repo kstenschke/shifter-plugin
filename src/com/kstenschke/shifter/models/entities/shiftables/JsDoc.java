@@ -23,8 +23,7 @@ import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NonNls;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 
@@ -44,7 +43,7 @@ public class JsDoc extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public JsDoc getInstance() {
+    public JsDoc getInstance(@Nullable Boolean checkIfShiftable) {
         if (!UtilsFile.isJavaScriptFile(actionContainer.filename, true)) return null;
 
         return isJsDocBlock(actionContainer.selectedText)

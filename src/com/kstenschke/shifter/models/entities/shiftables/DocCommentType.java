@@ -18,8 +18,8 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -36,7 +36,7 @@ public class DocCommentType extends AbstractShiftable {
     // Get instance or null if not applicable:
     // Check whether given String represents a data type (number / integer / string /...)
     // from a DOC comment (param / return /...)
-    public AbstractShiftable getInstance() {
+    public AbstractShiftable getInstance(@Nullable Boolean checkIfShiftable) {
         if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return null;
 
         AbstractShiftable shiftableType = new DocCommentTag(actionContainer);

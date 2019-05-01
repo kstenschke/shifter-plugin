@@ -21,8 +21,8 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.CssAttributesStyleLineComparator;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -39,7 +39,7 @@ public class Css extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public Css getInstance() {
+    public Css getInstance(@Nullable Boolean checkIfShiftable) {
         return null != actionContainer &&
                UtilsFile.isCssFile(actionContainer.filename) &&
                UtilsTextual.isMultiLine(actionContainer.selectedText)

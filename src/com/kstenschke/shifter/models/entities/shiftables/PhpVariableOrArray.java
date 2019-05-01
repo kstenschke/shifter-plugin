@@ -45,7 +45,7 @@ public class PhpVariableOrArray extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public PhpVariableOrArray getInstance() {
+    public PhpVariableOrArray getInstance(@Nullable Boolean checkIfShiftable) {
         String word = actionContainer.getStringToBeShifted();
         if (null == word || word.length() < 2) return null;
 

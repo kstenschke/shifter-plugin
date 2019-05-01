@@ -19,8 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.StaticWordType;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // Pixel value class
 public class AccessType extends AbstractShiftable {
@@ -35,7 +34,7 @@ public class AccessType extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public AccessType getInstance() {
+    public AccessType getInstance(@Nullable Boolean checkIfShiftable) {
         if ("@".equals(actionContainer.prefixChar)) return null;
 
         String word = actionContainer.getStringToBeShifted();

@@ -250,7 +250,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_TUPEL_WORDS_ORDER)) {
-            Tupel tupel = new Tupel(actionContainer).getInstance();
+            Tupel tupel = new Tupel(actionContainer).getInstance(false);
             actionContainer.disableIntentionPopup = true;
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,

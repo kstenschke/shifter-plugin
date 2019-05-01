@@ -32,7 +32,7 @@ public class OperatorSign extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public OperatorSign getInstance() {
+    public OperatorSign getInstance(@Nullable Boolean checkIfShiftable) {
         String word = actionContainer.firstChar == null
                 ? actionContainer.selectedText
                 : actionContainer.firstChar;

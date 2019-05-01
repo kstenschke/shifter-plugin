@@ -19,8 +19,8 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.List;
 
@@ -44,7 +44,7 @@ class DocCommentDataType extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public DocCommentDataType getInstance() {
+    public DocCommentDataType getInstance(@Nullable Boolean checkIfShiftable) {
         return null != actionContainer &&
                !("#".equals(actionContainer.prefixChar) || "@".equals(actionContainer.prefixChar))
                     ? this : null;

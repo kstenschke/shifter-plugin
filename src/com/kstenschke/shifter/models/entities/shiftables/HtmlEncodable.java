@@ -19,8 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringEscapeUtils;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // HTML encoded/encode-able (=containing char(s) that be be encoded) String.
 public class HtmlEncodable extends AbstractShiftable {
@@ -34,7 +33,7 @@ public class HtmlEncodable extends AbstractShiftable {
 
     // Get instance or null if not applicable:
     // Shiftable sting must be encode-able to an HTML special char / or is already HTML encoded
-    public HtmlEncodable getInstance() {
+    public HtmlEncodable getInstance(@Nullable Boolean checkIfShiftable) {
         String str = actionContainer.shiftCaretLine
                 ? actionContainer.caretLine
                 : actionContainer.selectedText;

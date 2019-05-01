@@ -31,8 +31,6 @@ public class ShiftableSelection {
 
     static final String ACTION_TEXT_SHIFT_SELECTION = "Shift Selection";
 
-    private static final String ACTION_TEXT_SWAP_SLASHES     = "Swap Slashes";
-    private static final String ACTION_TEXT_SWAP_WORDS_ORDER = "Swap Words Order";
     private static final String ACTION_TEXT_SWAP_QUOTES      = "Swap Quotes";
 
     /**
@@ -133,7 +131,7 @@ public class ShiftableSelection {
             if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
 
-        final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance();
+        final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance(null);
         boolean isLogicalConjunction = null != logicalConjunction;
 
         JsConcatenation jsConcatenation = new JsConcatenation(actionContainer);
@@ -193,22 +191,8 @@ public class ShiftableSelection {
             return;
         }
 
-        final Tupel wordsTupel = new Tupel(actionContainer);
-        if (null != wordsTupel.getInstance()) {
-            actionContainer.disableIntentionPopup = false;
-            final String replacement = wordsTupel.getShifted(actionContainer.selectedText);
-            if (!replacement.isEmpty()) {
-                /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
-                 * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
-                 * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
-                 */
-                actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(replacement), ACTION_TEXT_SWAP_WORDS_ORDER);
-            }
-
-            return;
-        }
-
-        if (null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
+        if (null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
+            null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
             null != (shiftable = logicalConjunction) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||

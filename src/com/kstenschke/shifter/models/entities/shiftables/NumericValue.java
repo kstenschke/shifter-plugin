@@ -50,7 +50,7 @@ public class NumericValue extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable: selected text must be a CSS length value
-    public NumericValue getInstance() {
+    public NumericValue getInstance(@Nullable Boolean checkIfShiftable) {
         String str = actionContainer.getStringToBeShifted();
 
         return str.matches("[0-9]+")

@@ -22,8 +22,8 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.StaticWordType;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -55,7 +55,7 @@ public class DictionaryWord extends AbstractShiftable {
     // Check whether the given term exists in any section of shift-lists of the dictionary
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
-    public DictionaryWord getInstance() {
+    public DictionaryWord getInstance(@Nullable Boolean checkIfShiftable) {
         return null != actionContainer &&
                null != actionContainer.fileExtension &&
                isTermInAnyDictionary()

@@ -36,7 +36,7 @@ public class StringContainingSlash extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable: string must be wrapped in quote characters
-    public StringContainingSlash getInstance() {
+    public StringContainingSlash getInstance(@Nullable Boolean checkIfShiftable) {
         return  UtilsTextual.containsSlashes(actionContainer.selectedText) ? this : null;
     }
 

@@ -30,6 +30,7 @@ import java.util.regex.Pattern;
 public class Tupel extends AbstractShiftable {
 
     public static final String ACTION_TEXT = "Shift Tupel";
+    private static final String ACTION_TEXT_SWAP_WORDS_ORDER = "Swap Words Order";
 
     // Defined during detection of being a tupel
     private String delimiter;
@@ -40,7 +41,7 @@ public class Tupel extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public Tupel getInstance() {
+    public Tupel getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
@@ -69,11 +70,25 @@ public class Tupel extends AbstractShiftable {
             String parts[] = str.split("\\s*" + Pattern.quote(glue) + "\\s*");
             if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
                 delimiter = glue;
-                return this;
+                return (null == checkIfShiftable ||
+                        !checkIfShiftable ||
+                        checkIfShiftable()) ? this : null;
             }
         }
 
         return null;
+    }
+
+    private boolean checkIfShiftable() {
+        boolean disableIntentionPopup = actionContainer.disableIntentionPopup;
+        actionContainer.disableIntentionPopup = false;
+
+        final String shifted = getShifted(actionContainer.selectedText);
+        if (shifted.isEmpty()) {
+            actionContainer.disableIntentionPopup = disableIntentionPopup;
+            return false;
+        }
+        return true;
     }
 
     public ShiftableTypes.Type getType() {
@@ -112,8 +127,16 @@ public class Tupel extends AbstractShiftable {
         return getShifted(str);
     }
 
+    /* If there is a selection, and it is a words tupel and at the same time a dictionary term,
+     * an intention popup is opened to chose whether to 1. Swap words order or 2. Shift dictionaric
+     * The manipulation of 2. is done already, 1. returns the replacement string (if it is not a dictionary term also)
+     */
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        return false;
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        getShifted(actionContainer.selectedText)),
+                ACTION_TEXT_SWAP_WORDS_ORDER);
+        return true;
     }
 
     @NotNull

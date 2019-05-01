@@ -21,8 +21,8 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsMap;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
 import java.util.HashMap;
 
 // Pixel value class
@@ -49,7 +49,7 @@ public class CssUnit extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable (selected text not a CSS length value)
-    public CssUnit getInstance() {
+    public CssUnit getInstance(@Nullable Boolean checkIfShiftable) {
         String str = actionContainer.getStringToBeShifted();
 
         return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)") ? this : null;

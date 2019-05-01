@@ -19,8 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // JavaScript Variables (multi-lined declarations of multiple vars)
 public class JqueryObserver extends AbstractShiftable {
@@ -39,7 +38,7 @@ public class JqueryObserver extends AbstractShiftable {
     // -each trimmed line ends w/ ";"
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
-    public JqueryObserver getInstance() {
+    public JqueryObserver getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText ||
             null == actionContainer.fileExtension ||

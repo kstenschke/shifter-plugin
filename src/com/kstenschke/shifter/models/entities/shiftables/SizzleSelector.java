@@ -33,7 +33,7 @@ public class SizzleSelector extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable: string must be a declaration of JS variables
-    public SizzleSelector getInstance() {
+    public SizzleSelector getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;

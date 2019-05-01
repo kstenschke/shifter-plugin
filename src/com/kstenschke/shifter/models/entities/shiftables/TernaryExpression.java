@@ -33,7 +33,7 @@ public class TernaryExpression extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable: string must be a ternary expression
-    public TernaryExpression getInstance() {
+    public TernaryExpression getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;

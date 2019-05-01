@@ -20,8 +20,7 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // "camelCase" and "TitleCase" strings
 public class CamelCaseString extends AbstractShiftable {
@@ -39,7 +38,7 @@ public class CamelCaseString extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public CamelCaseString getInstance() {
+    public CamelCaseString getInstance(@Nullable Boolean checkIfShiftable) {
         String str = actionContainer.getStringToBeShifted();
 
         return !UtilsTextual.startsNumeric(str) &&

@@ -18,8 +18,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // JavaScript concatenation in TypeScript file: shift into interpolation
 public class JsConcatenation extends AbstractShiftable {
@@ -35,7 +34,7 @@ public class JsConcatenation extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public JsConcatenation getInstance() {
+    public JsConcatenation getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;

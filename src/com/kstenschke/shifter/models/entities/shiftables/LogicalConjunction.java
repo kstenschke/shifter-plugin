@@ -35,7 +35,7 @@ public class LogicalConjunction extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public LogicalConjunction getInstance() {
+    public LogicalConjunction getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;

@@ -21,8 +21,7 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class DictionaryWordOfSpecificFileType extends DictionaryWord {
 
@@ -50,7 +49,7 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
     // Check whether the given term exists in any section of shift-lists of the dictionary
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
-    public DictionaryWordOfSpecificFileType getInstance() {
+    public DictionaryWordOfSpecificFileType getInstance(@Nullable Boolean checkIfShiftable) {
         if (null == super.getInstance()) return null;
 
         return isInFileTypeDictionary();

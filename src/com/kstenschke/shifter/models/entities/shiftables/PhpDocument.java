@@ -38,7 +38,7 @@ public class PhpDocument extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public PhpDocument getInstance() {
+    public PhpDocument getInstance(@Nullable Boolean checkIfShiftable) {
         return UtilsFile.isPhpFile(actionContainer.filename) &&
                null != actionContainer.selectedText
                 ? this

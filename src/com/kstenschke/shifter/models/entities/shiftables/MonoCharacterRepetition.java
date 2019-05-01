@@ -33,7 +33,7 @@ public class MonoCharacterRepetition extends AbstractShiftable {
     }
 
     // Get instance or null if not applicable
-    public MonoCharacterRepetition getInstance() {
+    public MonoCharacterRepetition getInstance(@Nullable Boolean checkIfShiftable) {
         if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
