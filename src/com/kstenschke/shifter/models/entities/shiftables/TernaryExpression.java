@@ -34,8 +34,7 @@ public class TernaryExpression extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a ternary expression
     public TernaryExpression getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 

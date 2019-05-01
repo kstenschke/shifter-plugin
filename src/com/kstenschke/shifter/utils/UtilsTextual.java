@@ -49,7 +49,8 @@ public class UtilsTextual {
     }
 
     public static boolean isMultiLine(@Nullable String str) {
-        return null != str && str.contains("\n");
+        return null != str &&
+               str.contains("\n");
     }
 
     /**

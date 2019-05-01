@@ -51,8 +51,7 @@ public class Comment extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Comment getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 
@@ -160,14 +159,13 @@ public class Comment extends AbstractShiftable {
             }
         }
 
-        shiftableType = new Comment(actionContainer);
         actionContainer.writeUndoable(
                 actionContainer.getRunnableReplaceSelection(
-                        shiftableType.getShifted(
+                        this.getShifted(
                                 actionContainer.selectedText,
                                 null,
                                 null,
-                                true,
+                                false,
                                 false)),
                 ACTION_TEXT);
     }

@@ -41,8 +41,7 @@ public class Tupel extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public Tupel getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 

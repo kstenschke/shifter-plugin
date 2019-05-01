@@ -34,8 +34,7 @@ public class SeparatedPath extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public SeparatedPath getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 

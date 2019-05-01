@@ -39,9 +39,7 @@ public class PhpConcatenation extends AbstractShiftable {
         super(actionContainer);
 
         // @todo make shiftable also in non-selection
-        if (null == actionContainer ||
-            null == actionContainer.selectedText
-        ) {
+        if (null == actionContainer.selectedText) {
             isShiftable = false;
             return;
         }

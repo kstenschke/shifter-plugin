@@ -37,7 +37,7 @@ public class PhpDocParam extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be a PHP variable
     public PhpDocParam getInstance() {
-        if (null == actionContainer || !UtilsFile.isPhpFile(actionContainer.filename)) return null;
+        if (!UtilsFile.isPhpFile(actionContainer.filename)) return null;
 
         String str = actionContainer.shiftCaretLine
                 ? actionContainer.caretLine
@@ -59,8 +59,8 @@ public class PhpDocParam extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if (null == actionContainer || actionContainer.shiftCaretLine)
-            return getShiftedCaretLine(null == actionContainer ? str : actionContainer.caretLine);
+        if (actionContainer.shiftCaretLine)
+            return getShiftedCaretLine(actionContainer.caretLine);
 
         AbstractShiftable shiftableType;
         if (null != (shiftableType = new PhpDocComment(actionContainer).getInstance()) &&

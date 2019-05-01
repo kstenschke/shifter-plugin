@@ -38,8 +38,6 @@ public class QuotedString extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must be wrapped in quote characters
     public QuotedString getInstance() {
-        if (null == actionContainer) return null;
-
         quoteChar = actionContainer.prefixChar;
 
         // Must be wrapped in single-, double quotes, or backticks

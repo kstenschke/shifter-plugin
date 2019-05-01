@@ -51,12 +51,7 @@ public class NumericValue extends AbstractShiftable {
 
     // Get instance or null if not applicable: selected text must be a CSS length value
     public NumericValue getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
-
-        String str = actionContainer.selectedText;
+        String str = actionContainer.getStringToBeShifted();
 
         return str.matches("[0-9]+")
                 ? this : null;

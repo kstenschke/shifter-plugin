@@ -36,13 +36,9 @@ public class AccessType extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public AccessType getInstance() {
-        if (null == actionContainer ||
-            "@".equals(actionContainer.prefixChar) ||
-            // @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
+        if ("@".equals(actionContainer.prefixChar)) return null;
 
-        String word = actionContainer.selectedText;
+        String word = actionContainer.getStringToBeShifted();
         String[] keywordsAccessType = {"public", "private", "protected"};
         accessTypes = new StaticWordType(keywordsAccessType);
 

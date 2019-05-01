@@ -44,8 +44,7 @@ public class JsVariableDeclarations extends AbstractShiftable {
     // -there can be empty lines
     // -there can be commented lines, beginning w/ "//"
     public JsVariableDeclarations getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText) return null;
 
         String str = actionContainer.selectedText.trim();

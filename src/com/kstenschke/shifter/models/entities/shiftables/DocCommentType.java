@@ -37,8 +37,6 @@ public class DocCommentType extends AbstractShiftable {
     // Check whether given String represents a data type (number / integer / string /...)
     // from a DOC comment (param / return /...)
     public AbstractShiftable getInstance() {
-        if (null == actionContainer) return null;
-
         if (!isDocCommentTypeLineContext(actionContainer.caretLine)) return null;
 
         AbstractShiftable shiftableType = new DocCommentTag(actionContainer);

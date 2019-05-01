@@ -32,8 +32,7 @@ public class LogicalOperator extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public LogicalOperator getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 

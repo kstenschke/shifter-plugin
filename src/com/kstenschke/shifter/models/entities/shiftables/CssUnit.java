@@ -50,12 +50,7 @@ public class CssUnit extends AbstractShiftable {
 
     // Get instance or null if not applicable (selected text not a CSS length value)
     public CssUnit getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
-
-        String str = actionContainer.selectedText;
+        String str = actionContainer.getStringToBeShifted();
 
         return str.matches("[0-9]*(%|cm|em|in|pt|px|rem|vw|vh|vmin|vmax)") ? this : null;
     }

@@ -40,8 +40,7 @@ public class XmlAttributes extends AbstractShiftable {
 
     // Get instance or null if not applicable: string must represent multiple XML attributes
     public XmlAttributes getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
+        if (// @todo make shiftable also in non-selection
             null == actionContainer.selectedText
         ) return null;
 

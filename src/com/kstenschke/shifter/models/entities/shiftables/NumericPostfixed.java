@@ -33,12 +33,7 @@ public class NumericPostfixed extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public NumericPostfixed getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
-
-        String word = actionContainer.selectedText;
+        String word = actionContainer.getStringToBeShifted();
 
         return word.matches("^.+?\\d$")
             ? this : null;

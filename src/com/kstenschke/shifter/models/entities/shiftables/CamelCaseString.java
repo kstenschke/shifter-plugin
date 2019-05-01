@@ -40,12 +40,7 @@ public class CamelCaseString extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public CamelCaseString getInstance() {
-        if (null == actionContainer ||
-            // @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
-
-        String str = actionContainer.selectedText;
+        String str = actionContainer.getStringToBeShifted();
 
         return !UtilsTextual.startsNumeric(str) &&
                UtilsTextual.isCamelCase(str)
