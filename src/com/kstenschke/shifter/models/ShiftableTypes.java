@@ -74,6 +74,7 @@ public class ShiftableTypes {
         PHP_DOC_COMMENT,
         CSS,
         JS_DOC,
-        LOGICAL_CONJUNCTION
+        LOGICAL_CONJUNCTION,
+        PHP_DOCUMENT
     }
 }

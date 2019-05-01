@@ -59,7 +59,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         if (containsEscapedQuotes) shiftOptions.add(StaticTexts.SHIFT_UNESCAPE_QUOTES);
     }
 
-    void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
+    public void shiftPhpConcatenationOrSwapQuotesInDocument(final PhpConcatenation phpConcatenation) {
         if (!containsShiftableQuotes) {
             actionContainer.document.replaceString(
                     actionContainer.offsetSelectionStart,
@@ -75,7 +75,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp, phpConcatenation, null, null);
     }
 
-    void sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+    public void sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
             final String delimiterSplitPattern,
             final String delimiterGlue,
             final boolean isJsConcatenation,

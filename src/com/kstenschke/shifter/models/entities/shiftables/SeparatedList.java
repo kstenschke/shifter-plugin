@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
@@ -110,6 +111,12 @@ public class SeparatedList extends AbstractShiftable {
     }
 
     public boolean shiftSelectionInDocument() {
-        return false;
+        // Comma-separated list w/ or w/o items wrapped in quotes: sort / ask whether to sort or toggle quotes
+        new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
+                ",(\\s)*",
+                ", ",
+                true,
+                actionContainer.isShiftUp);
+        return true;
     }
 }

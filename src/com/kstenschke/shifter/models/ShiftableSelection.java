@@ -127,21 +127,11 @@ public class ShiftableSelection {
 
         if (null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
-            null != (shiftable = new TrailingComment(actionContainer).getInstance())) {
+            null != (shiftable = new TrailingComment(actionContainer).getInstance()) ||
+            null != (shiftable = new PhpDocument(actionContainer).getInstance()) ||
+            null != (shiftable = new SeparatedList(actionContainer).getInstance())
+        ) {
             if (shiftable.shiftSelectionInDocument()) return;
-        }
-
-        if (UtilsFile.isPhpFile(actionContainer.filename) &&
-            shiftSelectionInPhpDocument(actionContainer)) return;
-
-        if (null != new SeparatedList(actionContainer).getInstance()) {
-            // Comma-separated list w/ or w/o items wrapped in quotes: sort / ask whether to sort or toggle quotes
-            new ShiftableSelectionWithPopup(actionContainer).sortListOrSwapQuotesOrInterpolateTypeScriptInDocument(
-                    ",(\\s)*",
-                    ", ",
-                    true,
-                    actionContainer.isShiftUp);
-            return;
         }
 
         final LogicalConjunction logicalConjunction = new LogicalConjunction(actionContainer).getInstance();
@@ -269,33 +259,6 @@ public class ShiftableSelection {
                 actionContainer.getRunnableReplaceSelection(
                     actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
                 ACTION_TEXT_SHIFT_SELECTION);
-    }
-
-    private static boolean shiftSelectionInPhpDocument(final ActionContainer actionContainer) {
-        AbstractShiftable shiftableType;
-
-        final PhpConcatenation phpConcatenation = new PhpConcatenation(actionContainer);
-        if (null != phpConcatenation.getInstance()) {
-            actionContainer.writeUndoable(
-                    () -> new ShiftableSelectionWithPopup(actionContainer).shiftPhpConcatenationOrSwapQuotesInDocument(phpConcatenation),
-                    ACTION_TEXT_SHIFT_SELECTION);
-            return true;
-        }
-
-        if (Comment.isHtmlComment(actionContainer.selectedText)) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(Comment.getPhpBlockCommentFromHtmlComment(actionContainer.selectedText)),
-                    ACTION_TEXT_SHIFT_SELECTION);
-            return true;
-        }
-        shiftableType = new Comment(actionContainer);
-        if (Comment.isPhpBlockComment(actionContainer.selectedText)) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(shiftableType.getShifted(actionContainer.selectedText)),
-                    ACTION_TEXT_SHIFT_SELECTION);
-            return true;
-        }
-        return false;
     }
 
     /**
