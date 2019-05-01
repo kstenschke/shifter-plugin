@@ -80,6 +80,10 @@ public class HtmlEncodable extends AbstractShiftable {
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        return false;
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        getShifted(actionContainer.selectedText)),
+                ACTION_TEXT);
+        return true;
     }
 }

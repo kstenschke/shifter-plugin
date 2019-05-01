@@ -18,7 +18,6 @@ package com.kstenschke.shifter.models;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
 import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
@@ -221,40 +220,14 @@ public class ShiftableSelection {
 
         if (null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
             null != (shiftable = logicalConjunction) ||
-            null != (shiftable = new HtmlEncodable(actionContainer).getInstance())
+            null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
+            null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())
         ) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                            shiftable.getShifted(actionContainer.selectedText)),
-                    shiftable.ACTION_TEXT);
-            return;
-        }
-
-        if (null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())) {
             if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }
 
-        final String shiftedWord = shiftableTypesManager.getShiftedWord(actionContainer, moreCount);
-        if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                        actionContainer.whiteSpaceLHSinSelection + shiftedWord.toUpperCase() + actionContainer.whiteSpaceRHSinSelection),
-                    ACTION_TEXT_SHIFT_SELECTION);
-            return;
-        }
-        if (UtilsTextual.isUpperCamelCase(actionContainer.selectedText) ||
-            UtilsTextual.isUcFirstRestLower(actionContainer.selectedText)) {
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                        actionContainer.whiteSpaceLHSinSelection + UtilsTextual.toUcFirstRestLower(shiftedWord) + actionContainer.whiteSpaceRHSinSelection),
-                    ACTION_TEXT_SHIFT_SELECTION);
-            return;
-        }
-
-        actionContainer.writeUndoable(
-                actionContainer.getRunnableReplaceSelection(
-                    actionContainer.whiteSpaceLHSinSelection + shiftedWord + actionContainer.whiteSpaceRHSinSelection),
-                ACTION_TEXT_SHIFT_SELECTION);
+        shiftable.replaceSelectionWithShiftedMaintainingCasing(
+                shiftableTypesManager.getShiftedWord(actionContainer, moreCount));
     }
 
     /**
