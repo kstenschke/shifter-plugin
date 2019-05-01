@@ -161,7 +161,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, actionContainer.isShiftUp,null, null, null);
     }
 
-    void shiftCamelCase(boolean isTwoWords) {
+    public void shiftCamelCase(boolean isTwoWords) {
         List<String> shiftOptions = new ArrayList<>();
         shiftOptions.add(StaticTexts.SHIFT_CAMEL_CASE_TO_PATH);
         shiftOptions.add(StaticTexts.SHIFT_CAMEL_CASE_TO_UNDERSCORE_SEPARATED);

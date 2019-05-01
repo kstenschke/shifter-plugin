@@ -176,14 +176,8 @@ public class ShiftableSelection {
             return;
         }
 
-        CamelCaseString camelCaseString = new CamelCaseString(actionContainer);
-        if (null != camelCaseString.getInstance()) {
-            new ShiftableSelectionWithPopup(actionContainer).shiftCamelCase(
-                    CamelCaseString.isWordPair(actionContainer.selectedText));
-            return;
-        }
-
-        if (null != (shiftable = new WordPair(actionContainer).getInstance()) ||
+        if (null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
+            null != (shiftable = new WordPair(actionContainer).getInstance()) ||
             null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
             null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
