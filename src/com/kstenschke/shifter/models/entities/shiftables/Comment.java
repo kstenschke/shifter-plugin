@@ -25,6 +25,7 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
@@ -234,7 +235,7 @@ public class Comment extends AbstractShiftable {
                     : shiftMultipleBlockCommentLines(actionContainer.selectedText, false);
 
                 actionContainer.writeUndoable(
-                        actionContainer.getRunnableReplaceSelection(shiftedBlockCommentLines),
+                        actionContainer.getRunnableReplaceSelection(shiftedBlockCommentLines, true),
                         ACTION_TEXT);
             },
                     null, null);
@@ -250,35 +251,40 @@ public class Comment extends AbstractShiftable {
 
         final Object[] options = shiftOptions.toArray(new String[0]);
         final JBList modes = new JBList(options);
-
-        //PopupChooserBuilder popup = JBPopupFactory.getInstance().createListPopupBuilder(modes);
         PopupChooserBuilder popup = new PopupChooserBuilder(modes);
 
         popup.setTitle(StaticTexts.POPUP_TITLE_SHIFT).setItemChoosenCallback(() -> ApplicationManager.getApplication().runWriteAction(() -> {
             // Callback when item chosen
             CommandProcessor.getInstance().executeCommand(actionContainer.project, () -> {
                 final int index = modes.getSelectedIndex();
-                String shifted;
-
-                switch (index) {
-                    case 0:
-                        shifted = mergeMultipleLineComments(actionContainer.selectedText);
-                        break;
-                    case 1:
-                        shifted = convertMultipleLineCommentsToBlockComment(actionContainer.selectedText);
-                        break;
-                    case 2:
-                        shifted = sortLineComments(actionContainer.selectedText, false);
-                        break;
-                    case 3:
-                    default:
-                        shifted = sortLineComments(actionContainer.selectedText, true);
-                        break;
-                }
-                actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(shifted), ACTION_TEXT);
+                        actionContainer.writeUndoable(actionContainer.getRunnableReplaceSelection(
+                                shiftMultipleSingleLineCommentsByMode(actionContainer, index),
+                                true
+                        ), ACTION_TEXT);
             },
                     null, null);
         })).setMovable(true).createPopup().showCenteredInCurrentWindow(actionContainer.project);
+    }
+
+    @NotNull
+    private static String shiftMultipleSingleLineCommentsByMode(ActionContainer actionContainer, int index) {
+        String shifted;
+        switch (index) {
+            case 0:
+                shifted = mergeMultipleLineComments(actionContainer.selectedText);
+                break;
+            case 1:
+                shifted = convertMultipleLineCommentsToBlockComment(actionContainer.selectedText);
+                break;
+            case 2:
+                shifted = sortLineComments(actionContainer.selectedText, false);
+                break;
+            case 3:
+            default:
+                shifted = sortLineComments(actionContainer.selectedText, true);
+                break;
+        }
+        return shifted;
     }
 
     private static String shiftMultipleBlockCommentLines(String str, boolean merge) {
