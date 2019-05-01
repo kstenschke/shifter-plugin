@@ -15,10 +15,10 @@
  */
 package com.kstenschke.shifter.actions;
 
+import com.kstenschke.shifter.ShifterPreferences;
 import com.intellij.openapi.actionSystem.AnAction;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
-import com.kstenschke.shifter.ShifterPreferences;
 
 class ShiftDownMoreAction extends AnAction {
 

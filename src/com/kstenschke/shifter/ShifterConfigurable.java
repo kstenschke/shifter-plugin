@@ -15,11 +15,10 @@
  */
 package com.kstenschke.shifter;
 
-import com.intellij.openapi.options.Configurable;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
+import com.intellij.openapi.options.Configurable;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
-
 import javax.swing.*;
 
 public class ShifterConfigurable implements Configurable {

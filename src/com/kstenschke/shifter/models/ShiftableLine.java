@@ -19,7 +19,6 @@ import com.kstenschke.shifter.models.entities.shiftables.JsDoc;
 import com.kstenschke.shifter.models.entities.shiftables.PhpDocParam;
 import com.kstenschke.shifter.models.entities.shiftables.HtmlEncodable;
 import com.kstenschke.shifter.utils.UtilsFile;
-
 import org.jetbrains.annotations.Nullable;
 
 /**

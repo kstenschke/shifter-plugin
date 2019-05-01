@@ -22,12 +22,13 @@ import com.kstenschke.shifter.models.entities.shiftables.JsDoc;
 import com.kstenschke.shifter.models.entities.shiftables.NumericValue;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
+
+import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.regex.Pattern;
-
-import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 
 public class ShiftableWord {
 

@@ -20,9 +20,11 @@ import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
-import org.jetbrains.annotations.Nullable;
 
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.PHP_DOCUMENT;
+
+import org.jetbrains.annotations.Nullable;
+
 
 // PHP Variable (word w/ $ prefix)
 public class PhpDocument extends AbstractShiftable {

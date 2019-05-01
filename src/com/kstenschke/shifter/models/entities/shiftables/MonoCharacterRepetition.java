@@ -19,7 +19,6 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringUtils;
-
 import javax.annotation.Nullable;
 
 // Mono-Character String = String that contains only one character (no matter how often)

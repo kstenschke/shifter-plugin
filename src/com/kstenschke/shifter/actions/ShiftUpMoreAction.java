@@ -15,8 +15,8 @@
  */
 package com.kstenschke.shifter.actions;
 
-import com.intellij.openapi.actionSystem.*;
 import com.kstenschke.shifter.ShifterPreferences;
+import com.intellij.openapi.actionSystem.*;
 
 class ShiftUpMoreAction extends AnAction {
 

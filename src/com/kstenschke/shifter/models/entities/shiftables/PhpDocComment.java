@@ -18,9 +18,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
-
-import javax.annotation.Nullable;
-
+import org.jetbrains.annotations.Nullable;
 import static org.apache.commons.lang.StringUtils.trim;
 
 class PhpDocComment extends AbstractShiftable {

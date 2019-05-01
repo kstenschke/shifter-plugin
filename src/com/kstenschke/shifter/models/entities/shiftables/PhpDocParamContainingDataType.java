@@ -17,8 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.utils.UtilsPhp;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import static org.apache.commons.lang.StringUtils.trim;
 

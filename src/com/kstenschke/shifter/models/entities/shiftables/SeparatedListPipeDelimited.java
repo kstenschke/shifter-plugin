@@ -21,7 +21,8 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import org.apache.commons.lang.StringUtils;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
+
 import java.util.regex.Pattern;
 
 // Separated list (delimiters e.g: ",", "|")

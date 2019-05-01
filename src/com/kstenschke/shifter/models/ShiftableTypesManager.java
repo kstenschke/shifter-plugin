@@ -17,9 +17,8 @@ package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
-import org.jetbrains.annotations.Nullable;
-
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+import org.jetbrains.annotations.Nullable;
 
 // Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
 class ShiftableTypesManager {

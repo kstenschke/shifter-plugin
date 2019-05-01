@@ -19,8 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // Toggle surrounding parenthesis: "(" and ")" ===> "[" and "]" ===> "{" and "}" ===> "(" and ")" ...
 public class Parenthesis extends AbstractShiftable {

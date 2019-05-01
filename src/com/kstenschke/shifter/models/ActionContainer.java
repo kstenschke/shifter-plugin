@@ -1,5 +1,9 @@
 package com.kstenschke.shifter.models;
 
+import com.kstenschke.shifter.resources.StaticTexts;
+import com.kstenschke.shifter.utils.UtilsEnvironment;
+import com.kstenschke.shifter.utils.UtilsFile;
+import com.kstenschke.shifter.utils.UtilsTextual;
 import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.intellij.openapi.actionSystem.PlatformDataKeys;
 import com.intellij.openapi.application.ApplicationManager;
@@ -9,12 +13,7 @@ import com.intellij.openapi.editor.Document;
 import com.intellij.openapi.editor.Editor;
 import com.intellij.openapi.editor.SelectionModel;
 import com.intellij.openapi.project.Project;
-import com.kstenschke.shifter.resources.StaticTexts;
-import com.kstenschke.shifter.utils.UtilsEnvironment;
-import com.kstenschke.shifter.utils.UtilsFile;
-import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
-
 import javax.annotation.Nullable;
 
 // Container for event and deducible IDE environment attributes (project, editor, etc.)

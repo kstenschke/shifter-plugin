@@ -20,7 +20,6 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
-
 import javax.annotation.Nullable;
 
 // JavaScript Variables (multi-lined declarations of multiple vars)

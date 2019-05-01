@@ -15,15 +15,15 @@
  */
 package com.kstenschke.shifter.models;
 
-import com.intellij.openapi.application.ApplicationManager;
-import com.intellij.openapi.command.CommandProcessor;
-import com.intellij.openapi.ui.popup.PopupChooserBuilder;
-import com.intellij.ui.components.JBList;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsTextual;
+import com.intellij.openapi.application.ApplicationManager;
+import com.intellij.openapi.command.CommandProcessor;
+import com.intellij.openapi.ui.popup.PopupChooserBuilder;
+import com.intellij.ui.components.JBList;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

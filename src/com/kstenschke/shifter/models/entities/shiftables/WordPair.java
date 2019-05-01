@@ -21,7 +21,7 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import org.jetbrains.annotations.NotNull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class WordPair extends SeparatedPath {
 

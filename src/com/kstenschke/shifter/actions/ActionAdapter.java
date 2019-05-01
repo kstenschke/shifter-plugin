@@ -15,8 +15,8 @@
  */
 package com.kstenschke.shifter.actions;
 
-import com.intellij.openapi.actionSystem.AnActionEvent;
 import com.kstenschke.shifter.models.*;
+import com.intellij.openapi.actionSystem.AnActionEvent;
 import org.jetbrains.annotations.Nullable;
 
 // Adapter to bundle setup and delegation of different kinds of shift actions

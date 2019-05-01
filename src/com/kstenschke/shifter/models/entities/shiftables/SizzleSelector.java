@@ -19,8 +19,7 @@ import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // Sizzle DOM selector
 public class SizzleSelector extends AbstractShiftable {

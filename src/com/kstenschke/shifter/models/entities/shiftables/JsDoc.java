@@ -24,7 +24,6 @@ import com.kstenschke.shifter.utils.UtilsPhp;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
-
 import static org.apache.commons.lang.StringUtils.trim;
 
 // JavaScript DOC @param comment
