@@ -78,6 +78,7 @@ public class ShiftableTypes {
         PHP_DOCUMENT,
         STRING_CONTAINING_SLASHES,
         // @todo merge into words_tupel
-        WORD_PAIR
+        WORD_PAIR,
+        MULTIPLE_LINES
     }
 }

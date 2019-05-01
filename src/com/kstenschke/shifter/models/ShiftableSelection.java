@@ -75,8 +75,6 @@ public class ShiftableSelection {
         }
 
         boolean isPhpVariableOrArray    = PHP_VARIABLE_OR_ARRAY == wordType;
-        boolean isJsVarsDeclarations    = !isPhpVariableOrArray &&
-                                          JS_VARIABLE_DECLARATIONS == wordType;
         boolean containsShiftableQuotes = QuotedString.containsShiftableQuotes(actionContainer.selectedText);
 
         if (isWrappedInParenthesis) {
@@ -99,28 +97,10 @@ public class ShiftableSelection {
         }
 
         if (null != (shiftable = new Css(actionContainer).getInstance()) ||
-            null != (shiftable = new TernaryExpression(actionContainer).getInstance())
-        ) {
-            if (shiftable.shiftSelectionInDocument(moreCount)) return;
-        }
-
-        int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
-        int lineNumberSelEnd   = actionContainer.document.getLineNumber(actionContainer.offsetSelectionEnd);
-        if (actionContainer.document.getLineStartOffset(lineNumberSelEnd) == actionContainer.offsetSelectionEnd) {
-            lineNumberSelEnd--;
-        }
-
-        if (!isJsVarsDeclarations) {
-            if (((lineNumberSelEnd - lineNumberSelStart) > 0 && !isPhpVariableOrArray)) {
-                // Multi-line selection: sort lines or swap quotes
-                new ShiftableSelectionWithPopup(actionContainer).sortLinesOrSwapQuotesInDocument();
-                return;
-            } else if (null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance())) {
-                if (shiftable.shiftSelectionInDocument(moreCount)) return;
-            }
-        }
-
-        if (null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
+            null != (shiftable = new TernaryExpression(actionContainer).getInstance()) ||
+            null != (shiftable = new MultipleLines(actionContainer).getInstance()) ||
+            null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
+            null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
             null != (shiftable = new TrailingComment(actionContainer).getInstance()) ||
             null != (shiftable = new PhpDocument(actionContainer).getInstance()) ||

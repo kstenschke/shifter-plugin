@@ -148,7 +148,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
     }
 
-    void sortLinesOrSwapQuotesInDocument() {
+    public void sortLinesOrSwapQuotesInDocument() {
         if (!containsShiftableQuotes && !containsEscapedQuotes) {
             ShiftableSelection.sortLinesInDocument(actionContainer, !actionContainer.isShiftUp);
             return;
