@@ -77,7 +77,7 @@ public class ShiftableSelection {
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalConjunction(actionContainer).getInstance(null)) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
-            null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance())
+            null != (shiftable = new PhpVariable(actionContainer).getInstance())
         ) {
             if (shiftable.shiftSelectionInDocument(moreCount)) return;
         }

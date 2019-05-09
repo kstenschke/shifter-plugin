@@ -55,7 +55,7 @@ public class ShiftableTypes {
         PHP_DOC_PARAM_CONTAINING_DATA_TYPE,
 
         // PHP specific
-        PHP_VARIABLE_OR_ARRAY,
+        PHP_VARIABLE,
 
         // JavaScript specific
         JS_VARIABLE_DECLARATIONS,

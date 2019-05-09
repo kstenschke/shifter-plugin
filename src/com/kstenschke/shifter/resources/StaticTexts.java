@@ -91,6 +91,4 @@ public class StaticTexts {
     public static final String SHIFT_SWAP_PARENTHESIS = "Toggle (...) and [...]";
     @NonNls
     public static final String SHIFT_SLASHES_SWAP = "Toggle \\ and /";
-    @NonNls
-    public static final String SHIFT_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX = "Convert to PHP array long syntax";
 }

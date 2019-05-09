@@ -40,7 +40,7 @@ public class MultipleLines extends AbstractShiftable {
 
         return (lineNumberSelEnd - lineNumberSelStart) > 0 &&
                // @todo make the following check unnecessary via shiftable detection order
-               null == new PhpVariableOrArray(actionContainer).getInstance()
+               null == new PhpVariable(actionContainer).getInstance()
                 ? this : null;
     }
 

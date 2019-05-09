@@ -45,4 +45,19 @@ public class ShiftableTypesManagerTest {
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE, shiftable.getType());
     }
+
+    @Test
+    public void getShiftableDetectSelectedPhpVariable() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n$foo=1;\n$bar=2;\n");
+        actionContainer.setSelectedText("$bar");
+        actionContainer.setPostfixChar(" ");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.PHP_VARIABLE, shiftable.getType());
+    }
 }

@@ -107,7 +107,7 @@ public class ShiftableWord {
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
-        if (    PHP_VARIABLE_OR_ARRAY != wordType
+        if (    PHP_VARIABLE != wordType
              && QUOTED_STRING != wordType
              && CAMEL_CASE_STRING != wordType
              && ShifterPreferences.getIsActivePreserveCase()

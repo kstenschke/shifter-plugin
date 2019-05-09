@@ -131,14 +131,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         shiftSelectionByPopupInDocument(shiftOptions, isUp,null, delimiterSplitPattern, "|");
     }
 
-    public void swapParenthesisOrConvertPphpArray() {
-        List<String> shiftOptions = new ArrayList<>();
-        shiftOptions.add(StaticTexts.SHIFT_SWAP_PARENTHESIS);
-        shiftOptions.add(StaticTexts.SHIFT_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX);
-
-        shiftSelectionByPopupInDocument(shiftOptions, false,null, null, null);
-    }
-
     public void shiftQuotesInDocument() {
         List<String> shiftOptions = new ArrayList<>();
         addQuoteShiftingOptions(shiftOptions);
@@ -331,11 +323,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         if (mode.equals(StaticTexts.SHIFT_PATH_TO_CAMEL_CASE)) {
             SeparatedPath separatedPath1 = new SeparatedPath(actionContainer);
             actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, separatedPath1.getShifted(actionContainer.selectedText));
-        }
-        if (mode.equals(StaticTexts.SHIFT_CONVERT_PHP_ARRAY_TO_LONG_SYNTAX)) {
-            PhpVariableOrArray phpVariableOrArray = new PhpVariableOrArray(actionContainer);
-            actionContainer.document.replaceString(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd, phpVariableOrArray.getShiftedArray(actionContainer.selectedText));
-            return;
         }
         if (mode.equals(StaticTexts.SHIFT_SWAP_PARENTHESIS)) {
             Parenthesis parenthesis = new Parenthesis(actionContainer);

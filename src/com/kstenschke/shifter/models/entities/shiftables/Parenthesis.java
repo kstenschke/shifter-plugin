@@ -66,26 +66,13 @@ public class Parenthesis extends AbstractShiftable {
         return "(" + str.substring(1, str.length() - 1) + ")";
     }
 
-    // Swap parenthesis or convert PHP array
+    // Swap parenthesis
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        boolean isPhpVariableOrArray = null != new PhpVariableOrArray(actionContainer).getInstance(null);
-        boolean isShiftablePhpArray =
-                isPhpVariableOrArray &&
-                PhpVariableOrArray.isStaticShiftablePhpArray(actionContainer.selectedText);
-
-        if (!isPhpVariableOrArray ||
-            !isShiftablePhpArray
-        ) {
-            // Swap surrounding "(" and ")" versus "[" and "]"
-            actionContainer.writeUndoable(
-                    actionContainer.getRunnableReplaceSelection(
-                            getShifted(actionContainer.selectedText)),
-                    ACTION_TEXT);
-            return true;
-        }
-
-        new ShiftableSelectionWithPopup(actionContainer).swapParenthesisOrConvertPphpArray();
-
+        // Swap surrounding "(" and ")" versus "[" and "]"
+        actionContainer.writeUndoable(
+                actionContainer.getRunnableReplaceSelection(
+                        getShifted(actionContainer.selectedText)),
+                ACTION_TEXT);
         return true;
     }
 

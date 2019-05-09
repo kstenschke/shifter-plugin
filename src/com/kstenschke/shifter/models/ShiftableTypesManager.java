@@ -45,7 +45,7 @@ class ShiftableTypesManager {
         actionContainer.shiftSelectedText = true;
         actionContainer.shiftCaretLine = false;
 
-        if (null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance()) ||
+        if (null != (shiftable = new PhpVariable(actionContainer).getInstance()) ||
             null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
             null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
@@ -100,7 +100,7 @@ class ShiftableTypesManager {
             return UNKNOWN;
         }
 
-        if (null != (shiftable = new PhpVariableOrArray(actionContainer).getInstance()) ||
+        if (null != (shiftable = new PhpVariable(actionContainer).getInstance()) ||
             null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
             null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
@@ -163,7 +163,7 @@ class ShiftableTypesManager {
             case NUMERIC_VALUE: return new NumericValue(actionContainer).getShifted(word);
             case CSS_UNIT: return new CssUnit(actionContainer).getShifted(word);
             case JQUERY_OBSERVER: return new JqueryObserver(actionContainer).getShifted(word, null, null);
-            case PHP_VARIABLE_OR_ARRAY: return new PhpVariableOrArray(actionContainer).getShifted(word, moreCount);
+            case PHP_VARIABLE: return new PhpVariable(actionContainer).getShifted(word, moreCount);
             case TERNARY_EXPRESSION: return new TernaryExpression(actionContainer).getShifted(word);
             case QUOTED_STRING: return new QuotedString(actionContainer).getShifted(word);
             case PARENTHESIS: return new Parenthesis(actionContainer).getShifted(word);
