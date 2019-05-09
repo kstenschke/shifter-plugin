@@ -50,7 +50,8 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
     // + Stores matching line containing the term for use in shifting later
     // Note: this is a global dictionary check, and NOT file extension specific
     public DictionaryWordOfSpecificFileType getInstance(@Nullable Boolean checkIfShiftable) {
-        if (null == super.getInstance()) return null;
+        if (null == actionContainer ||
+            null == super.getInstance(checkIfShiftable)) return null;
 
         return isInFileTypeDictionary();
     }

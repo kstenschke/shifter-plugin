@@ -44,12 +44,14 @@ public class SeparatedList extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public SeparatedList getInstance(@Nullable Boolean checkIfShiftable) {
-        if (// @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
+        if (null == actionContainer) return null;
 
-        String str = actionContainer.selectedText;
-        String delimiter = actionContainer.delimiter.isEmpty() ? "," : actionContainer.delimiter;
+        String str = actionContainer.getStringToBeShifted();
+        if (null == str) return null;
+
+        String delimiter =
+                null == actionContainer.delimiter ||
+                actionContainer.delimiter.isEmpty() ? "," : actionContainer.delimiter;
 
         if (!str.contains(delimiter)
             || str.trim().length() == delimiter.length()

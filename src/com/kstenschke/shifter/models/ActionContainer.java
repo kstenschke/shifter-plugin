@@ -58,8 +58,8 @@ public class ActionContainer {
 
     public String selectedText;
     public String stringAroundCaret;
-    public String whiteSpaceLHSinSelection;
-    public String whiteSpaceRHSinSelection;
+    public String whiteSpaceLHSinSelection = "";
+    public String whiteSpaceRHSinSelection = "";
 
     private int offsetCaretLineStart;
     public String caretLine;
@@ -117,8 +117,36 @@ public class ActionContainer {
         return null;
     }
 
+    public void setDocumentText(String documentText) {
+        this.documentText = documentText;
+    }
+
+    public void setSelectedText(String selectedText) {
+        this.selectedText = selectedText;
+    }
+
+    public void setStringAroundCaret(String stringAroundCaret) {
+        this.stringAroundCaret = stringAroundCaret;
+    }
+
+    public void setCaretLine(String caretLine) {
+        this.caretLine = caretLine;
+    }
+
+    public void setPrefixChar(String prefixChar) {
+        this.prefixChar = prefixChar;
+    }
+
+    public void setPostfixChar(String postfixChar) {
+        this.postfixChar = postfixChar;
+    }
+
     public void setIsShiftUp(boolean isShiftUp) {
         this.isShiftUp = isShiftUp;
+    }
+
+    public void setIsLastLineInDocument(boolean isLastLineInDocument) {
+        this.isLastLineInDocument = isLastLineInDocument;
     }
 
     public void initTextAfterCaret() {

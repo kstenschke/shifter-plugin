@@ -36,6 +36,7 @@ public abstract class AbstractShiftable {
 
     // Get shiftable instance or null if not applicable
     abstract public AbstractShiftable getInstance(Boolean checkIfShiftable);
+
     public AbstractShiftable getInstance() {
         return getInstance(null);
     }
@@ -65,7 +66,8 @@ public abstract class AbstractShiftable {
     public abstract boolean shiftSelectionInDocument(@Nullable Integer moreCount);
 
     public void replaceSelectionWithShiftedMaintainingCasing(@Nullable String shiftedWord) {
-        if (null == shiftedWord) return;
+        if (null == shiftedWord ||
+            null == actionContainer) return;
 
         if (UtilsTextual.isAllUppercase(actionContainer.selectedText)) {
             actionContainer.writeUndoable(

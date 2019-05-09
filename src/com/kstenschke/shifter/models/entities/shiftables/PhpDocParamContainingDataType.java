@@ -39,8 +39,9 @@ public class PhpDocParamContainingDataType extends PhpDocParam {
         actionContainer.shiftSelectedText = false;
         actionContainer.shiftCaretLine = true;
 
-        if (super.getInstance() == null ||
-                !containsDataType(actionContainer.caretLine)) {
+        if (null == super.getInstance(checkIfShiftable) ||
+            !containsDataType(actionContainer.caretLine)
+        ) {
             actionContainer.shiftSelectedText = shiftSelectedTextWas;
             actionContainer.shiftCaretLine = shiftCaretLineWas;
             return null;

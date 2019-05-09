@@ -83,8 +83,12 @@ public class ShiftableSelection {
         }
 
         // @todo call from within shiftSelectionInDocument()
-        shiftable.replaceSelectionWithShiftedMaintainingCasing(
-                shiftableTypesManager.getShiftedWord(actionContainer, moreCount));
+        try {
+            shiftable.replaceSelectionWithShiftedMaintainingCasing(
+                    shiftableTypesManager.getShiftedWord(actionContainer, moreCount));
+        } catch (NullPointerException e) {
+            // silently continue (for now)
+        }
     }
 
     /**

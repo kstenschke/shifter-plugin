@@ -21,12 +21,11 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.StaticWordType;
 import org.jetbrains.annotations.Nullable;
 
-// Pixel value class
 public class AccessType extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift Access Type";
 
-    private StaticWordType accessTypes;
+    private static StaticWordType accessTypes;
 
     // Constructor
     public AccessType(@Nullable ActionContainer actionContainer) {
@@ -35,13 +34,18 @@ public class AccessType extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public AccessType getInstance(@Nullable Boolean checkIfShiftable) {
-        if ("@".equals(actionContainer.prefixChar)) return null;
+        return null != actionContainer &&
+               detect(actionContainer.prefixChar, actionContainer.getStringToBeShifted())
+                ? this : null;
+    }
 
-        String word = actionContainer.getStringToBeShifted();
-        String[] keywordsAccessType = {"public", "private", "protected"};
+    public static boolean detect(String prefixChar, String wordToBeShifted) {
+        if ("@".equals(prefixChar)) return false;
+
+        String[] keywordsAccessType = {"public", "protected", "private"};
         accessTypes = new StaticWordType(keywordsAccessType);
 
-        return accessTypes.hasWord(word) ? this : null;
+        return accessTypes.hasWord(wordToBeShifted);
     }
 
     public ShiftableTypes.Type getType() {
@@ -59,10 +63,15 @@ public class AccessType extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        return accessTypes.getShifted(value, actionContainer.isShiftUp);
+        return accessTypes.getShifted(actionContainer.getStringToBeShifted(), actionContainer.isShiftUp);
     }
 
     public boolean shiftSelectionInDocument(@Nullable Integer moreCount) {
-        return false;
+        String shifted = getShifted(actionContainer.getStringToBeShifted());
+        actionContainer.writeUndoable(
+            actionContainer.getRunnableReplaceSelection(shifted),
+            ACTION_TEXT
+        );
+        return true;
     }
 }

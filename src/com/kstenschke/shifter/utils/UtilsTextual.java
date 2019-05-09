@@ -239,6 +239,7 @@ public class UtilsTextual {
                 null != str &&
                 !"".equals(str) &&
                 str.length() > 2 &&
+                !str.contains(" ") &&
                 (
                         isLowerCamelCase(str) ||
                         isUpperCamelCase(str)

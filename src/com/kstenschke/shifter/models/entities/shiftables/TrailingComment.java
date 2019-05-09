@@ -38,7 +38,8 @@ public class TrailingComment extends AbstractShiftable {
         if (
             null == word ||
             !word.contains("//") ||
-            (!actionContainer.isLastLineInDocument && !"\n".equals(actionContainer.postfixChar))
+            (!actionContainer.isLastLineInDocument &&
+             !"\n".equals(actionContainer.postfixChar))
         ) {
             return null;
         }

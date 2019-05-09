@@ -1,29 +1,78 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
+import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
+import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
 public class CamelCaseStringTest {
 
-    @Test
-    public void isCamelCase() {
-        /*
-        assertFalse(CamelCaseString.getInstance(null));
-        assertFalse(CamelCaseString.getInstance(""));
-        assertFalse(CamelCaseString.getInstance("f"));
-        assertFalse(CamelCaseString.getInstance("foobar"));
-        assertFalse(CamelCaseString.getInstance("Foo"));
-        assertFalse(CamelCaseString.getInstance("FooBar baz"));
-        assertFalse(CamelCaseString.getInstance("foo1"));
+    private CamelCaseString camelCaseString;
+    private AbstractShiftable shiftable;
+    private ActionContainer actionContainer;
 
-        assertTrue(CamelCaseString.getInstance("fooBar"));
-        assertTrue(CamelCaseString.getInstance("FooBar"));
-        assertTrue(CamelCaseString.getInstance("foo1Bar"));
-        */
+    @Before
+    public void setUp() throws Exception {
+    }
+
+    @After
+    public void tearDown() throws Exception {
+        camelCaseString = null;
+        shiftable = null;
+        actionContainer = null;
+
     }
 
     @Test
+    public void getInstanceNoActionContainer() {
+        camelCaseString = new CamelCaseString(null);
+        assertNull(camelCaseString.getInstance());
+    }
+
+    @Test
+    public void getInstanceEmpty() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("");
+        camelCaseString = new CamelCaseString(actionContainer);
+        assertNull(camelCaseString.getInstance());
+    }
+
+    @Test
+    public void getInstanceStartsNumeric() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("10foo");
+        camelCaseString = new CamelCaseString(actionContainer);
+        assertNull(camelCaseString.getInstance());
+    }
+
+    @Test
+    public void getInstanceNotCamelCase() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("foo");
+        camelCaseString = new CamelCaseString(actionContainer);
+        assertNull(camelCaseString.getInstance());
+    }
+
+    @Test
+    public void getInstanceCamelCaseButContainsSpace() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("fooBar baz");
+        camelCaseString = new CamelCaseString(actionContainer);
+        assertNull(camelCaseString.getInstance());
+    }
+
+    @Test
+    public void getInstanceCamelCase() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("fooBar");
+        camelCaseString = new CamelCaseString(actionContainer);
+        assertNotNull(camelCaseString.getInstance());
+    }
+
+    /*@Test
     public void isWordPair() {
         assertFalse(CamelCaseString.isWordPair(null));
         assertFalse(CamelCaseString.isWordPair(""));
@@ -56,5 +105,5 @@ public class CamelCaseStringTest {
     public void getShifted() {
         assertEquals("barFoo", CamelCaseString.flipWordPairOrder("fooBar"));
         assertEquals("BarFoo", CamelCaseString.flipWordPairOrder("FooBar"));
-    }
+    }*/
 }

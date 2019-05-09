@@ -183,6 +183,8 @@ class ShiftableTypesManager {
     }
 
     String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
+        if (null == actionContainer) return "";
+
         actionContainer.shiftSelectedText = true;
 
         AbstractShiftable shiftable = getShiftable();

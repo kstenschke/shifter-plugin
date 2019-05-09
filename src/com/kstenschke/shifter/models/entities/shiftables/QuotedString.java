@@ -59,6 +59,8 @@ public class QuotedString extends AbstractShiftable {
     }
 
     public static boolean containsShiftableQuotes(String str) {
+        if (null == str) return false;
+
         // @todo add backticks handling
         return (ShifterPreferences.getIsActiveConvertSingleQuotes() && str.contains("'"))
             || (ShifterPreferences.getIsActiveConvertDoubleQuotes() && str.contains("\""));

@@ -1,69 +1,138 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
 public class AccessTypeTest {
 
     private AccessType accessType;
+    private AbstractShiftable shiftable;
+    private ActionContainer actionContainer;
 
     @Before
     public void setUp() throws Exception {
-        accessType = new AccessType(null);
     }
 
     @After
     public void tearDown() throws Exception {
         accessType = null;
+        shiftable = null;
+        actionContainer = null;
     }
 
     @Test
-    public void isAccessType() {
-        /*
-        assertFalse(accessType.getInstance(null));
-        assertFalse(accessType.getInstance(""));
-        assertFalse(accessType.getInstance("foo"));
-
-        assertTrue(accessType.getInstance("public"));
-        assertTrue(accessType.getInstance("protected"));
-        assertTrue(accessType.getInstance("private"));
-
-        assertFalse(accessType.getInstance("public "));
-        assertFalse(accessType.getInstance("protected "));
-        assertFalse(accessType.getInstance("private "));
-        */
+    public void getInstanceNoActionContainer() {
+        accessType = new AccessType(null);
+        assertNull(accessType.getInstance());
     }
 
     @Test
-    public void getShifted() {
-        ActionContainer actionContainer = new ActionContainer(null, false, false);
-/*
-        accessType.getInstance("public");
-        assertEquals("protected", accessType.getShifted(
-                "public", actionContainer, null, null));
+    public void getInstanceAtParam() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setPrefixChar("@");
+        actionContainer.setSelectedText("param");
+        accessType = new AccessType(actionContainer);
+        assertNull(accessType.getInstance());
+    }
 
-        accessType.getInstance("protected");
-        assertEquals("private", accessType.getShifted(
-                "protected", actionContainer, null, null));
+    @Test
+    public void getInstanceFoo() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setPrefixChar("");
+        actionContainer.setSelectedText("foo");
+        accessType = new AccessType(actionContainer);
+        assertNull(accessType.getInstance());
+    }
 
-        accessType.getInstance("private");
-        assertEquals("public", accessType.getShifted(
-                "private", actionContainer,null, null));
+    @Test
+    public void getInstancePublic() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setPrefixChar("");
+        actionContainer.setSelectedText("public");
+        accessType = new AccessType(actionContainer);
+        assertNotNull(accessType.getInstance());
+    }
 
-        actionContainer.setIsShiftUp(true);
-        accessType.getInstance("public");
-        assertEquals("private", accessType.getShifted(
-                "public", actionContainer,null, null));
+    @Test
+    public void getInstanceProtected() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("protected");
+        accessType = new AccessType(actionContainer);
+        assertNotNull(accessType.getInstance());
+    }
 
-        accessType.getInstance("protected");
-        assertEquals("public", accessType.getShifted(
-                "protected", actionContainer,null, null));
+    @Test
+    public void getInstancePrivate() {
+        actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("private");
+        accessType = new AccessType(actionContainer);
+        assertNotNull(accessType.getInstance());
+    }
 
-        accessType.getInstance("private");
-        assertEquals("protected", accessType.getShifted(
-                "private", actionContainer,null, null));
-                */
+    @Test
+    public void getShiftedUpPublic() {
+        actionContainer = new ActionContainer(null, true, false);
+
+        actionContainer.setPrefixChar("");
+        actionContainer.setSelectedText("public");
+        accessType = new AccessType(actionContainer);
+        shiftable = accessType.getInstance();
+        assertEquals("protected", shiftable.getShifted("public"));
+    }
+
+    @Test
+    public void getShiftedUpProtected() {
+        actionContainer = new ActionContainer(null, true, false);
+
+        actionContainer.setSelectedText("protected");
+        accessType = new AccessType(actionContainer);
+        shiftable = accessType.getInstance();
+        assertEquals("private", shiftable.getShifted("protected"));
+    }
+
+    @Test
+    public void getShiftedUpPrivate() {
+        actionContainer = new ActionContainer(null, true, false);
+
+        actionContainer.setSelectedText("private");
+        accessType = new AccessType(actionContainer);
+        shiftable = accessType.getInstance();
+        assertEquals("public", shiftable.getShifted("private"));
+    }
+
+    @Test
+    public void getShiftedDownPrivate() {
+        actionContainer = new ActionContainer(null, false, false);
+
+        actionContainer.setSelectedText("private");
+        accessType = new AccessType(actionContainer);
+        shiftable = accessType.getInstance();
+        assertEquals("protected", shiftable.getShifted("private"));
+    }
+
+    @Test
+    public void getShiftedDownProtected() {
+        actionContainer = new ActionContainer(null, false, false);
+        actionContainer.setSelectedText("protected");
+        accessType = new AccessType(actionContainer);
+        shiftable = accessType.getInstance();
+        assertEquals("public", shiftable.getShifted("protected"));
+    }
+
+    @Test
+    public void getShiftedDownPublic() {
+        actionContainer = new ActionContainer(null, false, false);
+
+        actionContainer.setSelectedText("public");
+        accessType = new AccessType(actionContainer);
+        shiftable = accessType.getInstance();
+        assertEquals("private", shiftable.getShifted("public"));
     }
 }

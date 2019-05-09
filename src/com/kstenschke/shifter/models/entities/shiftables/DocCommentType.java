@@ -74,6 +74,8 @@ public class DocCommentType extends AbstractShiftable {
      * @return boolean.
      */
     public boolean isDocCommentTypeLineContext(String line) {
+        if (null == line) return false;
+
         String allTags = new DocCommentTag(null).getAllTagsPiped();
         String regExPatternLine = "\\s*\\*\\s+@(" + allTags + ")\\s*";
 
