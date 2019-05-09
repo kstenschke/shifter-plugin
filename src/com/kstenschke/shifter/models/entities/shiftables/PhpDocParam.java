@@ -37,13 +37,11 @@ public class PhpDocParam extends AbstractShiftable {
     // Get instance or null if not applicable: string must be a PHP variable
     public PhpDocParam getInstance(@Nullable Boolean checkIfShiftable) {
         if (!UtilsFile.isPhpFile(actionContainer.filename)) return null;
-
-        String str = actionContainer.shiftCaretLine
-                ? actionContainer.caretLine
-                : actionContainer.selectedText;
+        String str = actionContainer.getStringToBeShifted();
         str = trim(str);
 
-        return str.startsWith("*") && str.contains("@param")
+        return str.startsWith("*") &&
+               str.contains("@param")
                 ? this : null;
     }
 

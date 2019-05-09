@@ -16,6 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
+import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import org.jetbrains.annotations.Nullable;
 
@@ -33,24 +34,21 @@ public class PhpDocParamContainingDataType extends PhpDocParam {
 
     // Get instance or null if not applicable: string must be a PHP variable
     public PhpDocParamContainingDataType getInstance(@Nullable Boolean checkIfShiftable) {
-        boolean shiftSelectedTextWas = actionContainer.shiftSelectedText;
-        boolean shiftCaretLineWas = actionContainer.shiftCaretLine;
+        if (null == actionContainer) return null;
 
-        actionContainer.shiftSelectedText = false;
-        actionContainer.shiftCaretLine = true;
+        String stringToBeShifted = actionContainer.getStringToBeShifted();
 
-        if (null == super.getInstance(checkIfShiftable) ||
-            !containsDataType(actionContainer.caretLine)
-        ) {
-            actionContainer.shiftSelectedText = shiftSelectedTextWas;
-            actionContainer.shiftCaretLine = shiftCaretLineWas;
-            return null;
-        }
+        return null == super.getInstance(checkIfShiftable) ||
+            !containsDataType(stringToBeShifted) ? null : this;
+    }
 
-        return this;
+    public ShiftableTypes.Type getType() {
+        return ShiftableTypes.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE;
     }
 
     public Boolean containsDataType(String str) {
+        if (null == str) return false;
+
         str = trim(str.toLowerCase());
 
         return     str.contains("array")

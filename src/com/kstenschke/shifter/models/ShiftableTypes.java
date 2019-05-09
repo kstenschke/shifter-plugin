@@ -52,6 +52,7 @@ public class ShiftableTypes {
         // DOC comment related
         DOC_COMMENT_TAG,
         DOC_COMMENT_DATA_TYPE,
+        PHP_DOC_PARAM_CONTAINING_DATA_TYPE,
 
         // PHP specific
         PHP_VARIABLE_OR_ARRAY,

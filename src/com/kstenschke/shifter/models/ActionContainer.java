@@ -106,13 +106,26 @@ public class ActionContainer {
             selectedText = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
         else
             stringAroundCaret = UtilsTextual.getWordAtOffset(editorText, caretOffset, fileExtension.equals("css"));
+
+        getStringToBeShifted();
     }
 
     public String getStringToBeShifted() {
-        if (null != selectedText) return selectedText;
+        shiftSelectedText = false;
+        shiftCaretLine = false;
+
+        if (null != selectedText) {
+            shiftSelectedText = true;
+            return selectedText;
+        }
         if (null != stringAroundCaret) return stringAroundCaret;
-        if (null != caretLine && !caretLine.isEmpty()) return caretLine;
-        if (null != documentText) return documentText;
+        if (null != caretLine && !caretLine.isEmpty()) {
+            shiftCaretLine = true;
+            return caretLine;
+        }
+        if (null != documentText) {
+            return documentText;
+        }
 
         return null;
     }
@@ -143,6 +156,14 @@ public class ActionContainer {
 
     public void setIsShiftUp(boolean isShiftUp) {
         this.isShiftUp = isShiftUp;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
+    }
+
+    public void setFileExtension(String fileExtension) {
+        this.fileExtension = fileExtension;
     }
 
     public void setIsLastLineInDocument(boolean isLastLineInDocument) {
