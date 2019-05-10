@@ -19,7 +19,7 @@ public class ShiftableTypesManagerTest {
     }
 
     @Test
-    public void getShiftableDetectSelectedTrailingCommentTest() {
+    public void getShiftableDetectTrailingCommentSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setSelectedText("echo 'x'; // output x");
         actionContainer.setIsLastLineInDocument(false);
@@ -33,7 +33,7 @@ public class ShiftableTypesManagerTest {
     }
 
     @Test
-    public void getShiftableDetectSelectedPhpDocContainingDataType() {
+    public void getShiftableDetectPhpDocContainingDataTypeSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.php");
         actionContainer.setSelectedText("* @param int $x");
@@ -47,7 +47,7 @@ public class ShiftableTypesManagerTest {
     }
 
     @Test
-    public void getShiftableDetectSelectedPhpVariable() {
+    public void getShiftableDetectPhpVariableSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.php");
         actionContainer.setDocumentText("<?php\n$foo=1;\n$bar=2;\n");
@@ -59,5 +59,120 @@ public class ShiftableTypesManagerTest {
 
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.PHP_VARIABLE, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectParenthesisSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n$foo=(10+9*8)/2;\n$bar=2;\n");
+        actionContainer.setSelectedText("(10+9*8)");
+        actionContainer.setPostfixChar(" ");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.PARENTHESIS, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectJsVariableDeclarationsSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.js");
+        actionContainer.setDocumentText("var foo=0;\nvar bar=1;\n");
+        actionContainer.setSelectedText("var foo=0;\nvar bar=1;");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.JS_VARIABLE_DECLARATIONS, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectSizzleSelectorSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.js");
+        actionContainer.setDocumentText("$('div').hide();\n");
+        actionContainer.setSelectedText("$('div')");
+        actionContainer.setPostfixChar(".");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.SIZZLE_SELECTOR, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectDocCommentTagCaretLine() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n\n/**\n * @version 2.0\n**/\n");
+        actionContainer.setCaretLine(" * @version 2.0");
+        actionContainer.setPrefixChar("@");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.DOC_COMMENT_TAG, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectAccessTypeAtCaret() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n\n/class Foo {\npublic function a(){}\nprotected function b(){}\nprivate function b(){}\n");
+        actionContainer.setStringAtCaret("public");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar(" ");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+
+        actionContainer.setStringAtCaret("private");
+        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+
+        actionContainer.setStringAtCaret("protected");
+        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectAccessTypeSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n\n/class Foo {\npublic function a(){}\nprotected function b(){}\nprivate function b(){}\n");
+        actionContainer.setSelectedText("public");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar(" ");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+
+        actionContainer.setSelectedText("private");
+        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+
+        actionContainer.setSelectedText("protected");
+        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
     }
 }

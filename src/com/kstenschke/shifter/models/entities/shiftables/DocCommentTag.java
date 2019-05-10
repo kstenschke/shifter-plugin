@@ -50,9 +50,10 @@ public class DocCommentTag extends AbstractShiftable {
     // Get instance or null if not applicable:
     // Caret line must be a data type (number / integer / string /...) from a DOC comment (param / return /...))
     public AbstractShiftable getInstance(@Nullable Boolean checkIfShiftable) {
-        String line = actionContainer.caretLine;
+        String line = actionContainer.getStringToBeShifted();
 
-        return "@".equals(actionContainer.prefixChar) && isDocCommentLineContext(line) ? this : null;
+        return "@".equals(actionContainer.prefixChar) &&
+               isDocCommentLineContext(line) ? this : null;
     }
 
     public ShiftableTypes.Type getType() {

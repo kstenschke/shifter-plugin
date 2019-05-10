@@ -57,7 +57,7 @@ public class ActionContainer {
     public boolean shiftSelectedText = true;
 
     public String selectedText;
-    public String stringAroundCaret;
+    public String stringAtCaret;
     public String whiteSpaceLHSinSelection = "";
     public String whiteSpaceRHSinSelection = "";
 
@@ -105,7 +105,7 @@ public class ActionContainer {
         if (selectionModel.hasSelection())
             selectedText = UtilsTextual.getSubString(editorText, offsetSelectionStart, offsetSelectionEnd);
         else
-            stringAroundCaret = UtilsTextual.getWordAtOffset(editorText, caretOffset, fileExtension.equals("css"));
+            stringAtCaret = UtilsTextual.getWordAtOffset(editorText, caretOffset, fileExtension.equals("css"));
 
         getStringToBeShifted();
     }
@@ -118,7 +118,7 @@ public class ActionContainer {
             shiftSelectedText = true;
             return selectedText;
         }
-        if (null != stringAroundCaret) return stringAroundCaret;
+        if (null != stringAtCaret) return stringAtCaret;
         if (null != caretLine && !caretLine.isEmpty()) {
             shiftCaretLine = true;
             return caretLine;
@@ -138,8 +138,8 @@ public class ActionContainer {
         this.selectedText = selectedText;
     }
 
-    public void setStringAroundCaret(String stringAroundCaret) {
-        this.stringAroundCaret = stringAroundCaret;
+    public void setStringAtCaret(String stringAroundCaret) {
+        this.stringAtCaret = stringAroundCaret;
     }
 
     public void setCaretLine(String caretLine) {
