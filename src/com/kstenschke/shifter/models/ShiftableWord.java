@@ -158,9 +158,7 @@ public class ShiftableWord {
                     actionContainer.editorText,
                     actionContainer.caretOffset,
                     actionContainer.fileExtension.endsWith("css"));
-        } else {
-            isOperator = true;
-        }
+        } else isOperator = true;
 
         if (null == word || word.isEmpty()) return false;
 
@@ -208,20 +206,19 @@ public class ShiftableWord {
 
             return true;
         }
-        if (JsDoc.isInvalidAtReturnsLine(actionContainer.caretLine)) {
-            actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            JsDoc.correctInvalidReturnsCommentInDocument(actionContainer);
-                        }
-                    },
-                    "Shift JsDoc");
 
-            return true;
-        }
+        if (!JsDoc.isInvalidAtReturnsLine(actionContainer.caretLine)) return false;
 
-        return false;
+        actionContainer.writeUndoable(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        JsDoc.correctInvalidReturnsCommentInDocument(actionContainer);
+                    }
+                },
+                "Shift JsDoc");
+
+        return true;
     }
 
     /**
