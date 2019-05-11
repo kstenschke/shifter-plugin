@@ -101,31 +101,28 @@ public class DictionaryWord extends AbstractShiftable {
     }
 
     private boolean isTermInAnyDictionary() {
-        String term = actionContainer.selectedText;
+        String term = actionContainer.getStringToBeShifted();
 
-        // @todo why check for extension in search over all type-dictionaries?
-        if (dictionaryContents.contains("|" + actionContainer.fileExtension.toLowerCase() + "|")) {
-            // Merge all terms-blocks
-            String dictionaryTerms = dictionaryContents;
-            Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
+        // Merge all terms-blocks
+        String dictionaryTerms = dictionaryContents;
+        Object[] dictionaryExtensionsBlocks = getAllFileExtensionsBlockStarts();
 
-            for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
-                String currentExtensionsList = dictionaryExtensionsBlock.toString();
-                dictionaryTerms = dictionaryTerms.replace(currentExtensionsList, "");
-            }
+        for (Object dictionaryExtensionsBlock : dictionaryExtensionsBlocks) {
+            String currentExtensionsList = dictionaryExtensionsBlock.toString();
+            dictionaryTerms = dictionaryTerms.replace(currentExtensionsList, "");
+        }
 
-            // Term is contained? store list of shifting neighbours
-            if (dictionaryTerms.contains("|" + term + "|")) {
-                relevantTermsList = extractFirstMatchingTermsLine(dictionaryTerms, term);
-                return true;
-            }
-            // Not found case-sensitive, try insensitive
-            String dictionaryTermsLower = dictionaryTerms.toLowerCase();
-            String termLower = term.toLowerCase();
-            if (dictionaryTermsLower.contains("|" + termLower + "|")) {
-                relevantTermsList = extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
-                return true;
-            }
+        // Term is contained? store list of shifting neighbours
+        if (dictionaryTerms.contains("|" + term + "|")) {
+            relevantTermsList = extractFirstMatchingTermsLine(dictionaryTerms, term);
+            return true;
+        }
+        // Not found case-sensitive, try insensitive
+        String dictionaryTermsLower = dictionaryTerms.toLowerCase();
+        String termLower = term.toLowerCase();
+        if (dictionaryTermsLower.contains("|" + termLower + "|")) {
+            relevantTermsList = extractFirstMatchingTermsLine(dictionaryTermsLower, termLower);
+            return true;
         }
 
         return false;

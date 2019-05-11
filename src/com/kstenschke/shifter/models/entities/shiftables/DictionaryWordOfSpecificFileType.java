@@ -37,12 +37,12 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
     public DictionaryWordOfSpecificFileType(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
 
-        String contents = ShifterPreferences.getDictionary();
-        if (contents.isEmpty()) {
-            contents = new PluginConfiguration().getDefaultDictionary();
+        String dictionary = ShifterPreferences.getDictionary();
+        if (dictionary.isEmpty()) {
+            dictionary = new PluginConfiguration().getDefaultDictionary();
         }
 
-        dictionaryContents = contents;
+        dictionaryContents = dictionary;
     }
 
     // Get instance or null if not applicable:

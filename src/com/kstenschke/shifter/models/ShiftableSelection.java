@@ -56,6 +56,7 @@ public class ShiftableSelection {
             // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
             null != (shiftable = new JsDoc(actionContainer).getInstance()) ||
             null != (shiftable = new Comment(actionContainer).getInstance()) ||
+            null != (shiftable = new AccessType(actionContainer).getInstance()) ||
             null != (shiftable = new XmlAttributes(actionContainer).getInstance()) ||
             null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
             null != (shiftable = new Css(actionContainer).getInstance()) ||
@@ -75,6 +76,8 @@ public class ShiftableSelection {
             null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
             null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
+            null != (shiftable = new MonoCharacterRepetition(actionContainer).getInstance()) ||
+            null != (shiftable = new DictionaryWord(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalConjunction(actionContainer).getInstance(null)) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
             null != (shiftable = new PhpVariable(actionContainer).getInstance())

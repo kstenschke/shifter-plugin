@@ -175,4 +175,35 @@ public class ShiftableTypesManagerTest {
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
     }
+
+    /*@Test
+    public void getShiftableDetectDictionaryWordOfSpecificFileTypeSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText(" foo\n north\n monday\n dog\n");
+        actionContainer.setSelectedText("north");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.DICTIONARY_WORD, shiftable.getType());
+    }*/
+
+    @Test
+    public void getShiftableDetectDictionaryWordSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setFileExtension("txt");
+        actionContainer.setDocumentText(" foo\n north\n monday\n dog\n");
+        actionContainer.setSelectedText("north");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.DICTIONARY_WORD, shiftable.getType());
+    }
 }

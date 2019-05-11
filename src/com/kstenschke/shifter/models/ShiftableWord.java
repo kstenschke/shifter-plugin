@@ -255,6 +255,7 @@ public class ShiftableWord {
 
         // Identify word type and shift it accordingly
         ShiftableWord shiftableWord = new ShiftableWord(actionContainer, word, prefixChar, postfixChar, moreCount);
+        // @todo reuse shiftableTypesManager here, eliminate hard-code knowledge about types' internals
 
         if (!isOperator && "-".equals(prefixChar) &&
             (null != new NumericValue(actionContainer).getInstance() || null != new CssUnit(actionContainer).getInstance())
