@@ -21,20 +21,11 @@ import com.intellij.openapi.actionSystem.PlatformDataKeys;
 
 class ShiftUpAction extends AnAction {
 
-    /**
-     * Disable when no editor available
-     *
-     * @param event Action system event
-     */
+    // Disable when no editor available
     public void update(AnActionEvent event) {
         event.getPresentation().setEnabled(event.getData(PlatformDataKeys.EDITOR) != null);
     }
 
-    /**
-     * Perform shift up
-     *
-     * @param event ActionSystem event
-     */
     public void actionPerformed(final AnActionEvent event) {
         new ActionAdapter(event, true, false).delegate(null);
     }

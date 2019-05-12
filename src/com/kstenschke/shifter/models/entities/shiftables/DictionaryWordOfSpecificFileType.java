@@ -53,7 +53,7 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
         if (null == actionContainer ||
             null == super.getInstance(checkIfShiftable)) return null;
 
-        return isInFileTypeDictionary();
+        return isInFileTypeDictionary() ? this : null;
     }
 
     public ShiftableTypes.Type getType() {
@@ -63,12 +63,12 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
     // Check whether the given term exists in any section of shift-lists of the dictionary,
     // looking only at lists in blocks having assigned the given extension
     // + Stores first matching line containing the term for use in shifting later
-    private DictionaryWordOfSpecificFileType isInFileTypeDictionary() {
+    private boolean isInFileTypeDictionary() {
         if (null == actionContainer.fileExtension ||
             !dictionaryContents.contains("|" + actionContainer.fileExtension + "|")
-        ) return null;
+        ) return false;
 
-        String term = actionContainer.selectedText;
+        String term = actionContainer.getStringToBeShifted();
 
         // Reduce to first term-list of terms-block(s) of the given file extension, containing the given term
         Object[] blocksOfExtension = getAllFileExtensionsBlockStarts(actionContainer.fileExtension);
@@ -81,10 +81,10 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
             // Term is contained? store list of shifting neighbours
             if (UtilsTextual.containsCaseInSensitive(curShiftTermsBlock, "|" + term + "|")) {
                 relevantTermsList = extractFirstMatchingTermsLine(curShiftTermsBlock, term);
-                return this;
+                return true;
             }
         }
 
-        return null;
+        return false;
     }
 }

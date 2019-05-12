@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models.entities.shiftables;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
@@ -79,13 +82,18 @@ public class DictionaryWord extends AbstractShiftable {
             boolean updateInDocument,
             boolean disableIntentionPopup
     ) {
-        if (null == relevantTermsList) return word;
+        word = actionContainer.getStringToBeShifted();
+        if (null == relevantTermsList) {
+            return word;
+        }
 
         String shiftTerms = relevantTermsList.replaceFirst("\\|", "");
         shiftTerms = UtilsTextual.replaceLast(shiftTerms, "|", "");
 
         String[] termsList = shiftTerms.split("\\|");
-        if (termsList.length == 0) return word;
+        if (termsList.length == 0) {
+            return word;
+        }
 
         StaticWordType wordType = new StaticWordType(termsList);
         String shiftedWord = wordType.getShifted(word, actionContainer.isShiftUp);

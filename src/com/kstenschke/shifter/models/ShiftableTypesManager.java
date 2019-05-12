@@ -15,6 +15,9 @@
  */
 package com.kstenschke.shifter.models;
 
+import com.intellij.notification.Notification;
+import com.intellij.notification.NotificationType;
+import com.intellij.notification.Notifications;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
@@ -72,7 +75,7 @@ class ShiftableTypesManager {
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance())
         ) return shiftable;
 
-        // @todo 1. completely eliminate getWordType() from manager
+        // @todo 1. completely eliminate getShiftableType() from manager
 
         // @todo 2. rework: remove redundant arguments (e.g. from getShifted())
 
@@ -83,7 +86,7 @@ class ShiftableTypesManager {
     }
 
     // Detect word type (get the one w/ highest priority to be shifted) of given string
-    ShiftableTypes.Type getWordType() {
+    ShiftableTypes.Type getShiftableType() {
         AbstractShiftable shiftable;
 
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code
@@ -138,19 +141,19 @@ class ShiftableTypesManager {
      *
      * @param  actionContainer
      * @param  word         Word to be shifted
-     * @param  wordType     Shiftable word type
+     * @param  shiftableType     Shiftable word type
      * @param  moreCount    Current "more" count, starting w/ 1. If non-more shift: null
      * @return              The shifted word
      */
     String getShiftedWord(
             ActionContainer actionContainer,
             String word,
-            ShiftableTypes.Type wordType,
+            ShiftableTypes.Type shiftableType,
             Integer moreCount
     ) {
-        if (wordType == WORDS_TUPEL) actionContainer.disableIntentionPopup = true;
+        if (shiftableType == WORDS_TUPEL) actionContainer.disableIntentionPopup = true;
 
-        switch (wordType) {
+        switch (shiftableType) {
             // String based word shiftables
             case ACCESS_TYPE: return new AccessType(actionContainer).getShifted(word);
             // Numeric values including UNIX and millisecond timestamps
@@ -176,9 +179,17 @@ class ShiftableTypesManager {
             case SEPARATED_PATH: return new SeparatedPath(actionContainer).getShifted(word);
             case CAMEL_CASE_STRING: return new CamelCaseString(actionContainer).getShifted(word);
             case HTML_ENCODABLE: return new HtmlEncodable(actionContainer).getShifted(word);
+            case DICTIONARY_WORD: return new DictionaryWord(actionContainer).getInstance().getShifted(word);
             case NUMERIC_POSTFIXED: return new NumericPostfixed(actionContainer).getShifted(word);
             case WORDS_TUPEL: return new Tupel(actionContainer).getShifted(word);
-            default: return word;
+            default:
+                Notifications.Bus.notify(
+                        new Notification(
+                                "type not handled",
+                                "type not handled",
+                                "shiftable type not handled: " + shiftableType,
+                                NotificationType.INFORMATION));
+                return word;
         }
     }
 

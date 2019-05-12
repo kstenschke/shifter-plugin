@@ -39,8 +39,8 @@ public class ShiftableWord {
     private final Integer moreCount;
 
     private AbstractShiftable shiftable;
-    // @todo eliminate wordType, use shiftable
-    private ShiftableTypes.Type wordType;
+    // @todo eliminate shiftableType, use shiftable
+    private ShiftableTypes.Type shiftableType;
 
     private final boolean isShiftable;
 
@@ -72,24 +72,25 @@ public class ShiftableWord {
 
         // Detect word type
         shiftingShiftableTypesManager.setPrefixChar(prefixChar);
-        // @todo eliminate wordType, use shiftable
+        // @todo eliminate shiftableType, use shiftable
         shiftable = shiftingShiftableTypesManager.getShiftable();
-        wordType = shiftingShiftableTypesManager.getWordType();
+        shiftableType = shiftingShiftableTypesManager.getShiftableType();
 
         // Comprehend negative values of numeric shiftables
         this.word = (
-                (CSS_UNIT == wordType || NUMERIC_VALUE == wordType)
+                (CSS_UNIT == shiftableType ||
+                 NUMERIC_VALUE == shiftableType)
                 && "-".equals(prefixChar)
         )
             ? "-" + word
             : word;
 
         // Can the word be shifted?
-        isShiftable = UNKNOWN != wordType;
+        isShiftable = UNKNOWN != shiftableType;
     }
 
-    public ShiftableTypes.Type getWordType() {
-        return wordType;
+    public ShiftableTypes.Type getShiftableType() {
+        return shiftableType;
     }
 
     /**
@@ -98,18 +99,20 @@ public class ShiftableWord {
      * @return String   Next upper/lower word
      */
     public String getShifted(boolean checkIfIsShiftable) {
-        if (!checkIfIsShiftable && !isShiftable) return word;
+        if (!checkIfIsShiftable && !isShiftable) {
+            return word;
+        }
 
         //String shiftedWord = shiftable.getShifted(word, moreCount);
-        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, wordType, moreCount);
+        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, shiftableType, moreCount);
 
         return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }
 
     private String maintainCasingOnShiftedWord(String shiftedWord) {
-        if (    PHP_VARIABLE != wordType
-             && QUOTED_STRING != wordType
-             && CAMEL_CASE_STRING != wordType
+        if (    PHP_VARIABLE != shiftableType
+             && QUOTED_STRING != shiftableType
+             && CAMEL_CASE_STRING != shiftableType
              && ShifterPreferences.getIsActivePreserveCase()
         ) {
             if (UtilsTextual.isAllUppercase(word)) return shiftedWord.toUpperCase();
@@ -130,7 +133,7 @@ public class ShiftableWord {
     private String postProcess(String word, String postfix) {
         if (!UtilsFile.isCssFile(actionContainer.filename)) return word;
 
-        switch (wordType) {
+        switch (shiftableType) {
             // "0" was shifted to a different numeric value, inside a CSS file, so we can add a measure unit
             case NUMERIC_VALUE:
                 return CssUnit.isCssUnit(postfix)
@@ -254,8 +257,11 @@ public class ShiftableWord {
         ShiftableWord shiftableWord = new ShiftableWord(actionContainer, word, prefixChar, postfixChar, moreCount);
         // @todo reuse shiftableTypesManager here, eliminate hard-code knowledge about types' internals
 
-        if (!isOperator && "-".equals(prefixChar) &&
-            (null != new NumericValue(actionContainer).getInstance() || null != new CssUnit(actionContainer).getInstance())
+        if (!isOperator &&
+            "-".equals(prefixChar) &&
+            (null != new NumericValue(actionContainer).getInstance() ||
+             null != new CssUnit(actionContainer).getInstance()
+            )
         ) {
             word = "-" + word;
             wordOffset--;
