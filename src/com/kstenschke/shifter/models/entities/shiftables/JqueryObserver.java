@@ -21,7 +21,6 @@ import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
 import org.jetbrains.annotations.Nullable;
 
-// JavaScript Variables (multi-lined declarations of multiple vars)
 public class JqueryObserver extends AbstractShiftable {
 
     public static final String ACTION_TEXT = "Shift jQuery Observer";
@@ -60,7 +59,7 @@ public class JqueryObserver extends AbstractShiftable {
             || "load(".equals(str)
             || "mouseenter(".equals(str)
             || "mouseleave(".equals(str)
-            || "resize(".equals(str)
+            || "resize(".equals(str)
             || "submit(".equals(str)
             || "scroll(".equals(str)
             || "unload(".equals(str)

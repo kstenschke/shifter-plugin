@@ -72,7 +72,8 @@ class ShiftableTypesManager {
             null != (shiftable = new Tupel(actionContainer).getInstance()) ||
             null != (shiftable = new SeparatedPath(actionContainer).getInstance()) ||
             null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
-            null != (shiftable = new HtmlEncodable(actionContainer).getInstance())
+            null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
+            null != (shiftable = new Comment(actionContainer).getInstance())
         ) return shiftable;
 
         // @todo 1. completely eliminate getShiftableType() from manager
@@ -128,7 +129,8 @@ class ShiftableTypesManager {
             null != (shiftable = new Tupel(actionContainer).getInstance()) ||
             null != (shiftable = new SeparatedPath(actionContainer).getInstance()) ||
             null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
-            null != (shiftable = new HtmlEncodable(actionContainer).getInstance())
+            null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
+            null != (shiftable = new Comment(actionContainer).getInstance())
         ) return shiftable.getType();
 
         return UNKNOWN;

@@ -19,110 +19,6 @@ public class ShiftableTypesManagerTest {
     }
 
     @Test
-    public void getShiftableDetectTrailingCommentSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setSelectedText("echo 'x'; // output x");
-        actionContainer.setIsLastLineInDocument(false);
-        actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.TRAILING_COMMENT, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectPhpDocContainingDataTypeSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.php");
-        actionContainer.setSelectedText("* @param int $x");
-        actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectPhpVariableSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.php");
-        actionContainer.setDocumentText("<?php\n$foo=1;\n$bar=2;\n");
-        actionContainer.setSelectedText("$bar");
-        actionContainer.setPostfixChar(" ");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.PHP_VARIABLE, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectParenthesisSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.php");
-        actionContainer.setDocumentText("<?php\n$foo=(10+9*8)/2;\n$bar=2;\n");
-        actionContainer.setSelectedText("(10+9*8)");
-        actionContainer.setPostfixChar(" ");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.PARENTHESIS, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectJsVariableDeclarationsSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.js");
-        actionContainer.setDocumentText("var foo=0;\nvar bar=1;\n");
-        actionContainer.setSelectedText("var foo=0;\nvar bar=1;");
-        actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.JS_VARIABLE_DECLARATIONS, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectSizzleSelectorSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.js");
-        actionContainer.setDocumentText("$('div').hide();\n");
-        actionContainer.setSelectedText("$('div')");
-        actionContainer.setPostfixChar(".");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.SIZZLE_SELECTOR, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectDocCommentTagCaretLine() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.php");
-        actionContainer.setDocumentText("<?php\n\n/**\n * @version 2.0\n**/\n");
-        actionContainer.setCaretLine(" * @version 2.0");
-        actionContainer.setPrefixChar("@");
-        actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.DOC_COMMENT_TAG, shiftable.getType());
-    }
-
-    @Test
     public void getShiftableDetectAccessTypeAtCaret() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.php");
@@ -176,20 +72,36 @@ public class ShiftableTypesManagerTest {
         assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
     }
 
-    /*@Test
-    public void getShiftableDetectDictionaryWordOfSpecificFileTypeSelected() {
+    @Test
+    public void getShiftableDetectCamelCaseStringSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.txt");
-        actionContainer.setDocumentText(" foo\n north\n monday\n dog\n");
-        actionContainer.setSelectedText("north");
-        actionContainer.setPrefixChar(" ");
-        actionContainer.setPostfixChar("\n");
+        actionContainer.setFileExtension("txt");
+        actionContainer.setDocumentText("fooBarBaz");
+        actionContainer.setSelectedText("fooBarBaz");
+        actionContainer.setPrefixChar("");
+        actionContainer.setPostfixChar("");
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
 
         AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.DICTIONARY_WORD, shiftable.getType());
-    }*/
+        assertEquals(ShiftableTypes.Type.CAMEL_CASE_STRING, shiftable.getType());
+    }
+    @Test
+    public void getShiftableDetectCommentSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setFileExtension("txt");
+        actionContainer.setDocumentText("//fooBarBaz");
+        actionContainer.setSelectedText("//fooBarBaz");
+        actionContainer.setPrefixChar("");
+        actionContainer.setPostfixChar("");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.COMMENT, shiftable.getType());
+    }
 
     @Test
     public void getShiftableDetectDictionaryWordSelected() {
@@ -206,4 +118,139 @@ public class ShiftableTypesManagerTest {
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.DICTIONARY_WORD, shiftable.getType());
     }
+
+    @Test
+    public void getShiftableDetectDocCommentTagCaretLine() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n\n/**\n * @version 2.0\n**/\n");
+        actionContainer.setCaretLine(" * @version 2.0");
+        actionContainer.setPrefixChar("@");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.DOC_COMMENT_TAG, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectJqueryObserverSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.js");
+        actionContainer.setFileExtension("js");
+        actionContainer.setDocumentText("$('#myId').click(function(){alert('click!');});");
+        actionContainer.setSelectedText("click(");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.JQUERY_OBSERVER, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectJsVariableDeclarationsSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.js");
+        actionContainer.setDocumentText("var foo=0;\nvar bar=1;\n");
+        actionContainer.setSelectedText("var foo=0;\nvar bar=1;");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.JS_VARIABLE_DECLARATIONS, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectParenthesisSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n$foo=(10+9*8)/2;\n$bar=2;\n");
+        actionContainer.setSelectedText("(10+9*8)");
+        actionContainer.setPostfixChar(" ");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.PARENTHESIS, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectPhpDocContainingDataTypeSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setSelectedText("* @param int $x");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectPhpVariableSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n$foo=1;\n$bar=2;\n");
+        actionContainer.setSelectedText("$bar");
+        actionContainer.setPostfixChar(" ");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.PHP_VARIABLE, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectSizzleSelectorSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.js");
+        actionContainer.setDocumentText("$('div').hide();\n");
+        actionContainer.setSelectedText("$('div')");
+        actionContainer.setPostfixChar(".");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.SIZZLE_SELECTOR, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectTrailingCommentSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setSelectedText("echo 'x'; // output x");
+        actionContainer.setIsLastLineInDocument(false);
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.TRAILING_COMMENT, shiftable.getType());
+    }
+
+    /*@Test
+    public void getShiftableDetectDictionaryWordOfSpecificFileTypeSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText(" foo\n north\n monday\n dog\n");
+        actionContainer.setSelectedText("north");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar("\n");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.DICTIONARY_WORD, shiftable.getType());
+    }*/
 }
