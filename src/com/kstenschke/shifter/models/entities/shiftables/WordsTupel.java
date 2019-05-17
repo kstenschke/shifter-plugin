@@ -27,26 +27,24 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 // Tupel (two items w/ delimiter in between)
-public class Tupel extends AbstractShiftable {
+public class WordsTupel extends AbstractShiftable {
 
     public static final String ACTION_TEXT = "Shift Tupel";
-    private static final String ACTION_TEXT_SWAP_WORDS_ORDER = "Swap Words Order";
+    private static final String ACTION_TEXT_SWAP_WORDS_ORDER = "Swap Order";
 
     // Defined during detection of being a tupel
     private String delimiter;
 
     // Constructor
-    public Tupel(@Nullable ActionContainer actionContainer) {
+    public WordsTupel(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
     // Get instance or null if not applicable
-    public Tupel getInstance(@Nullable Boolean checkIfShiftable) {
-        if (// @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
+    public WordsTupel getInstance(@Nullable Boolean checkIfShiftable) {
+        String str = actionContainer.getStringToBeShifted();
 
-        String str = actionContainer.selectedText;
+        if (null == str) return null;
 
         String glues[] = new String[]{
                 ",",

@@ -18,10 +18,10 @@ package com.kstenschke.shifter.models.entities.shiftables;
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
+import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
 
-// PHP Variable (word w/ $ prefix)
 public class ConcatenationPhp extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift PHP Concatenation";
@@ -39,20 +39,20 @@ public class ConcatenationPhp extends AbstractShiftable {
     public ConcatenationPhp(ActionContainer actionContainer) {
         super(actionContainer);
 
-        // @todo make shiftable also in non-selection
-        if (null == actionContainer.selectedText) {
+        String str = actionContainer.getStringToBeShifted();
+
+        if (null == str) {
             isShiftable = false;
             return;
         }
 
-        String str = actionContainer.selectedText;
         String strJoined = UtilsTextual.removeLineBreaks(str.trim());
         if (strJoined.length() <= 4 || !strJoined.contains(".")) return;
 
         extractParts(strJoined);
         if (null == partLHS || null == partRHS) return;
 
-        isPhpConcatenation = true;
+        isPhpConcatenation = UtilsFile.isPhpFile(actionContainer.filename);
         if (null == offsetDot) return;
 
         char charBeforeDot = strJoined.charAt(offsetDot - 1);

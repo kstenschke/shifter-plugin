@@ -40,8 +40,8 @@ public class UtilsFile {
                 : filename.substring(filename.lastIndexOf('.') + 1);
     }
 
-    private static String extractFileExtension(@Nullable String filename) {
-        return extractFileExtension(filename, false);
+    public static String extractFileExtension(@Nullable String filename) {
+        return extractFileExtension(filename, true);
     }
 
     private static String getBasename(@Nullable String filename) {

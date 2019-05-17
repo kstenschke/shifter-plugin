@@ -160,6 +160,8 @@ public class ActionContainer {
 
     public void setFilename(String filename) {
         this.filename = filename;
+
+        if (null == this.fileExtension) this.setFileExtension(UtilsFile.extractFileExtension(filename));
     }
 
     public void setFileExtension(String fileExtension) {

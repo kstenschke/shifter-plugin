@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class TupelTest {
 
-    private Tupel tupel;
+    private WordsTupel tupel;
 
     @Before
     public void setUp() throws Exception {
-        tupel = new Tupel(null);
+        tupel = new WordsTupel(null);
     }
 
     @After

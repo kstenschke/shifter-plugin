@@ -73,7 +73,7 @@ public class ShiftableSelection {
             null != (shiftable = new QuotedString(actionContainer).getInstance(null)) ||
             null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
             null != (shiftable = new WordPair(actionContainer).getInstance()) ||
-            null != (shiftable = new Tupel(actionContainer).getInstance(true)) ||
+            null != (shiftable = new WordsTupel(actionContainer).getInstance(true)) ||
             null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
             null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
             null != (shiftable = new MonoCharacterRepetition(actionContainer).getInstance()) ||

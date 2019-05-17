@@ -73,10 +73,24 @@ public class ShiftableTypesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectCamelCaseStringAtCaret() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?php\n\necho 'fooBarBaz';\n");
+        actionContainer.setStringAtCaret("fooBarBaz");
+        actionContainer.setPrefixChar("'");
+        actionContainer.setPostfixChar("'");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.CAMEL_CASE_STRING, shiftable.getType());
+    }
+
+    @Test
     public void getShiftableDetectCamelCaseStringSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.txt");
-        actionContainer.setFileExtension("txt");
         actionContainer.setDocumentText("fooBarBaz");
         actionContainer.setSelectedText("fooBarBaz");
         actionContainer.setPrefixChar("");
@@ -87,11 +101,11 @@ public class ShiftableTypesManagerTest {
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.CAMEL_CASE_STRING, shiftable.getType());
     }
+
     @Test
     public void getShiftableDetectCommentSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.txt");
-        actionContainer.setFileExtension("txt");
         actionContainer.setDocumentText("//fooBarBaz");
         actionContainer.setSelectedText("//fooBarBaz");
         actionContainer.setPrefixChar("");
@@ -104,10 +118,54 @@ public class ShiftableTypesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectConcatenationJsSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.js");
+        actionContainer.setDocumentText("var txt= 'foo' + 'bar' + 'baz';\n");
+        actionContainer.setSelectedText("'foo' + 'bar' + 'baz'");
+        actionContainer.setPrefixChar("'");
+        actionContainer.setPostfixChar("'");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.CONCATENATION_JS, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectConcatenationTsSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.ts");
+        actionContainer.setDocumentText("let foo = 1;\nlet bar = foo + 'bar' + 10 + 'baz';\n");
+        actionContainer.setSelectedText("foo + 'bar' + 10 + 'baz'");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar(";");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.CONCATENATION_JS_IN_TS, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectConcatenationPhpSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("<?\n$foo = 'bar' . $baz;\n");
+        actionContainer.setSelectedText("'bar' . $baz");
+        actionContainer.setPrefixChar(" ");
+        actionContainer.setPostfixChar(";");
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        AbstractShiftable shiftable = shiftableTypesManager.getShiftable();
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.CONCATENATION_PHP, shiftable.getType());
+    }
+
+    @Test
     public void getShiftableDetectDictionaryWordSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.txt");
-        actionContainer.setFileExtension("txt");
         actionContainer.setDocumentText(" foo\n north\n monday\n dog\n");
         actionContainer.setSelectedText("north");
         actionContainer.setPrefixChar(" ");
@@ -139,7 +197,6 @@ public class ShiftableTypesManagerTest {
     public void getShiftableDetectJqueryObserverSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.js");
-        actionContainer.setFileExtension("js");
         actionContainer.setDocumentText("$('#myId').click(function(){alert('click!');});");
         actionContainer.setSelectedText("click(");
         actionContainer.setPrefixChar(" ");

@@ -20,13 +20,10 @@ import com.kstenschke.shifter.models.ShiftableTypes;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.jetbrains.annotations.Nullable;
 
-// JavaScript concatenation in TypeScript file: shift into interpolation
+// JavaScript concatenation in JavaScript file: shift into interpolation
 public class ConcatenationJs extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Convert to interpolation";
-
-    private int amountVariables = 0;
-    private int amountStrings = 0;
 
     // Constructor
     public ConcatenationJs(@Nullable ActionContainer actionContainer) {
@@ -35,21 +32,23 @@ public class ConcatenationJs extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public ConcatenationJs getInstance(@Nullable Boolean checkIfShiftable) {
-        if (
-            null == actionContainer.selectedText
+        if (!actionContainer.fileExtension.equals("js") &&
+            !actionContainer.fileExtension.equals("ts")
         ) return null;
 
-        String str = actionContainer.selectedText;
-        if (!str.contains("+") ||
-            str.replaceAll("[\\s|\\d]", "").length() < 3) {
-            return null;
-        }
+        String str = actionContainer.getStringToBeShifted();
 
-        return this;
+        return
+            null == str ||
+            !str.contains("+") ||
+            str.replaceAll("[\\s|\\d]", "").length() < 3
+                ? null : this;
     }
 
     public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.CONCATENATION_JS;
+        return actionContainer.fileExtension.equals("ts")
+                ? ShiftableTypes.Type.CONCATENATION_JS_IN_TS
+                : ShiftableTypes.Type.CONCATENATION_JS;
     }
 
     public String getShifted(

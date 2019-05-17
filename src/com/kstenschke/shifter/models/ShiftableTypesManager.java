@@ -51,6 +51,7 @@ class ShiftableTypesManager {
         if (null != (shiftable = new PhpVariable(actionContainer).getInstance()) ||
             null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
             null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
+            null != (shiftable = new ConcatenationJs(actionContainer).getInstance()) ||
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
             null != (shiftable = new DocCommentType(actionContainer).getInstance()) ||
             null != (shiftable = new AccessType(actionContainer).getInstance()) ||
@@ -69,7 +70,8 @@ class ShiftableTypesManager {
             // Term in any dictionary (w/o limiting to edited file's extension)
             null != (shiftable = new DictionaryWord(actionContainer).getInstance()) ||
             null != (shiftable = new NumericPostfixed(actionContainer).getInstance()) ||
-            null != (shiftable = new Tupel(actionContainer).getInstance()) ||
+            null != (shiftable = new ConcatenationPhp(actionContainer).getInstance()) ||
+            null != (shiftable = new WordsTupel(actionContainer).getInstance()) ||
             null != (shiftable = new SeparatedPath(actionContainer).getInstance()) ||
             null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
@@ -107,6 +109,7 @@ class ShiftableTypesManager {
         if (null != (shiftable = new PhpVariable(actionContainer).getInstance()) ||
             null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
             null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
+            null != (shiftable = new ConcatenationJs(actionContainer).getInstance()) ||
             null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
             null != (shiftable = new DocCommentTag(actionContainer).getInstance()) ||
             null != (shiftable = new DocCommentType(actionContainer).getInstance()) ||
@@ -126,7 +129,8 @@ class ShiftableTypesManager {
             // Term in dictionary (anywhere, that is w/o limiting to the current file extension)
             null != (shiftable = new DictionaryWord(actionContainer).getInstance()) ||
             null != (shiftable = new NumericPostfixed(actionContainer).getInstance()) ||
-            null != (shiftable = new Tupel(actionContainer).getInstance()) ||
+            null != (shiftable = new ConcatenationPhp(actionContainer).getInstance()) ||
+            null != (shiftable = new WordsTupel(actionContainer).getInstance()) ||
             null != (shiftable = new SeparatedPath(actionContainer).getInstance()) ||
             null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
             null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
@@ -183,7 +187,7 @@ class ShiftableTypesManager {
             case HTML_ENCODABLE: return new HtmlEncodable(actionContainer).getShifted(word);
             case DICTIONARY_WORD: return new DictionaryWord(actionContainer).getInstance().getShifted(word);
             case NUMERIC_POSTFIXED: return new NumericPostfixed(actionContainer).getShifted(word);
-            case WORDS_TUPEL: return new Tupel(actionContainer).getShifted(word);
+            case WORDS_TUPEL: return new WordsTupel(actionContainer).getShifted(word);
             default:
                 Notifications.Bus.notify(
                         new Notification(
