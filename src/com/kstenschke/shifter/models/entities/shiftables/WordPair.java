@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
 import org.jetbrains.annotations.NotNull;
@@ -39,8 +39,8 @@ public class WordPair extends SeparatedPath {
                     ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.WORD_PAIR;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.WORD_PAIR;
     }
 
     public boolean isWordPair(String str) {

@@ -37,11 +37,11 @@ public class ShiftableSelection {
             actionContainer.selectedText.trim().isEmpty()
         ) return;
 
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-        shiftableTypesManager.setPrefixChar("");
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+        shiftablesManager.setPrefixChar("");
         AbstractShiftable shiftable;
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        shiftable = ShiftablesManager.getShiftable(shiftables);
 
         if (null != shiftable &&
             shiftable.shiftSelectionInDocument(moreCount)
@@ -50,7 +50,7 @@ public class ShiftableSelection {
         // @todo call from within shiftSelectionInDocument()
         try {
             shiftable.replaceSelectionWithShiftedMaintainingCasing(
-                    shiftableTypesManager.getShiftedWord(actionContainer, moreCount));
+                    shiftablesManager.getShiftedWord(actionContainer, moreCount));
         } catch (NullPointerException e) {
             // silently continue (for now)
         }

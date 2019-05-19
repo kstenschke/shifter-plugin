@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,8 +46,8 @@ public class MultipleLines extends AbstractShiftable {
                 ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.MULTIPLE_LINES;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.MULTIPLE_LINES;
     }
 
     public String getShifted(

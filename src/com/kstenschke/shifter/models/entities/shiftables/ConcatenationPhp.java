@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
@@ -70,8 +70,8 @@ public class ConcatenationPhp extends AbstractShiftable {
         return isShiftable && isPhpConcatenation ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.CONCATENATION_PHP;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.CONCATENATION_PHP;
     }
 
     /** @return  String  Concatenation w/ left- and right-hand-side parts interchanged */

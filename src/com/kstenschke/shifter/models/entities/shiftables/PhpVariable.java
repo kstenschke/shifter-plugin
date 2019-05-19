@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import org.jetbrains.annotations.NotNull;
@@ -50,8 +50,8 @@ public class PhpVariable extends AbstractShiftable {
         return null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.PHP_VARIABLE;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.PHP_VARIABLE;
     }
 
     /**

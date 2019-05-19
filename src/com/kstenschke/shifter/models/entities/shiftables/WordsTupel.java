@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
@@ -89,8 +89,8 @@ public class WordsTupel extends AbstractShiftable {
         return true;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.WORDS_TUPEL;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.WORDS_TUPEL;
     }
 
     // Swap tupel parts

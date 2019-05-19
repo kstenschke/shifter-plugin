@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsFile;
@@ -58,8 +58,8 @@ public class Comment extends AbstractShiftable {
         return isComment(str) ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.COMMENT;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.COMMENT;
     }
 
     public String getShifted(

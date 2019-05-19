@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.utils.UtilsPhp;
 import org.jetbrains.annotations.Nullable;
 
@@ -42,8 +42,8 @@ public class PhpDocParamContainingDataType extends PhpDocParam {
             !containsDataType(stringToBeShifted) ? null : this;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE;
     }
 
     public Boolean containsDataType(String str) {

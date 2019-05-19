@@ -10,7 +10,7 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-public class ShiftableTypesManagerTest {
+public class ShiftablesManagerTest {
 
     @Before
     public void setUp() throws Exception {
@@ -28,26 +28,26 @@ public class ShiftableTypesManagerTest {
         actionContainer.setStringAtCaret("public");
         actionContainer.setPrefixChar(" ");
         actionContainer.setPostfixChar(" ");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.ACCESS_TYPE, shiftable.getType());
 
         actionContainer.setStringAtCaret("private");
-        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-        shiftables = shiftableTypesManager.getShiftables();
-        shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        shiftablesManager = new ShiftablesManager(actionContainer);
+        shiftables = shiftablesManager.getShiftables();
+        shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.ACCESS_TYPE, shiftable.getType());
 
         actionContainer.setStringAtCaret("protected");
-        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-        shiftables = shiftableTypesManager.getShiftables();
-        shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        shiftablesManager = new ShiftablesManager(actionContainer);
+        shiftables = shiftablesManager.getShiftables();
+        shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.ACCESS_TYPE, shiftable.getType());
     }
 
     @Test
@@ -58,26 +58,26 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("public");
         actionContainer.setPrefixChar(" ");
         actionContainer.setPostfixChar(" ");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.ACCESS_TYPE, shiftable.getType());
 
         actionContainer.setSelectedText("private");
-        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-        shiftables = shiftableTypesManager.getShiftables();
-        shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        shiftablesManager = new ShiftablesManager(actionContainer);
+        shiftables = shiftablesManager.getShiftables();
+        shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.ACCESS_TYPE, shiftable.getType());
 
         actionContainer.setSelectedText("protected");
-        shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-        shiftables = shiftableTypesManager.getShiftables();
-        shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        shiftablesManager = new ShiftablesManager(actionContainer);
+        shiftables = shiftablesManager.getShiftables();
+        shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.ACCESS_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.ACCESS_TYPE, shiftable.getType());
     }
 
     @Test
@@ -88,12 +88,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setStringAtCaret("fooBarBaz");
         actionContainer.setPrefixChar("'");
         actionContainer.setPostfixChar("'");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.CAMEL_CASE_STRING, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.CAMEL_CASE_STRING, shiftable.getType());
     }
 
     @Test
@@ -104,12 +104,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("fooBarBaz");
         actionContainer.setPrefixChar("");
         actionContainer.setPostfixChar("");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.CAMEL_CASE_STRING, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.CAMEL_CASE_STRING, shiftable.getType());
     }
 
     @Test
@@ -120,12 +120,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("//fooBarBaz");
         actionContainer.setPrefixChar("");
         actionContainer.setPostfixChar("");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.COMMENT, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.COMMENT, shiftable.getType());
     }
 
     @Test
@@ -136,12 +136,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("'foo' + 'bar' + 'baz'");
         actionContainer.setPrefixChar("'");
         actionContainer.setPostfixChar("'");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.CONCATENATION_JS, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.CONCATENATION_JS, shiftable.getType());
     }
 
     @Test
@@ -152,12 +152,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("foo + 'bar' + 10 + 'baz'");
         actionContainer.setPrefixChar(" ");
         actionContainer.setPostfixChar(";");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.CONCATENATION_JS_IN_TS, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.CONCATENATION_JS_IN_TS, shiftable.getType());
     }
 
     @Test
@@ -168,12 +168,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("'bar' . $baz");
         actionContainer.setPrefixChar(" ");
         actionContainer.setPostfixChar(";");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.CONCATENATION_PHP, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.CONCATENATION_PHP, shiftable.getType());
     }
 
     @Test
@@ -184,12 +184,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("north");
         actionContainer.setPrefixChar(" ");
         actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.DICTIONARY_WORD, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.DICTIONARY_WORD, shiftable.getType());
     }
 
     @Test
@@ -200,13 +200,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setCaretLine(" * @version 2.0");
         actionContainer.setPrefixChar("@");
         actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.DOC_COMMENT_TAG, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.DOC_COMMENT_TAG, shiftable.getType());
     }
 
     @Test
@@ -217,12 +217,12 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("click(");
         actionContainer.setPrefixChar(" ");
         actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.JQUERY_OBSERVER, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.JQUERY_OBSERVER, shiftable.getType());
     }
 
     @Test
@@ -232,13 +232,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setDocumentText("var foo=0;\nvar bar=1;\n");
         actionContainer.setSelectedText("var foo=0;\nvar bar=1;");
         actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.JS_VARIABLE_DECLARATIONS, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.JS_VARIABLE_DECLARATIONS, shiftable.getType());
     }
 
     @Test
@@ -248,13 +248,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setDocumentText("<?php\n$foo=(10+9*8)/2;\n$bar=2;\n");
         actionContainer.setSelectedText("(10+9*8)");
         actionContainer.setPostfixChar(" ");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.PARENTHESIS, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.PARENTHESIS, shiftable.getType());
     }
 
     @Test
@@ -263,13 +263,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setFilename("foo.php");
         actionContainer.setSelectedText("* @param int $x");
         actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.PHP_DOC_PARAM_CONTAINING_DATA_TYPE, shiftable.getType());
     }
 
     @Test
@@ -279,13 +279,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setDocumentText("<?php\n$foo=1;\n$bar=2;\n");
         actionContainer.setSelectedText("$bar");
         actionContainer.setPostfixChar(" ");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.PHP_VARIABLE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.PHP_VARIABLE, shiftable.getType());
     }
 
     @Test
@@ -295,13 +295,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setDocumentText("$('div').hide();\n");
         actionContainer.setSelectedText("$('div')");
         actionContainer.setPostfixChar(".");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.SIZZLE_SELECTOR, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.SIZZLE_SELECTOR, shiftable.getType());
     }
 
     @Test
@@ -310,13 +310,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setSelectedText("echo 'x'; // output x");
         actionContainer.setIsLastLineInDocument(false);
         actionContainer.setPostfixChar("\n");
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.TRAILING_COMMENT, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.TRAILING_COMMENT, shiftable.getType());
     }
 
     @Test
@@ -326,13 +326,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setDocumentText("fö bår baß");
         actionContainer.setSelectedText("fö bår baß");
         actionContainer.setIsLastLineInDocument(true);
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.HTML_ENCODABLE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.HTML_ENCODABLE, shiftable.getType());
     }
 
     @Test
@@ -342,13 +342,13 @@ public class ShiftableTypesManagerTest {
         actionContainer.setDocumentText("1");
         actionContainer.setSelectedText("1");
         actionContainer.setIsLastLineInDocument(true);
-        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
 
-        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
 
         assertNotNull(shiftable);
-        assertEquals(ShiftableTypes.Type.NUMERIC_VALUE, shiftable.getType());
+        assertEquals(ShiftablesEnum.Type.NUMERIC_VALUE, shiftable.getType());
     }
 
     /*@Test

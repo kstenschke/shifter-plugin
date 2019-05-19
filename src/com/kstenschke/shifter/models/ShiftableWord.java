@@ -23,7 +23,7 @@ import com.kstenschke.shifter.models.entities.shiftables.NumericValue;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 
-import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+import static com.kstenschke.shifter.models.ShiftablesEnum.Type.*;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -33,7 +33,7 @@ import java.util.regex.Pattern;
 
 public class ShiftableWord {
 
-    private ShiftableTypesManager shiftingShiftableTypesManager;
+    private ShiftablesManager shiftingShiftablesManager;
     private String word;
 
     // "more" count, starting w/ 1. If non-more shift: null
@@ -41,7 +41,7 @@ public class ShiftableWord {
 
     private AbstractShiftable shiftable;
     // @todo eliminate shiftableType, use shiftable
-    private ShiftableTypes.Type shiftableType;
+    private ShiftablesEnum.Type shiftableType;
 
     private final boolean isShiftable;
 
@@ -69,16 +69,16 @@ public class ShiftableWord {
         this.actionContainer = actionContainer;
         this.moreCount       = moreCount;
 
-        shiftingShiftableTypesManager = new ShiftableTypesManager(actionContainer);
+        shiftingShiftablesManager = new ShiftablesManager(actionContainer);
 
         // Detect word type
-        shiftingShiftableTypesManager.setPrefixChar(prefixChar);
+        shiftingShiftablesManager.setPrefixChar(prefixChar);
 
-        List<AbstractShiftable> shiftables = shiftingShiftableTypesManager.getShiftables();
+        List<AbstractShiftable> shiftables = shiftingShiftablesManager.getShiftables();
         // @todo eliminate shiftableType, use shiftable
-        shiftable = shiftingShiftableTypesManager.getShiftable(shiftables);
+        shiftable = shiftingShiftablesManager.getShiftable(shiftables);
 
-        shiftableType = shiftingShiftableTypesManager.getShiftableType();
+        shiftableType = shiftingShiftablesManager.getShiftableType();
 
         // Comprehend negative values of numeric shiftables
         this.word = (
@@ -93,7 +93,7 @@ public class ShiftableWord {
         isShiftable = UNKNOWN != shiftableType;
     }
 
-    public ShiftableTypes.Type getShiftableType() {
+    public ShiftablesEnum.Type getShiftableType() {
         return shiftableType;
     }
 
@@ -108,7 +108,7 @@ public class ShiftableWord {
         }
 
         //String shiftedWord = shiftable.getShifted(word, moreCount);
-        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(shiftable, word, moreCount);
+        String shiftedWord = shiftingShiftablesManager.getShiftedWord(shiftable, word, moreCount);
 
         return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }

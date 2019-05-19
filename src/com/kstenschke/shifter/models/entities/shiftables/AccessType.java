@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.StaticWordType;
 import org.jetbrains.annotations.Nullable;
@@ -48,8 +48,8 @@ public class AccessType extends AbstractShiftable {
         return accessTypes.hasWord(wordToBeShifted);
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.ACCESS_TYPE;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.ACCESS_TYPE;
     }
 
     /**

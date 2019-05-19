@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.ShifterPreferences;
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.resources.ui.PluginConfiguration;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.apache.commons.lang.StringUtils;
@@ -56,8 +56,8 @@ public class DictionaryWordOfSpecificFileType extends DictionaryWord {
         return isInFileTypeDictionary() ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.DICTIONARY_WORD_EXT_SPECIFIC;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.DICTIONARY_WORD_EXT_SPECIFIC;
     }
 
     // Check whether the given term exists in any section of shift-lists of the dictionary,

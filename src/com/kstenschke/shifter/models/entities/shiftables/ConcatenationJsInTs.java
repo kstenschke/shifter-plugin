@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import org.jetbrains.annotations.Nullable;
 
 // JavaScript concatenation in TypeScript file: shift into interpolation
@@ -46,8 +46,8 @@ public class ConcatenationJsInTs extends ConcatenationJs {
                 ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.CONCATENATION_JS_IN_TS;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.CONCATENATION_JS_IN_TS;
     }
 
     /**

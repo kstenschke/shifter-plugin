@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
 import com.kstenschke.shifter.resources.StaticTexts;
@@ -80,8 +80,8 @@ public class SeparatedList extends AbstractShiftable {
         return this;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.SEPARATED_LIST;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.SEPARATED_LIST;
     }
 
     /**

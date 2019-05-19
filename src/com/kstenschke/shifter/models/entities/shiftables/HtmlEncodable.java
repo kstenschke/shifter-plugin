@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringEscapeUtils;
 import org.jetbrains.annotations.Nullable;
@@ -53,8 +53,8 @@ public class HtmlEncodable extends AbstractShiftable {
                 ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.HTML_ENCODABLE;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.HTML_ENCODABLE;
     }
 
     /**

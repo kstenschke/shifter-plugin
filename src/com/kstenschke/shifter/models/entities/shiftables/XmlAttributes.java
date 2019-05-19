@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.comparators.AlphanumComparator;
 import com.kstenschke.shifter.utils.UtilsArray;
@@ -50,8 +50,8 @@ public class XmlAttributes extends AbstractShiftable {
                 ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.XML_ATTRIBUTES;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.XML_ATTRIBUTES;
     }
 
     public String getShifted(

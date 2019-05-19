@@ -17,7 +17,7 @@ package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
-import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+import static com.kstenschke.shifter.models.ShiftablesEnum.Type.*;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -27,12 +27,12 @@ import java.util.Collections;
 import java.util.List;
 
 // Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
-class ShiftableTypesManager {
+class ShiftablesManager {
 
     private ActionContainer actionContainer;
 
     // Constructor
-    ShiftableTypesManager(ActionContainer actionContainer) {
+    ShiftablesManager(ActionContainer actionContainer) {
         this.actionContainer = actionContainer;
     }
 
@@ -89,7 +89,7 @@ class ShiftableTypesManager {
     }
 
     // Detect word type (get the one w/ highest priority to be shifted) of given string
-    ShiftableTypes.Type getShiftableType() {
+    ShiftablesEnum.Type getShiftableType() {
         AbstractShiftable shiftable;
 
         // Selected code line w/ trailing //-comment: moves the comment into a new caretLine before the code

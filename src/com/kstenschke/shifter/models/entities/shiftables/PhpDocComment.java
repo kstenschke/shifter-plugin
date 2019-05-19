@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.jetbrains.annotations.Nullable;
 import static org.apache.commons.lang.StringUtils.trim;
@@ -40,8 +40,8 @@ class PhpDocComment extends AbstractShiftable {
                 ? this : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.PHP_DOC_COMMENT;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.PHP_DOC_COMMENT;
     }
 
     public String getShifted(

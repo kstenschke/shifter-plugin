@@ -17,7 +17,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.jetbrains.annotations.Nullable;
 
@@ -43,8 +43,8 @@ public class OperatorSign extends AbstractShiftable {
                     : null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.OPERATOR_SIGN;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.OPERATOR_SIGN;
     }
 
     /**

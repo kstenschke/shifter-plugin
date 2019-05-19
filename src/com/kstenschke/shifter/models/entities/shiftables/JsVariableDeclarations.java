@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.apache.commons.lang.StringUtils;
 import org.jetbrains.annotations.NotNull;
@@ -66,8 +66,8 @@ public class JsVariableDeclarations extends AbstractShiftable {
         return null;
     }
 
-    public ShiftableTypes.Type getType() {
-        return ShiftableTypes.Type.JS_VARIABLE_DECLARATIONS;
+    public ShiftablesEnum.Type getType() {
+        return ShiftablesEnum.Type.JS_VARIABLE_DECLARATIONS;
     }
 
     public String getShifted(

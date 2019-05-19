@@ -17,11 +17,11 @@ package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
 import com.kstenschke.shifter.models.ShiftableSelectionWithPopup;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.utils.UtilsFile;
 
-import static com.kstenschke.shifter.models.ShiftableTypes.Type.PHP_DOCUMENT;
+import static com.kstenschke.shifter.models.ShiftablesEnum.Type.PHP_DOCUMENT;
 
 import org.jetbrains.annotations.Nullable;
 
@@ -47,7 +47,7 @@ public class PhpDocument extends AbstractShiftable {
     }
 
     @Override
-    public ShiftableTypes.Type getType() {
+    public ShiftablesEnum.Type getType() {
         return PHP_DOCUMENT;
     }
 

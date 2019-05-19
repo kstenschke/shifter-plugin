@@ -16,7 +16,7 @@
 package com.kstenschke.shifter.models.entities.shiftables;
 
 import com.kstenschke.shifter.models.ActionContainer;
-import com.kstenschke.shifter.models.ShiftableTypes;
+import com.kstenschke.shifter.models.ShiftablesEnum;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import org.jetbrains.annotations.Nullable;
 
@@ -46,10 +46,10 @@ public class ConcatenationJs extends AbstractShiftable {
                 ? null : this;
     }
 
-    public ShiftableTypes.Type getType() {
+    public ShiftablesEnum.Type getType() {
         return actionContainer.fileExtension.equals("ts")
-                ? ShiftableTypes.Type.CONCATENATION_JS_IN_TS
-                : ShiftableTypes.Type.CONCATENATION_JS;
+                ? ShiftablesEnum.Type.CONCATENATION_JS_IN_TS
+                : ShiftablesEnum.Type.CONCATENATION_JS;
     }
 
     public String getShifted(
