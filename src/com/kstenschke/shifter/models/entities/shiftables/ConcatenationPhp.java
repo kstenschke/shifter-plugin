@@ -74,9 +74,7 @@ public class ConcatenationPhp extends AbstractShiftable {
         return ShiftableTypes.Type.CONCATENATION_PHP;
     }
 
-    /**
-     * @return  String  Concatenation w/ left- and right-hand-side parts interchanged
-     */
+    /** @return  String  Concatenation w/ left- and right-hand-side parts interchanged */
     public String getShifted(
             String str,
             Integer moreCount,

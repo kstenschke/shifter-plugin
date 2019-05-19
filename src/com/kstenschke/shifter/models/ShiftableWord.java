@@ -28,6 +28,7 @@ import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.List;
 import java.util.regex.Pattern;
 
 public class ShiftableWord {
@@ -72,8 +73,11 @@ public class ShiftableWord {
 
         // Detect word type
         shiftingShiftableTypesManager.setPrefixChar(prefixChar);
+
+        List<AbstractShiftable> shiftables = shiftingShiftableTypesManager.getShiftables();
         // @todo eliminate shiftableType, use shiftable
-        shiftable = shiftingShiftableTypesManager.getShiftable();
+        shiftable = shiftingShiftableTypesManager.getShiftable(shiftables);
+
         shiftableType = shiftingShiftableTypesManager.getShiftableType();
 
         // Comprehend negative values of numeric shiftables

@@ -21,7 +21,13 @@ import com.intellij.notification.Notifications;
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
 import com.kstenschke.shifter.models.entities.shiftables.*;
 import static com.kstenschke.shifter.models.ShiftableTypes.Type.*;
+
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 // Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
 class ShiftableTypesManager {
@@ -37,55 +43,41 @@ class ShiftableTypesManager {
         actionContainer.prefixChar = prefix;
     }
 
-    AbstractShiftable getShiftable() {
-        AbstractShiftable shiftable;
+    List<AbstractShiftable> getShiftables() {
+        List<AbstractShiftable> shiftables = new ArrayList<>();
 
-        if (null != (shiftable = new TrailingComment(actionContainer).getInstance()) ||
-            // Handle only PHP DOC data type, param line is handled in caretLine-shifting fallback
-            null != (shiftable = new PhpDocParamContainingDataType(actionContainer).getInstance())
-        ) return shiftable;
+        shiftables.add(new TrailingComment(actionContainer).getInstance());
+        shiftables.add(new PhpDocParamContainingDataType(actionContainer).getInstance());
+        shiftables.add(new PhpVariable(actionContainer).getInstance());
+        shiftables.add(new Parenthesis(actionContainer).getInstance());
+        shiftables.add(new JsVariableDeclarations(actionContainer).getInstance());
+        shiftables.add(new ConcatenationJs(actionContainer).getInstance());
+        shiftables.add(new SizzleSelector(actionContainer).getInstance());
+        shiftables.add(new DocCommentType(actionContainer).getInstance());
+        shiftables.add(new AccessType(actionContainer).getInstance());
+        shiftables.add(new DictionaryWordOfSpecificFileType(actionContainer).getInstance());
+        shiftables.add(new JqueryObserver(actionContainer).getInstance());
+        shiftables.add(new TernaryExpression(actionContainer).getInstance());
+        shiftables.add(new QuotedString(actionContainer).getInstance());
+        shiftables.add(new RgbColor(actionContainer).getInstance());
+        shiftables.add(new CssUnit(actionContainer).getInstance());
+        shiftables.add(new NumericValue(actionContainer).getInstance());
+        shiftables.add(new OperatorSign(actionContainer).getInstance());
+        shiftables.add(new RomanNumeral(actionContainer).getInstance());
+        shiftables.add(new LogicalOperator(actionContainer).getInstance());
+        shiftables.add(new MonoCharacterRepetition(actionContainer).getInstance());
+        shiftables.add(new DictionaryWord(actionContainer).getInstance());
+        shiftables.add(new NumericPostfixed(actionContainer).getInstance());
+        shiftables.add(new ConcatenationPhp(actionContainer).getInstance());
+        shiftables.add(new WordsTupel(actionContainer).getInstance());
+        shiftables.add(new SeparatedPath(actionContainer).getInstance());
+        shiftables.add(new CamelCaseString(actionContainer).getInstance());
+        shiftables.add(new HtmlEncodable(actionContainer).getInstance());
+        shiftables.add(new Comment(actionContainer).getInstance());
 
-        actionContainer.shiftSelectedText = true;
-        actionContainer.shiftCaretLine = false;
+        shiftables.removeAll(Collections.singleton(null));
 
-        if (null != (shiftable = new PhpVariable(actionContainer).getInstance()) ||
-            null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
-            null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
-            null != (shiftable = new ConcatenationJs(actionContainer).getInstance()) ||
-            null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
-            null != (shiftable = new DocCommentType(actionContainer).getInstance()) ||
-            null != (shiftable = new AccessType(actionContainer).getInstance()) ||
-            null != (shiftable = new DictionaryWordOfSpecificFileType(actionContainer).getInstance()) ||
-            null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
-            null != (shiftable = new TernaryExpression(actionContainer).getInstance()) ||
-            null != (shiftable = new QuotedString(actionContainer).getInstance()) ||
-            null != (shiftable = new RgbColor(actionContainer).getInstance()) ||
-            null != (shiftable = new CssUnit(actionContainer).getInstance()) ||
-            null != (shiftable = new NumericValue(actionContainer).getInstance()) ||
-            null != (shiftable = new OperatorSign(actionContainer).getInstance()) ||
-            null != (shiftable = new RomanNumeral(actionContainer).getInstance()) ||
-            // Logical operators "&&" and "||" must be detected before MonoCharStrings to avoid confusing
-            null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
-            null != (shiftable = new MonoCharacterRepetition(actionContainer).getInstance()) ||
-            // Term in any dictionary (w/o limiting to edited file's extension)
-            null != (shiftable = new DictionaryWord(actionContainer).getInstance()) ||
-            null != (shiftable = new NumericPostfixed(actionContainer).getInstance()) ||
-            null != (shiftable = new ConcatenationPhp(actionContainer).getInstance()) ||
-            null != (shiftable = new WordsTupel(actionContainer).getInstance()) ||
-            null != (shiftable = new SeparatedPath(actionContainer).getInstance()) ||
-            null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
-            null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
-            null != (shiftable = new Comment(actionContainer).getInstance())
-        ) return shiftable;
-
-        // @todo 1. completely eliminate getShiftableType() from manager
-
-        // @todo 2. rework: remove redundant arguments (e.g. from getShifted())
-
-        // @todo 3. make shifting context flexible: actionContainer.selectedText or textAroundCaret / etc.
-
-        // No shiftable type detected
-        return null;
+        return shiftables;
     }
 
     // Detect word type (get the one w/ highest priority to be shifted) of given string
@@ -199,15 +191,22 @@ class ShiftableTypesManager {
         }
     }
 
+    static AbstractShiftable getShiftable(@NotNull List<AbstractShiftable> shiftables) {
+        return 0 < shiftables.size()
+                ? shiftables.get(0)
+                : null;
+    }
+
     String getShiftedWord(ActionContainer actionContainer, @Nullable Integer moreCount) {
         if (null == actionContainer) return "";
 
         actionContainer.shiftSelectedText = true;
 
-        AbstractShiftable shiftable = getShiftable();
+        List<AbstractShiftable> shiftables = getShiftables();
+        AbstractShiftable shiftable = getShiftable(shiftables);
         return null == shiftable
-                ? actionContainer.selectedText
-                : shiftable.getShifted(actionContainer.selectedText, moreCount,null);
+                ? actionContainer.getStringToBeShifted() // @todo if more than one shiftable: open intention popup
+                : shiftable.getShifted(actionContainer.getStringToBeShifted(), moreCount,null);
     }
 
     String getActionText(@Nullable AbstractShiftable shiftable) {

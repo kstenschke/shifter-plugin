@@ -32,8 +32,9 @@ public class ConcatenationJs extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public ConcatenationJs getInstance(@Nullable Boolean checkIfShiftable) {
-        if (!actionContainer.fileExtension.equals("js") &&
-            !actionContainer.fileExtension.equals("ts")
+        if (null == actionContainer.fileExtension ||
+                (!actionContainer.fileExtension.equals("js") &&
+                 !actionContainer.fileExtension.equals("ts"))
         ) return null;
 
         String str = actionContainer.getStringToBeShifted();
