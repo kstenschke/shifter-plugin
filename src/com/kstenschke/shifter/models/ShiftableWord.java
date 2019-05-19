@@ -108,7 +108,7 @@ public class ShiftableWord {
         }
 
         //String shiftedWord = shiftable.getShifted(word, moreCount);
-        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(actionContainer, word, shiftableType, moreCount);
+        String shiftedWord = shiftingShiftableTypesManager.getShiftedWord(shiftable, word, moreCount);
 
         return word.equals(shiftedWord) ? word : maintainCasingOnShiftedWord(shiftedWord);
     }

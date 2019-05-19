@@ -318,6 +318,7 @@ public class ShiftableTypesManagerTest {
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.TRAILING_COMMENT, shiftable.getType());
     }
+
     @Test
     public void getShiftableDetectHtmlEncodableSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
@@ -332,6 +333,22 @@ public class ShiftableTypesManagerTest {
 
         assertNotNull(shiftable);
         assertEquals(ShiftableTypes.Type.HTML_ENCODABLE, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectNumericSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("1");
+        actionContainer.setSelectedText("1");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftableTypesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftableTypes.Type.NUMERIC_VALUE, shiftable.getType());
     }
 
     /*@Test

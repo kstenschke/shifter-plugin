@@ -16,7 +16,6 @@
 package com.kstenschke.shifter.models;
 
 import com.kstenschke.shifter.models.entities.AbstractShiftable;
-import com.kstenschke.shifter.models.entities.shiftables.*;
 import com.kstenschke.shifter.resources.StaticTexts;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.Nullable;
@@ -39,51 +38,14 @@ public class ShiftableSelection {
         ) return;
 
         ShiftableTypesManager shiftableTypesManager = new ShiftableTypesManager(actionContainer);
-
-        //int editorTextLength = actionContainer.editorText.length();
-        //int offsetPostfixChar = actionContainer.caretOffset + actionContainer.selectedText.length();
-        //String postfixChar = editorTextLength > offsetPostfixChar
-        //        ? String.valueOf(actionContainer.editorText.charAt(offsetPostfixChar))
-        //        : "";
-        //boolean isLastLineInDocument = offsetPostfixChar == editorTextLength;
         shiftableTypesManager.setPrefixChar("");
-
         AbstractShiftable shiftable;
+        List<AbstractShiftable> shiftables = shiftableTypesManager.getShiftables();
+        shiftable = ShiftableTypesManager.getShiftable(shiftables);
 
-        if (
-            // Detect and shift PHPDoc block or single line out of it (containing @param caretLine(s) w/o data type)
-            null != (shiftable = new PhpDocParam(actionContainer).getInstance()) ||
-            // Shift selected comment: Must be before multi-line sort to allow multi-caretLine comment shifting
-            null != (shiftable = new JsDoc(actionContainer).getInstance()) ||
-            null != (shiftable = new Comment(actionContainer).getInstance()) ||
-            null != (shiftable = new AccessType(actionContainer).getInstance()) ||
-            null != (shiftable = new XmlAttributes(actionContainer).getInstance()) ||
-            null != (shiftable = new Parenthesis(actionContainer).getInstance()) ||
-            null != (shiftable = new Css(actionContainer).getInstance()) ||
-            null != (shiftable = new TernaryExpression(actionContainer).getInstance()) ||
-            null != (shiftable = new MultipleLines(actionContainer).getInstance()) ||
-            null != (shiftable = new JsVariableDeclarations(actionContainer).getInstance()) ||
-            null != (shiftable = new JqueryObserver(actionContainer).getInstance()) ||
-            null != (shiftable = new SizzleSelector(actionContainer).getInstance()) ||
-            null != (shiftable = new TrailingComment(actionContainer).getInstance()) ||
-            null != (shiftable = new PhpDocument(actionContainer).getInstance()) ||
-            null != (shiftable = new SeparatedList(actionContainer).getInstance()) ||
-            null != (shiftable = new SeparatedListPipeDelimited(actionContainer).getInstance()) ||
-            null != (shiftable = new ConcatenationJsInTs(actionContainer).getInstance()) ||
-            null != (shiftable = new QuotedString(actionContainer).getInstance(null)) ||
-            null != (shiftable = new CamelCaseString(actionContainer).getInstance()) ||
-            null != (shiftable = new WordPair(actionContainer).getInstance()) ||
-            null != (shiftable = new WordsTupel(actionContainer).getInstance(true)) ||
-            null != (shiftable = new StringContainingSlash(actionContainer).getInstance()) ||
-            null != (shiftable = new LogicalOperator(actionContainer).getInstance()) ||
-            null != (shiftable = new MonoCharacterRepetition(actionContainer).getInstance()) ||
-            null != (shiftable = new DictionaryWord(actionContainer).getInstance()) ||
-            null != (shiftable = new LogicalConjunction(actionContainer).getInstance(null)) ||
-            null != (shiftable = new HtmlEncodable(actionContainer).getInstance()) ||
-            null != (shiftable = new PhpVariable(actionContainer).getInstance())
-        ) {
-            if (shiftable.shiftSelectionInDocument(moreCount)) return;
-        }
+        if (null != shiftable &&
+            shiftable.shiftSelectionInDocument(moreCount)
+        ) return;
 
         // @todo call from within shiftSelectionInDocument()
         try {
