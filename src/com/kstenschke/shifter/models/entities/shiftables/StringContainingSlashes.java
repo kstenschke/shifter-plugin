@@ -23,18 +23,24 @@ import com.kstenschke.shifter.utils.UtilsTextual;
 
 import org.jetbrains.annotations.Nullable;
 
-public class StringContainingSlash extends AbstractShiftable {
+public class StringContainingSlashes extends AbstractShiftable {
 
     public final String ACTION_TEXT = "Shift Slashes";
 
     // Constructor
-    public StringContainingSlash(@Nullable ActionContainer actionContainer) {
+    public StringContainingSlashes(@Nullable ActionContainer actionContainer) {
         super(actionContainer);
     }
 
     // Get instance or null if not applicable: string must be wrapped in quote characters
-    public StringContainingSlash getInstance(@Nullable Boolean checkIfShiftable) {
-        return  UtilsTextual.containsSlashes(actionContainer.selectedText) ? this : null;
+    public StringContainingSlashes getInstance(@Nullable Boolean checkIfShiftable) {
+        String str = actionContainer.getStringToBeShifted();
+
+        return UtilsTextual.containsSlashes(str) &&
+               (UtilsTextual.subStringCount(str, "/") != 2 ||
+                !str.contains("//")
+               )
+                ? this : null;
     }
 
     public ShiftableTypes.Type getType() {

@@ -32,6 +32,8 @@ public class MultipleLines extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public MultipleLines getInstance(@Nullable Boolean checkIfShiftable) {
+        if (!actionContainer.hasSelection) return null;
+
         int lineNumberSelStart = actionContainer.document.getLineNumber(actionContainer.offsetSelectionStart);
         int lineNumberSelEnd   = actionContainer.document.getLineNumber(actionContainer.offsetSelectionEnd);
         if (actionContainer.document.getLineStartOffset(lineNumberSelEnd) == actionContainer.offsetSelectionEnd) {

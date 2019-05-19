@@ -48,6 +48,7 @@ public class ActionContainer {
 
     public String textAfterCaret;
 
+    public boolean hasSelection = false;
     public int offsetSelectionStart;
     public int offsetSelectionEnd;
     int lineNumberSelStart;
@@ -83,6 +84,7 @@ public class ActionContainer {
         documentText = document.getText();
 
         selectionModel = editor.getSelectionModel();
+        hasSelection = selectionModel.hasSelection();
         offsetSelectionStart = selectionModel.getSelectionStart();
         offsetSelectionEnd = selectionModel.getSelectionEnd();
         if (documentText.charAt(offsetSelectionEnd - 1) == '\n') {
