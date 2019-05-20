@@ -242,6 +242,22 @@ public class ShiftablesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectNumericSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("1");
+        actionContainer.setSelectedText("1");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.NUMERIC_VALUE, shiftable.getType());
+    }
+
+    @Test
     public void getShiftableDetectParenthesisSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.php");
@@ -289,6 +305,38 @@ public class ShiftablesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectHtmlEncodableSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.html");
+        actionContainer.setDocumentText("fö bår baß");
+        actionContainer.setSelectedText("fö bår baß");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.HTML_ENCODABLE, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectRomanNumeralSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("XI");
+        actionContainer.setSelectedText("XI");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.ROMAN_NUMERAL, shiftable.getType());
+    }
+
+    @Test
     public void getShiftableDetectSizzleSelectorSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.js");
@@ -317,38 +365,6 @@ public class ShiftablesManagerTest {
 
         assertNotNull(shiftable);
         assertEquals(ShiftablesEnum.Type.TRAILING_COMMENT, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectHtmlEncodableSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.html");
-        actionContainer.setDocumentText("fö bår baß");
-        actionContainer.setSelectedText("fö bår baß");
-        actionContainer.setIsLastLineInDocument(true);
-        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
-
-        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftablesEnum.Type.HTML_ENCODABLE, shiftable.getType());
-    }
-
-    @Test
-    public void getShiftableDetectNumericSelected() {
-        ActionContainer actionContainer = new ActionContainer(null, true, false);
-        actionContainer.setFilename("foo.txt");
-        actionContainer.setDocumentText("1");
-        actionContainer.setSelectedText("1");
-        actionContainer.setIsLastLineInDocument(true);
-        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
-
-        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
-        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
-
-        assertNotNull(shiftable);
-        assertEquals(ShiftablesEnum.Type.NUMERIC_VALUE, shiftable.getType());
     }
 
     /*@Test

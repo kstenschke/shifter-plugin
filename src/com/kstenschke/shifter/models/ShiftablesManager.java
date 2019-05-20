@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-// Manager of "shiftable" word shiftables - detects word type to evoke resp. shifting
+// Manager of shiftables - detects type(s) to evoke resp. shifting
 class ShiftablesManager {
 
     private ActionContainer actionContainer;
