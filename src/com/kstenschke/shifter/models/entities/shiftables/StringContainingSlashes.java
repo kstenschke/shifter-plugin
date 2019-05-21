@@ -47,12 +47,6 @@ public class StringContainingSlashes extends AbstractShiftable {
         return ShiftablesEnum.Type.STRING_CONTAINING_SLASHES;
     }
 
-    /**
-     * Shift to previous/next quoted string
-     *
-     * @param  word       Quoted word to be shifted
-     * @return String
-     */
     public String getShifted(
             String word,
             Integer moreCount,

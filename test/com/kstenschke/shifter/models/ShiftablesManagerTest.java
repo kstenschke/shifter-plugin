@@ -7,8 +7,8 @@ import org.junit.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static junit.framework.TestCase.assertTrue;
+import static org.junit.Assert.*;
 
 public class ShiftablesManagerTest {
 
@@ -369,6 +369,26 @@ public class ShiftablesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectSeparatedPathSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("foo-bar-baz");
+        actionContainer.setSelectedText("foo-bar-baz");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+
+        assertNotEquals(0, shiftables.size());
+
+        boolean containsSeparatedPath = false;
+        for (AbstractShiftable shiftable : shiftables) {
+            if (shiftable.getType() == ShiftablesEnum.Type.SEPARATED_PATH) containsSeparatedPath = true;
+        }
+        assertTrue(containsSeparatedPath);
+    }
+
+    @Test
     public void getShiftableDetectSizzleSelectorSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.js");
@@ -382,6 +402,22 @@ public class ShiftablesManagerTest {
 
         assertNotNull(shiftable);
         assertEquals(ShiftablesEnum.Type.SIZZLE_SELECTOR, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectTernaryExpressionSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.php");
+        actionContainer.setDocumentText("echo $x ? 1 : 0;\n");
+        actionContainer.setSelectedText("? 1 : 0");
+        actionContainer.setPostfixChar(";");
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.TERNARY_EXPRESSION, shiftable.getType());
     }
 
     @Test
