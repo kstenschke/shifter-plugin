@@ -37,11 +37,10 @@ public class SeparatedListPipeDelimited extends SeparatedList {
 
     // Get instance or null if not applicable
     public SeparatedListPipeDelimited getInstance(@Nullable Boolean checkIfShiftable) {
-        if (// @todo make shiftable also in non-selection
-            null == actionContainer.selectedText
-        ) return null;
+        String str = actionContainer.getStringToBeShifted();
 
-        String str = actionContainer.selectedText;
+        if (null == str) return null;
+
         String delimiter = "|";
 
         if (!str.contains(delimiter)

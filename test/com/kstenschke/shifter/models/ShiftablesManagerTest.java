@@ -337,6 +337,38 @@ public class ShiftablesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectSeparatedListSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("1, 2, 3");
+        actionContainer.setSelectedText("1, 2, 3");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.SEPARATED_LIST, shiftable.getType());
+    }
+
+    @Test
+    public void getShiftableDetectSeparatedListPipeSeparatedSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("1|2|3");
+        actionContainer.setSelectedText("1|2|3");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.SEPARATED_LIST, shiftable.getType());
+    }
+
+    @Test
     public void getShiftableDetectSizzleSelectorSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.js");
