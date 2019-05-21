@@ -56,9 +56,9 @@ public class StaticTexts {
     public static final String SHIFT_MULTIPLE_LINE_SORT_ASCENDING = "Sort comments alphabetically ascending";
 
     @NonNls
-    public static final String SHIFT_LINES_SORT = "Sort lines alphabetical";
+    public static final String SHIFT_LINES_SORT = "Sort lines";
     @NonNls
-    public static final String SHIFT_LIST_ITEMS_SORT = "Sort items alphabetical";
+    public static final String SHIFT_LIST_ITEMS_SORT = "Sort items";
     @NonNls
     public static final String SHIFT_LIST_ITEMS_SWAP = "Swap list items";
     @NonNls
