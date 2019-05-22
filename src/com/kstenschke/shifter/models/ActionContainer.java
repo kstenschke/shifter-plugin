@@ -120,11 +120,17 @@ public class ActionContainer {
             shiftSelectedText = true;
             return selectedText;
         }
+
         if (null != stringAtCaret) return stringAtCaret;
+
+        // @todo return also actionContainer.firstChar, e.g. for operatorSign shifting
+        // @todo actionContainer.firstChar must be non-"[a-z0-9_]"
+
         if (null != caretLine && !caretLine.isEmpty()) {
             shiftCaretLine = true;
             return caretLine;
         }
+
         if (null != documentText) {
             return documentText;
         }

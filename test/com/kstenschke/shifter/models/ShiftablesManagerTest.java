@@ -258,6 +258,22 @@ public class ShiftablesManagerTest {
     }
 
     @Test
+    public void getShiftableDetectOperatorSignSelected() {
+        ActionContainer actionContainer = new ActionContainer(null, true, false);
+        actionContainer.setFilename("foo.txt");
+        actionContainer.setDocumentText("1+1=0");
+        actionContainer.setSelectedText("+");
+        actionContainer.setIsLastLineInDocument(true);
+        ShiftablesManager shiftablesManager = new ShiftablesManager(actionContainer);
+
+        List<AbstractShiftable> shiftables = shiftablesManager.getShiftables();
+        AbstractShiftable shiftable = ShiftablesManager.getShiftable(shiftables);
+
+        assertNotNull(shiftable);
+        assertEquals(ShiftablesEnum.Type.OPERATOR_SIGN, shiftable.getType());
+    }
+
+    @Test
     public void getShiftableDetectParenthesisSelected() {
         ActionContainer actionContainer = new ActionContainer(null, true, false);
         actionContainer.setFilename("foo.php");

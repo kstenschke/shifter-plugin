@@ -32,15 +32,12 @@ public class OperatorSign extends AbstractShiftable {
 
     // Get instance or null if not applicable
     public OperatorSign getInstance(@Nullable Boolean checkIfShiftable) {
-        if (null == actionContainer) return null;
+        String str = actionContainer.getStringToBeShifted();
 
-        String word = actionContainer.firstChar == null
-                ? actionContainer.selectedText
-                : actionContainer.firstChar;
-
-        return null != word && word.length() == 1 && "+-<>*/%".contains(word)
-                    ? this
-                    : null;
+        return null != str &&
+               str.length() == 1 &&
+               "+-<>*/%".contains(str)
+                    ? this : null;
     }
 
     public ShiftablesEnum.Type getType() {
