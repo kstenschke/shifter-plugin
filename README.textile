@@ -9,7 +9,7 @@ h2. Description
 Shifter performs string manipulations on a single keyboard shortcut, after detection of intended manipulation.
 The type of manipulation has to be selected manually only when several are possible.
 
-When evoked, Shifter detects the type of selection (or lets the user chose when ambiguous) in the current line or
+When evoked, Shifter detects the type of selection (or lets the user choose when ambiguous) in the current line or
 keyword at the caret and performs the possible string manipulation.
 To manipulations with multiple steps, there is an "up"- and "down"-shifting mode available.
 
@@ -39,7 +39,7 @@ h4. Sorting
 * Shifting a single-line selection, that is a tupel, flips the items' order (delimiters: ":", "|", ", ", " - ", " + ", " < ", " > ", " <= ", " >= ", " == ", " != ", " === ", " !== ", " || ")
 * Shifting a selection that is a camelCased (w/ lower or upper lead character) word pair, flips the order of the words.
 * Shifting a selected AND && or OR || logical conjunction with two operands, swaps the operands' order
-* Shifting a selected (from questionmark on) ternary expression, swaps "than" and "else" statements
+* Shifting a selected (from questionmark on) ternary expression, swaps "then" and "else" statements
 * Shifting a selected PHP concatenation from two strings / variables, toggles the concatenated items' order
 * Shifting a selection from a CSS file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>
 * Shifting selected attribute-style lines inside a CSS file, sorts them (alphabetically, vendor-attributes and vendor-styles at the end)</li>
@@ -47,7 +47,7 @@ h4. Sorting
 h4. Numeric Shifting
 * Numeric values - Incrementing/decrementing numbers
 * Strings ending with numbers - increments/decrements the postfix
-* Numeric block selection: opens dialog to chose: 1. in/decrement each or: 2. replace by enumeration
+* Numeric block selection: opens dialog to choose: 1. in/decrement each or: 2. replace by enumeration
 * UNIX (and millisecond based) timestamps - Increments/decrements by one day, shows a balloon info with the shifted date in human-readable format
 * CSS hex RGB colors - Shifts color value lighter/darker
 * CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm, rem, vw, vh, vmin, vmax)
@@ -106,7 +106,7 @@ Some keyword types from the default dictionary:
 h4. Tip: Using Mouse Wheel
 
 To setup the mouse wheel to invoke shifting, open the IDE preferences and go to: "Keymap". Search for "Shift",
-than right-click the shifter action items and use the option "Add mouse shortcut".
+then right-click the shifter action items and use the option "Add mouse shortcut".
 Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" can be assigned to "Shift-Up",
 "Shift + Wheel Down" to "Shift-Down".
 
