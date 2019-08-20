@@ -1,8 +1,7 @@
 Shifter Plugin
 ==============
 
-Source code of the intellij IDEA "Shifter plugin":http://plugins.jetbrains.com/plugin/6149
-This is a plugin for the various Jetbrains IDEs, working in IntelliJ IDEA, PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion,  Gogland, DataGrip, Rider and Android Studio
+"Shifter Plugin" for the various Jetbrains IDEs, working in IntelliJ IDEA, PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion,  Gogland, DataGrip, Rider and Android Studio
 
 
 ## Description
