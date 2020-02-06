@@ -173,6 +173,7 @@
 	|postfix|prefix|
 	|pre|post|
 	|previous|next|	
+	|read|write|execute|
 	|redo|undo|
 	|request|response|
 	|second|minute|hour|day|week|month|year|
