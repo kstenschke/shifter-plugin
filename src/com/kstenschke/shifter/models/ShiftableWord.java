@@ -176,24 +176,14 @@ public class ShiftableWord {
             && JsDoc.containsNoCompounds(actionContainer.caretLine) && JsDoc.isWordRightOfAtKeyword(word, actionContainer.caretLine) && JsDoc.isDataType(word)) {
             // Add missing curly brackets around data type at caret in jsDoc @param line
             actionContainer.writeUndoable(
-                    new Runnable() {
-                @Override
-                public void run() {
-                    JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(actionContainer, word);
-                }
-            },
+                    () -> JsDoc.addCompoundsAroundDataTypeAtCaretInDocument(actionContainer, word),
                     "Shift JsDoc Data Type");
 
             return true;
         }
         if (JsDoc.isInvalidAtReturnsLine(actionContainer.caretLine)) {
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            JsDoc.correctInvalidReturnsCommentInDocument(actionContainer);
-                        }
-                    },
+                    () -> JsDoc.correctInvalidReturnsCommentInDocument(actionContainer),
                     "Shift JsDoc");
 
             return true;
@@ -252,14 +242,11 @@ public class ShiftableWord {
         if (replaceInDocument) {
             // Replace word at caret by shifted one (if any)
             actionContainer.writeUndoable(
-                    new Runnable() {
-                        @Override
-                        public void run() {
-                            actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
-                            if (actionContainer.selectedText.isEmpty() && newWordFin.contains(" ")) {
-                                // There's no selection and shifted word newly contains a space: select it
-                                actionContainer.selectionModel.setSelection(wordOffsetFin, wordOffsetFin + newWordFin.length());
-                            }
+                    () -> {
+                        actionContainer.document.replaceString(wordOffsetFin, wordOffsetEndFin, newWordFin);
+                        if (actionContainer.selectedText.isEmpty() && newWordFin.contains(" ")) {
+                            // There's no selection and shifted word newly contains a space: select it
+                            actionContainer.selectionModel.setSelection(wordOffsetFin, wordOffsetFin + newWordFin.length());
                         }
                     });
 
