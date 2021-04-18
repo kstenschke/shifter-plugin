@@ -47,10 +47,6 @@ public class ShiftableWord {
      * @param word        Shiftable word
      * @param prefixChar  Char before the word, "#"?
      * @param postfixChar Char after the word, "#"?
-     * @param line        Whole line to possibly guess the context
-     * @param editorText  Whole text currently in editor
-     * @param caretOffset Caret offset in document
-     * @param filename    Filename of the edited file
      * @param moreCount   Current "more" count, starting w/ 1. If non-more shift: null
      */
     public ShiftableWord(
@@ -83,8 +79,6 @@ public class ShiftableWord {
     /**
      * Get shifted up/down word
      *
-     * @uses  actionContainer.isUp     Shift up or down?
-     * @uses  actionContainer.editor   Nullable (required to retrieve offset for positioning info-balloon which isn't shown if editor == null)
      * @return String   Next upper/lower word
      */
     public String getShifted() {
@@ -146,8 +140,6 @@ public class ShiftableWord {
     /**
      * Get shifted word (and replace if possible)
      *
-     * @param shiftUp
-     * @param line
      * @param moreCount Current "more" count, starting w/ 1. If non-more shift: null
      * @return boolean
      */
