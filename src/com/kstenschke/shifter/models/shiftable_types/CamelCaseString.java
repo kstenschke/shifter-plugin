@@ -41,7 +41,7 @@ public class CamelCaseString {
      * @return string   Converts: "camelCase" to "caseCamel" and: "TitleCase" to "CaseTitle"
      */
     public static String flipWordPairOrder(String str) {
-        String words[] = UtilsTextual.splitCamelCaseIntoWords(str);
+        String[] words = UtilsTextual.splitCamelCaseIntoWords(str);
         if (words.length <= 1 || words.length > 2) {
             return str;
         }
@@ -66,7 +66,7 @@ public class CamelCaseString {
     }
 
     public static String getShifted(String word, ShiftMode mode) {
-        String parts[] = UtilsTextual.splitCamelCaseIntoWords(word, true);
+        String[] parts = UtilsTextual.splitCamelCaseIntoWords(word, true);
 
         switch (mode) {
             case CAMEL_WORDS_TO_UNDERSCORE_SEPARATED:

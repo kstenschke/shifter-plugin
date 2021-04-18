@@ -74,7 +74,7 @@ public class UtilsTextual {
         }
     }
 
-    static boolean equalsAnyOf(String str, String words[]) {
+    static boolean equalsAnyOf(String str, String[] words) {
         if (null == str || null == words) {
             return false;
         }
@@ -143,7 +143,7 @@ public class UtilsTextual {
             return null;
         }
 
-        char chars[] = str.toCharArray();
+        char[] chars = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
             if (chars[i] == '/') {
                 chars[i] = '\\';
@@ -160,7 +160,7 @@ public class UtilsTextual {
             return str;
         }
 
-        char chars[] = str.toCharArray();
+        char[] chars = str.toCharArray();
         for (int i = 0; i < str.length(); i++) {
             if (chars[i] == '\'' && singleToDouble) {
                 chars[i] = '"';
@@ -278,7 +278,7 @@ public class UtilsTextual {
         if (isUcFirst) {
             str = UtilsTextual.toLcFirst(str);
         }
-        String parts[] = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
+        String[] parts = str.split("(?<!(^|[A-Z]))(?=[A-Z])|(?<!^)(?=[A-Z][a-z])");
 
         if (toLower) {
             return toLower(parts);

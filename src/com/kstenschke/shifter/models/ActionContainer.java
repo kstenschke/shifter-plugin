@@ -14,8 +14,7 @@ import com.kstenschke.shifter.utils.UtilsEnvironment;
 import com.kstenschke.shifter.utils.UtilsFile;
 import com.kstenschke.shifter.utils.UtilsTextual;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Container for event and deducible IDE environment attributes (project, editor, etc.)
@@ -49,9 +48,6 @@ public class ActionContainer {
     public String filename;
     String fileExtension;
 
-    /**
-     * Constructor
-     */
     public ActionContainer(final AnActionEvent event, boolean isShiftUp, boolean isShiftMore) {
         this.isShiftUp = isShiftUp;
         this.isShiftMore = isShiftMore;

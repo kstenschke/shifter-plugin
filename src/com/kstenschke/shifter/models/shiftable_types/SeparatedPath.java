@@ -34,7 +34,7 @@ public class SeparatedPath {
     }
 
     public static String flipWordsOrder(String str) {
-        String words[] = str.split(getWordsGlue(str));
+        String[] words = str.split(getWordsGlue(str));
 
         return words[1] + "-" + words[0];
     }
@@ -44,7 +44,7 @@ public class SeparatedPath {
      * @return String   Given string converted to camelCase
      */
     public static String getShifted(String word) {
-        String parts[] = word.split(getWordsGlue(word));
+        String[] parts = word.split(getWordsGlue(word));
         StringBuilder shifted = new StringBuilder();
         int index = 0;
         for (String part : parts) {

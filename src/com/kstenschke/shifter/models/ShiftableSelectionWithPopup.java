@@ -36,8 +36,6 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
     private final boolean containsEscapedQuotes;
 
     /**
-     * Constructor
-     *
      * @param actionContainer
      */
     public ShiftableSelectionWithPopup(ActionContainer actionContainer) {
@@ -92,7 +90,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
             shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
         }
 
-        String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
+        String[] items = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(items.length == 2 ? StaticTexts.SHIFT_LIST_ITEMS_SWAP : StaticTexts.SHIFT_LIST_ITEMS_SORT);
 
         addQuoteShiftingOptions(shiftOptions);
@@ -104,7 +102,7 @@ public class ShiftableSelectionWithPopup extends ShiftableSelection {
         String delimiterSplitPattern = "\\|(\\s)*";
         List<String> shiftOptions = new ArrayList<>();
 
-        String items[] = actionContainer.selectedText.split(delimiterSplitPattern);
+        String[] items = actionContainer.selectedText.split(delimiterSplitPattern);
         shiftOptions.add(StaticTexts.SHIFT_CONVERT_TO_TYPESCRIPT_STRING_INTERPOLATION);
         if (items.length == 2) {
             shiftOptions.add(StaticTexts.SHIFT_LIST_ITEMS_SWAP);

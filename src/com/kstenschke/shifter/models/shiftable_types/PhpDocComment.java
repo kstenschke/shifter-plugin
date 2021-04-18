@@ -27,7 +27,7 @@ class PhpDocComment {
      */
     static boolean isPhpDocComment(String str) {
         str = trim(str);
-        String lines[] = str.split("\n");
+        String[] lines = str.split("\n");
 
         return lines.length > 2 && str.startsWith("/**") && str.endsWith("*/") && str.contains(" * ");
     }
@@ -37,7 +37,7 @@ class PhpDocComment {
     }
 
     public static String getShifted(String str) {
-        String lines[] = str.split("\n");
+        String[] lines = str.split("\n");
         StringBuilder shifted = new StringBuilder();
 
         int indexLine = 1;

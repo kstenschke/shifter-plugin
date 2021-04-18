@@ -36,9 +36,6 @@ public class DictionaryTerm {
     // The complete dictionary
     private final String dictionaryContents;
 
-    /**
-     * Constructor
-     */
     public DictionaryTerm() {
         String contents = ShifterPreferences.getDictionary();
         if (contents.isEmpty()) {

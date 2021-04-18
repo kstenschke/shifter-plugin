@@ -36,9 +36,6 @@ public class DocCommentTag {
 
     private final String[] tagsPHP;
 
-    /**
-     * Constructor
-     */
     public DocCommentTag() {
         tagsJavaScript = new String[]{"author", "class", "constructor", "deprecated", "exception", "method", "module", "namespace", "param", "private", "property", "returns", "see", "this", "throws", "type", "version"};
         tagsJava       = new String[]{"author", "version", "param", "return", "exception", "throws", "see", "since", "serial", "deprecated"};

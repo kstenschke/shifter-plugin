@@ -44,8 +44,6 @@ public class ShiftableWord {
     final private ActionContainer actionContainer;
 
     /**
-     * Constructor
-     *
      * @param word        Shiftable word
      * @param prefixChar  Char before the word, "#"?
      * @param postfixChar Char after the word, "#"?

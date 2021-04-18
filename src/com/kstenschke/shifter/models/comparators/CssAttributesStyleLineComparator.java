@@ -42,11 +42,11 @@ public class CssAttributesStyleLineComparator implements Comparator<String> {
             return 1;
         }
 
-        String parts1[] = str1.split(":");
+        String[] parts1 = str1.split(":");
         String attribute1 = trim(parts1[0]);
         String style1     = parts1.length > 1 ? trim(parts1[1]) : "";
 
-        String parts2[] = str2.split(":");
+        String[] parts2 = str2.split(":");
         String attribute2 = trim(parts2[0]);
         String style2     = parts2.length > 1 ? trim(parts2[1]) : "";
 

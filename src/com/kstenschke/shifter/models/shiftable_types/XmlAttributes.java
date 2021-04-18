@@ -35,8 +35,6 @@ public class XmlAttributes {
     private final ActionContainer actionContainer;
 
     /**
-     * Constructor
-     *
      * @param actionContainer
      */
     public XmlAttributes(ActionContainer actionContainer) {

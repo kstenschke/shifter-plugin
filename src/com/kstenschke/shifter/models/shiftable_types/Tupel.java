@@ -37,8 +37,6 @@ public class Tupel {
     private String delimiter;
 
     /**
-     * Constructor
-     *
      * @param actionContainer
      */
     public Tupel(@Nullable ActionContainer actionContainer) {
@@ -54,7 +52,7 @@ public class Tupel {
     public boolean isWordsTupel(String str) {
         if (null == str) return false;
 
-        String glues[] = new String[]{
+        String[] glues = new String[]{
                 ",",
 
                 // Multi-character delimiters containing singe-character delimiters must precede those
@@ -73,7 +71,7 @@ public class Tupel {
         };
 
         for (String glue : glues) {
-            String parts[] = str.split("\\s*" + Pattern.quote(glue) + "\\s*");
+            String[] parts = str.split("\\s*" + Pattern.quote(glue) + "\\s*");
             if (parts.length == 2 && !parts[0].isEmpty() && !parts[1].isEmpty()) {
                 delimiter = glue;
                 return true;

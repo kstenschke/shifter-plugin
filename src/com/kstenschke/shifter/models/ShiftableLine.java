@@ -35,8 +35,6 @@ public class ShiftableLine {
     private final ActionContainer actionContainer;
 
     /**
-     * Constructor
-     *
      * @param actionContainer
      */
     private ShiftableLine(ActionContainer actionContainer) {

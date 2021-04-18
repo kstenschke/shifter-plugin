@@ -51,7 +51,6 @@ public class RomanNumber {
      * toInt() will return the number as a value of type int.
      */
     class RomanNumeral {
-
         private final int num;   // The number represented by this Roman numeral.
 
          /* The following arrays are used by the toString() function to construct

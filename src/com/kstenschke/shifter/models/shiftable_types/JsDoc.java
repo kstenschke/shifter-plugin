@@ -86,7 +86,7 @@ public class JsDoc {
     }
 
     public static boolean isWordRightOfAtKeyword(String word, String line) {
-        String keywords[] = new String[]{"@param", "@return", "@type"};
+        String[] keywords = new String[]{"@param", "@return", "@type"};
         for (String keyword : keywords) {
             if (line.contains(keyword)) {
                 line = trim(line.split(keyword)[1]);
@@ -166,7 +166,7 @@ public class JsDoc {
     public static boolean correctDocBlockInDocument(final ActionContainer actionContainer) {
         String documentText = actionContainer.document.getText();
         String docBlock = documentText.substring(actionContainer.offsetSelectionStart, actionContainer.offsetSelectionEnd);
-        String lines[] = docBlock.split("\n");
+        String[] lines = docBlock.split("\n");
 
         StringBuilder docBlockCorrected = new StringBuilder();
         int index = 0;
@@ -207,7 +207,7 @@ public class JsDoc {
     }
 
     public static String correctAtKeywordLine(String line) {
-        String keywords[] = new String[]{"@param", "@returns", "@type"};
+        String[] keywords = new String[]{"@param", "@returns", "@type"};
         for (String keyword : keywords) {
             line = correctAtKeywordLine(line, keyword);
         }
@@ -238,7 +238,7 @@ public class JsDoc {
     }
 
     private static String reduceDoubleEmptyCommentLines(String block) {
-        String lines[] = block.split("\n");
+        String[] lines = block.split("\n");
         StringBuilder blockCleaned = new StringBuilder();
 
         boolean wasPreviousEmpty = false;
@@ -284,7 +284,7 @@ public class JsDoc {
 
     private static String guessDataTypeByParameterName(String parameterName) {
         String parameterNameLower = parameterName.toLowerCase();
-        String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
+        String[] camelWords = UtilsTextual.splitCamelCaseIntoWords(parameterName, true);
         String lastWord = camelWords[camelWords.length - 1];
 
         if (parameterName.startsWith("$") || parameterName.matches("(?i)(\\w*elem)")) {

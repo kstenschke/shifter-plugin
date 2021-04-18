@@ -45,9 +45,6 @@ public class NumericValue {
      */
     private final int timestampShiftMode;
 
-    /**
-     * Constructor
-     */
     public NumericValue() {
         timestampShiftMode = ShifterPreferences.getShiftingModeOfTimestamps();
     }

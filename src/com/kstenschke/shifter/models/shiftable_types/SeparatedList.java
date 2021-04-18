@@ -62,7 +62,8 @@ public class SeparatedList {
      * @param  sortAscending
      * @return Given delimiter separated list, sorted (natural) alphabetically ascending / descending
      */
-    public static String getShifted(String selectedText, String delimiterSplitPattern, String delimiterGlue, boolean sortAscending) {
+    public static String getShifted(String selectedText, String delimiterSplitPattern, String delimiterGlue,
+                                    boolean sortAscending) {
         String[] items = selectedText.split(delimiterSplitPattern);
 
         if (items.length == 2) {

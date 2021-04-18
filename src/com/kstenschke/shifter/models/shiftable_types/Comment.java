@@ -86,7 +86,7 @@ public class Comment {
         if (!str.contains("\n")) {
             return false;
         }
-        String lines[] = str.split("\n");
+        String[] lines = str.split("\n");
         for (String line : lines) {
             if (!trim(line).startsWith("//")) {
                 return false;
@@ -236,7 +236,7 @@ public class Comment {
     private static String shiftMultipleBlockCommentLines(String str, boolean merge) {
         str = trim(str).substring(2);
 
-        String lines[] = str.split("\n");
+        String[] lines = str.split("\n");
         int index = 0;
 
         StringBuilder result = new StringBuilder("//");
@@ -275,7 +275,7 @@ public class Comment {
     }
 
     private static String convertMultipleLineCommentsToBlockComment(String str) {
-        String lines[] = str.split("\n");
+        String[] lines = str.split("\n");
         StringBuilder result  = new StringBuilder();
         int index = 0;
         for (String line : lines) {
@@ -287,7 +287,7 @@ public class Comment {
     }
 
     private static String mergeMultipleLineComments(String str) {
-        String lines[] = str.split("\n");
+        String[] lines = str.split("\n");
         StringBuilder result  = new StringBuilder();
         int index = 0;
         for (String line : lines) {

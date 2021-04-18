@@ -54,9 +54,6 @@ public class PluginConfiguration {
     private JCheckBox checkboxPhpArrayShortToLong;
     private JTabbedPane tabDictionary;
 
-    /**
-     * Constructor
-     */
     public PluginConfiguration() {
         tabDictionary.setIconAt(1, UIUtil.isUnderDarcula() ? ShifterIcons.ICON_DICTIONARY_DARK : ShifterIcons.ICON_DICTIONARY);
 

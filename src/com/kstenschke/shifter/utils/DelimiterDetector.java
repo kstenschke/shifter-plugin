@@ -27,8 +27,6 @@ class DelimiterDetector {
     private boolean isDelimitedLastLine;
 
     /**
-     * Constructor
-     *
      * @param lines
      */
     DelimiterDetector(List<String> lines) {

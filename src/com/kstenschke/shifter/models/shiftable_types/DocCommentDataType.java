@@ -30,9 +30,6 @@ class DocCommentDataType {
     private final String[] typesPHP;
     private final String[] typesObjectiveC;
 
-    /**
-     * Constructor
-     */
     DocCommentDataType() {
         typesJavaScript = new String[]{ "array", "boolean", "element", "event", "function", "number", "null", "object", "string", "undefined" };
         typesJava       = new String[]{ "boolean", "byte", "char", "double", "float", "int", "long", "short", "string" };

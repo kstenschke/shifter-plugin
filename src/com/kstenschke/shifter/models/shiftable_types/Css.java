@@ -38,8 +38,8 @@ public class Css {
 
     private static String sortAttributeStyleLinesInsideSelectors(String value) {
         // Split CSS into groups of attribute-style lines per selector
-        String attributeGroups[]       = value.split("([^\r\n,{}]+)(,(?=[^}]*\\{)|\\s*\\{)");
-        String attributeGroupsSorted[] = new String[attributeGroups.length];
+        String[] attributeGroups = value.split("([^\r\n,{}]+)(,(?=[^}]*\\{)|\\s*\\{)");
+        String[] attributeGroupsSorted = new String[attributeGroups.length];
 
         // 1. Collect groups of attribute-style lines per selector
         int indexMatch = 0;

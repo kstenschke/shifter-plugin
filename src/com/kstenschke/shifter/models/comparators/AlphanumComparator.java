@@ -120,7 +120,7 @@ public class AlphanumComparator implements Comparator<String>
      */
     private static String prepareStringForCompare(String str) {
         // Convert all numeric-chunks within str to having 10 digits
-        String parts[] = str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
+        String[] parts = str.split("(?<=\\D)(?=\\d)|(?<=\\d)(?=\\D)");
         int index = 0;
         for (String part : parts) {
             if (StringUtils.isNumeric(part)) {

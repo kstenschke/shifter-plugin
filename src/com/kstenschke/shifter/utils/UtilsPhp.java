@@ -37,10 +37,11 @@ public class UtilsPhp {
     /**
      * @param  str
      * @return Name of primitive (PHP) data type
-     * @note   this method is also the basis for guessing JavaScript data types, is converted to the rel. JS type than
+     * @note   this method is also the basis for guessing JavaScript data types,
+     *         is converted to the rel. JS type than
      */
     public static String guessDataTypeByParameterName(String str) {
-        String camelWords[] = UtilsTextual.splitCamelCaseIntoWords(str, true);
+        String[] camelWords = UtilsTextual.splitCamelCaseIntoWords(str, true);
         String firstWord = camelWords[0];
         String lastWord = camelWords[camelWords.length - 1];
 
@@ -50,15 +51,19 @@ public class UtilsPhp {
         if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"args", "array", "data", "ids", "items", "list", "pieces", "params", "parameters", "values", "vars"})) {
             return "array";
         }
+
         if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"int", "amount", "count", "id", "index", "offset"})) {
             return "int";
         }
+
         if ("float".equals(lastWord)) {
             return "float";
         }
+
         if (UtilsTextual.equalsAnyOf(lastWord, new String[]{"app", "object", "obj"})) {
             return "object";
         }
+
         if ("string".equals(lastWord)) {
             return "string";
         }
@@ -72,23 +77,29 @@ public class UtilsPhp {
         if (str.matches("(\\w*delim(iter)*|\\w*dir(ectory)*|\\w*domain|description|expr|filename\\w*|\\w*identifier|\\w*key|\\w*link|\\w*name|\\w*path\\w*|\\w*prefix|\\w*suffix|charlist|comment|\\w*file(name)*|format|glue|haystack|html|intput|locale|message|name|needle|output|platform|replace(ment)*|salt|separator|str(ing)*|\\w*title|\\w*url)\\d*")) {
             return "string";
         }
+
         if (str.matches("(\\w*day|\\w*end|\\w*expire|\\w*handle|\\w*height|\\w*hour(s)*|\\w*id|\\w*index|\\w*len(gth)*|\\w*mask|\\w*pointer|\\w*quality|\\w*s(e)*ize|\\w*start|\\w*step(s)*|tick|\\w*year\\w*|ascii|base|blue|ch|chunklen|fp|green|len|limit|\\w*max|\\w*min|\\w*mode|month|\\w*multiplier|now|num|offset|\\w*op(eration)*|\\w*pos(ition)*|red|\\w*time(stamp)*|week|\\w*wid(th)*|x|y)\\d*")) {
             return "int";
         }
+
         if (str.matches("(\\w*gamma|percent)\\d*")) {
             return "float";
         }
+
         if (str.matches("(\\wmodel|\\w*obj(ect)*)\\d*")) {
             return "Object";
         }
+
         if (UtilsTextual.equalsAnyOf(str, new String[]{"action|cmd|content|controller|html|out"})) {
             return "string";
         }
+
         if (UtilsTextual.equalsAnyOf(firstWord, new String[]{"allow|enable|disable|hide|show"})
             ||lastWord.endsWith("ed") || lastWord.endsWith("n")) {
             // E.g. states like "enabled", "disabled", "hidden", "shown", etc.
             return "bool";
         }
+
         if (str.matches("((\\w*s)\\d*|\\w*arr(ay)*|\\w*param(eter)*s|\\w*val(ue)*s)")) {
             return "array";
         }

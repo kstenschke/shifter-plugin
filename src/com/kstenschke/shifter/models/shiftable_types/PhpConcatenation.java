@@ -30,9 +30,6 @@ public class PhpConcatenation {
     private String partLHS = null;
     private String partRHS = null;
 
-    /**
-     * Constructor
-     */
     public PhpConcatenation(String str) {
         String strJoined = UtilsTextual.removeLineBreaks(str.trim());
 
