@@ -1,9 +1,12 @@
-h1. Shifter Plugin
+Shifter Plugin
+==============
 
-"Shifter plugin" for the various Jetbrains IDEs, working in IntelliJ IDEA, PhpStorm, WebStorm, PyCharm, RubyMine, AppCode, CLion,  Gogland, DataGrip, Rider and Android Studio
+Extension plugin for the various Jetbrains IDEs, working in IntelliJ IDEA, PhpStorm, WebStorm, PyCharm, RubyMine, 
+AppCode, CLion,  Gogland, DataGrip, Rider and Android Studio
 
 
-h2. Description
+Description
+-----------
 
 Shifter performs string manipulations on a single keyboard shortcut, after detection of intended manipulation.
 The type of manipulation has to be selected manually only when several are possible.
@@ -18,7 +21,7 @@ To shift values instantly multiple times, there are additional "Shift More" acti
 configured in the plugin configurations (default: 10).
 
 
-h3. Default Keyboard Shortcuts
+### Default Keyboard Shortcuts
 
 Shifter adds the following editing tools (you can change the keymap in the IDE preferences):
 
@@ -27,11 +30,11 @@ Shifter adds the following editing tools (you can change the keymap in the IDE p
 * Ctrl+Shift+Alt+J  - Shift-Down More
 * Ctrl+Shift+Alt+K  - Shift-Up More
 
-*Mac Users:* On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
+**Mac Users:** On Macs, the keyboard shortcuts are Comma or Period key together with Shift+Alt+Cmd
 
-h3. Shifting Types
+### Shifting Types
 
-h4. Sorting
+#### Sorting
 * Shifting a multi-line selection sorts the lines alphabetically ascending/descending.
 * Shifting a single-line selection, that is a comma- or pipe-separated list, sorts the items ascending/descending.
 * Shifting a single-line selection, that is XML attribute-value pairs, sorts them alphabetically.
@@ -43,7 +46,7 @@ h4. Sorting
 * Shifting a selection from a CSS file, sorts all attributes inside their selectors (alphabetically, vendor-attributes and vendor-styles at the end)</li>
 * Shifting selected attribute-style lines inside a CSS file, sorts them (alphabetically, vendor-attributes and vendor-styles at the end)</li>
 
-h4. Numeric Shifting
+#### Numeric Shifting
 * Numeric values - Incrementing/decrementing numbers
 * Strings ending with numbers - increments/decrements the postfix
 * Numeric block selection: opens dialog to choose: 1. in/decrement each or: 2. replace by enumeration
@@ -52,7 +55,7 @@ h4. Numeric Shifting
 * CSS length values - Shifts numeric length values up/down by 1 (units: em, in, px, pt, cm, rem, vw, vh, vmin, vmax)
 * Increment/decrement roman numerals
 
-h4. String Manipulations
+#### String Manipulations
 * Shifting a selection within a single line: detects and swaps characters: single quote vs. double quote OR slash vs. backslash
 * Shifting a selected (or the caret touching a) camel-cased string, converts it into a minus- or underscore-separated path (and vice versa)
 * Strings wrapped in single/double quotes and backticks - Shifts to alphabetically next/previous quoted string found in current document
@@ -62,7 +65,7 @@ h4. String Manipulations
 * Single characters and string consisting from any amount of the same character can be shifted to the previous/next ASCII value
 * Escaped single or double quotes can be unescaped when shifting a selection
 
-h4. Code- and DOC Comments
+#### Code- and DOC Comments
 * Selection which is a block comment or multiple line-comments (e.g. PHP, JavaScript, C syntax) - toggle among comment type (//... vs. /*...*/). Merges multi-line comments into 1 line.
 * Selected line of code ending with a trailing //-comment - Moves the comment into a new line before the code
 * Selected HTML comment inside a PHP / PHTML file: converts it into a PHP block comment (and vice versa)
@@ -71,7 +74,7 @@ h4. Code- and DOC Comments
 * JsDOC: Shifting w/ the caret touching a data type that is not wrapped in curly brackets, inside an "@param", "@returns" or "@type" annotation: adds the missing curly brackets
 * Selected JsDoc block: Convert "@return" into "@returns", add missing curly brackets around data types in "@param", "@returns" and "@type" lines, correct invalid data types into existing data types (bool => boolean, int(eger) => number), reduce empty JsDoc lines
 
-h4. PHP, JavaScript and TypeScript shifting
+#### PHP, JavaScript and TypeScript shifting
 * PHP variables - Shifts to alphabetically next/previous variable found in current document ("shift more" shifts until first variable with a different first letter)
 * Selected PHP array - Shifts among long and shorthand syntax (PHP >= 5.4)
 * Selection which is a Sizzle-Selector - Converts the selector into a corresponding JavaScript variable declaration
@@ -79,7 +82,7 @@ h4. PHP, JavaScript and TypeScript shifting
 * Selected deprecated jQuery observer methods are modernized, e.g. ".click(" becomes ".on('click', ": Event types: blur, change, click, dblclick, error, focus, keypress, keydown, keyup, load, mouseenter, mouseleave, resize, submit, scroll, unload
 * Selected JavaScript string concatenation in TypeScript file - Converts to TypeScript string interpolation
 
-h4. Dictionaric Keyword Shifting
+#### Dictionaric Keyword Shifting
 
 Shifter comes with a customizable, file extension specific and globally usable, dictionary of shiftable keywords.
 Some keyword types from the default dictionary:
@@ -102,7 +105,7 @@ Some keyword types from the default dictionary:
 * Boolean (paired) keyword values - Toggles true/false, on/off, yes/no (e.g. Objective-C), shown/hidden, show/hide, positive/negative, from/until, enable(d)/disable(d), pass/fail, min/max, expand/collapse, asc/desc, first/last
 
 
-h4. Tip: Using Mouse Wheel
+#### Tip: Using Mouse Wheel
 
 To setup the mouse wheel to invoke shifting, open the IDE preferences and go to: "Keymap". Search for "Shift",
 then right-click the shifter action items and use the option "Add mouse shortcut".
@@ -110,12 +113,12 @@ Mouse shortcuts can include hotkeys, this way for instance "Shift + Wheel Up" ca
 "Shift + Wheel Down" to "Shift-Down".
 
 
-h2. Changelog
+#### Changelog
 
-Read "changelog":https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.md
+See https://github.com/kstenschke/shifter-plugin/blob/master/CHANGELOG.md
 
 
-h2. Contributors
+#### Contributors
 
 Thanks for their input, ideas, help or other contribution
 
@@ -131,7 +134,7 @@ Thanks for their input, ideas, help or other contribution
 * Yann Cebron from Jetbrains
 
 
-h2. License
+## License
 
 Copyright 2011-2019 Kay Stenschke
 
