@@ -40,7 +40,7 @@ public class RomanNumber {
 
         return 1 == intVal && !isUp
                 ? value
-                : new RomanNumeral(isUp ? intVal + 1 : intVal -1).toString();
+                : new RomanNumeral(isUp ? intVal + 1 : intVal - 1).toString();
     }
 
     /**
@@ -50,7 +50,7 @@ public class RomanNumber {
      * standardized Roman numeral representation of the number.  The function
      * toInt() will return the number as a value of type int.
      */
-    class RomanNumeral {
+    static class RomanNumeral {
         private final int num;   // The number represented by this Roman numeral.
 
          /* The following arrays are used by the toString() function to construct
